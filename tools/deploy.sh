@@ -16,9 +16,10 @@ git worktree add --detach "$work" >/dev/null 2>&1
   git rm -rfq . >/dev/null 2>&1 || true
   cp -R "$OLDPWD/dist/." .
   touch .nojekyll
-  git add -A
+  git add -A -f   # -f : ne pas tenir compte d'un éventuel .gitignore copié
   git commit -qm "$msg"
   git push -f "$remote" gh-pages:gh-pages
 )
 git worktree remove --force "$work"
+git branch -D gh-pages >/dev/null 2>&1 || true   # la branche locale ne sert à rien
 echo "→ publié sur la branche gh-pages de $remote"

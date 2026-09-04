@@ -1,0 +1,96 @@
+# Mécanisme : l'étau d'établi. Complexité supérieure au serre-joint : 4 classes, 4 liaisons,
+# une boucle fermée dans le graphe, une liaison d'axe vertical (barre de manœuvre) et des
+# pièces à regrouper (mordaches vissées, écrou emmanché).
+id: etau
+nom: Étau
+titre: L'étau d'établi
+description: >
+  Outil fixé sur l'établi pour maintenir une pièce entre deux mors. On tourne la barre de
+  manœuvre : la vis, vissée dans l'écrou du bâti, entraîne le mors mobile qui coulisse vers
+  le mors fixe et serre la pièce.
+repere: "x : axe de la vis et du coulissement (horizontal) ; y : vertical (axe de la barre de manœuvre) ; z : vers l'observateur"
+figures:
+  dessin: mecanisme-etau-dessin
+  classes: mecanisme-etau-classes
+  graphe: mecanisme-etau-graphe
+  schema: mecanisme-etau-schema
+pieces:
+  - {num: 1, nom: "bâti (corps + mors fixe)"}
+  - {num: 2, nom: "écrou"}
+  - {num: 3, nom: "mors mobile"}
+  - {num: 4, nom: "vis de manœuvre"}
+  - {num: 5, nom: "barre de manœuvre"}
+  - {num: 6, nom: "mordache du mors fixe"}
+  - {num: 7, nom: "mordache du mors mobile"}
+classes:
+  - {id: E1, nom: "bâti + écrou + mordache fixe", pieces: [1, 2, 6], couleur: solideB, bati: true,
+     pourquoi: "L'écrou 2 est emmanché dans le corps et la mordache 6 est vissée sur le mors fixe : aucun mouvement relatif avec le bâti 1."}
+  - {id: E2, nom: "mors mobile + sa mordache", pieces: [3, 7], couleur: solideA,
+     pourquoi: "La mordache 7 est vissée sur le mors mobile 3 : elles coulissent ensemble."}
+  - {id: E3, nom: "vis de manœuvre", pieces: [4], couleur: solideE,
+     pourquoi: "La vis tourne par rapport au mors mobile et se visse dans l'écrou : elle bouge par rapport à toutes les autres classes."}
+  - {id: E4, nom: "barre de manœuvre", pieces: [5], couleur: solideD,
+     pourquoi: "La barre coulisse et tourne dans le trou de la tête de vis : elle n'est pas solidaire de la vis."}
+liaisons:
+  - entre: [E1, E2]
+    contact: "surfacique plan (×2)"
+    surfaces: "la coulisse de section rectangulaire du mors mobile glisse dans le canal du corps"
+    liaison: glissiere
+    point: A
+    axe: x
+    explication: "Deux plans de contact perpendiculaires ne laissent qu'une translation le long du canal : glissière d'axe (A, x)."
+  - entre: [E1, E3]
+    contact: "filetage / taraudage"
+    surfaces: "la vis est vissée dans l'écrou fixé au corps"
+    liaison: helicoidale
+    point: B
+    axe: x
+    explication: "Vis dans écrou : rotation et translation liées, liaison hélicoïdale d'axe (B, x)."
+  - entre: [E2, E3]
+    contact: "cylindre-cylindre court + épaulements"
+    surfaces: "le collet de la vis tourne dans l'alésage du mors mobile, bloqué en translation par la tête et un anneau d'arrêt"
+    liaison: pivot
+    point: C
+    axe: x
+    explication: "La vis tourne dans le mors mobile mais ne peut pas coulisser (tête d'un côté, anneau de l'autre) : pivot d'axe (C, x)."
+  - entre: [E3, E4]
+    contact: "cylindre-cylindre long"
+    surfaces: "la barre lisse coulisse et tourne dans le trou de la tête de vis"
+    liaison: pivot-glissant
+    point: D
+    axe: y
+    explication: "La barre peut glisser et tourner dans le trou de la tête : pivot glissant d'axe (D, y). Attention, l'axe est vertical : le symbole se dessine tourné."
+questions:
+  - level: 2
+    type: mcq
+    prompt: "Sur le schéma cinématique de l'étau, quel est le mouvement du **mors mobile (E2)** par rapport au **bâti (E1)** quand on tourne la barre ?\n{{fig:mecanisme-etau-schema}}"
+    choices: ["Une translation le long de x", "Une rotation autour de x", "Une translation et une rotation autour de x", "Aucun mouvement"]
+    answer: 0
+    explanation: "La glissière (A, x) n'autorise qu'une translation : la vis tourne, le mors mobile avance sans tourner."
+  - level: 2
+    type: mcq
+    prompt: "Sur le schéma de l'étau, pourquoi le symbole placé en **D** est-il dessiné **verticalement** ?\n{{fig:mecanisme-etau-schema}}"
+    choices: ["Parce que l'axe de la liaison (la barre) est vertical, selon y", "Parce que la barre est plus longue que la vis", "Parce que c'est une liaison pivot", "Par convention, les pivots glissants sont toujours verticaux"]
+    answer: 0
+    explanation: "Le symbole s'oriente selon l'axe réel de la liaison : le pivot glissant d'axe (D, y) se dessine avec son rectangle vertical."
+  - level: 3
+    type: mcq
+    skill: graphe
+    prompt: "Le graphe des liaisons de l'étau contient une **boucle** (E1 – E2 – E3 – E1). Qu'en déduit-on ?\n{{fig:mecanisme-etau-graphe}}"
+    choices: ["Le mouvement du mors mobile est imposé par la vis : chaîne fermée", "Il y a une erreur, un graphe ne doit pas contenir de boucle", "Le mors mobile est libre de bouger indépendamment de la vis", "L'étau a un degré de liberté de plus"]
+    answer: 0
+    explanation: "Une chaîne fermée signifie que les mouvements sont liés : un tour de vis (hélicoïdale avec E1) fait avancer d'un pas le mors mobile (pivot avec la vis, glissière avec E1)."
+  - level: 3
+    type: mcq
+    skill: classes
+    prompt: "Modélisation simplifiée : si l'on néglige le coulissement de la barre 5 dans la tête de vis, que devient la barre ?"
+    choices: ["Elle rejoint la classe de la vis : E3 = {4, 5}", "Elle rejoint la classe du bâti", "Elle forme toujours une classe à elle seule", "Elle est exclue car déformable"]
+    answer: 0
+    explanation: "Sans mouvement relatif, barre et vis forment un seul solide : le pivot glissant devient un encastrement et disparaît du schéma."
+  - level: 2
+    type: mcq
+    skill: classes
+    prompt: "Dans l'étau, pourquoi l'**écrou (2)** est-il dans la classe du **bâti (1)** et non dans celle de la **vis (4)** ?\n{{fig:mecanisme-etau-dessin}}"
+    choices: ["Parce qu'il est emmanché dans le corps : il ne bouge pas par rapport au bâti", "Parce qu'il est vissé sur la vis", "Parce qu'il est en acier comme le bâti", "Parce qu'il est plus proche du bâti sur le dessin"]
+    answer: 0
+    explanation: "L'écrou est fixe dans le corps (encastrement) ; la vis tourne et avance dans l'écrou (hélicoïdale) : ils ne sont pas solidaires."

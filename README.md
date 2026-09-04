@@ -10,7 +10,7 @@ sources TikZ compilées en SVG, et `make` reconstruit l'application complète da
 Première unité couverte : **le schéma cinématique** (manuel I2D 1re, chapitre 2, p. 30-33) —
 les 10 liaisons normalisées, leurs symboles, degrés de liberté, surfaces de contact, efforts
 transmissibles, puis classes d'équivalence, graphe des liaisons et lecture/tracé du schéma
-(serre-joint, bielle-manivelle).
+(serre-joint, bielle-manivelle, étau).
 
 ## Utilisation
 
@@ -78,8 +78,8 @@ make test       # tests unitaires de l'application (planificateur, progression, 
 
 ## Feuille de route
 
-1. ✅ Liaisons, classes d'équivalence, graphe, lecture de schéma (serre-joint, bielle-manivelle).
-2. Mécanismes supplémentaires de complexité croissante (étau, pompe, vérin/levier, pince, cric…),
+1. ✅ Liaisons, classes d'équivalence, graphe, lecture de schéma (serre-joint, bielle-manivelle, étau).
+2. Mécanismes supplémentaires de complexité croissante (pompe, vérin/levier, pince, cric, essuie-glace…),
    symboles 3D, exercice de construction guidée du schéma.
 3. Chapitres suivants du manuel (mouvements et cinématique, chaîne d'information, matériaux et
    structures), puis physique-chimie et maths (rendu des formules avec KaTeX).

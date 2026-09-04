@@ -24,3 +24,11 @@ placé **à la position réelle** de son centre.
 
 - Les pivots d'axe z ont leur axe **perpendiculaire** au plan de la vue : symboles « selon l'axe » (cercles).
 - La glissière (B, x) du piston a son axe dans le plan : rectangle.
+
+## Exemple : l'étau (une liaison d'axe vertical)
+
+{{fig:mecanisme-etau-schema}}
+
+- Glissière (A, x), hélicoïdale (B, x) et pivot (C, x) ont leur axe dans le plan : rectangles horizontaux.
+- Le pivot glissant (D, y) de la barre de manœuvre a son axe **vertical** : on **tourne** le symbole.
+- Le bâti E1 est hachuré aux deux endroits où il touche l'établi.

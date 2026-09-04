@@ -653,7 +653,7 @@ def write_dist(content):
     DIST.mkdir(exist_ok=True)
     if APP.exists():
         shutil.copytree(APP, DIST, dirs_exist_ok=True,
-                        ignore=shutil.ignore_patterns("dev", "tests", "content.js", "*.py", "package.json", ".DS_Store", "node_modules"))
+                        ignore=shutil.ignore_patterns("dev", "tests", "content.js", "*.py", "package.json", ".gitignore", ".DS_Store", "node_modules"))
     text = json.dumps(content, ensure_ascii=False, separators=(",", ":"))
     (DIST / "content.json").write_text(text, encoding="utf-8")
     (DIST / "content.js").write_text("window.CONTENT = " + text + ";\n", encoding="utf-8")
