@@ -1,0 +1,12 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}\input{_contacts-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\hachures{(0,0) rectangle (4.5,0.7)}
+\hachuresb{(1,0.7) rectangle (3.2,1.7)}
+\draw[contact] (1,0.7) -- (3.2,0.7);
+\draw[-{Stealth[length=5pt]}, line width=0.8pt, solideB] (3.4,1.2) -- (4.2,1.2) node[right, font=\small, text=solideB] {T};
+\draw[-{Stealth[length=5pt]}, line width=0.8pt, solideE] (1.75,1.95) arc (200:-20:0.35 and 0.1) node[right, font=\small, text=solideE] {R};
+\node[legende] at (2.25,-0.15) {plan sur plan : glisse dans le plan, tourne autour de la normale};
+\end{tikzpicture}
+\end{document}

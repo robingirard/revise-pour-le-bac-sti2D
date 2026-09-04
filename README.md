@@ -30,8 +30,19 @@ modules JavaScript en `file://`, d'où le petit serveur `make serve`.)
 2. Ouvrir l'adresse dans **Safari**, puis *Partager* → **« Sur l'écran d'accueil »**.
 3. L'application s'ouvre ensuite en plein écran et fonctionne hors connexion.
 
-La progression est enregistrée dans le navigateur de l'appareil. L'écran *Réglages* permet de
-l'**exporter** (texte JSON à copier, par exemple pour l'envoyer à un parent) et de l'**importer**.
+La progression est enregistrée dans le navigateur de l'appareil. L'écran *Progrès* propose un
+**bilan à partager** avec un parent (résumé + lien qui affiche le bilan complet) ; l'écran *Réglages*
+permet d'**exporter** et d'**importer** la progression complète, de saisir un prénom et d'activer le
+**mode découverte** (toutes les compétences déverrouillées).
+
+## Principes pédagogiques
+
+- Des **QCM avec distracteurs** plutôt que de l'auto-évaluation ; chaque mauvaise réponse a sa
+  propre explication (« pourquoi ce n'est pas ça »), générée à partir des mobilités des liaisons.
+- Des **figures** partout : symboles normalisés (deux vues), surfaces de contact, mobilités,
+  dessins d'ensemble et schémas des mécanismes, pictogrammes pour les objets du quotidien.
+- **Répétition espacée** (SM-2) : un exercice raté revient vite, un exercice réussi s'espace ;
+  **progression** par compétences avec prérequis, niveaux, XP et série de jours.
 
 ## Prérequis pour reconstruire
 
@@ -49,7 +60,7 @@ content/               sources pédagogiques (la « vérité »)
   mecanismes/*.yaml    un mécanisme = pièces, classes d'équivalence, liaisons, questions
   units.yaml           arbre de compétences : unités → compétences → générateurs d'exercices
   lessons/*.md         leçons (Markdown restreint, figures via {{fig:id}}, tables via {{table:…}})
-figures/tikz/          liaisons.sty (symboles normalisés = « pics » TikZ) + figures des mécanismes
+figures/tikz/          liaisons.sty (symboles normalisés, hachures) + contacts, mobilités, mécanismes
 figures/build/         PDF et SVG compilés (non versionnés) — dont planche-liaisons.pdf à imprimer
 tools/                 build_figures.py, build_content.py, validate.py, serve.py
 app/                   l'application (HTML/CSS/JS sans dépendance) + tests + fixture de dev

@@ -11,13 +11,15 @@ export function mount(container, item, ctx) {
   const leftOrder = shuffle(pairs.map((_, i) => i), rng);
   const rightOrder = shuffle(pairs.map((_, i) => i), rng);
   const leftBtns = new Map(), rightBtns = new Map();
-  let selectedLeft = null, failed = false, matched = 0, done = false;
+  let selectedLeft = null, failed = false, matched = 0, done = false, firstError = null;
 
   const hint = h('p', { class: 'hint' }, 'Touche un élément de gauche, puis celui qui lui correspond à droite.');
+  const it = (s) => (/\{\{fig:/.test(s) ? s : `*${s}*`); // pas d'italique autour d'une figure
   const finish = () => {
     if (done) return;
     done = true;
-    onAnswer({ correct: !failed, grade: failed ? 'again' : 'good' });
+    const detail = firstError ? `Erreur : ${it(firstError.left)} ↔ ${it(firstError.right)}` : null;
+    onAnswer({ correct: !failed, grade: failed ? 'again' : 'good', detail });
   };
   const flashWrong = (a, b) => {
     a.classList.add('wrong'); b.classList.add('wrong');
@@ -52,6 +54,7 @@ export function mount(container, item, ctx) {
         matched += 1;
         if (matched === n) finish();
       } else {
+        if (!failed) firstError = { left: pairs[selectedLeft].left, right: pairs[j].right };
         failed = true; // une erreur = item raté, mais on continue jusqu'au bout
         left.classList.remove('selected');
         selectedLeft = null;

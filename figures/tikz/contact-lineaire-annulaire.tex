@@ -1,0 +1,15 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}\input{_contacts-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+% tube (coupé) et sphère à tige (non coupées)
+\hachures{(0,1.5) rectangle (4.4,2.0)}
+\hachures{(0,0.0) rectangle (4.4,0.5)}
+\draw[piece, fill=white] (2.2,1.0) circle (0.5);
+\draw[piece, fill=white] (2.05,-0.6) rectangle (2.35,0.55);
+\draw[piece, fill=white] (2.2,1.0) circle (0.5);
+\draw[contact] (1.95,0.53) arc (-150:-30:0.5) (1.95,1.47) arc (150:30:0.5);
+\draw[dash pattern=on 6pt off 2pt on 1pt off 2pt, line width=0.4pt] (-0.3,1) -- (4.7,1);
+\node[legende] at (2.2,-0.75) {sphère dans un cylindre : contact suivant un cercle};
+\end{tikzpicture}
+\end{document}

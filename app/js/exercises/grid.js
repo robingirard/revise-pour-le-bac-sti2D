@@ -1,6 +1,6 @@
 // grid.js — grille de cases à cocher (ex. degrés de liberté : lignes x,y,z × colonnes T,R)
 import { h } from '../dom.js';
-import { setEquals } from '../answers.js';
+import { setEquals, gridDetail } from '../answers.js';
 import { promptEl, verifyButton } from './common.js';
 
 export function mount(container, item, ctx) {
@@ -18,7 +18,15 @@ export function mount(container, item, ctx) {
       else if (c.input.checked) c.td.classList.add('wrong');
     }
     verify.hidden = true;
-    onAnswer({ correct: ok, grade: ok ? 'good' : 'again' });
+    let detail = null;
+    if (!ok) {
+      const order = [...cells.keys()];
+      detail = gridDetail(checked, [...answer], p.labels, order);
+      const notes = order.filter((id) => (answer.has(id) !== checked.includes(id)) && p.cellFeedback && p.cellFeedback[id])
+        .map((id) => `${(p.labels && p.labels[id]) || id} : ${p.cellFeedback[id]}`);
+      if (notes.length) detail = [detail, ...notes].filter(Boolean).join('\n');
+    }
+    onAnswer({ correct: ok, grade: ok ? 'good' : 'again', detail });
   });
   verify.disabled = false; // une grille vide est une réponse possible (ex. encastrement : 0 ddl)
 
@@ -26,7 +34,7 @@ export function mount(container, item, ctx) {
   const tbody = h('tbody', {}, ...p.rows.map((r) =>
     h('tr', {}, h('th', { scope: 'row' }, r.label), ...p.cols.map((c) => {
       const id = c.id + r.id;
-      const input = h('input', { type: 'checkbox', 'aria-label': id });
+      const input = h('input', { type: 'checkbox', 'data-cell': id, 'aria-label': id });
       const label = (p.labels && p.labels[id]) || id; // ex. efforts : Fx → X, Mx → L
       input.setAttribute('aria-label', label);
       const td = h('td', {}, h('label', { class: 'cell' }, input, h('span', { class: 'cell-label' }, label)));

@@ -2,11 +2,16 @@
 \usepackage{liaisons}
 \input{_mecanisme-etau-common}
 \begin{document}
-\begin{tikzpicture}[x=1cm,y=1cm,
-  p1/.style={fill=solideB!45, draw=solideB}, p2/.style={fill=solideB!45, draw=solideB}, p6/.style={fill=solideB!45, draw=solideB},
-  p3/.style={fill=solideA!45, draw=solideA}, p7/.style={fill=solideA!45, draw=solideA},
-  p4/.style={fill=solideE!45, draw=solideE},
-  p5/.style={fill=solideD!55, draw=solideD}]
+\begin{tikzpicture}[x=1cm,y=1cm]
+\newcommand\piece[2]{\ifcase#1\relax
+  \or \draw[line width=0.6pt, line join=round, fill=solideB!45, draw=solideB] #2;
+  \or \draw[line width=0.6pt, line join=round, fill=solideB!45, draw=solideB] #2;
+  \or \draw[line width=0.6pt, line join=round, fill=solideA!45, draw=solideA] #2;
+  \or \draw[line width=0.6pt, line join=round, fill=solideE!45, draw=solideE] #2;
+  \or \draw[line width=0.6pt, line join=round, fill=solideD!55, draw=solideD] #2;
+  \or \draw[line width=0.6pt, line join=round, fill=solideB!45, draw=solideB] #2;
+  \or \draw[line width=0.6pt, line join=round, fill=solideA!45, draw=solideA] #2;
+  \fi}
 \newcommand\etlabels{%
   \node[fill=solideB, text=white, font=\small\bfseries, inner sep=2pt, rounded corners=1pt] at (5.4,3.6) {E1 = \{1, 2, 6\}};
   \draw[solideB, line width=0.5pt] (5.4,3.4) -- (5.2,2.7);

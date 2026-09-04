@@ -3,6 +3,8 @@
 
 const FIG_RE = /\{\{fig:([\w.-]+)\}\}/g;
 const FIG_ONLY_RE = /^\s*\{\{fig:([\w.-]+)\}\}\s*$/;
+const EMOJI_RE = /\{\{emoji:([^{}<>&]{1,16})\}\}/g;          // appliqué sur le texte déjà échappé
+const EMOJI_ONLY_RE = /^\s*\{\{emoji:[^{}<>&]{1,16}\}\}\s*$/;
 
 export function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -16,23 +18,26 @@ export function figureHtml(id, figures = {}, { block = false } = {}) {
 }
 
 /** Mise en forme en ligne d'un texte déjà échappé. */
-function inline(escaped) {
+function inline(escaped, { emojiBlock = false } = {}) {
+  const emojiClass = emojiBlock ? 'emoji-big emoji-block' : 'emoji-big';
   return escaped
+    .replace(EMOJI_RE, `<span class="${emojiClass}">$1</span>`)
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/(^|[^*\w])\*(\S(?:[^*\n]*?\S)?)\*(?!\w)/g, '$1<em>$2</em>')
     .replace(/\$([^$\n]+?)\$/g, '<span class="math">$1</span>')
     .replace(/\n/g, '<br>');
 }
 
-/** Texte riche : **gras**, *italique*, \n, {{fig:ID}}, $math$. */
+/** Texte riche : **gras**, *italique*, \n, {{fig:ID}}, {{emoji:🚪}}, $math$. */
 export function renderRich(text, figures = {}) {
   if (text == null) return '';
   const str = String(text);
   const block = FIG_ONLY_RE.test(str);
+  const emojiBlock = EMOJI_ONLY_RE.test(str); // un pictogramme seul : affiché en grand, centré
   const parts = str.split(FIG_RE); // [texte, id, texte, id, …]
   let out = '';
   for (let i = 0; i < parts.length; i++) {
-    out += i % 2 === 0 ? inline(escapeHtml(parts[i])) : figureHtml(parts[i], figures, { block });
+    out += i % 2 === 0 ? inline(escapeHtml(parts[i]), { emojiBlock }) : figureHtml(parts[i], figures, { block });
   }
   return out;
 }

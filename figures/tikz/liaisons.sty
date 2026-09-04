@@ -190,6 +190,25 @@
     \draw[-{Stealth[length=5pt]}, line width=0.6pt] #2 -- ++(0,0.95) node[pos=1, anchor=south west, inner sep=1pt, font=\small] {$\vec{#4}$};
   \end{scope}}
 
+%% Hachures de coupe « légères » : un seul chemin (le motif TikZ `pattern` devient des milliers de
+%% segments une fois converti en SVG). \hachures[style]{<chemin fermé>} : remplit en blanc, hachure à
+%% 45° dans le sens NE, trace le contour ; \hachuresb : sens NO (pièce voisine). Le chemin est répété
+%% trois fois : ne pas y mettre de nœuds nommés.
+\newcommand\hachures[2][]{%
+  \begin{scope}
+    \path[clip] #2;
+    \fill[white] #2;
+    \draw[line width=0.4pt, draw=black!70, #1] foreach \hx in {-12,-11.85,...,12} { (\hx,-6) -- ({\hx+12},6) };
+  \end{scope}
+  \draw[line width=0.6pt, line join=round] #2;}
+\newcommand\hachuresb[2][]{%
+  \begin{scope}
+    \path[clip] #2;
+    \fill[white] #2;
+    \draw[line width=0.4pt, draw=black!70, #1] foreach \hx in {-12,-11.85,...,12} { (\hx,6) -- ({\hx+12},-6) };
+  \end{scope}
+  \draw[line width=0.6pt, line join=round] #2;}
+
 %% Symbole de bâti (hachures) : \bati{point} — trait horizontal hachuré
 \tikzset{
   pics/bati/.style={code={

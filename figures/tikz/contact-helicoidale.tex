@@ -1,0 +1,19 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}\input{_contacts-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+% écrou (coupé) et vis (non coupée) avec filetage en zigzag
+\hachures{(1.2,0) rectangle (3.4,2)}
+\fill[white] (1.2,0.55) rectangle (3.4,1.45);
+\draw[piece, fill=white] (-0.2,0.6) rectangle (4.8,1.4);
+\draw[piece, fill=white] (-0.6,0.35) rectangle (-0.2,1.65);
+\foreach \x in {0.2,0.5,...,4.4} {
+  \draw[line width=0.5pt] (\x,1.4) -- (\x+0.15,1.55) -- (\x+0.3,1.4);
+  \draw[line width=0.5pt] (\x,0.6) -- (\x+0.15,0.45) -- (\x+0.3,0.6);
+}
+\draw[contact] (1.25,1.4) -- (1.4,1.55) -- (1.55,1.4) -- (1.7,1.55) -- (1.85,1.4) -- (2.0,1.55) -- (2.15,1.4) -- (2.3,1.55) -- (2.45,1.4) -- (2.6,1.55) -- (2.75,1.4) -- (2.9,1.55) -- (3.05,1.4) -- (3.2,1.55) -- (3.35,1.4);
+\draw[contact] (1.25,0.6) -- (1.4,0.45) -- (1.55,0.6) -- (1.7,0.45) -- (1.85,0.6) -- (2.0,0.45) -- (2.15,0.6) -- (2.3,0.45) -- (2.45,0.6) -- (2.6,0.45) -- (2.75,0.6) -- (2.9,0.45) -- (3.05,0.6) -- (3.2,0.45) -- (3.35,0.6);
+\draw[dash pattern=on 6pt off 2pt on 1pt off 2pt, line width=0.4pt] (-0.9,1) -- (5.1,1);
+\node[legende] at (2.2,-0.15) {filetage dans taraudage : un tour = une avance d'un pas};
+\end{tikzpicture}
+\end{document}

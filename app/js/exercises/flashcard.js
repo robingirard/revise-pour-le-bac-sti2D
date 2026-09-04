@@ -13,7 +13,7 @@ export function mount(container, item, ctx) {
     ...Object.entries(GRADE_LABELS).map(([g, label]) =>
       h('button', { class: `btn grade grade-${g}`, type: 'button', onClick: () => {
         grades.querySelectorAll('button').forEach((b) => { b.disabled = true; });
-        onAnswer({ correct: g !== 'again', grade: g });
+        onAnswer({ correct: g !== 'again', grade: g, detail: null });
       } }, label)));
   const flip = h('button', { class: 'btn btn-primary btn-block', type: 'button', onClick: () => {
     back.hidden = false;

@@ -95,15 +95,32 @@ Règle : **tout ce qui est dans `dist/` et `figures/build/` est régénéré** p
 
 Un « texte riche » (`rich`) est une chaîne pouvant contenir :
 `**gras**`, `*italique*`, retours à la ligne `\n`, `{{fig:ID}}` (SVG inséré en ligne,
-depuis `figures`), `$…$` (math : affiché tel quel en italique pour l'instant,
+depuis `figures`), `{{emoji:🚪}}` (pictogramme affiché en grand, pour illustrer une
+question sans figure), `$…$` (math : affiché tel quel en italique pour l'instant,
 KaTeX plus tard).
+
+**Correction adaptée à l'erreur.** Chaque exercice auto-corrigé fournit, en plus de
+l'`explanation` générale, un **détail propre à l'erreur commise**, affiché en premier dans le
+bandeau rouge (`onAnswer({ correct, grade, detail })`, `detail` = rich ou null) :
+
+- `mcq` : `payload.feedback[i]` (facultatif, aligné sur `choices`, `null` autorisé) = ce qu'il
+  faut dire si le choix *i* est sélectionné à tort ; le détail est le feedback du (premier)
+  mauvais choix sélectionné ;
+- `grid` : détail automatique « Coché(s) à tort : … · Oublié(s) : … » (avec les `labels`),
+  complété par `payload.cellFeedback[id]` (facultatif) pour chaque case fautive ;
+- `match` : « Erreur : *gauche* ↔ *droite choisie* » pour la première association fausse ;
+- `order` : la première étape mal placée (« L'étape n°k devait être : … ») ;
+- `input` : la réponse attendue.
+
+Les exercices d'auto-évaluation (`flashcard`) restent supportés par l'appli mais ne sont plus
+utilisés par le contenu : on préfère des QCM avec distracteurs et feedback ciblé.
 
 | type | payload | correction |
 |---|---|---|
 | `flashcard` | `{ "front": rich, "back": rich }` | auto-évaluation : *À revoir* / *Difficile* / *Facile* |
-| `mcq` | `{ "prompt": rich, "choices": [rich], "answer": [idx], "multiple": false, "layout": "list"\|"grid", "explanation": rich }` | ensemble d'indices sélectionnés == `answer` |
+| `mcq` | `{ "prompt": rich, "choices": [rich], "answer": [idx], "multiple": false, "layout": "list"\|"grid", "explanation": rich, "feedback": [rich\|null] }` | ensemble d'indices sélectionnés == `answer` |
 | `match` | `{ "prompt": rich, "pairs": [{"left": rich, "right": rich}] }` (3 à 6 paires) | toutes les paires appariées ; une erreur = item raté |
-| `grid` | `{ "prompt": rich, "rows": [{"id":"x","label":"x"}…], "cols": [{"id":"T","label":"Translation"},{"id":"R","label":"Rotation"}], "answer": ["Tx","Rx"], "labels": {"Tx":"X"}, "hint": "…", "explanation": rich }` — id de case = `col.id + row.id` ; `labels` (facultatif) remplace le texte affiché dans une case (efforts : Fx → X, Mx → L) ; `hint` (facultatif) remplace la consigne | ensemble de cases cochées == `answer` |
+| `grid` | `{ "prompt": rich, "rows": [{"id":"x","label":"x"}…], "cols": [{"id":"T","label":"Translation"},{"id":"R","label":"Rotation"}], "answer": ["Tx","Rx"], "labels": {"Tx":"X"}, "hint": "…", "explanation": rich }` — id de case = `col.id + row.id` ; `labels` (facultatif) remplace le texte affiché dans une case (efforts : Fx → X, Mx → L) ; `hint` (facultatif) remplace la consigne ; `cellFeedback` (facultatif) = `{id: rich}` explication par case fautive | ensemble de cases cochées == `answer` |
 | `order` | `{ "prompt": rich, "steps": [rich] }` (dans le bon ordre ; l'appli mélange) | ordre reconstitué == `steps` |
 | `input` | `{ "prompt": rich, "answer": "3", "accept": ["trois"], "numeric": true, "tolerance": 0.01, "unit": "m", "explanation": rich }` | texte normalisé (minuscules, sans accents/espaces) ∈ {answer}∪accept, ou |x−answer| ≤ tolerance si numeric |
 
@@ -164,3 +181,32 @@ Un item est **dû** si `due ≤ aujourd'hui`. **Maîtrisé** si `interval ≥ 21
   maîtrisés) ; **Réglages** (objectif, export/import JSON de la progression, remise à zéro).
 - Interface **en français**, mobile d'abord, boutons larges, thème clair/sombre
   automatique, accessibilité clavier.
+- `settings` contient aussi `name` (prénom de l'élève, facultatif) et `unlockAll`
+  (« mode découverte » : toutes les compétences déverrouillées, pour explorer ou pour un parent).
+
+## 9. Bilan pour le parent
+
+Objet **bilan** (calculé par une fonction pure `buildBilan(progress, content, today)`) :
+
+```jsonc
+{ "v": 1, "date": "2026-09-04", "name": "Tom", "xp": 420, "streak": 5,
+  "sessions7d": 6, "accuracy7d": 84,               // séances et % de bonnes réponses sur 7 jours
+  "skills": [ { "id": "symboles", "level": 2, "progress": 0.5, "sessions": 5,
+                "acc": 80,                          // % de bonnes réponses (3 dernières séances)
+                "total": 49, "seen": 30, "mastered": 12, "due": 4 } ],
+  "recent": [ { "date": "2026-09-04", "skill": "symboles", "correct": 8, "total": 10 } ],  // 10 dernières
+  "weak": [ { "tag": "pivot-glissant", "lapses": 4 } ] }                                  // 5 tags les plus ratés
+```
+
+Les `tags` des exercices (identifiants de liaison, de mécanisme) servent à repérer les points
+faibles ; l'appli affiche le nom lisible (nom de la liaison via les exercices, sinon le tag).
+
+- Écran **Progrès** : en tête, une carte « Bilan » avec le résumé et le bouton
+  **« Partager le bilan »** : `navigator.share({ title, text, url })` si disponible, sinon une
+  zone de texte à copier + un lien `mailto:` ; `url` = adresse de l'appli + `#/bilan?d=<base64url(JSON du bilan)>`
+  et `text` = résumé lisible (prénom, date, série, XP, séances de la semaine, niveaux, points faibles).
+- Route `#/bilan` : le bilan courant, mis en page (tableau par compétence, séances récentes,
+  points faibles). Route `#/bilan?d=…` : **bilan reçu** (lecture seule, bandeau « Bilan reçu,
+  daté du … ») — c'est ce que le parent ouvre. Le paramètre `d` est décodé sans jamais être
+  exécuté ; un `d` invalide affiche un message d'erreur.
+- Bouton **« Tout déverrouiller (mode découverte) »** dans Réglages, réversible.

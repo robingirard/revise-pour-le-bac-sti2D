@@ -4,32 +4,31 @@
 \newcommand\etau{%
   \begin{scope}[line width=0.6pt, line join=round]
     % 1 : bâti = semelle + mors fixe + bloc arrière (coupés)
-    \draw[p1] (0.8,0) -- (5.8,0) -- (5.8,2.7) -- (4.6,2.7) -- (4.6,3.4) -- (3.4,3.4) -- (3.4,0.7) -- (0.8,0.7) -- cycle;
+    \piece{1}{(0.8,0) -- (5.8,0) -- (5.8,2.7) -- (4.6,2.7) -- (4.6,3.4) -- (3.4,3.4) -- (3.4,0.7) -- (0.8,0.7) -- cycle}
     \fill[white] (3.4,0.95) rectangle (5.8,1.45);   % canal de guidage du mors mobile
     \draw (3.4,0.95) -- (5.8,0.95) (3.4,1.45) -- (5.8,1.45);
     \fill[white] (3.4,1.75) rectangle (4.4,2.25);   % passage de la vis (avec jeu)
     \draw (3.4,1.75) -- (4.4,1.75) (3.4,2.25) -- (4.4,2.25);
     % 2 : écrou emmanché dans le bloc arrière
     \fill[white] (4.4,1.5) rectangle (5.3,2.5);
-    \draw[p2] (4.4,1.5) rectangle (5.3,2.5);
+    \piece{2}{(4.4,1.5) rectangle (5.3,2.5)}
     % 3 : mors mobile = bloc vertical + coulisse dans le canal
-    \draw[p3] (1.6,0.95) -- (2.6,0.95) -- (2.6,1.0) -- (5.6,1.0) -- (5.6,1.4) -- (2.6,1.4)
-              -- (2.6,3.4) -- (1.6,3.4) -- cycle;
+    \piece{3}{(1.6,0.95) -- (2.6,0.95) -- (2.6,1.0) -- (5.6,1.0) -- (5.6,1.4) -- (2.6,1.4) -- (2.6,3.4) -- (1.6,3.4) -- cycle}
     \fill[white] (1.6,1.78) rectangle (2.6,2.22);   % alésage de la vis dans le mors mobile
     \draw (1.6,1.78) -- (2.6,1.78) (1.6,2.22) -- (2.6,2.22);
     % 6 et 7 : mordaches vissées sur les mors
-    \draw[p6] (3.25,2.5) rectangle (3.4,3.3);
-    \draw[p7] (2.6,2.5) rectangle (2.75,3.3);
+    \piece{6}{(3.25,2.5) rectangle (3.4,3.3)}
+    \piece{7}{(2.6,2.5) rectangle (2.75,3.3)}
     % 4 : vis de manœuvre (non coupée) : tête, collet, corps fileté, anneau d'arrêt
-    \draw[p4] (1.0,1.6) rectangle (1.6,2.4);
-    \draw[p4] (1.6,1.8) rectangle (5.5,2.2);
-    \draw[p4] (2.6,1.7) rectangle (2.72,2.3);
+    \piece{4}{(1.0,1.6) rectangle (1.6,2.4)}
+    \piece{4}{(1.6,1.8) rectangle (5.5,2.2)}
+    \piece{4}{(2.6,1.7) rectangle (2.72,2.3)}
     \foreach \x in {3.5,3.7,...,5.3} { \draw[line width=0.35pt] (\x,2.2) -- (\x+0.12,1.8); }
     \draw[dash pattern=on 6pt off 2pt on 1pt off 2pt, line width=0.4pt] (0.7,2.0) -- (5.9,2.0);
     % 5 : barre de manœuvre (non coupée), traverse la tête de vis, embouts aux extrémités
-    \draw[p5] (1.17,0.55) rectangle (1.43,3.65);
-    \draw[p5] (1.08,0.45) rectangle (1.52,0.6);
-    \draw[p5] (1.08,3.6) rectangle (1.52,3.75);
+    \piece{5}{(1.17,0.55) rectangle (1.43,3.65)}
+    \piece{5}{(1.08,0.45) rectangle (1.52,0.6)}
+    \piece{5}{(1.08,3.6) rectangle (1.52,3.75)}
     \draw[dash pattern=on 6pt off 2pt on 1pt off 2pt, line width=0.4pt] (1.3,0.2) -- (1.3,4.0);
     % points caractéristiques
     \foreach \p/\n/\pos in {A/{(4.5,1.2)}/{above}, B/{(4.85,2.0)}/{above right}, C/{(2.1,2.0)}/{above left}, D/{(1.3,2.0)}/{below left}} {

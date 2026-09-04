@@ -1,0 +1,15 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}\input{_contacts-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\hachures{(0,0) rectangle (4,0.9)}
+\hachuresb{(0,0.9) rectangle (4,1.8)}
+\draw[contact] (0,0.9) -- (4,0.9);
+% boulon : tige, tête, écrou (non coupés)
+\draw[piece, fill=white] (1.75,-0.1) rectangle (2.25,2.1);
+\draw[piece, fill=white] (1.5,1.8) rectangle (2.5,2.3);
+\draw[piece, fill=white] (1.5,-0.5) rectangle (2.5,0.0);
+\foreach \y in {0.15,0.35,...,1.7} { \draw[line width=0.35pt] (1.75,\y) -- (2.25,\y+0.1); }
+\node[legende] at (2,-0.6) {assemblage fixe : vis + écrou (ou soudure, colle, rivet)};
+\end{tikzpicture}
+\end{document}

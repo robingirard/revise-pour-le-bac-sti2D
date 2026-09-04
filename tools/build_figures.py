@@ -41,6 +41,27 @@ SYMBOL_TEMPLATE = r"""%% Généré par tools/build_figures.py — ne pas modifie
 \end{document}
 """
 
+MOBILITE_TEMPLATE = r"""%% Généré par tools/build_figures.py — ne pas modifier à la main.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\definecolor{trans}{RGB}{40,110,200}\definecolor{rot}{RGB}{60,160,60}
+\newcommand\axe[4]{%%
+  \begin{scope}[rotate=#1]
+    \draw[dashed, line width=0.5pt] (0,0) -- (2.5,0);
+    \draw[-{Stealth[length=6pt]}, line width=0.6pt] (2.5,0) -- (3.2,0) node[pos=1, anchor=180+#1, inner sep=2pt, font=\small] {$\vec{#2}$};
+    \ifnum#3=1 \draw[-{Stealth[length=8pt]}, line width=2.2pt, trans] (0.6,0.16) -- (2.0,0.16) node[pos=1, anchor=270+#1, inner sep=3pt, font=\bfseries, text=trans] {T#2}; \fi
+    \ifnum#4=1 \draw[-{Stealth[length=8pt]}, line width=2pt, rot] (2.05,-0.5) arc (-90:190:0.16 and 0.5) node[pos=1, anchor=90+#1, inner sep=4pt, font=\bfseries, text=rot] {R#2}; \fi
+  \end{scope}}
+\axe{90}{z}{%(Tz)d}{%(Rz)d}
+\axe{-150}{x}{%(Tx)d}{%(Rx)d}
+\axe{-30}{y}{%(Ty)d}{%(Ry)d}
+\fill (0,0) circle (1.2pt);
+\end{tikzpicture}
+\end{document}
+"""
+
 PLANCHE_HEAD = r"""%% Généré par tools/build_figures.py — planche récapitulative des liaisons (à imprimer).
 \documentclass[border=6mm]{standalone}
 \usepackage{liaisons}
@@ -99,6 +120,11 @@ def generate_symbol_sources(liaisons):
         second = by_plane.get(("x", "y"), second)
         rows.append(PLANCHE_ROW % dict(designation=tex_escape(l["designation"]), ddl=ddl,
                                        fig1=tikz_cell(first), fig2=tikz_cell(second), efforts=efforts))
+    for m in ("Tx", "Ty", "Tz", "Rx", "Ry", "Rz"):
+        flags = {k: 1 if k == m else 0 for k in ("Tx", "Ty", "Tz", "Rx", "Ry", "Rz")}
+        path = GEN / f"mobilite-{m}.tex"
+        write_if_changed(path, MOBILITE_TEMPLATE % flags)
+        files.append(path)
     planche = GEN / "planche-liaisons.tex"
     write_if_changed(planche, PLANCHE_HEAD + "".join(rows) + PLANCHE_FOOT)
     files.append(planche)
@@ -164,6 +190,8 @@ def postprocess_svg(text, prefix):
         text = text.replace(f'href="#{i}"', f'href="#{prefix}--{i}"')
         text = text.replace(f'url(#{i})', f'url(#{prefix}--{i})')
     text = text.replace("<svg ", f'<svg class="fig" role="img" data-fig="{prefix}" ', 1)
+    # arrondi des coordonnées des chemins (0,01 pt suffit) : divise la taille par ~1,5
+    text = re.sub(r'\bd="([^"]*)"', lambda m: 'd="' + re.sub(r"-?\d+\.\d{3,}", lambda n: f"{float(n.group()):.2f}", m.group(1)) + '"', text)
     return text.strip()
 
 

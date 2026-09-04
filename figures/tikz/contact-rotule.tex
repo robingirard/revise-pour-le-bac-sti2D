@@ -1,0 +1,13 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}\input{_contacts-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+% coupelle (coupée) avec cavité sphérique ; sphère + tige (non coupées)
+\hachures{(0.3,-0.2) -- (3.7,-0.2) -- (3.7,1.1) -- (2.78,1.1) arc (0:-180:0.78) -- (0.3,1.1) -- cycle}
+\draw[piece, fill=white] (2,1.1) circle (0.75);
+\draw[piece, fill=white] (1.8,1.7) rectangle (2.2,2.9);
+\draw[contact] (2.75,1.1) arc (0:-180:0.75);
+\draw[-{Stealth[length=5pt]}, line width=0.8pt, solideE] (1.2,2.5) arc (150:30:0.9 and 0.3) node[right, font=\small, text=solideE] {R};
+\node[legende] at (2,-0.35) {sphère dans une sphère creuse : les 3 rotations};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,19 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}\input{_contacts-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+% palier (coupé) avec alésage
+\hachures{(1,0) -- (4,0) -- (4,2) -- (1,2) -- cycle}
+\fill[white] (1,0.7) rectangle (4,1.3);
+\draw[piece] (1,0.7) -- (4,0.7) (1,1.3) -- (4,1.3);
+% arbre (non coupé) avec collet à gauche et anneau d'arrêt à droite
+\draw[piece, fill=white] (0,0.7) rectangle (4.8,1.3);
+\draw[piece, fill=white] (0.6,0.45) rectangle (1,1.55);
+\draw[piece, fill=white] (4,0.5) rectangle (4.15,1.5);
+\draw[dash pattern=on 6pt off 2pt on 1pt off 2pt, line width=0.4pt] (-0.3,1) -- (5.1,1);
+% surfaces de contact : cylindre (haut/bas) + épaulement
+\draw[contact] (1,0.7) -- (4,0.7) (1,1.3) -- (4,1.3);
+\draw[contact] (1,0.45) -- (1,0.7) (1,1.3) -- (1,1.55) (4,0.5) -- (4,0.7) (4,1.3) -- (4,1.5);
+\node[legende] at (2.4,-0.15) {cylindre long dans un alésage + épaulements : rotation seule};
+\end{tikzpicture}
+\end{document}

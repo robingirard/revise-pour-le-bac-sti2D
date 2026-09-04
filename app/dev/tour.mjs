@@ -14,7 +14,7 @@ const today = new Date().toISOString().slice(0, 10);
 try {
   await b.goto('#/');
   const skills = JSON.parse(await b.evaluate('JSON.stringify(window.CONTENT.units.flatMap((u) => u.skills.map((s) => ({ id: s.id, items: s.items }))))'));
-  const items = JSON.parse(await b.evaluate('JSON.stringify(Object.values(window.CONTENT.items).map((i) => ({ id: i.id, type: i.type, skill: i.skill, layout: i.payload.layout, labels: !!i.payload.labels })))'));
+  const items = JSON.parse(await b.evaluate('JSON.stringify(Object.values(window.CONTENT.items).map((i) => ({ id: i.id, type: i.type, skill: i.skill, layout: i.payload.layout, labels: !!i.payload.labels, tags: i.tags || [] })))'));
   // progression : tout déverrouillé (niveau 1), aucune carte vue
   await b.evaluate(`localStorage.setItem('revise-sti2d.progress.v1', JSON.stringify({ version: 1, xp: 42, streak: { count: 2, last: '${today}' }, history: [],
     settings: { dailyGoal: 30 }, items: {}, skills: ${JSON.stringify(Object.fromEntries(skills.map((s) => [s.id, { level: 1, progress: 0.5, sessions: 2, xp: 20 }])))} }))`);
@@ -69,6 +69,39 @@ try {
   await b.shot('30-bilan');
   await b.goto('#/'); await b.shot('31-accueil-apres', true);
   await b.goto('#/progress'); await b.shot('40-progres', true);
+
+  // Bilan parent : on enrichit l'historique et quelques items ratés, puis captures
+  const firstItems = items.filter((i) => i.tags.length).slice(0, 6).map((i) => i.id); // items étiquetés : les points faibles ont un nom
+  await b.evaluate(`(() => { const p = JSON.parse(localStorage.getItem('revise-sti2d.progress.v1')); p.settings.name = 'Tom';
+    const d = new Date(); const day = (n) => { const x = new Date(d); x.setDate(d.getDate() - n); return x.toISOString().slice(0, 10); };
+    const sk = ${JSON.stringify(skills.slice(0, 3).map((s) => s.id))};
+    p.history = [6, 5, 4, 2, 1, 0].map((n, i) => ({ date: day(n), kind: i === 3 ? 'review' : 'skill', skill: i === 3 ? null : sk[i % sk.length], correct: 5 + i, total: 10, xp: 20 + 2 * i })).concat(p.history);
+    for (const [k, id] of ${JSON.stringify(firstItems)}.entries()) p.items[id] = { reps: 0, ease: 2.1, interval: 0, due: day(0), lapses: 1 + (k % 3), last: day(k % 2) };
+    localStorage.setItem('revise-sti2d.progress.v1', JSON.stringify(p)); })()`);
+  await b.goto('#/progress'); await b.reload(); await b.shot('50-progres-bilan', true);
+  await b.goto('#/bilan'); await b.shot('51-bilan', true);
+  await b.goto('#/progress'); // la carte Bilan (et son lien mailto) est sur l'écran Progrès
+  const link = await b.evaluate(`(() => { const a = document.querySelector('.bilan-card a[href^="mailto:"]'); const body = decodeURIComponent(a.getAttribute('href').split('body=')[1] || ''); const i = body.indexOf('#/bilan?d='); return i < 0 ? null : body.slice(i).trim(); })()`);
+  await b.goto(link.slice(link.indexOf('#'))); await b.shot('52-bilan-recu', true);
+  // QCM répondu faux exprès (un item avec feedback si possible), grille fausse exprès
+  const mcqFb = await b.evaluate(`(() => { const it = Object.values(window.CONTENT.items).find((i) => i.type === 'mcq' && i.payload.layout !== 'grid' && Array.isArray(i.payload.feedback) && i.payload.feedback.some(Boolean)) || Object.values(window.CONTENT.items).find((i) => i.type === 'mcq' && i.payload.layout !== 'grid'); return it ? JSON.stringify({ id: it.id, skill: it.skill }) : null; })()`);
+  if (mcqFb) {
+    const it = JSON.parse(mcqFb);
+    await b.goto(`#/session/${it.skill}?item=${encodeURIComponent(it.id)}&seed=1`);
+    await b.evaluate(`(() => { const it = window.CONTENT.items[${JSON.stringify(it.id)}]; const plain = (s) => String(s).replace(/\\*\\*|\\*/g, '').replace(/\\s+/g, ' ').trim();
+      const ok = new Set(it.payload.answer.map((i) => plain(it.payload.choices[i])));
+      const btn = [...document.querySelectorAll('.choice')].find((b) => !ok.has(b.textContent.replace(/\\s+/g, ' ').trim())); btn.click(); })()`);
+    await b.click('.btn-verify'); await b.shot('53-mcq-feedback-erreur', true);
+  }
+  const gridIt = items.find((i) => i.type === 'grid');
+  if (gridIt) {
+    await b.goto(`#/session/${gridIt.skill}?item=${encodeURIComponent(gridIt.id)}&seed=1`);
+    await b.evaluate(`(() => { const it = window.CONTENT.items[${JSON.stringify(gridIt.id)}]; const ans = new Set(it.payload.answer);
+      const inputs = [...document.querySelectorAll('.grid-table input')]; const wrong = inputs.find((i) => !ans.has(i.dataset.cell || i.getAttribute('aria-label')));
+      if (wrong) wrong.click(); })()`);
+    await b.click('.btn-verify'); await b.shot('54-grid-erreur', true);
+  }
+  await b.goto('#/settings'); await b.shot('56-reglages', true);
   const errors = await b.evaluate('document.querySelectorAll(".error").length');
   console.log(`OK — ${steps} exercices joués dans la séance « ${target.id} » ; captures dans ${OUT} ; éléments .error : ${errors}`);
 } finally {

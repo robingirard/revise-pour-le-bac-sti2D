@@ -8,6 +8,7 @@ import * as sess from './session.js';
 import { renderRich, renderLesson } from './render.js';
 import { EXERCISES } from './exercises/index.js';
 import { GRADE_LABELS } from './exercises/flashcard.js';
+import * as bilan from './bilan.js';
 
 window.__RS_STARTED = true; // signale à index.html que le module a bien démarré
 
@@ -46,6 +47,7 @@ function route() {
       case 'review': renderReviewEntry(root, query); break;
       case 'summary': renderSummary(root); break;
       case 'progress': renderProgress(root); break;
+      case 'bilan': renderBilan(root, query); break;
       case 'settings': renderSettings(root); break;
       default: renderHome(root);
     }
@@ -268,8 +270,10 @@ function handleAnswer(root, item, res) {
   const title = isCard ? `Carte notée « ${GRADE_LABELS[res.grade] || res.grade} »` : res.correct ? 'Bravo, c\'est juste !' : 'Pas tout à fait…';
   const explanation = item.payload.explanation;
   const finished = sess.isFinished(session);
+  const detail = !res.correct && res.detail ? res.detail : null; // détail propre à l'erreur (SPEC §4)
   const panel = h('div', { class: cls, role: 'status' },
     h('div', { class: 'feedback-title' }, title),
+    detail ? h('div', { class: 'feedback-detail', html: renderRich(detail, figures) }) : null,
     explanation ? h('div', { class: 'feedback-expl', html: renderRich(explanation, figures) }) : null,
     nextInfo ? h('div', { class: 'feedback-next' }, nextInfo) : null,
     h('button', { class: 'btn btn-block btn-continue', type: 'button', onClick: () => nextStep(root) }, finished ? 'Voir le bilan' : 'Continuer'));
@@ -346,6 +350,7 @@ function renderProgress(root) {
   const sessions = progress.history.length;
   root.append(
     topbar({ back: '#/', title: 'Progrès' }),
+    bilanCard(today),
     h('section', { class: 'stats' },
       h('div', { class: 'stat' }, h('span', { class: 'stat-value' }, `⭐ ${progress.xp}`), h('span', { class: 'stat-label' }, 'XP au total')),
       h('div', { class: 'stat' }, h('span', { class: 'stat-value' }, `📚 ${sessions}`), h('span', { class: 'stat-label' }, plural(sessions, 'séance', 'séances').replace(/^\d+ /, ''))),
@@ -358,6 +363,98 @@ function renderProgress(root) {
   );
 }
 
+// ---------------------------------------------------------------- bilan pour le parent (SPEC §9)
+function copyButton(getText) {
+  const btn = h('button', { class: 'btn', type: 'button', onClick: async () => {
+    try {
+      await navigator.clipboard.writeText(getText());
+      btn.textContent = 'Copié ✔';
+    } catch {
+      btn.textContent = 'Copie impossible : sélectionne le texte';
+    }
+  } }, 'Copier');
+  return btn;
+}
+
+/** Carte « Bilan » de l'écran Progrès : résumé + partage. */
+function bilanCard(today) {
+  const b = bilan.buildBilan(progress, content, today);
+  const text = bilan.bilanText(b, content);
+  const url = bilan.bilanUrl(b);
+  const title = `Bilan Révise STI2D${b.name ? ' de ' + b.name : ''}`;
+  const full = `${text}\n\nBilan détaillé : ${url}`;
+  const area = h('textarea', { class: 'json-area', readonly: true, rows: 7, 'aria-label': 'Bilan à partager' });
+  area.value = full;
+  const mail = h('a', { class: 'btn', href: `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(full)}` }, 'Envoyer par e-mail');
+  const panel = h('div', { class: 'share-panel', hidden: true },
+    h('p', { class: 'muted small' }, 'Copie ce texte (ou envoie-le par e-mail) : le lien ouvre le bilan détaillé.'),
+    area, h('div', { class: 'row-right' }, copyButton(() => area.value), mail));
+  const shareBtn = h('button', { class: 'btn btn-primary', type: 'button', onClick: async () => {
+    if (navigator.share) {
+      try { await navigator.share({ title, text, url }); return; } catch (err) { if (err && err.name === 'AbortError') return; }
+    }
+    panel.hidden = !panel.hidden;
+  } }, 'Partager le bilan');
+  const weak = b.weak.length ? b.weak.map((w) => bilan.tagLabel(w.tag, content)).join(', ') : 'aucun pour l\'instant';
+  return h('section', { class: 'bilan-card' },
+    h('h2', {}, `📋 Bilan${b.name ? ' de ' + b.name : ''}`),
+    h('ul', { class: 'bilan-lines' },
+      h('li', {}, `🔥 Série : ${plural(b.streak, 'jour', 'jours')} · ⭐ ${b.xp} XP`),
+      h('li', {}, `📅 Cette semaine : ${plural(b.sessions7d, 'séance', 'séances')}${b.accuracy7d != null ? ` · ${b.accuracy7d} % de bonnes réponses` : ''}`),
+      h('li', {}, `🎯 Points faibles : ${weak}`)),
+    h('div', { class: 'bilan-actions' }, shareBtn, h('a', { class: 'btn', href: '#/bilan' }, 'Voir le bilan complet')),
+    panel);
+}
+
+/** Écran bilan : le sien (#/bilan) ou un bilan reçu (#/bilan?d=…), en lecture seule. */
+function renderBilan(root, query) {
+  const today = todayStr();
+  let b = null, received = false, error = null;
+  if (query.has('d')) {
+    received = true;
+    try { b = bilan.decodeBilan(query.get('d')); } catch (err) { error = err.message; }
+  } else {
+    b = bilan.buildBilan(progress, content, today);
+  }
+  if (error) {
+    root.append(topbar({ back: '#/', title: 'Bilan' }), h('p', { class: 'error' }, error), bottomNav(null));
+    return;
+  }
+  const rows = b.skills.map((s) => h('tr', {},
+    h('td', {}, bilan.skillTitle(s.id, content)),
+    h('td', {}, `${s.level}/${bilan.skillLevelsOf(s.id, content)}`),
+    h('td', {}, s.sessions),
+    h('td', {}, s.acc != null ? `${s.acc} %` : '—'),
+    h('td', {}, `${s.seen}/${s.total}`),
+    h('td', {}, s.mastered),
+    h('td', {}, s.due)));
+  const recent = b.recent.length
+    ? h('ul', { class: 'bilan-recent' }, ...b.recent.map((s) => h('li', {}, `${bilan.formatDate(s.date)} · ${bilan.skillTitle(s.skill, content)} : ${s.correct}/${s.total}`)))
+    : h('p', { class: 'muted' }, 'Aucune séance pour l\'instant.');
+  const weak = b.weak.length
+    ? h('ul', { class: 'bilan-weak' }, ...b.weak.map((w) => h('li', {}, `${bilan.tagLabel(w.tag, content)} — ${plural(w.lapses, 'erreur', 'erreurs')}`)))
+    : h('p', { class: 'muted' }, 'Aucun point faible repéré pour l\'instant.');
+  const parts = [
+    topbar({ back: received ? '#/' : '#/progress', title: `Bilan${b.name ? ' de ' + b.name : ''}` }),
+    received ? h('div', { class: 'received-banner' }, `📨 Bilan reçu${b.name ? ' de ' + b.name : ''}, daté du ${bilan.formatDate(b.date)}.`) : null,
+    h('section', { class: 'stats' },
+      h('div', { class: 'stat' }, h('span', { class: 'stat-value' }, `⭐ ${b.xp}`), h('span', { class: 'stat-label' }, 'XP au total')),
+      h('div', { class: 'stat' }, h('span', { class: 'stat-value' }, `🔥 ${b.streak}`), h('span', { class: 'stat-label' }, 'jours de série')),
+      h('div', { class: 'stat' }, h('span', { class: 'stat-value' }, `📅 ${b.sessions7d}`), h('span', { class: 'stat-label' }, b.accuracy7d != null ? `séances / 7 j · ${b.accuracy7d} %` : 'séances / 7 j'))),
+    h('h2', {}, 'Par compétence'),
+    h('div', { class: 'table-wrap' }, h('table', { class: 'progress-table bilan-table' },
+      h('thead', {}, h('tr', {}, h('th', {}, 'Compétence'), h('th', { title: 'Niveau' }, 'Niv.'), h('th', { title: 'Séances' }, 'Séances'),
+        h('th', { title: 'Réussite sur les 3 dernières séances' }, 'Réussite'), h('th', { title: 'Exercices vus / total' }, 'Vus'), h('th', { title: 'Maîtrisés' }, 'Maîtr.'), h('th', { title: 'À revoir' }, 'Dus'))),
+      h('tbody', {}, ...rows))),
+    h('p', { class: 'muted small' }, 'Réussite : bonnes réponses du premier coup sur les 3 dernières séances. Maîtrisé : prochaine révision prévue dans 21 jours ou plus.'),
+    h('h2', {}, 'Dernières séances'), recent,
+    h('h2', {}, 'Points faibles'), weak,
+    received ? null : h('p', { class: 'muted small' }, `Bilan du ${bilan.formatDate(b.date)}. Pour l'envoyer : Progrès → « Partager le bilan ».`),
+    bottomNav(received ? null : 'progress'),
+  ];
+  root.append(...parts.filter(Boolean)); // Element.append(null) écrirait « null »
+}
+
 // ---------------------------------------------------------------- réglages
 function renderSettings(root) {
   const goalInput = h('input', { class: 'text-input', type: 'number', min: 10, max: 500, step: 10, value: progress.settings.dailyGoal || prog.DEFAULT_DAILY_GOAL, 'aria-label': 'Objectif quotidien en XP' });
@@ -365,6 +462,16 @@ function renderSettings(root) {
     const v = Math.max(10, Math.min(500, Number(goalInput.value) || prog.DEFAULT_DAILY_GOAL));
     goalInput.value = v;
     progress.settings.dailyGoal = v;
+    store.save(progress);
+  });
+  const nameInput = h('input', { class: 'text-input', type: 'text', maxlength: 40, autocomplete: 'given-name', value: progress.settings.name || '', placeholder: 'Prénom', 'aria-label': 'Prénom de l\'élève' });
+  nameInput.addEventListener('change', () => {
+    progress.settings.name = nameInput.value.trim().slice(0, 40);
+    store.save(progress);
+  });
+  const unlockInput = h('input', { type: 'checkbox', checked: !!progress.settings.unlockAll, 'aria-label': 'Mode découverte : tout déverrouiller' });
+  unlockInput.addEventListener('change', () => {
+    progress.settings.unlockAll = unlockInput.checked;
     store.save(progress);
   });
   const exportArea = h('textarea', { class: 'json-area', readonly: true, rows: 6, 'aria-label': 'Progression exportée' });
@@ -404,8 +511,13 @@ function renderSettings(root) {
   root.append(
     topbar({ back: '#/', title: 'Réglages' }),
     h('section', { class: 'settings' },
+      h('h2', {}, 'Prénom'),
+      h('p', { class: 'muted small' }, 'Utilisé dans le bilan partagé avec un parent.'),
+      h('div', { class: 'input-row' }, nameInput),
       h('h2', {}, 'Objectif quotidien'),
       h('div', { class: 'input-row' }, goalInput, h('span', { class: 'unit' }, 'XP / jour')),
+      h('h2', {}, 'Mode découverte'),
+      h('label', { class: 'toggle-row' }, unlockInput, h('span', {}, 'Tout déverrouiller (pour explorer toutes les compétences sans respecter les prérequis).')),
       h('h2', {}, 'Exporter la progression'),
       h('p', { class: 'muted small' }, 'Copie ce texte pour le sauvegarder ou le transférer sur un autre appareil.'),
       exportArea, h('div', { class: 'row-right' }, copyBtn),

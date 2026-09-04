@@ -32,6 +32,12 @@ AXES = ["x", "y", "z"]
 FORCE = {"x": "X", "y": "Y", "z": "Z"}
 MOMENT = {"x": "L", "y": "M", "z": "N"}
 VUE_TXT = {"bout": "vue selon l'axe", "face": "vue de face"}
+MOBS = ["Tx", "Ty", "Tz", "Rx", "Ry", "Rz"]
+MOB_TXT = {"Tx": "la translation selon x", "Ty": "la translation selon y", "Tz": "la translation selon z",
+           "Rx": "la rotation autour de x", "Ry": "la rotation autour de y", "Rz": "la rotation autour de z"}
+MOB_LONG = {m: ("une translation (flèche droite) le long de l'axe " if m[0] == "T" else "une rotation (flèche courbe) autour de l'axe ") + m[1] for m in MOBS}
+CELL_MOB = {"Fx": "Tx", "Fy": "Ty", "Fz": "Tz", "Mx": "Rx", "My": "Ry", "Mz": "Rz"}
+EFFORT_LABEL = {"Fx": "X", "Fy": "Y", "Fz": "Z", "Mx": "L", "My": "M", "Mz": "N"}
 GENERIC_WRONG_REASONS = [
     "Parce qu'elles sont en contact l'une avec l'autre",
     "Parce qu'elles ont la même couleur sur le dessin",
@@ -43,6 +49,62 @@ GENERIC_WRONG_REASONS = [
 # ----------------------------------------------------------------------------- utilitaires
 def fig(fid):
     return "{{fig:%s}}" % fid
+
+
+def emoji(e):
+    return "{{emoji:%s}}" % e if e else ""
+
+
+def mob_list(ms):
+    parts = [MOB_TXT[m] for m in MOBS if m in ms]
+    if not parts:
+        return ""
+    return parts[0] if len(parts) == 1 else ", ".join(parts[:-1]) + " et " + parts[-1]
+
+
+def diff_feedback(L, D, context=""):
+    """Feedback quand on a choisi la liaison D à la place de L : compare leurs mobilités."""
+    dl, dd = set(L["ddl"]), set(D["ddl"])
+    extra, missing = dd - dl, dl - dd
+    if L["id"] == "helicoidale" and D["id"] == "pivot-glissant":
+        s = "Non : dans un pivot glissant, translation et rotation sont indépendantes ; ici elles sont liées par le filetage (un tour = un pas)."
+    elif L["id"] == "pivot-glissant" and D["id"] == "helicoidale":
+        s = "Non : une hélicoïdale lie la translation à la rotation (filetage) ; ici l'arbre est lisse, les deux mouvements sont indépendants."
+    else:
+        s = f"Non : la liaison {D['nom'].lower()}"
+        if extra and missing:
+            s += f" autoriserait {mob_list(extra)} mais bloquerait {mob_list(missing)}."
+        elif extra:
+            s += f" autoriserait aussi {mob_list(extra)}."
+        elif missing:
+            s += f" ne permettrait pas {mob_list(missing)}."
+        else:
+            s += " n'a pas le même contact."
+    return (s + " " + context).strip()
+
+
+def low_first(s):
+    """Minuscule sur la première lettre seulement (« Pivot d'axe (B, x) » → « pivot d'axe (B, x) »)."""
+    return s[:1].lower() + s[1:] if s else s
+
+
+def le(m):
+    """« le serre-joint », « l'étau » (élision devant voyelle)."""
+    n = low_first(m["nom"])
+    return ("l'" + n) if n[:1] in "aeiouyéèêh" else ("le " + n)
+
+
+def du(m):
+    n = low_first(m["nom"])
+    return ("de l'" + n) if n[:1] in "aeiouyéèêh" else ("du " + n)
+
+
+def ex_text(ex):
+    return ex["texte"] if isinstance(ex, dict) else str(ex)
+
+
+def ex_emoji(ex):
+    return ex.get("emoji", "") if isinstance(ex, dict) else ""
 
 
 def rng(key):
@@ -152,8 +214,11 @@ def lesson_tables(liaisons):
                               [row([l["designation"], by_plane(l, ("z", "y")), by_plane(l, ("x", "y"))]) for l in liaisons])
     t["ddl"] = "\n".join([row(["Liaison", "Mobilités", "Nombre de ddl"]), row(["---"] * 3)] +
                          [row([l["designation"], fmt_ddl(l), str(nb_ddl(l))]) for l in liaisons])
-    t["contacts"] = "\n".join([row(["Liaison", "Surfaces de contact", "Exemples"]), row(["---"] * 3)] +
-                              [row([l["nom"], l["surfaces"], " ; ".join(l["exemples"])]) for l in liaisons])
+    t["contacts"] = "\n".join([row(["Liaison", "Contact", "Surfaces de contact", "Exemples"]), row(["---"] * 4)] +
+                              [row([l["nom"], fig(f"contact-{l['id']}"), l["surfaces"],
+                                    " ; ".join(f"{ex_emoji(e)} {ex_text(e)}".strip() for e in l["exemples"])]) for l in liaisons])
+    t["mobilites"] = "\n".join([row(["Notation", "Figure", "Signification"]), row(["---"] * 3)] +
+                               [row([f"**{m}**", fig(f"mobilite-{m}"), MOB_LONG[m]]) for m in MOBS])
     t["efforts"] = "\n".join([row(["Liaison", "Mobilités", "Efforts transmissibles"]), row(["---"] * 3)] +
                              [row([l["designation"], fmt_ddl(l), fmt_efforts(l)]) for l in liaisons])
     return t
@@ -177,28 +242,37 @@ class Builder:
         self.items[item["id"]] = item
         return item["id"]
 
-    def mcq(self, iid, skill, level, prompt, correct, distractors, explanation="", layout="list", tags=()):
-        distractors = [d for d in distractors if d != correct]
-        seen, uniq = set(), []
+    def mcq(self, iid, skill, level, prompt, correct, distractors, explanation="", layout="list", tags=(), feedback=None):
+        """distractors : liste de textes, ou de couples (texte, feedback). feedback : dict texte → feedback."""
+        feedback = dict(feedback or {})
+        uniq, seen = [], {correct}
         for d in distractors:
-            if d not in seen:
-                seen.add(d)
-                uniq.append(d)
+            txt, fb = d if isinstance(d, tuple) else (d, None)
+            if txt in seen:
+                continue
+            seen.add(txt)
+            uniq.append(txt)
+            if fb:
+                feedback[txt] = fb
         choices = [correct] + uniq[:3]
         r = rng(iid)
         r.shuffle(choices)
-        return self.add({"id": iid, "skill": skill, "type": "mcq", "level": level, "tags": list(tags),
-                         "payload": {"prompt": prompt, "choices": choices, "answer": [choices.index(correct)],
-                                     "multiple": False, "layout": layout, "explanation": explanation}})
+        payload = {"prompt": prompt, "choices": choices, "answer": [choices.index(correct)],
+                   "multiple": False, "layout": layout, "explanation": explanation}
+        if feedback:
+            payload["feedback"] = [None if c == correct else feedback.get(c) for c in choices]
+        return self.add({"id": iid, "skill": skill, "type": "mcq", "level": level, "tags": list(tags), "payload": payload})
 
     def flashcard(self, iid, skill, level, front, back, tags=()):
         return self.add({"id": iid, "skill": skill, "type": "flashcard", "level": level, "tags": list(tags),
                          "payload": {"front": front, "back": back}})
 
-    def grid(self, iid, skill, level, prompt, rows, cols, answer, explanation="", labels=None, tags=()):
+    def grid(self, iid, skill, level, prompt, rows, cols, answer, explanation="", labels=None, tags=(), cell_feedback=None):
         payload = {"prompt": prompt, "rows": rows, "cols": cols, "answer": list(answer), "explanation": explanation}
         if labels:
             payload["labels"] = labels
+        if cell_feedback:
+            payload["cellFeedback"] = cell_feedback
         return self.add({"id": iid, "skill": skill, "type": "grid", "level": level, "tags": list(tags), "payload": payload})
 
     def match(self, iid, skill, level, prompt, pairs, tags=()):
@@ -226,6 +300,25 @@ class Builder:
         cands.sort(key=lambda k: (abs(k - n), rng(key + str(k)).random()))
         return [str(k) for k in cands[:3]]
 
+    # --- feedbacks types ---------------------------------------------------------
+    def fb_symbole(self, L, D, vue):
+        """On a répondu D au lieu de L devant le symbole de L (vue donnée)."""
+        return diff_feedback(L, D, f"Le symbole de la liaison {low_first(D['nom'])} serait {D['reconnaitre'][vue]} ; ici, {L['reconnaitre'][vue]} : c'est la liaison {low_first(L['nom'])}.")
+
+    def fb_figure_de(self, D, vue):
+        """On a choisi la figure de D (symbole) à la place de celle attendue."""
+        return f"Non : ce symbole ({D['reconnaitre'][vue]}) est celui de la liaison {low_first(D['nom'])}."
+
+    def fb_contact(self, L, D):
+        return diff_feedback(L, D, f"Le contact « {D['contact_court']} » donnerait une liaison {low_first(D['nom'])} ; ici le contact est « {L['contact_court']} » : liaison {low_first(L['nom'])}.")
+
+    def liaison_choices(self, L, key, fb):
+        """3 liaisons distractrices avec leur feedback (fb(D) → texte)."""
+        return [(o["nom"], fb(o)) for o in self.others(L, 3, key)]
+
+    def mob_cell_feedback(self, L):
+        return {m: L["mobilites"][m] for m in MOBS if m in L.get("mobilites", {})}
+
     # --- liaisons --------------------------------------------------------------
     def gen_symbole_vers_nom(self, skill):
         for l in self.liaisons:
@@ -235,26 +328,21 @@ class Builder:
                 vue = f" ({VUE_TXT[s['vue']]}, plan {plan_txt(s)})" if many else ""
                 self.mcq(iid, skill, lvl(1 if s["vue"] == "bout" else 2, l),
                          "Quelle liaison est représentée par ce symbole ?\n" + fig(sym_fig(l, s["vue"])),
-                         l["nom"], [o["nom"] for o in self.others(l, 3, iid)],
-                         f"C'est la liaison **{l['designation']}**{vue}. {l['contact']}", tags=[l["id"]])
-
-    def gen_symbole_flashcards(self, skill):
-        for l in self.liaisons:
-            iid = f"{skill}.symbole_flashcards.{l['id']}"
-            figs = " ".join(fig(sym_fig(l, s["vue"])) for s in distinct_views(l))
-            self.flashcard(iid, skill, lvl(1, l), figs + "\nQuelle est cette liaison ?",
-                           f"**{l['nom']}** — {l['designation']}.\nMobilités : {fmt_ddl(l)}.", tags=[l["id"]])
+                         l["nom"], self.liaison_choices(l, iid, lambda o, l=l, v=s["vue"]: self.fb_symbole(l, o, v)),
+                         f"C'est la liaison **{l['designation']}**{vue} : {l['reconnaitre'][s['vue']]}. {l['contact']}", tags=[l["id"]])
 
     def gen_nom_vers_symbole(self, skill):
         for l in self.liaisons:
-            views = distinct_views(l)
-            for s in views:
+            for s in distinct_views(l):
                 iid = f"{skill}.nom_vers_symbole.{l['id']}.{s['vue']}"
-                distractors = [fig(sym_fig(o, view_of(o, s["vue"])["vue"])) for o in self.others(l, 3, iid)]
+                distractors = []
+                for o in self.others(l, 3, iid):
+                    ov = view_of(o, s["vue"])["vue"]
+                    distractors.append((fig(sym_fig(o, ov)), self.fb_figure_de(o, ov)))
                 self.mcq(iid, skill, lvl(2 if s["vue"] == "bout" else 3, l),
                          f"Quel symbole représente la liaison **{l['designation']}** dans une vue du plan **{plan_txt(s)}** ?",
                          fig(sym_fig(l, s["vue"])), distractors,
-                         f"{l['nom']} : {l['contact']}", layout="grid", tags=[l["id"]])
+                         f"{l['nom']} : {l['reconnaitre'][s['vue']]}. {l['contact']}", layout="grid", tags=[l["id"]])
 
     def gen_match_symboles(self, skill):
         groupes = [
@@ -277,9 +365,19 @@ class Builder:
             expl = f"Mobilités : {fmt_ddl(l)} → **{n}** degré(s) de liberté."
             if l.get("ddl_lies"):
                 expl = "Tx et Rx sont liés (un tour = une avance d'un pas) : un seul degré de liberté indépendant."
+            distr = []
+            for k in self.numbers(n, iid):
+                k = int(k)
+                if l.get("ddl_lies") and k == 2:
+                    fb = "Non : Tx et Rx sont liés par le filetage, ils ne comptent que pour **un** degré de liberté indépendant."
+                elif k > n:
+                    fb = f"Non, {k} c'est trop : seules ces mobilités sont possibles : {fmt_ddl(l)} → {n}."
+                else:
+                    fb = f"Non, {k} ce n'est pas assez : {fmt_ddl(l)} → {n}."
+                distr.append((str(k), fb))
             self.mcq(iid, skill, lvl(1, l),
                      f"Combien de **degrés de liberté** possède la liaison **{l['designation']}** ?\n" + fig(sym_fig(l, distinct_views(l)[0]["vue"])),
-                     str(n), self.numbers(n, iid), expl, tags=[l["id"]])
+                     str(n), distr, expl, tags=[l["id"]])
 
     def gen_ddl_grid(self, skill):
         rows = [{"id": a, "label": a} for a in AXES]
@@ -288,71 +386,90 @@ class Builder:
             iid = f"{skill}.ddl_grid.{l['id']}"
             figs = " ".join(fig(sym_fig(l, s["vue"])) for s in distinct_views(l))
             self.grid(iid, skill, lvl(2, l),
-                      f"Cochez les mobilités autorisées par la liaison **{l['designation']}**.\n{figs}",
-                      rows, cols, l["ddl"], f"Mobilités : {fmt_ddl(l)}. {l['contact']}", tags=[l["id"]])
+                      f"Cochez les mobilités autorisées par la liaison **{l['designation']}**.\n{figs} {fig('contact-' + l['id'])}",
+                      rows, cols, l["ddl"], f"Mobilités : {fmt_ddl(l)}. {l['contact']}", tags=[l["id"]],
+                      cell_feedback=self.mob_cell_feedback(l))
 
     def gen_ddl_vers_nom(self, skill):
         for l in self.liaisons:
             iid = f"{skill}.ddl_vers_nom.{l['id']}"
             self.mcq(iid, skill, lvl(2, l),
                      f"Quelle liaison autorise **exactement** les mobilités suivantes : **{fmt_ddl(l)}** ?",
-                     l["nom"], [o["nom"] for o in self.others(l, 3, iid)],
+                     l["nom"], self.liaison_choices(l, iid, lambda o, l=l: diff_feedback(l, o, f"{l['nom']} : {l['contact']}")),
                      f"{l['designation']} : {l['contact']}", tags=[l["id"]])
 
-    def gen_ddl_flashcards(self, skill):
+    def gen_contact_figure_vers_nom(self, skill):
         for l in self.liaisons:
-            iid = f"{skill}.ddl_flashcards.{l['id']}"
-            self.flashcard(iid, skill, lvl(1, l),
-                           f"Quels sont les degrés de liberté de la liaison **{l['designation']}** ?\n" + fig(sym_fig(l, distinct_views(l)[0]["vue"])),
-                           f"**{fmt_ddl(l)}** ({nb_ddl(l)} ddl).\n{l['contact']}", tags=[l["id"]])
+            iid = f"{skill}.contact_figure_vers_nom.{l['id']}"
+            self.mcq(iid, skill, lvl(1, l),
+                     f"Voici les surfaces en contact entre deux pièces (le contact est surligné en rouge). Quelle est la liaison ?\n{fig('contact-' + l['id'])}",
+                     l["nom"], self.liaison_choices(l, iid, lambda o, l=l: self.fb_contact(l, o)),
+                     f"{l['contact_court']} → **{l['nom']}** : {l['contact']}", tags=[l["id"]])
+
+    def gen_nom_vers_contact_figure(self, skill):
+        for l in self.liaisons:
+            iid = f"{skill}.nom_vers_contact_figure.{l['id']}"
+            distr = [(fig("contact-" + o["id"]), f"Non : ce dessin montre « {o['contact_court']} », c'est le contact d'une liaison {o['nom']}.")
+                     for o in self.others(l, 3, iid)]
+            self.mcq(iid, skill, lvl(2, l),
+                     f"Quelles surfaces de contact réalisent une liaison **{l['nom']}** ?",
+                     fig("contact-" + l["id"]), distr, f"{l['nom']} : {l['surfaces']}", layout="grid", tags=[l["id"]])
 
     def gen_contact_vers_nom(self, skill):
         for l in self.liaisons:
             iid = f"{skill}.contact_vers_nom.{l['id']}"
-            self.mcq(iid, skill, lvl(1, l),
+            self.mcq(iid, skill, lvl(2, l),
                      f"Les surfaces en contact entre les deux pièces sont : **{l['surfaces']}**\nQuelle est la liaison ?",
-                     l["nom"], [o["nom"] for o in self.others(l, 3, iid)],
+                     l["nom"], self.liaison_choices(l, iid, lambda o, l=l: self.fb_contact(l, o)),
                      f"{l['designation']} : {l['contact']}", tags=[l["id"]])
 
     def gen_exemple_vers_nom(self, skill):
         for l in self.liaisons:
             for k, ex in enumerate(l["exemples"]):
                 iid = f"{skill}.exemple_vers_nom.{l['id']}.{k}"
+                txt = ex_text(ex)
                 self.mcq(iid, skill, lvl(2, l),
-                         f"**{ex[0].upper() + ex[1:]}** : par quelle liaison modélise-t-on ce contact ?",
-                         l["nom"], [o["nom"] for o in self.others(l, 3, iid)],
+                         f"{emoji(ex_emoji(ex))}\n**{txt[0].upper() + txt[1:]}** : par quelle liaison modélise-t-on ce contact ?".strip(),
+                         l["nom"], self.liaison_choices(l, iid, lambda o, l=l, txt=txt: diff_feedback(l, o, f"{txt[0].upper() + txt[1:]} : {l['surfaces']} → {l['nom']}.")),
                          f"{l['nom']} : {l['surfaces']} {l['contact']}", tags=[l["id"]])
 
     def gen_nom_vers_contact(self, skill):
         for l in self.liaisons:
             iid = f"{skill}.nom_vers_contact.{l['id']}"
-            self.mcq(iid, skill, lvl(2, l),
+            distr = [(o["surfaces"], f"Non : « {o['surfaces']} » réalise une liaison {o['nom']} ({fmt_ddl(o)}).") for o in self.others(l, 3, iid)]
+            self.mcq(iid, skill, lvl(3, l),
                      f"Quelles surfaces de contact réalisent une liaison **{l['nom']}** ?",
-                     l["surfaces"], [o["surfaces"] for o in self.others(l, 3, iid)],
-                     f"{l['designation']} : {l['contact']}", tags=[l["id"]])
+                     l["surfaces"], distr, f"{l['designation']} : {l['contact']}", tags=[l["id"]])
 
     def gen_efforts_grid(self, skill):
         rows = [{"id": a, "label": a} for a in AXES]
         cols = [{"id": "F", "label": "Force"}, {"id": "M", "label": "Moment"}]
-        labels = {"Fx": "X", "Fy": "Y", "Fz": "Z", "Mx": "L", "My": "M", "Mz": "N"}
         cell_of = {"X": "Fx", "Y": "Fy", "Z": "Fz", "L": "Mx", "M": "My", "N": "Mz"}
         for l in self.liaisons:
             iid = f"{skill}.efforts_grid.{l['id']}"
+            answer = [cell_of[e] for e in l["efforts"]]
+            cfb = {}
+            for cell, mob in CELL_MOB.items():
+                reason = l.get("mobilites", {}).get(mob, "")
+                if cell in answer:
+                    cfb[cell] = f"{EFFORT_LABEL[cell]} est transmise car {mob} est {reason}"
+                else:
+                    cfb[cell] = f"{EFFORT_LABEL[cell]} n'est pas transmise car {mob} est {reason}"
             self.grid(iid, skill, lvl(2, l),
                       f"Cochez les composantes d'effort **transmissibles** par la liaison **{l['designation']}** "
                       f"(forces X, Y, Z ; moments L, M, N).\n" + fig(sym_fig(l, distinct_views(l)[0]["vue"])),
-                      rows, cols, [cell_of[e] for e in l["efforts"]],
+                      rows, cols, answer,
                       f"Transmis : {fmt_efforts(l)}. Les mobilités ({fmt_ddl(l)}) annulent les composantes correspondantes.",
-                      labels=labels, tags=[l["id"]])
+                      labels=EFFORT_LABEL, tags=[l["id"]], cell_feedback=cfb)
 
     def gen_nb_efforts_mcq(self, skill):
         for l in self.liaisons:
             iid = f"{skill}.nb_efforts_mcq.{l['id']}"
             n = nb_efforts(l)
+            distr = [(k, f"Non : 6 mobilités − {nb_ddl(l)} degré(s) de liberté = {n} composantes ({fmt_efforts(l)}).") for k in self.numbers(n, iid)]
             self.mcq(iid, skill, lvl(1, l),
-                     f"Combien de composantes d'effort **indépendantes** transmet la liaison **{l['designation']}** ?",
-                     str(n), self.numbers(n, iid),
-                     f"6 − {nb_ddl(l)} ddl = **{n}** composantes : {fmt_efforts(l)}.", tags=[l["id"]])
+                     f"Combien de composantes d'effort **indépendantes** transmet la liaison **{l['designation']}** ?\n{fig('contact-' + l['id'])}",
+                     str(n), distr, f"6 − {nb_ddl(l)} ddl = **{n}** composantes : {fmt_efforts(l)}.", tags=[l["id"]])
 
     def gen_choix_symbole_vue(self, skill):
         for l in self.liaisons:
@@ -362,26 +479,46 @@ class Builder:
             for s in views:
                 iid = f"{skill}.choix_symbole_vue.{l['id']}.{s['vue']}"
                 other = [v for v in views if v is not s][0]
-                choices = [fig(sym_fig(l, other["vue"]))]
+                axe = l["parametre"].split("(")[-1].rstrip(")").split(",")[-1].strip() if "(" in l["parametre"] else "x"
+                if s["vue"] == "bout":
+                    why = f"Dans le plan {plan_txt(s)}, l'axe {axe} de la liaison est **perpendiculaire** à la feuille : on dessine la vue selon l'axe ({l['reconnaitre']['bout']})."
+                else:
+                    why = f"Dans le plan {plan_txt(s)}, l'axe {axe} de la liaison est **dans** la feuille : on dessine la vue de face ({l['reconnaitre']['face']})."
+                choices = [(fig(sym_fig(l, other["vue"])), f"Non : c'est bien le symbole de la liaison {low_first(l['nom'])}, mais dans l'autre vue. {why}")]
                 for o in self.others(l, 5, iid):
                     ov = distinct_views(o)
                     if len(ov) >= 2:
-                        choices += [fig(sym_fig(o, v["vue"])) for v in ov[:2]]
+                        choices += [(fig(sym_fig(o, v["vue"])), self.fb_figure_de(o, v["vue"])) for v in ov[:2]]
                         break
                 if len(choices) < 3:
-                    choices += [fig(sym_fig(o, distinct_views(o)[0]["vue"])) for o in self.others(l, 3, iid + "b")]
+                    choices += [(fig(sym_fig(o, distinct_views(o)[0]["vue"])), self.fb_figure_de(o, distinct_views(o)[0]["vue"]))
+                                for o in self.others(l, 3, iid + "b")]
                 note = " (l'axe x pointe vers vous)" if tuple(s["plan"]) == ("z", "y") else ""
-                axe = l["parametre"].split("(")[-1].rstrip(")").split(",")[-1].strip() if "(" in l["parametre"] else "x"
-                if s["vue"] == "bout":
-                    expl = (f"Dans le plan {plan_txt(s)}, l'axe {axe} de la liaison est **perpendiculaire** à la feuille : "
-                            "on dessine la vue selon l'axe (cercle ou carré).")
-                else:
-                    expl = (f"Dans le plan {plan_txt(s)}, l'axe {axe} de la liaison est **dans** la feuille : "
-                            "on dessine la vue de face (rectangle ou profil).")
                 self.mcq(iid, skill, lvl(2 if s["vue"] == "bout" else 3, l),
                          f"On trace le schéma dans le plan **{plan_txt(s)}**{note}. "
                          f"Quel symbole représente la liaison **{l['designation']}** dans cette vue ?",
-                         fig(sym_fig(l, s["vue"])), choices[:3], expl, layout="grid", tags=[l["id"]])
+                         fig(sym_fig(l, s["vue"])), choices[:3], why, layout="grid", tags=[l["id"]])
+
+    # --- mobilités (figures mobilite-Tx …) --------------------------------------
+    def mob_distractors(self, m, key):
+        same_axis = [x for x in MOBS if x != m and x[1] == m[1]]
+        same_type = [x for x in MOBS if x != m and x[0] == m[0]]
+        rng(key).shuffle(same_type)
+        return same_axis + same_type
+
+    def gen_mobilite_figure_vers_nom(self, skill):
+        for m in MOBS:
+            iid = f"{skill}.mobilite_figure_vers_nom.{m}"
+            distr = [(d, f"Non : {d} serait {MOB_LONG[d]} ; la figure montre {MOB_LONG[m]}.") for d in self.mob_distractors(m, iid)]
+            self.mcq(iid, skill, 1, f"Quelle mobilité est représentée sur cette figure ?\n{fig('mobilite-' + m)}",
+                     m, distr, f"**{m}** : {MOB_LONG[m]}.", tags=["mobilites"])
+
+    def gen_mobilite_nom_vers_figure(self, skill):
+        for m in MOBS:
+            iid = f"{skill}.mobilite_nom_vers_figure.{m}"
+            distr = [(fig("mobilite-" + d), f"Non : cette figure montre {d}, {MOB_LONG[d]}.") for d in self.mob_distractors(m, iid)]
+            self.mcq(iid, skill, 2, f"Quelle figure représente la mobilité **{m}** ?",
+                     fig("mobilite-" + m), distr, f"**{m}** : {MOB_LONG[m]}.", layout="grid", tags=["mobilites"])
 
     # --- mécanismes ------------------------------------------------------------
     def handwritten(self, skill, questions, prefix):
@@ -404,16 +541,20 @@ class Builder:
             for a in answers:
                 if not 0 <= a < len(choices):
                     self.errors.append(f"{iid} : réponse hors limites")
-            self.add({"id": iid, "skill": skill, "type": "mcq", "level": level, "tags": q.get("tags", []),
-                      "payload": {"prompt": q["prompt"], "choices": choices, "answer": answers,
-                                  "multiple": len(answers) > 1, "layout": q.get("layout", "list"),
-                                  "explanation": q.get("explanation", "")}})
+            payload = {"prompt": q["prompt"], "choices": choices, "answer": answers,
+                       "multiple": len(answers) > 1, "layout": q.get("layout", "list"),
+                       "explanation": q.get("explanation", "")}
+            if q.get("feedback"):
+                if len(q["feedback"]) != len(choices):
+                    self.errors.append(f"{iid} : feedback de longueur ≠ choix")
+                payload["feedback"] = [None if i in answers else fb for i, fb in enumerate(q["feedback"])]
+            self.add({"id": iid, "skill": skill, "type": "mcq", "level": level, "tags": q.get("tags", []), "payload": payload})
         elif t == "grid":
             rows = [{"id": r, "label": r} if isinstance(r, str) else r for r in q["rows"]]
             names = {"T": "Translation", "R": "Rotation", "F": "Force", "M": "Moment"}
             cols = [{"id": c, "label": names.get(c, c)} if isinstance(c, str) else c for c in q["cols"]]
             self.grid(iid, skill, level, q["prompt"], rows, cols, q["answer"], q.get("explanation", ""),
-                      labels=q.get("labels"), tags=q.get("tags", []))
+                      labels=q.get("labels"), tags=q.get("tags", []), cell_feedback=q.get("cellFeedback"))
         elif t == "order":
             self.order(iid, skill, level, q["prompt"], list(q["steps"]), tags=q.get("tags", []))
         elif t == "input":
@@ -424,14 +565,32 @@ class Builder:
         else:
             self.errors.append(f"{iid} : type inconnu {t}")
 
+    def liaison_between(self, m, ca, cb):
+        for li in m["liaisons"]:
+            if set(li["entre"]) == {ca, cb}:
+                return li
+        return None
+
     def gen_classes_mecanisme(self, skill):
         for m in self.mecanismes:
             titre, dessin, classes_fig = m["titre"], fig(m["figures"]["dessin"]), fig(m["figures"]["classes"])
             names = {p["num"]: p["nom"] for p in m["pieces"]}
             all_pieces = [p["num"] for p in m["pieces"]]
             classes = m["classes"]
+            class_of = {n: c for c in classes for n in c["pieces"]}
+
+            def why_not_together(x, p):
+                cx, cp = class_of.get(x), class_of.get(p)
+                if cx is None or cp is None or cx is cp:
+                    return f"la pièce {x} ({names[x]}) est bien solidaire de la pièce {p}"
+                li = self.liaison_between(m, cx["id"], cp["id"])
+                if li:
+                    L = self.by_id[li["liaison"]]
+                    return f"Non : la pièce {x} ({names[x]}) est en liaison **{L['nom'].lower()}** avec la classe de la pièce {p} : elles ont un mouvement relatif."
+                return f"Non : la pièce {x} ({names[x]}) n'est pas solidaire de la pièce {p} : elle appartient à la classe « {cx['nom']} », qui bouge par rapport à « {cp['nom']} »."
+
             self.input(f"{skill}.nb_classes.{m['id']}", skill, 1,
-                       f"Combien de **classes d'équivalence cinématique** compte le {m['nom'].lower()} ?\n{dessin}",
+                       f"Combien de **classes d'équivalence cinématique** compte {le(m)} ?\n{dessin}",
                        len(classes), numeric=True,
                        explanation="  ;  ".join(f"{c['id']} = {{{', '.join(map(str, c['pieces']))}}}" for c in classes),
                        tags=[m["id"]])
@@ -442,35 +601,37 @@ class Builder:
                     iid = f"{skill}.classe_de.{m['id']}.{p}"
                     others = [x for x in all_pieces if x not in pcs]
                     r = rng(iid)
-                    wrong = ["aucune : elle forme une classe à elle seule"]
+                    wrong = [("aucune : elle forme une classe à elle seule", f"Non : {c.get('pourquoi', 'ces pièces sont solidaires.')}")]
                     tries = 0
                     while len(wrong) < 3 and tries < 20 and others:
                         tries += 1
                         k = min(len(others), r.choice([1, 2]))
                         s = sorted(r.sample(others, k))
                         txt = fmt_pieces(s, m)
-                        if txt not in wrong:
-                            wrong.append(txt)
+                        if txt not in [w[0] for w in wrong]:
+                            wrong.append((txt, why_not_together(s[0], p)))
                     self.mcq(iid, skill, 1,
-                             f"Dans le {m['nom'].lower()}, quelles pièces forment la **même classe d'équivalence** que la pièce "
+                             f"Dans {le(m)}, quelles pièces forment la **même classe d'équivalence** que la pièce "
                              f"**{p} ({names[p]})** ?\n{dessin}",
                              fmt_pieces([x for x in pcs if x != p], m), wrong, c.get("pourquoi", ""), tags=[m["id"]])
                     if c.get("pourquoi"):
                         iid = f"{skill}.pourquoi.{m['id']}.{c['id']}"
-                        others_why = [o["pourquoi"] for o in classes if o is not c and o.get("pourquoi") and len(o["pieces"]) >= 2]
-                        distractors = (others_why + GENERIC_WRONG_REASONS)[:3]
+                        distr = [(o["pourquoi"], f"Non : cette raison concerne la classe {o['id']} ({o['nom']}).")
+                                 for o in classes if o is not c and o.get("pourquoi") and len(o["pieces"]) >= 2]
+                        generic_fb = "Non : être en contact, avoir la même couleur, le même matériau ou la même taille n'empêche pas un mouvement relatif. Seule l'absence de mouvement relatif compte."
+                        distr += [(g, generic_fb) for g in GENERIC_WRONG_REASONS]
                         self.mcq(iid, skill, 2,
-                                 f"Pourquoi {fmt_pieces(pcs[:2], m)} du {m['nom'].lower()} sont-elles dans la **même** classe d'équivalence ?\n{classes_fig}",
-                                 c["pourquoi"], distractors, "", tags=[m["id"]])
+                                 f"Pourquoi {fmt_pieces(pcs[:2], m)} {du(m)} sont-elles dans la **même** classe d'équivalence ?\n{classes_fig}",
+                                 c["pourquoi"], distr[:3], "", tags=[m["id"]])
                 else:
                     p = pcs[0]
                     iid = f"{skill}.singleton.{m['id']}.{p}"
                     others = [x for x in all_pieces if x != p]
                     r = rng(iid)
                     r.shuffle(others)
-                    wrong = [f"Oui, avec la pièce {x} ({names[x]})" for x in others[:3]]
+                    wrong = [(f"Oui, avec la pièce {x} ({names[x]})", why_not_together(x, p)) for x in others[:3]]
                     self.mcq(iid, skill, 2,
-                             f"Dans le {m['nom'].lower()}, la pièce **{p} ({names[p]})** forme-t-elle une classe d'équivalence "
+                             f"Dans {le(m)}, la pièce **{p} ({names[p]})** forme-t-elle une classe d'équivalence "
                              f"avec d'autres pièces ?\n{dessin}",
                              "Non : elle forme une classe à elle seule", wrong, c.get("pourquoi", ""), tags=[m["id"]])
             self.handwritten(skill, m.get("questions", []), f"{skill}.{m['id']}")
@@ -479,31 +640,39 @@ class Builder:
         for m in self.mecanismes:
             cls = {c["id"]: c for c in m["classes"]}
             points = sorted({li["point"] for li in m["liaisons"]})
+            by_point = {}
+            for li in m["liaisons"]:
+                by_point.setdefault(li["point"], li)
             for li in m["liaisons"]:
                 l = self.by_id[li["liaison"]]
                 a, b = li["entre"]
                 iid = f"{skill}.liaison_entre.{m['id']}.{a}-{b}"
                 self.mcq(iid, skill, 1,
-                         f"Dans le {m['nom'].lower()}, entre **{a} ({cls[a]['nom']})** et **{b} ({cls[b]['nom']})**, "
+                         f"Dans {le(m)}, entre **{a} ({cls[a]['nom']})** et **{b} ({cls[b]['nom']})**, "
                          f"le contact est : **{li['contact']}** ({li['surfaces']}).\nQuelle est la liaison ?\n{fig(m['figures']['classes'])}",
-                         l["nom"], [o["nom"] for o in self.others(l, 3, iid)], li.get("explication", ""), tags=[m["id"], l["id"]])
+                         l["nom"], self.liaison_choices(l, iid, lambda o, l=l, li=li: diff_feedback(l, o, li.get("explication", ""))),
+                         li.get("explication", ""), tags=[m["id"], l["id"]])
                 # désignation complète (point + axe)
                 iid2 = f"{skill}.designation.{m['id']}.{a}-{b}"
                 correct = designation_complete(l, li)
                 wrong = []
                 for p in points:
                     if p != li["point"]:
-                        wrong.append(designation_complete(l, dict(li, point=p)))
+                        other = by_point[p]
+                        oL = self.by_id[other["liaison"]]
+                        wrong.append((designation_complete(l, dict(li, point=p)),
+                                      f"Non : le point {p} est le centre de la liaison {low_first(designation_complete(oL, other))} ; celle-ci est en {li['point']}."))
                 for ax in AXES:
                     if ax != li.get("axe", "x") and not l["parametre"].startswith("centre"):
-                        wrong.append(designation_complete(l, dict(li, axe=ax)))
+                        wrong.append((designation_complete(l, dict(li, axe=ax)),
+                                      f"Non : sur le schéma, l'axe de cette liaison est ({li['point']}, {li.get('axe', 'x')}), pas ({li['point']}, {ax})."))
                 if l["parametre"].startswith("centre"):
-                    wrong.append(f"{l['nom']} d'axe ({li['point']}, x)")
+                    wrong.append((f"{l['nom']} d'axe ({li['point']}, x)", f"Non : une liaison {low_first(l['nom'])} se définit par son **centre**, pas par un axe."))
                 o = self.others(l, 1, iid2)[0]
-                wrong.append(designation_complete(o, dict(li, axe=li.get("axe", "x"))))
+                wrong.append((designation_complete(o, dict(li, axe=li.get("axe", "x"))), diff_feedback(l, o, li.get("explication", ""))))
                 rng(iid2).shuffle(wrong)
                 self.mcq(iid2, skill, 2,
-                         f"Dans le {m['nom'].lower()}, comment désigne-t-on **complètement** la liaison entre **{a}** et **{b}** "
+                         f"Dans {le(m)}, comment désigne-t-on **complètement** la liaison entre **{a}** et **{b}** "
                          f"(nom, centre, axe) ?\n{fig(m['figures']['schema'])}",
                          correct, wrong, li.get("explication", ""), tags=[m["id"], l["id"]])
 
@@ -511,21 +680,22 @@ class Builder:
         for m in self.mecanismes:
             graphe = fig(m["figures"]["graphe"])
             self.input(f"{skill}.nb_liaisons.{m['id']}", skill, 1,
-                       f"Combien de **liaisons** compte le graphe des liaisons du {m['nom'].lower()} ?\n{graphe}",
+                       f"Combien de **liaisons** compte le graphe des liaisons {du(m)} ?\n{graphe}",
                        len(m["liaisons"]), numeric=True,
                        explanation="Chaque trait du graphe est une liaison entre deux classes.", tags=[m["id"]])
-            designations = [designation_complete(self.by_id[li["liaison"]], li) for li in m["liaisons"]]
+            desig = {designation_complete(self.by_id[li["liaison"]], li): li for li in m["liaisons"]}
             for li in m["liaisons"]:
                 l = self.by_id[li["liaison"]]
                 a, b = li["entre"]
                 correct = designation_complete(l, li)
-                wrong = [d for d in designations if d != correct]
+                wrong = [(d, f"Non : {d} relie {o['entre'][0]} et {o['entre'][1]}.") for d, o in desig.items() if d != correct]
                 for o in self.others(l, 3, f"{skill}.{m['id']}.{a}{b}"):
-                    wrong.append(designation_complete(o, li))
+                    d = designation_complete(o, li)
+                    wrong.append((d, f"Non : {d} n'apparaît pas dans ce mécanisme."))
                 for suffix, level, figtxt in (("lecture", 1, "\n" + graphe), ("memoire", 2, "")):
                     iid = f"{skill}.{suffix}.{m['id']}.{a}-{b}"
                     self.mcq(iid, skill, level,
-                             f"{'D’après le graphe des liaisons, ' if suffix == 'lecture' else 'De mémoire : dans le ' + m['nom'].lower() + ', '}"
+                             f"{'D’après le graphe des liaisons, ' if suffix == 'lecture' else 'De mémoire : dans ' + le(m) + ', '}"
                              f"quelle liaison relie **{a}** et **{b}** ?{figtxt}",
                              correct, wrong, li.get("explication", ""), tags=[m["id"], l["id"]])
             self.handwritten(skill, m.get("questions", []), f"{skill}.{m['id']}")
@@ -626,6 +796,8 @@ def build():
             b.errors.append(f"{it['id']} : pas assez de choix")
         if it["type"] == "match" and len(it["payload"]["pairs"]) < 3:
             b.errors.append(f"{it['id']} : pas assez de paires")
+        if it["type"] == "mcq" and "feedback" in it["payload"] and len(it["payload"]["feedback"]) != len(it["payload"]["choices"]):
+            b.errors.append(f"{it['id']} : feedback mal aligné")
     if b.errors:
         print("Erreurs de construction :", file=sys.stderr)
         for e in b.errors:

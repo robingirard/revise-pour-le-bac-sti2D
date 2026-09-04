@@ -63,3 +63,11 @@ test('XP du jour d\'après l\'historique', () => {
   assert.equal(xpOnDay(history, '2026-09-05'), 0);
   assert.equal(sessionXp({ correct: 0, total: 5 }), 10);
 });
+
+test('mode découverte : tout est déverrouillé', () => {
+  const p = makeProgress({ settings: { dailyGoal: 30, unlockAll: true } });
+  assert.equal(isUnlocked(s2, p), true);
+  assert.equal(isUnlocked(s3, p), true);
+  p.settings.unlockAll = false;
+  assert.equal(isUnlocked(s3, p), false);
+});

@@ -3,6 +3,7 @@ import { h, clear } from '../dom.js';
 import { renderRich } from '../render.js';
 import { shuffle } from '../session.js';
 import { promptEl, verifyButton } from './common.js';
+import { orderDetail } from '../answers.js';
 
 export function mount(container, item, ctx) {
   const { onAnswer, figures = {}, rng = Math.random } = ctx;
@@ -24,7 +25,7 @@ export function mount(container, item, ctx) {
         h('p', { class: 'hint' }, 'Le bon ordre était :'),
         h('ol', {}, ...steps.map((s) => h('li', { html: renderRich(s, figures) })))));
     }
-    onAnswer({ correct: ok, grade: ok ? 'good' : 'again' });
+    onAnswer({ correct: ok, grade: ok ? 'good' : 'again', detail: ok ? null : orderDetail(chosen, steps) });
   });
 
   function render() {

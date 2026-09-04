@@ -1,12 +1,17 @@
 \documentclass[tikz,border=4pt]{standalone}
 \usepackage{liaisons}
-\usetikzlibrary{patterns}
 \input{_mecanisme-serre-joint-common}
 \begin{document}
-\begin{tikzpicture}[x=1cm,y=1cm,
-  coupe/.style={pattern=north east lines, pattern color=black!75},
-  p1/.style={fill=white}, p2/.style={fill=white}, p3/.style={coupe}, p4/.style={coupe},
-  p5/.style={fill=white}, p6/.style={coupe}, p7/.style={coupe}]
+\begin{tikzpicture}[x=1cm,y=1cm]
+\newcommand\piece[2]{\ifcase#1\relax
+  \or \draw[line width=0.6pt, line join=round, fill=white] #2;
+  \or \draw[line width=0.6pt, line join=round, fill=white] #2;
+  \or \hachures{#2}
+  \or \hachuresb{#2}
+  \or \draw[line width=0.6pt, line join=round, fill=white] #2;
+  \or \hachures{#2}
+  \or \hachuresb{#2}
+  \fi}
 \newcommand\sjlabels{%
   \foreach \n/\pt/\lab in {1/{(0.35,3.34)}/{(0.35,4.5)}, 2/{(3.2,3.5)}/{(3.2,4.5)}, 3/{(0.4,2.2)}/{(-0.8,2.2)},
                            4/{(6.4,3.3)}/{(7.4,4.4)}, 5/{(4.2,1.04)}/{(4.2,0.0)}, 6/{(7.9,0.85)}/{(8.3,0.0)}, 7/{(1.15,0.6)}/{(1.15,-0.1)}} {

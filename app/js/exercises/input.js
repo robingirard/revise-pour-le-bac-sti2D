@@ -18,7 +18,7 @@ export function mount(container, item, ctx) {
     if (!ok) {
       container.append(h('p', { class: 'expected' }, 'Réponse attendue : ', h('strong', {}, `${p.answer}${p.unit ? ' ' + p.unit : ''}`)));
     }
-    onAnswer({ correct: ok, grade: ok ? 'good' : 'again' });
+    onAnswer({ correct: ok, grade: ok ? 'good' : 'again', detail: ok ? null : `Réponse attendue : **${p.answer}${p.unit ? ' ' + p.unit : ''}**` });
   });
   input.addEventListener('input', () => { verify.disabled = input.value.trim() === ''; });
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !verify.disabled && !verify.hidden) verify.click(); });

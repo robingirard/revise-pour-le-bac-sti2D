@@ -1,0 +1,12 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}\input{_contacts-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+% vue en bout : rainure rectangulaire (coupée) et barre de section rectangulaire
+\hachures{(0,0) -- (3,0) -- (3,2.2) -- (2.3,2.2) -- (2.3,0.5) -- (0.7,0.5) -- (0.7,2.2) -- (0,2.2) -- cycle}
+\hachuresb{(0.75,0.55) rectangle (2.25,1.9)}
+\draw[contact] (0.75,0.55) -- (2.25,0.55) (0.7,0.55) -- (0.7,1.9) (2.3,0.55) -- (2.3,1.9);
+\node[font=\small] at (1.5,2.6) {vue selon l'axe : la barre glisse « vers vous »};
+\node[legende] at (1.5,-0.1) {deux plans (ou plus) : translation seule};
+\end{tikzpicture}
+\end{document}

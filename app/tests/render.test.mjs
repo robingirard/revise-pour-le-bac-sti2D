@@ -50,3 +50,9 @@ sur deux lignes.
   assert.equal(renderLesson('1. un\n2. deux'), '<ol><li>un</li><li>deux</li></ol>');
   assert.equal(renderLesson('- a\n1. b'), '<ul><li>a</li></ul>\n<ol><li>b</li></ol>');
 });
+
+test('pictogramme {{emoji:…}} : en ligne, ou en bloc s\'il est seul', () => {
+  assert.equal(renderRich('{{emoji:🚪}} **La porte**'), '<span class="emoji-big">🚪</span> <strong>La porte</strong>');
+  assert.equal(renderRich('{{emoji:🚪}}'), '<span class="emoji-big emoji-block">🚪</span>');
+  assert.equal(renderRich('{{emoji:<b>}}'), '{{emoji:&lt;b&gt;}}'); // pas de HTML : non substitué, échappé
+});

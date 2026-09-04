@@ -9,6 +9,8 @@ Deux solides **sans aucun contact** peuvent bouger l'un par rapport à l'autre d
 
 Ces mouvements relatifs possibles sont les **degrés de liberté** (ddl).
 
+{{table:mobilites}}
+
 ## Le rôle des liaisons
 
 Un mécanisme est fait de plusieurs solides qui se touchent. **Chaque contact supprime des mobilités.**

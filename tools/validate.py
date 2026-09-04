@@ -82,6 +82,18 @@ def check_liaisons(liaisons):
                 err(f"{p} : sens invalide")
         if len(l["exemples"]) < 2:
             warn(f"{p} : moins de 2 exemples")
+        for ex in l["exemples"]:
+            if not isinstance(ex, dict) or "texte" not in ex:
+                err(f"{p} : exemple mal formé (attendu {{texte, emoji}}) : {ex}")
+        for k in ("contact_court", "reconnaitre", "mobilites"):
+            if k not in l:
+                err(f"{p} : champ manquant « {k} »")
+        for s in l["symboles"]:
+            if s["vue"] not in l.get("reconnaitre", {}):
+                err(f"{p} : reconnaitre[{s['vue']}] manquant")
+        missing = DDL - set(l.get("mobilites", {}))
+        if missing:
+            err(f"{p} : mobilites incomplet, manque {sorted(missing)}")
     return set(ids)
 
 
@@ -114,6 +126,10 @@ def check_mecanismes(mecanismes, liaison_ids):
         for q in m.get("questions", []):
             if q["type"] == "mcq" and not (0 <= q["answer"] < len(q["choices"])):
                 err(f"{p} : question « {q['prompt'][:40]}… » réponse hors limites")
+            if q["type"] == "mcq" and q.get("feedback") and len(q["feedback"]) != len(q["choices"]):
+                err(f"{p} : question « {q['prompt'][:40]}… » feedback mal aligné")
+            if q["type"] == "mcq" and not q.get("feedback"):
+                warn(f"{p} : question « {q['prompt'][:40]}… » sans feedback par choix")
         for k in ("dessin", "classes", "graphe", "schema"):
             if k not in m["figures"]:
                 err(f"{p} : figure « {k} » manquante")

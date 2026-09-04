@@ -1,0 +1,11 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}\input{_contacts-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\hachures{(0,0) -- (4,0) -- (5.2,1.2) -- (1.2,1.2) -- cycle}
+\draw[piece, fill=white] (2.6,1.25) circle (0.6);
+\draw[piece, fill=white] (2.45,1.8) rectangle (2.75,2.7);
+\fill[solideA] (2.6,0.65) circle (0.09);
+\node[legende] at (2.6,-0.15) {sphère sur plan : contact en un point};
+\end{tikzpicture}
+\end{document}

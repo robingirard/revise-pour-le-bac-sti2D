@@ -1,16 +1,14 @@
 \documentclass[tikz,border=4pt]{standalone}
 \usepackage{liaisons}
-\usetikzlibrary{patterns}
 \begin{document}
-\begin{tikzpicture}[x=1cm,y=1cm, line width=0.6pt, line join=round,
-  coupe/.style={pattern=north east lines, pattern color=black!70}]
+\begin{tikzpicture}[x=1cm,y=1cm, line width=0.6pt, line join=round]
 \coordinate (O) at (0,0); \coordinate (A) at (0.9,1.5); \coordinate (B) at (5,0);
 % 0 : bâti — palier de la manivelle et cylindre (coupés)
-\draw[coupe] (O) circle (0.75);
+\hachures{(O) circle (0.75)}
 \fill[white] (O) circle (0.45); \draw (O) circle (0.45);
-\draw[coupe] (3.4,0.8) rectangle (7.4,1.1);
-\draw[coupe] (3.4,-1.1) rectangle (7.4,-0.8);
-\draw[coupe] (7.4,-1.1) rectangle (7.7,1.1);
+\hachures{(3.4,0.8) rectangle (7.4,1.1)}
+\hachures{(3.4,-1.1) rectangle (7.4,-0.8)}
+\hachures{(7.4,-1.1) rectangle (7.7,1.1)}
 % 1 : manivelle
 \draw[fill=solideE!40, draw=solideE!80!black, rounded corners=3pt]
   ($(O)+(-0.27,-0.16)$) -- ($(A)+(-0.27,-0.16)$) -- ($(A)+(0.27,0.16)$) -- ($(O)+(0.27,0.16)$) -- cycle;

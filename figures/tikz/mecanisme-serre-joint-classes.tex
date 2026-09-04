@@ -2,11 +2,16 @@
 \usepackage{liaisons}
 \input{_mecanisme-serre-joint-common}
 \begin{document}
-\begin{tikzpicture}[x=1cm,y=1cm,
-  p1/.style={fill=solideB!45, draw=solideB}, p2/.style={fill=solideB!45, draw=solideB}, p3/.style={fill=solideB!45, draw=solideB},
-  p4/.style={fill=solideA!45, draw=solideA},
-  p5/.style={fill=solideE!45, draw=solideE}, p6/.style={fill=solideE!45, draw=solideE},
-  p7/.style={fill=solideD!55, draw=solideD}]
+\begin{tikzpicture}[x=1cm,y=1cm]
+\newcommand\piece[2]{\ifcase#1\relax
+  \or \draw[line width=0.6pt, line join=round, fill=solideB!45, draw=solideB] #2;
+  \or \draw[line width=0.6pt, line join=round, fill=solideB!45, draw=solideB] #2;
+  \or \draw[line width=0.6pt, line join=round, fill=solideB!45, draw=solideB] #2;
+  \or \draw[line width=0.6pt, line join=round, fill=solideA!45, draw=solideA] #2;
+  \or \draw[line width=0.6pt, line join=round, fill=solideE!45, draw=solideE] #2;
+  \or \draw[line width=0.6pt, line join=round, fill=solideE!45, draw=solideE] #2;
+  \or \draw[line width=0.6pt, line join=round, fill=solideD!55, draw=solideD] #2;
+  \fi}
 \newcommand\sjlabels{%
   \node[fill=solideB, text=white, font=\small\bfseries, inner sep=2pt, rounded corners=1pt] at (2.5,4.3) {E1 = \{1, 2, 3\}};
   \draw[solideB, line width=0.5pt] (2.5,4.1) -- (2.5,3.5);

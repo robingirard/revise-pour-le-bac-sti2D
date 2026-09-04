@@ -1,0 +1,15 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}\input{_contacts-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+% cylindre couché sur un plan, vue oblique : plan (parallélogramme) + cylindre (rectangle + ellipses)
+\hachures{(0,0) -- (4,0) -- (5.2,1.2) -- (1.2,1.2) -- cycle}
+\fill[white] (1.0,0.9) -- (3.6,0.9) -- (3.6,1.7) -- (1.0,1.7) -- cycle;
+\draw[piece, fill=white] (1.0,1.3) ellipse (0.25 and 0.4);
+\draw[piece, fill=white] (1.0,0.9) rectangle (3.6,1.7);
+\draw[piece, fill=white] (3.6,1.3) ellipse (0.25 and 0.4);
+\draw[piece] (1.0,1.3) ellipse (0.25 and 0.4);
+\draw[contact] (1.0,0.9) -- (3.6,0.9);
+\node[legende] at (2.6,-0.15) {cylindre sur plan : contact suivant une ligne};
+\end{tikzpicture}
+\end{document}

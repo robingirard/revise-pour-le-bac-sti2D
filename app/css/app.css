@@ -310,3 +310,32 @@ th { font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-
 .match-btn svg[data-fig^="liaison-"] { width: 120px; height: auto; max-height: none; }
 .lesson table svg[data-fig^="liaison-"] { width: 96px; min-width: 96px; height: auto; max-height: none; }
 .lesson-body svg[data-fig^="mecanisme-"], .prompt svg[data-fig^="mecanisme-"] { width: 100%; max-width: 520px; height: auto; max-height: none; }
+
+/* ---- pictogrammes et détail d'erreur ---- */
+.emoji-big { font-size: 2.4rem; line-height: 1.1; vertical-align: middle; }
+.emoji-block { display: block; text-align: center; font-size: 3.2rem; margin: 4px 0 8px; }
+.feedback-detail { color: var(--text); margin-top: 6px; font-size: 1rem; font-weight: 600; }
+.feedback-detail svg { max-height: 90px; }
+.feedback-detail + .feedback-expl { font-weight: 400; }
+
+/* ---- bilan parent ---- */
+.bilan-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px 16px; margin: 8px 0 14px; }
+.bilan-card h2 { margin-top: 0; }
+.bilan-lines { margin: 6px 0 10px; padding-left: 0; list-style: none; }
+.bilan-lines li { margin: 3px 0; }
+.bilan-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.share-panel { margin-top: 12px; }
+.share-panel .json-area { font: 14px/1.4 inherit; }
+.received-banner { background: var(--warn-bg); color: var(--warn); border-radius: 12px; padding: 10px 14px; font-weight: 600; margin: 8px 0 12px; }
+.bilan-table td:not(:first-child), .bilan-table th:not(:first-child) { text-align: center; white-space: nowrap; }
+.bilan-recent li, .bilan-weak li { margin: 4px 0; }
+.toggle-row { display: flex; align-items: center; gap: 12px; min-height: var(--tap); cursor: pointer; }
+.toggle-row input { width: 24px; height: 24px; accent-color: var(--primary); }
+
+/* ---- figures de mobilité (mobilite-*) et de contact (contact-*) : tailles selon le contexte ---- */
+.prompt svg[data-fig^="mobilite"], .card-front svg[data-fig^="mobilite"] { width: 200px; height: auto; max-height: none; }
+.choice svg[data-fig^="mobilite"] { width: 100%; max-width: 170px; height: auto; max-height: none; }
+.lesson table svg[data-fig^="mobilite"] { width: 110px; min-width: 110px; height: auto; max-height: none; }
+.prompt svg[data-fig^="contact-"], .card-front svg[data-fig^="contact-"] { width: 100%; max-width: 340px; height: auto; max-height: none; }
+.choice svg[data-fig^="contact-"] { width: 100%; height: auto; max-height: none; }
+.lesson table svg[data-fig^="contact-"] { width: 150px; min-width: 150px; height: auto; max-height: none; }

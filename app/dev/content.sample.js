@@ -12,9 +12,9 @@
 
   const DDL_ROWS = [{ id: 'x', label: 'x' }, { id: 'y', label: 'y' }, { id: 'z', label: 'z' }];
   const DDL_COLS = [{ id: 'T', label: 'Translation' }, { id: 'R', label: 'Rotation' }];
-  const ddl = (id, skill, level, nom, answer, explanation) => ({
+  const ddl = (id, skill, level, nom, answer, explanation, cellFeedback) => ({
     id, skill, type: 'grid', level, tags: [nom.toLowerCase()],
-    payload: { prompt: `Coche les degrés de liberté d'une **${nom}**.`, rows: DDL_ROWS, cols: DDL_COLS, answer, explanation },
+    payload: { prompt: `Coche les degrés de liberté d'une **${nom}**.`, rows: DDL_ROWS, cols: DDL_COLS, answer, explanation, ...(cellFeedback ? { cellFeedback } : {}) },
   });
 
   const items = [
@@ -30,9 +30,15 @@
       back: 'Un mouvement relatif indépendant possible entre deux pièces : une translation le long d\'un axe ou une rotation autour d\'un axe.' } },
     { id: 'mob-mcq-1', skill: 'liaisons-mobilites', type: 'mcq', level: 1, tags: ['notation'], payload: {
       prompt: 'Une rotation autour de l\'axe $\\vec{z}$ se note :', choices: ['Rz', 'Tz', 'Rx', 'Ty'], answer: [0],
+      feedback: [null, 'Non : **T** désigne une translation (déplacement en ligne droite), pas une rotation.', 'Non : l\'axe est **z**, pas x.', 'Non : **T** désigne une translation, et l\'axe est z.'],
       explanation: '**R** pour rotation, **z** pour l\'axe autour duquel on tourne.' } },
+    { id: 'mob-mcq-3', skill: 'liaisons-mobilites', type: 'mcq', level: 1, tags: ['porte'], payload: {
+      prompt: '{{emoji:🚪}} Une **porte** sur ses gonds (axe vertical z). Quel est son seul degré de liberté par rapport au mur ?', choices: ['Rz', 'Tz', 'Rx', 'Ty'], answer: [0],
+      feedback: [null, 'Non : la porte ne monte pas et ne descend pas (pas de translation selon z) : elle **tourne**.', 'Non : l\'axe des gonds est **vertical**, c\'est l\'axe z.', 'Non : la porte ne se déplace pas en ligne droite : elle **tourne** autour de ses gonds.'],
+      explanation: 'La porte ne peut que tourner autour de l\'axe vertical des gonds : rotation **Rz**.' } },
     { id: 'mob-mcq-2', skill: 'liaisons-mobilites', type: 'mcq', level: 1, tags: ['contact'], payload: {
       prompt: 'Chaque contact entre deux pièces…', choices: ['limite les mobilités', 'ajoute des mobilités', 'ne change rien aux mobilités', 'supprime toujours les 6 mobilités'], answer: [0],
+      feedback: [null, 'Non : un contact ne crée jamais de mouvement, il en **empêche**.', 'Non : dès qu\'il y a contact, certains mouvements deviennent impossibles.', 'Non : seul un **encastrement** supprime les 6 mobilités ; les autres liaisons en laissent.'],
       explanation: 'Les surfaces de contact suppriment certains mouvements : ce qui reste définit la liaison.' } },
     { id: 'mob-input-1', skill: 'liaisons-mobilites', type: 'input', level: 1, tags: ['ddl'], payload: {
       prompt: 'Nombre **maximal** de degrés de liberté entre deux solides ?', answer: '6', numeric: true, explanation: '3 translations + 3 rotations.' } },
@@ -84,7 +90,8 @@
       explanation: 'La liaison **hélicoïdale** : la translation et la rotation sont liées par le pas de la vis.' } },
 
     // ---- liaisons-ddl
-    ddl('ddl-grid-1', 'liaisons-ddl', 1, 'liaison pivot d\'axe (A, x)', ['Rx'], 'Une pivot ne laisse qu\'**une rotation** autour de son axe.'),
+    ddl('ddl-grid-1', 'liaisons-ddl', 1, 'liaison pivot d\'axe (A, x)', ['Rx'], 'Une pivot ne laisse qu\'**une rotation** autour de son axe.',
+      { Tx: 'la translation le long de l\'axe est bloquée par les épaulements', Ty: 'l\'arbre ne peut pas sortir de son alésage', Rx: 'c\'est la rotation autour de l\'axe, la seule mobilité du pivot', Ry: 'l\'alésage long empêche l\'arbre de basculer' }),
     ddl('ddl-grid-2', 'liaisons-ddl', 1, 'liaison glissière d\'axe (A, x)', ['Tx'], 'Une glissière ne laisse qu\'**une translation** le long de son axe.'),
     ddl('ddl-grid-3', 'liaisons-ddl', 1, 'liaison rotule de centre A', ['Rx', 'Ry', 'Rz'], 'Une rotule laisse les **trois rotations** et bloque les trois translations.'),
     ddl('ddl-grid-4', 'liaisons-ddl', 2, 'liaison appui plan de normale (A, y)', ['Tx', 'Tz', 'Ry'], 'On glisse dans le plan (Tx, Tz) et on tourne autour de la normale (Ry).'),

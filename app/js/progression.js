@@ -17,8 +17,9 @@ export function skillLevels(skill) {
   return skill && skill.levels > 0 ? skill.levels : DEFAULT_LEVELS;
 }
 
-/** Une compétence est déverrouillée si tous ses prérequis sont au niveau ≥ 1. */
+/** Une compétence est déverrouillée si tous ses prérequis sont au niveau ≥ 1 (ou en mode découverte). */
 export function isUnlocked(skill, progress) {
+  if (progress && progress.settings && progress.settings.unlockAll) return true;
   const skills = (progress && progress.skills) || {};
   return (skill.prerequisites || []).every((id) => ((skills[id] || {}).level || 0) >= 1);
 }
