@@ -201,9 +201,10 @@ Un item est **dû** si `due ≤ aujourd'hui`. **Maîtrisé** si `interval ≥ 21
   Chaque **séance réussie** (≥ 80 % de bonnes réponses au premier essai) fait
   `progress += 1/2` ; à `progress ≥ 1` → `level += 1`, `progress = 0`.
   Une séance < 80 % ne fait pas progresser mais compte dans `sessions`.
-- **Séance de compétence** (≈ 10 exercices) : d'abord les items **dus** de la
+- **Séance de compétence** (8 exercices) : d'abord les items **dus** de la
   compétence, puis les items **nouveaux** de niveau ≤ `level + 1`, puis (s'il en
-  manque) des items déjà vus, au hasard. Mélange final. Un item raté est **remis
+  manque) des items déjà vus, au hasard. Les items dus restent avant les nouveaux ; chaque bloc
+  est mélangé puis **diversifié** (jamais deux exercices consécutifs du même générateur). Un item raté est **remis
   en fin de file** jusqu'à réussite (il est noté `again` la première fois seulement).
 - **Séance de révision** (bouton « Réviser ») : tous les items dus des compétences
   déverrouillées, 20 max, toutes compétences mélangées.

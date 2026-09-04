@@ -12,6 +12,7 @@ import * as bilan from './bilan.js';
 import * as gl from './guided-logic.js';
 import * as home from './home.js';
 import * as figs from './figures.js';
+import * as anim from './anim.js';
 
 window.__RS_STARTED = true; // signale à index.html que le module a bien démarré
 
@@ -248,7 +249,10 @@ function renderSkill(root, skillId) {
     h('section', { class: 'counts' },
       stat('nouveaux', counts.fresh), stat('à revoir', counts.due), stat('maîtrisés', counts.mastered), stat('exercices', counts.total)),
     skill.lesson
-      ? h('details', { class: 'lesson', open: st.sessions === 0 }, h('summary', {}, '📖 Leçon'), h('div', { class: 'lesson-body', html: renderLesson(skill.lesson, figures) }))
+      ? h('details', { class: 'lesson', open: st.sessions === 0 }, h('summary', {}, '📖 Leçon'),
+          h('div', { class: 'lesson-tools' },
+            h('button', { class: 'btn btn-small lesson-anim-btn', type: 'button', hidden: true, 'aria-pressed': 'false' }, anim.lessonButtonLabel(false))),
+          h('div', { class: 'lesson-body', html: renderLesson(skill.lesson, figures) }))
       : null,
     renderCompletsCard(skill, st) || document.createDocumentFragment(), // null → « null » affiché sinon
     !unlocked
@@ -705,4 +709,5 @@ function renderOfflineFigures() {
 // ---------------------------------------------------------------- démarrage
 window.addEventListener('hashchange', route);
 figs.observe(document.getElementById('app')); // gabarits créés après coup (choix, corrections, étapes)
+anim.install(document.getElementById('app'));  // symboles animés : toucher, bouton des leçons
 route();

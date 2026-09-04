@@ -27,7 +27,8 @@ export function figureHtml(id, figures = {}, { block = false } = {}) {
     return `<span class="fig-missing">[figure manquante : ${escapeHtml(id)}]</span>`;
   }
   const attr = `data-fig="${escapeHtml(id)}"`;
-  return block ? `<figure class="fig fig-block" ${attr}>${svg}</figure>` : `<span class="fig fig-inline" ${attr}>${svg}</span>`;
+  const anim = /\sdata-anim=/.test(svg) ? ' fig-anim' : ''; // symbole animable (voir anim.js)
+  return block ? `<figure class="fig fig-block${anim}" ${attr}>${svg}</figure>` : `<span class="fig fig-inline${anim}" ${attr}>${svg}</span>`;
 }
 
 /** Mise en forme en ligne d'un texte déjà échappé. */

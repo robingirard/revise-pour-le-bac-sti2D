@@ -7,6 +7,7 @@
     'liaison-pivot-axe': svg(`<line x1="50" y1="10" x2="50" y2="35" stroke="${RED}"/><circle cx="50" cy="50" r="15" stroke="${BLUE}"/><line x1="50" y1="65" x2="50" y2="90" stroke="${BLUE}"/><text x="58" y="34" font-size="11" fill="#333" stroke="none">A</text>`),
     'liaison-glissiere-axe': svg(`<line x1="50" y1="10" x2="50" y2="35" stroke="${RED}"/><rect x="35" y="35" width="30" height="30" stroke="${BLUE}"/><line x1="35" y1="35" x2="65" y2="65" stroke="${RED}"/><line x1="65" y1="35" x2="35" y2="65" stroke="${RED}"/><line x1="50" y1="65" x2="50" y2="90" stroke="${BLUE}"/><text x="58" y="34" font-size="11" fill="#333" stroke="none">A</text>`),
     'liaison-rotule': svg(`<line x1="50" y1="10" x2="50" y2="36" stroke="${RED}"/><circle cx="50" cy="50" r="14" stroke="${RED}"/><path d="M 31 50 A 19 19 0 0 0 69 50" stroke="${BLUE}"/><line x1="50" y1="69" x2="50" y2="90" stroke="${BLUE}"/><text x="58" y="34" font-size="11" fill="#333" stroke="none">A</text>`),
+    'liaison-pivot-anim': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="120" height="120" data-anim="rot" style="--cx:50px;--cy:50px"><g fill="none" stroke-width="3" stroke-linecap="round"><line class="s1" x1="50" y1="10" x2="50" y2="35" stroke="${RED}"/><circle cx="50" cy="50" r="15" stroke="${BLUE}"/><line x1="50" y1="65" x2="50" y2="90" stroke="${BLUE}"/><text x="58" y="34" font-size="11" fill="#333" stroke="none">A</text></g></svg>`,
     'liaison-appui-plan': svg(`<line x1="50" y1="10" x2="50" y2="46" stroke="${RED}"/><line x1="30" y1="46" x2="70" y2="46" stroke="${RED}"/><line x1="15" y1="52" x2="85" y2="52" stroke="${BLUE}"/><line x1="50" y1="52" x2="50" y2="90" stroke="${BLUE}"/><text x="58" y="42" font-size="11" fill="#333" stroke="none">A</text>`),
   };
 
@@ -35,7 +36,7 @@
       explanation: 'Position en mouvement uniformément varié : $$x(t) = \\tfrac12 a t^2 + v_0 t + x_0$$ (formule affichée pour tester).' } },
     { id: 'mob-mcq-1', skill: 'liaisons-mobilites', type: 'mcq', level: 1, tags: ['notation'], payload: {
       prompt: 'Une rotation autour de l\'axe $\\vec{z}$ se note :', choices: ['Rz', 'Tz', 'Rx', 'Ty'], answer: [0],
-      feedback: [null, 'Non : **T** désigne une translation (déplacement en ligne droite), pas une rotation.', 'Non : l\'axe est **z**, pas x.', 'Non : **T** désigne une translation, et l\'axe est z.'],
+      feedback: [null, 'Tu as répondu **rotation** : {{fig:liaison-pivot-anim}}. Réponse : une **translation** {{fig:lazy-demo-anim}}.', 'Non : l\'axe est **z**, pas x.', 'Non : **T** désigne une translation, et l\'axe est z.'],
       explanation: '**R** pour rotation, **z** pour l\'axe autour duquel on tourne.' } },
     { id: 'mob-mcq-3', skill: 'liaisons-mobilites', type: 'mcq', level: 1, tags: ['porte'], payload: {
       prompt: '{{emoji:🚪}} Une **porte** sur ses gonds (axe vertical z). Quel est son seul degré de liberté par rapport au mur ?', choices: ['Rz', 'Tz', 'Rx', 'Ty'], answer: [0],
@@ -190,7 +191,7 @@
     title: 'Révise STI2D',
     figures,
     // Figures chargées à la demande (dev/figures/*.svg servies sous ./figures/ par dev/browser.mjs)
-    figureIndex: { 'lazy-demo-1': { w: 180, h: 90, bytes: 700 }, 'lazy-demo-2': { w: 120, h: 120, bytes: 500 }, 'lazy-demo-absente': { w: 100, h: 60, bytes: 1000 } },
+    figureIndex: { 'lazy-demo-1': { w: 180, h: 90, bytes: 700 }, 'lazy-demo-2': { w: 120, h: 120, bytes: 500 }, 'lazy-demo-anim': { w: 120, h: 60, bytes: 600 }, 'lazy-demo-absente': { w: 100, h: 60, bytes: 1000 } },
     units: [
       {
         id: 'liaisons',
@@ -201,7 +202,7 @@
           {
             id: 'liaisons-mobilites', title: 'Les 6 mobilités', icon: '🧭',
             description: 'Translations, rotations et degrés de liberté.', prerequisites: [], levels: 2,
-            lesson: `# Les six mobilités
+            lesson: `# Les six mobilités\n\nSurvole ou touche un symbole pour le voir bouger : {{fig:liaison-pivot-anim}} et {{fig:lazy-demo-anim}}\n
 Deux solides **sans aucun contact** peuvent bouger l'un par rapport à l'autre de **6** façons indépendantes :
 
 - en **translation** suivant chacun des 3 axes : Tx, Ty, Tz ;

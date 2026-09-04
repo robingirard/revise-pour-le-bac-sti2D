@@ -103,3 +103,12 @@ test('ensureIndex : lit figures/index.json quand CONTENT ne fournit pas l’inde
   assert.deepEqual(await figs.ensureIndex(), { k: { w: 5, h: 5, bytes: 9 } });
   assert.equal(figs.isLazy('k'), true);
 });
+
+test('fig-anim : les figures en ligne animables portent la classe (render)', async () => {
+  const { renderRich } = await import('../js/render.js');
+  const figures = { anim: '<svg xmlns="http://www.w3.org/2000/svg" data-anim="rot" style="--cx:10px;--cy:10px"><circle class="s1" r="1"/></svg>',
+                    plain: '<svg xmlns="http://www.w3.org/2000/svg"></svg>' };
+  assert.match(renderRich('{{fig:anim}}', figures), /<figure class="fig fig-block fig-anim" data-fig="anim"/);
+  assert.match(renderRich('a {{fig:anim}} b', figures), /<span class="fig fig-inline fig-anim" data-fig="anim"/);
+  assert.doesNotMatch(renderRich('{{fig:plain}}', figures), /fig-anim/);
+});

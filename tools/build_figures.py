@@ -201,8 +201,10 @@ def postprocess_svg(text, prefix):
     text = text.replace("<svg ", f'<svg class="fig" role="img" data-fig="{prefix}" ', 1)
     if prefix in ANIMS:
         # symbole animable : le solide 1 (rouge) reçoit la classe s1, le centre A est donné en unités utilisateur
+        # chaque élément rouge est enveloppé dans un groupe (un transform CSS sur l'élément lui-même
+        # écraserait son attribut transform et le déplacerait) ; c'est le groupe qui est animé
         text = re.sub(r"<(path|circle|use)\b([^>]*)/>",
-                      lambda m: f'<{m.group(1)} class="s1"{m.group(2)}/>' if RED.search(m.group(2)) else m.group(0), text)
+                      lambda m: f'<g class="s1"><{m.group(1)}{m.group(2)}/></g>' if RED.search(m.group(2)) else m.group(0), text)
         w = re.search(r'\bwidth="([\d.]+)pt"', text)
         cx = float(w.group(1)) / 2 if w else 0
         text = text.replace("<svg ", f'<svg data-anim="{ANIMS[prefix]}" style="--cx:{cx:.2f}px;--cy:{CENTER_Y_PT:.2f}px" ', 1)

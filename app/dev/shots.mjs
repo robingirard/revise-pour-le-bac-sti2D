@@ -133,6 +133,25 @@ try {
   console.log('hors-ligne :', offlineTxt);
   await evaluate('document.querySelector(".offline-box").scrollIntoView()'); await sleep(150);
   await shot('96-settings-offline');
+  // Symboles animés : leçon avec le bouton actif, puis correction avec figures
+  await goto('#/skill/liaisons-mobilites');
+  await evaluate('document.querySelector("details.lesson") && (document.querySelector("details.lesson").open = true)');
+  await sleep(600);
+  const animBtnVisible = await evaluate('(() => { const b = document.querySelector(".lesson-anim-btn"); return b ? !b.hidden : null; })()');
+  if (animBtnVisible !== true) throw new Error(`bouton d'animation absent ou masqué (${animBtnVisible})`);
+  await click('.lesson-anim-btn');
+  await sleep(300);
+  const animState = await evaluate('JSON.stringify({ playingAll: !!document.querySelector(".lesson-body.playing-all"), animSvgs: document.querySelectorAll(".lesson-body svg[data-anim]").length, badges: document.querySelectorAll(".lesson-body .fig-anim").length, label: document.querySelector(".lesson-anim-btn").textContent })');
+  console.log('animation :', animState);
+  if (JSON.parse(animState).animSvgs < 2) throw new Error('figures animables non détectées');
+  await evaluate('document.querySelector(".lesson-body").scrollIntoView()'); await sleep(100);
+  await shot('97-anim-lesson');
+  await goto('#/session/liaisons-mobilites?item=mob-mcq-1&seed=1');
+  await click('.choice', 1); await click('.btn-verify'); await sleep(500);
+  const fbFigs = await evaluate('document.querySelectorAll(".feedback svg").length');
+  console.log('figures dans la correction :', fbFigs);
+  if (fbFigs < 2) throw new Error('figures absentes du bandeau de correction');
+  await shot('98-feedback-figures');
   const errors = await evaluate('document.querySelectorAll(".error").length');
   console.log('OK — captures dans', OUT, '; éléments .error visibles :', errors);
 } finally {

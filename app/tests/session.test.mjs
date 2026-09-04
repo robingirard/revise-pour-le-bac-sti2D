@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildSkillSession, buildReviewSession, answer, summary, isFinished, currentItemId, mulberry32, shuffle, skillCounts, countDue } from '../js/session.js';
+import { buildSkillSession, buildReviewSession, answer, summary, isFinished, currentItemId, mulberry32, shuffle, skillCounts, countDue, familyOf, diversify, SKILL_SESSION_SIZE } from '../js/session.js';
 import { grade } from '../js/scheduler.js';
 import { addDays } from '../js/dates.js';
 import { makeContent, makeProgress } from './helpers.mjs';
@@ -16,16 +16,48 @@ test('mulberry32 est déterministe et shuffle conserve les éléments', () => {
   assert.deepEqual(arr, [1, 2, 3, 4, 5, 6, 7, 8]); // copie
 });
 
-test('séance de compétence : nouveaux de niveau ≤ niveau+1, 10 max', () => {
+test('séance de compétence : nouveaux de niveau ≤ niveau+1, 8 max', () => {
+  assert.equal(SKILL_SESSION_SIZE, 8);
   const content = makeContent();
   const p = makeProgress();
   const s = buildSkillSession(content, p, 's1', { today: T, rng: mulberry32(3) });
-  assert.equal(s.queue.length, 8); // 8 items de niveau 1 seulement (niveau 2 inaccessible au niveau 0)
+  assert.equal(s.queue.length, 8); // 8 items de niveau 1 (niveau 2 inaccessible au niveau 0)
   assert.ok(s.queue.every((id) => content.items[id].level === 1));
   p.skills.s1 = { level: 1, progress: 0, sessions: 2, xp: 0 };
   const s2 = buildSkillSession(content, p, 's1', { today: T, rng: mulberry32(3) });
-  assert.equal(s2.queue.length, 10);
-  assert.equal(new Set(s2.queue).size, 10);
+  assert.equal(s2.queue.length, 8); // plafond de la séance
+  assert.equal(new Set(s2.queue).size, 8);
+  const s3 = buildSkillSession(content, p, 's1', { today: T, rng: mulberry32(3), size: 12 });
+  assert.equal(s3.queue.length, 12);
+});
+
+test('familyOf : générateur ou « h » pour les items écrits à la main', () => {
+  assert.equal(familyOf('symboles.symbole_vers_nom.pivot.bout'), 'symboles.symbole_vers_nom');
+  assert.equal(familyOf('mobilites.h1a2b3c4d'), 'mobilites.h');
+  assert.equal(familyOf('graphe.lecture.etau.E1-E2'), 'graphe.lecture');
+  assert.equal(familyOf('s1-l1-3'), 's1-l1-3');
+});
+
+test('diversify : jamais deux items consécutifs de même famille quand c\'est évitable', () => {
+  const ids = ['a.x.1', 'a.x.2', 'a.x.3', 'a.y.1', 'a.y.2', 'a.z.1'];
+  const out = diversify(ids);
+  assert.deepEqual([...out].sort(), [...ids].sort());
+  for (let i = 1; i < out.length; i++) assert.notEqual(familyOf(out[i]), familyOf(out[i - 1]));
+  // quand c'est inévitable, on garde l'ordre et on n'invente rien
+  assert.deepEqual(diversify(['a.x.1', 'a.x.2']), ['a.x.1', 'a.x.2']);
+  assert.deepEqual(diversify([]), []);
+});
+
+test('séance : les dus restent avant les nouveaux, et la file est diversifiée', () => {
+  const content = makeContent();
+  // familles : on renomme virtuellement via une fonction de famille par niveau
+  const p = makeProgress();
+  for (const id of ['s1-l1-1', 's1-l1-2', 's1-l1-3']) p.items[id] = grade(undefined, 'good', addDays(T, -5));
+  const s = buildSkillSession(content, p, 's1', { today: T, rng: mulberry32(11) });
+  const dueSet = new Set(['s1-l1-1', 's1-l1-2', 's1-l1-3']);
+  const firstNew = s.queue.findIndex((id) => !dueSet.has(id));
+  assert.ok(s.queue.slice(0, firstNew).every((id) => dueSet.has(id)), 'les dus sont en tête');
+  assert.ok(s.queue.slice(firstNew).every((id) => !dueSet.has(id)), 'aucun dû après le premier nouveau');
 });
 
 test('les items dus passent avant les nouveaux ; les déjà vus complètent', () => {

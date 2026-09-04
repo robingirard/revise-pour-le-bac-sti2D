@@ -411,3 +411,30 @@ figure.fig-lazy { display: block; margin: 10px auto; }
 .fig-unavailable { font-style: italic; color: var(--muted); font-size: 0.85em; }
 .offline-box { display: flex; flex-direction: column; gap: 8px; }
 .offline-bar { height: 8px; }
+
+/* ---- symboles de liaison animés (svg[data-anim], solide 1 = .s1 ; voir anim.js) ---- */
+svg[data-anim] { cursor: pointer; }
+svg[data-anim] .s1 { transform-box: view-box; transform-origin: var(--cx, 50%) var(--cy, 50%); }
+svg[data-anim="rot"]:hover .s1, svg[data-anim="rot"].playing .s1, .playing-all svg[data-anim="rot"] .s1 { animation: fig-rot 3s linear infinite; }
+svg[data-anim="rock"]:hover .s1, svg[data-anim="rock"].playing .s1, .playing-all svg[data-anim="rock"] .s1 { animation: fig-rock 1.2s ease-in-out infinite alternate; }
+svg[data-anim="tx"]:hover .s1, svg[data-anim="tx"].playing .s1, .playing-all svg[data-anim="tx"] .s1 { animation: fig-tx 1.6s ease-in-out infinite alternate; }
+svg[data-anim="ty"]:hover .s1, svg[data-anim="ty"].playing .s1, .playing-all svg[data-anim="ty"] .s1 { animation: fig-ty 1.6s ease-in-out infinite alternate; }
+@keyframes fig-rot { to { transform: rotate(360deg); } }
+@keyframes fig-rock { from { transform: rotate(-25deg); } to { transform: rotate(25deg); } }
+@keyframes fig-tx { from { transform: translateX(-10px); } to { transform: translateX(10px); } }
+@keyframes fig-ty { from { transform: translateY(-10px); } to { transform: translateY(10px); } }
+.fig-anim { position: relative; }
+.fig-anim::after {
+  content: '▶'; position: absolute; right: 2px; bottom: 2px; width: 15px; height: 15px; line-height: 15px;
+  font-size: 9px; text-align: center; border-radius: 50%; color: var(--muted); background: var(--card);
+  border: 1px solid var(--border); opacity: 0.8; pointer-events: none;
+}
+.lesson-tools { margin: 4px 0 8px; }
+.lesson-tools .btn-small { font-size: 0.85rem; padding: 6px 10px; }
+@media (prefers-reduced-motion: reduce) { svg[data-anim] .s1 { animation: none !important; } }
+
+/* ---- figures dans le bandeau de correction : petites et en ligne ---- */
+.feedback svg[data-fig^="liaison-"], .feedback svg[data-fig^="contact-"], .feedback svg[data-fig^="mobilite"] {
+  width: 96px; height: auto; max-height: none; display: inline-block; vertical-align: middle;
+}
+.feedback .fig-inline, .feedback .fig-block { display: inline-block; margin: 2px 4px; vertical-align: middle; }

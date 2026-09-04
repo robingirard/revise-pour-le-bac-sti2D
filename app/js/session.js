@@ -3,7 +3,7 @@
 import { isDue, isNew, isMastered } from './scheduler.js';
 import { isUnlocked } from './progression.js';
 
-export const SKILL_SESSION_SIZE = 10;
+export const SKILL_SESSION_SIZE = 8;
 export const REVIEW_SESSION_SIZE = 20;
 
 /** Générateur pseudo-aléatoire déterministe (mulberry32). */
@@ -26,6 +26,33 @@ export function shuffle(arr, rng = Math.random) {
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
+}
+
+/**
+ * Famille d'un item = son identifiant jusqu'au deuxième point (compétence.générateur) ; les items écrits
+ * à la main (« compétence.h<crc> ») forment la famille « compétence.h ». Sert à varier les séances.
+ */
+export function familyOf(id) {
+  const parts = String(id).split('.');
+  if (parts.length < 2) return parts[0];
+  const second = /^h[0-9a-f]{6,}$/i.test(parts[1]) ? 'h' : parts[1];
+  return `${parts[0]}.${second}`;
+}
+
+/**
+ * Réordonne une file (passage glouton, déterministe) pour éviter deux items consécutifs de la même
+ * famille quand c'est possible ; l'ordre relatif des autres items est conservé au mieux.
+ */
+export function diversify(ids, family = familyOf) {
+  const rest = ids.slice();
+  const out = [];
+  while (rest.length) {
+    const prev = out.length ? family(out[out.length - 1]) : null;
+    let k = rest.findIndex((id) => family(id) !== prev);
+    if (k < 0) k = 0;
+    out.push(rest.splice(k, 1)[0]);
+  }
+  return out;
 }
 
 export function findSkill(content, skillId) {
@@ -121,18 +148,23 @@ export function buildSkillSession(content, progress, skillId, opts = {}) {
   const forced = forceItemId ? content.items[forceItemId] : null;
   if (forced && forced.type === 'guided') return makeSession('skill', skillId, [forceItemId]); // seul dans sa séance
   const { due, fresh, seen } = classifySkillItems(content, progress, skillId, today);
-  const queue = due.slice(0, size);
+  // Les dus d'abord (mélangés puis diversifiés), puis les nouveaux et les déjà vus (idem)
+  const dueQueue = due.slice(0, size);
+  const rest = [];
   for (const item of fresh) {
-    if (queue.length >= size) break;
-    queue.push(item);
+    if (dueQueue.length + rest.length >= size) break;
+    rest.push(item);
   }
-  if (queue.length < size) {
+  if (dueQueue.length + rest.length < size) {
     for (const item of shuffle(seen, rng)) {
-      if (queue.length >= size) break;
-      queue.push(item);
+      if (dueQueue.length + rest.length >= size) break;
+      rest.push(item);
     }
   }
-  let ids = shuffle(queue.map((it) => it.id), rng);
+  let ids = [
+    ...diversify(shuffle(dueQueue.map((it) => it.id), rng)),
+    ...diversify(shuffle(rest.map((it) => it.id), rng)),
+  ];
   if (forceItemId && content.items[forceItemId]) {
     ids = [forceItemId, ...ids.filter((id) => id !== forceItemId)];
   }
@@ -142,7 +174,7 @@ export function buildSkillSession(content, progress, skillId, opts = {}) {
 /** Séance de révision : tous les items dus des compétences déverrouillées (20 max), mélangés. */
 export function buildReviewSession(content, progress, opts = {}) {
   const { today, size = REVIEW_SESSION_SIZE, rng = Math.random } = opts;
-  const ids = shuffle(dueItems(content, progress, today).slice(0, size).map((it) => it.id), rng);
+  const ids = diversify(shuffle(dueItems(content, progress, today).slice(0, size).map((it) => it.id), rng));
   return makeSession('review', null, ids);
 }
 
