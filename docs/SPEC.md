@@ -190,7 +190,9 @@ couleur au build). Spécification :
     "courroie": { "motion": "dash", "speed": 29 },                         // tirets défilants (pt/s)
     "E6": { "motion": "rocker", "pivot": [4, 0], "coupler": "E2" },         // balancier d'un quadrilatère articulé
     "E7": { "motion": "aim", "pivot": [1.2, 0], "at": "E1", "point": [2.6, 1.9] },              // corps de vérin
-    "E8": { "motion": "aim", "pivot": [1.2, 0], "at": "E1", "point": [2.6, 1.9], "slide": true } } }   // tige de vérin
+    "E8": { "motion": "aim", "pivot": [1.2, 0], "at": "E1", "point": [2.6, 1.9], "slide": true },   // tige de vérin
+    "E9": { "motion": "attach", "of": "E1", "point": [-1.3, 0.9] },                    // écrou qui suit un point, sans tourner
+    "E10": { "motion": "track", "of": "E1", "point": [-1.3, 0.9], "dir": [0, 1] } } }   // idem, composante le long de dir
 ```
 
 Coordonnées en **cm** dans le repère du dessin TikZ ; conversion vers les unités utilisateur du SVG :
@@ -207,7 +209,9 @@ du cercle de centre `a(t)` et de rayon `|ab|` avec le cercle de centre `pivot` e
 côté que la position dessinée ; `aim` (corps de vérin) : rotation autour de `pivot` (fixe) de l'angle qui amène
 la direction `pivot → point` sur `pivot → point(t)`, où `point` est solidaire de la classe `at` ; avec
 `slide: true` (tige de vérin), la pièce est en plus translatée le long de cet axe pour rester attachée en
-`point(t)` ; `dash` (courroie, chaîne) : pas de transformation,
+`point(t)` ; `attach` : translation pure qui suit le point `point` de la classe `of` (écrou au bout d'une barre) ;
+`track` : même chose en ne gardant que la composante le long de `dir` (vis d'un cric qui monte avec ses écrous) ;
+`dash` (courroie, chaîne) : pas de transformation,
 le groupe reçoit `stroke-dasharray` et un `stroke-dashoffset` qui décroît de `speed` unités SVG par seconde
 (sens de tracé du chemin ; distance par cycle arrondie à un nombre entier de motifs). Les transformations
 sont des matrices affines

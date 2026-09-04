@@ -147,3 +147,21 @@ test('aim : le corps du vérin vise le point mobile, la tige y reste attachée (
   const lifted = apply(poseAt(spec, 0.5).E1, P0);                    // à t = 0,5 : −30°, l'attache P (à gauche de C) est montée (y SVG plus petit)
   assert.ok(lifted[1] < P0[1]);
 });
+
+test('attach / track : écrou qui suit le bout d’une barre, vis qui ne garde que la montée', () => {
+  const spec = { bbox: [-3, -1, 3, 4], border: 0, classes: {
+    barre: { motion: 'rotate', center: [0, 0], offset: -12.5, amplitude: -12.5, phase: 0.75 },
+    ecrou: { motion: 'attach', of: 'barre', point: [-1.311, 0.918] },
+    vis: { motion: 'track', of: 'barre', point: [-1.311, 0.918], dir: [0, 1] } } };
+  const L0 = toSvg([-1.311, 0.918], spec);
+  for (const t of [0, 0.25, 0.5]) {
+    const poses = poseAt(spec, t);
+    const L = apply(poses.barre, L0);
+    closePt(apply(poses.ecrou, L0), L, 1e-6);                        // l'écrou reste au bout de la barre
+    const V = apply(poses.vis, L0);
+    close(V[0], L0[0], 1e-6);                                        // la vis ne bouge pas horizontalement
+    close(V[1], L[1], 1e-6);                                         // mais suit la hauteur de l'écrou
+    assert.equal(poses.ecrou.a, 1); assert.equal(poses.ecrou.b, 0); // translation pure
+  }
+  assert.ok(apply(poseAt(spec, 0.5).barre, L0)[1] < L0[1]);         // à mi-cycle la barre gauche s'est relevée (y SVG plus petit)
+});

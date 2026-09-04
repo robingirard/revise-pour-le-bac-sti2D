@@ -98,7 +98,8 @@ CENTER_Y_PT = 2 + 1.3 * 72 / 2.54   # bord 2 pt + 1,3 cm : ordonnée du centre A
 
 
 PALETTE = {"solideA": (225, 55, 25), "solideB": (45, 75, 205), "solideC": (225, 105, 180), "solideD": (235, 150, 20),
-           "solideE": (20, 150, 90), "solideF": (110, 60, 180), "black": (0, 0, 0)}
+           "solideE": (20, 150, 90), "solideF": (110, 60, 180),
+           "solideG": (0, 150, 160), "solideH": (140, 90, 40), "black": (0, 0, 0)}
 MECH = {}   # nom de figure de schéma → {id de classe: regex de sa couleur}
 
 

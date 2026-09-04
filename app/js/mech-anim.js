@@ -4,6 +4,7 @@
 // (`bbox`), bord en points (`border`), durée d'un cycle (`duration`, s) et mouvement de chaque classe
 // (`fixed`, `rotate`, `translate`, `follow`, `coupler`, `slider`, `rocker` : balancier d'un quadrilatère
 // articulé, `aim` : pièce qui pivote pour viser un point mobile, avec `slide` pour la tige d'un vérin,
+// `attach` : translation qui suit un point d'une autre classe, `track` : idem projetée sur une direction,
 // `dash` : courroie dont les tirets défilent).
 // Partie géométrique pure (testable),
 // puis pilote DOM (requestAnimationFrame), déclenché par anim.js (survol, toucher, bouton de leçon).
@@ -154,6 +155,15 @@ export function poseAt(spec, t) {
         const p = points[c.coupler];
         const P = toSvg(c.pivot || [0, 0], spec);
         M = p ? rotSvg(Math.atan2(p.B[1] - P[1], p.B[0] - P[0]) - Math.atan2(p.B0[1] - P[1], p.B0[0] - P[0]), P[0], P[1]) : IDENTITY;
+        break;
+      }
+      case 'attach':      // pièce qui suit, sans tourner, le point `point` de la classe `of` (écrou au bout d'une barre)
+      case 'track': {     // idem, mais seule la composante le long de `dir` est conservée (vis qui monte avec ses écrous)
+        const Q0 = toSvg(c.point || [0, 0], spec);
+        const Q = apply(pose(c.of), Q0);
+        let dx = Q[0] - Q0[0], dy = Q[1] - Q0[1];
+        if (c.motion === 'track') { const d = dirSvg(c.dir); const s = dx * d[0] + dy * d[1]; dx = s * d[0]; dy = s * d[1]; }
+        M = translate(dx, dy);
         break;
       }
       case 'aim': {       // corps de vérin : pivote autour de `pivot` pour viser le point `point` de la classe `at` ;
