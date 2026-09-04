@@ -2082,7 +2082,7 @@ units:
       level: 3
       prompt: 'Pour $f(x)=\mathrm{e}^{-x}$ sur $\left[0\,;1\right]$ avec $n=100$, le programme renvoie $0{,}6353$, alors que la valeur exacte de l''intégrale est $0{,}6321$. Pourquoi cette surestimation ?'
       choices:
-      - Parce que $f$ est **décroissante** : sur chaque morceau, la borne gauche donne la plus grande valeur de $f$
+      - 'Parce que $f$ est **décroissante** : sur chaque morceau, la borne gauche donne la plus grande valeur de $f$'
       - Parce que $n$ est trop petit pour que la méthode fonctionne
       - Parce que l'ordinateur arrondit à chaque addition
       - Parce que la fonction exponentielle n'admet pas de primitive
