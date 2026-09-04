@@ -2,8 +2,9 @@
 %% Arborescence système -> sous-système -> blocs ; losange plein = composant
 %% obligatoire, losange vide = composant optionnel ; le nombre porté sur le lien
 %% est le nombre d'éléments identiques.
-%% Mise en page « téléphone » : les quatre blocs sont rangés en 2 x 2 ; les deux
-%% blocs du bas sont reliés par les côtés (liens qui contournent la grille).
+%% Mise en page « téléphone » (largeur < 9 cm) : le système et le sous-système
+%% sont côte à côte, les quatre blocs sont rangés en 2 x 2 ; les deux blocs du
+%% bas sont raccordés par le côté, leurs liens contournant la grille.
 \documentclass[tikz,border=4pt]{standalone}
 \usepackage{liaisons}
 \begin{document}
@@ -12,43 +13,50 @@
   lien/.style={line width=0.8pt, black!75},
   boite/.style={draw=solideE, line width=0.9pt, fill=solideE!7, inner sep=2.5pt,
                 font=\scriptsize,
-                execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+                execute at begin node={\linespread{0.9}\selectfont
+                                       \hyphenpenalty=10000\exhyphenpenalty=10000}},
   tete/.style={boite, align=center},
   vals/.style={boite, align=left, fill=white},
   mult/.style={font=\scriptsize, inner sep=1.5pt}]
 
 %% ---- macro « bloc » : \bloc{nom TikZ}{x}{y}{largeur}{stéréotype}{nom}{values} ----
 \newcommand\bloc[7]{%
-  \node[tete, text width=#4, anchor=north] (#1h) at (#2,#3) {\textit{#5}\\[1pt] \textbf{#6}};
+  \node[tete, text width=#4, anchor=north] (#1h) at (#2,#3) {\textit{#5}\\[0.5pt] \textbf{#6}};
   \node[vals, text width=#4, anchor=north] (#1v) at (#1h.south) {#7};}
 %% ---- losanges de composition : plein (obligatoire) / vide (optionnel) ----
 \newcommand\losangeplein[2]{%
   \fill[black] (#1,#2) -- (#1+0.12,#2-0.16) -- (#1,#2-0.32) -- (#1-0.12,#2-0.16) -- cycle;}
 \newcommand\losangevide[2]{%
   \draw[lien, fill=white] (#1,#2) -- (#1+0.12,#2-0.16) -- (#1,#2-0.32) -- (#1-0.12,#2-0.16) -- cycle;}
+%% ---- losange horizontal (pointe à droite) : lien système -> sous-système ----
+\newcommand\losangepleinh[2]{%
+  \fill[black] (#1,#2) -- (#1-0.16,#2+0.12) -- (#1-0.32,#2) -- (#1-0.16,#2-0.12) -- cycle;}
 
 %% ---- repères de la grille -------------------------------------------
-\def\cgauche{2.00}  % centre de la colonne de gauche
-\def\cdroite{5.60}  % centre de la colonne de droite
-\def\rhaut{3.20}    % haut des blocs de la rangée du haut
-\def\rbas{0.95}     % haut des blocs de la rangée du bas
-\def\lb{3cm}        % largeur de texte d'un bloc
+\def\cgauche{2.20}  % centre de la colonne de gauche
+\def\cdroite{6.40}  % centre de la colonne de droite
+\def\rhaut{4.40}    % haut des blocs de la rangée du haut
+\def\rbas{2.20}     % haut des blocs de la rangée du bas
+\def\lb{3.7cm}      % largeur de texte d'un bloc
 
 %% ================== cadre à onglet ====================================
-\draw[cadre] (0,-0.55) rectangle (7.6,6.85);
-\draw[cadre] (0,6.40) -- (4.5,6.40) -- (4.75,6.63) -- (4.75,6.85);
-\node[font=\scriptsize, anchor=west, inner sep=3pt] at (0.1,6.62)
+\draw[cadre] (0,0.24) rectangle (8.6,6.90);
+\draw[cadre] (0,6.45) -- (5.05,6.45) -- (5.30,6.68) -- (5.30,6.90);
+\node[font=\scriptsize, anchor=west, inner sep=3pt] at (0.1,6.67)
      {\texttt{bdd} [Paquet] Blocks [BDD Ferry Boat]};
+%% légende des losanges, logée sur la ligne de l'onglet
+\losangeplein{5.60}{6.79}
+\node[font=\scriptsize, anchor=west, inner sep=2pt] at (5.75,6.63) {obligatoire};
+\losangevide{7.15}{6.79}
+\node[font=\scriptsize, anchor=west, inner sep=2pt] at (7.30,6.63) {optionnel};
 
-%% ================== niveau 1 : le système =============================
-\bloc{sys}{3.80}{6.20}{3.3cm}{«system»}{Ferry Boat}
+%% ============ niveaux 1 et 2 : système et sous-système, côte à côte ===
+\bloc{sys}{\cgauche}{6.35}{3.3cm}{«system»}{Ferry Boat}
      {Longueur = 13~m ; Largeur = 4,70~m ; Vitesse = 7~nœuds}
-
-%% ================== niveau 2 : le sous-système ========================
-\node[tete, text width=2.9cm, anchor=north] (sub) at (3.80,4.30)
-     {\textit{«subsystem»}\\[1pt] \textbf{Alimentation électrique}};
-\losangeplein{3.80}{4.82}
-\draw[lien] (3.80,4.50) -- (3.80,4.30);
+\node[tete, text width=3.3cm, anchor=north] (sub) at (\cdroite,6.35)
+     {\textit{«subsystem»}\\[0.5pt] \textbf{Alimentation électrique}};
+\losangepleinh{4.30}{5.97}
+\draw[lien] (3.94,5.97) -- (4.30,5.97) (4.30,5.97) -- (sub.west);
 
 %% ================== niveau 3 : les quatre blocs (2 x 2) ===============
 \bloc{pv1}{\cgauche}{\rhaut}{\lb}{«block»}{Panneaux photovoltaïques Propulsion}
@@ -62,24 +70,21 @@
 
 %% ================== liens de composition ==============================
 %% rail horizontal sous le sous-système, porteur des quatre losanges
-\draw[lien] (2.90,3.62) -- (4.70,3.62)  (3.80,3.62) -- (3.80,3.72);
-\losangeplein{2.90}{3.62} \losangeplein{3.50}{3.62}
-\losangeplein{4.10}{3.62} \losangevide{4.70}{3.62}
-%% rangée du haut : descente directe sur le haut des blocs
-\draw[lien] (3.50,3.30) -- (3.50,3.40) -- (\cgauche,3.40) -- (\cgauche,\rhaut);
-\draw[lien] (4.10,3.30) -- (4.10,3.40) -- (\cdroite,3.40) -- (\cdroite,\rhaut);
+\draw[lien] (sub.south) -- (\cdroite,5.20) -- (4.15,5.20);
+\losangeplein{4.15}{5.20} \losangeplein{4.65}{5.20}
+\losangeplein{5.15}{5.20} \losangevide{5.65}{5.20}
+%% rangée du haut : descente sur le haut des blocs
+\draw[lien] (4.65,4.88) -- (4.65,4.70) -- (\cgauche,4.70) -- (\cgauche,\rhaut);
+\draw[lien] (5.15,4.88) -- (5.15,4.70) -- (\cdroite,4.70) -- (\cdroite,\rhaut);
 %% rangée du bas : les liens contournent la grille par les côtés
-\draw[lien] (2.90,3.30) -- (2.90,3.52) -- (0.25,3.52) |- (bath.west);
-\draw[lien] (4.70,3.30) -- (4.70,3.52) -- (7.35,3.52) |- (venh.east);
-\node[mult, anchor=north west] at (2.07,3.18) {16};
-\node[mult, anchor=north west] at (5.67,3.18) {8};
+\draw[lien] (4.15,4.88) -- (4.15,4.78) -- (0.14,4.78) |- (bath.west);
+\draw[lien] (5.65,4.88) -- (5.65,4.78) -- (8.46,4.78) |- (venh.east);
+\node[mult, anchor=north west] at (2.27,4.67) {16};
+\node[mult, anchor=north west] at (6.47,4.67) {8};
 
-%% ================== légende ===========================================
-\losangeplein{0.35}{-0.75}
-\node[font=\scriptsize, anchor=west] at (0.5,-0.91) {obligatoire};
-\losangevide{2.35}{-0.75}
-\node[font=\scriptsize, anchor=west] at (2.5,-0.91) {optionnel};
-\node[font=\scriptsize, anchor=north west] at (0.25,-1.15)
+%% ================== note de lecture ===================================
+\node[font=\scriptsize, anchor=north west, align=left, inner sep=1pt,
+      text width=4cm] at (4.45,0.84)
      {--- le nombre porté sur le lien est le nombre d'éléments identiques};
 \end{tikzpicture}
 \end{document}

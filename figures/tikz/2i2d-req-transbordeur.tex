@@ -1,6 +1,8 @@
 %% Extrait du diagramme des exigences (req) du pont transbordeur.
 %% Chaque exigence = une boîte à deux compartiments (stéréotype + nom / Id + Text).
 %% Liens : décomposition (cercle barré d'une croix, côté exigence générale) et «refine».
+%% Mise en page « téléphone » (largeur < 9 cm) : les exigences sont empilées en
+%% deux colonnes de trois rangées, la légende occupant la case libre en bas à gauche.
 \documentclass[tikz,border=4pt]{standalone}
 \usepackage{liaisons}
 \begin{document}
@@ -9,59 +11,66 @@
   lien/.style={line width=0.8pt, black!75},
   raffine/.style={-{Triangle[length=5pt,width=4.5pt]}, line width=0.8pt, black!75,
                   dash pattern=on 3pt off 2pt},
-  boite/.style={draw=solideB, line width=0.9pt, fill=white, text width=2.3cm, inner sep=3pt,
+  boite/.style={draw=solideB, line width=0.9pt, fill=white, text width=3.6cm, inner sep=2.5pt,
                 font=\scriptsize,
-                execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+                execute at begin node={\linespread{0.9}\selectfont
+                                       \hyphenpenalty=10000\exhyphenpenalty=10000}},
   tete/.style={boite, align=center},
   corps/.style={boite, align=left}]
 
 %% ---- macro « exigence » : \exig{nom TikZ}{x}{y}{stéréotype}{nom}{Id}{Text} ----
 \newcommand\exig[7]{%
-  \node[tete, anchor=north] (#1h) at (#2,#3) {\textit{#4}\\[1pt] \textbf{#5}};
+  \node[tete, anchor=north] (#1h) at (#2,#3) {\textit{#4}\\[0.5pt] \textbf{#5}};
   \node[corps, anchor=north] (#1b) at (#1h.south) {Id = "#6"\\ Text = "#7"};}
-%% ---- macro « cercle barré » (décomposition) --------------------------
-\newcommand\decomp[2]{%
-  \draw[lien, fill=white] (#1,#2) circle (0.13);
-  \draw[lien] (#1-0.13,#2) -- (#1+0.13,#2) (#1,#2-0.13) -- (#1,#2+0.13);}
+%% ---- macro « cercle barré » (décomposition) : \decompn{nom}{position} ----
+\newcommand\decompn[2]{%
+  \node[circle, draw=black!75, line width=0.7pt, fill=white, inner sep=0pt,
+        minimum size=0.26cm] (#1) at #2 {};
+  \draw[lien] (#1.west) -- (#1.east) (#1.south) -- (#1.north);}
+
+%% ---- repères de la grille -------------------------------------------
+\def\cgauche{2.10} \def\cdroite{6.35}
 
 %% ================== cadre à onglet ====================================
-\draw[cadre] (0,-0.25) rectangle (12.0,6.4);
-\draw[cadre] (0,5.95) -- (2.35,5.95) -- (2.6,6.18) -- (2.6,6.4);
-\node[font=\scriptsize, anchor=west, inner sep=3pt] at (0.1,6.17) {\texttt{req} [Paquet] Exigences};
+\draw[cadre] (0,0.35) rectangle (8.45,6.90);
+\draw[cadre] (0,6.47) -- (2.35,6.47) -- (2.60,6.70) -- (2.60,6.90);
+\node[font=\scriptsize, anchor=west, inner sep=3pt] at (0.1,6.69) {\texttt{req} [Paquet] Exigences};
 
-%% ================== les cinq exigences ================================
-\exig{r1}{1.45}{4.7}{«requirement»}{Franchissement de la Loire}{1}{Traverser la Loire à pied ou en busway}
-\exig{r11}{4.35}{5.85}{«requirement»}{Transport de véhicules et piétons}{1.1}{Charge utile de la nacelle : 100 tonnes}
-\exig{r111}{7.25}{5.85}{«functional Requirement»}{Traversée à pied}{1.1.1}{Deux cabines : 270 personnes}
-\exig{r112}{7.25}{2.9}{«functional Requirement»}{Traversée en busway}{1.1.2}{Un busway par traversée}
-\exig{r5}{10.6}{3.1}{«physical Requirement»}{Dimensions d'un busway}{5}{Largeur 2,55 m ; hauteur 3,12 m ; 150 personnes}
-
-%% ================== liens de décomposition ============================
+%% ================== rangée 1 : l'exigence générale et sa décomposition ====
+\exig{r1}{\cgauche}{6.30}{«requirement»}{Franchissement de la Loire}{1}%
+        {Traverser la Loire à pied ou en busway}
+\exig{r11}{\cdroite}{6.30}{«requirement»}{Transport de véhicules et piétons}{1.1}%
+        {Charge utile de la nacelle : 100 tonnes}
 %% « 1 » se décompose en « 1.1 » : le cercle barré est du côté de l'exigence générale
-\path let \p1 = (r1h.south east), \p2 = (r11h.south west) in
-  \pgfextra{\xdef\ya{\y1}\xdef\yb{\y2}};
-\decomp{2.9}{\ya}
-\draw[lien] (2.9,\ya+0.13) -- (2.9,\yb) -- (r11h.south west);
-%% « 1.1 » se décompose en « 1.1.1 »
-\path let \p1 = (r11h.south east), \p2 = (r111h.south west) in
-  \pgfextra{\xdef\yc{\y1}\xdef\yd{\y2}};
-\decomp{5.75}{\yc}
-\draw[lien] (5.75,\yc-0.13) -- (5.75,\yd) -- (r111h.south west);
-%% « 1.1 » se décompose en « 1.1.2 »
-\path let \p1 = (r11b.south), \p2 = (r112h.south west) in
-  \pgfextra{\xdef\ye{\y1}\xdef\yf{\y2}};
-\decomp{4.35}{\ye-0.2}
-\draw[lien] (4.35,\ye) -- (4.35,\ye-0.07);
-\draw[lien] (4.35,\ye-0.33) -- (4.35,\yf) -- (r112h.south west);
+\decompn{d1}{($(r1h.east)+(0.13,0)$)}
+\draw[lien] (d1.east) -- (r11h.west);
 
-%% ================== lien «refine» =====================================
-\draw[raffine] (9.35,2.3) -- (8.5,2.3);
-\node[font=\scriptsize, anchor=south, inner sep=2pt] at (8.93,2.35) {«refine»};
+%% ================== rangée 2 : les deux exigences fonctionnelles ==========
+\exig{r111}{\cgauche}{4.15}{«functional Requirement»}{Traversée à pied}{1.1.1}%
+        {Deux cabines : 270 personnes}
+\exig{r112}{\cdroite}{4.15}{«functional Requirement»}{Traversée en busway}{1.1.2}%
+        {Un busway par traversée}
+%% « 1.1 » se décompose en « 1.1.1 » et « 1.1.2 »
+\decompn{d11}{($(r11b.south)+(0,-0.13)$)}
+\path (d11.south) ++(0,-0.14) coordinate (bus);
+\draw[lien] (d11.south) -- (bus);
+\draw[lien] (bus) -| (r111h.north);
+\draw[lien] (bus) -- (r112h.north);
 
-%% ================== légende ===========================================
-\decomp{0.35}{-0.6}
-\node[font=\scriptsize, anchor=north west, align=left, inner sep=1pt] at (0.55,-0.45)
-     {: l'exigence générale se décompose en exigences plus détaillées\\
-      «refine» : précise l'exigence pointée};
+%% ================== rangée 3 : l'exigence physique (et la légende) ========
+\exig{r5}{\cdroite}{2.30}{«physical Requirement»}{Dimensions d'un busway}{5}%
+        {Largeur 2,55 m ; hauteur 3,12 m ; 150 personnes}
+%% lien «refine» : « 5 » précise l'exigence « 1.1.2 »
+\draw[raffine] (r5h.north) -- (r112b.south);
+\node[font=\scriptsize, anchor=west, inner sep=2pt] at (6.45,2.52) {«refine»};
+
+%% ================== légende (case libre, en bas à gauche) =================
+\decompn{dl}{(0.42,1.98)}
+\node[font=\scriptsize, anchor=north west, align=left, inner sep=2pt, text width=3.35cm,
+      execute at begin node={\linespread{0.9}\selectfont}] at (0.62,2.11)
+     {: l'exigence générale se décompose en exigences plus détaillées};
+\node[font=\scriptsize, anchor=north west, align=left, inner sep=2pt, text width=3.9cm,
+      execute at begin node={\linespread{0.9}\selectfont}] at (0.20,1.15)
+     {«refine» : précise l'exigence pointée};
 \end{tikzpicture}
 \end{document}
