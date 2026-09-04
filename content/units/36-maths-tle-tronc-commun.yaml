@@ -771,7 +771,7 @@ units:
         - Une raison est une constante, elle ne change pas au fil des rangs.
         explanation: 'Le modèle est mathématiquement valable pour tout $n$, mais il décrit une production multipliée par $7{,}7$ en trois ans. Machines, locaux et personnel imposent un plafond : un modèle exponentiel n''est valable que sur un horizon limité.'
   - id: mathstc-exp-log
-    title: Exponentielles de base $a$ et logarithme décimal
+    title: Exponentielles de base a et logarithme décimal
     icon: 📈
     description: Les fonctions $x\mapsto a^{x}$ comme modèle continu d'évolution relative constante, taux moyen, logarithme décimal et résolution d'équations.
     prerequisites:
