@@ -1,0 +1,17 @@
+{
+ "lazy-demo-1": {
+  "w": 180,
+  "h": 90,
+  "bytes": 587
+ },
+ "lazy-demo-2": {
+  "w": 120,
+  "h": 120,
+  "bytes": 422
+ },
+ "lazy-demo-absente": {
+  "w": 100,
+  "h": 60,
+  "bytes": 1000
+ }
+}

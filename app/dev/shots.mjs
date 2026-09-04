@@ -110,6 +110,7 @@ try {
   // Accueil par matière : sections dépliées puis une section repliée (état mémorisé)
   await goto('#/'); await evaluate('localStorage.removeItem("revise-sti2d.ui.v1")'); await reload(); await shot('90-home-matieres', true);
   await click('.subject-head', 0); await sleep(200); await shot('91-home-collapsed', true);
+
   await reload();
   const stillCollapsed = await evaluate('document.querySelector(".subject-head").getAttribute("aria-expanded")');
   if (stillCollapsed !== 'false') throw new Error(`section non mémorisée repliée (aria-expanded=${stillCollapsed})`);
@@ -117,6 +118,21 @@ try {
   const reopened = await evaluate('document.querySelector(".subject-head").getAttribute("aria-expanded")');
   if (reopened !== 'true') throw new Error('la puce ne déplie pas la section');
   await evaluate('localStorage.removeItem("revise-sti2d.ui.v1")');
+  // Figures chargées à la demande : leçon de la démo physique (deux figures + une absente), puis mode hors-ligne
+  await goto('#/skill/pc-demo');
+  await evaluate('document.querySelector("details.lesson") && (document.querySelector("details.lesson").open = true)');
+  await sleep(600);
+  const lazyState = await evaluate('JSON.stringify({ loaded: document.querySelectorAll(".fig[data-loaded]").length, errors: document.querySelectorAll(".fig-error").length, pending: document.querySelectorAll(".fig-lazy:not(.fig-error)").length })');
+  console.log('figures à la demande :', lazyState);
+  if (JSON.parse(lazyState).loaded < 2 || JSON.parse(lazyState).errors !== 1) throw new Error(`hydratation inattendue ${lazyState}`);
+  await shot('95-lazy-figures', true);
+  await goto('#/settings');
+  await evaluate('document.querySelector(".offline-box .btn").click()');
+  await sleep(800);
+  const offlineTxt = await evaluate('document.querySelector(".offline-status").textContent');
+  console.log('hors-ligne :', offlineTxt);
+  await evaluate('document.querySelector(".offline-box").scrollIntoView()'); await sleep(150);
+  await shot('96-settings-offline');
   const errors = await evaluate('document.querySelectorAll(".error").length');
   console.log('OK — captures dans', OUT, '; éléments .error visibles :', errors);
 } finally {

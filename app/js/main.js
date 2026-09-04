@@ -11,11 +11,13 @@ import { GRADE_LABELS } from './exercises/flashcard.js';
 import * as bilan from './bilan.js';
 import * as gl from './guided-logic.js';
 import * as home from './home.js';
+import * as figs from './figures.js';
 
 window.__RS_STARTED = true; // signale à index.html que le module a bien démarré
 
 const content = window.CONTENT;
 const figures = (content && content.figures) || {};
+figs.configure({ index: (content && content.figureIndex) || null }); // figures chargées à la demande
 let progress = store.load();
 function uiStorage() {
   try { return globalThis.localStorage || null; } catch { return null; }
@@ -57,6 +59,7 @@ function route() {
       case 'settings': renderSettings(root); break;
       default: renderHome(root);
     }
+    figs.hydrate(root);
   } catch (err) {
     console.error(err);
     root.append(h('p', { class: 'error' }, `Erreur : ${err.message}`), h('a', { class: 'btn', href: '#/' }, 'Accueil'));
@@ -247,7 +250,7 @@ function renderSkill(root, skillId) {
     skill.lesson
       ? h('details', { class: 'lesson', open: st.sessions === 0 }, h('summary', {}, '📖 Leçon'), h('div', { class: 'lesson-body', html: renderLesson(skill.lesson, figures) }))
       : null,
-    renderCompletsCard(skill, st),
+    renderCompletsCard(skill, st) || document.createDocumentFragment(), // null → « null » affiché sinon
     !unlocked
       ? h('p', { class: 'locked-msg' }, `🔒 Cette compétence se débloque quand « ${prereqTitles(skill)} » atteint le niveau 1.`)
       : counts.total === 0
@@ -287,6 +290,7 @@ function renderSessionEntry(root, skillId, query) {
     const seed = query.get('seed');
     const rng = seed != null ? sess.mulberry32(Number(seed)) : Math.random;
     session = sess.buildSkillSession(content, progress, skillId, { today: todayStr(), rng, forceItemId: query.get('item') });
+    prefetchSessionFigures(session);
   }
   if (session.queue.length === 0) {
     session = null;
@@ -302,6 +306,7 @@ function renderReviewEntry(root, query) {
     const seed = query.get('seed');
     const rng = seed != null ? sess.mulberry32(Number(seed)) : Math.random;
     session = sess.buildReviewSession(content, progress, { today: todayStr(), rng });
+    prefetchSessionFigures(session);
   }
   if (session.queue.length === 0) {
     session = null;
@@ -309,6 +314,17 @@ function renderReviewEntry(root, query) {
     return;
   }
   renderSessionScreen(root);
+}
+
+/** Précharge les figures des exercices de la séance (le service worker les garde ensuite hors-ligne). */
+function prefetchSessionFigures(s) {
+  if (!s || !Array.isArray(s.queue)) return;
+  const ids = [];
+  for (const q of s.queue) {
+    const it = content.items[q && q.id ? q.id : q];
+    if (it) ids.push(...figs.figureIdsOf(it.payload));
+  }
+  figs.prefetch(ids);
 }
 
 function renderSessionScreen(root) {
@@ -348,6 +364,7 @@ function renderSessionScreen(root) {
       handleAnswer(root, item, res);
     },
   });
+  figs.hydrate(root);
 }
 
 function handleAnswer(root, item, res) {
@@ -623,6 +640,8 @@ function renderSettings(root) {
     }
   } }, 'Tout remettre à zéro');
 
+  const offline = renderOfflineFigures();
+
   root.append(
     topbar({ back: '#/', title: 'Réglages' }),
     h('section', { class: 'settings' },
@@ -638,6 +657,8 @@ function renderSettings(root) {
       exportArea, h('div', { class: 'row-right' }, copyBtn),
       h('h2', {}, 'Importer une progression'),
       importArea, h('div', { class: 'row-right' }, importBtn), importMsg,
+      h('h2', {}, 'Mode hors-ligne'),
+      offline,
       h('h2', {}, 'Zone dangereuse'),
       h('div', { class: 'row-right' }, resetBtn),
       h('p', { class: 'muted small' }, `Contenu généré le ${content.generatedAt ? new Date(content.generatedAt).toLocaleString('fr-FR') : '—'} · version ${content.version || '?'}`)),
@@ -645,6 +666,43 @@ function renderSettings(root) {
   );
 }
 
+/** Bloc « préparer le mode hors-ligne » : télécharge toutes les figures pour que le service worker les garde. */
+function renderOfflineFigures() {
+  const idx = figs.getIndex();
+  const n = idx ? Object.keys(idx).length : 0;
+  const size = figs.formatMo(figs.totalBytes(idx));
+  const done = progress.settings.offlineFigures;
+  const status = h('p', { class: 'muted small offline-status' },
+    done && done.date ? `Figures téléchargées le ${new Date(done.date).toLocaleDateString('fr-FR')} (${done.count || n} figures).`
+      : "Les figures des leçons et des exercices sont téléchargées au fur et à mesure. Pour tout avoir hors connexion, lance le téléchargement une fois.");
+  const bar = h('div', { class: 'bar offline-bar', hidden: true }, h('div', { class: 'bar-fill', style: 'width:0%' }));
+  const btn = h('button', { class: 'btn', type: 'button', disabled: n === 0 }, `Préparer le mode hors-ligne (${n} figures, ${size})`);
+  btn.addEventListener('click', async () => {
+    btn.disabled = true;
+    bar.hidden = false;
+    status.textContent = 'Téléchargement…';
+    try {
+      const r = await figs.prefetchAll({ concurrency: 4, onProgress: (k, total) => {
+        bar.firstChild.style.width = `${Math.round(100 * k / total)}%`;
+        status.textContent = `${k} / ${total} figures téléchargées…`;
+      } });
+      progress.settings.offlineFigures = { date: new Date().toISOString(), count: r.ok };
+      store.save(progress);
+      status.textContent = r.ok === r.total
+        ? `Terminé : ${r.ok} figures disponibles hors connexion (${size}).`
+        : `Terminé : ${r.ok} figures sur ${r.total} (les autres n'ont pas pu être téléchargées).`;
+      status.className = 'ok-text small offline-status';
+    } catch (err) {
+      status.textContent = `Échec du téléchargement : ${err.message}`;
+      status.className = 'error small offline-status';
+    } finally {
+      btn.disabled = false;
+    }
+  });
+  return h('div', { class: 'offline-box' }, status, bar, h('div', { class: 'row-right' }, btn));
+}
+
 // ---------------------------------------------------------------- démarrage
 window.addEventListener('hashchange', route);
+figs.observe(document.getElementById('app')); // gabarits créés après coup (choix, corrections, étapes)
 route();

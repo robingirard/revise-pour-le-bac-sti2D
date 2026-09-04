@@ -2,6 +2,8 @@
 // Tout le texte est échappé ; seules les figures SVG (de confiance, générées par le build) et le HTML produit par KaTeX
 // (qui échappe lui-même la source) sont insérés tels quels.
 
+import { placeholderHtml } from './figures.js';
+
 const FIG_RE = /\{\{fig:([\w.-]+)\}\}/g;
 const FIG_ONLY_RE = /^\s*\{\{fig:([\w.-]+)\}\}\s*$/;
 // Jetons traités avant l'échappement : figure, maths affichées ($$…$$ ou \[…\]), maths en ligne ($…$ ou \(…\)).
@@ -18,7 +20,12 @@ export function escapeHtml(s) {
 
 export function figureHtml(id, figures = {}, { block = false } = {}) {
   const svg = figures && figures[id];
-  if (!svg) return `<span class="fig-missing">[figure manquante : ${escapeHtml(id)}]</span>`;
+  if (!svg) {
+    // Figure absente du contenu en ligne : gabarit chargé à la demande si elle est connue de l'index
+    const lazy = placeholderHtml(id, { block });
+    if (lazy) return lazy;
+    return `<span class="fig-missing">[figure manquante : ${escapeHtml(id)}]</span>`;
+  }
   const attr = `data-fig="${escapeHtml(id)}"`;
   return block ? `<figure class="fig fig-block" ${attr}>${svg}</figure>` : `<span class="fig fig-inline" ${attr}>${svg}</span>`;
 }

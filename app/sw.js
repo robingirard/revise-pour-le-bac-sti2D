@@ -1,6 +1,6 @@
 // sw.js — service worker : cache-first pour l'enveloppe de l'appli et le contenu.
 // Incrémenter VERSION à chaque mise en ligne pour forcer la mise à jour chez les utilisateurs.
-const VERSION = '2026-09-04.8';
+const VERSION = '2026-09-04.9';
 const CACHE = `revise-sti2d-${VERSION}`;
 const ASSETS = [
   './', './index.html', './manifest.webmanifest', './content.js', './css/app.css',
@@ -14,9 +14,17 @@ const ASSETS = [
   './vendor/katex/fonts/KaTeX_AMS-Regular.woff2', './vendor/katex/fonts/KaTeX_Caligraphic-Bold.woff2', './vendor/katex/fonts/KaTeX_Caligraphic-Regular.woff2', './vendor/katex/fonts/KaTeX_Fraktur-Bold.woff2', './vendor/katex/fonts/KaTeX_Fraktur-Regular.woff2', './vendor/katex/fonts/KaTeX_Main-Bold.woff2', './vendor/katex/fonts/KaTeX_Main-BoldItalic.woff2', './vendor/katex/fonts/KaTeX_Main-Italic.woff2', './vendor/katex/fonts/KaTeX_Main-Regular.woff2', './vendor/katex/fonts/KaTeX_Math-BoldItalic.woff2', './vendor/katex/fonts/KaTeX_Math-Italic.woff2', './vendor/katex/fonts/KaTeX_SansSerif-Bold.woff2', './vendor/katex/fonts/KaTeX_SansSerif-Italic.woff2', './vendor/katex/fonts/KaTeX_SansSerif-Regular.woff2', './vendor/katex/fonts/KaTeX_Script-Regular.woff2', './vendor/katex/fonts/KaTeX_Size1-Regular.woff2', './vendor/katex/fonts/KaTeX_Size2-Regular.woff2', './vendor/katex/fonts/KaTeX_Size3-Regular.woff2', './vendor/katex/fonts/KaTeX_Size4-Regular.woff2', './vendor/katex/fonts/KaTeX_Typewriter-Regular.woff2',
 ];
 
+// Fichiers facultatifs (absents dans certaines versions) : mis en cache s'ils existent, sans faire échouer l'installation.
+const OPTIONAL = ['./figures/index.json'];
+
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
+  event.waitUntil(
+    caches.open(CACHE)
+      .then((cache) => cache.addAll(ASSETS).then(() => Promise.all(OPTIONAL.map((u) => cache.add(u).catch(() => null)))))
+      .then(() => self.skipWaiting()),
+  );
 });
+// Les figures (./figures/<id>.svg) sont mises en cache au fil des consultations par le gestionnaire fetch ci-dessous.
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(

@@ -189,6 +189,8 @@
     generatedAt: '2026-09-04T09:00:00Z',
     title: 'Révise STI2D',
     figures,
+    // Figures chargées à la demande (dev/figures/*.svg servies sous ./figures/ par dev/browser.mjs)
+    figureIndex: { 'lazy-demo-1': { w: 180, h: 90, bytes: 700 }, 'lazy-demo-2': { w: 120, h: 120, bytes: 500 }, 'lazy-demo-absente': { w: 100, h: 60, bytes: 1000 } },
     units: [
       {
         id: 'liaisons',
@@ -299,7 +301,7 @@ Règle : **ddl + efforts transmissibles = 6**.`,
         id: 'pc-demo-unit', matiere: 'physique', title: 'Physique : énergie électrique (démo)',
         description: 'Puissance et énergie électriques.',
         skills: [{ id: 'pc-demo', title: 'Puissance électrique', icon: '⚡', description: 'P = U × I, énergie en kWh.', prerequisites: [], levels: 3,
-          lesson: `# Puissance électrique\nLa puissance reçue par un dipôle vaut $P = U \\times I$ ; l'énergie consommée pendant une durée $t$ vaut $E = P \\times t$.`, items: idsOf('pc-demo') }],
+          lesson: `# Puissance électrique\nLa puissance reçue par un dipôle vaut $P = U \\times I$ ; l'énergie consommée pendant une durée $t$ vaut $E = P \\times t$.\n\n{{fig:lazy-demo-1}}\n\nUne figure en ligne {{fig:lazy-demo-2}} dans un paragraphe, et une figure absente : {{fig:lazy-demo-absente}}.`, items: idsOf('pc-demo') }],
       },
       {
         id: 'maths-demo-unit', matiere: 'maths', title: 'Mathématiques : analyse (démo)',

@@ -7,11 +7,18 @@ compétences** (arbre à la Duolingo : niveaux, XP, série de jours).
 Tout est reproductible : le contenu pédagogique est écrit en YAML/Markdown, les figures sont des
 sources TikZ compilées en SVG, et `make` reconstruit l'application complète dans `dist/`.
 
-Unités couvertes (manuel I2D 1re, chapitre 2 « Mécanismes ») : **les liaisons mécaniques**, **le schéma
-cinématique** (serre-joint, bielle-manivelle, étau), **transmettre et transformer le mouvement** (engrenages,
-poulies, roue et vis sans fin, pignon-crémaillère, vis-écrou, couple et rendement) et **mouvements et
-cinématique** (trajectoires, vitesses, accélération, équations du mouvement). Les formules sont rendues
-avec KaTeX (embarqué, hors ligne).
+Contenu couvert (13 unités, 51 compétences, environ 1 100 exercices, 170 figures TikZ) :
+
+- **Ingénierie 2I2D** : les liaisons mécaniques ; le schéma cinématique (serre-joint, bielle-manivelle,
+  étau) ; transmettre et transformer le mouvement ; mouvements et cinématique ; statique et résistance
+  des matériaux ; chaîne d'information et numérique (signaux, CAN, numération, logique, algorithmes).
+- **Physique-chimie** : énergie électrique ; énergie thermique ; chimie (matière, combustions, piles) ;
+  ondes et lumière ; forces, énergie et dynamique ; compléments de Terminale (radioactivité, piles et
+  accumulateurs, acido-basique, signaux et spectres).
+- **Mathématiques** : primitives, cercle trigonométrique, fonctions trigonométriques, produit scalaire,
+  nombres complexes.
+
+Les formules sont rendues avec KaTeX (embarqué, hors ligne) ; les figures sont chargées à la demande.
 
 ## Utilisation
 
@@ -102,9 +109,8 @@ make test       # tests unitaires de l'application (planificateur, progression, 
 
 ## Feuille de route
 
-1. ✅ Liaisons, schéma cinématique (3 mécanismes), transmission/transformation, cinématique ; exercices
-   complets de fin de chapitre ; annales officielles ; bilan parent ; KaTeX.
-2. En cours : statique et RDM, chaîne d'information et numérique (à partir des notes du manuel),
-   puis physique-chimie et mathématiques (notes en cours de transcription).
-3. Mécanismes supplémentaires de complexité croissante, symboles 3D, adaptation d'exercices d'annales
-   en exercices guidés.
+1. ✅ Les deux manuels (ingénierie 1re/Tle, physique-chimie 1re/Tle, maths 1re) transcrits en notes
+   et transformés en 13 unités avec exercices à feedback, exercices complets, annales, bilan parent, KaTeX.
+2. Exercices guidés supplémentaires tirés des exercices des manuels et des annales ; maths de Terminale
+   (non scannées) ; mécanismes supplémentaires et symboles 3D.
+3. Relecture pédagogique par un enseignant des points signalés « à vérifier » dans `docs/notes/`.

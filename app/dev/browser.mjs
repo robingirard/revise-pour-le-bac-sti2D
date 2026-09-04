@@ -16,10 +16,15 @@ export async function launch({ dir, out, port = Number(process.env.PORT) || 8766
   const server = http.createServer((req, res) => {
     let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
     if (p.endsWith('/')) p += 'index.html';
-    fs.readFile(path.join(dir, p), (err, data) => {
+    const send = (err, data) => {
       if (err) { res.writeHead(404); res.end('not found'); return; }
       res.writeHead(200, { 'Content-Type': MIME[path.extname(p)] || 'application/octet-stream' });
       res.end(data);
+    };
+    fs.readFile(path.join(dir, p), (err, data) => {
+      // en développement (dossier app/), les figures à la demande sont servies depuis dev/figures/
+      if (err && p.startsWith('/figures/')) return fs.readFile(path.join(dir, 'dev', p), send);
+      send(err, data);
     });
   });
   await new Promise((r) => server.listen(port, '127.0.0.1', r));

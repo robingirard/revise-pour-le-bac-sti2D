@@ -177,7 +177,7 @@ def check_dist():
         warn("dist/content.json absent : lancez « make » pour vérifier le contenu construit")
         return
     c = json.loads(DIST.read_text(encoding="utf-8"))
-    figs = set(c["figures"])
+    figs = set(c["figures"]) | set(c.get("figureIndex", {}))   # figures inline ou chargées à la demande
     for it in c["items"].values():
         for f in fig_refs(it["payload"]):
             if f not in figs:
