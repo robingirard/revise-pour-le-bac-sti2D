@@ -1,0 +1,62 @@
+%% 2i2d-grandeurs-photometriques — flux lumineux, intensité lumineuse, éclairement.
+%% Trois vignettes de même taille avec la même ampoule : phi rayonne dans toutes les
+%% directions (lm), I ne regarde qu'une direction (cd), E concerne la surface éclairée (lx).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  txt/.style={font=\scriptsize, align=center},
+  cadre/.style={line width=0.7pt, black!60},
+  cote/.style={{Stealth[length=3.5pt]}-{Stealth[length=3.5pt]}, line width=0.5pt, black!75}]
+
+\def\hv{2.10}   % hauteur des vignettes
+
+%% ---------- ampoule dessinée au trait : \ampoule{x}{y} ---------------------
+\newcommand\ampoule[2]{%
+  \begin{scope}[shift={(#1,#2)}]
+    \fill[solideD!12] (0,0) circle (0.26);
+    \draw[line width=0.6pt, black!70] (0,0) circle (0.26);
+    \fill[black!25] (-0.09,-0.44) rectangle (0.09,-0.26);
+    \draw[line width=0.5pt, black!70] (-0.09,-0.44) rectangle (0.09,-0.26);
+    \draw[line width=0.4pt, black!70] (-0.09,-0.38) -- (0.09,-0.38)
+                                      (-0.09,-0.32) -- (0.09,-0.32);
+    \draw[line width=0.5pt, solideD!80!black]
+      (-0.08,-0.20) -- (-0.08,-0.04) -- (-0.04,0.08) -- (0,-0.02)
+      -- (0.04,0.08) -- (0.08,-0.04) -- (0.08,-0.20);
+  \end{scope}}
+
+%% ================= 1. flux lumineux =========================================
+\draw[cadre] (0,0) rectangle (2.30,\hv);
+\foreach \a in {0,45,...,315} {
+  \draw[-{Stealth[length=4pt]}, line width=0.9pt, solideD]
+    ([shift={(\a:0.36)}]1.15,1.15) -- ([shift={(\a:0.80)}]1.15,1.15); }
+\ampoule{1.15}{1.15}
+\node[txt, anchor=north] at (1.15,-0.10) {\textbf{Flux lumineux} $\varphi$\\ lumen (lm)};
+
+%% ================= 2. intensité lumineuse ===================================
+\draw[cadre] (2.55,0) rectangle (4.85,\hv);
+\foreach \a in {0,45,90,135,180,225,315} {
+  \draw[-{Stealth[length=3pt]}, line width=0.5pt, black!22]
+    ([shift={(\a:0.36)}]3.70,1.30) -- ([shift={(\a:0.68)}]3.70,1.30); }
+\draw[-{Stealth[length=7pt, width=6pt]}, line width=2.4pt, solideD] (3.70,0.92) -- (3.70,0.32);
+\ampoule{3.70}{1.30}
+\node[txt, text=solideD, anchor=west, font=\tiny] at (3.82,0.55) {une seule\\ direction};
+\node[txt, anchor=north] at (3.70,-0.10) {\textbf{Intensité lumineuse} $I$\\ candela (cd)};
+
+%% ================= 3. éclairement ===========================================
+\draw[cadre] (5.10,0) rectangle (7.40,\hv);
+\ampoule{6.25}{1.66}
+\fill[solideD!25] (6.13,1.36) -- (5.50,0.62) -- (7.00,0.62) -- (6.37,1.36) -- cycle;
+\fill[black!18] (5.42,0.46) rectangle (7.08,0.62);
+\draw[line width=0.6pt, black!70] (5.42,0.46) rectangle (7.08,0.62);
+\draw[cote] (5.42,0.32) -- (7.08,0.32);
+\node[font=\scriptsize, anchor=north, inner sep=2pt] at (6.25,0.30) {surface $S$};
+\node[txt, anchor=north] at (6.25,-0.10) {\textbf{Éclairement} $E$\\ lux (lx)};
+
+%% ================= égalité et bandeau =======================================
+\node[draw=black!70, line width=0.7pt, rounded corners=2pt, fill=black!3, font=\small,
+      inner sep=3.5pt, anchor=north] at (6.25,-0.86) {1 lx = 1 lm/m$^2$};
+\node[font=\scriptsize, anchor=north, align=center] at (3.20,-0.90)
+  {$\varphi$ et $I$ décrivent la \textbf{source},\\ $E$ décrit la \textbf{surface éclairée}};
+\end{tikzpicture}
+\end{document}
