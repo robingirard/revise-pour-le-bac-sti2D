@@ -1,0 +1,76 @@
+%% 2i2d-affaiblissement-paroi — indice d'affaiblissement acoustique R d'une paroi.
+%% Local bruyant à gauche (machine, L1 = 85 dB), local calme à droite (poste de travail,
+%% L2 = 43 dB). La paroi retire R = 42 dB au niveau qui la traverse : L2 = L1 - R.
+%% Le motif de briques est dessiné à la main (pas de `pattern`, trop lourd en SVG).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  txt/.style={font=\scriptsize},
+  piece/.style={line width=0.7pt, black!70}]
+
+\def\hp{2.40}                       % hauteur des locaux
+\def\pg{3.00}\def\pd{3.50}          % faces gauche et droite de la paroi
+
+%% ================= les deux locaux ==========================================
+\fill[solideA!7] (0,0) rectangle (\pg,\hp);
+\fill[solideB!7] (\pd,0) rectangle (6.50,\hp);
+\draw[piece] (0,\hp) -- (0,0) -- (6.50,0) -- (6.50,\hp);
+\draw[piece] (0,\hp) -- (\pg,\hp) (\pd,\hp) -- (6.50,\hp);
+\node[txt, anchor=north west] at (0.08,\hp-0.06) {Local bruyant};
+\node[txt, anchor=north east] at (6.42,\hp-0.06) {Poste de travail};
+
+%% ================= la paroi (briques) =======================================
+\begin{scope}
+  \path[clip] (\pg,0) rectangle (\pd,\hp);
+  \fill[black!12] (\pg,0) rectangle (\pd,\hp);
+  \foreach \k in {0,1,...,8} {
+    \draw[black!45, line width=0.4pt] (\pg,{0.30*\k}) -- (\pd,{0.30*\k});
+    \draw[black!45, line width=0.4pt]
+      ({\pg+0.25+0.25*mod(\k,2)},{0.30*\k}) -- ++(0,0.30); }
+\end{scope}
+\draw[line width=0.8pt] (\pg,0) rectangle (\pd,\hp);
+\node[txt, anchor=south] at ({0.5*(\pg+\pd)},\hp+0.06) {Paroi $R = 42$ dB};
+
+%% ================= la machine (source) ======================================
+\fill[black!20] (0.45,0.10) rectangle (1.35,0.80);
+\draw[line width=0.6pt, black!70] (0.45,0.10) rectangle (1.35,0.80);
+\begin{scope}[shift={(0.90,0.98)}]
+  \foreach \a in {0,45,...,315} {
+    \fill[black!45] (\a:0.20) -- ([shift={(\a+14:0.26)}]0,0) -- ([shift={(\a-14:0.26)}]0,0) -- cycle; }
+  \fill[black!30] (0,0) circle (0.20);
+  \draw[line width=0.5pt, black!70] (0,0) circle (0.20);
+  \fill[white] (0,0) circle (0.07);
+\end{scope}
+\node[txt, anchor=north] at (0.90,0.06) {machine};
+
+%% arcs sonores : nombreux et épais
+\foreach \r in {0.45,0.75,1.05,1.35,1.65} {
+  \draw[solideA, line width=1.2pt] ([shift={(-52:\r)}]1.35,1.05) arc (-52:52:\r); }
+\node[txt, text=solideA, anchor=west] at (0.10,1.62) {$L_1 = 85$ dB};
+
+%% ================= le poste de travail (récepteur) ==========================
+\fill[black!20] (4.85,0.55) rectangle (5.85,0.62);
+\draw[line width=0.6pt, black!70] (4.85,0.55) rectangle (5.85,0.62);
+\draw[line width=0.6pt, black!70] (4.95,0.55) -- (4.95,0.10) (5.75,0.55) -- (5.75,0.10);
+\fill[black!12] (5.10,0.62) rectangle (5.60,1.02);
+\draw[line width=0.6pt, black!70] (5.10,0.62) rectangle (5.60,1.02);
+\node[txt, anchor=north] at (5.35,0.06) {poste de travail};
+
+%% arcs sonores : peu nombreux et fins
+\foreach \r in {0.40,0.70,1.00} {
+  \draw[solideB, line width=0.5pt] ([shift={(-50:\r)}]\pd,1.30) arc (-50:50:\r); }
+\node[txt, text=solideB, anchor=east] at (6.42,1.62) {$L_2 = 43$ dB};
+
+%% ================= la relation ==============================================
+\node[draw=black!70, line width=0.7pt, rounded corners=2pt, fill=white, align=center,
+      inner sep=4pt, anchor=north] at (3.25,-0.14)
+  {{\small $L_2 = L_1 - R$}\\[1pt] {\scriptsize $85 - 42 = 43$ dB}};
+
+%% ================= avertissement ============================================
+\node[draw=solideD, line width=0.7pt, rounded corners=2pt, fill=solideD!8, align=center,
+      inner sep=4pt, anchor=north, font=\scriptsize] at (3.25,-1.12)
+  {le $R$ acoustique s'exprime en \textbf{dB} et se \textbf{soustrait} ;\\
+   il n'a rien à voir avec la résistance thermique en m$^2\cdot$K/W};
+\end{tikzpicture}
+\end{document}

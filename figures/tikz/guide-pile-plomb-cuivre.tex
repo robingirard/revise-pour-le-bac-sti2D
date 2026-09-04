@@ -1,0 +1,69 @@
+%% guide-pile-plomb-cuivre — pile à légender, construite comme pc-pile-daniell mais SANS
+%% les réponses : cinq points d'interrogation (solideD) marquent ce que l'élève doit trouver
+%% (polarité des deux bornes, sens conventionnel du courant, demi-équation de chaque électrode).
+%% Code couleur de l'unité appliqué AU RÔLE : réduction (cuivre) en solideB,
+%% oxydation (plomb) en solideA.
+%% RÈGLE : ni demi-équation, ni polarité, ni sens du courant, ni évolution des masses.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  verre/.style={line width=1pt, draw=black!55, line join=round},
+  fil/.style={line width=0.9pt, draw=black!75, line cap=round},
+  chim/.style={font=\small, inner sep=1pt},
+  rappel/.style={font=\scriptsize, text=black!65, inner sep=1pt},
+  hint/.style={font=\tiny, text=black!55, inner sep=1.5pt},
+  quest/.style={draw=solideD, line width=0.9pt, rounded corners=2pt, fill=white,
+                inner sep=2pt, font=\small\bfseries, text=solideD}]
+
+\definecolor{cuivrerose}{RGB}{198,150,132}
+\definecolor{plombgris}{RGB}{105,110,118}
+
+%% ================= béchers et solutions ===================================
+\fill[solideB!15, rounded corners=2pt] (0.25,-0.30) rectangle (2.55,-2.05);
+\draw[line width=0.6pt, draw=solideB!45] (0.25,-0.30) -- (2.55,-0.30);
+\draw[line width=0.6pt, draw=black!35] (4.45,-0.30) -- (6.75,-0.30);
+\draw[verre, rounded corners=3pt] (0.20,0.10) -- (0.20,-2.10) -- (2.60,-2.10) -- (2.60,0.10);
+\draw[verre, rounded corners=3pt] (4.40,0.10) -- (4.40,-2.10) -- (6.80,-2.10) -- (6.80,0.10);
+
+%% ================= électrodes =============================================
+\fill[cuivrerose] (0.85,-1.70) rectangle (1.05,0.35);
+\draw[line width=0.5pt, black!55] (0.85,-1.70) rectangle (1.05,0.35);
+\fill[plombgris]  (5.95,-1.70) rectangle (6.15,0.35);
+\draw[line width=0.5pt, black!55] (5.95,-1.70) rectangle (6.15,0.35);
+\node[rappel, rotate=90, align=center]  at (0.58,-0.95) {lame de cuivre\\(200 g)};
+\node[rappel, rotate=-90, align=center] at (6.42,-0.95) {lame de plomb\\(200 g)};
+
+%% ================= contenu des béchers ====================================
+\node[font=\scriptsize, align=center] at (1.90,-1.62)
+  {$\mathrm{Cu^{2+}}$\\1,0 mol$\cdot$L$^{-1}$\\100 mL};
+\node[font=\scriptsize, align=center] at (5.30,-1.62)
+  {$\mathrm{Pb^{2+}}$\\1,0 mol$\cdot$L$^{-1}$\\100 mL};
+\node[font=\scriptsize, text=solideB, anchor=north] at (1.40,-2.20) {Compartiment A};
+\node[font=\scriptsize, text=solideA, anchor=north] at (5.60,-2.20) {Compartiment B};
+
+%% ================= pont salin =============================================
+\draw[line width=0.7pt, draw=black!45, double=black!10, double distance=4pt,
+      rounded corners=5pt, line cap=round]
+  (2.10,-0.90) -- (2.10,0.62) -- (4.90,0.62) -- (4.90,-0.90);
+\node[rappel, anchor=south] at (3.50,0.72) {pont salin};
+
+%% ================= circuit extérieur et voltmètre =========================
+\draw[fil] (0.95,0.35) -- (0.95,1.90) -- (3.24,1.90);
+\draw[fil] (3.76,1.90) -- (6.05,1.90) -- (6.05,0.35);
+\draw[fil, fill=white] (3.50,1.90) circle (0.26);
+\node[chim] at (3.50,1.90) {V};
+
+%% ================= les cinq points d'interrogation ========================
+\node[quest] at (0.95,0.78) {?};   % polarité de la borne de gauche
+\node[quest] at (6.05,0.78) {?};   % polarité de la borne de droite
+\node[quest] at (2.30,1.90) {?};   % sens conventionnel du courant
+\node[quest] at (1.90,-0.68) {?};  % demi-équation, compartiment A
+\node[quest] at (5.10,-0.68) {?};  % demi-équation, compartiment B
+\node[hint, anchor=west] at (1.20,0.78) {polarité};
+\node[hint, anchor=east] at (5.80,0.78) {polarité};
+\node[hint, anchor=south] at (2.30,2.10) {sens du courant};
+\node[hint, anchor=north] at (1.90,-0.92) {demi-équation};
+\node[hint, anchor=north] at (5.10,-0.92) {demi-équation};
+\end{tikzpicture}
+\end{document}

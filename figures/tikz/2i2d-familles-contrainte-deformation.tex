@@ -15,7 +15,7 @@
 \draw[axe] (0,0) -- (0,3.5);
 \draw[axe] (0,0) -- (5.5,0);
 \node[petit, anchor=north east] at (-0.02,-0.02) {$0$};
-\node[petit, anchor=north east] at (5.5,-0.08) {Déformation $\varepsilon = \Delta L / L$};
+\node[petit, anchor=south east] at (5.32,0.07) {Déformation $\varepsilon = \Delta L / L$};
 \node[petit, anchor=south west] at (-0.35,3.55) {Contrainte $\sigma = F/S$};
 
 %% --- A : céramique / verre — fragile ------------------------------------------
@@ -51,7 +51,7 @@
   .. controls (4.95,0.78) and (5.2,1.25) .. (5.3,1.85);
 
 %% --- légende ---------------------------------------------------------------------
-\begin{scope}[shift={(5.75,3.4)}]
+\begin{scope}[shift={(4.88,3.42)}]
   \foreach \i/\c/\t in {0/solideA/{céramique (fragile)}, 1/solideB/{acier doux (ductile)},
                         2/solideE/{alliage d'aluminium}, 3/solideD/{élastomère}} {
     \draw[line width=1.2pt, \c] (0,-0.42*\i) -- (0.5,-0.42*\i);
@@ -66,9 +66,9 @@
 \node[petit, anchor=north, text=solideD] at (2.4,-0.6) {zone plastique};
 
 %% --- cartouche -------------------------------------------------------------------------
-\node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=4pt, anchor=north west,
-      align=left, font=\scriptsize] at (4.75,0.55)
+\node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=4pt, anchor=north,
+      align=center, font=\scriptsize] at (3.7,-1.02)
      {la \textbf{pente} donne la rigidité $E$ ;\\
-      la \textbf{longueur} de la partie\\plastique donne la ductilité};
+      la \textbf{longueur} de la partie plastique donne la ductilité};
 \end{tikzpicture}
 \end{document}

@@ -1,0 +1,110 @@
+%% Circuit hydraulique complet : les symboles fluidiques en situation (Tle, p. 252-253).
+%% Conduites d'aller teintées en vert, retour au réservoir en bleu ;
+%% chaque composant porte un numéro renvoyant à la légende.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  tuyau/.style={line width=0.7pt, black!85, line join=round},
+  fluide/.style={line width=3.2pt, line join=round, line cap=round},
+  trait/.style={line width=0.8pt, black, line join=round},
+  et/.style={font=\scriptsize, inner sep=2pt},
+  leg/.style={font=\scriptsize, anchor=west, inner sep=0pt}]
+
+%% ---- pastille numérotée ---------------------------------------------
+\newcommand\rep[3]{%
+  \fill[solideA] (#1,#2) circle (0.16);
+  \node[font=\scriptsize\bfseries, text=white, inner sep=0pt] at (#1,#2) {#3};}
+
+%% ---- tracé des conduites (dessiné deux fois : fluide puis paroi) -----
+\newcommand\condaspi[1]{\draw[#1] (1.0,0.55) -- (1.0,3.0) -- (4.9,3.0) -- (4.9,1.35)
+                                 -- (6.15,1.35) -- (6.15,1.6);}
+\newcommand\condbranches[1]{\draw[#1] (2.9,3.0) -- (2.9,3.3); \draw[#1] (3.9,3.0) -- (3.9,3.5);}
+\newcommand\condsorties[1]{%
+  \draw[#1] (6.15,2.3) -- (6.15,3.4) -- (5.9,3.4) -- (5.9,3.7);
+  \draw[#1] (6.5,2.3) -- (6.5,3.4) -- (7.3,3.4) -- (7.3,3.7);}
+\newcommand\condretour[1]{\draw[#1] (6.5,1.6) -- (6.5,1.0) -- (1.5,1.0) -- (1.5,0.55);}
+
+\condaspi{fluide, solideE!30} \condbranches{fluide, solideE!30}
+\condsorties{fluide, solideE!30} \condretour{fluide, solideB!30}
+\condaspi{tuyau} \condbranches{tuyau} \condsorties{tuyau} \condretour{tuyau}
+
+%% ================== 1 : réservoir =====================================
+\fill[solideB!20] (0.6,0.35) rectangle (1.8,0.75);
+\draw[trait] (0.6,0.95) -- (0.6,0.35) -- (1.8,0.35) -- (1.8,0.95);
+\rep{0.45}{1.05}{1}
+
+%% ================== 2 : filtre ========================================
+\filldraw[trait, fill=white] (1.0,1.55) -- (1.25,1.25) -- (1.0,0.95) -- (0.75,1.25) -- cycle;
+\draw[trait, dash pattern=on 2pt off 1.5pt] (0.82,1.25) -- (1.18,1.25);
+\rep{1.55}{1.25}{2}
+
+%% ================== 3 : moteur électrique et pompe ====================
+\filldraw[trait, fill=white] (1.0,2.15) circle (0.28);
+\fill[black] (0.86,2.01) -- (1.14,2.01) -- (1.0,2.29) -- cycle;
+\filldraw[trait, fill=white] (2.1,2.15) circle (0.28);
+\node[font=\scriptsize] at (2.1,2.15) {M};
+\draw[trait] (1.28,2.19) -- (1.82,2.19) (1.28,2.11) -- (1.82,2.11);
+\rep{1.55}{2.6}{3}
+
+%% ================== 4 : clapet anti-retour ============================
+\draw[trait] (1.98,3.19) -- (1.80,3.0) -- (1.98,2.81);
+\filldraw[trait, fill=white] (1.67,3.0) circle (0.13);
+\rep{1.83}{3.4}{4}
+
+%% ================== 5 : accumulateur ==================================
+\filldraw[trait, fill=solideE!15] (2.9,3.72) ellipse (0.26 and 0.45);
+\draw[trait] (2.66,3.85) .. controls (2.8,3.97) and (3.0,3.97) .. (3.14,3.85);
+\rep{3.3}{4.05}{5}
+
+%% ================== 6 : manomètre =====================================
+\filldraw[trait, fill=white] (3.9,3.76) circle (0.26);
+\draw[trait] (3.9,3.76) -- ++(58:0.2);
+\draw[trait] (3.9,3.5) -- (3.9,3.58);
+\rep{4.28}{4.05}{6}
+
+%% ================== 7 : distributeur piloté ===========================
+\foreach \x in {5.35,6.0,6.65} { \draw[trait] (\x,1.6) rectangle (\x+0.65,2.3); }
+\draw[-{Stealth[length=4pt]}, tuyau] (5.5,1.72) -- (5.5,2.18);
+\draw[-{Stealth[length=4pt]}, tuyau] (5.85,2.18) -- (5.85,1.72);
+\foreach \x in {6.15,6.5} {
+  \draw[tuyau] (\x,2.3) -- (\x,2.14) (\x-0.08,2.14) -- (\x+0.08,2.14);
+  \draw[tuyau] (\x,1.6) -- (\x,1.76) (\x-0.08,1.76) -- (\x+0.08,1.76); }
+\draw[-{Stealth[length=4pt]}, tuyau] (6.8,1.72) -- (7.15,2.18);
+\draw[-{Stealth[length=4pt]}, tuyau] (7.15,1.72) -- (6.8,2.18);
+\draw[trait, draw=solideA, fill=solideA!15] (5.05,1.7) rectangle (5.35,2.2);
+\draw[trait, draw=solideA, fill=solideA!15] (7.3,1.7) rectangle (7.6,2.2);
+\rep{7.85}{1.95}{7}
+
+%% ================== 8 : réducteur de débit ============================
+\draw[trait] (6.0,3.05) .. controls (6.12,3.11) and (6.12,3.19) .. (6.0,3.25);
+\draw[trait] (6.3,3.05) .. controls (6.18,3.11) and (6.18,3.19) .. (6.3,3.25);
+\draw[-{Stealth[length=4pt]}, trait] (5.85,2.95) -- (6.45,3.35);
+\rep{5.7}{3.35}{8}
+
+%% ================== 9 : vanne (deux triangles opposés) ================
+\filldraw[trait, fill=white] (6.5,2.6) -- (6.27,2.46) -- (6.27,2.74) -- cycle;
+\filldraw[trait, fill=white] (6.5,2.6) -- (6.73,2.46) -- (6.73,2.74) -- cycle;
+\rep{6.98}{2.6}{9}
+
+%% ================== 10 : vérin double effet ===========================
+\draw[trait] (5.6,3.7) rectangle (7.6,4.6);
+\draw[line width=2.2pt, solideE] (6.5,3.75) -- (6.5,4.55);
+\draw[trait] (6.5,4.15) -- (8.4,4.15);
+\draw[trait] (8.4,4.02) -- (8.4,4.28);
+\rep{8.1}{4.6}{10}
+
+%% ================== légende ===========================================
+\newcommand\legende[4]{\rep{#1}{#2}{#3}\node[leg] at (#1+0.24,#2) {#4};}
+\legende{0.5}{-0.2}{1}{Réservoir}
+\legende{0.5}{-0.6}{2}{Filtre}
+\legende{0.5}{-1.0}{3}{Moteur électrique et pompe}
+\legende{0.5}{-1.4}{4}{Clapet anti-retour}
+\legende{0.5}{-1.8}{5}{Accumulateur}
+\legende{4.6}{-0.2}{6}{Manomètre}
+\legende{4.6}{-0.6}{7}{Distributeur piloté électriquement}
+\legende{4.6}{-1.0}{8}{Réducteur de débit}
+\legende{4.6}{-1.4}{9}{Vanne}
+\legende{4.6}{-1.8}{10}{Vérin double effet}
+\end{tikzpicture}
+\end{document}

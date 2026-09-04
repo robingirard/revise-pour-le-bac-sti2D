@@ -1,0 +1,60 @@
+%% guide-bouilloire-courbe — chauffage de 1,00 kg d'eau dans une bouilloire électrique.
+%% Portion linéaire de (0 s ; 20 °C) à (250 s ; 100 °C) puis palier d'ébullition à 100 °C.
+%% Échelles : 1 s -> 0,0186 cm ; 1 °C -> 0,0283 cm.
+%% RÈGLE : la pente (coefficient directeur) n'est pas écrite — c'est la réponse de l'étape 3.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={draw=solideB, line width=1.4pt, line join=round, line cap=round},
+  grille/.style={line width=0.3pt, black!15, dotted},
+  rappel/.style={line width=0.5pt, black!50, dash pattern=on 2.5pt off 2pt},
+  grad/.style={font=\scriptsize, inner sep=2.5pt},
+  tri/.style={{Stealth[length=4.5pt]}-{Stealth[length=4.5pt]}, line width=0.9pt, draw=solideA}]
+
+\newcommand\xt[1]{{(#1)*0.0186}}      % abscisse d'une date en s
+\newcommand\yt[1]{{(#1)*0.0283}}      % ordonnée d'une température en °C
+
+%% ================= quadrillage ============================================
+\foreach \t in {50,100,...,350} { \draw[grille] (\xt{\t},0) -- (\xt{\t},\yt{120}); }
+\foreach \q in {20,40,...,120}  { \draw[grille] (0,\yt{\q}) -- (\xt{350},\yt{\q}); }
+
+%% ================= axes et graduations ====================================
+\draw[axe] (-0.12,0) -- (\xt{378},0);
+\node[grad, anchor=south east] at (\xt{380},0.04) {$t$ (s)};
+\draw[axe] (0,-0.12) -- (0,\yt{132});
+\node[grad, anchor=south west] at (0.04,\yt{132}) {$\theta$ ($^\circ$C)};
+\node[grad, anchor=north east] at (-0.02,-0.02) {$O$};
+\foreach \t in {50,100,150,200,250,300,350} {
+  \draw[line width=0.5pt] (\xt{\t},0) -- (\xt{\t},-0.09);
+  \node[grad, anchor=north] at (\xt{\t},-0.09) {\t}; }
+\foreach \q in {20,40,60,80,100,120} {
+  \draw[line width=0.5pt] (0,\yt{\q}) -- (-0.09,\yt{\q});
+  \node[grad, anchor=east] at (-0.09,\yt{\q}) {\q}; }
+
+%% ================= traits de rappel =======================================
+\draw[rappel] (0,\yt{100}) -- (\xt{320},\yt{100});
+\draw[rappel] (\xt{250},0) -- (\xt{250},\yt{100});
+
+%% ================= le tracé ===============================================
+\draw[courbe] (\xt{0},\yt{20}) -- (\xt{250},\yt{100}) -- (\xt{320},\yt{100});
+\node[font=\scriptsize, text=solideB, anchor=south] at (\xt{287},\yt{103})
+  {palier d'ébullition};
+
+%% ================= triangle du coefficient directeur ======================
+\draw[tri] (\xt{6},\yt{20}) -- (\xt{244},\yt{20});
+\node[font=\small, text=solideA, fill=white, inner sep=1.5pt]
+  at (\xt{125},\yt{20}) {$\Delta t$};
+\draw[tri] (\xt{250},\yt{24}) -- (\xt{250},\yt{96});
+\node[font=\small, text=solideA, fill=white, inner sep=1.5pt]
+  at (\xt{250},\yt{60}) {$\Delta\theta$};
+
+%% ================= cartouche des données ==================================
+\node[draw=black!55, line width=0.6pt, rounded corners=2pt, fill=black!3,
+      inner sep=4pt, align=center, font=\scriptsize, anchor=north west]
+  at (\xt{75},\yt{158})
+  {$m = 1{,}00$ kg \quad $R = 40\ \Omega$ \quad $U_{\text{eff}} = 230$ V\\[1pt]
+   bouilloire très bien isolée};
+\end{tikzpicture}
+\end{document}

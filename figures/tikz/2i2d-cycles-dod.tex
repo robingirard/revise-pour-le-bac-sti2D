@@ -1,0 +1,41 @@
+%% 2i2d-cycles-dod — nombre de cycles charge/décharge admissibles selon la profondeur de décharge.
+%% Échelle : 1 cycle -> 0,00066 cm (0 à 5 000 cycles -> 3,3 cm).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.7pt},
+  grille/.style={black!15, line width=0.35pt},
+  grad/.style={font=\scriptsize, inner sep=2pt},
+  som/.style={font=\scriptsize\bfseries, anchor=south, inner sep=2.5pt}]
+
+\newcommand\yc[1]{0.00066*(#1)}          % ordonnée : nombre de cycles
+\def\lb{0.45}                             % demi-largeur d'une barre
+
+%% ---------- quadrillage, axes et graduations -----------------------------
+\foreach \n in {500,1000,...,5000} { \draw[grille] (0,{\yc{\n}}) -- (5.0,{\yc{\n}}); }
+\draw[axe] (0,-0.08) -- (0,{\yc{5000}+0.30});
+\draw[axe] (-0.08,0) -- (5.15,0);
+\foreach \n/\lbl in {0/0, 500/{500}, 1000/{1 000}, 1500/{1 500}, 2000/{2 000}, 2500/{2 500},
+                     3000/{3 000}, 3500/{3 500}, 4000/{4 000}, 4500/{4 500}, 5000/{5 000}} {
+  \draw[line width=0.5pt] (0,{\yc{\n}}) -- (-0.08,{\yc{\n}});
+  \node[grad, anchor=east] at (-0.08,{\yc{\n}}) {\lbl};}
+\node[font=\scriptsize, anchor=south west, inner sep=2pt] at (0.05,{\yc{5000}+0.31})
+  {Nombre de cycles charge/décharge};
+
+%% ---------- les trois barres --------------------------------------------
+\foreach \x/\n/\c/\lbl in {1.15/1450/solideA/{1 450}, 2.65/2400/solideD/{2 400},
+                           4.15/4400/solideE/{4 400}} {
+  \draw[\c, line width=0.8pt, fill=\c!35] (\x-\lb,0) rectangle (\x+\lb,{\yc{\n}});
+  \node[som, text=\c] at (\x,{\yc{\n}}) {\lbl};}
+\foreach \x/\p in {1.15/70, 2.65/50, 4.15/30} {
+  \node[grad, anchor=north] at (\x,-0.06) {\p~\%};}
+\node[font=\scriptsize, anchor=north] at (2.65,-0.44) {Profondeur de décharge};
+
+%% ---------- note de lecture ----------------------------------------------
+\node[font=\scriptsize, anchor=north, align=flush center, text=black!65, text width=6.6cm]
+  at (2.65,-0.92)
+  {batteries SAFT STM 5-140 MR : moins on décharge, plus le pack dure
+   (valeurs lues sur le graphique du constructeur, non imprimées)};
+\end{tikzpicture}
+\end{document}

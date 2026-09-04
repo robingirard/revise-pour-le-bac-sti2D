@@ -1,0 +1,85 @@
+%% guide-cycle-frigorifique — super-congélateur à vaccins.
+%% Deux ambiances séparées par une paroi isolante hachurée (solideE) ; flux thermique Phi
+%% du local vers l'enceinte ; boucle du fluide frigorigène en quatre organes.
+%% RÈGLE : ni R_th, ni la valeur de Phi, ni la baisse de température (étapes 3, 4, 6 et 7).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  organe/.style={draw, line width=1pt, rounded corners=3pt, fill=white,
+                 font=\scriptsize, inner sep=2pt, minimum width=1.6cm, minimum height=0.5cm},
+  tuyau/.style={-{Stealth[length=6pt]}, line width=1.4pt, draw=black!65,
+                line join=round, line cap=round},
+  flux/.style={-{Stealth[length=9pt, width=8pt]}, line width=3.4pt, draw=solideD},
+  fluxfin/.style={-{Stealth[length=5pt]}, line width=0.9pt, draw=solideD},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.7pt, draw=black!75},
+  sous/.style={font=\scriptsize, text=black!65, inner sep=1pt},
+  amb/.style={font=\small, inner sep=1pt, anchor=west},
+  don/.style={font=\scriptsize, inner sep=1pt, anchor=west}]
+
+%% ================= les deux ambiances =====================================
+\fill[solideB!8] (0.3,0.35) rectangle (3.6,4.25);
+\fill[solideA!8] (4.0,0.35) rectangle (7.6,4.25);
+\draw[line width=0.6pt, black!40] (0.3,0.35) rectangle (3.6,4.25);
+\draw[line width=0.6pt, black!40] (4.0,0.35) rectangle (7.6,4.25);
+\node[amb, text=solideB] at (0.45,4.02) {intérieur : $-80$ $^\circ$C};
+\node[don] at (0.45,3.70) {air intérieur : 750 g};
+\node[amb, text=solideA] at (4.15,4.02) {air ambiant : 20 $^\circ$C};
+
+%% ================= la paroi isolante ======================================
+\begin{scope}
+  \path[clip] (3.6,0.35) rectangle (4.0,4.25);
+  \fill[solideE!30] (3.6,0.35) rectangle (4.0,4.25);
+  \draw[line width=0.4pt, draw=solideE!80]
+    foreach \hx in {-1,-0.8,...,5} { (\hx,-1) -- ({\hx+6},5) };
+\end{scope}
+\draw[line width=0.7pt] (3.6,0.35) rectangle (4.0,4.25);
+\draw[cote] (3.6,4.45) -- (4.0,4.45);
+\node[font=\small, anchor=south, inner sep=1pt] at (3.8,4.48) {$e$};
+\node[font=\small, rotate=90, inner sep=1pt] at (3.80,1.62) {$S$, $\lambda$};
+
+%% ================= flacons de vaccin ======================================
+\draw[line width=0.7pt, draw=black!65, fill=solideB!25, rounded corners=2pt]
+  (0.55,0.75) rectangle (0.80,1.35);
+\draw[line width=0.7pt, draw=black!65, fill=solideB!25, rounded corners=2pt]
+  (0.90,0.75) rectangle (1.15,1.20);
+\draw[line width=0.7pt, draw=black!65] (0.58,1.38) -- (0.77,1.38) (0.93,1.23) -- (1.12,1.23);
+\node[font=\tiny, text=black!65, anchor=north] at (0.85,0.68) {vaccins};
+
+%% ================= flux thermique =========================================
+\draw[fluxfin] (5.20,2.80) -- (2.90,2.80);
+\draw[fluxfin] (5.20,1.90) -- (2.90,1.90);
+\draw[flux]    (5.55,2.35) -- (2.55,2.35);
+\node[font=\small\bfseries, text=solideD, anchor=south, inner sep=2pt] at (5.00,2.44) {$\Phi$};
+
+%% ================= boucle du fluide frigorigène ===========================
+\node[organe, draw=solideB] (evap) at (2.20,1.05) {Évaporateur};
+\node[organe, draw=black]   (comp) at (3.80,3.45) {Compresseur};
+\node[organe, draw=solideA] (cond) at (6.40,3.45) {Condenseur};
+\node[organe, draw=black]   (det)  at (6.40,1.05) {Détendeur};
+\node[sous, anchor=north] at (2.20,0.78) {liquide $\rightarrow$ gaz};
+\node[sous, anchor=north] at (3.80,3.18) {la pression augmente};
+\node[sous, anchor=north] at (6.40,3.18) {gaz $\rightarrow$ liquide};
+\node[sous, anchor=north] at (6.40,0.78) {la pression diminue};
+
+\draw[tuyau] (evap.north) -- (2.20,3.45) -- (comp.west);
+\draw[tuyau] (comp.east) -- (cond.west);
+\draw[tuyau] (cond.south) -- (det.north);
+\draw[tuyau] (det.west) -- (evap.east);
+
+%% ================= échanges d'énergie =====================================
+\draw[-{Stealth[length=6pt]}, line width=1.2pt, draw=solideB] (0.95,1.72) -- (1.50,1.22);
+\node[font=\scriptsize, text=solideB, align=left, anchor=south west] at (0.38,1.82)
+  {énergie prélevée\\à l'air intérieur};
+\draw[-{Stealth[length=6pt]}, line width=1.2pt, draw=solideA] (7.05,3.72) -- (7.42,4.12);
+\node[font=\scriptsize, text=solideA, anchor=south east] at (7.62,4.30)
+  {énergie cédée à l'extérieur};
+
+%% ================= données ================================================
+\node[font=\scriptsize, align=center, anchor=north] at (3.95,0.15)
+  {propane : $L_{\text{vaporisation}} = 426$ kJ$\cdot$kg$^{-1}$
+   --- 100 g vaporisés par cycle\\
+   paroi : $e = 10$ cm --- $S = 10$ m$^{2}$ ---
+   $\lambda = 0{,}0050$ W$\cdot$m$^{-1}\cdot$K$^{-1}$};
+\end{tikzpicture}
+\end{document}

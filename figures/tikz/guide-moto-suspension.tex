@@ -14,66 +14,61 @@
   cote/.style={line width=0.6pt, solideD, {Stealth[length=4pt]}-{Stealth[length=4pt]}},
   traj/.style={line width=0.6pt, black!55, dash pattern=on 3pt off 2pt}]
 
-\useasboundingbox (-0.4,-1.0) rectangle (8.0,4.3);
+\useasboundingbox (-0.4,-1.0) rectangle (8.1,4.5);
 \coordinate (A) at (6.6,1.1);      % axe de la roue arrière
 \coordinate (B) at (4.4,1.9);      % tige 3 / bras 2
-\coordinate (C) at (5.6,4.0);      % corps 4 / châssis 1
+\coordinate (C) at (5.35,3.65);    % corps 4 / châssis 1
 \coordinate (D) at (2.6,1.5);      % bras 2 / châssis 1
-\pgfmathsetmacro\abc{60.26}        % inclinaison de (BC) sur l'horizontale
+\def\abc{61.5}                     % inclinaison de (BC) sur l'horizontale (≈ 60°)
+\def\lbc{1.99}                     % longueur BC dans le dessin
 
 %% ---------------- châssis 1 (référence, hachuré) --------------------------
-\draw[piece, solideE] (D) -- (2.75,2.95) -- (4.05,3.62) -- (C) -- (5.15,3.05) -- (3.35,2.45) -- cycle;
-\foreach \i in {0,1,...,6} {\pgfmathsetmacro\xx{4.05+(5.6-4.05)*\i/6}%
-  \pgfmathsetmacro\yy{3.62+(4.0-3.62)*\i/6}%
+\draw[piece, solideE] (D) -- (2.75,2.85) -- (3.95,3.35) -- (C) -- (4.95,2.85) -- (3.35,2.35) -- cycle;
+\foreach \i in {0,1,...,6} {\pgfmathsetmacro\xx{3.95+1.40*\i/6}\pgfmathsetmacro\yy{3.35+0.30*\i/6}%
   \draw[line width=0.45pt, solideE] (\xx,\yy) -- (\xx-0.10,\yy+0.20);}
-\node[font=\small\bfseries, text=solideE, anchor=east] at (2.65,3.25) {1};
-\node[font=\small, text=solideE, anchor=east] at (2.65,3.02) {châssis};
+\node[font=\small, text=solideE, anchor=east] at (2.65,3.05) {\textbf{1} châssis};
 
 %% ---------------- roue arrière ---------------------------------------------
-\draw[line width=0.8pt, black!40] (A) circle (0.9);
-\draw[line width=0.8pt, black!40] (A) circle (0.28);
+\draw[line width=0.8pt, black!40] (A) circle (0.8);
+\draw[line width=0.8pt, black!40] (A) circle (0.25);
 
 %% ---------------- bras oscillant 2 -----------------------------------------
 \draw[fin, solideB] (D) -- (B) -- (A);
 \draw[piece, solideB] (D) -- (A);
-\node[font=\small\bfseries, text=solideB, anchor=north] at (3.9,1.28) {2};
-\node[font=\small, text=solideB, anchor=north] at (4.55,1.28) {bras oscillant};
+\node[font=\small, text=solideB, sloped, anchor=south, inner sep=3pt] at (4.85,1.32)
+     {\textbf{2} bras oscillant};
 
 %% ---------------- trajectoire de A dans le mouvement 2/1 -------------------
 \draw[traj, {Stealth[length=5pt]}-{Stealth[length=5pt]}]
-  ([shift=(-22:4.02)]D) arc (-22:9:4.02);
-\node[font=\scriptsize, text=black!55, anchor=west] at (7.05,2.20) {trajectoire de $A$};
+  ([shift=(-20:4.02)]D) arc (-20:8:4.02);
+\node[font=\scriptsize, text=black!55, anchor=east] at (7.7,-0.18) {trajectoire de $A$ (2/1)};
 
 %% ---------------- combiné ressort-amortisseur ------------------------------
 \begin{scope}[shift={(B)}, rotate=\abc]
-  % tige 3 : tiers inférieur, entrant dans le corps
-  \draw[piece, solideD] (0,0) -- (1.05,0);
-  % corps 4 : deux tiers supérieurs
-  \draw[line width=1.2pt, solideA, fill=white] (0.80,-0.17) rectangle (2.42,0.17);
-  % glissière 3-4 : deux traits parallèles à (BC) à l'entrée du corps
-  \draw[line width=0.7pt, solideD] (0.62,-0.11) -- (1.02,-0.11) (0.62,0.11) -- (1.02,0.11);
-  % cote de l'entraxe BC
-  \draw[cote] (0,-0.62) -- (2.42,-0.62);
-  \node[font=\small, text=solideD, anchor=north, inner sep=2pt] at (1.21,-0.64) {$BC=310$ mm};
+  \draw[piece, solideD] (0,0) -- (0.95,0);                                   % tige 3
+  \draw[line width=1.2pt, solideA, fill=white] (0.72,-0.17) rectangle (\lbc,0.17);  % corps 4
+  \draw[line width=0.7pt, solideD] (0.52,-0.11) -- (0.90,-0.11)
+                                   (0.52,0.11)  -- (0.90,0.11);              % glissière 3/4
+  \draw[cote] (0,-0.85) -- (\lbc,-0.85);
 \end{scope}
-\node[font=\small\bfseries, text=solideD, anchor=west] at (4.95,2.28) {3};
-\node[font=\small, text=solideD, anchor=west] at (5.12,2.28) {tige};
-\node[font=\small\bfseries, text=solideA, anchor=west] at (5.86,3.30) {4};
-\node[font=\small, text=solideA, anchor=west] at (6.03,3.30) {corps};
-\node[font=\small\itshape, text=black!60, anchor=north west] at (-0.3,1.05)
+\draw[line width=0.5pt, solideD] (5.72,2.40) -- (6.30,2.45);
+\node[font=\small, text=solideD, anchor=west, inner sep=2pt] at (6.30,2.45) {$BC=310$ mm};
+\node[font=\small, text=solideD, anchor=east] at (4.25,2.45) {\textbf{3} tige};
+\node[font=\small, text=solideA, anchor=west] at (6.25,3.45) {\textbf{4} corps};
+\node[font=\small\itshape, text=black!60, anchor=north west] at (-0.35,0.95)
      {ressort non représenté};
 
 %% ---------------- angle de 60° sur l'horizontale ---------------------------
-\draw[line width=0.5pt, dash pattern=on 2.5pt off 2pt, black!60] (B) -- ++(1.15,0);
-\draw[line width=0.6pt, solideD] ([shift=(0:0.78)]B) arc (0:\abc:0.78);
-\node[font=\small, text=solideD, anchor=west, inner sep=1pt] at ([shift=(28:0.86)]B) {$60^{\circ}$};
+\draw[line width=0.5pt, dash pattern=on 2.5pt off 2pt, black!60] (B) -- ++(1.0,0);
+\draw[line width=0.6pt, solideD] ([shift=(0:0.62)]B) arc (0:\abc:0.62);
+\node[font=\small, text=solideD] at ([shift=(24:0.72)]B) {$60^{\circ}$};
 
 %% ---------------- actions du ressort comprimé -------------------------------
-\draw[vect] (C) -- ++(\abc:0.95)
-     node[anchor=south east, inner sep=1pt, font=\small, text=solideA]
+\draw[vect] (C) -- ++(\abc:0.70)
+     node[anchor=west, inner sep=2pt, font=\scriptsize, text=solideA]
      {$\vec{F}_{\text{ressort}\rightarrow 4}$};
-\draw[vect] (B) -- ++(\abc+180:0.95)
-     node[anchor=north east, inner sep=1pt, font=\small, text=solideA]
+\draw[vect] (B) -- ++(\abc+180:0.70)
+     node[anchor=north, inner sep=2pt, font=\scriptsize, text=solideA]
      {$\vec{F}_{\text{ressort}\rightarrow 3}$};
 
 %% ---------------- liaisons pivot --------------------------------------------
@@ -85,6 +80,6 @@
 \foreach \p/\pos in {A/{south east}, B/{south west}, C/{north west}, D/{north east}} {
   \fill (\p) circle (1.5pt);
   \node[font=\small\bfseries, anchor=\pos, inner sep=3pt] at (\p) {$\p$};}
-\repere{(0.25,-0.65)}{x}{y}{1}
+\repere{(0.15,-0.7)}{x}{y}{1}
 \end{tikzpicture}
 \end{document}

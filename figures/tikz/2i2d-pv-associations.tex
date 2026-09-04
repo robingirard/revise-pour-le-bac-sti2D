@@ -1,0 +1,78 @@
+%% 2i2d-pv-associations — trois branchements de quatre cellules photovoltaïques (18 V ; 5,56 A).
+%% Le branchement fixe le couple (U, I) mais pas leur produit : la puissance reste la somme des
+%% puissances des cellules. Rail « + » en solideA, rail « - » en noir.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  film/.style={line width=0.8pt, line cap=round},
+  filp/.style={line width=0.8pt, line cap=round, draw=solideA},
+  titre/.style={font=\scriptsize\bfseries, anchor=south},
+  val/.style={font=\scriptsize, anchor=north, inner sep=1pt},
+  puis/.style={font=\scriptsize\bfseries, text=solideE, anchor=north, inner sep=2.5pt,
+               draw=solideE, line width=0.7pt, rounded corners=2pt}]
+
+%% ---- une cellule photovoltaïque, centrée en (#1,#2) ----------------------
+\newcommand\cellule[2]{%
+  \begin{scope}
+    \path[clip] (#1-0.36,#2-0.31) rectangle (#1+0.36,#2+0.31);
+    \fill[solideB!22] (#1-0.36,#2-0.31) rectangle (#1+0.36,#2+0.31);
+    \foreach \k in {-3,-2,...,3} { \draw[solideB!55, line width=0.35pt]
+      (#1+0.09*\k,#2-0.31) -- (#1+0.09*\k,#2+0.31); }
+  \end{scope}
+  \draw[solideB, line width=0.7pt] (#1-0.36,#2-0.31) rectangle (#1+0.36,#2+0.31);
+  \node[font=\tiny, fill=white, inner sep=0.4pt] at (#1,#2+0.15) {18 V};
+  \node[font=\tiny, fill=white, inner sep=0.4pt] at (#1,#2-0.15) {5,56 A};}
+\newcommand\bornemoins[2]{\fill (#1,#2) circle (1.1pt);
+  \node[font=\scriptsize, anchor=south] at (#1,#2+0.04) {$-$};}
+\newcommand\borneplus[2]{\fill[solideA] (#1,#2) circle (1.1pt);
+  \node[font=\scriptsize, text=solideA, anchor=south] at (#1,#2+0.02) {$+$};}
+
+%% ================= 1. PARALLÈLE ==========================================
+\node[titre] at (0.55,3.45) {Parallèle};
+\foreach \y in {2.77,2.03,1.29,0.55} {
+  \cellule{0.55}{\y}
+  \draw[film] (0,\y) -- (0.19,\y);
+  \draw[filp] (0.91,\y) -- (1.1,\y);}
+\draw[film] (0,0.55) -- (0,3.00);
+\draw[filp] (1.1,0.55) -- (1.1,3.00);
+\bornemoins{0}{3.00}  \borneplus{1.1}{3.00}
+
+%% ================= 2. SÉRIE-PARALLÈLE ====================================
+\node[titre] at (2.55,3.45) {Série-parallèle};
+\foreach \y in {2.05,1.25} {
+  \cellule{2.10}{\y}  \cellule{3.00}{\y}
+  \draw[film] (1.55,\y) -- (1.74,\y);
+  \draw[line width=0.8pt] (2.46,\y) -- (2.64,\y);
+  \draw[filp] (3.36,\y) -- (3.55,\y);}
+\draw[film] (1.55,1.25) -- (1.55,3.00);
+\draw[filp] (3.55,1.25) -- (3.55,3.00);
+\bornemoins{1.55}{3.00}  \borneplus{3.55}{3.00}
+
+%% ================= 3. SÉRIE ==============================================
+\node[titre] at (6.0,3.45) {Série};
+\foreach \x in {4.66,5.56,6.46,7.36} { \cellule{\x}{1.66} }
+\draw[film] (4.1,1.66) -- (4.30,1.66);
+\draw[line width=0.8pt] (5.02,1.66) -- (5.20,1.66)  (5.92,1.66) -- (6.10,1.66)
+                        (6.82,1.66) -- (7.00,1.66);
+\draw[filp] (7.72,1.66) -- (7.9,1.66);
+\draw[film] (4.1,1.66) -- (4.1,3.00);
+\draw[filp] (7.9,1.66) -- (7.9,3.00);
+\bornemoins{4.1}{3.00}  \borneplus{7.9}{3.00}
+
+%% ================= tableau de synthèse ===================================
+\foreach \x/\u/\i in {0.55/18/{22{,}24}, 2.55/36/{11{,}12}, 6.0/72/{5{,}56}} {
+  \node[val] at (\x,0.02) {$U = \u$ V};
+  \node[val] at (\x,-0.33) {$I = \i$ A};
+  \node[puis] at (\x,-0.72) {$P \approx 400$ W};}
+
+\draw[solideE, line width=0.7pt] (0.55,-1.26) -- (6.0,-1.26);
+\foreach \x in {0.55,2.55,6.0} { \draw[solideE, line width=0.7pt] (\x,-1.26) -- (\x,-1.18); }
+\draw[solideE, line width=0.7pt] (3.28,-1.26) -- (3.28,-1.34);
+\node[font=\scriptsize, text=solideE, anchor=north] at (3.28,-1.34)
+  {$P = U \times I$ : même puissance dans les trois cas};
+\node[font=\scriptsize, anchor=north, align=flush center, text=black!65, text width=6.6cm]
+  at (3.28,-1.72)
+  {valeurs exactes 400,3 W ; le manuel arrondit le courant à 22,2 A puis écrit 400 W};
+\end{tikzpicture}
+\end{document}

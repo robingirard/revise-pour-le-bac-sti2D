@@ -1,0 +1,47 @@
+%% guide-sismogramme — enregistrement sismique : quatre périodes en 0,40 s.
+%% Sinusoïde d'amplitude 2,0 cm, période 0,10 s, partant de l'origine en montant.
+%% RÈGLE : ni la période, ni la fréquence, ni la longueur d'onde ne sont écrites ;
+%% la double flèche indique « 4 périodes », c'est à l'élève de diviser.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=15cm,y=0.65cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  grille/.style={line width=0.3pt, black!15},
+  onde/.style={draw=solideA, line width=1.2pt, line join=round},
+  cote/.style={{Stealth[length=4.5pt]}-{Stealth[length=4.5pt]}, line width=0.9pt, draw=solideD},
+  grad/.style={font=\scriptsize, inner sep=2.5pt}]
+
+%% ================= quadrillage ============================================
+\foreach \t in {0.05,0.10,...,0.401} { \draw[grille] (\t,-2.4) -- (\t,2.4); }
+\foreach \a in {-2,-1.5,...,2.01}    { \draw[grille] (0,\a) -- (0.42,\a); }
+
+%% ================= axes ===================================================
+\draw[axe] (-0.012,0) -- (0.445,0);
+\node[grad, anchor=north east] at (0.448,-0.10) {$t$ (s)};
+\draw[axe] (0,-2.55) -- (0,2.75);
+\node[grad, anchor=south east] at (-0.004,2.35) {$x$ (cm)};
+\foreach \t/\lab in {0.10/{0,10}, 0.20/{0,20}, 0.30/{0,30}, 0.40/{0,40}} {
+  \draw[line width=0.5pt] (\t,-0.14) -- (\t,0.14);
+  \node[grad, anchor=north, fill=white, inner sep=1.5pt] at (\t,-0.18) {\lab}; }
+\node[grad, anchor=north east] at (-0.004,-0.05) {0};
+\foreach \a in {-2,-1,1,2} {
+  \draw[line width=0.5pt] (-0.004,\a) -- (0.004,\a);
+  \node[grad, anchor=east] at (-0.005,\a) {\a}; }
+
+%% ================= la sinusoïde ===========================================
+\draw[onde] plot[domain=0:0.40, samples=200, smooth] (\x,{2*sin(3600*\x)});
+
+%% ================= amplitude et durée observée ============================
+\draw[cote] (0.025,0.08) -- (0.025,1.94);
+\node[font=\scriptsize, text=solideD, anchor=south west, inner sep=2pt] at (0.030,2.05) {amplitude};
+\draw[cote] (0,2.85) -- (0.40,2.85);
+\node[font=\scriptsize\bfseries, text=solideD, fill=white, inner sep=2pt] at (0.20,2.85)
+  {4 périodes};
+
+%% ================= titre et légende =======================================
+\node[font=\small, anchor=south] at (0.20,3.35) {Sismogramme --- ondes S};
+\node[font=\scriptsize, text=black!70, anchor=north] at (0.20,-3.10)
+  {la célérité $v_\mathrm{S} = 4{,}0$ km$\cdot$s$^{-1}$ est donnée par l'énoncé};
+\end{tikzpicture}
+\end{document}

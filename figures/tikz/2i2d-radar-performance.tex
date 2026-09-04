@@ -1,6 +1,6 @@
 %% 2i2d-radar-performance — diagramme en toile d'araignée : six indices de
-%% performance notés de 0 (centre) à 5 (extérieur). Deux matériaux comparés
-%% (le diagramme du manuel est vierge : c'est à l'élève de le remplir).
+%% performance notés de 0 (centre) à 5 (extérieur). Deux matériaux sont comparés
+%% ici (le diagramme du manuel est vierge : c'est à l'élève de le remplir).
 \documentclass[tikz,border=4pt]{standalone}
 \usepackage{liaisons}
 \begin{document}
@@ -9,46 +9,47 @@
   petit/.style={font=\scriptsize, inner sep=1.5pt}]
 
 %% --- les six directions, en partant du haut et dans le sens horaire ----------
-%% angle 90, 30, -30, -90, -150, 150
 \newcommand\ang[1]{90-60*#1}
+\newcommand\ray[1]{0.35*#1}     % note (0 à 5) → rayon
 
-%% --- hexagones concentriques et graduations ----------------------------------
-\foreach \r in {0.4,0.8,1.2,1.6,2.0} {
-  \draw[toile] (\ang{0}:\r) \foreach \k in {1,...,5} { -- (\ang{\k}:\r) } -- cycle; }
-\foreach \k in {0,...,5} { \draw[toile] (0,0) -- (\ang{\k}:2.0); }
-\foreach \n in {0,1,2,3,4,5} { \node[petit, anchor=west, text=black!60] at (0.12,-0.4*\n) {\n}; }
+%% --- hexagones concentriques, axes et graduations ----------------------------
+\foreach \n in {1,...,5} {
+  \draw[toile] (\ang{0}:\ray{\n}) \foreach \k in {1,...,5} { -- (\ang{\k}:\ray{\n}) } -- cycle; }
+\foreach \k in {0,...,5} { \draw[toile] (0,0) -- (\ang{\k}:\ray{5}); }
+\foreach \n in {0,...,5} {
+  \node[petit, anchor=west, text=black!60, fill=white, inner sep=1pt] at (0.1,-\ray{\n}) {\n}; }
 
 %% --- étiquettes des axes -------------------------------------------------------
-\node[petit, anchor=south, align=center]      at (\ang{0}:2.15) {Résistance\\à la corrosion};
-\node[petit, anchor=west, align=left]         at (\ang{1}:2.15) {Coulabilité};
-\node[petit, anchor=west, align=left]         at (\ang{2}:2.15) {Empreinte\\carbone};
-\node[petit, anchor=north, align=center]      at (\ang{3}:2.45) {Recyclabilité};
-\node[petit, anchor=east, align=right]        at (\ang{4}:2.15) {Masse};
-\node[petit, anchor=east, align=right]        at (\ang{5}:2.15) {Limite\\élastique};
+\node[petit, anchor=south, align=center] at (\ang{0}:1.95) {Résistance\\à la corrosion};
+\node[petit, anchor=west,  align=left]   at (\ang{1}:1.90) {Coulabilité};
+\node[petit, anchor=west,  align=left]   at (\ang{2}:1.90) {Empreinte\\carbone};
+\node[petit, anchor=north, align=center] at (\ang{3}:2.20) {Recyclabilité};
+\node[petit, anchor=east,  align=right]  at (\ang{4}:1.90) {Masse};
+\node[petit, anchor=east,  align=right]  at (\ang{5}:1.90) {Limite\\élastique};
 
 %% --- matériau 1 : notes 3, 4, 2, 3, 1, 5 -----------------------------------------
 \draw[line width=1pt, solideA, fill=solideA, fill opacity=0.10, draw opacity=1]
-  (\ang{0}:1.2) -- (\ang{1}:1.6) -- (\ang{2}:0.8) -- (\ang{3}:1.2) -- (\ang{4}:0.4) -- (\ang{5}:2.0) -- cycle;
-\foreach \k/\n in {0/3, 1/4, 2/2, 3/3, 4/1, 5/5} { \fill[solideA] (\ang{\k}:0.4*\n) circle (1.3pt); }
+  (\ang{0}:\ray{3}) -- (\ang{1}:\ray{4}) -- (\ang{2}:\ray{2}) -- (\ang{3}:\ray{3})
+  -- (\ang{4}:\ray{1}) -- (\ang{5}:\ray{5}) -- cycle;
+\foreach \k/\n in {0/3, 1/4, 2/2, 3/3, 4/1, 5/5} { \fill[solideA] (\ang{\k}:\ray{\n}) circle (1.2pt); }
 
 %% --- matériau 2 : notes 4, 2, 4, 5, 4, 3 -------------------------------------------
-\draw[line width=1pt, solideB, dash pattern=on 3pt off 2pt, fill=solideB, fill opacity=0.08, draw opacity=1]
-  (\ang{0}:1.6) -- (\ang{1}:0.8) -- (\ang{2}:1.6) -- (\ang{3}:2.0) -- (\ang{4}:1.6) -- (\ang{5}:1.2) -- cycle;
-\foreach \k/\n in {0/4, 1/2, 2/4, 3/5, 4/4, 5/3} { \fill[solideB] (\ang{\k}:0.4*\n) circle (1.3pt); }
+\draw[line width=1pt, solideB, dash pattern=on 3pt off 2pt,
+      fill=solideB, fill opacity=0.08, draw opacity=1]
+  (\ang{0}:\ray{4}) -- (\ang{1}:\ray{2}) -- (\ang{2}:\ray{4}) -- (\ang{3}:\ray{5})
+  -- (\ang{4}:\ray{4}) -- (\ang{5}:\ray{3}) -- cycle;
+\foreach \k/\n in {0/4, 1/2, 2/4, 3/5, 4/4, 5/3} { \fill[solideB] (\ang{\k}:\ray{\n}) circle (1.2pt); }
 
 %% --- légende --------------------------------------------------------------------------
-\begin{scope}[shift={(3.9,1.4)}]
-  \draw[line width=1pt, solideA] (0,0) -- (0.5,0);
-  \node[petit, anchor=west, text=solideA] at (0.58,0) {matériau 1};
-  \draw[line width=1pt, solideB, dash pattern=on 3pt off 2pt] (0,-0.42) -- (0.5,-0.42);
-  \node[petit, anchor=west, text=solideB] at (0.58,-0.42) {matériau 2};
-  \node[petit, anchor=north west, text=black!60, align=left] at (0,-0.9)
-       {(dans le manuel, le\\diagramme est vierge :\\c'est à vous de le remplir)};
-\end{scope}
+\draw[line width=1pt, solideA] (3.05,0.35) -- (3.55,0.35);
+\node[petit, anchor=west, text=solideA] at (3.63,0.35) {matériau 1};
+\draw[line width=1pt, solideB, dash pattern=on 3pt off 2pt] (3.05,-0.15) -- (3.55,-0.15);
+\node[petit, anchor=west, text=solideB] at (3.63,-0.15) {matériau 2};
 
-%% --- bandeau de l'échelle de notation ------------------------------------------------------
+%% --- bandeau : l'échelle de notation --------------------------------------------------------
 \node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=4pt, anchor=north,
-      font=\scriptsize] at (1.6,-3.05)
-     {0 Mauvais $\cdot$ 1 Faible $\cdot$ 2 Médiocre $\cdot$ 3 Acceptable $\cdot$ 4 Bon $\cdot$ 5 Excellent};
+      align=center, font=\scriptsize] at (1.1,-2.72)
+     {0 Mauvais $\cdot$ 1 Faible $\cdot$ 2 Médiocre $\cdot$ 3 Acceptable $\cdot$ 4 Bon $\cdot$ 5 Excellent\\[1pt]
+      {\itshape dans le manuel le diagramme est vierge : c'est à vous de le remplir}};
 \end{tikzpicture}
 \end{document}

@@ -1,0 +1,71 @@
+%% Schéma cinématique simplifié de la caméra dôme (Tle, p. 251).
+%% Trois classes d'équivalence, deux liaisons pivot : l'axe vertical z donne la
+%% rotation dite « horizontale » (panoramique), l'axe horizontal y la rotation
+%% dite « verticale » (site).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cl1/.style={line width=1.1pt, solideB, line cap=round, line join=round},
+  cl2/.style={line width=1.1pt, solideE, line cap=round, line join=round},
+  rot/.style={-{Stealth[length=5pt]}, line width=0.9pt, black!55},
+  amorce/.style={black!55, dash pattern=on 2pt off 2pt, line width=0.5pt},
+  legd/.style={font=\scriptsize, anchor=west, align=left, text width=3.0cm, inner sep=2pt,
+               execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+  legg/.style={font=\scriptsize, anchor=east, align=right, text width=2.3cm, inner sep=2pt,
+               execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+  mixte/.style={-{Stealth[length=5pt]}, line width=0.6pt,
+                dash pattern=on 6pt off 2pt on 1pt off 2pt}]
+
+%% ================== bâti 0 ============================================
+\hachures[draw=solideA]{(2.1,5.95) rectangle (4.1,6.15)}
+\draw[solideA, line width=0.9pt] (2.1,5.95) rectangle (4.1,6.15);
+\draw[amorce] (4.1,6.05) -- (4.95,6.05);
+\node[legd] at (4.95,6.05) {\textbf{Bâti 0} : plateau 3 + tiges 2 + platine 1};
+
+%% ================== liaison pivot d'axe (O,z) =========================
+\draw[solideA, line width=1.1pt] (2.35,5.95) -- (2.35,4.75) -- (2.75,4.75);
+\pic[rotate=90, s1=solideB, s2=solideA, liens=false] at (3.0,4.75) {pivot face};
+\node[font=\small, anchor=south east, inner sep=1pt] at (2.94,4.8) {$O$};
+\draw[amorce] (3.3,4.75) -- (4.95,4.75);
+\node[legd] at (4.95,4.75)
+     {liaison \textbf{pivot} $(O,\vec{z})$ --- roulements 5 : rotation \textbf{horizontale} (panoramique)};
+%% flèche de rotation autour de l'axe vertical
+\draw[rot] (2.6,3.9) arc (180:-30:0.4 and 0.14);
+
+%% ================== classe 1 : chape + poulie + moteur ================
+\draw[cl1] (3.0,3.85) -- (3.0,3.6) -- (4.0,3.6) -- (4.0,3.2);
+\draw[cl1] (3.7,3.6) -- (3.7,3.68);
+\draw[cl1, fill=solideB!12, rounded corners=3pt] (3.45,3.68) rectangle (3.95,4.08);
+\draw[amorce] (3.98,3.88) -- (4.95,3.75);
+\node[legd] at (4.95,3.7) {\textbf{1} : chape 8 + poulie 14, qui porte le moteur};
+
+%% ================== liaison pivot d'axe (A,y) =========================
+\pic[s1=solideE, s2=solideB, liens=false] at (4.0,2.9) {pivot face};
+\node[font=\small, anchor=south west, inner sep=1pt] at (4.06,2.95) {$A$};
+\draw[amorce] (3.5,2.9) -- (2.6,2.9);
+\node[legg] at (2.55,2.9)
+     {liaison \textbf{pivot} $(A,\vec{y})$ --- roulements 9 : rotation \textbf{verticale} (site)};
+%% flèche de rotation autour de l'axe horizontal
+\draw[rot] (3.15,2.45) arc (-90:190:0.13 and 0.45);
+
+%% ================== classe 2 : module caméra ==========================
+\draw[cl2] (4.8,2.9) -- (4.8,2.45);
+\draw[cl2, fill=solideE!12] (4.1,1.55) rectangle (5.5,2.45);
+\draw[cl2, fill=solideE!12] (3.8,1.85) rectangle (4.1,2.15);
+\draw[cl2, fill=white] (3.8,2.0) ellipse (0.09 and 0.15);
+\node[font=\scriptsize, anchor=north] at (4.8,1.42)
+     {\textbf{2} : module caméra 27 + chape 10 + roue 13};
+
+%% ================== repère (x, y, z) ==================================
+\draw[mixte] (1.2,1.45) -- (1.2,2.25) node[anchor=south, inner sep=1pt, font=\small] {$\vec{z}$};
+\draw[mixte] (1.2,1.45) -- (2.0,1.35) node[anchor=west, inner sep=1pt, font=\small] {$\vec{y}$};
+\draw[mixte] (1.2,1.45) -- (0.6,0.95) node[anchor=north east, inner sep=1pt, font=\small] {$\vec{x}$};
+
+%% ================== encadré de conclusion =============================
+\node[draw=solideA, line width=0.9pt, fill=solideA!7, rounded corners=3pt, inner sep=4pt,
+      font=\scriptsize, anchor=north, text width=7.2cm, align=center] at (4.2,0.85)
+     {la rotation dite \textbf{horizontale} se fait autour de l'axe \textbf{vertical} $\vec{z}$ ;
+      la rotation dite \textbf{verticale} se fait autour de l'axe \textbf{horizontal} $\vec{y}$};
+\end{tikzpicture}
+\end{document}

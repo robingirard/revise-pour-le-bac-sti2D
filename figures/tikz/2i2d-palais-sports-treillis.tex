@@ -27,8 +27,8 @@
 \batihoriz{0.2}{7.8}{0}
 \hachures{(0.675,0) rectangle (1.125,1.2)}
 \hachures{(6.875,0) rectangle (7.325,1.2)}
-\node[petit, anchor=north] at (0.9,-0.28) {poteau 1};
-\node[petit, anchor=north] at (7.1,-0.28) {poteau 2};
+\node[petit, anchor=north] at (0.9,-0.3) {poteau 1};
+\node[petit, anchor=north] at (7.1,-0.3) {poteau 2};
 
 %% --- la ferme en treillis ----------------------------------------------------------
 \draw[membrure] (0.9,1.2) -- (7.1,1.2);                       % membrure inférieure
@@ -40,39 +40,39 @@
   \draw[barre] (\a,1.2) -- (\b,{\haut{\b}}); }                % diagonales en zigzag
 
 %% --- couverture et panneaux ----------------------------------------------------------
-\draw[line width=1pt, solideF] (0.9,1.9) -- (4.6,2.7) -- (7.1,2.2);
-\node[petit, anchor=south, text=solideF] at (3.2,2.72) {couverture + panneaux photovoltaïques};
+\draw[line width=1pt, solideF] (0.9,2.0) -- (4.6,2.8) -- (7.1,2.3);
+\node[petit, anchor=south, text=solideF] at (3.0,2.86) {couverture + panneaux photovoltaïques};
 
-%% --- barre 1 : membrure supérieure juste à droite du sommet, en traction ----------------
+%% --- barre 1 : membrure supérieure juste à droite du sommet, tendue -------------------
 \draw[line width=1.3pt, solideA] (4.6,2.55) -- (5.5,2.37);
-\draw[-{Stealth[length=4pt]}, line width=0.8pt, solideA] (5.05,2.46) -- (5.85,2.30);
-\draw[-{Stealth[length=4pt]}, line width=0.8pt, solideA] (5.05,2.46) -- (4.25,2.62);
-\node[petit, anchor=north, text=solideA] at (5.35,2.22) {barre 1 — $N = 1\,750$ kN};
+\draw[-{Stealth[length=4pt]}, line width=0.8pt, solideA] (5.05,2.46) -- (5.92,2.29);
+\draw[-{Stealth[length=4pt]}, line width=0.8pt, solideA] (5.05,2.46) -- (4.28,2.61);
+\node[petit, anchor=west, text=solideA] at (5.65,2.76) {barre 1 : $N = 1\,750$ kN};
 
 %% --- appuis ----------------------------------------------------------------------------
 \draw[line width=0.9pt, draw=solideE, fill=solideE!14, line join=round]
   (0.9,1.17) -- (0.66,0.86) -- (1.14,0.86) -- cycle;
 \draw[line width=0.7pt, draw=solideE, fill=white] (0.78,0.75) circle (0.09);
 \draw[line width=0.7pt, draw=solideE, fill=white] (1.02,0.75) circle (0.09);
-\node[petit, anchor=east, text=solideE, align=right] at (0.55,0.62) {appui glissant\\(type A)};
+\node[petit, anchor=west, text=solideE, align=left] at (1.32,0.75) {appui glissant\\(type A)};
 \draw[line width=0.9pt, draw=solideE, fill=solideE!14, line join=round]
   (7.1,1.17) -- (6.86,0.86) -- (7.34,0.86) -- cycle;
-\node[petit, anchor=west, text=solideE, align=left] at (7.45,0.72) {appui fixe\\(type B)};
+\node[petit, anchor=east, text=solideE, align=right] at (6.68,0.75) {appui fixe\\(type B)};
 
 %% --- le vent des deux côtés ---------------------------------------------------------------
-\draw[vent] (0.05,3.05) -- (0.75,3.05);
-\node[petit, anchor=south, text=solideD] at (0.4,3.08) {vent d'ouest};
-\draw[vent] (7.95,3.05) -- (7.25,3.05);
-\node[petit, anchor=south, text=solideD] at (7.6,3.08) {vent d'est};
+\draw[vent] (0.25,3.45) -- (0.95,3.45);
+\node[petit, anchor=south, text=solideD] at (0.6,3.48) {vent d'ouest};
+\draw[vent] (7.75,3.45) -- (7.05,3.45);
+\node[petit, anchor=south, text=solideD] at (7.4,3.48) {vent d'est};
 
-%% --- la dilatation -------------------------------------------------------------------------
+%% --- la dilatation, permise par l'appui glissant ---------------------------------------------
 \draw[{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.7pt, solideD,
-      dash pattern=on 3pt off 2pt] (3.2,0.95) -- (4.8,0.95);
-\node[petit, anchor=north, text=solideD] at (4.0,0.92) {dilatation $\approx$ 27 mm};
+      dash pattern=on 3pt off 2pt] (3.35,1.02) -- (4.65,1.02);
+\node[petit, anchor=north, text=solideD] at (4.0,0.98) {dilatation $\approx$ 27 mm};
 
 %% --- portée ------------------------------------------------------------------------------------
-\draw[attache] (0.9,-0.3) -- (0.9,-0.7)  (7.1,-0.3) -- (7.1,-0.7);
-\draw[cote] (0.9,-0.55) -- (7.1,-0.55);
-\node[petit, anchor=south, text=solideD] at (4.0,-0.52) {56 m};
+\draw[attache] (0.9,-0.3) -- (0.9,-0.95)  (7.1,-0.3) -- (7.1,-0.95);
+\draw[cote] (0.9,-0.8) -- (7.1,-0.8);
+\node[petit, anchor=south, text=solideD] at (4.0,-0.78) {56 m};
 \end{tikzpicture}
 \end{document}

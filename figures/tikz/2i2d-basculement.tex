@@ -53,12 +53,12 @@
 
 %% --- le mouvement de basculement -------------------------------------------------------
 \draw[line width=0.9pt, dash pattern=on 3pt off 2pt, solideD, -{Stealth[length=6pt]}]
-  (4.2,0) ++(125:1.15) arc (125:65:1.15);
-\node[petit, anchor=south, text=solideD] at (4.2,1.28) {basculement};
+  ([shift=(103:4.1)]4.2,0) arc (103:68:4.1);
+\node[petit, anchor=south, text=solideD] at (4.45,4.08) {basculement autour de $A$};
 
 %% --- cartouche ---------------------------------------------------------------------------
 \node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=4pt, anchor=north west,
-      align=left, font=\scriptsize] at (5.55,3.05)
+      align=left, font=\scriptsize] at (5.35,3.0)
      {$M_{\text{stab}} = P \times d_P$\\[2pt]
       $M_{\text{renv}} = F \times h$\\[2pt]
       stable si $M_{\text{stab}} > M_{\text{renv}}$};

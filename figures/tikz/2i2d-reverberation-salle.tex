@@ -1,0 +1,73 @@
+%% 2i2d-reverberation-salle — trajets réfléchis dans une salle et décroissance du niveau.
+%% À gauche : le son direct (solideA) et trois trajets réfléchis (solideB) sur le plafond,
+%% le sol et le mur du fond. À droite : après l'arrêt de la source, le niveau décroît ;
+%% le temps de réverbération T_R est la durée d'une décroissance de 60 dB.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  txt/.style={font=\scriptsize},
+  grad/.style={font=\tiny},
+  refl/.style={solideB, line width=0.5pt, -{Stealth[length=3.5pt]}, line join=round},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.6pt, black!75},
+  guide/.style={black!45, line width=0.4pt, dash pattern=on 1.6pt off 1.6pt}]
+
+%% ================= partie gauche : coupe de la salle ========================
+\def\hs{2.20}\def\ls{3.50}
+\fill[black!3] (0,0) rectangle (\ls,\hs);
+\draw[line width=0.8pt, black!70] (0,0) rectangle (\ls,\hs);
+
+%% source : petit haut-parleur
+\fill[black!45] (0.30,0.45) rectangle (0.55,0.95);
+\fill[black!30] (0.55,0.95) -- (0.72,1.10) -- (0.72,0.30) -- (0.55,0.45) -- cycle;
+\draw[line width=0.5pt, black!70] (0.30,0.45) rectangle (0.55,0.95);
+\draw[line width=0.5pt, black!70] (0.55,0.95) -- (0.72,1.10) -- (0.72,0.30) -- (0.55,0.45);
+\node[txt, anchor=north] at (0.50,0.38) {source};
+
+%% auditeur : silhouette simplifiée
+\fill[black!55] (2.80,0) -- (3.02,0) -- (3.02,0.80) -- (2.80,0.80) -- cycle;
+\fill[black!55] (2.91,0.98) circle (0.12);
+\node[txt, anchor=north] at (2.91,-0.02) {auditeur};
+
+%% trajet direct et trajets réfléchis
+\draw[solideA, line width=1.1pt, -{Stealth[length=4.5pt]}] (0.74,0.72) -- (2.76,0.78);
+\draw[refl] (0.74,0.88) -- (1.60,\hs) -- (2.76,0.95);
+\draw[refl] (0.74,0.56) -- (1.55,0) -- (2.76,0.60);
+\draw[refl] (0.74,1.25) -- (0,1.62) -- (2.76,1.12);
+\node[txt, text=solideA, anchor=west, fill=black!3, inner sep=1pt] at (1.32,0.46) {direct};
+\node[txt, text=solideB, anchor=west, fill=black!3, inner sep=1pt] at (0.95,1.78) {réfléchis};
+\node[txt, anchor=south west] at (0.02,\hs+0.04) {$V = 1\,000$ m$^3$};
+\node[txt, anchor=south east] at (\ls-0.02,\hs+0.04) {$A = 200$ m$^2$};
+
+%% ================= partie droite : décroissance du niveau ===================
+\begin{scope}[shift={(4.35,0)}, x=0.95cm, y=0.026cm]
+  \draw[-{Stealth[length=5pt]}, line width=0.6pt] (0,0) -- (2.15,0);
+  \draw[-{Stealth[length=5pt]}, line width=0.6pt] (0,0) -- (0,80);
+  \foreach \L in {30,60,90} {
+    \draw[line width=0.5pt] (0,{\L-20}) -- (-0.045,{\L-20})
+      node[grad, anchor=east, inner sep=2pt] {\L}; }
+  \foreach \t in {0.5,1,1.5,2} {
+    \draw[line width=0.5pt] (\t,0) -- (\t,-3) node[grad, anchor=north, inner sep=2pt] {\t}; }
+  %% palier (source en marche) puis décroissance rectiligne de 60 dB en 0,80 s
+  \draw[solideD, line width=1.3pt, line join=round] (0,70) -- (0.80,70) -- (1.60,10);
+  \draw[black!55, line width=0.7pt, dash pattern=on 2pt off 1.6pt] (0.80,-3) -- (0.80,78);
+  \node[txt, anchor=south west, inner sep=1.5pt] at (0.84,74) {arrêt};
+  %% cotes : 60 dB en ordonnée, T_R en abscisse
+  \draw[guide] (1.60,10) -- (1.92,10);
+  \draw[guide] (0.80,70) -- (1.92,70);
+  \draw[cote] (1.92,70) -- (1.92,10);
+  \draw[guide] (0.80,70) -- (0.80,4) (1.60,10) -- (1.60,4);
+  \draw[cote] (0.80,4) -- (1.60,4);
+  \node[txt, anchor=south, inner sep=1.5pt, fill=white] at (1.20,6) {$T_R = 0{,}80$ s};
+  \node[txt, anchor=west, inner sep=2pt, text=black!75] at (1.98,40) {60 dB};
+  \node[txt, anchor=south east, inner sep=1pt] at (0.10,80) {$L$ (dB)};
+  \node[txt, anchor=north] at (1.05,-10) {$t$ (s)};
+\end{scope}
+
+%% ================= relation de Sabine =======================================
+\node[draw=black!70, line width=0.7pt, rounded corners=2pt, fill=black!3, align=center,
+      inner sep=4pt, anchor=north] at (3.45,-0.75)
+  {{\small $T_R = 0{,}16 \times \dfrac{V}{A}$}\ \ {\scriptsize ($T_R$ en s ; $V$ en m$^3$ ; $A$ en m$^2$)}\\[1pt]
+   {\scriptsize formule de Sabine}};
+\end{tikzpicture}
+\end{document}

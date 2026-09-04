@@ -10,7 +10,7 @@
   grad/.style={font=\tiny}]
 
 %% ================= diagramme (coordonnées locales : T - 12) =================
-\begin{scope}[x=0.30cm, y=0.30cm]
+\begin{scope}[x=0.26cm, y=0.26cm]
   %% demi-plans « trop chaud » (au-dessus) et « trop frais » (au-dessous)
   \fill[solideA!8] (1,12) -- (12,1) -- (12,12) -- cycle;
   \fill[solideB!8] (0,0) -- (0,11) -- (11,0) -- cycle;
@@ -21,8 +21,6 @@
     \draw[black!25, line width=0.4pt, dotted] (\v,0) -- (\v,12) (0,\v) -- (12,\v); }
   %% droite de confort
   \draw[solideE, line width=1.2pt] (0,12) -- (12,0);
-  \node[txt, text=solideE!55!black, rotate=-45, anchor=south] at (9.4,2.6)
-    {zone de confort ressenti};
   %% mentions des deux demi-plans
   \node[grad, text=solideA!70!black] at (9.2,10.2) {trop chaud};
   \node[grad, text=solideB!70!black] at (2.2,1.4) {trop frais};
@@ -40,20 +38,25 @@
     \draw[line width=0.5pt] (\v,0) -- (\v,-0.45) node[grad, anchor=north, inner sep=2pt] {\the\numexpr\v+12\relax};
     \draw[line width=0.5pt] (0,\v) -- (-0.45,\v) node[grad, anchor=east, inner sep=2pt] {\the\numexpr\v+12\relax}; }
 \end{scope}
-\node[txt, anchor=north] at (1.80,-0.62) {$T_{\text{parois}}$ ($^\circ$C)};
-\node[txt, anchor=south west, inner sep=1pt] at (-0.55,4.05) {$T_{\text{air}}$ ($^\circ$C)};
+\node[txt, anchor=north] at (1.60,-0.62) {$T_{\text{parois}}$ ($^\circ$C)};
+\node[txt, anchor=south west, inner sep=1pt] at (-0.55,3.50) {$T_{\text{air}}$ ($^\circ$C)};
 
-%% ================= repérage des deux points =================================
-\node[txt, anchor=north west, align=left] at (4.30,3.95)
+%% ================= légende, à droite du diagramme ===========================
+\def\xc{3.80}
+\fill[solideE!18] (\xc,3.28) rectangle (\xc+0.34,3.52);
+\draw[solideE, line width=1.2pt] (\xc,3.40) -- (\xc+0.34,3.40);
+\node[txt, anchor=north west, align=left] at (\xc+0.42,3.56)
+  {zone de confort\\ ressenti $\approx 18\ ^\circ$C};
+\node[txt, anchor=north west, align=left] at (\xc,2.55)
   {\textbf{A} — avant isolation\\ parois $15\ ^\circ$C, air $21\ ^\circ$C};
-\node[txt, anchor=north west, align=left] at (4.30,2.85)
+\node[txt, anchor=north west, align=left] at (\xc,1.60)
   {\textbf{B} — après isolation\\ parois $19\ ^\circ$C, air $17\ ^\circ$C};
-\node[txt, anchor=north west, align=left, text=solideD] at (4.30,1.75)
-  {même sensation ($\approx 18\ ^\circ$C),\\ mais $4\ ^\circ$C de consigne\\ en moins};
+\node[txt, anchor=north west, align=left, text=solideD] at (\xc,0.65)
+  {même sensation, mais\\ $4\ ^\circ$C de consigne en moins};
 
 %% ================= relation encadrée ========================================
 \node[draw=black!70, line width=0.7pt, rounded corners=2pt, fill=black!3, align=center,
-      inner sep=4pt, anchor=north] at (3.20,-1.05)
+      inner sep=4pt, anchor=north] at (1.75,-0.98)
   {{\small $T_{\text{ressentie}} \approx \dfrac{T_{\text{air}} + T_{\text{parois}}}{2}$}\\[1pt]
    {\scriptsize modèle simplifié}};
 \end{tikzpicture}
