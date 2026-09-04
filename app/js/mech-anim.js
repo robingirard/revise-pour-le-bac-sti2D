@@ -2,7 +2,9 @@
 // g.mech[data-class="E1"], produit par le build d'après la couleur des tracés) reçoit à chaque image
 // une transformation rigide calculée d'après CONTENT.animations[id de figure] : boîte du dessin en cm
 // (`bbox`), bord en points (`border`), durée d'un cycle (`duration`, s) et mouvement de chaque classe
-// (`fixed`, `rotate`, `translate`, `follow`, `coupler`, `slider`, `dash` : courroie dont les tirets défilent).
+// (`fixed`, `rotate`, `translate`, `follow`, `coupler`, `slider`, `rocker` : balancier d'un quadrilatère
+// articulé, `aim` : pièce qui pivote pour viser un point mobile, avec `slide` pour la tige d'un vérin,
+// `dash` : courroie dont les tirets défilent).
 // Partie géométrique pure (testable),
 // puis pilote DOM (requestAnimationFrame), déclenché par anim.js (survol, toucher, bouton de leçon).
 
@@ -54,7 +56,8 @@ function basic(c, spec, t) {
   switch (c && c.motion) {
     case 'rotate': {
       const [cx, cy] = toSvg(c.center || [0, 0], spec);
-      const deg = c.turns ? c.turns * 360 * t : (Number(c.amplitude) || 0) * Math.sin(TAU * (t + (Number(c.phase) || 0)));
+      const deg = (Number(c.offset) || 0)   // angle moyen (ex. benne oscillant entre 0° et 30° : offset 15, amplitude 15)
+        + (c.turns ? c.turns * 360 * t : (Number(c.amplitude) || 0) * Math.sin(TAU * (t + (Number(c.phase) || 0))));
       return rotateAbout(deg, cx, cy);
     }
     case 'translate': {
@@ -92,6 +95,20 @@ export function dashAt(c, spec, t) {
   return { dasharray: DASH_PATTERN.join(' '), dashoffset: -perCycle * t };
 }
 
+/** Point B d'un balancier : à distance r du pivot et L de A, du même côté (orientation) que la position dessinée. */
+export function rockerPoint(A, pivot, r, L, sign) {
+  const dx = pivot[0] - A[0], dy = pivot[1] - A[1];
+  const d = Math.hypot(dx, dy) || 1e-9;
+  const ux = dx / d, uy = dy / d;
+  const a = (L * L - r * r + d * d) / (2 * d);       // abscisse du milieu de la corde depuis A
+  const h = Math.sqrt(Math.max(0, L * L - a * a));     // hors d'atteinte : h = 0, point sur la ligne des centres
+  const M = [A[0] + a * ux, A[1] + a * uy];
+  const c1 = [M[0] - h * uy, M[1] + h * ux], c2 = [M[0] + h * uy, M[1] - h * ux];
+  const orient = (B) => Math.sign((B[0] - A[0]) * (B[1] - pivot[1]) - (B[1] - A[1]) * (B[0] - pivot[0]));
+  return orient(c1) === sign ? c1 : c2;
+}
+const orientation = (A, B, P) => Math.sign((B[0] - A[0]) * (B[1] - P[1]) - (B[1] - A[1]) * (B[0] - P[0]));
+
 /** Pose de chaque classe à l'instant t ∈ [0,1) : { id: matrice SVG }. Lève une erreur en cas de cycle. */
 export function poseAt(spec, t) {
   const classes = spec.classes || {};
@@ -110,12 +127,16 @@ export function poseAt(spec, t) {
         M = c.then ? mul(base, basic(c.then, spec, t)) : base;
         break;
       }
-      case 'coupler': {   // bielle entre un point A de la manivelle et un point B du coulisseau
+      case 'coupler': {   // bielle entre un point A de la manivelle et un point B du coulisseau (ou du balancier)
         const A0 = toSvg(c.a, spec), B0 = toSvg(c.b, spec);
         const A = apply(pose(c.crank), A0);
-        const d = dirSvg((classes[c.slider] || {}).dir);
+        const out = classes[c.slider] || {};
         const L = Math.hypot(B0[0] - A0[0], B0[1] - A0[1]);
-        const B = sliderPoint(A, B0, d, L);
+        let B;
+        if (out.motion === 'rocker') {
+          const P = toSvg(out.pivot || [0, 0], spec);
+          B = rockerPoint(A, P, Math.hypot(B0[0] - P[0], B0[1] - P[1]), L, orientation(A0, B0, P));
+        } else B = sliderPoint(A, B0, dirSvg(out.dir), L);
         const phi0 = Math.atan2(B0[1] - A0[1], B0[0] - A0[0]);
         const phi = Math.atan2(B[1] - A[1], B[0] - A[0]);
         M = mul(translate(A[0] - A0[0], A[1] - A0[1]), rotSvg(phi - phi0, A0[0], A0[1]));
@@ -126,6 +147,21 @@ export function poseAt(spec, t) {
         pose(c.coupler);
         const p = points[c.coupler];
         M = p ? translate(p.B[0] - p.B0[0], p.B[1] - p.B0[1]) : IDENTITY;
+        break;
+      }
+      case 'rocker': {    // balancier : tourne autour de son pivot fixe pour suivre le point B de sa bielle
+        pose(c.coupler);
+        const p = points[c.coupler];
+        const P = toSvg(c.pivot || [0, 0], spec);
+        M = p ? rotSvg(Math.atan2(p.B[1] - P[1], p.B[0] - P[0]) - Math.atan2(p.B0[1] - P[1], p.B0[0] - P[0]), P[0], P[1]) : IDENTITY;
+        break;
+      }
+      case 'aim': {       // corps de vérin : pivote autour de `pivot` pour viser le point `point` de la classe `at` ;
+        const P = toSvg(c.pivot || [0, 0], spec);                    // tige (`slide`) : glisse en plus jusqu'à ce point
+        const Q0 = toSvg(c.point || [0, 0], spec);
+        const Q = apply(pose(c.at), Q0);
+        const R = rotSvg(Math.atan2(Q[1] - P[1], Q[0] - P[0]) - Math.atan2(Q0[1] - P[1], Q0[0] - P[0]), P[0], P[1]);
+        if (c.slide) { const RQ0 = apply(R, Q0); M = mul(translate(Q[0] - RQ0[0], Q[1] - RQ0[1]), R); } else M = R;
         break;
       }
       default:

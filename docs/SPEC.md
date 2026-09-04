@@ -187,18 +187,27 @@ couleur au build). Spécification :
     "E3": { "motion": "slider", "dir": [1, 0], "coupler": "E2" },
     "E4": { "motion": "translate", "dir": [0, 1], "amplitude": 0.4, "phase": 0.25 },
     "E5": { "motion": "follow", "of": "E3", "then": { "motion": "translate", … } },
-    "courroie": { "motion": "dash", "speed": 29 } } }                      // tirets défilants (pt/s)
+    "courroie": { "motion": "dash", "speed": 29 },                         // tirets défilants (pt/s)
+    "E6": { "motion": "rocker", "pivot": [4, 0], "coupler": "E2" },         // balancier d'un quadrilatère articulé
+    "E7": { "motion": "aim", "pivot": [1.2, 0], "at": "E1", "point": [2.6, 1.9] },              // corps de vérin
+    "E8": { "motion": "aim", "pivot": [1.2, 0], "at": "E1", "point": [2.6, 1.9], "slide": true } } }   // tige de vérin
 ```
 
 Coordonnées en **cm** dans le repère du dessin TikZ ; conversion vers les unités utilisateur du SVG :
 `k = 72 / 2.54`, `X = border + (x − x0)·k`, `Y = border + (y1 − y)·k` (l'axe y est inversé). Le temps
 `t ∈ [0, 1)` parcourt un cycle de `duration` secondes ; `rotate` avec `turns` = rotation continue
 (sens trigonométrique : angle SVG négatif), sinon oscillation sinusoïdale `amplitude·sin(2π(t + phase))`
-(degrés) ; `translate` = déplacement sinusoïdal `amplitude·sin(2π(t + phase))` (cm) le long de `dir` ;
+(degrés), plus un angle moyen `offset` facultatif (degrés) ; `translate` = déplacement sinusoïdal `amplitude·sin(2π(t + phase))` (cm) le long de `dir` ;
 `follow` = même transformation que la classe `of`, composée avec `then` ; `coupler` (bielle) : le point
 `a` (dessiné, solidaire de `crank`) suit la manivelle, le point `b` reste sur la droite de `slider`
 (direction `dir`) à distance `|ab|` de `a(t)`, la bielle est déplacée rigidement de `a→b` vers `a(t)→b(t)` ;
-`slider` : translation `b(t) − b` calculée par sa bielle ; `dash` (courroie, chaîne) : pas de transformation,
+`slider` : translation `b(t) − b` calculée par sa bielle ; `rocker` (balancier d'un quadrilatère articulé) :
+la bielle `coupler` a son point `b` sur le balancier, qui tourne autour de `pivot` (fixe) : `b(t)` = intersection
+du cercle de centre `a(t)` et de rayon `|ab|` avec le cercle de centre `pivot` et de rayon `|pivot b|`, du même
+côté que la position dessinée ; `aim` (corps de vérin) : rotation autour de `pivot` (fixe) de l'angle qui amène
+la direction `pivot → point` sur `pivot → point(t)`, où `point` est solidaire de la classe `at` ; avec
+`slide: true` (tige de vérin), la pièce est en plus translatée le long de cet axe pour rester attachée en
+`point(t)` ; `dash` (courroie, chaîne) : pas de transformation,
 le groupe reçoit `stroke-dasharray` et un `stroke-dashoffset` qui décroît de `speed` unités SVG par seconde
 (sens de tracé du chemin ; distance par cycle arrondie à un nombre entier de motifs). Les transformations
 sont des matrices affines

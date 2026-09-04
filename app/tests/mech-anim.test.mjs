@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { K, toSvg, mul, translate, rotateAbout, apply, toAttr, poseAt, sliderPoint, IDENTITY, dashAt, DASH_PATTERN } from '../js/mech-anim.js';
+import { K, toSvg, mul, translate, rotateAbout, apply, toAttr, poseAt, sliderPoint, IDENTITY, dashAt, DASH_PATTERN, rockerPoint } from '../js/mech-anim.js';
 
 const close = (a, b, eps = 1e-6) => assert.ok(Math.abs(a - b) < eps, `${a} ≠ ${b}`);
 const closePt = (p, q, eps = 1e-6) => { close(p[0], q[0], eps); close(p[1], q[1], eps); };
@@ -101,4 +101,49 @@ test('dashAt : la courroie défile dans le sens du tracé et reboucle sur un nom
   assert.ok(dashAt(spec.classes.c, spec, 0.5).dashoffset < 0);   // décalage négatif = tirets vers l'avant
   close(d1.dashoffset, -Math.round((29 * 4) / P) * P);
   assert.equal(poseAt(spec, 0.3).c.a, 1);           // pas de transformation géométrique pour une courroie
+});
+
+test('rocker : quadrilatère articulé, le point B reste à distance r du pivot et L de A', () => {
+  const spec = { bbox: [-1, -1, 7, 4], border: 0, classes: {
+    E1: { motion: 'rotate', center: [0, 0], turns: 1 },
+    E2: { motion: 'coupler', crank: 'E1', a: [0.8, 0], slider: 'E3', b: [4, 2.2] },
+    E3: { motion: 'rocker', pivot: [4, 0], coupler: 'E2' } } };
+  const A0 = toSvg([0.8, 0], spec), B0 = toSvg([4, 2.2], spec), D = toSvg([4, 0], spec);
+  const L = Math.hypot(B0[0] - A0[0], B0[1] - A0[1]), r = 2.2 * K;
+  for (const t of [0, 0.1, 0.3, 0.5, 0.7, 0.9]) {
+    const poses = poseAt(spec, t);
+    const A = apply(poses.E1, A0), B = apply(poses.E3, B0);
+    close(Math.hypot(B[0] - D[0], B[1] - D[1]), r, 1e-6);            // le balancier tourne autour de D
+    close(Math.hypot(B[0] - A[0], B[1] - A[1]), L, 1e-6);            // la bielle garde sa longueur
+    closePt(apply(poses.E2, B0), B, 1e-6);                           // l'extrémité B de la bielle est sur le balancier
+    closePt(apply(poses.E2, A0), A, 1e-6);                           // et son extrémité A sur la manivelle
+  }
+  closePt(apply(poseAt(spec, 0).E3, B0), B0);                        // position dessinée à t = 0
+});
+
+test('rockerPoint : intersection de deux cercles, côté choisi par l’orientation', () => {
+  const B = rockerPoint([0, 0], [4, 0], 2, 3, 1);
+  close(Math.hypot(B[0], B[1]), 3); close(Math.hypot(B[0] - 4, B[1]), 2);
+  const B2 = rockerPoint([0, 0], [4, 0], 2, 3, -1);
+  close(B2[1], -B[1]);                                               // solution symétrique
+});
+
+test('aim : le corps du vérin vise le point mobile, la tige y reste attachée (slide)', () => {
+  const spec = { bbox: [0, 0, 8, 4], border: 0, classes: {
+    E1: { motion: 'rotate', center: [5, 0.6], amplitude: -15, phase: 0.75, offset: -15 },   // benne : 0° → −30° (horaire : l'avant, à gauche de C, monte)
+    E2: { motion: 'aim', pivot: [1.2, 0], at: 'E1', point: [2.6, 1.9] },
+    E3: { motion: 'aim', pivot: [1.2, 0], at: 'E1', point: [2.6, 1.9], slide: true } } };
+  const O = toSvg([1.2, 0], spec), P0 = toSvg([2.6, 1.9], spec);
+  closePt(apply(poseAt(spec, 0).E1, P0), P0, 1e-6);                  // offset + amplitude·sin(2π·0.75) = 0° : au repos
+  for (const t of [0.1, 0.25, 0.5]) {
+    const poses = poseAt(spec, t);
+    const P = apply(poses.E1, P0);
+    closePt(apply(poses.E3, P0), P, 1e-6);                           // la tige suit l'attache sur la benne
+    closePt(apply(poses.E2, O), O, 1e-6);                            // le corps pivote autour de O…
+    const Q = apply(poses.E2, P0);                                   // …et sa direction vise P
+    const ang = (a, b) => Math.atan2(a[1] - O[1], a[0] - O[0]) - Math.atan2(b[1] - O[1], b[0] - O[0]);
+    close(ang(Q, P), 0, 1e-6);
+  }
+  const lifted = apply(poseAt(spec, 0.5).E1, P0);                    // à t = 0,5 : −30°, l'attache P (à gauche de C) est montée (y SVG plus petit)
+  assert.ok(lifted[1] < P0[1]);
 });
