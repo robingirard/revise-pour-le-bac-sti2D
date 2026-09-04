@@ -1,0 +1,54 @@
+%% liaison-rotule-3d.tex — symbole normalisé (NF EN ISO 3952) en perspective : sphère dans une coupelle sphérique
+%% Perspective cavalière commune aux dix figures liaison-*-3d :
+%%   x vers la droite, y vers le haut, z (fuyante) vers l'observateur, 30° et rapport 0,5.
+%%   Solide 1 = solideA (rouge, pièce « intérieure »), solide 2 = solideB (bleu, pièce « extérieure »).
+%%   Traits cachés en pointillé fin. Pas de nom de liaison : la figure sert de question.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{calc,arrows.meta,3d}
+\tikzset{
+  cavaliere/.style={x={(1cm,0cm)}, y={(0cm,1cm)}, z={(-0.4330cm,-0.2500cm)}},
+  sA/.style={draw=solideA, line width=1.1pt, line join=round, line cap=round},
+  sB/.style={draw=solideB, line width=1.1pt, line join=round, line cap=round},
+  cacheA/.style={draw=solideA, line width=0.5pt, dash pattern=on 2pt off 1.6pt},
+  cacheB/.style={draw=solideB, line width=0.5pt, dash pattern=on 2pt off 1.6pt},
+  axe3d/.style={-{Stealth[length=4pt]}, line width=0.5pt},
+  etiq/.style={inner sep=1pt, font=\scriptsize},
+}
+%% Génératrices de silhouette d'un cylindre d'axe x : (y,z) = ±(0,9701 r ; -0,2425 r)
+\newcommand\gy{0.9701}\newcommand\gz{0.2425}
+%% \ellx{<style>}{<x>}{<r>} : section circulaire d'axe x (ellipse en perspective)
+\newcommand\ellx[3]{\begin{scope}[canvas is yz plane at x=#2]\draw[#1] (0,0) circle (#3);\end{scope}}
+%% \cylx{<style>}{<x1>}{<x2>}{<r>} : les deux génératrices vues d'un cylindre d'axe x
+\newcommand\cylx[4]{%
+  \draw[#1] (#2,{\gy*#4},{-\gz*#4}) -- (#3,{\gy*#4},{-\gz*#4});
+  \draw[#1] (#2,{-\gy*#4},{\gz*#4}) -- (#3,{-\gy*#4},{\gz*#4});}
+%% \cylxfond{<x1>}{<x2>}{<r>} : remplit en blanc la silhouette du cylindre (masque l'arrière-plan)
+\newcommand\cylxfond[3]{%
+  \fill[white] (#1,{\gy*#3},{-\gz*#3}) -- (#2,{\gy*#3},{-\gz*#3})
+            -- (#2,{-\gy*#3},{\gz*#3}) -- (#1,{-\gy*#3},{\gz*#3}) -- cycle;
+  \begin{scope}[canvas is yz plane at x=#1]\fill[white] (0,0) circle (#3);\end{scope}
+  \begin{scope}[canvas is yz plane at x=#2]\fill[white] (0,0) circle (#3);\end{scope}}
+%% \triedre{<x>}{<y>} : petit repère (x, y, z) en noir, dans le coin inférieur gauche
+\newcommand\triedre[2]{%
+  \begin{scope}[shift={(#1,#2,0)}, black]
+    \draw[axe3d] (0,0,0) -- (0.5,0,0) node[etiq, anchor=north west] {$x$};
+    \draw[axe3d] (0,0,0) -- (0,0.5,0) node[etiq, anchor=south west] {$y$};
+    \draw[axe3d] (0,0,0) -- (0,0,0.6) node[etiq, anchor=north east] {$z$};
+  \end{scope}}
+\begin{document}
+\begin{tikzpicture}[cavaliere]
+  \useasboundingbox (-2.0,-1.3) rectangle (1.65,1.05);
+  % solide 2 : coupelle — bord arrière du cercle de bord, puis la calotte
+  \draw[sB] (0,-0.45,0) -- (0,-0.95,0);
+  \begin{scope}[canvas is xz plane at y=0]\draw[sB] (180:0.45) arc (180:360:0.45);\end{scope}
+  \draw[sB] (-0.45,0,0) arc (180:360:0.45);
+  % solide 1 : sphère (remplie en blanc : elle masque le fond de la coupelle)
+  \draw[sA, fill=white] (0,0,0) circle (0.4cm);
+  \begin{scope}[canvas is xz plane at y=0.21]\draw[sA, line width=0.6pt] (0,0) circle (0.34);\end{scope}
+  \draw[sA] (0,0.4,0) -- (0,0.95,0);
+  % bord avant de la coupelle : il passe devant la sphère
+  \begin{scope}[canvas is xz plane at y=0]\draw[sB] (0:0.45) arc (0:180:0.45);\end{scope}
+  \triedre{-1.58}{-0.95}
+\end{tikzpicture}
+\end{document}

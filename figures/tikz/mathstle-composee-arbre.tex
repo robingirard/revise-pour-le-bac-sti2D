@@ -34,10 +34,15 @@
 \node[font=\scriptsize, text=black!60, anchor=north, align=center] at (2.15,-2.05)
      {on dérive de l'extérieur vers l'intérieur, sans oublier $u'$};
 
-%% ---------------- trois exemples, colonne de droite ------------------------
-\node[anchor=north west, align=left, font=\scriptsize, inner sep=2pt] at (5.55,0.55)
-     {$\mathrm{e}^{u}\ \rightarrow\ u'\,\mathrm{e}^{u}$\\[5pt]
-      $\ln(u)\ \rightarrow\ \dfrac{u'}{u}$\\[5pt]
-      $u^{n}\ \rightarrow\ n\,u'\,u^{n-1}$};
+%% ---------------- trois exemples, rangée du bas ----------------------------
+%% (placés sous la formule pour tenir dans une largeur d'écran de téléphone)
+\node[anchor=north, font=\scriptsize, inner sep=2pt] (ex1) at (0.15,-2.5)
+     {$\mathrm{e}^{u}\ \rightarrow\ u'\,\mathrm{e}^{u}$};
+\node[anchor=north, font=\scriptsize, inner sep=2pt] (ex2) at (2.25,-2.5)
+     {$\ln(u)\ \rightarrow\ \dfrac{u'}{u}$};
+\node[anchor=north, font=\scriptsize, inner sep=2pt] (ex3) at (4.62,-2.5)
+     {$u^{n}\ \rightarrow\ n\,u'\,u^{n-1}$};
+%% deux filets fins séparant les trois exemples
+\draw[black!35, line width=0.4pt] (1.2,-2.45) -- (1.2,-2.95)  (3.32,-2.45) -- (3.32,-2.95);
 \end{tikzpicture}
 \end{document}

@@ -47,7 +47,8 @@
 \draw[line width=1.3pt, solideA] (4.6,2.55) -- (5.5,2.37);
 \draw[-{Stealth[length=4pt]}, line width=0.8pt, solideA] (5.05,2.46) -- (5.92,2.29);
 \draw[-{Stealth[length=4pt]}, line width=0.8pt, solideA] (5.05,2.46) -- (4.28,2.61);
-\node[petit, anchor=west, text=solideA] at (5.65,2.76) {barre 1 : $N = 1\,750$ kN};
+\node[petit, anchor=west, text=solideA, align=left] at (5.62,2.93)
+     {barre 1 :\\ $N = 1\,750$ kN};
 
 %% --- appuis ----------------------------------------------------------------------------
 \draw[line width=0.9pt, draw=solideE, fill=solideE!14, line join=round]
@@ -68,7 +69,8 @@
 %% --- la dilatation, permise par l'appui glissant ---------------------------------------------
 \draw[{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.7pt, solideD,
       dash pattern=on 3pt off 2pt] (3.35,1.02) -- (4.65,1.02);
-\node[petit, anchor=north, text=solideD] at (4.0,0.98) {dilatation $\approx$ 27 mm};
+\node[petit, anchor=north, text=solideD, align=center] at (4.15,0.98)
+     {dilatation\\ $\approx$ 27 mm};
 
 %% --- portée ------------------------------------------------------------------------------------
 \draw[attache] (0.9,-0.3) -- (0.9,-0.95)  (7.1,-0.3) -- (7.1,-0.95);
