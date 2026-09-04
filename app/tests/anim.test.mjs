@@ -17,7 +17,7 @@ test('togglePlaying bascule la classe playing', () => {
 });
 
 test('toggleLesson bascule playing-all et met à jour le bouton', () => {
-  const body = { classList: new FakeClassList() };
+  const body = { classList: new FakeClassList(), querySelectorAll: () => [] };
   const btn = { textContent: '', attrs: {}, setAttribute(k, v) { this.attrs[k] = v; } };
   assert.equal(toggleLesson(body, btn), true);
   assert.equal(btn.textContent, lessonButtonLabel(true));
@@ -28,7 +28,7 @@ test('toggleLesson bascule playing-all et met à jour le bouton', () => {
 
 test('refreshLessonButtons masque le bouton sans figure animable', () => {
   const mk = (hasAnim) => {
-    const body = { querySelector: (sel) => (sel === 'svg[data-anim]' && hasAnim ? {} : null) };
+    const body = { querySelector: (sel) => (sel === 'svg[data-anim]' && hasAnim ? {} : null), querySelectorAll: () => [] };
     const details = { querySelector: (sel) => (sel === '.lesson-body' ? body : null) };
     const btn = { hidden: undefined, closest: (sel) => (sel === 'details.lesson' ? details : null) };
     return btn;

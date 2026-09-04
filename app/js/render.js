@@ -27,7 +27,7 @@ export function figureHtml(id, figures = {}, { block = false } = {}) {
     return `<span class="fig-missing">[figure manquante : ${escapeHtml(id)}]</span>`;
   }
   const attr = `data-fig="${escapeHtml(id)}"`;
-  const anim = /\sdata-anim=/.test(svg) ? ' fig-anim' : ''; // symbole animable (voir anim.js)
+  const anim = /\sdata-(anim|mech)=/.test(svg) ? ' fig-anim' : ''; // symbole ou schéma animable (voir anim.js)
   return block ? `<figure class="fig fig-block${anim}" ${attr}>${svg}</figure>` : `<span class="fig fig-inline${anim}" ${attr}>${svg}</span>`;
 }
 

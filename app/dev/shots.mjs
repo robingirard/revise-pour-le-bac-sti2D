@@ -147,11 +147,24 @@ try {
   await evaluate('document.querySelector(".lesson-body").scrollIntoView()'); await sleep(100);
   await shot('97-anim-lesson');
   await goto('#/session/liaisons-mobilites?item=mob-mcq-1&seed=1');
-  await click('.choice', 1); await click('.btn-verify'); await sleep(500);
+  // les choix sont mélangés : on clique « Tz », dont la correction contient deux figures
+  await evaluate(`(() => { const c = [...document.querySelectorAll('.choice')].find((el) => el.textContent.trim() === 'Tz'); if (c) c.click(); return !!c; })()`);
+  await click('.btn-verify'); await sleep(500);
   const fbFigs = await evaluate('document.querySelectorAll(".feedback svg").length');
   console.log('figures dans la correction :', fbFigs);
   if (fbFigs < 2) throw new Error('figures absentes du bandeau de correction');
   await shot('98-feedback-figures');
+  // Schéma cinématique animé : la leçon en lecture, une image prise à t ≈ 0,3 (durée 4 s)
+  await goto('#/skill/liaisons-mobilites');
+  await evaluate('document.querySelector("details.lesson") && (document.querySelector("details.lesson").open = true)');
+  await sleep(600);
+  await click('.lesson-anim-btn');
+  await sleep(1200);
+  const mechState = await evaluate('JSON.stringify({ svgs: document.querySelectorAll("svg[data-mech]").length, moved: document.querySelectorAll("g.mech[transform]").length, caption: !!document.querySelector(".mech-legende"), badge: !!document.querySelector(".fig-anim svg[data-mech]") })');
+  console.log('mécanisme :', mechState);
+  if (JSON.parse(mechState).moved < 1) throw new Error('schéma cinématique non animé');
+  await evaluate('document.querySelector("svg[data-mech]").scrollIntoView({ block: "center" })'); await sleep(60);
+  await shot('99-mech-anim');
   const errors = await evaluate('document.querySelectorAll(".error").length');
   console.log('OK — captures dans', OUT, '; éléments .error visibles :', errors);
 } finally {

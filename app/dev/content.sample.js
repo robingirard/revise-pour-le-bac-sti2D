@@ -191,7 +191,11 @@
     title: 'Révise STI2D',
     figures,
     // Figures chargées à la demande (dev/figures/*.svg servies sous ./figures/ par dev/browser.mjs)
-    figureIndex: { 'lazy-demo-1': { w: 180, h: 90, bytes: 700 }, 'lazy-demo-2': { w: 120, h: 120, bytes: 500 }, 'lazy-demo-anim': { w: 120, h: 60, bytes: 600 }, 'lazy-demo-absente': { w: 100, h: 60, bytes: 1000 } },
+    figureIndex: { 'lazy-demo-1': { w: 180, h: 90, bytes: 700 }, 'lazy-demo-2': { w: 120, h: 120, bytes: 500 }, 'lazy-demo-anim': { w: 120, h: 60, bytes: 600 }, 'lazy-demo-absente': { w: 100, h: 60, bytes: 1000 }, 'mech-demo': { w: 178.11, h: 93.05, bytes: 1100 } },
+    // Schémas cinématiques animés (voir js/mech-anim.js) : boîte du dessin en cm, bord en pt, mouvement par classe
+    animations: { 'mech-demo': { bbox: [0, 0, 6, 3], border: 4, duration: 4, mecanisme: 'demo',
+      classes: { E0: { motion: 'fixed' }, E1: { motion: 'rotate', center: [1, 1.5], turns: 1 }, E2: { motion: 'coupler', crank: 'E1', a: [1.6, 2.3], slider: 'E3', b: [4.5, 1.5] }, E3: { motion: 'slider', dir: [1, 0], coupler: 'E2' } },
+      legende: 'La manivelle tourne, la bielle a un mouvement plan, le piston coulisse.' } },
     units: [
       {
         id: 'liaisons',
@@ -202,7 +206,7 @@
           {
             id: 'liaisons-mobilites', title: 'Les 6 mobilités', icon: '🧭',
             description: 'Translations, rotations et degrés de liberté.', prerequisites: [], levels: 2,
-            lesson: `# Les six mobilités\n\nSurvole ou touche un symbole pour le voir bouger : {{fig:liaison-pivot-anim}} et {{fig:lazy-demo-anim}}\n
+            lesson: `# Les six mobilités\n\nSurvole ou touche un symbole pour le voir bouger : {{fig:liaison-pivot-anim}} et {{fig:lazy-demo-anim}}\n\n{{fig:mech-demo}}\n
 Deux solides **sans aucun contact** peuvent bouger l'un par rapport à l'autre de **6** façons indépendantes :
 
 - en **translation** suivant chacun des 3 axes : Tx, Ty, Tz ;

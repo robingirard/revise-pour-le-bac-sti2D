@@ -1,6 +1,9 @@
-// anim.js — symboles de liaison animés (SVG portant data-anim="rot|rock|tx|ty", solide 1 en classe .s1).
-// L'animation elle-même est en CSS (app.css) : survol de la souris, classe .playing (toucher), ou
+// anim.js — symboles de liaison animés (SVG portant data-anim="rot|rock|tx|ty", solide 1 en classe .s1)
+// et schémas cinématiques animés (SVG portant data-mech, pilotés par mech-anim.js).
+// Symboles : l'animation est en CSS (app.css) : survol de la souris, classe .playing (toucher), ou
 // classe .playing-all sur le corps d'une leçon (bouton « Voir les liaisons bouger »).
+// Schémas : mêmes déclencheurs, mais le mouvement est calculé en JavaScript (mech-anim.js).
+import * as mech from './mech-anim.js';
 
 /** Vrai sur les appareils sans survol (tactiles) : un toucher sur la figure bascule l'animation. */
 export function touchOnly() {
@@ -11,6 +14,7 @@ export function touchOnly() {
 export function togglePlaying(svg) {
   if (!svg) return false;
   const on = svg.classList.toggle('playing');
+  if (svg.dataset && svg.dataset.mech) mech.setPlaying(svg, on);
   return on;
 }
 
@@ -23,6 +27,7 @@ export function lessonButtonLabel(playing) {
 export function toggleLesson(body, btn) {
   const on = body.classList.toggle('playing-all');
   if (btn) { btn.textContent = lessonButtonLabel(on); btn.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+  mech.syncLesson(body, on);
   return on;
 }
 
@@ -32,7 +37,7 @@ export function refreshLessonButtons(root) {
   for (const btn of root.querySelectorAll('.lesson-anim-btn')) {
     const details = btn.closest('details.lesson');
     const body = details && details.querySelector('.lesson-body');
-    btn.hidden = !(body && body.querySelector('svg[data-anim]'));
+    btn.hidden = !(body && (body.querySelector('svg[data-anim]') || body.querySelector('svg[data-mech]')));
   }
 }
 
@@ -52,8 +57,21 @@ export function install(root) {
       return;
     }
     if (!touchOnly()) return;
-    const svg = target.closest('svg[data-anim]');
+    const svg = target.closest('svg[data-anim], svg[data-mech]');
     if (svg) togglePlaying(svg);
+  });
+  // Survol à la souris d'un schéma cinématique : lecture pendant le survol (les symboles, eux, sont en CSS)
+  root.addEventListener('pointerover', (e) => {
+    if (touchOnly() || (e.pointerType && e.pointerType !== 'mouse')) return;
+    const svg = e.target && typeof e.target.closest === 'function' ? e.target.closest('svg[data-mech]') : null;
+    if (svg && !mech.isPlaying(svg)) { svg.dataset.hoverPlay = '1'; mech.play(svg); }
+  });
+  root.addEventListener('pointerout', (e) => {
+    const svg = e.target && typeof e.target.closest === 'function' ? e.target.closest('svg[data-mech]') : null;
+    if (!svg || !svg.dataset.hoverPlay) return;
+    if (e.relatedTarget && svg.contains(e.relatedTarget)) return;
+    delete svg.dataset.hoverPlay;
+    if (!svg.classList.contains('playing') && !svg.closest('.playing-all')) mech.stop(svg);
   });
   if (typeof MutationObserver !== 'undefined') {
     let scheduled = false;

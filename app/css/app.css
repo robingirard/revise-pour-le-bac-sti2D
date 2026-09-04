@@ -438,3 +438,8 @@ svg[data-anim="ty"]:hover .s1, svg[data-anim="ty"].playing .s1, .playing-all svg
   width: 96px; height: auto; max-height: none; display: inline-block; vertical-align: middle;
 }
 .feedback .fig-inline, .feedback .fig-block { display: inline-block; margin: 2px 4px; vertical-align: middle; }
+
+/* ---- schémas cinématiques animés (svg[data-mech], classes g.mech ; voir mech-anim.js) ---- */
+svg[data-mech] { cursor: pointer; }
+.fig-anim.mech-on::after { display: none; }
+.mech-legende { display: block; font-size: 0.82rem; color: var(--muted); text-align: center; margin: 2px auto 6px; max-width: 520px; line-height: 1.3; }

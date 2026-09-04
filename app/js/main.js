@@ -13,12 +13,14 @@ import * as gl from './guided-logic.js';
 import * as home from './home.js';
 import * as figs from './figures.js';
 import * as anim from './anim.js';
+import * as mech from './mech-anim.js';
 
 window.__RS_STARTED = true; // signale à index.html que le module a bien démarré
 
 const content = window.CONTENT;
 const figures = (content && content.figures) || {};
 figs.configure({ index: (content && content.figureIndex) || null }); // figures chargées à la demande
+mech.configure({ animations: (content && content.animations) || {} }); // schémas cinématiques animés
 let progress = store.load();
 function uiStorage() {
   try { return globalThis.localStorage || null; } catch { return null; }

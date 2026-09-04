@@ -152,7 +152,7 @@ animation:
   bbox:
   - -1.3
   - -1.6
-  - 7.8
+  - 8.7
   - 2.3
   border: 4
   duration: 4
@@ -169,8 +169,8 @@ animation:
       motion: coupler
       crank: E1
       a:
-      - 0.9
-      - 1.5
+      - 0.6
+      - 1.0
       slider: E3
       b:
       - 5

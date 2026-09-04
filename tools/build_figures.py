@@ -231,7 +231,7 @@ def postprocess_svg(text, prefix):
                 if rx.search(attrs):
                     return f'<g class="mech" data-class="{cid}"><{m.group(1)}{attrs}/></g>'
             return m.group(0)
-        text = re.sub(r"<(path|circle|use)\b([^>]*)/>", wrap, text)
+        text = re.sub(r"<(path|circle)\b([^>]*)/>", wrap, text)   # pas les glyphes (<use>) : les étiquettes restent fixes
         text = text.replace("<svg ", f'<svg data-mech="{prefix}" ', 1)
     if prefix in ANIMS:
         # symbole animable : le solide 1 (rouge) reçoit la classe s1, le centre A est donné en unités utilisateur

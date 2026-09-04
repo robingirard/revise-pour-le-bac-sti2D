@@ -128,7 +128,7 @@ export async function ensureIndex() {
 function inject(el, svg) {
   el.innerHTML = svg;
   el.classList.remove('fig-lazy', 'fig-error');
-  if (el.querySelector && el.querySelector('svg[data-anim]')) el.classList.add('fig-anim'); // symbole animable
+  if (el.querySelector && el.querySelector('svg[data-anim], svg[data-mech]')) el.classList.add('fig-anim'); // symbole ou schéma animable
   el.removeAttribute('style');
   el.removeAttribute('aria-busy');
   el.dataset.loaded = '1';
