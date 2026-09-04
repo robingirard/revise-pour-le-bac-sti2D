@@ -394,6 +394,7 @@ units:
     generators:
     - gen: choix_symbole_vue
     - gen: lecture_schema
+    - gen: exercice_complet
     items:
     - type: mcq
       level: 1

@@ -102,6 +102,31 @@ try {
     await b.click('.btn-verify'); await b.shot('54-grid-erreur', true);
   }
   await b.goto('#/settings'); await b.shot('56-reglages', true);
+
+  // Exercices complets (guided) et annales, s'il y en a dans le contenu
+  const guided = items.find((i) => i.type === 'guided');
+  if (guided) {
+    await b.evaluate(`(() => { const p = JSON.parse(localStorage.getItem('revise-sti2d.progress.v1')); p.skills[${JSON.stringify(guided.skill)}] = { level: 2, progress: 0, sessions: 4, xp: 40 }; localStorage.setItem('revise-sti2d.progress.v1', JSON.stringify(p)); })()`);
+    await b.goto(`#/skill/${guided.skill}`); await b.reload(); await b.shot('60-skill-complets', true);
+    await b.goto(`#/session/${guided.skill}?item=${encodeURIComponent(guided.id)}&seed=1`); await b.shot('61-guided-step1', true);
+    await b.evaluate(SOLVER);
+    for (let i = 0; i < 12; i++) {
+      const r = await b.evaluate('window.__solve()');
+      if (!r.startsWith('guided:')) throw new Error('exercice complet : ' + r);
+      await sleep(150);
+      if (i === 0) await b.shot('62-guided-feedback', true);
+      await b.click('.btn-next-step'); await sleep(150);
+      if (await b.evaluate('!!document.querySelector(".btn-continue")')) break;
+    }
+    await b.shot('63-guided-end', true);
+  } else {
+    console.log('aucun exercice complet (guided) dans le contenu : captures 60-63 sautées');
+  }
+  if (await b.evaluate('Array.isArray(window.CONTENT.annales) && window.CONTENT.annales.length > 0')) {
+    await b.goto('#/'); await b.shot('70-home-annales', true);
+  } else {
+    console.log('aucune annale dans le contenu : capture 70 sautée');
+  }
   const errors = await b.evaluate('document.querySelectorAll(".error").length');
   console.log(`OK — ${steps} exercices joués dans la séance « ${target.id} » ; captures dans ${OUT} ; éléments .error : ${errors}`);
 } finally {

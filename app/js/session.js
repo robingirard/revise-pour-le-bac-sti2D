@@ -47,6 +47,11 @@ export function skillItems(content, skill) {
   return (skill.items || []).map((id) => content.items[id]).filter(Boolean);
 }
 
+/** Exercices complets (guided) d'une compétence : jamais tirés dans une séance ordinaire. */
+export function guidedItems(content, skill) {
+  return skillItems(content, skill).filter((it) => it.type === 'guided');
+}
+
 /**
  * Classe les items d'une compétence : dus (par date croissante), nouveaux accessibles
  * (niveau ≤ niveau courant + 1, triés par niveau), déjà vus non dus, et nouveaux trop avancés.
@@ -59,6 +64,7 @@ export function classifySkillItems(content, progress, skillId, today) {
   const maxLevel = level + 1;
   const due = [], fresh = [], seen = [], later = [], mastered = [];
   for (const item of skillItems(content, skill)) {
+    if (item.type === 'guided') continue; // les exercices complets ne comptent pas ici
     const st = states[item.id];
     if (isMastered(st)) mastered.push(item);
     if (isDue(st, today)) due.push(item);
@@ -89,6 +95,7 @@ export function dueItems(content, progress, today) {
     for (const skill of unit.skills || []) {
       if (!isUnlocked(skill, progress)) continue;
       for (const item of skillItems(content, skill)) {
+        if (item.type === 'guided') continue;
         if (isDue(states[item.id], today)) out.push(item);
       }
     }
@@ -102,7 +109,7 @@ export function countDue(content, progress, today) {
 }
 
 function makeSession(kind, skillId, ids) {
-  return { kind, skillId, queue: ids, index: 0, results: {}, attempts: 0 };
+  return { kind, skillId, queue: ids, index: 0, results: {}, attempts: 0, xpBonus: 0 };
 }
 
 /**
@@ -111,6 +118,8 @@ function makeSession(kind, skillId, ids) {
  */
 export function buildSkillSession(content, progress, skillId, opts = {}) {
   const { today, size = SKILL_SESSION_SIZE, rng = Math.random, forceItemId = null } = opts;
+  const forced = forceItemId ? content.items[forceItemId] : null;
+  if (forced && forced.type === 'guided') return makeSession('skill', skillId, [forceItemId]); // seul dans sa séance
   const { due, fresh, seen } = classifySkillItems(content, progress, skillId, today);
   const queue = due.slice(0, size);
   for (const item of fresh) {
@@ -148,7 +157,7 @@ export function isFinished(session) {
 /**
  * Enregistre une réponse. Un item raté est remis en fin de file ; seule la première
  * tentative compte pour la note du planificateur et pour le score.
- * @param {{correct:boolean, grade?:string}} res
+ * @param {{correct:boolean, grade?:string, xpBonus?:number, requeue?:boolean}} res
  * @returns {{session:object, schedulerGrade:string|null, firstAttempt:boolean}}
  */
 export function answer(session, res) {
@@ -164,7 +173,8 @@ export function answer(session, res) {
   } else {
     s.results[id] = { ...s.results[id], attempts: s.results[id].attempts + 1 };
   }
-  if (!correct) s.queue.push(id);
+  if (firstAttempt && res.xpBonus > 0) s.xpBonus = (s.xpBonus || 0) + res.xpBonus;
+  if (!correct && res.requeue !== false) s.queue.push(id);
   s.index += 1;
   s.attempts += 1;
   return { session: s, schedulerGrade, firstAttempt };

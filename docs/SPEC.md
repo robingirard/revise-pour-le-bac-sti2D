@@ -126,6 +126,31 @@ utilisés par le contenu : on préfère des QCM avec distracteurs et feedback ci
 
 Les choix de `mcq` en `layout:"grid"` sont typiquement des figures (2×2).
 
+### Exercice guidé (`guided`)
+
+Un **exercice complet de fin de chapitre** enchaîne plusieurs étapes autour d'un même système
+(par exemple : du dessin d'ensemble au schéma cinématique). Payload :
+
+```jsonc
+{ "title": "Le serre-joint : du mécanisme au schéma",
+  "intro": rich,                       // contexte + figure, affiché en tête de chaque étape (repliable)
+  "steps": [                           // chaque étape = un exercice auto-corrigé, même payload qu'un item
+    { "kind": "mcq",   "prompt": rich, "choices": [rich], "answer": [0], "feedback": [...], "explanation": rich },
+    { "kind": "input", "prompt": rich, "answer": "4", "numeric": true, "explanation": rich },
+    { "kind": "grid",  "prompt": rich, "rows": [...], "cols": [...], "answer": [...], "explanation": rich },
+    { "kind": "order", "prompt": rich, "steps": [rich], "explanation": rich },
+    { "kind": "match", "prompt": rich, "pairs": [...] }
+  ] }
+```
+
+Déroulement : les étapes sont jouées dans l'ordre, chacune corrigée immédiatement (bandeau vert/rouge
+avec le détail de l'erreur, puis « Étape suivante »). Un item `guided` compte pour **un** exercice dans la
+séance : `correct` = toutes les étapes justes du premier coup ; note `good` si tout juste, `hard` si au moins
+la moitié, `again` sinon ; XP : 2 par étape juste du premier coup. Les items `guided` sont toujours de niveau 3
+et ne sont jamais tirés dans une séance ordinaire : ils apparaissent sur l'écran de la compétence dans une
+carte « Exercices complets », lançables (`#/session/SKILL?item=ID`) quand la compétence est au niveau ≥ 2,
+sinon verrouillés avec le message « Atteins le niveau 2 pour débloquer ».
+
 ## 5. Leçon (Markdown restreint)
 
 Titres `#`/`##`/`###`, paragraphes, `**gras**`, `*italique*`, listes `- `, tableaux
@@ -183,6 +208,23 @@ Un item est **dû** si `due ≤ aujourd'hui`. **Maîtrisé** si `interval ≥ 21
   automatique, accessibilité clavier.
 - `settings` contient aussi `name` (prénom de l'élève, facultatif) et `unlockAll`
   (« mode découverte » : toutes les compétences déverrouillées, pour explorer ou pour un parent).
+
+## 10. Annales
+
+`content.annales` (construit depuis `content/annales.yaml`) liste des sujets d'examen officiels :
+
+```jsonc
+{ "id": "2i2d-2024-metropole", "titre": "Bac 2024 — 2I2D, métropole", "session": "2024",
+  "epreuve": "2I2D", "partie": "Partie commune, exercice 1 : …", "url": "https://…/sujet.pdf",
+  "corrige": "https://…" | null, "themes": ["schéma cinématique", "statique"],
+  "prerequis": [ { "skill": "schema-2d", "level": 2 } ],   // tous requis pour déverrouiller
+  "guided": "annales.2i2d-2024-metropole" | null }         // item guided adapté, s'il existe
+```
+
+Écran **Accueil** : après les unités, une section « Annales » liste ces sujets ; un sujet est verrouillé
+tant que ses prérequis ne sont pas atteints (message indiquant la compétence et le niveau manquants) ;
+déverrouillé, il montre les liens (sujet, corrigé, ouverts dans un nouvel onglet) et, s'il y en a un,
+un bouton « S'entraîner » qui lance l'item guided. Le mode découverte déverrouille aussi les annales.
 
 ## 9. Bilan pour le parent
 

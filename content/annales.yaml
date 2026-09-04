@@ -1,0 +1,4 @@
+# Sujets d'examen officiels (annales) accessibles depuis l'accueil, verrouillés par niveau.
+# Champs : id, titre, session, epreuve (2I2D | physique-chimie et mathématiques), partie, url (PDF du sujet),
+# corrige (URL ou vide), themes (liste), prerequis (liste de {skill, level}), guided (id d'exercice guidé adapté, ou vide).
+annales: []

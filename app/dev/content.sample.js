@@ -49,6 +49,22 @@
       steps: ['Deux solides sans contact (6 ddl)', 'Rotule (3 ddl)', 'Pivot (1 ddl)', 'Encastrement (0 ddl)'],
       explanation: 'Plus il y a de contact, moins il reste de degrés de liberté.' } },
 
+    { id: 'mob-guided-1', skill: 'liaisons-mobilites', type: 'guided', level: 3, tags: ['porte', 'ddl'], payload: {
+      title: 'La porte : des mobilités à la liaison',
+      intro: '{{emoji:🚪}} Une **porte** est fixée au mur par deux gonds d\'axe vertical z. On étudie ses mouvements possibles par rapport au mur, puis on nomme la liaison.',
+      steps: [
+        { kind: 'mcq', prompt: 'Étape 1 — Combien de mobilités possède un solide **libre** dans l\'espace ?', choices: ['6', '3', '2', '12'], answer: [0],
+          feedback: [null, 'Non : il y a 3 translations **et** 3 rotations.', 'Non : 2 ce serait dans un plan ; dans l\'espace il y a 3 axes.', 'Non : 3 axes × 2 types de mouvement = 6.'],
+          explanation: '3 translations + 3 rotations = 6 mobilités.' },
+        { kind: 'input', prompt: 'Étape 2 — Combien de mobilités la porte **garde-t-elle** par rapport au mur ?', answer: '1', numeric: true,
+          explanation: 'Les gonds ne laissent qu\'un mouvement : tourner autour de leur axe.' },
+        { kind: 'grid', prompt: 'Étape 3 — Coche la mobilité restante de la porte.', rows: DDL_ROWS, cols: DDL_COLS, answer: ['Rz'],
+          cellFeedback: { Tz: 'la porte ne monte pas : les gonds la portent', Rx: 'l\'axe des gonds est vertical (z), pas horizontal', Ty: 'la porte ne se déplace pas en ligne droite' },
+          explanation: 'Rotation autour de l\'axe vertical z : **Rz**.' },
+        { kind: 'order', prompt: 'Étape 4 — Remets dans l\'ordre le raisonnement qui mène à la liaison.',
+          steps: ['Repérer les surfaces de contact (les gonds)', 'En déduire les mouvements bloqués', 'Compter les mobilités restantes', 'Nommer la liaison : pivot d\'axe (A, z)'],
+          explanation: 'Contact → mouvements bloqués → degrés de liberté → nom de la liaison.' },
+      ] } },
     // ---- liaisons-symboles
     { id: 'sym-mcq-grid-1', skill: 'liaisons-symboles', type: 'mcq', level: 1, tags: ['pivot'], payload: {
       prompt: 'Quel symbole représente une **liaison pivot** (vue selon l\'axe) ?', layout: 'grid',
@@ -224,5 +240,11 @@ Règle : **ddl + efforts transmissibles = 6**.`,
       },
     ],
     items: byId,
+    annales: [
+      { id: 'demo-2024', titre: 'Bac 2024 — 2I2D, métropole (démo)', session: '2024', epreuve: '2I2D', partie: 'Partie commune, exercice 1 : porte automatique',
+        url: 'https://eduscol.education.fr/', corrige: null, themes: ['mobilités', 'liaisons'], prerequis: [{ skill: 'liaisons-mobilites', level: 1 }], guided: 'mob-guided-1' },
+      { id: 'demo-2023', titre: 'Bac 2023 — 2I2D, Polynésie (démo)', session: '2023', epreuve: '2I2D', partie: 'Partie commune, exercice 2 : schéma cinématique',
+        url: 'https://eduscol.education.fr/', corrige: 'https://eduscol.education.fr/', themes: ['schéma cinématique', 'statique'], prerequis: [{ skill: 'schema-demarche', level: 2 }], guided: null },
+    ],
   };
 })();

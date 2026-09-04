@@ -10,3 +10,6 @@ __pycache__/
 *.log
 *.synctex.gz
 .DS_Store
+
+# notes de transcription du manuel : conservées en local (droits d’auteur), voir ../scans/INDEX.md
+docs/notes/

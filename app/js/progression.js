@@ -39,14 +39,14 @@ export function sessionXp(result) {
 }
 
 /**
- * Met à jour l'état d'une compétence après une séance.
+ * Met à jour l'état d'une compétence après une séance (extraXp : bonus des exercices complets).
  * @returns {{state:object, xp:number, passed:boolean, leveledUp:boolean}}
  */
-export function applySession(state, skill, result) {
+export function applySession(state, skill, result, extraXp = 0) {
   const s = { ...newSkillState(), ...(state || {}) };
   const levels = skillLevels(skill);
   const passed = isPassed(result);
-  const xp = sessionXp(result);
+  const xp = sessionXp(result) + (extraXp > 0 ? extraXp : 0);
   let leveledUp = false;
   s.sessions += 1;
   s.xp += xp;

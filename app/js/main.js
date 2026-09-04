@@ -9,6 +9,7 @@ import { renderRich, renderLesson } from './render.js';
 import { EXERCISES } from './exercises/index.js';
 import { GRADE_LABELS } from './exercises/flashcard.js';
 import * as bilan from './bilan.js';
+import * as gl from './guided-logic.js';
 
 window.__RS_STARTED = true; // signale à index.html que le module a bien démarré
 
@@ -114,8 +115,37 @@ function renderHome(root) {
       ? h('a', { class: 'btn btn-primary btn-block', href: '#/review' }, `Réviser (${dueCount})`)
       : h('div', { class: 'btn btn-block btn-muted', 'aria-disabled': 'true' }, 'Rien à réviser aujourd\'hui 🎉'),
     ...content.units.map((unit) => renderUnit(unit, today)),
+    renderAnnales(),
     bottomNav('home'),
   );
+}
+
+// ---------------------------------------------------------------- annales (SPEC §10)
+function renderAnnales() {
+  const list = Array.isArray(content.annales) ? content.annales : [];
+  if (list.length === 0) return null;
+  return h('section', { class: 'unit annales' },
+    h('h2', {}, '🎓 Annales'),
+    h('p', { class: 'muted' }, 'Des sujets officiels du bac, débloqués au fil de la progression.'),
+    h('div', { class: 'skills' }, ...list.map(renderAnnaleCard)));
+}
+
+function renderAnnaleCard(a) {
+  const { locked, missing } = gl.annaleStatus(a, progress);
+  const meta = [a.session, a.epreuve, a.partie].filter(Boolean).join(' · ');
+  const guidedItem = a.guided ? content.items[a.guided] : null;
+  const link = (href, label, primary = false) => h('a', { class: `btn btn-small${primary ? ' btn-primary' : ''}`, href, target: '_blank', rel: 'noopener' }, label);
+  const actions = locked
+    ? h('p', { class: 'muted small annale-locked' }, `🔒 Requiert : ${missing.map((m) => `${bilan.skillTitle(m.skill, content)} niveau ${m.level || 1}`).join(', ')}`)
+    : h('div', { class: 'annale-actions' },
+      a.url ? link(a.url, 'Sujet') : null,
+      a.corrige ? link(a.corrige, 'Corrigé') : null,
+      guidedItem ? h('a', { class: 'btn btn-small btn-primary', href: `#/session/${guidedItem.skill}?item=${encodeURIComponent(guidedItem.id)}&seed=1` }, 'S\'entraîner') : null);
+  return h('div', { class: `annale${locked ? ' locked' : ''}` },
+    h('div', { class: 'annale-title' }, a.titre || a.id),
+    meta ? h('div', { class: 'muted small' }, meta) : null,
+    (a.themes || []).length ? h('div', { class: 'chips' }, ...a.themes.map((th) => h('span', { class: 'chip' }, th))) : null,
+    actions);
 }
 
 function renderUnit(unit, today) {
@@ -166,6 +196,7 @@ function renderSkill(root, skillId) {
     skill.lesson
       ? h('details', { class: 'lesson', open: st.sessions === 0 }, h('summary', {}, '📖 Leçon'), h('div', { class: 'lesson-body', html: renderLesson(skill.lesson, figures) }))
       : null,
+    renderCompletsCard(skill, st),
     !unlocked
       ? h('p', { class: 'locked-msg' }, `🔒 Cette compétence se débloque quand « ${prereqTitles(skill)} » atteint le niveau 1.`)
       : counts.total === 0
@@ -173,6 +204,21 @@ function renderSkill(root, skillId) {
         : h('a', { class: 'btn btn-primary btn-block', href: `#/session/${skill.id}` }, st.sessions === 0 ? 'Commencer' : 'Nouvelle séance'),
     bottomNav(null),
   );
+}
+
+/** Carte « Exercices complets » : les items guided de la compétence, lançables au niveau ≥ 2. */
+function renderCompletsCard(skill, st) {
+  const guided = sess.guidedItems(content, skill);
+  if (guided.length === 0) return null;
+  const open = gl.guidedUnlocked(st, progress.settings);
+  return h('section', { class: 'complets' },
+    h('h2', {}, '🏁 Exercices complets'),
+    h('p', { class: 'muted small' }, 'Un problème en plusieurs étapes, comme en fin de chapitre. Il compte pour une séance.'),
+    ...guided.map((g) => h('div', { class: 'complet' },
+      h('span', { class: 'complet-title' }, (g.payload && g.payload.title) || g.id),
+      open
+        ? h('a', { class: 'btn btn-small btn-primary', href: `#/session/${skill.id}?item=${encodeURIComponent(g.id)}&seed=1` }, 'Lancer')
+        : h('span', { class: 'muted small complet-locked' }, `🔒 Atteins le niveau ${gl.GUIDED_MIN_LEVEL} pour débloquer`))));
 }
 
 function renderNotFound(root) {
@@ -226,7 +272,7 @@ function renderSessionScreen(root) {
       navigate('#/');
     }
   } }, '✕');
-  const exerciseBox = h('div', { class: `exercise exercise-${item.type}` });
+  const exerciseBox = h('div', { class: `exercise exercise-${item.type}`, 'data-item': item.id });
   root.append(
     h('header', { class: 'topbar session-top' }, quit, bar(session.index / total, 'session-bar'), h('span', { class: 'counter' }, `${session.index + 1}/${total}`)),
     h('main', { class: 'session-main' },
@@ -244,6 +290,7 @@ function renderSessionScreen(root) {
   mod.mount(exerciseBox, item, {
     figures,
     rng: Math.random,
+    exercises: EXERCISES, // pour les exercices complets, qui montent leurs étapes
     onAnswer: (res) => {
       if (answered) return;
       answered = true;
@@ -266,11 +313,15 @@ function handleAnswer(root, item, res) {
     nextInfo = 'On le revoit dans cette séance.';
   }
   const isCard = item.type === 'flashcard';
-  const cls = isCard ? 'feedback neutral' : res.correct ? 'feedback ok' : 'feedback ko';
-  const title = isCard ? `Carte notée « ${GRADE_LABELS[res.grade] || res.grade} »` : res.correct ? 'Bravo, c\'est juste !' : 'Pas tout à fait…';
-  const explanation = item.payload.explanation;
+  const isGuided = item.type === 'guided';
+  if (isGuided) nextInfo = ''; // le planificateur ne s'applique pas aux exercices complets
+  const cls = isCard ? 'feedback neutral' : res.correct ? 'feedback ok' : isGuided ? 'feedback neutral' : 'feedback ko';
+  const title = isCard ? `Carte notée « ${GRADE_LABELS[res.grade] || res.grade} »`
+    : isGuided ? (res.correct ? 'Exercice complet réussi !' : 'Exercice complet terminé')
+      : res.correct ? 'Bravo, c\'est juste !' : 'Pas tout à fait…';
+  const explanation = isGuided ? null : item.payload.explanation;
   const finished = sess.isFinished(session);
-  const detail = !res.correct && res.detail ? res.detail : null; // détail propre à l'erreur (SPEC §4)
+  const detail = isGuided ? (res.detail || null) : (!res.correct && res.detail ? res.detail : null); // détail propre à l'erreur (SPEC §4)
   const panel = h('div', { class: cls, role: 'status' },
     h('div', { class: 'feedback-title' }, title),
     detail ? h('div', { class: 'feedback-detail', html: renderRich(detail, figures) }) : null,
@@ -288,10 +339,11 @@ function nextStep(root) {
 function finishSession() {
   const today = todayStr();
   const result = sess.summary(session);
-  let xp = prog.sessionXp(result), passed = null, leveledUp = false, skill = null, skillState = null;
+  const bonus = session.xpBonus || 0; // XP des étapes d'exercices complets
+  let xp = prog.sessionXp(result) + bonus, passed = null, leveledUp = false, skill = null, skillState = null;
   if (session.kind === 'skill') {
     skill = sess.findSkill(content, session.skillId);
-    const r = prog.applySession(progress.skills[session.skillId], skill, result);
+    const r = prog.applySession(progress.skills[session.skillId], skill, result, bonus);
     progress.skills[session.skillId] = r.state;
     ({ xp, passed, leveledUp } = r);
     skillState = r.state;

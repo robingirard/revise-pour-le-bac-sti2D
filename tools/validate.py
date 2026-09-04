@@ -190,8 +190,31 @@ def check_dist():
             for i in s["items"]:
                 if i not in c["items"]:
                     err(f"dist : {s['id']} liste un exercice inconnu {i}")
+    kinds = {"mcq", "input", "grid", "order", "match"}
+    for it in c["items"].values():
+        if it["type"] != "guided":
+            continue
+        steps = it["payload"].get("steps", [])
+        if len(steps) < 3:
+            err(f"dist : {it['id']} : exercice guidé trop court ({len(steps)} étapes)")
+        for k, s in enumerate(steps, 1):
+            if s.get("kind") not in kinds:
+                err(f"dist : {it['id']} étape {k} : kind invalide")
+            if s.get("kind") == "mcq" and not (s.get("choices") and s.get("answer")):
+                err(f"dist : {it['id']} étape {k} : QCM incomplet")
+            if s.get("kind") == "mcq" and s.get("feedback") and len(s["feedback"]) != len(s["choices"]):
+                err(f"dist : {it['id']} étape {k} : feedback mal aligné")
+    skills = {s["id"] for u in c["units"] for s in u["skills"]}
+    for a in c.get("annales", []):
+        for k in ("id", "titre", "url"):
+            if not a.get(k):
+                err(f"dist : annale sans {k}")
+        for pr in a.get("prerequis", []):
+            if pr.get("skill") not in skills:
+                err(f"dist : annale {a['id']} : prérequis inconnu {pr}")
     print(f"dist/content.json : {len(c['items'])} exercices, {len(c['figures'])} figures, "
-          f"{sum(len(u['skills']) for u in c['units'])} compétences")
+          f"{sum(len(u['skills']) for u in c['units'])} compétences, "
+          f"{sum(1 for i in c['items'].values() if i['type'] == 'guided')} exercices guidés, {len(c.get('annales', []))} annales")
 
 
 def main():

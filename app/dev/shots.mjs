@@ -81,6 +81,25 @@ try {
   await evaluate(`(() => { const cols = document.querySelectorAll('.match-col'); cols[0].querySelectorAll('.match-btn')[0].click(); const r = [...cols[1].querySelectorAll('.match-btn')]; r[r.length - 1].click(); })()`);
   await shot('55-match-erreur-flash');
   await goto('#/settings'); await shot('56-settings');
+
+  // Exercices complets (guided) : carte sur l'écran compétence, déroulé pas à pas, puis annales
+  await evaluate(`(() => { const p = JSON.parse(localStorage.getItem('revise-sti2d.progress.v1')); p.skills['liaisons-mobilites'] = { level: 2, progress: 0, sessions: 4, xp: 100 }; localStorage.setItem('revise-sti2d.progress.v1', JSON.stringify(p)); })()`);
+  await goto('#/skill/liaisons-mobilites'); await reload(); await shot('60-skill-complets');
+  await goto('#/session/liaisons-mobilites?item=mob-guided-1&seed=1'); await shot('61-guided-step1');
+  await evaluate(SOLVER);
+  await evaluate(`(() => { [...document.querySelectorAll('.guided-step .choice')].find((b) => b.textContent.trim() === '3').click(); })()`); // faux exprès
+  await click('.guided-step .btn-verify'); await shot('62-guided-feedback');
+  for (let i = 0; i < 8; i++) {
+    await click('.btn-next-step'); await sleep(150);
+    if (await evaluate('!!document.querySelector(".btn-continue")')) break;
+    const r = await evaluate('window.__solve()');
+    if (!r.startsWith('guided:')) throw new Error('exercice complet : ' + r);
+    await sleep(150);
+  }
+  if (!(await evaluate('!!document.querySelector(".btn-continue")'))) throw new Error('exercice complet non terminé');
+  await shot('63-guided-end');
+  await click('.btn-continue'); await sleep(200); await shot('64-guided-summary');
+  await goto('#/'); await evaluate('document.querySelector(".annales").scrollIntoView()'); await sleep(150); await shot('70-home-annales');
   const errors = await evaluate('document.querySelectorAll(".error").length');
   console.log('OK — captures dans', OUT, '; éléments .error visibles :', errors);
 } finally {

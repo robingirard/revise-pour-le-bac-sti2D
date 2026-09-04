@@ -242,8 +242,8 @@ class Builder:
         self.items[item["id"]] = item
         return item["id"]
 
-    def mcq(self, iid, skill, level, prompt, correct, distractors, explanation="", layout="list", tags=(), feedback=None):
-        """distractors : liste de textes, ou de couples (texte, feedback). feedback : dict texte → feedback."""
+    def mcq_payload(self, iid, prompt, correct, distractors, explanation="", layout="list", feedback=None):
+        """Payload d'un QCM : mélange déterministe des choix, feedback aligné."""
         feedback = dict(feedback or {})
         uniq, seen = [], {correct}
         for d in distractors:
@@ -261,7 +261,21 @@ class Builder:
                    "multiple": False, "layout": layout, "explanation": explanation}
         if feedback:
             payload["feedback"] = [None if c == correct else feedback.get(c) for c in choices]
+        return payload
+
+    def mcq(self, iid, skill, level, prompt, correct, distractors, explanation="", layout="list", tags=(), feedback=None):
+        """distractors : liste de textes, ou de couples (texte, feedback). feedback : dict texte → feedback."""
+        payload = self.mcq_payload(iid, prompt, correct, distractors, explanation, layout, feedback)
         return self.add({"id": iid, "skill": skill, "type": "mcq", "level": level, "tags": list(tags), "payload": payload})
+
+    def guided(self, iid, skill, title, intro, steps, tags=()):
+        """Exercice complet : enchaînement d'étapes (chacune = payload d'un exercice + « kind »)."""
+        kinds = {"mcq", "input", "grid", "order", "match"}
+        for k, s in enumerate(steps):
+            if s.get("kind") not in kinds:
+                self.errors.append(f"{iid} : étape {k + 1} de type inconnu {s.get('kind')}")
+        return self.add({"id": iid, "skill": skill, "type": "guided", "level": 3, "tags": list(tags),
+                         "payload": {"title": title, "intro": intro, "steps": steps}})
 
     def flashcard(self, iid, skill, level, front, back, tags=()):
         return self.add({"id": iid, "skill": skill, "type": "flashcard", "level": level, "tags": list(tags),
@@ -562,6 +576,8 @@ class Builder:
                        q.get("tolerance", 0), q.get("unit", ""), q.get("explanation", ""), tags=q.get("tags", []))
         elif t == "match":
             self.match(iid, skill, level, q["prompt"], list(q["pairs"]), tags=q.get("tags", []))
+        elif t == "guided":
+            self.guided(iid, skill, q["title"], q.get("intro", ""), list(q["steps"]), tags=q.get("tags", []))
         else:
             self.errors.append(f"{iid} : type inconnu {t}")
 
@@ -704,6 +720,106 @@ class Builder:
         for m in self.mecanismes:
             self.handwritten(skill, m.get("questions", []), f"{skill}.{m['id']}")
 
+    def gen_exercice_complet(self, skill):
+        """Exercice de fin de chapitre : la démarche complète du schéma cinématique sur chaque mécanisme."""
+        DEMARCHE = ["Étudier le dessin d'ensemble pour comprendre le fonctionnement",
+                    "Identifier les classes d'équivalence (une couleur par classe)",
+                    "Identifier la nature des contacts et en déduire les liaisons",
+                    "Tracer le graphe des liaisons",
+                    "Tracer le schéma cinématique (2D ou 3D)"]
+        for m in self.mecanismes:
+            iid = f"{skill}.complet.{m['id']}"
+            names = {p["num"]: p["nom"] for p in m["pieces"]}
+            all_pieces = [p["num"] for p in m["pieces"]]
+            classes = m["classes"]
+            class_of = {n: c for c in classes for n in c["pieces"]}
+            cls = {c["id"]: c for c in classes}
+            steps = []
+            # 1. nombre de classes
+            steps.append({"kind": "input", "prompt": f"**Étape 1.** Après avoir repéré les pièces solidaires (vissées, emmanchées, rivetées…), "
+                                                     f"combien de **classes d'équivalence** compte {le(m)} ?",
+                          "answer": str(len(classes)), "numeric": True, "tolerance": 0,
+                          "explanation": "  ;  ".join(f"{c['id']} = {{{', '.join(map(str, c['pieces']))}}} ({c['nom']})" for c in classes)})
+            # 2. composition de la plus grande classe
+            big = max(classes, key=lambda c: len(c["pieces"]))
+            if len(big["pieces"]) >= 2:
+                pp = big["pieces"][0]
+                others = [x for x in all_pieces if x not in big["pieces"]]
+                r = rng(iid + "classe")
+                wrong = [("aucune : elle forme une classe à elle seule", f"Non : {big.get('pourquoi', 'ces pièces sont solidaires.')}")]
+                tries = 0
+                while len(wrong) < 3 and tries < 20 and others:
+                    tries += 1
+                    s = sorted(r.sample(others, min(len(others), r.choice([1, 2]))))
+                    txt = fmt_pieces(s, m)
+                    if txt not in [w[0] for w in wrong]:
+                        cx = class_of[s[0]]
+                        li = self.liaison_between(m, cx["id"], big["id"])
+                        why = (f"Non : la pièce {s[0]} ({names[s[0]]}) est en liaison **{self.by_id[li['liaison']]['nom'].lower()}** avec cette classe : mouvement relatif."
+                               if li else f"Non : la pièce {s[0]} ({names[s[0]]}) appartient à une autre classe (« {cx['nom']} »).")
+                        wrong.append((txt, why))
+                steps.append(dict(kind="mcq", **self.mcq_payload(iid + ".classe",
+                    f"**Étape 2.** Quelles pièces forment la même classe d'équivalence que la pièce **{pp} ({names[pp]})** ?\n{fig(m['figures']['dessin'])}",
+                    fmt_pieces([x for x in big["pieces"] if x != pp], m), wrong, big.get("pourquoi", ""))))
+            # 3. une étape par liaison : contact → liaison
+            for k, li in enumerate(m["liaisons"], 3):
+                l = self.by_id[li["liaison"]]
+                a, b = li["entre"]
+                steps.append(dict(kind="mcq", **self.mcq_payload(iid + f".liaison{k}",
+                    f"**Étape {k}.** Entre **{a} ({cls[a]['nom']})** et **{b} ({cls[b]['nom']})**, le contact est : **{li['contact']}** "
+                    f"({li['surfaces']}). Quelle est la liaison ?\n{fig(m['figures']['classes'])}",
+                    l["nom"], self.liaison_choices(l, iid + str(k), lambda o, l=l, li=li: diff_feedback(l, o, li.get("explication", ""))),
+                    li.get("explication", ""))))
+            k = 3 + len(m["liaisons"])
+            # 4. graphe : nombre de liaisons
+            steps.append({"kind": "input", "prompt": f"**Étape {k}.** On trace le graphe des liaisons : un cercle par classe, un trait par liaison. "
+                                                     f"Combien de **traits** compte-t-il ?",
+                          "answer": str(len(m["liaisons"])), "numeric": True, "tolerance": 0,
+                          "explanation": f"Une liaison par contact entre deux classes : {len(m['liaisons'])} traits.\n{fig(m['figures']['graphe'])}"})
+            k += 1
+            # 5. symbole de la première liaison à axe dans le plan du schéma
+            for li in m["liaisons"]:
+                l = self.by_id[li["liaison"]]
+                views = distinct_views(l)
+                if len(views) < 2:
+                    continue
+                axe = li.get("axe", "x")
+                # dans le plan (x, y) du schéma : l'axe z est perpendiculaire → vue « bout » ; x ou y → vue « face »
+                vue = "bout" if axe == "z" else "face"
+                other = "face" if vue == "bout" else "bout"
+                why = (f"L'axe ({li['point']}, {axe}) est perpendiculaire au plan (x, y) : on dessine la vue selon l'axe ({l['reconnaitre']['bout']})."
+                       if vue == "bout" else
+                       f"L'axe ({li['point']}, {axe}) est dans le plan (x, y) : on dessine la vue de face ({l['reconnaitre']['face']}).")
+                choices = [(fig(sym_fig(l, other)), f"Non : c'est bien le symbole de la liaison {low_first(l['nom'])}, mais dans l'autre vue. {why}")]
+                for o in self.others(l, 5, iid + "sym"):
+                    ov = distinct_views(o)
+                    if len(ov) >= 2:
+                        choices += [(fig(sym_fig(o, v["vue"])), self.fb_figure_de(o, v["vue"])) for v in ov[:2]]
+                        break
+                steps.append(dict(kind="mcq", **self.mcq_payload(iid + ".symbole",
+                    f"**Étape {k}.** Le schéma est tracé dans le plan **(x, y)**. Quel symbole représente la liaison "
+                    f"**{designation_complete(l, li)}** ?", fig(sym_fig(l, vue)), choices[:3], why, layout="grid")))
+                k += 1
+                break
+            # 6. la démarche dans l'ordre
+            steps.append({"kind": "order", "prompt": f"**Étape {k}.** Pour finir, remets dans l'ordre les cinq étapes de la démarche que tu viens de suivre.",
+                          "steps": DEMARCHE, "explanation": "Étudier → classes → contacts et liaisons → graphe → schéma (manuel p. 33)."})
+            k += 1
+            # 7. lecture du schéma final : première question écrite à la main sur le schéma
+            for q in m.get("questions", []):
+                if q["type"] == "mcq" and q.get("skill", "schema-2d") == "schema-2d":
+                    answers = [q["answer"]] if not isinstance(q["answer"], list) else q["answer"]
+                    step = {"kind": "mcq", "prompt": f"**Étape {k}.** Voici le schéma cinématique obtenu. " + q["prompt"],
+                            "choices": list(q["choices"]), "answer": answers, "multiple": False, "layout": q.get("layout", "list"),
+                            "explanation": q.get("explanation", "")}
+                    if q.get("feedback"):
+                        step["feedback"] = [None if i in answers else fb for i, fb in enumerate(q["feedback"])]
+                    steps.append(step)
+                    break
+            self.guided(iid, skill, f"{m['titre']} : du dessin d'ensemble au schéma cinématique",
+                        f"{m['description'].strip()}\n{fig(m['figures']['dessin'])}\nRepère : {m['repere']}.",
+                        steps, tags=[m["id"]])
+
 
 GENERATORS = {name[4:]: name for name in dir(Builder) if name.startswith("gen_")}
 
@@ -741,6 +857,7 @@ def build():
     liaisons = load_yaml(CONTENT / "liaisons.yaml")["liaisons"]
     mecanismes = [load_yaml(p) for p in sorted((CONTENT / "mecanismes").glob("*.yaml"))]
     units_src = load_yaml(CONTENT / "units.yaml")
+    annales_src = load_yaml(CONTENT / "annales.yaml") if (CONTENT / "annales.yaml").exists() else {"annales": []}
     figures = load_figures()
     tables = lesson_tables(liaisons)
     b = Builder(liaisons, mecanismes)
@@ -798,6 +915,16 @@ def build():
             b.errors.append(f"{it['id']} : pas assez de paires")
         if it["type"] == "mcq" and "feedback" in it["payload"] and len(it["payload"]["feedback"]) != len(it["payload"]["choices"]):
             b.errors.append(f"{it['id']} : feedback mal aligné")
+    annales = []
+    for a in annales_src.get("annales", []) or []:
+        for pr in a.get("prerequis", []):
+            if pr["skill"] not in skill_ids:
+                b.errors.append(f"annales {a['id']} : prérequis inconnu {pr['skill']}")
+        if a.get("guided") and a["guided"] not in b.items:
+            b.errors.append(f"annales {a['id']} : exercice guidé inconnu {a['guided']}")
+        annales.append({"id": a["id"], "titre": a["titre"], "session": str(a.get("session", "")), "epreuve": a.get("epreuve", ""),
+                        "partie": a.get("partie", ""), "url": a.get("url", ""), "corrige": a.get("corrige"),
+                        "themes": a.get("themes", []), "prerequis": a.get("prerequis", []), "guided": a.get("guided")})
     if b.errors:
         print("Erreurs de construction :", file=sys.stderr)
         for e in b.errors:
@@ -817,6 +944,7 @@ def build():
         "figures": {k: v for k, v in figures.items() if k in used},
         "units": units,
         "items": b.items,
+        "annales": annales,
     }
     return content
 

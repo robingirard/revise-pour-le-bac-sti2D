@@ -87,6 +87,17 @@ make check      # invariants du contenu (ddl + efforts = 6, prérequis, figures 
 make test       # tests unitaires de l'application (planificateur, progression, séances, rendu)
 ```
 
+## Exercices complets et annales
+
+- Chaque mécanisme donne automatiquement un **exercice complet de fin de chapitre** (type `guided`) :
+  classes → contacts et liaisons → graphe → symbole → lecture du schéma, débloqué au niveau 2 de
+  la compétence « Tracer le schéma ».
+- `content/annales.yaml` référence des **sujets d'examen officiels** (liens vers les PDF) avec des
+  prérequis de niveau ; ils apparaissent sur l'accueil, verrouillés tant que les niveaux ne sont pas atteints.
+- `docs/notes/` contient les notes structurées tirées du manuel (plan, formules, figures à redessiner,
+  propositions de questions) qui servent à écrire les unités suivantes ; `docs/biblio.md` recense
+  les annales et sites utiles.
+
 ## Feuille de route
 
 1. ✅ Liaisons, classes d'équivalence, graphe, lecture de schéma (serre-joint, bielle-manivelle, étau).

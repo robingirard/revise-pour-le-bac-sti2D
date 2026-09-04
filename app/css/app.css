@@ -339,3 +339,32 @@ th { font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-
 .prompt svg[data-fig^="contact-"], .card-front svg[data-fig^="contact-"] { width: 100%; max-width: 340px; height: auto; max-height: none; }
 .choice svg[data-fig^="contact-"] { width: 100%; height: auto; max-height: none; }
 .lesson table svg[data-fig^="contact-"] { width: 150px; min-width: 150px; height: auto; max-height: none; }
+
+/* ---- exercices complets (guided) ---- */
+.guided-title { margin: 0 0 6px; font-size: 1.15rem; }
+.guided-intro { background: var(--bg); border-radius: 12px; padding: 2px 12px; margin-bottom: 10px; }
+.guided-intro summary { cursor: pointer; font-weight: 600; padding: 8px 0; list-style: none; }
+.guided-intro summary::-webkit-details-marker { display: none; }
+.guided-intro summary::after { content: " ▸"; color: var(--muted); }
+.guided-intro[open] summary::after { content: " ▾"; }
+.guided-intro-body { padding-bottom: 8px; }
+.guided-counter { font-weight: 700; color: var(--accent); margin: 4px 0 10px; }
+.guided-step { border-top: 1px dashed var(--border); padding-top: 10px; }
+.guided-feedback { border-radius: 12px; padding: 10px 12px; margin-top: 12px; }
+.guided-feedback.ok { background: var(--ok-bg); color: var(--ok); }
+.guided-feedback.ko { background: var(--ko-bg); color: var(--ko); }
+.guided-feedback .feedback-title { font-size: 1.05rem; }
+.complets { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 12px 16px; margin: 12px 0; }
+.complets h2 { margin: 0 0 4px; font-size: 1.05rem; }
+.complet { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; border-top: 1px solid var(--border); }
+.complet-title { font-weight: 600; flex: 1; }
+.complet-locked { text-align: right; }
+
+/* ---- annales ---- */
+.annale { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 12px 14px; border-left: 4px solid var(--accent); }
+.annale.locked { opacity: 0.75; border-left-color: var(--border); }
+.annale-title { font-weight: 700; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+.chip { font-size: 0.78rem; background: var(--bg); border: 1px solid var(--border); border-radius: 999px; padding: 2px 8px; color: var(--muted); }
+.annale-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.annale-locked { margin: 6px 0 0; }
