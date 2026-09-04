@@ -510,15 +510,15 @@ class Builder:
         for m in MOBS:
             iid = f"{skill}.mobilite_figure_vers_nom.{m}"
             distr = [(d, f"Non : {d} serait {MOB_LONG[d]} ; la figure montre {MOB_LONG[m]}.") for d in self.mob_distractors(m, iid)]
-            self.mcq(iid, skill, 1, f"Quelle mobilité est représentée sur cette figure ?\n{fig('mobilite-' + m)}",
-                     m, distr, f"**{m}** : {MOB_LONG[m]}.", tags=["mobilites"])
+            self.mcq(iid, skill, 1, f"Quelle mobilité est représentée sur cette figure ?\n{fig('mobilite-' + m + '-q')}",
+                     m, distr, f"**{m}** : {MOB_LONG[m]}. {fig('mobilite-' + m)}", tags=["mobilites"])
 
     def gen_mobilite_nom_vers_figure(self, skill):
         for m in MOBS:
             iid = f"{skill}.mobilite_nom_vers_figure.{m}"
-            distr = [(fig("mobilite-" + d), f"Non : cette figure montre {d}, {MOB_LONG[d]}.") for d in self.mob_distractors(m, iid)]
+            distr = [(fig("mobilite-" + d + "-q"), f"Non : cette figure montre {d}, {MOB_LONG[d]}.") for d in self.mob_distractors(m, iid)]
             self.mcq(iid, skill, 2, f"Quelle figure représente la mobilité **{m}** ?",
-                     fig("mobilite-" + m), distr, f"**{m}** : {MOB_LONG[m]}.", layout="grid", tags=["mobilites"])
+                     fig("mobilite-" + m + "-q"), distr, f"**{m}** : {MOB_LONG[m]}. {fig('mobilite-' + m)}", layout="grid", tags=["mobilites"])
 
     # --- mécanismes ------------------------------------------------------------
     def handwritten(self, skill, questions, prefix):
