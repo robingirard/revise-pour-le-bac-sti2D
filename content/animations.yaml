@@ -1,0 +1,55 @@
+# Animations des figures de mécanismes de transmission / transformation (hors mécanismes complets,
+# décrits dans content/mecanismes/*.yaml). Même format que le bloc « animation » d'un mécanisme :
+#   bbox = \useasboundingbox du .tex (cm), border (pt), duration (s), classes : couleur TikZ → mouvement.
+#   Mouvements : fixed | rotate (center, turns ou amplitude/phase) | translate (dir, amplitude, phase)
+#   | follow (of, then) | coupler (crank, a, slider, b) | slider (dir, coupler) | dash (speed : courroie).
+animations:
+  transmission-engrenage:
+    bbox: [-3.3, -2.6, 3.5, 3.7]
+    border: 4
+    duration: 4
+    legende: "La roue menante (1) entraîne la roue menée (2) en sens inverse ; ω₂ = ω₁ × Z₁ ÷ Z₂."
+    classes:
+      roue1: {couleur: solideA, motion: rotate, center: [0, 2.2], turns: 1}
+      roue2: {couleur: solideB, motion: rotate, center: [0, 0], turns: -0.5714}
+  transmission-poulies:
+    bbox: [-1.9, -2.8, 6.3, 2.5]
+    border: 4
+    duration: 4
+    legende: "Les deux poulies tournent dans le même sens ; la courroie avance à la même vitesse sur les deux."
+    classes:
+      poulie1: {couleur: solideA, motion: rotate, center: [0, 0], turns: -1}
+      poulie2: {couleur: solideB, motion: rotate, center: [3.4, 0], turns: -0.52}
+      courroie: {couleur: solideD, motion: dash, speed: 29}
+  transmission-roue-vis:
+    bbox: [-2.1, -2.8, 5.9, 2.4]
+    border: 4
+    duration: 4
+    legende: "Un tour de vis fait avancer la roue d'une dent : la roue tourne Z₂ fois moins vite que la vis (ici, pour l'illustration, 4 tours de vis pour un quart de tour de roue)."
+    classes:
+      roue: {couleur: solideB, motion: rotate, center: [0, 0], turns: 0.25}
+      vis: {couleur: solideA, motion: rotate, center: [4.2, 1.35], turns: 4}
+  transformation-pignon-cremaillere:
+    bbox: [-2.8, -1.4, 2.8, 3.1]
+    border: 4
+    duration: 4
+    legende: "Le pignon tourne, la crémaillère translate : d = r × θ (roulement sans glissement)."
+    classes:
+      pignon: {couleur: solideA, motion: rotate, center: [0, 1.2], amplitude: 40}
+      cremaillere: {couleur: solideB, motion: translate, dir: [1, 0], amplitude: 0.698}
+  transformation-vis-ecrou:
+    bbox: [-1.0, -0.7, 5.5, 3.1]
+    border: 4
+    duration: 4
+    legende: "La vis tourne sur place (rotation invisible dans cette vue) ; l'écrou, bloqué en rotation, avance d'un pas par tour."
+    classes:
+      ecrou: {couleur: solideB, motion: translate, dir: [1, 0], amplitude: 0.4}
+  transformation-bielle-manivelle:
+    bbox: [-2.2, -2.1, 6.2, 1.6]
+    border: 4
+    duration: 4
+    legende: "La manivelle tourne, la bielle a un mouvement plan, le piston va et vient dans son guidage."
+    classes:
+      manivelle: {couleur: solideE, motion: rotate, center: [0, 0], turns: 1}
+      bielle: {couleur: solideA, motion: coupler, crank: manivelle, a: [0.6883, 0.983], slider: piston, b: [3.62, 0]}
+      piston: {couleur: solideB, motion: slider, dir: [1, 0], coupler: bielle}

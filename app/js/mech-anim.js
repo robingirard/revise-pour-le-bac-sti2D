@@ -2,7 +2,8 @@
 // g.mech[data-class="E1"], produit par le build d'après la couleur des tracés) reçoit à chaque image
 // une transformation rigide calculée d'après CONTENT.animations[id de figure] : boîte du dessin en cm
 // (`bbox`), bord en points (`border`), durée d'un cycle (`duration`, s) et mouvement de chaque classe
-// (`fixed`, `rotate`, `translate`, `follow`, `coupler`, `slider`). Partie géométrique pure (testable),
+// (`fixed`, `rotate`, `translate`, `follow`, `coupler`, `slider`, `dash` : courroie dont les tirets défilent).
+// Partie géométrique pure (testable),
 // puis pilote DOM (requestAnimationFrame), déclenché par anim.js (survol, toucher, bouton de leçon).
 
 export const K = 72 / 2.54;   // points par centimètre : les SVG produits par le build sont en points
@@ -78,6 +79,17 @@ export function sliderPoint(A, B0, dir, L) {
     s = Math.abs(s1) <= Math.abs(s2) ? s1 : s2;
   }
   return [B0[0] + s * dir[0], B0[1] + s * dir[1]];
+}
+
+/** Courroie (`dash`) : motif de tirets (unités SVG) et décalage à l'instant t. `speed` en points par seconde
+ *  le long du tracé (positif = sens de tracé) ; la distance par cycle est arrondie à un nombre entier de
+ *  motifs pour que le défilement reboucle sans saut. */
+export const DASH_PATTERN = [7, 4];
+export function dashAt(c, spec, t) {
+  const P = DASH_PATTERN[0] + DASH_PATTERN[1];
+  const duration = Math.max(0.5, Number(spec.duration) || 4);
+  const perCycle = Math.round(((Number(c.speed) || 0) * duration) / P) * P;
+  return { dasharray: DASH_PATTERN.join(' '), dashoffset: -perCycle * t };
 }
 
 /** Pose de chaque classe à l'instant t ∈ [0,1) : { id: matrice SVG }. Lève une erreur en cas de cycle. */
@@ -156,6 +168,13 @@ export function play(svg) {
     let poses;
     try { poses = poseAt(spec, t); } catch (err) { console.error(err); stop(svg); return; }
     for (const g of groups) {
+      const c = spec.classes && spec.classes[g.dataset.class];
+      if (c && c.motion === 'dash') {
+        const d = dashAt(c, spec, t);
+        g.setAttribute('stroke-dasharray', d.dasharray);
+        g.setAttribute('stroke-dashoffset', d.dashoffset.toFixed(2));
+        continue;
+      }
       const M = poses[g.dataset.class];
       if (M) g.setAttribute('transform', toAttr(M));
     }
@@ -176,7 +195,7 @@ export function stop(svg) {
   running.delete(svg);
   svg.classList.remove('mech-playing');
   if (svg.parentElement) svg.parentElement.classList.remove('mech-on');
-  for (const g of svg.querySelectorAll('g.mech[data-class]')) g.removeAttribute('transform');
+  for (const g of svg.querySelectorAll('g.mech[data-class]')) { g.removeAttribute('transform'); g.removeAttribute('stroke-dasharray'); g.removeAttribute('stroke-dashoffset'); }
   if (state.caption && state.caption.parentNode) state.caption.remove();
 }
 export function setPlaying(svg, on) { if (on) return play(svg); stop(svg); return false; }

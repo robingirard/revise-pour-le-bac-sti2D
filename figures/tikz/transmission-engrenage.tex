@@ -10,6 +10,7 @@
     roue/.style={line width=1.4pt, line cap=round, line join=round},
     arbre/.style={line width=1.1pt, line cap=round},
     fleche/.style={-{Stealth[length=5pt]}, line width=0.8pt}]
+\useasboundingbox (-3.3,-2.6) rectangle (3.5,3.7);   % boîte fixe (animation : cm → SVG)
 % --- Macro locale : segment de bâti vertical hachuré (hachures vers la gauche) ---
 \newcommand\bativerti[4]{% #1 = x, #2 = y bas, #3 = y haut, #4 = nombre de hachures
   \draw[line width=0.8pt] (#1,#2) -- (#1,#3);
@@ -39,9 +40,9 @@
 \pic[s1=solideA, s2=black, liens=false] at (O1) {pivot bout};
 \pic[s1=solideB, s2=black, liens=false] at (O2) {pivot bout};
 % --- Sens de rotation : opposés ---
-\draw[fleche, solideA] ([shift=(-20:1.15)]O1) arc (-20:35:1.15)
+\draw[fleche, solideA!60] ([shift=(-20:1.15)]O1) arc (-20:35:1.15)
   node[pos=1, anchor=west, inner sep=2pt, font=\small, text=solideA] {$\omega_1$};
-\draw[fleche, solideB] ([shift=(40:1.75)]O2) arc (40:-25:1.75)
+\draw[fleche, solideB!60] ([shift=(40:1.75)]O2) arc (40:-25:1.75)
   node[pos=1, anchor=west, inner sep=2pt, font=\small, text=solideB] {$\omega_2$};
 % --- Étiquettes ---
 \node[font=\small, text=solideA, anchor=south] at (0,3.15) {\textbf{1} menante ($Z_1$)};

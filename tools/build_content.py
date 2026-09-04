@@ -1227,6 +1227,12 @@ def build():
     for u in units:
         for s in u["skills"]:
             used.update(fig_refs(s["lesson"]))
+    animations = {m["figures"]["schema"]: dict(m["animation"], mecanisme=m["id"]) for m in mecanismes if m.get("animation")}
+    if (CONTENT / "animations.yaml").exists():
+        for fid, spec in (load_yaml(CONTENT / "animations.yaml") or {}).get("animations", {}).items():
+            if fid not in figures:
+                b.errors.append(f"animations.yaml : figure inconnue {fid}")
+            animations[fid] = spec
     content = {
         "version": 1,
         "generatedAt": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -1235,7 +1241,7 @@ def build():
         "units": units,
         "items": b.items,
         "annales": annales,
-        "animations": {m["figures"]["schema"]: dict(m["animation"], mecanisme=m["id"]) for m in mecanismes if m.get("animation")},
+        "animations": animations,
     }
     return content
 

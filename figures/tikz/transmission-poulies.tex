@@ -13,6 +13,7 @@
     fleche/.style={-{Stealth[length=5pt]}, line width=0.8pt},
     cote/.style={line width=0.6pt, {Stealth[length=4pt]}-{Stealth[length=4pt]}},
     attache/.style={line width=0.4pt, draw=black!40}]
+\useasboundingbox (-1.9,-2.8) rectangle (6.3,2.5);   % boîte fixe (animation : cm → SVG)
 % --- Macro locale : ligne de bâti horizontale hachurée ---
 \newcommand\batihoriz[4]{% #1 = x début, #2 = x fin, #3 = y, #4 = nombre de hachures
   \draw[line width=0.8pt] (#1,#3) -- (#2,#3);
@@ -39,6 +40,8 @@
 % --- Poulies (diamètres primitifs) ---
 \draw[poulie, solideA] (O1) circle (\ra);
 \draw[poulie, solideB] (O2) circle (\rb);
+\draw[poulie, solideA] (O1) -- ++(40:\ra);    % rayons : rendent la rotation visible
+\draw[poulie, solideB] (O2) -- ++(140:\rb);
 \pic[s1=solideA, s2=black, liens=false] at (O1) {pivot bout};
 \pic[s1=solideB, s2=black, liens=false] at (O2) {pivot bout};
 % --- Cotes des diamètres ---
@@ -49,12 +52,12 @@
 \draw[cote] (5.55,-\rb) -- (5.55,\rb);
 \node[font=\small, anchor=west, inner sep=2pt] at (5.6,0) {$d_2$};
 % --- Vitesse de la courroie (brin supérieur) ---
-\draw[fleche, solideD] (0.6,1.05) -- (2.4,1.35);
+\draw[fleche, solideD!60!black] (0.6,1.05) -- (2.4,1.35);
 \node[font=\small, text=solideD, anchor=south east] at (2.4,1.35) {$V$ courroie};
 % --- Sens de rotation : identiques ---
-\draw[fleche, solideA] ([shift=(-105:0.95)]O1) arc (-105:-175:0.95);   % sens horaire : le brin supérieur avance vers la droite
+\draw[fleche, solideA!60] ([shift=(-105:0.95)]O1) arc (-105:-175:0.95);   % sens horaire : le brin supérieur avance vers la droite
 \node[font=\small, text=solideA, anchor=north east] at (-0.55,-0.95) {$\omega_1$};
-\draw[fleche, solideB] ([shift=(-25:1.55)]O2) arc (-25:-85:1.55);
+\draw[fleche, solideB!60] ([shift=(-25:1.55)]O2) arc (-25:-85:1.55);
 \node[font=\small, text=solideB, anchor=west] at (4.9,-0.74) {$\omega_2$};
 % --- Repères ---
 \node[font=\small\bfseries, text=solideA, anchor=south] at (0,0.78) {1};

@@ -12,6 +12,7 @@
     fleche/.style={-{Stealth[length=5pt]}, line width=0.9pt},
     cote/.style={line width=0.6pt, {Stealth[length=4pt]}-{Stealth[length=4pt]}},
     attache/.style={line width=0.4pt, draw=black!45}]
+\useasboundingbox (-1.0,-0.7) rectangle (5.5,3.1);   % boîte fixe (animation : cm → SVG)
 % --- Macro locale : ligne de bâti horizontale hachurée ---
 \newcommand\batihoriz[4]{% #1 = x début, #2 = x fin, #3 = y, #4 = nombre de hachures
   \draw[line width=0.8pt] (#1,#3) -- (#2,#3);
@@ -33,10 +34,10 @@
 \draw[trait, solideB] (3.5,1.35) -- (3.5,0.75);
 \draw[trait] (4.25,0.5) -- (4.25,0.06);
 % --- Entrée : rotation de la vis (couple C, vitesse omega) ---
-\draw[fleche, solideA] (-0.25,1.15) arc (-90:200:0.16 and 0.45);
+\draw[fleche, solideA!60] (-0.25,1.15) arc (-90:200:0.16 and 0.45);
 \node[font=\small, text=solideA, anchor=south] at (-0.25,2.15) {$\vec{C}$, $\omega$};
 % --- Sortie : translation de l'écrou (effort F, vitesse V) ---
-\draw[fleche, solideB] (2.2,2.5) -- (3.6,2.5);
+\draw[fleche, solideB!60] (2.2,2.5) -- (3.6,2.5);
 \node[font=\small, text=solideB, anchor=south] at (2.9,2.55) {$\vec{F}$, $V$};
 % --- Cote du pas p entre deux crêtes successives du filet ---
 \draw[attache] (3.75,1.73) -- (3.75,2.2) (4.75,1.73) -- (4.75,2.2);

@@ -117,6 +117,10 @@ def load_mechanisms():
         if not m.get("animation"):
             continue
         MECH[m["figures"]["schema"]] = {c["id"]: color_regex(PALETTE.get(c.get("couleur", "black"), (0, 0, 0))) for c in m["classes"]}
+    extra = CONTENT / "animations.yaml"
+    if extra.exists():
+        for fid, spec in (yaml.safe_load(extra.read_text(encoding="utf-8")) or {}).get("animations", {}).items():
+            MECH[fid] = {cid: color_regex(PALETTE[c["couleur"]]) for cid, c in spec["classes"].items()}
 
 
 def generate_symbol_sources(liaisons):

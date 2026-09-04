@@ -11,6 +11,7 @@
     primitif/.style={line width=0.5pt, dash pattern=on 3pt off 2pt, draw=black!60},
     renvoi/.style={line width=0.4pt, draw=black!60},
     fleche/.style={-{Stealth[length=5pt]}, line width=0.9pt}]
+\useasboundingbox (-2.8,-1.4) rectangle (2.8,3.1);   % boîte fixe (animation : cm → SVG)
 \def\rp{1.0}                      % rayon primitif du pignon
 \def\pas{0.5236}                  % pas = 2*pi*r/12 (12 dents)
 \coordinate (O) at (0,1.2);       % centre du pignon
@@ -35,9 +36,9 @@
 \fill (0,0.2) circle (1.4pt);
 \node[font=\small, anchor=north east, inner sep=2pt] at (0,0.2) {I};
 % --- Mouvements : rotation du pignon (sens trigonométrique) et translation vers la droite ---
-\draw[fleche, solideA] ([shift=(128:1.52)]O) arc (128:190:1.52);
+\draw[fleche, solideA!60] ([shift=(128:1.52)]O) arc (128:190:1.52);
 \node[font=\small, text=solideA, anchor=east, inner sep=3pt] at ([shift=(160:1.52)]O) {$\theta$, $\omega$};
-\draw[fleche, solideB] (0.35,-0.85) -- (2.1,-0.85);
+\draw[fleche, solideB!60] (0.35,-0.85) -- (2.1,-0.85);
 \node[font=\small, text=solideB, anchor=north] at (1.25,-0.92) {$d$, $V$};
 % --- Étiquettes ---
 \node[font=\small, text=solideA, anchor=south] at (0,2.5) {\textbf{1} pignon ($Z$ dents)};

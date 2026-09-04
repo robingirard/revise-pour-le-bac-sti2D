@@ -171,7 +171,9 @@ Déclenchement : survol de la souris ou toucher sur la figure (bascule), et un b
 ### Schémas cinématiques animés
 
 `content.animations[<id de figure>]` décrit le mouvement des classes d'équivalence d'un schéma
-(source : bloc `animation:` du YAML du mécanisme). Le SVG du schéma porte `data-mech="<id de figure>"`
+(sources : bloc `animation:` du YAML d'un mécanisme, ou `content/animations.yaml` pour les figures de
+transmission / transformation, où chaque classe indique en plus sa couleur TikZ `couleur:`).
+Le SVG du schéma porte `data-mech="<id de figure>"`
 et chaque tracé d'une classe est enveloppé dans `<g class="mech" data-class="E1">` (classement par
 couleur au build). Spécification :
 
@@ -184,7 +186,8 @@ couleur au build). Spécification :
     "E2": { "motion": "coupler", "crank": "E1", "a": [0.9, 1.5], "slider": "E3", "b": [5, 0] },
     "E3": { "motion": "slider", "dir": [1, 0], "coupler": "E2" },
     "E4": { "motion": "translate", "dir": [0, 1], "amplitude": 0.4, "phase": 0.25 },
-    "E5": { "motion": "follow", "of": "E3", "then": { "motion": "translate", … } } } }
+    "E5": { "motion": "follow", "of": "E3", "then": { "motion": "translate", … } },
+    "courroie": { "motion": "dash", "speed": 29 } } }                      // tirets défilants (pt/s)
 ```
 
 Coordonnées en **cm** dans le repère du dessin TikZ ; conversion vers les unités utilisateur du SVG :
@@ -195,10 +198,16 @@ Coordonnées en **cm** dans le repère du dessin TikZ ; conversion vers les unit
 `follow` = même transformation que la classe `of`, composée avec `then` ; `coupler` (bielle) : le point
 `a` (dessiné, solidaire de `crank`) suit la manivelle, le point `b` reste sur la droite de `slider`
 (direction `dir`) à distance `|ab|` de `a(t)`, la bielle est déplacée rigidement de `a→b` vers `a(t)→b(t)` ;
-`slider` : translation `b(t) − b` calculée par sa bielle. Les transformations sont des matrices affines
+`slider` : translation `b(t) − b` calculée par sa bielle ; `dash` (courroie, chaîne) : pas de transformation,
+le groupe reçoit `stroke-dasharray` et un `stroke-dashoffset` qui décroît de `speed` unités SVG par seconde
+(sens de tracé du chemin ; distance par cycle arrondie à un nombre entier de motifs). Les transformations
+sont des matrices affines
 appliquées (attribut `transform="matrix(…)"`) aux groupes `g.mech[data-class]`. Déclenchement identique
 aux symboles (survol, toucher, bouton de leçon) ; boucle `requestAnimationFrame` uniquement pendant la
-lecture ; la `legende` est affichée sous la figure pendant la lecture.
+lecture ; la `legende` est affichée sous la figure pendant la lecture. Dans le `.tex`, la boîte fixe
+`\useasboundingbox` doit être égale à `bbox`, les flèches et annotations fixes utilisent une teinte
+différente de la pièce (`solideA!60`) pour ne pas être regroupées avec elle, et les étiquettes restent
+des glyphes (jamais animés).
 
 ## 5. Leçon (Markdown restreint)
 

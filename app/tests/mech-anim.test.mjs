@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { K, toSvg, mul, translate, rotateAbout, apply, toAttr, poseAt, sliderPoint, IDENTITY } from '../js/mech-anim.js';
+import { K, toSvg, mul, translate, rotateAbout, apply, toAttr, poseAt, sliderPoint, IDENTITY, dashAt, DASH_PATTERN } from '../js/mech-anim.js';
 
 const close = (a, b, eps = 1e-6) => assert.ok(Math.abs(a - b) < eps, `${a} ≠ ${b}`);
 const closePt = (p, q, eps = 1e-6) => { close(p[0], q[0], eps); close(p[1], q[1], eps); };
@@ -89,4 +89,16 @@ test('sliderPoint : solution la plus proche de B0, jamais NaN', () => {
   const far = sliderPoint([0, 100], [4, 0], [1, 0], 5);             // hors d'atteinte : point le plus proche
   assert.ok(Number.isFinite(far[0]) && Number.isFinite(far[1]));
   closePt(far, [0, 0]);
+});
+
+test('dashAt : la courroie défile dans le sens du tracé et reboucle sur un nombre entier de motifs', () => {
+  const spec = { bbox: [0, 0, 4, 4], border: 0, duration: 4, classes: { c: { motion: 'dash', speed: 29 } } };
+  const P = DASH_PATTERN[0] + DASH_PATTERN[1];
+  const d0 = dashAt(spec.classes.c, spec, 0), d1 = dashAt(spec.classes.c, spec, 1);
+  assert.equal(d0.dasharray, DASH_PATTERN.join(' '));
+  close(d0.dashoffset, 0);
+  close(d1.dashoffset % P, 0);                       // un nombre entier de motifs par cycle : pas de saut
+  assert.ok(dashAt(spec.classes.c, spec, 0.5).dashoffset < 0);   // décalage négatif = tirets vers l'avant
+  close(d1.dashoffset, -Math.round((29 * 4) / P) * P);
+  assert.equal(poseAt(spec, 0.3).c.a, 1);           // pas de transformation géométrique pour une courroie
 });
