@@ -1,0 +1,89 @@
+%% pc-tableau-avancement — tableau d'avancement de la combustion complète du méthane,
+%% avec 2 mol de CH4 et 10 mol de O2 (exemple du cours). Les coefficients
+%% stœchiométriques repris dans les expressions sont en rouge (solideA) et reliés par
+%% deux flèches courbes aux coefficients de l'équation.
+%% Nota : l'encadré sur x_max est placé SOUS le tableau (et non à droite) pour tenir
+%% dans la largeur d'un écran de téléphone.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{shapes.geometric, positioning}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  trait/.style={line width=0.5pt, draw=black!45},
+  bord/.style={line width=0.9pt, draw=black!65},
+  cell/.style={font=\small, inner sep=1pt},
+  etat/.style={font=\scriptsize, inner sep=1pt, align=center},
+  entete/.style={font=\small, inner sep=1pt}]
+
+%% ---- géométrie du tableau (colonnes et lignes) ---------------------------
+\def\xa{0}    \def\xb{1.55} \def\xc{2.60} \def\xd{3.88}
+\def\xe{5.16} \def\xf{6.44} \def\xg{7.72}
+\def\ya{0}    \def\yb{-0.45} \def\yc{-1.02} \def\yd{-1.55}
+\def\ye{-2.08} \def\yf{-2.65}
+
+%% fonds : en-têtes en bleu très clair, colonnes de gauche en gris très clair
+\fill[solideB!10] (\xc,\ya) rectangle (\xg,\yc);
+\fill[solideB!10] (\xa,\ya) rectangle (\xc,\yc);
+\fill[black!4]    (\xa,\yc) rectangle (\xc,\yf);
+
+%% filets intérieurs puis bordure extérieure
+\draw[trait] (\xa,\yb) -- (\xg,\yb);
+\foreach \y in {\yc,\yd,\ye} \draw[trait] (\xa,\y) -- (\xg,\y);
+\foreach \x in {\xb,\xc,\xd,\xe,\xf} \draw[trait] (\x,\ya) -- (\x,\yf);
+\draw[bord] (\xa,\ya) rectangle (\xg,\yf);
+\draw[bord] (\xa,\yc) -- (\xg,\yc);
+
+%% ---- en-têtes ------------------------------------------------------------
+\node[etat] at ({(\xa+\xb)/2},-0.51) {État\\du système};
+\node[etat] at ({(\xb+\xc)/2},-0.51) {$x$\\(mol)};
+\node[font=\scriptsize, inner sep=1pt, text=solideB] at ({(\xc+\xg)/2},-0.225)
+  {Quantités de matière (mol)};
+\node[entete] at ({(\xc+\xd)/2},-0.735) {$\mathrm{CH_4}$};
+\node[entete] at ({(\xd+\xe)/2},-0.735) {$+\ \textcolor{solideA}{2}\,\mathrm{O_2}$};
+\node[entete] at ({(\xe+\xf)/2},-0.735) {$\rightarrow\ \mathrm{CO_2}$};
+\node[entete] at ({(\xf+\xg)/2},-0.735) {$+\ \textcolor{solideA}{2}\,\mathrm{H_2O}$};
+\coordinate (co2)  at (4.28,-0.90);   % le « 2 » de 2 O2
+\coordinate (ch2o) at (6.86,-0.90);   % le « 2 » de 2 H2O
+
+%% ---- ligne « état initial » ----------------------------------------------
+\node[etat] at ({(\xa+\xb)/2},-1.285) {état initial};
+\node[cell] at ({(\xb+\xc)/2},-1.285) {$0$};
+\node[cell] at ({(\xc+\xd)/2},-1.285) {$2$};
+\node[cell] at ({(\xd+\xe)/2},-1.285) {$10$};
+\node[cell] at ({(\xe+\xf)/2},-1.285) {$0$};
+\node[cell] at ({(\xf+\xg)/2},-1.285) {$0$};
+
+%% ---- ligne « état intermédiaire » ----------------------------------------
+\node[etat] at ({(\xa+\xb)/2},-1.815) {état\\intermédiaire};
+\node[cell] at ({(\xb+\xc)/2},-1.815) {$x$};
+\node[cell] at ({(\xc+\xd)/2},-1.815) {$2-x$};
+\node[cell] (dixmoins) at ({(\xd+\xe)/2},-1.815) {$10-\textcolor{solideA}{2}\,x$};
+\node[cell] at ({(\xe+\xf)/2},-1.815) {$x$};
+\node[cell] (deuxx)    at ({(\xf+\xg)/2},-1.815) {$\textcolor{solideA}{2}\,x$};
+
+%% ---- ligne « état final » ------------------------------------------------
+\node[etat] at ({(\xa+\xb)/2},-2.365) {état final\\($x=x_{\max}$)};
+\node[cell] at ({(\xb+\xc)/2},-2.365) {$2$};
+\node[cell] at ({(\xc+\xd)/2},-2.365) {$0$};
+\node[cell] at ({(\xd+\xe)/2},-2.365) {$6$};
+\node[cell] at ({(\xe+\xf)/2},-2.365) {$2$};
+\node[cell] at ({(\xf+\xg)/2},-2.365) {$4$};
+
+%% ---- flèches : le coefficient de l'équation se retrouve devant x ---------
+\draw[-{Stealth[length=4.5pt]}, line width=0.6pt, draw=solideA]
+  (co2) to[out=-150, in=120] (4.29,-1.68);
+\draw[-{Stealth[length=4.5pt]}, line width=0.6pt, draw=solideA]
+  (ch2o) to[out=-150, in=110] (6.92,-1.68);
+\node[font=\scriptsize, text=solideA, anchor=north west] at (\xa,-2.78)
+  {le coefficient stœchiométrique de l'équation multiplie l'avancement $x$};
+
+%% ---- encadré : recherche de x_max ---------------------------------------
+\draw[line width=0.8pt, draw=solideB, fill=solideB!6, rounded corners=2.5pt]
+  (\xa,-3.14) rectangle (\xg,-4.62);
+\node[font=\scriptsize, anchor=north west, align=left, inner sep=0pt] at (0.16,-3.28)
+  {si $\mathrm{CH_4}$ est limitant : $2-x_{\max}=0$, soit $x_{\max}=2$ mol\\[1.5pt]
+   si $\mathrm{O_2}$ est limitant : $10-2\,x_{\max}=0$, soit $x_{\max}=5$ mol\\[1.5pt]
+   on retient la \textbf{plus petite} valeur : $x_{\max}=2$ mol,\\[1.5pt]
+   le méthane est le \textbf{réactif limitant}, le dioxygène est en excès};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,47 @@
+%% pc-couple-oxydant-reducteur — la demi-équation d'un couple ox/red et le sens des
+%% électrons : réduction (bleu) de gauche à droite, oxydation (rouge) de droite à gauche.
+%% Code couleur de l'unité : oxydant / réduction = solideB, réducteur / oxydation = solideA,
+%% électrons = solideE.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{shapes.geometric, positioning}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  pastille/.style={circle, minimum size=0.82cm, inner sep=0pt, line width=1pt, font=\small},
+  eq/.style={font=\small, inner sep=1pt},
+  fleche/.style={-{Stealth[length=6pt]}, line width=1.2pt},
+  lib/.style={font=\scriptsize, inner sep=1.5pt},
+  exemple/.style={rounded corners=2.5pt, line width=0.8pt}]
+
+%% ================= demi-équation générale ================================
+\node[pastille, draw=solideB, fill=solideB!12, text=solideB] (ox)  at (1.55,0) {$\mathrm{ox}$};
+\node[eq] at (2.72,0) {$+\ n\,\textcolor{solideE}{\mathrm{e^-}}$};
+\node[eq] at (3.62,0) {$=$};
+\node[pastille, draw=solideA, fill=solideA!12, text=solideA] (red) at (4.75,0) {$\mathrm{red}$};
+
+%% flèche du haut : réduction (l'oxydant capte les électrons)
+\draw[fleche, draw=solideB] (1.55,0.60) -- (4.75,0.60);
+\node[lib, text=solideB, anchor=south] at (3.15,0.68)
+  {\textbf{RÉDUCTION} : l'oxydant \textbf{capte} $n$ électrons};
+%% flèche du bas : oxydation (le réducteur cède les électrons)
+\draw[fleche, draw=solideA] (4.75,-0.60) -- (1.55,-0.60);
+\node[lib, text=solideA, anchor=north] at (3.15,-0.68)
+  {\textbf{OXYDATION} : le réducteur \textbf{cède} $n$ électrons};
+
+\node[font=\scriptsize, text=black!70, anchor=north] at (3.15,-1.24)
+  {les deux espèces forment le \textbf{couple} $\mathrm{ox}/\mathrm{red}$};
+
+%% ================= deux exemples =========================================
+\draw[exemple, draw=solideB, fill=solideB!7] (0,-1.75) rectangle (3.05,-3.34);
+\node[eq, anchor=north] at (1.525,-1.86)
+  {$\mathrm{Cu^{2+}} + \textcolor{solideE}{2\,\mathrm{e^-}} = \mathrm{Cu}$};
+\node[font=\scriptsize, text=solideB, align=center, anchor=north] at (1.525,-2.32)
+  {électrons \textbf{à gauche}\\du signe $=$\\$\Rightarrow$ \textbf{réduction}};
+
+\draw[exemple, draw=solideA, fill=solideA!7] (3.25,-1.75) rectangle (6.30,-3.34);
+\node[eq, anchor=north] at (4.775,-1.86)
+  {$\mathrm{Zn} = \mathrm{Zn^{2+}} + \textcolor{solideE}{2\,\mathrm{e^-}}$};
+\node[font=\scriptsize, text=solideA, align=center, anchor=north] at (4.775,-2.32)
+  {électrons \textbf{à droite}\\du signe $=$\\$\Rightarrow$ \textbf{oxydation}};
+\end{tikzpicture}
+\end{document}

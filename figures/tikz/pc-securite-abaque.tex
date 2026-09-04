@@ -1,0 +1,94 @@
+%% pc-securite-abaque — effets du courant électrique sur le corps humain.
+%% Abaque à échelles logarithmiques (durée en ordonnée, intensité en abscisse) :
+%% les graduations ne sont PAS régulières, leurs positions sont posées à la main
+%% dans les deux listes \foreach ci-dessous (une position en cm par valeur).
+%% Cinq zones colorées ; les frontières des trois dernières sont incurvées
+%% (elles se décalent vers la droite quand la durée diminue).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+%% --- couleurs des cinq zones (du moins au plus grave) -----------------------
+\definecolor{zvert}{RGB}{30,150,90}
+\definecolor{zjaune}{RGB}{245,205,40}
+\definecolor{zorange}{RGB}{235,150,20}
+\definecolor{zorangef}{RGB}{225,105,20}
+\definecolor{zrouge}{RGB}{200,30,25}
+
+%% l'unité x vaut 0,86 cm : le graphe reste sous 8 cm de large sans changer les textes
+\begin{tikzpicture}[x=0.86cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.7pt},
+  grad/.style={font=\tiny},
+  grille/.style={draw=white, line width=0.35pt},
+  %% noms des zones : écrits verticalement, sur deux lignes quand la zone est étroite
+  %% (ils doivent rester dans la partie haute, où les frontières sont verticales)
+  nomzone/.style={font=\tiny\bfseries, rotate=90, anchor=east, align=center},
+  legende/.style={font=\scriptsize, anchor=west, inner sep=0pt}]
+
+\def\XM{7.2}   % largeur du cadre
+\def\YM{3.40}  % hauteur du cadre
+
+%% ================= zones (empilées de la plus grave à la moins grave) =======
+%% Chaque zone est peinte sur toute la largeur restante : il suffit alors de
+%% décrire la frontière GAUCHE de la zone suivante, du bas vers le haut.
+\fill[zrouge] (0,0) rectangle (\XM,\YM);
+\fill[zorangef] (0,0) -- (6.40,0) .. controls (5.85,0.75) and (5.30,1.60) ..
+      (5.30,\YM) -- (0,\YM) -- cycle;
+\fill[zorange] (0,0) -- (4.80,0) .. controls (4.15,0.75) and (3.60,1.60) ..
+      (3.60,\YM) -- (0,\YM) -- cycle;
+\fill[zjaune] (0,0) -- (3.90,0) .. controls (3.35,0.75) and (3.00,1.60) ..
+      (3.00,\YM) -- (0,\YM) -- cycle;
+\fill[zvert] (0,0) rectangle (1.50,\YM);
+
+%% ================= grille blanche fine =====================================
+\foreach \gx in {0.55,1.05,1.50,1.95,2.50,3.00,3.60,4.40,5.30,6.10} {
+  \draw[grille] (\gx,0) -- (\gx,\YM); }
+\foreach \gy in {0.45,0.82,1.13,1.45,1.85,2.18,2.50,2.90} {
+  \draw[grille] (0,\gy) -- (\XM,\gy); }
+
+%% ================= noms des zones (en haut, écrits verticalement) ==========
+\node[nomzone, text=white]  at (0.75,\YM-0.14) {Picotement};
+\node[nomzone, text=black]  at (2.28,\YM-0.14) {Tétanisation};
+\node[nomzone, text=white]  at (3.30,\YM-0.14) {Paralysie\\respiratoire};
+\node[nomzone, text=white]  at (4.45,\YM-0.14) {Fibrillation\\ventriculaire};
+\node[nomzone, text=white]  at (6.30,\YM-0.14) {Arrêt cardiaque};
+
+%% ================= repère blanc : 30 mA pendant 500 ms =====================
+\draw[black!55, line width=2.1pt] (0,1.85) -- (3.60,1.85) -- (3.60,0);
+\draw[white, line width=1.1pt] (0,1.85) -- (3.60,1.85) -- (3.60,0);
+\draw[white, line width=1.1pt, fill=black!55] (3.60,1.85) circle (0.085);
+
+%% ================= cadre et axes ===========================================
+\draw[line width=0.7pt, black!70] (0,0) rectangle (\XM,\YM);
+\draw[axe] (0,0) -- (\XM+0.35,0);
+\draw[axe] (0,0) -- (0,\YM+0.30);
+
+%% graduations de l'axe des intensités (mA)
+\foreach \gx/\lb in {0/0, 0.55/{0,2}, 1.05/{0,5}, 1.50/1, 1.95/2, 2.50/5,
+                     3.00/10, 3.60/30, 4.40/100, 5.30/500, 6.10/{2\,000},
+                     7.00/{10\,000}} {
+  \draw[line width=0.5pt] (\gx,0) -- (\gx,-0.09);
+  \node[grad, anchor=north, inner sep=2pt] at (\gx,-0.09) {\lb}; }
+\node[font=\tiny, anchor=north] at ({0.5*\XM},-0.48)
+  {Intensité du courant traversant le corps humain (mA)};
+
+%% graduations de l'axe des durées (ms)
+\foreach \gy/\lb in {0/0, 0.45/20, 0.82/50, 1.13/100, 1.45/200, 1.85/500,
+                     2.18/{1\,000}, 2.50/{2\,000}, 2.90/{5\,000}, 3.25/{10\,000}} {
+  \draw[line width=0.5pt] (0,\gy) -- (-0.09,\gy);
+  \node[grad, anchor=east, inner sep=2pt] at (-0.09,\gy) {\lb}; }
+\node[font=\tiny, rotate=90, align=center, anchor=south] at (-1.10,{0.5*\YM})
+  {Durée de passage\\du courant (ms)};
+
+%% ================= légende sous le graphe ==================================
+\foreach \k/\co/\val/\txt in {%
+    0/zrouge/{1 A}/{Arrêt du cœur},
+    1/zorangef/{50/75 mA}/{Seuil de fibrillation cardiaque irréversible},
+    2/zorange/{30 mA}/{Seuil de paralysie respiratoire au-delà de 500 ms},
+    3/zjaune/{10 mA}/{Seuil de non-lâcher, contraction musculaire},
+    4/zvert/{0,5 mA}/{Seuil de perception, sensation très faible}} {
+  \pgfmathsetmacro\ly{-1.02-0.34*\k}
+  \fill[\co] (-0.95,\ly) circle (0.095);
+  \node[legende, font=\scriptsize\bfseries] at (-0.78,\ly) {\val};
+  \node[legende] at (0.80,\ly) {\txt}; }
+\end{tikzpicture}
+\end{document}

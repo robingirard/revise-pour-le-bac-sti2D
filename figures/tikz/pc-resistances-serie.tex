@@ -1,0 +1,75 @@
+%% pc-resistances-serie — toit de combles aménagés : cinq couches accolées.
+%% Partie haute : coupe du rampant incliné à 30° (les épaisseurs dessinées sont
+%% proportionnées, la laine de verre est de loin la plus épaisse).
+%% Partie basse : analogie électrique, cinq résistances en série qui s'additionnent.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\definecolor{bois}{RGB}{200,155,105}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  couche/.style={draw=black!65, line width=0.5pt},
+  etiq/.style={font=\scriptsize, anchor=east, inner sep=1pt},
+  rappel/.style={line width=0.4pt, draw=black!55},
+  ambiance/.style={font=\scriptsize\bfseries}]
+
+%% ================= partie haute : la coupe du rampant =====================
+%% Repère local : x le long du rampant, y suivant la normale (de l'intérieur
+%% vers l'extérieur). Le scope est incliné de 30°.
+\begin{scope}[rotate=30]
+  \def\Lr{3.2}
+  %% couches, de l'intérieur (bas) vers l'extérieur (haut)
+  \draw[couche, fill=white]        (0,0)    rectangle (\Lr,0.10);  % plaque de plâtre
+  \draw[couche, fill=solideE!25]   (0,0.10) rectangle (\Lr,0.80);  % laine de verre
+  \draw[couche, fill=white]        (0,0.80) rectangle (\Lr,0.96);  % air peu ventilé
+  \draw[couche, fill=bois]         (0,0.96) rectangle (\Lr,1.26);  % bois de charpente
+  \draw[couche, fill=black!55]     (0,1.26) rectangle (\Lr,1.32);  % ardoise
+  %% points d'accroche des traits de rappel (bord gauche de chaque couche)
+  \coordinate (cPlatre)  at (0.15,0.05);
+  \coordinate (cLaine)   at (0.15,0.45);
+  \coordinate (cAir)     at (0.15,0.88);
+  \coordinate (cBois)    at (0.15,1.11);
+  \coordinate (cArdoise) at (0.15,1.29);
+  %% trajet du flux thermique : perpendiculaire aux couches
+  \coordinate (fluxA) at (2.60,-0.60);
+  \coordinate (fluxB) at (2.60,1.95);
+  \coordinate (phiP)  at (2.30,1.68);
+\end{scope}
+
+%% étiquettes des couches et traits de rappel
+\foreach \yl/\cible/\txt in {1.95/cArdoise/{Ardoise --- 0,003},
+                             1.52/cBois/{Bois de charpente --- 0,333},
+                             1.09/cAir/{Air peu ventilé --- 0,130},
+                             0.66/cLaine/{Laine de verre --- \textbf{5,400}},
+                             0.23/cPlatre/{Plaque de plâtre --- 0,040}} {
+  \node[etiq] (e) at (-1.05,\yl) {\txt};
+  \draw[rappel] (-1.00,\yl) -- (\cible); }
+
+%% flux thermique de l'intérieur (chaud) vers l'extérieur (froid)
+\draw[-{Stealth[length=9pt, width=8pt]}, line width=3.2pt, solideD] (fluxA) -- (fluxB);
+\node[font=\small\bfseries, text=solideD] at (phiP) {$\Phi$};
+\node[ambiance, text=solideA, anchor=west] at (2.62,0.72) {CHAUD};
+\node[font=\scriptsize, text=solideA, anchor=west] at (2.62,0.45) {(intérieur)};
+\node[ambiance, text=solideB, anchor=east] at (1.05,3.05) {FROID};
+\node[font=\scriptsize, text=solideB, anchor=east] at (1.05,2.78) {(extérieur)};
+
+%% ================= partie basse : l'analogie électrique ===================
+\def\yf{-1.05}   % ordonnée du fil
+\draw[line width=0.7pt] (-2.95,\yf) -- (1.10,\yf);
+%% \resth{x gauche}{largeur}{valeur}{couleur}
+\newcommand\resth[4]{%
+  \draw[couche, fill=#4] (#1,{\yf-0.19}) rectangle ({#1+#2},{\yf+0.19});
+  \node[font=\tiny, anchor=south] at ({#1+0.5*#2},{\yf+0.22}) {#3};}
+\resth{-2.70}{0.42}{0,003}{black!55}
+\resth{-2.04}{0.42}{0,333}{bois}
+\resth{-1.38}{0.42}{0,130}{white}
+\resth{-0.72}{0.95}{\textbf{5,400}}{solideE!25}
+\resth{0.47}{0.42}{0,040}{white}
+\node[font=\small] at (1.32,\yf) {$=$};
+\node[draw=solideD, line width=0.8pt, rounded corners=2pt, fill=solideD!8,
+      font=\small, inner sep=4pt, anchor=west] at (1.55,\yf)
+  {$R_{\text{th}} = 5{,}906$ m$^2\cdot$K$\cdot$W$^{-1}$};
+
+\node[font=\scriptsize, anchor=north] at (0.40,-1.62)
+  {couches accolées = résistances \textbf{en série} : elles s'additionnent};
+\end{tikzpicture}
+\end{document}

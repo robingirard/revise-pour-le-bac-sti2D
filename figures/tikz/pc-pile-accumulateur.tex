@@ -1,0 +1,115 @@
+%% pc-pile-accumulateur — accumulateur au plomb en décharge (à gauche) et en recharge (à droite).
+%% Même géométrie dans les deux panneaux : les polarités ⊕ (électrode PbO2) et ⊖ (électrode Pb)
+%% NE CHANGENT PAS ; ce qui s'inverse, c'est le sens du courant i et celui des électrons,
+%% donc le rôle anode / cathode de chaque électrode.
+%% Bleu : réduction et courant conventionnel ; rouge : oxydation ; vert : électrons et pont salin.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm, y=1cm,
+  fl/.style={-{Stealth[length=5pt]}, line width=0.9pt},
+  fil/.style={line width=1pt},
+  eti/.style={font=\scriptsize, inner sep=2pt, align=center},
+  bloc/.style={font=\scriptsize, inner sep=1.5pt, align=center},
+  titre/.style={font=\small\bfseries}]
+
+%% ================= éléments communs à un panneau =================================
+%% bécher : \becher{x gauche}
+\newcommand\becher[1]{%
+  \fill[solideB!8] (#1,0.05) rectangle (#1+1.7,1.35);
+  \draw[line width=0.8pt] (#1,1.6) -- (#1,0) -- (#1+1.7,0) -- (#1+1.7,1.6);
+  \draw[solideB!45, line width=0.6pt] (#1,1.35) -- (#1+1.7,1.35);}
+%% électrode : \electrode{x gauche}{formule}
+\newcommand\electrode[2]{%
+  \fill[black!35] (#1,0.35) rectangle (#1+0.3,2.9);
+  \draw[line width=0.5pt, black!60] (#1,0.35) rectangle (#1+0.3,2.9);
+  \node[eti, rotate=90, text=white, inner sep=1pt] at (#1+0.15,1.05) {#2};}
+%% ossature d'une cellule (béchers, électrodes, pont salin, fils, polarités)
+\newcommand\cellule{%
+  \becher{0.15} \becher{2.75}
+  \electrode{0.60}{$\mathrm{PbO_2}$} \electrode{3.70}{$\mathrm{Pb}$}
+  %% pont salin
+  \draw[solideE, line width=3.5pt, line join=round]
+    (1.45,1.05) -- (1.45,2.10) -- (3.15,2.10) -- (3.15,1.05);
+  \node[eti, text=solideE, anchor=south, inner sep=3pt] at (2.30,2.16) {pont salin};
+  %% polarités : elles ne changent pas d'un panneau à l'autre
+  \fill[solideA] (0.30,2.60) circle (0.19);
+  \node[font=\scriptsize\bfseries, text=white] at (0.30,2.60) {$+$};
+  \fill[black] (4.30,2.60) circle (0.19);
+  \node[font=\scriptsize\bfseries, text=white] at (4.30,2.60) {$-$};
+  %% fils du circuit extérieur
+  \draw[fil] (0.75,2.90) -- (0.75,3.90) -- (1.45,3.90);
+  \draw[fil] (3.85,2.90) -- (3.85,3.90) -- (3.15,3.90);
+  \draw[line width=0.5pt, black!60] (0.49,2.60) -- (0.60,2.60);
+  \draw[line width=0.5pt, black!60] (4.00,2.60) -- (4.11,2.60);}
+%% flèches du circuit : \fleches{1} = courant de gauche à droite (décharge), {-1} sinon
+\newcommand\fleches[1]{%
+  \ifnum#1=1
+    \draw[fl, solideB] (0.80,4.06) -- (1.33,4.06);
+    \draw[fl, solideB] (3.27,4.06) -- (3.80,4.06);
+    \draw[fl, solideE] (1.33,3.74) -- (0.80,3.74);
+    \draw[fl, solideE] (3.80,3.74) -- (3.27,3.74);
+  \else
+    \draw[fl, solideB] (1.33,4.06) -- (0.80,4.06);
+    \draw[fl, solideB] (3.80,4.06) -- (3.27,4.06);
+    \draw[fl, solideE] (0.80,3.74) -- (1.33,3.74);
+    \draw[fl, solideE] (3.27,3.74) -- (3.80,3.74);
+  \fi
+  \node[eti, text=solideB, anchor=south, inner sep=1pt] at (1.06,4.12) {$i$};
+  \node[eti, text=solideE, anchor=north, inner sep=1pt] at (1.06,3.68) {$e^-$};}
+
+%% ================= panneau gauche : DÉCHARGE =====================================
+\begin{scope}[shift={(0,0)}]
+  \node[titre] at (2.30,4.75) {Décharge (l'accumulateur débite)};
+  \cellule
+  \fleches{1}
+  %% récepteur
+  \draw[fil, fill=white] (1.43,3.62) rectangle (3.17,4.18);
+  \node[font=\tiny, inner sep=1pt, align=center] at (2.30,3.90) {charge\\électrique};
+  %% demi-équations
+  \node[bloc, text=solideB, anchor=north] at (2.30,-0.30)
+    {$\mathrm{PbO_2}$ ($\oplus$) — \textbf{cathode}, réduction :\\
+     $\mathrm{PbO_2} + 4\,\mathrm{H^+} + 2\,e^- = \mathrm{Pb^{2+}} + 2\,\mathrm{H_2O}$};
+  \node[bloc, text=solideA, anchor=north] at (2.30,-1.15)
+    {$\mathrm{Pb}$ ($\ominus$) — \textbf{anode}, oxydation :\\
+     $\mathrm{Pb} = \mathrm{Pb^{2+}} + 2\,e^-$};
+\end{scope}
+
+%% ================= filet de séparation ===========================================
+\draw[black!30, line width=0.6pt] (5.00,-1.95) -- (5.00,4.60);
+
+%% ================= panneau droit : RECHARGE ======================================
+\begin{scope}[shift={(5.40,0)}]
+  \node[titre] at (2.30,4.75) {Recharge (sur un générateur)};
+  \cellule
+  \fleches{-1}
+  %% générateur : sa borne + alimente l'électrode ⊕ de l'accumulateur
+  \draw[fil, fill=white] (1.43,3.62) rectangle (3.17,4.18);
+  \node[font=\tiny, inner sep=1pt] at (2.30,3.90) {générateur};
+  \node[font=\scriptsize\bfseries, text=solideA] at (1.31,4.32) {$+$};
+  \node[font=\scriptsize\bfseries] at (3.29,4.32) {$-$};
+  %% demi-équations (les rôles anode / cathode sont échangés)
+  \node[bloc, text=solideA, anchor=north] at (2.30,-0.30)
+    {$\mathrm{PbO_2}$ ($\oplus$) — \textbf{anode}, oxydation :\\
+     $\mathrm{Pb^{2+}} + 2\,\mathrm{H_2O} = \mathrm{PbO_2} + 4\,\mathrm{H^+} + 2\,e^-$};
+  \node[bloc, text=solideB, anchor=north] at (2.30,-1.15)
+    {$\mathrm{Pb}$ ($\ominus$) — \textbf{cathode}, réduction :\\
+     $\mathrm{Pb^{2+}} + 2\,e^- = \mathrm{Pb}$};
+\end{scope}
+
+%% ================= équation réversible ============================================
+\node[font=\small, anchor=east] at (3.85,-2.70)
+  {$\mathrm{PbO_2} + 4\,\mathrm{H^+} + \mathrm{Pb}$};
+\node[font=\small, anchor=west] at (5.95,-2.70)
+  {$2\,\mathrm{Pb^{2+}} + 2\,\mathrm{H_2O}$};
+\draw[fl, solideA] (4.00,-2.58) -- (5.80,-2.58);
+\node[font=\scriptsize, text=solideA, anchor=south, inner sep=2pt] at (4.90,-2.54) {décharge};
+\draw[fl] (5.80,-2.86) -- (4.00,-2.86);
+\node[font=\scriptsize, anchor=north, inner sep=2pt] at (4.90,-2.90) {recharge};
+
+%% ================= bandeau ========================================================
+\node[draw, line width=0.6pt, rounded corners=2pt, fill=black!3, inner sep=5pt,
+      font=\small, align=center] at (4.95,-3.83)
+  {Les polarités $\oplus$ et $\ominus$ ne changent pas ; le sens des électrons, si.};
+\end{tikzpicture}
+\end{document}

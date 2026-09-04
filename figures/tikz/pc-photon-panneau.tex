@@ -1,0 +1,66 @@
+%% pc-photon-panneau — du photon absorbé au panneau photovoltaïque.
+%% À gauche : absorption d'un photon d'énergie E = h*nu, l'électron passe de E1 à E2.
+%% À droite : chaîne énergétique du panneau (rayonnante -> électrique + pertes).
+%% L'onde du photon est tracée avec \plot (pas de bibliothèque decorations) ;
+%% les blocs ont une largeur minimale imposée pour que les flèches gardent leur place.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  niv/.style={line width=1.1pt, black},
+  bloc/.style={draw=black!65, line width=0.7pt, rounded corners=2pt, fill=white,
+               align=center, font=\tiny, inner sep=2pt, minimum width=1cm},
+  fleche/.style={-{Stealth[length=7pt, width=6pt]}, line width=1.8pt},
+  titre/.style={font=\footnotesize\bfseries},
+  note/.style={font=\scriptsize, align=center}]
+
+%% ======================= partie gauche : absorption =======================
+\node[titre] at (1.10,2.92) {Absorption d'un photon};
+
+%% niveaux d'énergie
+\draw[niv] (0.50,0.55) -- (2.20,0.55);
+\draw[niv] (0.50,2.15) -- (2.20,2.15);
+\node[font=\small, anchor=west] at (2.28,0.55) {$E_1$};
+\node[font=\small, anchor=west] at (2.28,2.15) {$E_2$};
+
+%% photon incident : onde entretenue puis pointe de flèche
+\draw[solideD, line width=1pt] plot[domain=-0.50:0.80, samples=70, smooth]
+     (\x,{1.35+0.13*sin(deg((\x+0.50)*2*pi/0.325))});
+\draw[-{Stealth[length=5pt]}, solideD, line width=1pt] (0.80,1.35) -- (1.00,1.35);
+\node[font=\scriptsize, text=solideD, anchor=south] at (0.15,1.56) {photon $E = h\nu$};
+
+%% saut de l'électron (disque noir : l'électron)
+\draw[-{Stealth[length=6pt]}, line width=1.2pt, solideA] (1.45,0.62) -- (1.45,2.08);
+\draw[fill=black!30, draw=black!60, line width=0.4pt] (1.45,0.55) circle (0.085);
+\fill[black] (1.45,2.15) circle (0.085);
+\node[font=\scriptsize\bfseries, text=solideA, anchor=west] at (1.56,1.35) {absorption};
+
+\node[note, anchor=north] at (1.10,0.22)
+  {applications :\\photorésistance, photodiode,\\cellule photovoltaïque};
+
+%% ======================= séparateur =======================================
+\draw[black!45, line width=0.5pt] (2.70,-0.95) -- (2.70,3.10);
+
+%% ======================= partie droite : chaîne énergétique ===============
+\node[titre] at (5.20,2.92) {Chaîne énergétique du panneau};
+
+\node[bloc, text=solideD] at (3.35,2.15) {Énergie\\rayonnante};
+\node[bloc, font=\scriptsize, minimum width=1.6cm, minimum height=1.0cm, line width=0.9pt]
+     (cel) at (5.20,2.15) {Cellule\\photovoltaïque};
+\node[bloc, text=solideE] at (7.00,2.15) {Énergie\\électrique\\(utile)};
+
+\draw[fleche, solideD] (3.92,2.15) -- (4.35,2.15);
+\draw[fleche, solideE] (6.07,2.15) -- (6.47,2.15);
+\draw[fleche, solideA] (cel.south) -- ++(0,-0.50);
+\node[font=\scriptsize, text=solideA, align=center, anchor=north] at (5.20,1.05)
+  {\textbf{Énergie perdue}\\(thermique, rayonnante)};
+
+%% ======================= relations ========================================
+\node[draw=black!70, line width=0.7pt, rounded corners=3pt, fill=black!3,
+      font=\small, inner sep=5pt, anchor=north, align=center] at (5.20,0.32)
+  {$P_{\text{lumineuse}} = P_{\text{surf}} \times S$\\[3pt]
+   $r = \dfrac{P_{\max}}{P_{\text{surf}} \times S}$};
+\node[note, anchor=north] at (5.20,-1.20)
+  {$P$ en W ; $P_{\text{surf}}$ en W$\cdot$m$^{-2}$ ;\\ $S$ en m$^2$ ; $r$ sans unité};
+\end{tikzpicture}
+\end{document}

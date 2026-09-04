@@ -1,0 +1,93 @@
+%% pc-pile-daniell — schéma de principe de la pile Daniell.
+%% Deux compartiments reliés par un pont salin ; circuit extérieur avec résistance et
+%% ampèremètre ; électrons (solideE) du zinc vers le cuivre, courant I (solideA) en sens
+%% inverse ; polarité déduite du sens des électrons (- sur le zinc, + sur le cuivre).
+%% Code couleur de l'unité : oxydation en solideA (compartiment de gauche),
+%% réduction en solideB (compartiment de droite).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{shapes.geometric, positioning}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  verre/.style={line width=1pt, draw=black!55, line join=round},
+  fil/.style={line width=0.9pt, draw=black!75, line cap=round},
+  elec/.style={-{Stealth[length=5pt]}, line width=1.1pt, draw=solideE},
+  courant/.style={-{Stealth[length=5pt]}, line width=1.1pt, draw=solideA},
+  chim/.style={font=\small, inner sep=1pt},
+  rappel/.style={font=\scriptsize, text=black!65, inner sep=1pt},
+  leg/.style={font=\scriptsize, align=center, anchor=north, inner sep=1pt}]
+
+\definecolor{cuivre}{RGB}{184,115,51}
+\definecolor{zincgris}{RGB}{140,145,150}
+
+%% ================= béchers et solutions ===================================
+%% gauche : solution de sulfate de zinc (incolore) ; droite : sulfate de cuivre (bleue)
+\fill[solideB!12, rounded corners=2pt]  (0.25,-0.35) -- (0.25,-2.15) -- (2.55,-2.15) -- (2.55,-0.35) -- cycle;
+\fill[solideB!35, rounded corners=2pt] (4.45,-0.35) -- (4.45,-2.15) -- (6.75,-2.15) -- (6.75,-0.35) -- cycle;
+\draw[line width=0.6pt, draw=solideB!45] (0.25,-0.35) -- (2.55,-0.35);
+\draw[line width=0.6pt, draw=solideB!70] (4.45,-0.35) -- (6.75,-0.35);
+\draw[verre, rounded corners=3pt] (0.20,0) -- (0.20,-2.20) -- (2.60,-2.20) -- (2.60,0);
+\draw[verre, rounded corners=3pt] (4.40,0) -- (4.40,-2.20) -- (6.80,-2.20) -- (6.80,0);
+
+%% ================= pont salin =============================================
+\draw[line width=0.7pt, draw=black!45, double=black!10, double distance=4pt,
+      rounded corners=5pt, line cap=round]
+  (2.10,-0.95) -- (2.10,0.62) -- (4.90,0.62) -- (4.90,-0.95);
+\node[rappel, anchor=south] at (3.50,0.74) {Pont salin};
+
+%% ================= électrodes =============================================
+\fill[zincgris] (0.81,-1.75) rectangle (0.99,0.35);
+\draw[line width=0.5pt, black!55] (0.81,-1.75) rectangle (0.99,0.35);
+\fill[cuivre]   (6.01,-1.75) rectangle (6.19,0.35);
+\draw[line width=0.5pt, black!55] (6.01,-1.75) rectangle (6.19,0.35);
+%% traits de rappel et noms des lames
+\draw[line width=0.4pt, draw=black!55] (0.60,-1.05) -- (0.79,-1.05);
+\node[rappel, rotate=90]  at (0.48,-1.05) {Lame de zinc};
+\draw[line width=0.4pt, draw=black!55] (6.21,-1.05) -- (6.40,-1.05);
+\node[rappel, rotate=-90] at (6.52,-1.05) {Lame de cuivre};
+
+%% ================= polarité ===============================================
+\node[font=\large\bfseries, text=solideA, inner sep=1pt] at (1.30,0.16) {$-$};
+\node[font=\large\bfseries, text=solideB, inner sep=1pt] at (5.72,0.16) {$+$};
+
+%% ================= circuit extérieur ======================================
+\draw[fil] (0.90,0.35) -- (0.90,2.00) -- (2.00,2.00);
+\draw[fil] (2.80,2.00) -- (4.34,2.00);
+\draw[fil] (4.86,2.00) -- (6.10,2.00) -- (6.10,0.35);
+\draw[fil, fill=white] (2.00,1.83) rectangle (2.80,2.17);
+\node[chim] at (2.40,2.00) {$R$};
+\draw[fil, fill=white] (4.60,2.00) circle (0.26);
+\node[chim] at (4.60,2.00) {A};
+
+%% ================= électrons et courant ===================================
+\draw[elec] (0.62,0.75) -- (0.62,1.72);
+\node[chim, text=solideE, anchor=east] at (0.56,1.24) {$2\,\mathrm{e^-}$};
+\draw[elec] (3.02,2.30) -- (3.98,2.30);
+\node[chim, text=solideE, anchor=south] at (3.50,2.36) {$2\,\mathrm{e^-}$};
+\draw[elec] (6.38,1.72) -- (6.38,0.75);
+\node[chim, text=solideE, anchor=west] at (6.44,1.24) {$2\,\mathrm{e^-}$};
+\draw[courant] (3.98,1.70) -- (3.02,1.70);
+\node[chim, text=solideA, anchor=north] at (3.50,1.64) {$I$};
+
+%% ================= réactions aux électrodes ===============================
+%% gauche : le zinc s'oxyde et passe en solution
+\node[chim, text=solideA] (zn)  at (1.30,-0.72) {$\mathrm{Zn}$};
+\node[chim, text=solideA] (zni) at (1.82,-1.42) {$\mathrm{Zn^{2+}}$};
+\draw[-{Stealth[length=5pt]}, line width=1pt, draw=solideA]
+  (zn) to[out=-60, in=140] (zni);
+%% droite : les ions cuivre se réduisent et se déposent sur la lame
+\node[chim, text=solideB] (cui) at (5.30,-1.42) {$\mathrm{Cu^{2+}}$};
+\node[chim, text=solideB] (cu)  at (5.72,-0.72) {$\mathrm{Cu}$};
+\draw[-{Stealth[length=5pt]}, line width=1pt, draw=solideB]
+  (cui) to[out=60, in=-140] (cu);
+
+%% ================= légende ================================================
+\node[leg, text=solideA] at (1.40,-2.42)
+  {\textbf{oxydation} (borne $-$, anode)\\$\mathrm{Zn} = \mathrm{Zn^{2+}} + 2\,\mathrm{e^-}$};
+\node[leg, text=solideB] at (5.60,-2.42)
+  {\textbf{réduction} (borne $+$, cathode)\\$\mathrm{Cu^{2+}} + 2\,\mathrm{e^-} = \mathrm{Cu}$};
+\node[leg, text=black!75] at (3.50,-3.32)
+  {bilan : $\mathrm{Zn} + \mathrm{Cu^{2+}} \rightarrow \mathrm{Zn^{2+}} + \mathrm{Cu}$
+   \quad tension théorique : \textbf{1,1 V}};
+\end{tikzpicture}
+\end{document}

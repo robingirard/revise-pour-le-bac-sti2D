@@ -1,0 +1,119 @@
+%% pc-spectres-sources — spectres de quatre sources lumineuses (2 vignettes x 2).
+%% Les trois premières vignettes sont des spectres « photographiés » (fond noir) ;
+%% la quatrième est un profil d'intensité (LED blanche = LED bleue + luminophore).
+%% Toutes sont graduées de la même façon (400 / 500 / 600 / 700 nm) : l'axe va de
+%% 380 à 720 nm, avec l'échelle \sx (cm par nm).
+%% Aucune longueur d'onde de raie n'est chiffrée (le livre ne les donne pas).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+%% --- palette du visible ----------------------------------------------------
+\definecolor{arcA}{RGB}{110,30,175}   % violet
+\definecolor{arcB}{RGB}{35,60,220}    % bleu
+\definecolor{arcC}{RGB}{0,175,200}    % cyan
+\definecolor{arcD}{RGB}{25,165,60}    % vert
+\definecolor{arcE}{RGB}{240,225,0}    % jaune
+\definecolor{arcF}{RGB}{245,140,0}    % orange
+\definecolor{arcG}{RGB}{215,25,25}    % rouge
+
+\begin{tikzpicture}[x=1cm,y=1cm,
+  titre/.style={font=\scriptsize, align=center},
+  grad/.style={font=\tiny},
+  ann/.style={font=\tiny}]
+
+\def\W{3.45}          % largeur d'une vignette
+\def\Hv{0.95}         % hauteur du spectre
+\def\sx{0.0101471}    % 1 nm = 0,0101471 cm  (380 nm -> 0 ; 720 nm -> 3,45 cm)
+
+%% ---------- outils communs -------------------------------------------------
+%% abscisse d'une longueur d'onde (nm)
+\newcommand\xnm[1]{(#1-380)*\sx}
+%% graduations sous une vignette
+\newcommand\gradnm{%
+  \foreach \nm in {400,500,600,700} {
+    \draw[line width=0.4pt] ({\xnm{\nm}},0) -- ({\xnm{\nm}},-0.10);
+    \node[grad, anchor=north, inner sep=1.5pt] at ({\xnm{\nm}},-0.10) {\nm}; }
+  \node[grad, anchor=north west, inner sep=1.5pt] at ({\xnm{716}},-0.10) {nm};}
+%% titre au-dessus d'une vignette
+\newcommand\titrevignette[1]{\node[titre, anchor=south] at ({0.5*\W},{\Hv+0.10}) {#1};}
+%% raie fine : \raie{lambda}{couleur}{demi-largeur}
+\newcommand\raie[3]{\fill[#2] ({\xnm{#1}-#3},0) rectangle ({\xnm{#1}+#3},\Hv);}
+
+%% ===========================================================================
+%% 1. lampe spectrale au mercure : spectre de raies
+%% ===========================================================================
+\begin{scope}[shift={(0,2.55)}]
+  \fill[black] (0,0) rectangle (\W,\Hv);
+  \foreach \nm/\co in {398/{arcA!75!black}, 405/arcA, 412/{arcA!60!arcB},
+                       435/arcB, 447/{arcB!75!white}, 492/arcC,
+                       502/{arcC!60!arcD}, 546/arcD, 558/{arcD!65!arcE},
+                       577/arcE, 583/{arcE!85!arcF}, 623/arcF} {
+    \raie{\nm}{\co}{0.020} }
+  \draw[black!60, line width=0.4pt] (0,0) rectangle (\W,\Hv);
+  \gradnm
+  \titrevignette{\textbf{Lampe spectrale}\\spectre de raies,\\polychromatique}
+\end{scope}
+
+%% ===========================================================================
+%% 2. laser rouge : une seule raie
+%% ===========================================================================
+\begin{scope}[shift={(4.30,2.55)}]
+  \fill[black] (0,0) rectangle (\W,\Hv);
+  \raie{660}{arcG!35!black}{0.075}
+  \raie{660}{arcG}{0.026}
+  \draw[black!60, line width=0.4pt] (0,0) rectangle (\W,\Hv);
+  \gradnm
+  \titrevignette{\textbf{Laser}\\monochromatique}
+\end{scope}
+
+%% ===========================================================================
+%% 3. LED rouge : une bande large entre 600 et 700 nm
+%% ===========================================================================
+\begin{scope}[shift={(0,0)}]
+  \fill[black] (0,0) rectangle (\W,\Hv);
+  \foreach \j in {0,1,...,23} {
+    \pgfmathsetmacro\na{600+\j*100/24}
+    \pgfmathsetmacro\nb{600+(\j+1)*100/24}
+    \pgfmathsetmacro\ii{100*exp(-(((\j-11.5)/8)^2))}
+    \fill[arcG!\ii!black] ({\xnm{\na}},0) rectangle ({\xnm{\nb}+0.012},\Hv); }
+  \draw[black!60, line width=0.4pt] (0,0) rectangle (\W,\Hv);
+  \gradnm
+  \titrevignette{\textbf{LED rouge}\\bande large,\\polychromatique}
+\end{scope}
+
+%% ===========================================================================
+%% 4. LED blanche : profil d'intensité (LED bleue + luminophore)
+%% ===========================================================================
+\begin{scope}[shift={(4.30,0)}]
+  %% I(lambda) = pic bleu étroit + large bosse du luminophore ; le creux ne
+  %% redescend pas à zéro.
+  %% (le profil est écrit deux fois : TikZ n'accepte pas une macro à la place
+  %%  du mot-clé `plot` dans un chemin ; seule l'ordonnée est factorisée.)
+  \def\profily{0.92*exp(-(((\x-450)/22)^2)) + 0.55*exp(-(((\x-575)/72)^2))}
+  %% remplissage arc-en-ciel pâle sous la courbe : 42 quadrilatères successifs
+  %% (un `clip` sur la courbe alourdirait énormément le SVG exporté).
+  \foreach \k/\ca/\cb in {0/arcA/arcB,1/arcB/arcC,2/arcC/arcD,
+                          3/arcD/arcE,4/arcE/arcF,5/arcF/arcG} {
+    \foreach \j in {0,1,...,6} {
+      \pgfmathsetmacro\nn{\k*7+\j}
+      \pgfmathsetmacro\la{380+340*\nn/42}
+      \pgfmathsetmacro\lb{380+340*(\nn+1)/42}
+      \pgfmathsetmacro\fa{0.92*exp(-(((\la-450)/22)^2)) + 0.55*exp(-(((\la-575)/72)^2))}
+      \pgfmathsetmacro\fb{0.92*exp(-(((\lb-450)/22)^2)) + 0.55*exp(-(((\lb-575)/72)^2))}
+      \pgfmathsetmacro\pp{100-100*\j/7}
+      \fill[\ca!\pp!\cb!55!white]
+        ({\xnm{\la}},0) -- ({\xnm{\la}},\fa)
+        -- ({\xnm{\lb}+0.007},\fb) -- ({\xnm{\lb}+0.007},0) -- cycle; }}
+  \draw[line width=0.9pt, black!80] plot[domain=380:720, samples=70, smooth]
+       ({\xnm{\x}},{\profily});
+  %% repère
+  \draw[-{Stealth[length=4pt]}, line width=0.5pt] (0,0) -- (\W+0.10,0);
+  \draw[-{Stealth[length=4pt]}, line width=0.5pt] (0,0) -- (0,\Hv+0.16);
+  \node[grad, rotate=90, anchor=south] at (-0.28,{0.5*\Hv}) {intensité (u.a.)};
+  \gradnm
+  \node[ann, text=arcB!70!black, anchor=west] at (0.95,0.80) {LED bleue};
+  \node[ann, text=arcF!70!black, anchor=west] at (1.95,0.66) {Luminophore};
+  \titrevignette{\textbf{LED blanche}\\polychromatique}
+\end{scope}
+\end{tikzpicture}
+\end{document}

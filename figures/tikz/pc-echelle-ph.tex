@@ -1,0 +1,59 @@
+%% pc-echelle-ph — échelle de pH de 0 à 14 et concentration en ions oxonium.
+%% La bande colorée est une suite de rectangles d'une unité de pH (rouge -> vert -> bleu,
+%% couleurs d'un indicateur universel) : pas de `shading`, le SVG reste léger.
+%% Règle du bas : [H3O+] = 10^(-pH), donc la concentration DIMINUE quand le pH augmente.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=0.5cm, y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  grad/.style={font=\scriptsize, inner sep=2pt},
+  petit/.style={font=\scriptsize, inner sep=1.5pt},
+  trait/.style={line width=0.4pt, black!55}]
+
+\def\hb{0.55}   % hauteur de la bande colorée
+
+%% ---------------- bande colorée : 14 rectangles d'une unité de pH ----------------
+\foreach \k in {0,1,...,6} {                     % acides : rouge -> vert
+  \pgfmathsetmacro\p{100-100*(\k+0.5)/7}
+  \fill[solideA!\p!solideE] (\k,0) rectangle (\k+1,\hb); }
+\foreach \k in {7,8,...,13} {                    % basiques : vert -> bleu
+  \pgfmathsetmacro\p{100-100*(\k+0.5-7)/7}
+  \fill[solideE!\p!solideB] (\k,0) rectangle (\k+1,\hb); }
+\draw[line width=0.6pt] (0,0) rectangle (14,\hb);
+\draw[line width=0.9pt, white] (7,0) -- (7,\hb);
+
+%% ---------------- domaines acide / basique ---------------------------------------
+\node[font=\small\bfseries, text=solideA] at (3.5,1.62) {solutions acides};
+\node[font=\small\bfseries, text=solideB] at (10.5,1.62) {solutions basiques};
+\draw[axe, solideA] (6.6,1.30) -- (0.2,1.30);
+\draw[axe, solideB] (7.4,1.30) -- (13.8,1.30);
+
+%% ---------------- trois repères usuels -------------------------------------------
+\foreach \p/\lab in {2/{jus de citron}, 7/{eau pure}, 13/{déboucheur}} {
+  \draw[trait] (\p,\hb) -- (\p,0.98);
+  \node[petit, anchor=south, align=center] at (\p,0.96) {\lab}; }
+
+%% ---------------- axe des pH ------------------------------------------------------
+\draw[axe] (-0.6,-0.55) -- (14.9,-0.55) node[anchor=west, inner sep=3pt, font=\small] {pH};
+\foreach \p in {0,1,...,14} { \draw[line width=0.4pt] (\p,-0.55) -- (\p,-0.44); }
+\foreach \p in {0,7,14} {
+  \draw[trait] (\p,0) -- (\p,-0.55);
+  \draw[line width=0.7pt] (\p,-0.68) -- (\p,-0.44);
+  \node[grad, anchor=north] at (\p,-0.70) {\p}; }
+\node[petit, anchor=north, text=solideE, align=center] at (7,-1.02)
+  {$\mathrm{pH} = 7{,}0$\\neutre};
+
+%% ---------------- règle des concentrations ---------------------------------------
+\draw[line width=0.6pt] (0,-1.75) -- (14,-1.75);
+\foreach \p/\lab in {0/{$10^{0}$}, 7/{$10^{-7}$}, 14/{$10^{-14}$}} {
+  \draw[line width=0.7pt] (\p,-1.87) -- (\p,-1.63);
+  \node[grad, anchor=north] at (\p,-1.89) {\lab}; }
+\node[petit, anchor=east] at (-0.5,-1.75) {$[\mathrm{H_3O^+}]$ (mol$\cdot$L$^{-1}$)};
+
+%% ---------------- sens de variation de la concentration ---------------------------
+\draw[axe, solideD, line width=0.9pt] (1,-2.85) -- (13,-2.85);
+\node[petit, anchor=south, text=solideD] at (7,-2.82)
+  {$[\mathrm{H_3O^+}] = 10^{-\mathrm{pH}}$ : la concentration \textbf{diminue} quand le pH augmente};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,85 @@
+%% pc-corrosion-protection — quatre méthodes de protection d'un métal contre la corrosion.
+%% Même échelle et même style de trait pour les quatre vignettes ; les couleurs sont
+%% réservées au métal protégé (gris), à la couche protectrice (jaune ou gris clair)
+%% et au métal sacrifié (solideB, bleu).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{shapes.geometric, positioning}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  vignette/.style={rounded corners=2.5pt, line width=0.7pt, draw=black!25},
+  titre/.style={font=\scriptsize\bfseries, anchor=north west, inner sep=1pt, text=black!80},
+  legende/.style={font=\scriptsize, anchor=north west, align=left, inner sep=1pt,
+                  text=black!75, text width=2.05cm},
+  metal/.style={fill=black!22, draw=black!55, line width=0.6pt},
+  petit/.style={font=\tiny, inner sep=0.5pt}]
+
+\definecolor{revetement}{RGB}{235,190,45}
+
+%% cadre + titre d'une vignette : \vignette{x}{y}{titre}
+\newcommand\vignette[3]{%
+  \draw[vignette] (#1,#2) rectangle ++(3.95,-2.15);
+  \node[titre] at (#1+0.12,#2-0.06) {#3};}
+
+%% ================= 1. alliage : deux entités mélangées ====================
+\vignette{0}{0}{1. Alliage}
+\begin{scope}[shift={(0.85,-1.35)}]
+  \draw[metal] (-0.62,-0.30) rectangle (0.62,0.30);
+  \foreach \p in {(-0.45,0.14),(-0.15,0.18),(0.20,0.10),(0.48,0.19),
+                  (-0.30,-0.12),(0.02,-0.18),(0.36,-0.14)}
+    \fill[black!60] \p circle (0.045);
+  \foreach \p in {(-0.52,-0.09),(-0.02,0.03),(0.30,-0.02),(0.55,-0.17),
+                  (-0.22,0.02),(0.14,0.22)}
+    \fill[solideB] \p circle (0.045);
+\end{scope}
+\node[legende] at (1.70,-0.50)
+  {acier inoxydable : fer + chrome + carbone};
+
+%% ================= 2. revêtement : le dioxygène est arrêté ================
+\vignette{4.20}{0}{2. Revêtement}
+\begin{scope}[shift={(5.05,-1.35)}]
+  \draw[metal] (-0.50,-0.20) rectangle (0.50,0.20);
+  \draw[revetement, line width=2.4pt, line join=round]
+    (-0.60,-0.30) rectangle (0.60,0.30);
+  \draw[-{Stealth[length=4pt]}, line width=0.8pt, draw=black!65]
+    (-0.68,0.64) -- (-0.28,0.42);
+  \node[petit, anchor=east] at (-0.66,0.66) {$\mathrm{O_2}$};
+  \draw[line width=1pt, draw=solideA, line cap=round]
+    (-0.32,0.48) -- (-0.14,0.34)  (-0.32,0.34) -- (-0.14,0.48);
+\end{scope}
+\node[legende] at (5.90,-0.50)
+  {peinture, placage or, laiton};
+
+%% ================= 3. passivation : couche d'alumine ======================
+\vignette{0}{-2.35}{3. Passivation}
+\begin{scope}[shift={(0.85,-3.70)}]
+  \draw[metal] (-0.55,-0.30) rectangle (0.55,0.14);
+  \node[petit, text=black!70] at (0,-0.08) {Al};
+  \fill[black!8] (-0.55,0.14) rectangle (0.55,0.28);
+  \draw[line width=0.6pt, draw=black!45] (-0.55,0.14) rectangle (0.55,0.28);
+  \draw[line width=0.4pt, draw=black!55] (0,0.28) -- (0,0.40);
+  \node[petit, text=black!70, anchor=south] at (0,0.40) {alumine};
+\end{scope}
+\node[legende] at (1.70,-2.85)
+  {la couche d'oxyde protège le métal et ne s'oxyde pas dans l'air humide};
+
+%% ================= 4. anode sacrificielle : bloc de zinc ==================
+\vignette{4.20}{-2.35}{4. Anode sacrificielle}
+\begin{scope}[shift={(5.05,-3.70)}]
+  %% niveau du sol : la canalisation est enterrée
+  \draw[line width=0.5pt, draw=black!45] (-0.80,0.70) -- (0.80,0.70);
+  \foreach \i in {-0.74,-0.54,...,0.79}
+    \draw[line width=0.4pt, draw=black!35] (\i,0.70) -- (\i-0.12,0.58);
+  \draw[metal, rounded corners=1pt] (-0.74,-0.14) rectangle (0.74,0.16);
+  %% bloc de zinc fixé sur la canalisation
+  \draw[fill=solideB!35, draw=solideB, line width=0.7pt] (0.10,0.16) rectangle (0.48,0.42);
+  \node[petit, text=solideB] at (0.29,0.30) {Zn};
+  \draw[-{Stealth[length=4pt]}, line width=0.8pt, draw=solideB]
+    (0.06,0.38) -- (-0.20,0.52);
+  \node[petit, text=solideB, anchor=east] at (-0.22,0.53) {$\mathrm{Zn^{2+}}$};
+  \node[petit, text=solideB] at (0,-0.40) {$\mathrm{Zn} = \mathrm{Zn^{2+}} + 2\,\mathrm{e^-}$};
+\end{scope}
+\node[legende] at (5.90,-2.85)
+  {le zinc est oxydé \textbf{à la place} du fer ; à remplacer périodiquement};
+\end{tikzpicture}
+\end{document}

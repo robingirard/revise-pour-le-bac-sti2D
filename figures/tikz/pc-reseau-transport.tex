@@ -8,7 +8,8 @@
   trait/.style={line width=0.7pt, line cap=round, line join=round},
   boite/.style={draw=black!60, fill=white, line width=0.6pt, align=center,
                 font=\tiny, inner sep=2pt, rounded corners=1pt},
-  tension/.style={font=\scriptsize\bfseries},
+  %% NB : ne pas nommer ce style « tension » — /tikz/tension est déjà pris par TikZ (plot).
+  niveau/.style={font=\scriptsize\bfseries},
   titre/.style={font=\footnotesize\bfseries},
   conv/.style={-{Stealth[length=6pt]}, line width=1.4pt},
   petitefleche/.style={-{Stealth[length=3.5pt]}, line width=0.5pt, draw=black!55}]
@@ -80,7 +81,7 @@
 \foreach \sx/\sy in {0.62/1.72, 1.88/1.72, 0.35/2.6, 2.15/2.6} {
   \draw[petitefleche] (\sx,\sy) -- (1.25,1.28); }
 \node[boite] (pc) at (1.25,1.05) {Poste de\\la centrale};
-\node[tension, text=solideD] at (1.25,0.45) {20 kV};
+\node[niveau, text=solideD] at (1.25,0.45) {20 kV};
 
 %% ================== zone transport ========================================
 \pic at (3.35,2.85) {pylone};
@@ -88,18 +89,18 @@
 \foreach \dy in {0.2,0.42} {
   \draw[trait, draw=black!70] plot[domain=3.35:5.1, samples=20]
        (\x,{2.85+\dy-0.09*sin(deg((\x-3.35)/1.75*pi))}); }
-\node[tension, text=solideE] at (4.22,3.5) {400 kV};
+\node[niveau, text=solideE] at (4.22,3.5) {400 kV};
 \node[boite] (pt) at (4.22,1.85) {Poste de transformation};
-\node[tension, text=solideE, font=\scriptsize] at (4.22,1.35) {225 kV -- 90 kV -- 63 kV};
+\node[niveau, text=solideE, font=\scriptsize] at (4.22,1.35) {225 kV -- 90 kV -- 63 kV};
 \node[boite] (ps) at (4.22,0.85) {Poste source};
-\node[tension, text=solideE] at (4.22,0.4) {20 kV};
+\node[niveau, text=solideE] at (4.22,0.4) {20 kV};
 
 %% ================== zone distribution =====================================
-\pic at (6.4,2.6) {poteau};
-\node[boite, font=\tiny, inner sep=1.5pt] at (7.25,2.75) {Transformateur\\de quartier};
+\pic at (6.28,2.6) {poteau};
+\node[boite, font=\tiny, inner sep=1.5pt] at (7.22,2.78) {Transformateur\\de quartier};
 \pic at (6.55,1.35) {maison};
 \pic at (7.4,1.35) {maison};
-\node[tension, text=solideF] at (6.95,2.0) {400 V};
-\node[tension, text=solideF] at (6.95,0.75) {230 V};
+\node[niveau, text=solideF] at (6.95,2.0) {400 V};
+\node[niveau, text=solideF] at (6.95,0.75) {230 V};
 \end{tikzpicture}
 \end{document}

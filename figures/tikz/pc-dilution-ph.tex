@@ -1,0 +1,77 @@
+%% pc-dilution-ph — évolution du pH lors d'une dilution (deux cas).
+%% Même axe de pH pour les deux cas ; le repère vert (solution diluée) est toujours ENTRE
+%% le repère rouge (solution avant dilution) et celui de l'eau distillée (pH 7,0).
+%% Les valeurs numériques (2,0 -> 3,0 et 12,0 -> 11,0) illustrent une dilution 10 fois.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{decorations.pathreplacing}
+\begin{document}
+\begin{tikzpicture}[x=0.55cm, y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  petit/.style={font=\scriptsize, inner sep=2pt, align=center},
+  tige/.style={line width=0.5pt, black!55},
+  eau/.style={-{Stealth[length=4.5pt]}, line width=1pt, solideB}]
+
+%% ---------- un cas : #1 décalage vertical, #2 titre ------------------------------
+%% repère : \marque{pH}{couleur}{hauteur de tige}
+\newcommand\marque[3]{%
+  \draw[tige, draw=#2] (#1,0) -- (#1,#3);
+  \fill[#2] (#1,0) circle (0.075cm);
+  \draw[line width=0.7pt] (#1,-0.11) -- (#1,0.11);}
+
+%% =================== CAS 1 : solution acide ======================================
+\begin{scope}[shift={(0,0)}]
+  \node[font=\small\bfseries, anchor=west] at (-0.7,2.15)
+    {Cas 1 : on dilue une solution \textcolor{solideA}{acide}};
+  \draw[axe] (-0.7,0) -- (14.9,0) node[anchor=west, inner sep=3pt, font=\small] {pH};
+  \foreach \p in {0,2,...,14} { \draw[line width=0.4pt] (\p,-0.09) -- (\p,0.09); }
+  \foreach \p in {0,7,14} { \node[font=\scriptsize, anchor=north, inner sep=3pt] at (\p,-0.12) {\p}; }
+
+  \marque{2}{solideA}{1.15}
+  \node[petit, anchor=south, text=solideA] at (2,1.13) {solution avant\\dilution : pH 2,0};
+  \marque{7}{black!70}{1.15}
+  \node[petit, anchor=south] at (7,1.13) {eau distillée\\pH 7,0};
+  \marque{3}{solideE}{0.52}
+  \node[petit, anchor=west, text=solideE] at (3.3,0.52) {solution diluée\\pH 3,0};
+
+  %% ajout d'eau : le pH augmente, de 2,0 vers 3,0
+  \draw[eau] (2,-0.28) .. controls (2.2,-0.62) and (2.8,-0.62) .. (3,-0.28);
+  \node[petit, anchor=west, text=solideB] at (3.3,-0.60) {$+$ eau};
+
+  %% encadrement
+  \draw[solideF, line width=0.7pt, decorate,
+        decoration={brace, amplitude=4pt, raise=2pt, mirror}] (2,-0.95) -- (7,-0.95);
+  \node[petit, anchor=north, text=solideF] at (4.5,-1.20)
+    {le pH augmente, sans dépasser 7,0};
+\end{scope}
+
+%% =================== CAS 2 : solution basique ====================================
+\begin{scope}[shift={(0,-4.05)}]
+  \node[font=\small\bfseries, anchor=west] at (-0.7,2.15)
+    {Cas 2 : on dilue une solution \textcolor{solideB}{basique}};
+  \draw[axe] (-0.7,0) -- (14.9,0) node[anchor=west, inner sep=3pt, font=\small] {pH};
+  \foreach \p in {0,2,...,14} { \draw[line width=0.4pt] (\p,-0.09) -- (\p,0.09); }
+  \foreach \p in {0,7,14} { \node[font=\scriptsize, anchor=north, inner sep=3pt] at (\p,-0.12) {\p}; }
+
+  \marque{12}{solideA}{1.15}
+  \node[petit, anchor=south, text=solideA] at (12,1.13) {solution avant\\dilution : pH 12,0};
+  \marque{7}{black!70}{1.15}
+  \node[petit, anchor=south] at (7,1.13) {eau distillée\\pH 7,0};
+  \marque{11}{solideE}{0.52}
+  \node[petit, anchor=east, text=solideE] at (10.7,0.52) {solution diluée\\pH 11,0};
+
+  \draw[eau] (12,-0.28) .. controls (11.8,-0.62) and (11.2,-0.62) .. (11,-0.28);
+  \node[petit, anchor=east, text=solideB] at (10.7,-0.60) {$+$ eau};
+
+  \draw[solideF, line width=0.7pt, decorate,
+        decoration={brace, amplitude=4pt, raise=2pt, mirror}] (7,-0.95) -- (12,-0.95);
+  \node[petit, anchor=north, text=solideF] at (9.5,-1.20)
+    {le pH diminue, sans descendre sous 7,0};
+\end{scope}
+
+%% =================== bandeau =====================================================
+\node[draw, line width=0.6pt, rounded corners=2pt, fill=black!3, inner sep=5pt,
+      font=\small, align=center] at (7.1,-6.05)
+  {La dilution rapproche le pH de celui de l'eau distillée,\\sans jamais le dépasser.};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,126 @@
+%% pc-formules-developpees — formules développées des alcanes, alcènes et alcools.
+%% Toutes les liaisons sont tracées en noir ; un liseré solideD (orange) souligne
+%% ce qui caractérise la famille : la double liaison C=C des alcènes, le groupe -OH
+%% des alcools. Nota : le manuel ne donne pas l'éthane dans la série des alcanes.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{shapes.geometric, positioning}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  atome/.style={inner sep=1.2pt, font=\small},
+  lien/.style={line width=0.9pt, line cap=round},
+  liseré/.style={line width=1.6pt, line cap=round, draw=solideD},
+  titre/.style={font=\small\bfseries, anchor=north west, inner sep=1pt},
+  nom/.style={font=\scriptsize, anchor=north, inner sep=1pt, text=black!75},
+  filet/.style={line width=0.4pt, draw=black!20}]
+
+\def\d{0.60}   % pas de la chaîne carbonée
+\def\v{0.52}   % hauteur des hydrogènes portés par un carbone
+
+%% --- liaison simple entre deux points « atomes » ---------------------------
+\newcommand\liaisonH[3]{\draw[lien] (#1+0.17,#3) -- (#2-0.17,#3);}  % horizontale
+\newcommand\liaisonV[3]{\draw[lien] (#1,#2) -- (#1,#3);}            % verticale
+
+%% --- alcane à #1 carbones, centré en (0,0) : H-(CH2)n-H --------------------
+\newcommand\alcane[1]{%
+  \pgfmathsetmacro\ndemi{(#1+1)/2}
+  \foreach \i in {1,...,#1} {
+    \pgfmathsetmacro\x{(\i-\ndemi)*\d}
+    \node[atome] at (\x,0)   {$\mathrm{C}$};
+    \node[atome] at (\x,\v)  {$\mathrm{H}$};
+    \node[atome] at (\x,-\v) {$\mathrm{H}$};
+    \draw[lien] (\x,0.17) -- (\x,\v-0.17);
+    \draw[lien] (\x,-0.17) -- (\x,-\v+0.17);
+  }
+  \pgfmathsetmacro\xg{(0-\ndemi)*\d}   \pgfmathsetmacro\xd{(#1+1-\ndemi)*\d}
+  \node[atome] at (\xg,0) {$\mathrm{H}$};
+  \node[atome] at (\xd,0) {$\mathrm{H}$};
+  \foreach \i in {0,...,#1} {
+    \pgfmathsetmacro\xa{(\i-\ndemi)*\d}
+    \draw[lien] (\xa+0.17,0) -- (\xa+\d-0.17,0);
+  }}
+
+%% ================= 1. ALCANES ==============================================
+\node[titre] at (0,0) {Alcanes\quad\mdseries formule générale $\mathrm{C_nH_{2n+2}}$};
+\begin{scope}[shift={(0.85,-1.02)}] \alcane{1} \end{scope}
+\node[nom] at (0.85,-1.76) {méthane $\mathrm{CH_4}$};
+\begin{scope}[shift={(3.10,-1.02)}] \alcane{3} \end{scope}
+\node[nom] at (3.10,-1.76) {propane $\mathrm{C_3H_8}$};
+\begin{scope}[shift={(6.55,-1.02)}] \alcane{4} \end{scope}
+\node[nom] at (6.55,-1.76) {butane $\mathrm{C_4H_{10}}$};
+\draw[filet] (0,-2.02) -- (8.25,-2.02);
+
+%% ================= 2. ALCÈNES ==============================================
+\node[titre] at (0,-2.07) {Alcènes\quad\mdseries formule générale $\mathrm{C_nH_{2n}}$};
+%% éthène : C=C horizontal, deux H obliques par carbone
+\begin{scope}[shift={(1.30,-3.08)}]
+  \node[atome] at (-0.33,0) {$\mathrm{C}$};
+  \node[atome] at ( 0.33,0) {$\mathrm{C}$};
+  \foreach \s in {-1,1} {
+    \node[atome] at (\s*0.90, 0.46) {$\mathrm{H}$};
+    \node[atome] at (\s*0.90,-0.46) {$\mathrm{H}$};
+    \draw[lien] (\s*0.44,0.11) -- (\s*0.79,0.35);
+    \draw[lien] (\s*0.44,-0.11) -- (\s*0.79,-0.35);}
+  \draw[lien] (-0.16,0.06) -- (0.16,0.06);
+  \draw[lien] (-0.16,-0.06) -- (0.16,-0.06);
+  \draw[liseré] (-0.30,-0.24) -- (0.30,-0.24);
+\end{scope}
+\node[nom] at (1.30,-3.85) {éthène $\mathrm{C_2H_4}$};
+%% propène : C=C horizontal puis un carbone portant trois H
+\begin{scope}[shift={(4.60,-3.08)}]
+  \node[atome] at (-0.66,0) {$\mathrm{C}$};
+  \node[atome] at ( 0,0)    {$\mathrm{C}$};
+  \node[atome] at ( 0.66,0) {$\mathrm{C}$};
+  \node[atome] at (-1.23, 0.46) {$\mathrm{H}$};
+  \node[atome] at (-1.23,-0.46) {$\mathrm{H}$};
+  \draw[lien] (-0.77,0.11) -- (-1.12,0.35);
+  \draw[lien] (-0.77,-0.11) -- (-1.12,-0.35);
+  \node[atome] at (0,\v) {$\mathrm{H}$};   \draw[lien] (0,0.17) -- (0,\v-0.17);
+  \node[atome] at (0.66,\v)  {$\mathrm{H}$}; \draw[lien] (0.66,0.17) -- (0.66,\v-0.17);
+  \node[atome] at (0.66,-\v) {$\mathrm{H}$}; \draw[lien] (0.66,-0.17) -- (0.66,-\v+0.17);
+  \draw[lien] (0.17,0) -- (0.49,0);
+  \node[atome] at (1.32,0) {$\mathrm{H}$};  \draw[lien] (0.83,0) -- (1.15,0);
+  \draw[lien] (-0.49,0.06) -- (-0.17,0.06);
+  \draw[lien] (-0.49,-0.06) -- (-0.17,-0.06);
+  \draw[liseré] (-0.63,-0.24) -- (-0.03,-0.24);
+\end{scope}
+\node[nom] at (4.60,-3.85) {propène $\mathrm{C_3H_6}$};
+\draw[filet] (0,-4.14) -- (8.25,-4.14);
+
+%% ================= 3. ALCOOLS ==============================================
+\node[titre] at (0,-4.19) {Alcools\quad\mdseries formule générale $\mathrm{C_nH_{2n+1}OH}$};
+%% méthanol : H-C-O-H, le carbone portant deux H
+\begin{scope}[shift={(1.30,-5.20)}]
+  \node[atome] at (-0.90,0) {$\mathrm{H}$};
+  \node[atome] at (-0.30,0) {$\mathrm{C}$};
+  \node[atome] at ( 0.30,0) {$\mathrm{O}$};
+  \node[atome] at ( 0.90,0) {$\mathrm{H}$};
+  \node[atome] at (-0.30, \v) {$\mathrm{H}$};
+  \node[atome] at (-0.30,-\v) {$\mathrm{H}$};
+  \foreach \x in {-0.90,-0.30,0.30} \draw[lien] (\x+0.17,0) -- (\x+0.43,0);
+  \draw[lien] (-0.30,0.17) -- (-0.30,\v-0.17);
+  \draw[lien] (-0.30,-0.17) -- (-0.30,-\v+0.17);
+  \draw[liseré] (0.12,-0.26) -- (1.05,-0.26);
+\end{scope}
+\node[nom] at (1.30,-5.97) {méthanol $\mathrm{CH_3-OH}$};
+%% éthanol : H-C-C-O-H, chaque carbone portant deux H
+\begin{scope}[shift={(4.75,-5.20)}]
+  \node[atome] at (-1.20,0) {$\mathrm{H}$};
+  \node[atome] at (-0.60,0) {$\mathrm{C}$};
+  \node[atome] at ( 0,0)    {$\mathrm{C}$};
+  \node[atome] at ( 0.60,0) {$\mathrm{O}$};
+  \node[atome] at ( 1.20,0) {$\mathrm{H}$};
+  \foreach \x in {-0.60,0} {
+    \node[atome] at (\x, \v) {$\mathrm{H}$};
+    \node[atome] at (\x,-\v) {$\mathrm{H}$};
+    \draw[lien] (\x,0.17) -- (\x,\v-0.17);
+    \draw[lien] (\x,-0.17) -- (\x,-\v+0.17);}
+  \foreach \x in {-1.20,-0.60,0,0.60} \draw[lien] (\x+0.17,0) -- (\x+0.43,0);
+  \draw[liseré] (0.42,-0.26) -- (1.35,-0.26);
+\end{scope}
+\node[nom] at (4.75,-5.97) {éthanol $\mathrm{C_2H_5-OH}$};
+
+\node[font=\scriptsize, text=solideD, anchor=north] at (4.12,-6.27)
+  {liseré orange = groupe caractéristique de la famille};
+\end{tikzpicture}
+\end{document}

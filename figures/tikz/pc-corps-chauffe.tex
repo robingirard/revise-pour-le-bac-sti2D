@@ -1,0 +1,81 @@
+%% pc-corps-chauffe — spectre d'émission d'un corps chauffé (allure qualitative).
+%% Axe des longueurs d'onde RÉGULIÈREMENT gradué de 0 à 2 000 nm (pas de 500) :
+%% on corrige ici les graduations inégales du livre.
+%% Les deux courbes sont des lois log-normales d'allure « planckienne » : leur
+%% seul rôle est de montrer que le maximum se déplace vers le bleu quand T augmente.
+%% Aucune valeur de lambda_max n'est portée sur l'axe (la loi de Wien n'est pas au programme).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+%% --- arc-en-ciel du visible : suite de fines tranches (pas de `shading`) ----
+\definecolor{arcA}{RGB}{110,30,175}
+\definecolor{arcB}{RGB}{35,60,220}
+\definecolor{arcC}{RGB}{0,175,200}
+\definecolor{arcD}{RGB}{25,165,60}
+\definecolor{arcE}{RGB}{240,225,0}
+\definecolor{arcF}{RGB}{245,140,0}
+\definecolor{arcG}{RGB}{215,25,25}
+%% \arcenciel{x gauche}{x droite}{y bas}{y haut}{saturation en %}
+\newcommand\arcenciel[5]{%
+  \foreach \k/\ca/\cb in {0/arcA/arcB,1/arcB/arcC,2/arcC/arcD,3/arcD/arcE,4/arcE/arcF,5/arcF/arcG} {
+    \foreach \j in {0,1,...,5} {
+      \pgfmathsetmacro\ta{(\k*6+\j)/36}
+      \pgfmathsetmacro\tb{(\k*6+\j+1)/36}
+      \pgfmathsetmacro\pp{100-100*\j/6}
+      \fill[\ca!\pp!\cb!#5!white] ({#1+(#2-#1)*\ta},#3) rectangle ({#1+(#2-#1)*\tb+0.01},#4); }}}
+
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  grad/.style={font=\scriptsize},
+  courbe/.style={line width=1.4pt, line join=round},
+  pointille/.style={black!45, line width=0.5pt, dash pattern=on 1.8pt off 1.6pt}]
+
+\def\sx{0.0032}   % 1 nm = 0,0032 cm  (2 000 nm = 6,4 cm)
+\def\YM{3.60}
+
+%% ================= domaine visible ========================================
+\arcenciel{1.28}{2.56}{0}{\YM}{28}          % bande pâle, sur toute la hauteur
+\arcenciel{1.28}{2.56}{0}{0.14}{100}        % liseré saturé au ras de l'axe
+\draw[black!45, line width=0.4pt] (1.28,0) rectangle (2.56,\YM);
+\node[font=\scriptsize\bfseries] at (1.92,\YM-0.18) {Visible};
+\node[font=\scriptsize, text=black!70, anchor=east] at (1.20,\YM-0.18) {Ultraviolet};
+\node[font=\scriptsize, text=black!70, anchor=west] at (2.64,\YM-0.18) {Infrarouge};
+
+%% ================= axes ===================================================
+\draw[axe] (0,0) -- (6.90,0);
+\draw[axe] (0,0) -- (0,\YM+0.30);
+\foreach \nm in {0,500,1000,1500,2000} {
+  \draw[line width=0.5pt] ({\nm*\sx},0) -- ({\nm*\sx},-0.10); }
+\foreach \nm/\lb in {0/0, 500/500, 1000/{1\,000}, 1500/{1\,500}, 2000/{2\,000}} {
+  \node[grad, anchor=north, inner sep=2pt] at ({\nm*\sx},-0.10) {\lb}; }
+\node[grad, anchor=north east] at (6.90,-0.52) {$\lambda$ (nm)};
+\node[font=\scriptsize, rotate=90, anchor=south] at (-0.42,{0.5*\YM})
+  {Intensité (unité arbitraire)};
+
+%% ================= les deux courbes =======================================
+%% I(lambda) = A exp(-(ln(lambda/lambda_max)/s)^2) : montée rapide, décroissance lente.
+\draw[courbe, solideB, smooth, samples=110, domain=40:2000]
+  plot ({\x*\sx},{1.15*exp(-((ln(\x/1000)/0.75)^2))});
+\draw[courbe, solideA, smooth, samples=110, domain=40:2000]
+  plot ({\x*\sx},{3.05*exp(-((ln(\x/500)/1.05)^2))});
+
+%% verticales des maximums
+\draw[pointille] ({500*\sx},0) -- ({500*\sx},3.05);
+\draw[pointille] ({1000*\sx},0) -- ({1000*\sx},1.15);
+\fill[solideA] ({500*\sx},3.05) circle (0.07);
+\fill[solideB] ({1000*\sx},1.15) circle (0.07);
+
+%% légendes des courbes
+\node[font=\small\bfseries, text=solideA, anchor=west] at (4.95,1.12) {6 000 K};
+\node[font=\small\bfseries, text=solideB, anchor=west] at (4.95,0.30) {3 000 K};
+\node[font=\scriptsize, text=solideA, anchor=east, fill=white, inner sep=1.5pt] at (1.52,3.02)
+  {$\lambda_{\max}(6\,000\ \text{K})$};
+\node[font=\scriptsize, text=solideB, anchor=west, fill=white, inner sep=1.5pt] at (3.28,1.50)
+  {$\lambda_{\max}(3\,000\ \text{K})$};
+
+%% ================= déplacement du maximum =================================
+\draw[-{Stealth[length=6pt]}, line width=1.2pt, solideD] ({1000*\sx},-0.72) -- ({500*\sx},-0.72);
+\node[font=\scriptsize, text=solideD, anchor=north] at (2.55,-0.86)
+  {$T$ augmente $\rightarrow$ $\lambda_{\max}$ \textbf{diminue}};
+\end{tikzpicture}
+\end{document}

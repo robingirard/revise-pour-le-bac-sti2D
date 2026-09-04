@@ -1,0 +1,70 @@
+%% pc-pile-combustible — cellule dihydrogène / dioxygène.
+%% Convention : à gauche l'électrode ⊕ (cathode, réduction du O2), à droite l'électrode ⊖
+%% (anode, oxydation du H2). Les électrons passent par le circuit extérieur, de ⊖ vers ⊕ ;
+%% les ions H+ traversent la membrane, de l'anode vers la cathode (de droite à gauche).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm, y=1cm,
+  fl/.style={-{Stealth[length=5pt]}, line width=0.9pt},
+  fil/.style={line width=1pt},
+  eti/.style={font=\scriptsize, inner sep=2pt, align=center},
+  bloc/.style={font=\scriptsize, inner sep=2pt, align=center}]
+
+%% ---------------- corps de la cellule --------------------------------------------
+\fill[solideB!7] (0,0) rectangle (4.6,2.8);
+\draw[line width=0.8pt] (0,0) rectangle (4.6,2.8);
+%% membrane
+\fill[solideF!14] (2.1,0) rectangle (2.5,2.8);
+\draw[solideF, line width=0.6pt, dash pattern=on 2pt off 1.6pt]
+  (2.1,0) -- (2.1,2.8) (2.5,0) -- (2.5,2.8);
+\draw[line width=0.35pt, black!45] (2.3,2.8) -- (2.3,3.05);
+\node[eti, text=solideF, anchor=south] at (2.3,3.03) {membrane};
+
+%% ---------------- électrodes ------------------------------------------------------
+\foreach \x in {0.8, 3.5} { \fill[black!35] (\x,0.2) rectangle (\x+0.3,3.25);
+                            \draw[line width=0.5pt, black!60] (\x,0.2) rectangle (\x+0.3,3.25); }
+\node[eti, rotate=90, text=white] at (0.95,1.5) {électrode};
+\node[eti, rotate=90, text=white] at (3.65,1.5) {électrode};
+%% polarités
+\fill[solideA] (0.95,3.55) circle (0.19); \node[font=\scriptsize\bfseries, text=white] at (0.95,3.55) {$+$};
+\fill[black]   (3.65,3.55) circle (0.19); \node[font=\scriptsize\bfseries, text=white] at (3.65,3.55) {$-$};
+
+%% ---------------- circuit extérieur et lampe --------------------------------------
+\draw[fil] (0.95,3.74) -- (0.95,4.35) -- (1.95,4.35);
+\draw[fil] (3.65,3.74) -- (3.65,4.35) -- (2.65,4.35);
+\draw[fil, fill=white] (2.3,4.35) circle (0.35);
+\draw[fil] (2.06,4.11) -- (2.54,4.59) (2.06,4.59) -- (2.54,4.11);
+\foreach \a in {45,90,135} { \draw[line width=0.5pt, solideD]
+  ($(2.3,4.35)+(\a:0.45)$) -- ($(2.3,4.35)+(\a:0.65)$); }
+\node[eti, anchor=west] at (3.00,4.90) {lampe allumée};
+%% électrons : de l'électrode ⊖ (droite) vers l'électrode ⊕ (gauche)
+\foreach \x in {3.10, 1.55} {
+  \draw[fl, solideE] (\x+0.35,4.35) -- (\x-0.15,4.35);
+  \node[eti, text=solideE, anchor=south, inner sep=3pt] at (\x+0.10,4.40) {$e^-$}; }
+
+%% ---------------- entrées et sorties de gaz ---------------------------------------
+\draw[fl, solideB] (-0.95,2.25) -- (0.72,2.25);
+\node[eti, text=solideB, anchor=east] at (-1.0,2.25) {$\mathrm{O_2}$ (air)};
+\draw[fl, solideB] (0.72,0.55) -- (-0.95,0.55);
+\node[eti, text=solideB, anchor=east] at (-1.0,0.55) {$\mathrm{H_2O}$};
+\draw[fl, solideA] (5.55,2.25) -- (3.88,2.25);
+\node[eti, text=solideA, anchor=west] at (5.6,2.25) {$\mathrm{H_2}$};
+
+%% ---------------- migration des ions H+ à travers la membrane ---------------------
+\foreach \y in {0.65, 1.20, 1.75, 2.30} {
+  \draw[fl, solideD, line width=0.7pt] (2.85,\y) -- (1.75,\y);
+  \fill[solideD] (2.3,\y) circle (0.155);
+  \node[font=\tiny, text=white] at (2.3,\y) {$\mathrm{H^+}$}; }
+
+%% ---------------- demi-équations ---------------------------------------------------
+\node[bloc, text=solideB, anchor=north west, align=left] at (-1.05,-0.25)
+  {\textbf{cathode} $\oplus$ — réduction\\$\mathrm{O_2} + 4\,\mathrm{H^+} + 4\,e^- = 2\,\mathrm{H_2O}$};
+\node[bloc, text=solideA, anchor=north east, align=left] at (5.65,-0.25)
+  {\textbf{anode} $\ominus$ — oxydation\\$\mathrm{H_2} = 2\,\mathrm{H^+} + 2\,e^-$};
+
+%% ---------------- bilan --------------------------------------------------------------
+\node[font=\small, anchor=north] at (2.3,-1.25)
+  {Bilan : $2\,\mathrm{H_2} + \mathrm{O_2} \rightarrow 2\,\mathrm{H_2O}$};
+\end{tikzpicture}
+\end{document}

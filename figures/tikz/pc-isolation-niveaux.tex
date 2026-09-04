@@ -1,0 +1,70 @@
+%% pc-isolation-niveaux — résistances thermiques minimales exigées pour les parois.
+%% Barres horizontales groupées (toit, plancher, façade) x trois niveaux d'exigence.
+%% La verticale rouge en pointillés rappelle le toit de l'exemple (5,906 m²·K·W⁻¹).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  grad/.style={font=\tiny},
+  paroi/.style={font=\small\bfseries, anchor=east},
+  leg/.style={font=\scriptsize, anchor=west, inner sep=0pt}]
+
+\def\sx{0.56}   % 1 unité de R (m²·K·W⁻¹) = 0,56 cm
+\def\hautbarre{0.26}   % hauteur d'une barre
+
+%% \barre{ordonnée du haut}{valeur}{étiquette}{couleur}
+\newcommand\barre[4]{%
+  \draw[fill=#4, draw=black!55, line width=0.4pt]
+       (0,{#1-\hautbarre}) rectangle ({#2*\sx},#1);
+  \node[font=\tiny, anchor=west, inner sep=2pt] at ({#2*\sx},{#1-0.5*\hautbarre}) {#3};}
+
+%% ---------- grille verticale légère ---------------------------------------
+\foreach \v in {1,...,11} {
+  \draw[black!25, line width=0.4pt, dotted] ({\v*\sx},0) -- ({\v*\sx},3.55); }
+
+%% ---------- les trois groupes de barres -----------------------------------
+%% Toit
+\barre{3.44}{5.0}{5,0}{solideD}
+\barre{3.13}{6.7}{6,7}{solideE}
+\barre{2.82}{10}{10}{solideB}
+\node[paroi] at (-0.12,3.05) {Toit};
+%% Plancher
+\barre{2.16}{2.0}{2,0}{solideD}
+\barre{1.85}{3.3}{3,3}{solideE}
+\barre{1.54}{6.7}{6,7}{solideB}
+\node[paroi] at (-0.12,1.77) {Plancher};
+%% Façade
+\barre{0.88}{2.2}{2,2}{solideD}
+\barre{0.57}{3.3}{3,3}{solideE}
+\barre{0.26}{6.7}{6,7}{solideB}
+\node[paroi] at (-0.12,0.49) {Façade};
+
+%% ---------- exemple du cours : toiture à 5,906 ----------------------------
+\draw[solideA, line width=0.9pt, dash pattern=on 2.4pt off 1.8pt]
+     ({5.906*\sx},-0.05) -- ({5.906*\sx},3.72);
+\node[font=\scriptsize, text=solideA, anchor=south] at ({5.906*\sx},3.74)
+  {toit de l'exemple : 5,906};
+
+%% ---------- axes ----------------------------------------------------------
+\draw[axe] (0,0) -- ({11.6*\sx},0);
+\draw[line width=0.6pt] (0,0) -- (0,3.55);
+\foreach \v in {0,...,11} {
+  \draw[line width=0.5pt] ({\v*\sx},0) -- ({\v*\sx},-0.09);
+  \node[grad, anchor=north, inner sep=2pt] at ({\v*\sx},-0.09) {\v}; }
+\node[font=\scriptsize, anchor=north] at ({5.5*\sx},-0.46)
+  {Résistance thermique $R_{\text{th}}$ (m$^2\cdot$K$\cdot$W$^{-1}$)};
+
+%% ---------- légende -------------------------------------------------------
+\foreach \k/\co/\txt in {0/solideD/{RT 2005}, 1/solideE/{basse énergie},
+                         2/solideB/{très basse énergie}} {
+  \pgfmathsetmacro\lx{-1.30+2.35*\k}
+  \draw[fill=\co, draw=black!55, line width=0.4pt]
+       (\lx,-1.28) rectangle (\lx+0.30,-1.08);
+  \node[leg] at (\lx+0.40,-1.18) {\txt}; }
+
+\node[font=\scriptsize, anchor=north, align=center] at (2.20,-1.52)
+  {valeurs \textbf{minimales} à atteindre\\
+   (le livre les note $R_{\max}$, il faut lire $R_{\min}$)};
+\end{tikzpicture}
+\end{document}

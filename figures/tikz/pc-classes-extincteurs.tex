@@ -1,0 +1,70 @@
+%% pc-classes-extincteurs — les cinq classes de feux et l'agent extincteur associé.
+%% Cinq panneaux de structure identique (bandeau rouge, « EXTINCTEUR », puis classe et agent
+%% à gauche, type de feux à droite), produits par la macro
+%% \panneau{x}{y}{classe}{agent}{feux}{couleur}. Les retours à la ligne des textes sont
+%% écrits à la main (\\) pour que rien ne déborde des cases.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{shapes.geometric, positioning}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cadre/.style={line width=0.8pt, rounded corners=1.5pt},
+  cellule/.style={line width=0.5pt, draw=black!35, rounded corners=1pt},
+  txtclasse/.style={font=\scriptsize\bfseries, align=center, inner sep=0.5pt},
+  txtagent/.style={font=\tiny, align=center, inner sep=0.5pt, text=black!85},
+  txtfeux/.style={font=\tiny, align=center, inner sep=1pt, text=black!80}]
+
+%% --- silhouettes blanches du bandeau -------------------------------------
+\newcommand\extincteur{%   bouteille, poignée, flexible et lance, centrés en (0,0)
+  \fill[white, rounded corners=1.6pt] (-0.13,-0.34) rectangle (0.13,0.13);
+  \fill[white] (-0.045,0.13) rectangle (0.045,0.25);
+  \fill[white, rounded corners=0.6pt] (-0.11,0.25) rectangle (0.10,0.31);
+  \draw[white, line width=0.9pt, line cap=round]
+    (0.09,0.28) .. controls (0.28,0.24) and (0.30,0.02) .. (0.25,-0.12);
+  \fill[white] (0.19,-0.10) -- (0.31,-0.14) -- (0.28,-0.28) -- (0.20,-0.26) -- cycle;}
+\newcommand\flammeblanche{%  flamme pleine, centrée en (0,0)
+  \fill[white] (0,0.34)
+    .. controls (0.06,0.16) and (0.20,0.13) .. (0.16,-0.04)
+    .. controls (0.14,-0.19) and (-0.14,-0.19) .. (-0.16,-0.04)
+    .. controls (-0.20,0.12) and (-0.04,0.14) .. (0,0.34);}
+
+%% --- gabarit d'un panneau -------------------------------------------------
+%% #1 x, #2 y (coin haut gauche), #3 classe, #4 agent, #5 feux, #6 couleur
+\newcommand\panneau[6]{\begin{scope}[shift={(#1,#2)}]
+  \draw[cadre, draw=#6, fill=white] (0,0) rectangle (2.75,-2.90);
+  \begin{scope}                              % bandeau rouge (coins arrondis conservés)
+    \clip[rounded corners=1.5pt] (0,0) rectangle (2.75,-2.90);
+    \fill[solideA] (0,0) rectangle (2.75,-0.86);
+  \end{scope}
+  \begin{scope}[shift={(0.80,-0.43)}, scale=1.15] \extincteur \end{scope}
+  \begin{scope}[shift={(1.97,-0.43)}, scale=1.15] \flammeblanche \end{scope}
+  \node[font=\scriptsize\bfseries, text=solideB, inner sep=1pt] at (1.375,-1.05) {EXTINCTEUR};
+  %% colonne gauche : classe puis agent
+  \draw[cellule, fill=#6!15]  (0.09,-1.20) rectangle (1.21,-1.92);
+  \node[txtclasse, text=#6] at (0.65,-1.54) {\tiny\bfseries CLASSE\\[1.5pt]\normalsize\bfseries #3};
+  \draw[cellule, fill=black!4] (0.09,-1.98) rectangle (1.21,-2.80);
+  \node[txtagent] at (0.65,-2.39) {#4};
+  %% colonne droite : type de feux
+  \draw[cellule, fill=black!4] (1.29,-1.20) rectangle (2.66,-2.80);
+  \node[txtfeux, anchor=north] at (1.975,-1.28) {#5};
+\end{scope}}
+
+%% ================= rangée du haut : classes A, B, C ========================
+\panneau{0}{0}{A}{Eau\\pulvérisée}%
+  {feux de\\\textbf{matériaux}\\\textbf{solides}\\(bois,\\papiers,\\tissu)}{solideE}
+\panneau{2.87}{0}{B}{$\mathrm{CO_2}$}%
+  {feux de\\\textbf{solides} ou\\\textbf{liquides}\\\textbf{liquéfiables}\\(essence,\\alcool,\\huile)}{solideB}
+\panneau{5.74}{0}{C}{Poudre}%
+  {feux de \textbf{gaz}\\(butane,\\propane)}{solideC}
+
+%% ================= rangée du bas : classes D et F ==========================
+\panneau{1.435}{-3.10}{D}{Poudre}%
+  {feux de\\\textbf{métaux}\\(aluminium)}{solideB}
+\panneau{4.305}{-3.10}{F}{Mousse}%
+  {feux d'\textbf{huile}\\ou de\\\textbf{graisse}\\de cuisson}{solideF}
+
+\node[font=\scriptsize, text=black!70, align=center, anchor=north] at (4.245,-6.20)
+  {chaque agent supprime un côté du triangle du feu\\
+   \textbf{jamais d'eau} sur un feu d'huile (classe F)};
+\end{tikzpicture}
+\end{document}

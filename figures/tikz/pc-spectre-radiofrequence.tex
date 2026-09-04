@@ -1,0 +1,57 @@
+%% pc-spectre-radiofrequence — bandes de fréquences utilisées en télécommunications.
+%% Sept cases de largeur égale (le découpage est décimal : chaque case couvre un facteur 10).
+%% Règle du haut : fréquence, qui DÉCROÎT vers la droite ; règle du bas : longueur d'onde,
+%% qui CROÎT vers la droite, puisque lambda = c / f.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm, y=1cm,
+  regle/.style={line width=0.7pt},
+  grad/.style={font=\scriptsize, inner sep=2pt},
+  usage/.style={font=\scriptsize, inner sep=2pt, align=center, text=black!75},
+  amorce/.style={line width=0.35pt, black!45}]
+
+\def\hb{1.45}   % hauteur de la bande centrale
+\def\lc{1.25}   % largeur d'une case
+
+%% ---------------- les sept bandes ------------------------------------------------
+\foreach \k/\nom/\sigle in {0/{extrême\\haute\\fréquence}/EHF, 1/{super\\haute\\fréquence}/SHF,
+      2/{ultra\\haute\\fréquence}/UHF, 3/{très\\haute\\fréquence}/VHF, 4/{haute\\fréquence}/HF,
+      5/{moyenne\\fréquence}/MF, 6/{basse\\fréquence}/LF} {
+  \pgfmathsetmacro\p{100-100*(\k+0.5)/7}
+  \fill[solideA!\p!solideB!22!white] ({\k*\lc},0) rectangle ({(\k+1)*\lc},\hb);
+  \node[font=\tiny, align=center, inner sep=1pt, text=black!75]
+    at ({(\k+0.5)*\lc},{\hb-0.42}) {\nom};
+  \node[font=\small\bfseries, inner sep=1pt] at ({(\k+0.5)*\lc},0.28) {\sigle}; }
+\draw[line width=0.6pt] (0,0) rectangle ({7*\lc},\hb);
+\foreach \k in {1,2,...,6} { \draw[line width=0.4pt, black!60] ({\k*\lc},0) -- ({\k*\lc},\hb); }
+
+%% ---------------- règle des fréquences (au-dessus) --------------------------------
+\draw[regle, solideA] (0,{\hb+0.32}) -- ({7*\lc},{\hb+0.32});
+\foreach \k/\lab in {0/{300 GHz}, 1/{30 GHz}, 2/{3 GHz}, 3/{300 MHz}, 4/{30 MHz},
+                     5/{3 MHz}, 6/{300 kHz}, 7/{30 kHz}} {
+  \draw[regle, solideA] ({\k*\lc},{\hb+0.22}) -- ({\k*\lc},{\hb+0.42});
+  \node[grad, anchor=south, text=solideA] at ({\k*\lc},{\hb+0.42}) {\lab}; }
+\node[font=\small\bfseries, text=solideA, anchor=west, fill=white, inner sep=3pt]
+  at (-0.05,{\hb+1.05}) {Fréquence};
+
+%% ---------------- usages, reliés à leur case --------------------------------------
+\foreach \k/\y/\lab in {0/2.55/{radar automatique}, 1/1.75/{satellite},
+                        2/2.55/{téléphone mobile, DECT,\\four micro-ondes},
+                        3/1.75/{TNT}, 5/2.55/{radio AM et FM}} {
+  \draw[amorce] ({(\k+0.5)*\lc},\hb) -- ({(\k+0.5)*\lc},{\hb+\y-0.02});
+  \node[usage, anchor=south] at ({(\k+0.5)*\lc},{\hb+\y}) {\lab}; }
+
+%% ---------------- règle des longueurs d'onde (en dessous) -------------------------
+\draw[regle, solideB] (0,-0.32) -- ({7*\lc},-0.32);
+\foreach \k/\lab in {0/{1 mm}, 1/{1 cm}, 2/{10 cm}, 3/{1 m}, 4/{10 m},
+                     5/{100 m}, 6/{1 km}, 7/{10 km}} {
+  \draw[regle, solideB] ({\k*\lc},-0.22) -- ({\k*\lc},-0.42);
+  \node[grad, anchor=north, text=solideB] at ({\k*\lc},-0.42) {\lab}; }
+\node[font=\small\bfseries, text=solideB, anchor=east] at ({7*\lc},-1.05) {Longueur d'onde};
+
+%% ---------------- rappel de la relation -------------------------------------------
+\node[font=\small, anchor=east, align=center] at ({7*\lc},{\hb+3.75})
+  {$\lambda = \dfrac{c}{f}$ \; avec $c = 3{,}00 \times 10^{8}$ m$\cdot$s$^{-1}$};
+\end{tikzpicture}
+\end{document}
