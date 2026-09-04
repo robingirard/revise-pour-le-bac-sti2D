@@ -1,0 +1,773 @@
+# Mathématiques Tle — enseignement commun (tronc commun de la voie technologique, 3 h).
+# Programme : arrêté du 19 juillet 2019 (NOR MENE1921242A, BO spécial n° 8 du 25 juillet 2019),
+# applicable jusqu'à la session 2027. Source de travail : docs/notes/maths-tle-tronc-commun.md
+# (§ 2 pour le programme chapitre par chapitre, § 2.3 pour les automatismes, § 6 pour le découpage
+# C1-C6 suivi ici). Évalué en contrôle continu, coefficient 6 sur le cycle terminal (§ 4.1).
+# Volontairement absents (hors programme 2019 du tronc commun) : loi normale, loi uniforme,
+# intervalles de fluctuation ou de confiance, trigonométrie, nombres complexes, intégrale,
+# équations différentielles, géométrie (réservée à la série STD2A).
+# Ne double pas 30-maths-1re.yaml ni 35-maths-tle.yaml (spécialité : dérivation des composées,
+# exponentielle de base e et logarithme népérien, intégrale, complexes).
+# Tous les énoncés sont originaux ; les valeurs numériques ont été recalculées, arrondis explicites.
+units:
+- id: maths-tle-commun
+  matiere: maths
+  title: 'Mathématiques Tle : enseignement commun'
+  description: Automatismes, suites arithmétiques et géométriques, fonctions exponentielles de base $a$ et logarithme décimal, fonction inverse et lecture de courbes, statistiques à deux variables, probabilités conditionnelles et loi binomiale — le tronc commun de mathématiques de terminale technologique, évalué en contrôle continu (coefficient 6 sur le cycle).
+  skills:
+  - id: mathstc-automatismes
+    title: Automatismes
+    icon: 🎯
+    description: Proportions et pourcentages, évolutions et taux, calcul algébrique, dérivée d'un polynôme, lectures graphiques.
+    prerequisites: []
+    lesson: lessons/maths-tle-commun-automatismes.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Par quel nombre faut-il multiplier une valeur pour l'augmenter de $8\ \%$ ?
+      choices:
+      - $1{,}08$
+      - $0{,}08$
+      - $8$
+      - $1{,}8$
+      answer: 0
+      feedback:
+      - null
+      - $0{,}08$ est la **proportion** ajoutée, pas le coefficient multiplicateur ; il faut y ajouter $1$.
+      - Multiplier par $8$ reviendrait à augmenter de $700\ \%$.
+      - $1{,}8$ correspond à une augmentation de $80\ \%$, pas de $8\ \%$.
+      explanation: 'Augmenter de $t\ \%$ revient à multiplier par $1+\dfrac{t}{100}$. Ici $1+0{,}08=1{,}08$.'
+    - type: mcq
+      level: 1
+      prompt: Par quel nombre faut-il multiplier une valeur pour la diminuer de $18\ \%$ ?
+      choices:
+      - $0{,}82$
+      - $1{,}18$
+      - $0{,}18$
+      - $0{,}88$
+      answer: 0
+      feedback:
+      - null
+      - $1{,}18$ est le coefficient d'une **hausse** de $18\ \%$.
+      - $0{,}18$ ne garde que $18\ \%$ de la valeur, ce qui correspond à une baisse de $82\ \%$.
+      - Erreur de calcul ; $1-0{,}18=0{,}82$ et non $0{,}88$.
+      explanation: 'Diminuer de $t\ \%$ revient à multiplier par $1-\dfrac{t}{100}$. Ici $1-0{,}18=0{,}82$ : il reste $82\ \%$ de la valeur.'
+    - type: mcq
+      level: 1
+      prompt: Multiplier une valeur par $0{,}975$ correspond à quelle évolution ?
+      choices:
+      - une baisse de $2{,}5\ \%$
+      - une baisse de $97{,}5\ \%$
+      - une baisse de $0{,}975\ \%$
+      - une hausse de $2{,}5\ \%$
+      answer: 0
+      feedback:
+      - null
+      - Une baisse de $97{,}5\ \%$ correspondrait au coefficient $0{,}025$.
+      - Le taux se lit sur l'écart à $1$, pas sur le coefficient lui-même.
+      - Le coefficient est **inférieur** à $1$, l'évolution est donc une baisse.
+      explanation: 'Le taux est $t=(0{,}975-1)\times100=-2{,}5$, soit une baisse de $2{,}5\ \%$.'
+    - type: input
+      level: 1
+      prompt: Multiplier une valeur par $1{,}4$ correspond à une hausse de combien de pour cent ?
+      answer: '40'
+      numeric: true
+      tolerance: 0.1
+      unit: '%'
+      explanation: '$1{,}4-1=0{,}4$, soit $+40\ \%$. Réflexe : le coefficient $1{,}4$ ne signifie pas $+1{,}4\ \%$ ni $+14\ \%$.'
+    - type: match
+      level: 1
+      prompt: Associer chaque formulation additive à son coefficient multiplicateur.
+      pairs:
+      - left: augmenter de $5\ \%$
+        right: $\times1{,}05$
+      - left: diminuer de $5\ \%$
+        right: $\times0{,}95$
+      - left: augmenter de $50\ \%$
+        right: $\times1{,}5$
+      - left: diminuer de $75\ \%$
+        right: $\times0{,}25$
+      - left: augmenter de $0{,}4\ \%$
+        right: $\times1{,}004$
+    - type: mcq
+      level: 2
+      prompt: Une production augmente de $15\ \%$ une année, puis diminue de $8\ \%$ l'année suivante. Quel est le taux d'évolution global sur les deux années ?
+      choices:
+      - environ $+5{,}8\ \%$
+      - $+7\ \%$
+      - $+23\ \%$
+      - environ $+6{,}9\ \%$
+      answer: 0
+      feedback:
+      - null
+      - 'Erreur classique : les taux successifs **ne s''additionnent pas**. Ce sont les coefficients multiplicateurs qui se multiplient.'
+      - Les deux taux ne s'ajoutent pas non plus en valeur absolue ; la seconde évolution est une baisse.
+      - Recalcule le produit $1{,}15\times0{,}92$ ; il vaut $1{,}058$ et non $1{,}069$.
+      explanation: 'Coefficient global : $1{,}15\times0{,}92=1{,}058$, donc $+5{,}8\ \%$. La baisse de $8\ \%$ porte sur une valeur déjà augmentée, elle ne compense pas $8$ des $15$ points.'
+    - type: mcq
+      level: 2
+      prompt: Après une hausse de $25\ \%$, quelle baisse ramène exactement à la valeur initiale ?
+      choices:
+      - une baisse de $20\ \%$
+      - une baisse de $25\ \%$
+      - une baisse de $22{,}5\ \%$
+      - une baisse de $30\ \%$
+      answer: 0
+      feedback:
+      - null
+      - 'Piège du taux réciproque : $1{,}25\times0{,}75=0{,}9375\neq1$, on n''est pas revenu au point de départ.'
+      - La moyenne des deux taux n'a aucune raison de convenir.
+      - $1{,}25\times0{,}70=0{,}875$ ; on descend en dessous de la valeur initiale.
+      explanation: 'Il faut le coefficient réciproque $\dfrac{1}{1{,}25}=0{,}80$, soit une baisse de $20\ \%$. Vérification : $1{,}25\times0{,}80=1$.'
+    - type: input
+      level: 2
+      prompt: Après une baisse de $20\ \%$, quelle hausse, en pour cent, ramène exactement à la valeur initiale ?
+      answer: '25'
+      numeric: true
+      tolerance: 0.2
+      unit: '%'
+      explanation: 'Le coefficient réciproque de $0{,}80$ est $\dfrac{1}{0{,}80}=1{,}25$, soit $+25\ \%$. Baisse et hausse réciproques n''ont pas le même taux.'
+    - type: mcq
+      level: 2
+      prompt: Dans un lycée, $42\ \%$ des élèves sont en voie technologique et, parmi eux, $35\ \%$ sont en STI2D. Quelle part des élèves du lycée cela représente-t-il ?
+      choices:
+      - $14{,}7\ \%$
+      - $77\ \%$
+      - $35\ \%$
+      - $7\ \%$
+      answer: 0
+      feedback:
+      - null
+      - On n'additionne pas deux proportions qui ne portent pas sur le même ensemble.
+      - $35\ \%$ est la proportion **dans la voie technologique**, pas dans le lycée.
+      - La différence des deux taux n'a pas de sens ici.
+      explanation: 'La proportion d''une proportion se **multiplie** : $0{,}42\times0{,}35=0{,}147$, soit $14{,}7\ \%$ des élèves du lycée.'
+    - type: input
+      level: 2
+      prompt: La consommation d'un atelier est repérée par un indice de base $100$ en $2020$. Il vaut $108$ en $2022$ et $117{,}5$ en $2024$. Quel est le taux d'évolution entre $2022$ et $2024$, en pour cent, arrondi à $0{,}1$ ?
+      answer: '8.8'
+      numeric: true
+      tolerance: 0.1
+      unit: '%'
+      explanation: '$\dfrac{117{,}5}{108}\approx1{,}0880$, soit environ $+8{,}8\ \%$. On ne soustrait pas les indices : $117{,}5-108=9{,}5$ n''est **pas** le taux en pourcentage.'
+    - type: mcq
+      level: 2
+      prompt: Un indice de base $100$ en $2020$ vaut $117{,}5$ en $2024$. Que peut-on en conclure ?
+      choices:
+      - la grandeur a augmenté de $17{,}5\ \%$ entre $2020$ et $2024$
+      - la grandeur a augmenté de $117{,}5\ \%$ entre $2020$ et $2024$
+      - la grandeur vaut $117{,}5$ unités en $2024$
+      - la grandeur a augmenté de $17{,}5$ unités entre $2020$ et $2024$
+      answer: 0
+      feedback:
+      - null
+      - L'indice **contient** déjà la base $100$ ; le taux se lit sur l'écart à $100$.
+      - Un indice n'est pas une valeur mesurée, il n'a pas d'unité.
+      - Un indice donne une évolution **relative**, jamais une variation absolue.
+      explanation: 'L''indice $117{,}5$ signifie que la grandeur vaut $1{,}175$ fois sa valeur de $2020$, soit $+17{,}5\ \%$.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre les étapes du calcul du taux d'évolution global équivalent à plusieurs évolutions successives.
+      steps:
+      - Traduire chaque évolution en coefficient multiplicateur
+      - Multiplier tous les coefficients entre eux
+      - Retrancher $1$ au coefficient global obtenu
+      - Multiplier le résultat par $100$
+      - Conclure par une hausse ou une baisse, selon le signe
+      explanation: 'La seule opération autorisée sur des évolutions successives est la **multiplication des coefficients**. On ne repasse en pourcentage qu''à la toute fin.'
+    - type: mcq
+      level: 1
+      prompt: Quelle est l'écriture scientifique de $0{,}000\,47$ ?
+      choices:
+      - $4{,}7\times10^{-4}$
+      - $4{,}7\times10^{-3}$
+      - $4{,}7\times10^{4}$
+      - $47\times10^{-3}$
+      answer: 0
+      feedback:
+      - null
+      - $4{,}7\times10^{-3}=0{,}004\,7$, c'est dix fois trop grand.
+      - L'exposant doit être **négatif** pour un nombre inférieur à $1$.
+      - 'Deux défauts : la valeur ($47\times10^{-3}=0{,}047$) et la forme, car le premier facteur doit être compris entre $1$ et $10$.'
+      explanation: 'L''écriture scientifique est $a\times10^{n}$ avec $1\leqslant a<10$. On déplace la virgule de $4$ rangs vers la droite, d''où l''exposant $-4$.'
+    - type: input
+      level: 1
+      prompt: Convertir $45$ minutes en heures (écriture décimale).
+      answer: '0.75'
+      numeric: true
+      tolerance: 0.001
+      unit: h
+      explanation: '$\dfrac{45}{60}=0{,}75$ h. Attention, $45$ min ne s''écrit pas $0{,}45$ h.'
+    - type: mcq
+      level: 2
+      prompt: Soit $f(x)=2x^{3}-5x^{2}+x-7$. Quelle est sa dérivée ?
+      choices:
+      - $f'(x)=6x^{2}-10x+1$
+      - $f'(x)=6x^{2}-10x$
+      - $f'(x)=6x^{2}-5x+1$
+      - $f'(x)=2x^{2}-10x+1$
+      answer: 0
+      feedback:
+      - null
+      - Le terme $x$ a pour dérivée $1$, il ne disparaît pas ; c'est la constante $-7$ qui disparaît.
+      - Le terme $-5x^{2}$ a pour dérivée $-10x$, pas $-5x$.
+      - Le terme $2x^{3}$ a pour dérivée $3\times2x^{2}=6x^{2}$.
+      explanation: 'On dérive terme à terme : $\left(x^{n}\right)''=nx^{n-1}$. D''où $f''(x)=6x^{2}-10x+1$, et la constante $-7$ disparaît.'
+    - type: input
+      level: 2
+      prompt: Toujours avec $f(x)=2x^{3}-5x^{2}+x-7$, calculer le coefficient directeur de la tangente à la courbe au point d'abscisse $2$.
+      answer: '5'
+      numeric: true
+      tolerance: 0.01
+      explanation: 'Le coefficient directeur de la tangente en $a$ est $f''(a)$. Ici $f''(x)=6x^{2}-10x+1$, donc $f''(2)=24-20+1=5$.'
+    - type: mcq
+      level: 2
+      prompt: Quel est le signe de $-2(x-1)(x-3)$ ?
+      choices:
+      - positif sur $\left]1\,;3\right[$, négatif à l'extérieur
+      - négatif sur $\left]1\,;3\right[$, positif à l'extérieur
+      - positif sur $\mathbb{R}$
+      - négatif sur $\mathbb{R}$
+      answer: 0
+      feedback:
+      - null
+      - 'C''est le signe d''une parabole tournée vers le haut ; ici le coefficient $-2$ la retourne vers le bas.'
+      - L'expression s'annule en $1$ et en $3$, elle change donc de signe.
+      - L'expression vaut $+2$ en $x=2$, elle n'est pas toujours négative.
+      explanation: 'Image mentale : la courbe de $x\mapsto-2(x-1)(x-3)$ est une parabole tournée vers le **bas** qui coupe l''axe en $1$ et $3$. Elle est donc au-dessus de l''axe entre les racines.
+
+
+        {{fig:mathstc-signe-parabole}}'
+    - type: grid
+      level: 2
+      prompt: Pour chaque expression, cocher son signe en $x=2$.
+      rows:
+      - id: a
+        label: $-2(x-1)(x-3)$
+      - id: b
+        label: $(2x+3)(5-x)$
+      - id: c
+        label: $(x-5)(x+1)$
+      - id: d
+        label: $3x-8$
+      - id: e
+        label: $x^{2}-9$
+      cols:
+      - id: P
+        label: Positif
+      - id: N
+        label: Négatif
+      answer:
+      - Pa
+      - Pb
+      - Nc
+      - Nd
+      - Ne
+      cellFeedback:
+        Na: $-2\times1\times(-1)=+2$, le produit de deux facteurs négatifs redevient positif
+        Nb: $7\times3=21$, les deux facteurs sont positifs en $x=2$
+        Pc: $(-3)\times3=-9$, un seul facteur est négatif
+        Pd: $3\times2-8=-2$, la valeur $2$ est en dessous de la racine $\dfrac{8}{3}\approx2{,}67$
+        Pe: $4-9=-5$, la valeur $2$ est comprise entre les racines $-3$ et $3$
+      explanation: 'Pour un produit de facteurs, on regarde le signe de **chaque** facteur puis on applique la règle des signes. Une simple substitution suffit quand on demande le signe en un point.'
+    - type: mcq
+      level: 2
+      prompt: Dans la relation $P=\rho g h$, exprimer $h$ en fonction des autres grandeurs.
+      choices:
+      - $h=\dfrac{P}{\rho g}$
+      - $h=P\rho g$
+      - $h=\dfrac{\rho g}{P}$
+      - $h=P-\rho g$
+      answer: 0
+      feedback:
+      - null
+      - Pour isoler $h$, on divise les deux membres par $\rho g$, on ne multiplie pas.
+      - Le quotient est inversé ; c'est $P$ qui doit être au numérateur.
+      - $\rho g$ multiplie $h$, on ne l'enlève pas par soustraction.
+      explanation: '$P=\rho g h$ donne $h=\dfrac{P}{\rho g}$. Contrôle par les unités : des pascals divisés par des $\mathrm{kg}\cdot\mathrm{m}^{-3}\times\mathrm{m}\cdot\mathrm{s}^{-2}$ donnent bien des mètres.'
+    - type: input
+      level: 3
+      prompt: Un solide de masse $m=25$ kg possède l'énergie cinétique $E=450$ J. Sachant que $E=\dfrac{1}{2}mv^{2}$, calculer sa vitesse $v$.
+      answer: '6'
+      numeric: true
+      tolerance: 0.05
+      unit: m/s
+      explanation: '$v^{2}=\dfrac{2E}{m}=\dfrac{900}{25}=36$, donc $v=\sqrt{36}=6\ \mathrm{m\cdot s^{-1}}$ (la solution négative est écartée, une vitesse est positive).'
+    - type: mcq
+      level: 2
+      prompt: Une droite passe par les points $A(1\,;5)$ et $B(4\,;14)$. Quelle est son équation réduite ?
+      choices:
+      - $y=3x+2$
+      - $y=3x+5$
+      - $y=\dfrac{1}{3}x+2$
+      - $y=9x-4$
+      answer: 0
+      feedback:
+      - null
+      - L'ordonnée à l'origine n'est pas l'ordonnée de $A$ ; il faut remplacer dans $y=3x+b$.
+      - Le coefficient directeur est $\dfrac{\Delta y}{\Delta x}$, et non $\dfrac{\Delta x}{\Delta y}$.
+      - $9$ est la variation des ordonnées seule ; il faut la diviser par la variation des abscisses.
+      explanation: '$a=\dfrac{14-5}{4-1}=\dfrac{9}{3}=3$, puis $5=3\times1+b$ donne $b=2$. D''où $y=3x+2$, vérifiée par $B$ : $3\times4+2=14$.'
+    - type: mcq
+      level: 2
+      prompt: 'Sur la figure ci-dessous, la droite $\mathcal{D}$ représente le coût, en euros, en fonction du nombre de pièces. Lire graphiquement le nombre de pièces à partir duquel le coût dépasse $260$ €.
+
+
+        {{fig:mathstc-lecture-droite}}'
+      choices:
+      - à partir de $40$ pièces
+      - à partir de $26$ pièces
+      - à partir de $60$ pièces
+      - à partir de $260$ pièces
+      answer: 0
+      feedback:
+      - null
+      - $26$ est une lecture sur l'axe des ordonnées divisée par $10$ ; il faut lire l'abscisse du point d'intersection.
+      - Relis l'échelle de l'axe des abscisses, une graduation vaut $10$ pièces.
+      - $260$ est le **coût**, pas le nombre de pièces.
+      explanation: 'On trace l''horizontale $y=260$, on repère son point d''intersection avec $\mathcal{D}$, puis on lit l''abscisse : $40$ pièces. Au-delà, la droite est au-dessus de l''horizontale.'
+    - type: mcq
+      level: 2
+      prompt: 'À partir de la parabole représentée dans la leçon, résoudre graphiquement $-2(x-1)(x-3)\geqslant0$.'
+      choices:
+      - $x\in\left[1\,;3\right]$
+      - $x\in\left]-\infty\,;1\right]\cup\left[3\,;+\infty\right[$
+      - $x\in\left[-2\,;3\right]$
+      - $x\in\left[0\,;2\right]$
+      answer: 0
+      feedback:
+      - null
+      - C'est l'ensemble où la courbe est **en dessous** de l'axe des abscisses.
+      - $-2$ est le coefficient de l'expression, pas une racine.
+      - Les racines sont $1$ et $3$, elles se lisent sur les points d'intersection avec l'axe.
+      explanation: 'Résoudre $f(x)\geqslant0$, c''est chercher les $x$ pour lesquels la courbe est **au-dessus ou sur** l''axe des abscisses. Les bornes $1$ et $3$ sont incluses car l''inégalité est large.'
+    - type: guided
+      level: 3
+      title: Le suivi de production d'une usine de nacelles d'éoliennes
+      prompt: 'Exercice complet : évolutions successives, taux global, indice base 100, taux réciproque, proportion d''une proportion et isolement d''une variable.'
+      intro: 'Une usine assemble des nacelles d''éoliennes. Elle en a produit $1\,200$ en $2022$.
+        En $2023$, la production augmente de $15\ \%$ ; en $2024$, elle diminue de $5\ \%$.
+
+
+        Le service de gestion suit ces variations avec un indice de base $100$ en $2022$.'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Combien de nacelles ont été produites en $2023$ ?'
+        answer: '1380'
+        numeric: true
+        tolerance: 1
+        explanation: '$1\,200\times1{,}15=1\,380$ nacelles.'
+      - kind: input
+        prompt: '**Étape 2.** Combien de nacelles ont été produites en $2024$ ?'
+        answer: '1311'
+        numeric: true
+        tolerance: 1
+        explanation: '$1\,380\times0{,}95=1\,311$ nacelles. La baisse de $5\ \%$ porte sur $1\,380$, pas sur $1\,200$.'
+      - kind: input
+        prompt: '**Étape 3.** Quel est le taux d''évolution global de la production entre $2022$ et $2024$, en pour cent, arrondi à $0{,}01$ ?'
+        answer: '9.25'
+        numeric: true
+        tolerance: 0.05
+        unit: '%'
+        explanation: 'Coefficient global $1{,}15\times0{,}95=1{,}0925$, soit $+9{,}25\ \%$. Vérification directe : $\dfrac{1\,311}{1\,200}=1{,}0925$.'
+      - kind: mcq
+        prompt: '**Étape 4.** Un stagiaire annonce « $+15-5=+10\ \%$ ». Pourquoi est-ce faux ?'
+        choices:
+        - Parce que les taux successifs ne s'additionnent pas ; ce sont les coefficients multiplicateurs qui se multiplient
+        - Parce qu'il fallait écrire $-5+15$ et non $+15-5$
+        - Parce que la baisse de $5\ \%$ doit être comptée deux fois
+        - Parce qu'il fallait faire la moyenne des deux taux
+        answer:
+        - 0
+        feedback:
+        - null
+        - L'ordre des opérations n'est pas en cause, c'est l'opération elle-même qui est fausse.
+        - La baisse n'intervient qu'une seule fois, mais sur une base plus grande.
+        - La moyenne des taux ne donne pas non plus le taux global.
+        explanation: 'La baisse de $5\ \%$ s''applique à $1\,380$ et retire $69$ nacelles, alors que $5\ \%$ de $1\,200$ n''en retirerait que $60$. D''où un écart entre $+10\ \%$ et le vrai $+9{,}25\ \%$.'
+      - kind: input
+        prompt: '**Étape 5.** Quel est l''indice de la production de $2024$, en base $100$ en $2022$ ?'
+        answer: '109.25'
+        numeric: true
+        tolerance: 0.05
+        explanation: 'L''indice est $100\times\dfrac{1\,311}{1\,200}=109{,}25$. Un indice se lit directement comme le coefficient global multiplié par $100$.'
+      - kind: input
+        prompt: '**Étape 6.** De quel pourcentage la production devrait-elle baisser en $2025$ pour revenir exactement au niveau de $2022$ ? (donner un nombre négatif, arrondi à $0{,}01$)'
+        answer: '-8.47'
+        numeric: true
+        tolerance: 0.05
+        unit: '%'
+        explanation: 'Il faut le taux réciproque : $\dfrac{1}{1{,}0925}\approx0{,}9153$, soit environ $-8{,}47\ \%$. Ce n''est pas $-9{,}25\ \%$.'
+      - kind: input
+        prompt: '**Étape 7.** En $2024$, $40\ \%$ de la production est exportée et $25\ \%$ de ces exportations partent en Allemagne. Quelle part de la production totale, en pour cent, part en Allemagne ?'
+        answer: '10'
+        numeric: true
+        tolerance: 0.1
+        unit: '%'
+        explanation: 'Proportion d''une proportion : $0{,}40\times0{,}25=0{,}10$, soit $10\ \%$ de la production, c''est-à-dire environ $131$ nacelles.'
+      - kind: mcq
+        prompt: '**Étape 8.** La surface balayée par le rotor est $S=\pi R^{2}$. Exprimer le rayon $R$ en fonction de $S$.'
+        choices:
+        - $R=\sqrt{\dfrac{S}{\pi}}$
+        - $R=\dfrac{S}{\pi}$
+        - $R=\dfrac{\sqrt{S}}{\pi}$
+        - $R=\sqrt{S\pi}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - Il reste le carré à défaire ; il faut prendre la racine carrée.
+        - La racine carrée porte sur **tout** le quotient $\dfrac{S}{\pi}$.
+        - On divise par $\pi$, on ne multiplie pas.
+        explanation: '$S=\pi R^{2}$ donne $R^{2}=\dfrac{S}{\pi}$, puis $R=\sqrt{\dfrac{S}{\pi}}$ car un rayon est positif. Pour $S=5\,000\ \mathrm{m}^{2}$, on obtient $R\approx39{,}9$ m.'
+  - id: mathstc-suites
+    title: Suites et sommes de termes
+    icon: 🔢
+    description: Suites arithmétiques et géométriques, moyennes, terme général, sommes de termes consécutifs et notation $\Sigma$.
+    prerequisites:
+    - mathstc-automatismes
+    lesson: lessons/maths-tle-commun-suites.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Comment reconnaît-on une suite géométrique définie par une relation de récurrence ?
+      choices:
+      - on passe d'un terme au suivant en **multipliant** toujours par le même nombre
+      - on passe d'un terme au suivant en **ajoutant** toujours le même nombre
+      - les termes sont tous positifs
+      - les termes augmentent de plus en plus vite
+      answer: 0
+      feedback:
+      - null
+      - C'est la définition d'une suite **arithmétique**.
+      - Une suite géométrique de raison $0{,}9$ a des termes positifs, mais une suite quelconque aussi ; ce n'est pas un critère.
+      - Une suite géométrique de raison inférieure à $1$ décroît ; l'accélération n'est pas la définition.
+      explanation: '$(u_{n})$ est géométrique de raison $q$ si $u_{n+1}=q\times u_{n}$ pour tout $n$. Elle est arithmétique de raison $r$ si $u_{n+1}=u_{n}+r$.'
+    - type: mcq
+      level: 1
+      prompt: Les nombres $7$ ; $12$ ; $17$ sont-ils trois termes consécutifs d'une suite arithmétique, d'une suite géométrique, des deux ou d'aucune des deux ?
+      choices:
+      - d'une suite arithmétique seulement
+      - d'une suite géométrique seulement
+      - des deux
+      - d'aucune des deux
+      answer: 0
+      feedback:
+      - null
+      - Il faudrait $12^{2}=7\times17$, or $144\neq119$.
+      - La condition géométrique n'est pas vérifiée.
+      - La condition arithmétique est vérifiée, il y a bien une réponse.
+      explanation: 'Test arithmétique par la moyenne arithmétique : $\dfrac{7+17}{2}=12$, c''est bien le terme du milieu. Test géométrique : $12^{2}=144$ et $7\times17=119$, ce n''est pas égal.'
+    - type: mcq
+      level: 2
+      prompt: Les nombres $3$ ; $6$ ; $12$ sont-ils trois termes consécutifs d'une suite arithmétique, d'une suite géométrique, des deux ou d'aucune des deux ?
+      choices:
+      - d'une suite géométrique seulement
+      - d'une suite arithmétique seulement
+      - des deux
+      - d'aucune des deux
+      answer: 0
+      feedback:
+      - null
+      - Les écarts sont $3$ puis $6$, ils ne sont pas constants.
+      - La condition arithmétique n'est pas vérifiée.
+      - La condition géométrique est vérifiée, il y a bien une réponse.
+      explanation: 'Moyenne géométrique : $6^{2}=36$ et $3\times12=36$, l''égalité est vraie, donc les trois nombres sont consécutifs d''une suite géométrique de raison $2$. En revanche $6-3=3$ et $12-6=6$ : la suite n''est pas arithmétique.'
+    - type: grid
+      level: 2
+      prompt: Pour chaque triplet, cocher s'il s'agit de trois termes consécutifs d'une suite arithmétique, d'une suite géométrique, ou d'aucune des deux.
+      rows:
+      - id: t1
+        label: $4$ ; $10$ ; $16$
+      - id: t2
+        label: $4$ ; $10$ ; $25$
+      - id: t3
+        label: $2$ ; $6$ ; $18$
+      - id: t4
+        label: $2$ ; $5$ ; $9$
+      - id: t5
+        label: $1$ ; $3$ ; $9$
+      cols:
+      - id: A
+        label: Arithmétique
+      - id: G
+        label: Géométrique
+      - id: N
+        label: Ni l'une ni l'autre
+      answer:
+      - At1
+      - Gt2
+      - Gt3
+      - Nt4
+      - Gt5
+      cellFeedback:
+        Gt1: $10^{2}=100$ mais $4\times16=64$ ; la suite est arithmétique de raison $6$
+        At2: les écarts valent $6$ puis $15$ ; en revanche $10^{2}=100=4\times25$
+        At3: les écarts valent $4$ puis $12$ ; en revanche $6^{2}=36=2\times18$
+        At4: les écarts valent $3$ puis $4$, ils ne sont pas constants
+        Gt4: $5^{2}=25$ mais $2\times9=18$
+        At5: les écarts valent $2$ puis $6$ ; en revanche $3^{2}=9=1\times9$
+      explanation: 'Deux tests, deux moyennes : $b=\dfrac{a+c}{2}$ pour l''arithmétique, $b^{2}=ac$ pour la géométrique (termes positifs). Le triplet $2$ ; $6$ ; $18$ est le contre-exemple à retenir : géométrique mais pas arithmétique.'
+    - type: mcq
+      level: 2
+      prompt: Une population de $24\,000$ habitants perd $1{,}5\ \%$ par an. On note $u_{n}$ la population après $n$ années. Quelle est la nature et la raison de la suite $(u_{n})$ ?
+      choices:
+      - géométrique de raison $q=0{,}985$
+      - géométrique de raison $q=1{,}015$
+      - géométrique de raison $q=-0{,}015$
+      - arithmétique de raison $r=-360$
+      answer: 0
+      feedback:
+      - null
+      - $1{,}015$ est le coefficient d'une **hausse** de $1{,}5\ \%$.
+      - 'Confusion entre le taux et la raison : la raison est le coefficient multiplicateur $1+t$, pas le taux $t$.'
+      - 'Piège classique : $-360$ est la perte de la **première** année seulement ; les années suivantes, la perte porte sur un effectif plus petit.'
+      explanation: 'Perdre $1{,}5\ \%$ revient à multiplier par $0{,}985$ chaque année : $u_{n+1}=0{,}985\,u_{n}$, avec $u_{0}=24\,000$. La suite est géométrique de raison $0{,}985$.'
+    - type: input
+      level: 2
+      prompt: Avec $u_{0}=24\,000$ et $u_{n+1}=0{,}985\,u_{n}$, calculer $u_{10}$, arrondi à l'unité.
+      answer: '20634'
+      numeric: true
+      tolerance: 5
+      explanation: '$u_{n}=24\,000\times0{,}985^{n}$, donc $u_{10}=24\,000\times0{,}985^{10}\approx24\,000\times0{,}8597\approx20\,634$ habitants. Le premier terme ne change pas de place dans la formule.'
+    - type: mcq
+      level: 2
+      prompt: Une suite arithmétique vérifie $v_{0}=850$ et $v_{n+1}=v_{n}+37$. Quelle est l'expression de $v_{n}$ en fonction de $n$ ?
+      choices:
+      - $v_{n}=850+37n$
+      - $v_{n}=850+37(n-1)$
+      - $v_{n}=850\times37^{n}$
+      - $v_{n}=37+850n$
+      answer: 0
+      feedback:
+      - null
+      - Cette formule vaut quand la suite commence au rang $1$ ; ici le premier terme est $v_{0}$.
+      - Cette écriture correspondrait à une suite **géométrique** de raison $37$.
+      - 'Confusion entre le premier terme et la raison : $850$ est le terme initial, $37$ la raison.'
+      explanation: 'Pour une suite arithmétique de premier terme $v_{0}$ et de raison $r$ : $v_{n}=v_{0}+nr$. Ici $v_{n}=850+37n$, donc $v_{12}=850+444=1\,294$.'
+    - type: input
+      level: 1
+      prompt: Avec $v_{0}=850$ et $v_{n+1}=v_{n}+37$, calculer $v_{12}$.
+      answer: '1294'
+      numeric: true
+      tolerance: 0.5
+      explanation: '$v_{12}=850+37\times12=850+444=1\,294$.'
+    - type: match
+      level: 2
+      prompt: Associer chaque relation de récurrence à l'expression du terme général.
+      pairs:
+      - left: $u_{0}=2$ et $u_{n+1}=u_{n}+5$
+        right: $u_{n}=2+5n$
+      - left: $u_{0}=2$ et $u_{n+1}=5u_{n}$
+        right: $u_{n}=2\times5^{n}$
+      - left: $u_{0}=100$ et $u_{n+1}=0{,}9\,u_{n}$
+        right: $u_{n}=100\times0{,}9^{n}$
+      - left: $u_{0}=40$ et $u_{n+1}=u_{n}-7$
+        right: $u_{n}=40-7n$
+    - type: input
+      level: 2
+      prompt: Calculer la somme $S=1+2+3+\cdots+60$.
+      answer: '1830'
+      numeric: true
+      tolerance: 0.5
+      explanation: '$S=\dfrac{60\times61}{2}=1\,830$. C''est la somme de $60$ termes consécutifs d''une suite arithmétique, soit $60\times\dfrac{1+60}{2}$.'
+    - type: mcq
+      level: 2
+      prompt: Un amphithéâtre compte $22$ rangs. Le premier rang a $18$ places et chaque rang suivant en a $3$ de plus que le précédent. Combien de places compte l'amphithéâtre ?
+      choices:
+      - $1\,089$
+      - $1\,782$
+      - $396$
+      - $1\,122$
+      answer: 0
+      feedback:
+      - null
+      - $22\times81$ suppose que **tous** les rangs ont $81$ places, ce n'est que le dernier.
+      - $22\times18$ suppose que tous les rangs ont $18$ places, ce n'est que le premier.
+      - 'Le dernier rang est le rang n° $22$, il a $18+3\times21=81$ places et non $18+3\times22=84$.'
+      explanation: 'Le dernier rang compte $18+3\times21=81$ places. La somme de $22$ termes consécutifs d''une suite arithmétique vaut $22\times\dfrac{18+81}{2}=22\times49{,}5=1\,089$ places.'
+    - type: input
+      level: 2
+      prompt: Calculer la somme $S=\displaystyle\sum_{k=0}^{9}2^{k}=1+2+4+\cdots+2^{9}$.
+      answer: '1023'
+      numeric: true
+      tolerance: 0.5
+      explanation: 'Somme géométrique de raison $2$ et de $10$ termes : $S=\dfrac{1-2^{10}}{1-2}=2^{10}-1=1\,023$.'
+    - type: mcq
+      level: 2
+      prompt: Quelle est la formule de la somme $1+q+q^{2}+\cdots+q^{n}$ pour $q\neq1$ ?
+      choices:
+      - $\dfrac{1-q^{n+1}}{1-q}$
+      - $\dfrac{1-q^{n}}{1-q}$
+      - $\dfrac{q^{n+1}-1}{q}$
+      - $n\times\dfrac{1+q^{n}}{2}$
+      answer: 0
+      feedback:
+      - null
+      - 'Attention au nombre de termes : de $q^{0}$ à $q^{n}$, il y en a $n+1$, donc l''exposant est $n+1$.'
+      - Le dénominateur est $1-q$, pas $q$.
+      - C'est la formule d'une somme **arithmétique**, avec la demi-somme des extrêmes.
+      explanation: 'Pour une somme géométrique : $\text{premier terme}\times\dfrac{1-q^{\text{nombre de termes}}}{1-q}$. Ici le premier terme est $1$ et il y a $n+1$ termes.'
+    - type: input
+      level: 3
+      prompt: Calculer $S=100\times\dfrac{1-1{,}04^{15}}{1-1{,}04}$, arrondi à $0{,}01$.
+      answer: '2002.36'
+      numeric: true
+      tolerance: 1
+      explanation: '$1{,}04^{15}\approx1{,}800\,94$, donc $S\approx100\times\dfrac{-0{,}800\,94}{-0{,}04}\approx100\times20{,}0236\approx2\,002{,}36$. Les deux signes moins se compensent.'
+    - type: input
+      level: 3
+      prompt: Un artisan verse $1\,200$ € au début de chaque année sur un compte rémunéré à $3\ \%$ par an. Quelle est la valeur acquise juste après le dixième versement plus les intérêts de la dixième année, c'est-à-dire $1\,200\times1{,}03\times\dfrac{1{,}03^{10}-1}{0{,}03}$ ? (arrondir à l'euro)
+      answer: '14169'
+      numeric: true
+      tolerance: 5
+      unit: €
+      explanation: 'Le premier versement travaille $10$ ans ($1\,200\times1{,}03^{10}$), le dernier $1$ an ($1\,200\times1{,}03$). La somme de ces $10$ termes géométriques vaut $1\,200\times1{,}03\times\dfrac{1{,}03^{10}-1}{0{,}03}\approx1\,200\times11{,}8078\approx14\,169$ €, pour $12\,000$ € versés.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre les étapes du calcul d'une somme de termes consécutifs d'une suite géométrique.
+      steps:
+      - Identifier le premier terme de la somme et la raison $q$
+      - Compter le nombre $N$ de termes additionnés
+      - Écrire $\text{premier terme}\times\dfrac{1-q^{N}}{1-q}$
+      - Calculer la puissance $q^{N}$ à la calculatrice
+      - Effectuer le quotient puis conclure avec l'unité
+      explanation: 'L''erreur la plus fréquente porte sur le **nombre de termes** : de $u_{0}$ à $u_{9}$ il y a $10$ termes, pas $9$.'
+    - type: input
+      level: 2
+      prompt: Calculer $\displaystyle\sum_{k=1}^{10}k^{2}=1^{2}+2^{2}+\cdots+10^{2}$.
+      answer: '385'
+      numeric: true
+      tolerance: 0.5
+      explanation: 'La notation $\Sigma$ demande d''additionner les carrés successifs : $1+4+9+16+25+36+49+64+81+100=385$. Ce n''est pas une suite arithmétique ni géométrique, on additionne terme à terme (ou en Python avec un accumulateur).'
+    - type: input
+      level: 2
+      prompt: Calculer $\displaystyle\sum_{k=1}^{5}k^{3}=1^{3}+2^{3}+3^{3}+4^{3}+5^{3}$.
+      answer: '225'
+      numeric: true
+      tolerance: 0.5
+      explanation: '$1+8+27+64+125=225$. Curiosité : $225=15^{2}=(1+2+3+4+5)^{2}$.'
+    - type: input
+      level: 2
+      prompt: Calculer $\displaystyle\sum_{k=1}^{6}\dfrac{1}{k}$, arrondi à $0{,}01$.
+      answer: '2.45'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$1+\dfrac{1}{2}+\dfrac{1}{3}+\dfrac{1}{4}+\dfrac{1}{5}+\dfrac{1}{6}=\dfrac{147}{60}=2{,}45$ exactement. La somme d''inverses est citée par le programme comme exemple d''usage de la notation $\Sigma$.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre les instructions d'une fonction Python qui calcule la somme des $n$ premiers carrés avec un accumulateur.
+      steps:
+      - Définir la fonction en précisant son entrée $n$
+      - Initialiser l'accumulateur $S$ à $0$
+      - Ouvrir une boucle sur $k$ allant de $1$ à $n$
+      - Ajouter $k^{2}$ à l'accumulateur $S$
+      - Une fois la boucle terminée, renvoyer la valeur de $S$
+      explanation: 'C''est la traduction directe de $\displaystyle\sum_{k=1}^{n}k^{2}$ : initialisation, compteur, accumulateur, sortie de boucle. L''instruction de retour doit être **hors** de la boucle, sinon la fonction s''arrête au premier tour.'
+    - type: input
+      level: 3
+      prompt: Une production vaut $400$ unités l'année $0$. Modèle A - elle augmente de $60$ unités par an ; modèle B - elle augmente de $12\ \%$ par an. À partir de quelle année le modèle B dépasse-t-il le modèle A ?
+      answer: '5'
+      numeric: true
+      tolerance: 0.5
+      explanation: 'Modèle A : $400+60n$ ; modèle B : $400\times1{,}12^{n}$. En $n=4$ : $640$ contre $629{,}4$, A est devant. En $n=5$ : $700$ contre $704{,}9$, B passe devant. C''est le sens du couple croissance **linéaire** (suite arithmétique) et croissance **exponentielle** (suite géométrique) : la seconde finit toujours par l''emporter.
+
+
+        {{fig:mathstc-suites-lin-vs-geo}}'
+    - type: mcq
+      level: 2
+      prompt: 'Dans le diagramme en bâtons de la leçon, la suite représentée vérifie $u_{0}=5$ et $u_{n+1}=1{,}2\,u_{n}$. Que vaut $u_{4}$, arrondi à $0{,}01$ ?'
+      choices:
+      - $10{,}37$
+      - $9{,}00$
+      - $12{,}00$
+      - $8{,}64$
+      answer: 0
+      feedback:
+      - null
+      - $9$ correspondrait à quatre ajouts de $1$ ; la suite est géométrique, pas arithmétique.
+      - $12$ serait $5\times1{,}2\times2$, il manque des facteurs.
+      - $8{,}64$ est $u_{3}=5\times1{,}2^{3}$ ; attention au décalage de rang.
+      explanation: '$u_{n}=5\times1{,}2^{n}$, donc $u_{4}=5\times1{,}2^{4}=5\times2{,}0736=10{,}368\approx10{,}37$.
+
+
+        {{fig:mathstc-suite-batons}}'
+    - type: guided
+      level: 3
+      title: La montée en cadence d'un atelier
+      prompt: 'Exercice complet : reconnaître une suite géométrique, terme général, somme de termes consécutifs, comparaison avec un modèle linéaire et regard critique sur le modèle.'
+      intro: 'Un atelier de mécanique produit $480$ pièces au cours du **premier** mois de mise en service. Le responsable constate ensuite une progression régulière de $6\ \%$ par mois.
+
+
+        On note $u_{n}$ la production du mois de rang $n$, avec $u_{0}=480$ pour le premier mois.'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Quelle est la raison $q$ de la suite $(u_{n})$ ?'
+        answer: '1.06'
+        numeric: true
+        tolerance: 0.001
+        explanation: 'Une progression de $6\ \%$ correspond au coefficient multiplicateur $1+0{,}06=1{,}06$. La raison est $q=1{,}06$, pas $0{,}06$.'
+      - kind: mcq
+        prompt: '**Étape 2.** Quelle est l''expression de $u_{n}$ en fonction de $n$ ?'
+        choices:
+        - $u_{n}=480\times1{,}06^{n}$
+        - $u_{n}=480\times1{,}06n$
+        - $u_{n}=480+1{,}06n$
+        - $u_{n}=1{,}06\times480^{n}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - Il manque l'exposant ; multiplier par $1{,}06n$ donnerait une croissance linéaire.
+        - Une suite géométrique se construit par multiplication, pas par addition.
+        - 'Le premier terme et la raison sont échangés : c''est $480$ qui multiplie, et $1{,}06$ qui est élevé à la puissance $n$.'
+        explanation: 'Pour une suite géométrique de premier terme $u_{0}$ et de raison $q$ : $u_{n}=u_{0}\times q^{n}$, donc $u_{n}=480\times1{,}06^{n}$.'
+      - kind: input
+        prompt: '**Étape 3.** Quelle est la production du douzième mois, arrondie à l''unité ?'
+        answer: '911'
+        numeric: true
+        tolerance: 2
+        explanation: 'Le douzième mois est le rang $n=11$ : $u_{11}=480\times1{,}06^{11}\approx480\times1{,}898\,3\approx911$ pièces. Le décalage entre « douzième mois » et « rang $11$ » est le piège de l''exercice.'
+      - kind: input
+        prompt: '**Étape 4.** Quelle est la production **totale** des douze premiers mois, arrondie à l''unité ?'
+        answer: '8098'
+        numeric: true
+        tolerance: 5
+        explanation: 'Somme de $12$ termes géométriques : $S=480\times\dfrac{1-1{,}06^{12}}{1-1{,}06}=480\times\dfrac{1{,}012\,20}{0{,}06}\approx480\times16{,}870\approx8\,098$ pièces.'
+      - kind: mcq
+        prompt: '**Étape 5.** Comment qualifie-t-on ce type de croissance dans le langage courant ?'
+        choices:
+        - une croissance exponentielle
+        - une croissance linéaire
+        - une croissance constante
+        - une croissance arithmétique
+        answer:
+        - 0
+        feedback:
+        - null
+        - La croissance linéaire correspond à une suite **arithmétique**, où l'on ajoute toujours la même quantité.
+        - La production augmente, elle n'est pas constante ; c'est le **taux** qui est constant.
+        - Une suite arithmétique ajoute une quantité fixe ; ici on multiplie par un coefficient fixe.
+        explanation: 'Suite géométrique de raison supérieure à $1$ = croissance exponentielle ; suite arithmétique de raison positive = croissance linéaire. C''est le rapprochement explicitement demandé par le programme.'
+      - kind: input
+        prompt: '**Étape 6.** Un second atelier produit aussi $480$ pièces le premier mois, mais gagne $30$ pièces par mois. Quelle est sa production totale sur douze mois ?'
+        answer: '7740'
+        numeric: true
+        tolerance: 2
+        explanation: 'Suite arithmétique : le douzième mois donne $480+30\times11=810$ pièces, et la somme vaut $12\times\dfrac{480+810}{2}=12\times645=7\,740$ pièces, soit $358$ de moins que le premier atelier.'
+      - kind: mcq
+        prompt: '**Étape 7.** Le modèle géométrique prévoit $u_{35}\approx3\,689$ pièces au trente-sixième mois. Quel regard critique porter ?'
+        choices:
+        - Une croissance de $6\ \%$ par mois ne peut pas se poursuivre indéfiniment, la capacité de l'atelier finira par la limiter
+        - Le calcul est faux, une suite géométrique ne peut pas dépasser son premier terme
+        - Le modèle devient linéaire au bout de deux ans
+        - La raison $1{,}06$ devient négative au-delà de $30$ mois
+        answer:
+        - 0
+        feedback:
+        - null
+        - Le calcul est correct ; $480\times1{,}06^{35}\approx3\,689$.
+        - Rien dans le modèle ne le prévoit ; c'est la réalité physique qui impose une limite, pas les mathématiques.
+        - Une raison est une constante, elle ne change pas au fil des rangs.
+        explanation: 'Le modèle est mathématiquement valable pour tout $n$, mais il décrit une production multipliée par $7{,}7$ en trois ans. Machines, locaux et personnel imposent un plafond : un modèle exponentiel n''est valable que sur un horizon limité.'
+# FIN
