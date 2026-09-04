@@ -168,6 +168,38 @@ oscillation ±25° (`rock`), va-et-vient horizontal ou vertical de ±10 unités 
 Déclenchement : survol de la souris ou toucher sur la figure (bascule), et un bouton
 « ▶ Voir les liaisons bouger » dans les leçons qui anime toutes les figures de la page.
 
+### Schémas cinématiques animés
+
+`content.animations[<id de figure>]` décrit le mouvement des classes d'équivalence d'un schéma
+(source : bloc `animation:` du YAML du mécanisme). Le SVG du schéma porte `data-mech="<id de figure>"`
+et chaque tracé d'une classe est enveloppé dans `<g class="mech" data-class="E1">` (classement par
+couleur au build). Spécification :
+
+```jsonc
+{ "mecanisme": "bielle-manivelle", "bbox": [x0, y0, x1, y1], "border": 4, "duration": 4,
+  "legende": "…",
+  "classes": {
+    "E0": { "motion": "fixed" },
+    "E1": { "motion": "rotate", "center": [0, 0], "turns": 1 },            // ou "amplitude": deg, "phase"
+    "E2": { "motion": "coupler", "crank": "E1", "a": [0.9, 1.5], "slider": "E3", "b": [5, 0] },
+    "E3": { "motion": "slider", "dir": [1, 0], "coupler": "E2" },
+    "E4": { "motion": "translate", "dir": [0, 1], "amplitude": 0.4, "phase": 0.25 },
+    "E5": { "motion": "follow", "of": "E3", "then": { "motion": "translate", … } } } }
+```
+
+Coordonnées en **cm** dans le repère du dessin TikZ ; conversion vers les unités utilisateur du SVG :
+`k = 72 / 2.54`, `X = border + (x − x0)·k`, `Y = border + (y1 − y)·k` (l'axe y est inversé). Le temps
+`t ∈ [0, 1)` parcourt un cycle de `duration` secondes ; `rotate` avec `turns` = rotation continue
+(sens trigonométrique : angle SVG négatif), sinon oscillation sinusoïdale `amplitude·sin(2π(t + phase))`
+(degrés) ; `translate` = déplacement sinusoïdal `amplitude·sin(2π(t + phase))` (cm) le long de `dir` ;
+`follow` = même transformation que la classe `of`, composée avec `then` ; `coupler` (bielle) : le point
+`a` (dessiné, solidaire de `crank`) suit la manivelle, le point `b` reste sur la droite de `slider`
+(direction `dir`) à distance `|ab|` de `a(t)`, la bielle est déplacée rigidement de `a→b` vers `a(t)→b(t)` ;
+`slider` : translation `b(t) − b` calculée par sa bielle. Les transformations sont des matrices affines
+appliquées (attribut `transform="matrix(…)"`) aux groupes `g.mech[data-class]`. Déclenchement identique
+aux symboles (survol, toucher, bouton de leçon) ; boucle `requestAnimationFrame` uniquement pendant la
+lecture ; la `legende` est affichée sous la figure pendant la lecture.
+
 ## 5. Leçon (Markdown restreint)
 
 Titres `#`/`##`/`###`, paragraphes, `**gras**`, `*italique*`, listes `- `, tableaux

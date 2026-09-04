@@ -148,3 +148,37 @@ questions:
   - 'Non : ce serait la trajectoire du point B (le piston) ; A appartient à la manivelle qui tourne.'
   - 'Non : la manivelle a une longueur fixe, A reste à distance constante de O : c''est un cercle.'
   - 'Non : A tourne avec la manivelle ; seul O est fixe.'
+animation:
+  bbox:
+  - -1.3
+  - -1.6
+  - 7.8
+  - 2.3
+  border: 4
+  duration: 4
+  classes:
+    E0:
+      motion: fixed
+    E1:
+      motion: rotate
+      center:
+      - 0
+      - 0
+      turns: 1
+    E2:
+      motion: coupler
+      crank: E1
+      a:
+      - 0.9
+      - 1.5
+      slider: E3
+      b:
+      - 5
+      - 0
+    E3:
+      motion: slider
+      dir:
+      - 1
+      - 0
+      coupler: E2
+  legende: La manivelle (E1) tourne, la bielle (E2) a un mouvement plan, le piston (E3) translate.

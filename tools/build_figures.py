@@ -97,6 +97,28 @@ RED = re.compile(r"rgb\(88\.2\d*%,\s*21\.5\d*%,\s*9\.8\d*%\)")   # solideA = RGB
 CENTER_Y_PT = 2 + 1.3 * 72 / 2.54   # bord 2 pt + 1,3 cm : ordonnée du centre A dans les figures de symboles
 
 
+PALETTE = {"solideA": (225, 55, 25), "solideB": (45, 75, 205), "solideC": (225, 105, 180), "solideD": (235, 150, 20),
+           "solideE": (20, 150, 90), "solideF": (110, 60, 180), "black": (0, 0, 0)}
+MECH = {}   # nom de figure de schéma → {id de classe: regex de sa couleur}
+
+
+def color_regex(rgb):
+    """Regex de la couleur telle qu'écrite par pdftocairo : rgb(88.235294%,21.568627%,9.803922%)."""
+    parts = []
+    for c in rgb:
+        pct = c * 100 / 255
+        parts.append(re.escape(f"{pct:.6f}"[:4]) + r"\d*%")
+    return re.compile(r"rgb\(" + r",\s*".join(parts) + r"\)")
+
+
+def load_mechanisms():
+    for path in sorted((CONTENT / "mecanismes").glob("*.yaml")):
+        m = yaml.safe_load(path.read_text(encoding="utf-8"))
+        if not m.get("animation"):
+            continue
+        MECH[m["figures"]["schema"]] = {c["id"]: color_regex(PALETTE.get(c.get("couleur", "black"), (0, 0, 0))) for c in m["classes"]}
+
+
 def generate_symbol_sources(liaisons):
     """Écrit un .tex par vue de chaque liaison + la planche. Retourne la liste des fichiers."""
     GEN.mkdir(parents=True, exist_ok=True)
@@ -199,6 +221,18 @@ def postprocess_svg(text, prefix):
         text = text.replace(f'href="#{i}"', f'href="#{prefix}--{i}"')
         text = text.replace(f'url(#{i})', f'url(#{prefix}--{i})')
     text = text.replace("<svg ", f'<svg class="fig" role="img" data-fig="{prefix}" ', 1)
+    if prefix in MECH:
+        # schéma cinématique animable : chaque tracé prend le groupe de sa classe d'équivalence (par couleur)
+        classes = MECH[prefix]
+
+        def wrap(m):
+            attrs = m.group(2)
+            for cid, rx in classes.items():
+                if rx.search(attrs):
+                    return f'<g class="mech" data-class="{cid}"><{m.group(1)}{attrs}/></g>'
+            return m.group(0)
+        text = re.sub(r"<(path|circle|use)\b([^>]*)/>", wrap, text)
+        text = text.replace("<svg ", f'<svg data-mech="{prefix}" ', 1)
     if prefix in ANIMS:
         # symbole animable : le solide 1 (rouge) reçoit la classe s1, le centre A est donné en unités utilisateur
         # chaque élément rouge est enveloppé dans un groupe (un transform CSS sur l'élément lui-même
@@ -227,6 +261,7 @@ def main():
         d.mkdir(parents=True, exist_ok=True)
 
     liaisons = yaml.safe_load((CONTENT / "liaisons.yaml").read_text(encoding="utf-8"))["liaisons"]
+    load_mechanisms()
     sources = generate_symbol_sources(liaisons)
     sources += [p for p in sorted(TIKZ.glob("*.tex")) if not p.name.startswith("_")]
     if args.only:

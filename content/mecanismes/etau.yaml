@@ -181,3 +181,34 @@ questions:
   - 'Non : la vis tourne dans l''écrou (liaison hélicoïdale), ils ont un mouvement relatif.'
   - 'Non : le matériau ne compte pas ; seul le mouvement relatif compte.'
   - 'Non : la proximité sur le dessin ne compte pas ; seul le mouvement relatif compte.'
+animation:
+  bbox:
+  - -0.2
+  - -0.6
+  - 8.2
+  - 4.2
+  border: 4
+  duration: 4
+  classes:
+    E1:
+      motion: fixed
+    E3:
+      motion: translate
+      dir:
+      - 1
+      - 0
+      amplitude: 0.35
+    E2:
+      motion: follow
+      of: E3
+    E4:
+      motion: follow
+      of: E3
+      then:
+        motion: translate
+        dir:
+        - 0
+        - 1
+        amplitude: 0.4
+        phase: 0.25
+  legende: La vis (E3) se visse dans l'écrou et entraîne le mors mobile (E2) ; la barre (E4) coulisse dans la tête de vis.

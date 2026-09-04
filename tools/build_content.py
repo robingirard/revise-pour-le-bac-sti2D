@@ -1235,6 +1235,7 @@ def build():
         "units": units,
         "items": b.items,
         "annales": annales,
+        "animations": {m["figures"]["schema"]: dict(m["animation"], mecanisme=m["id"]) for m in mecanismes if m.get("animation")},
     }
     return content
 

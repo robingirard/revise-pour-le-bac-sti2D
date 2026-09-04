@@ -3,6 +3,7 @@
 \usetikzlibrary{backgrounds}
 \begin{document}
 \begin{tikzpicture}[x=1cm,y=1cm, solide/.style={line width=1.4pt, line cap=round, line join=round}]
+\useasboundingbox (-0.2,-0.6) rectangle (8.2,4.2);   % boîte fixe : sert à l'animation (cm → SVG)
 \colorlet{E1}{solideB}\colorlet{E2}{solideA}\colorlet{E3}{solideE}\colorlet{E4}{solideD}
 % Symboles (posés d'abord pour définir leurs coordonnées)
 \pic[s1=E2, s2=E1, liens=false, name=gA] at (4.5,1.0) {glissiere face};        % E2 coulisse dans E1

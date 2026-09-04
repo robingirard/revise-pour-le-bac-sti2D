@@ -150,3 +150,26 @@ questions:
   - 'Non : le contact avec la pièce serrée ne change pas la classe ; ce qui compte, c''est le mouvement relatif patin/vis.'
   - 'Non : le matériau ne compte pas pour les classes d''équivalence.'
   - 'Non : la taille ne compte pas pour les classes d''équivalence.'
+animation:
+  bbox:
+  - -0.4
+  - -1.0
+  - 8.9
+  - 3.8
+  border: 4
+  duration: 4
+  classes:
+    E1:
+      motion: fixed
+    E2:
+      motion: fixed
+    E3:
+      motion: translate
+      dir:
+      - 1
+      - 0
+      amplitude: 0.35
+    E4:
+      motion: follow
+      of: E3
+  legende: La vis (E3) avance et recule dans le coulisseau ; le patin (E4) la suit sans tourner.
