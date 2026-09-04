@@ -1242,7 +1242,22 @@ def write_dist(content):
     if APP.exists():
         shutil.copytree(APP, DIST, dirs_exist_ok=True,
                         ignore=shutil.ignore_patterns("dev", "tests", "content.js", "*.py", "package.json", ".gitignore", ".DS_Store", "node_modules"))
-    text = json.dumps(content, ensure_ascii=False, separators=(",", ":"))
+    # Figures : un fichier SVG par figure, chargé à la demande par l'appli (content.json reste léger),
+    # plus un index {id: {w, h, bytes}} (dimensions en pt, pour réserver la place avant chargement).
+    figdir = DIST / "figures"
+    figdir.mkdir(exist_ok=True)
+    for old in figdir.glob("*.svg"):
+        if old.stem not in content["figures"]:
+            old.unlink()
+    index = {}
+    for fid, svg in content["figures"].items():
+        (figdir / f"{fid}.svg").write_text(svg, encoding="utf-8")
+        w = re.search(r'\bwidth="([\d.]+)pt"', svg)
+        h = re.search(r'\bheight="([\d.]+)pt"', svg)
+        index[fid] = {"w": float(w.group(1)) if w else 0, "h": float(h.group(1)) if h else 0, "bytes": len(svg.encode("utf-8"))}
+    (figdir / "index.json").write_text(json.dumps(index, separators=(",", ":")), encoding="utf-8")
+    light = dict(content, figures={}, figureIndex=index)
+    text = json.dumps(light, ensure_ascii=False, separators=(",", ":"))
     (DIST / "content.json").write_text(text, encoding="utf-8")
     (DIST / "content.js").write_text("window.CONTENT = " + text + ";\n", encoding="utf-8")
 

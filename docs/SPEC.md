@@ -89,8 +89,14 @@ Règle : **tout ce qui est dans `dist/` et `figures/build/` est régénéré** p
 ```
 
 `dist/content.js` contient exactement le même objet, sous la forme
-`window.CONTENT = {...};` (permet l'ouverture en `file://`). L'appli charge
-`content.js` via `<script>` et n'a donc pas besoin de `fetch`.
+`window.CONTENT = {...};`. **Les figures ne sont plus incluses** dans `content.json`
+(`"figures": {}`) : chaque figure est un fichier `dist/figures/<id>.svg` chargé à la demande
+par l'appli (`fetch`), avec `dist/figures/index.json` = `{ "<id>": { "w", "h", "bytes" } }`
+(dimensions en pt, pour réserver l'espace avant chargement ; aussi présent dans
+`content.figureIndex`). L'appli garde la compatibilité : si `content.figures[id]` existe,
+elle l'insère directement. Le service worker met en cache les figures au fur et à mesure ;
+un bouton des Réglages « Préparer le mode hors-ligne » télécharge toutes les figures listées
+dans `index.json` (avec une barre de progression).
 
 ## 4. Types d'exercices (payloads)
 

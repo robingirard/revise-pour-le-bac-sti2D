@@ -41,8 +41,8 @@
                              1.09/cAir/{Air peu ventilé --- 0,130},
                              0.66/cLaine/{Laine de verre --- \textbf{5,400}},
                              0.23/cPlatre/{Plaque de plâtre --- 0,040}} {
-  \node[etiq] (e) at (-1.05,\yl) {\txt};
-  \draw[rappel] (-1.00,\yl) -- (\cible); }
+  \node[etiq] (e) at (-0.85,\yl) {\txt};
+  \draw[rappel] (-0.80,\yl) -- (\cible); }
 
 %% flux thermique de l'intérieur (chaud) vers l'extérieur (froid)
 \draw[-{Stealth[length=9pt, width=8pt]}, line width=3.2pt, solideD] (fluxA) -- (fluxB);
@@ -64,12 +64,12 @@
 \resth{-1.38}{0.42}{0,130}{white}
 \resth{-0.72}{0.95}{\textbf{5,400}}{solideE!25}
 \resth{0.47}{0.42}{0,040}{white}
-\node[font=\small] at (1.32,\yf) {$=$};
+\node[font=\small] at (1.20,\yf) {$=$};
 \node[draw=solideD, line width=0.8pt, rounded corners=2pt, fill=solideD!8,
-      font=\small, inner sep=4pt, anchor=west] at (1.55,\yf)
+      font=\scriptsize, inner sep=4pt, anchor=west] at (1.38,\yf)
   {$R_{\text{th}} = 5{,}906$ m$^2\cdot$K$\cdot$W$^{-1}$};
 
-\node[font=\scriptsize, anchor=north] at (0.40,-1.62)
-  {couches accolées = résistances \textbf{en série} : elles s'additionnent};
+\node[font=\scriptsize, anchor=north, align=center] at (-0.40,-1.62)
+  {couches accolées = résistances \textbf{en série} :\\elles s'additionnent};
 \end{tikzpicture}
 \end{document}
