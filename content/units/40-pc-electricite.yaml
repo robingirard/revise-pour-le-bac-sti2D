@@ -1,0 +1,1043 @@
+units:
+- id: pc-electricite
+  matiere: physique
+  title: 'Physique : énergie électrique'
+  description: Chaîne énergétique, puissance et rendement, tension et intensité, effet Joule, régime sinusoïdal, transport et protection (physique-chimie 1re et Tle).
+  skills:
+  - id: pc-energie-puissance
+    title: Énergie, puissance, rendement
+    icon: ⚡
+    description: Formes et sources d'énergie, chaîne énergétique, puissance moyenne et instantanée, énergie, rendement, unités J et kWh.
+    prerequisites: []
+    lesson: lessons/pc-energie-puissance.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Quelles sont les **quatre formes d'énergie** distinguées par le cours ?
+      choices:
+      - Chimique, mécanique, thermique, nucléaire
+      - Chimique, électrique, thermique, nucléaire
+      - Cinétique, potentielle, thermique, électrique
+      - Solaire, éolienne, hydraulique, géothermique
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''électricité est un **mode de transfert** de l''énergie, pas une forme d''énergie dans la classification du cours.'
+      - 'Non : l''énergie cinétique et l''énergie potentielle sont les deux composantes de la seule énergie **mécanique**.'
+      - 'Non : ce sont des **sources** d''énergie renouvelables, pas des formes d''énergie.'
+      explanation: Chimique (liaisons chimiques), mécanique (cinétique + potentielle), thermique (température) et nucléaire (fission des noyaux).
+    - type: mcq
+      level: 1
+      prompt: 'Dans le système international d''unités, toute **énergie** s''exprime en :'
+      choices:
+      - joule (J)
+      - watt (W)
+      - kilowattheure (kWh)
+      - newton (N)
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le watt est l''unité de **puissance**, c''est-à-dire d''une énergie divisée par une durée.'
+      - 'Non : le kilowattheure est bien une unité d''énergie, mais ce n''est pas l''unité du système international ($1$ Wh $= 3\,600$ J).'
+      - 'Non : le newton est l''unité de force.'
+      explanation: « Toute énergie s'exprime dans le système international d'unités en joule, noté J. »
+    - type: mcq
+      level: 1
+      prompt: Dans quelle unité toute **puissance** est-elle exprimée ?
+      choices:
+      - Le watt (W)
+      - Le joule (J)
+      - Le kilowattheure (kWh)
+      - Le volt (V)
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le joule est l''unité d''énergie. Puissance = énergie ÷ durée.'
+      - 'Non : le kilowattheure est une unité d''**énergie** ($1$ kWh $= 3{,}6 \times 10^{6}$ J).'
+      - 'Non : le volt est l''unité de tension électrique.'
+      explanation: 'Encadré du cours de Tle : « Toute puissance est exprimée en watt (W). »'
+    - type: order
+      level: 1
+      prompt: 'Une batterie alimente un moteur électrique qui entraîne un disque en rotation. Remettez la **chaîne énergétique** dans l''ordre.
+
+        {{fig:pc-chaine-energetique}}'
+      steps:
+      - Énergie chimique (batterie)
+      - Transfert électrique
+      - Moteur électrique (convertisseur)
+      - Transfert mécanique
+      - Énergie cinétique (disque en rotation)
+      explanation: 'Le moteur perd en plus de l''énergie par transfert **thermique** vers l''environnement : une flèche supplémentaire part du convertisseur.'
+    - type: mcq
+      level: 1
+      prompt: 'Comment lit-on une **chaîne énergétique** ?
+
+        {{fig:pc-chaine-energetique}}'
+      choices:
+      - Les formes d'énergie sont encadrées, le convertisseur est entouré, la nature du transfert est écrite au-dessus des flèches
+      - Les formes d'énergie sont entourées, le convertisseur est encadré
+      - Toutes les cases sont des formes d'énergie ; les flèches n'ont pas de nom
+      - Les flèches portent la valeur de l'énergie en joules
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est l''inverse. Rectangle = forme d''énergie ; ellipse = convertisseur.'
+      - 'Non : chaque flèche porte la **nature du transfert** (électrique, mécanique, thermique…).'
+      - 'Non : la chaîne énergétique est qualitative ; elle nomme les formes et les transferts.'
+      explanation: Formes d'énergie **encadrées**, convertisseur **entouré**, nature des transferts **au-dessus des flèches**.
+    - type: mcq
+      level: 1
+      prompt: 'L''électricité transportée du producteur au consommateur par les lignes haute et basse tension est un transfert d''énergie de nature :'
+      choices:
+      - électrique
+      - thermique
+      - mécanique
+      - par rayonnement
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le transfert thermique va toujours du corps le plus chaud vers le corps le plus froid.'
+      - 'Non : le transfert mécanique a lieu lors d''un déplacement ou du travail de forces.'
+      - 'Non : le rayonnement est l''émission d''ondes par un corps (le Soleil vers la Terre).'
+      explanation: 'Les quatre modes de transfert du cours : thermique, par rayonnement, mécanique et électrique.'
+    - type: grid
+      level: 1
+      prompt: Pour chaque source d'énergie, cochez si elle est **renouvelable** ou **non renouvelable**.
+      rows:
+      - id: bois
+        label: Bois (biomasse)
+      - id: petrole
+        label: Pétrole
+      - id: vent
+        label: Vent (éolien)
+      - id: nucleaire
+        label: Nucléaire (fission)
+      - id: geo
+        label: Géothermie
+      cols:
+      - id: R
+        label: Renouvelable
+      - id: NR
+        label: Non renouvelable
+      answer:
+      - Rbois
+      - NRpetrole
+      - Rvent
+      - NRnucleaire
+      - Rgeo
+      cellFeedback:
+        Rpetrole: le pétrole est une énergie fossile, fabriquée sur des temps géologiques
+        NRbois: la biomasse se renouvelle à l'échelle humaine
+        NRvent: le vent est une source renouvelable
+        NRgeo: la géothermie exploite la température du sous-sol, de façon renouvelable
+        Rnucleaire: le cours classe le nucléaire parmi les sources **non** renouvelables
+      explanation: 'Renouvelable = exploitable de façon **illimitée à l''échelle humaine** : biomasse, hydraulique, éolien, solaire, géothermie. Non renouvelable : nucléaire et énergies fossiles (pétrole, gaz, charbon).'
+    - type: input
+      level: 1
+      prompt: Combien de joules valent **1 wattheure** (1 Wh) ?
+      answer: '3600'
+      numeric: true
+      tolerance: 1
+      unit: J
+      explanation: $1$ Wh $= 1$ W $\times\ 1$ h $= 1$ W $\times\ 3\,600$ s $= 3\,600$ J.
+    - type: mcq
+      level: 2
+      prompt: 'Quelle est l''expression du **rendement** $\eta$ d''un convertisseur d''énergie ?
+
+        {{fig:pc-bilan-convertisseur}}'
+      choices:
+      - $\eta = E_{\text{utile}} / E_{\text{reçue}}$
+      - $\eta = E_{\text{reçue}} / E_{\text{utile}}$
+      - $\eta = E_{\text{utile}} \times E_{\text{reçue}}$
+      - $\eta = E_{\text{reçue}} - E_{\text{utile}}$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : ce rapport serait supérieur à 1, or le rendement est toujours compris entre 0 et 100 %.'
+      - 'Non : un produit de deux énergies n''a pas de sens ; le rendement est un **rapport**, sans unité.'
+      - 'Non : cette différence donne les **pertes** (en joules), pas le rendement.'
+      explanation: '$\eta = E_{\text{utile}} / E_{\text{reçue}}$, sans unité (ou en %), compris entre 0 et 100 % : les deux énergies doivent être exprimées dans la même unité.'
+    - type: input
+      level: 2
+      prompt: Un convertisseur reçoit $E_{\text{reçue}} = 240$ J et restitue $E_{\text{utile}} = 180$ J. Calculer son rendement en pourcentage.
+      answer: '75'
+      numeric: true
+      tolerance: 1
+      unit: '%'
+      explanation: '$\eta = 180 / 240 = 0{,}75$, soit 75 %. Erreur classique : inverser le rapport ($240/180 = 133$ %, impossible).'
+    - type: input
+      level: 2
+      prompt: Un appareil consomme une énergie $\Delta E = 1{,}8$ kWh pendant $\Delta t = 3{,}0$ h. Calculer sa **puissance moyenne** en watts.
+      answer: '600'
+      numeric: true
+      tolerance: 5
+      unit: W
+      explanation: '$P = \Delta E / \Delta t = 1{,}8 / 3{,}0 = 0{,}60$ kW $= 600$ W. Erreur classique : multiplier ($1{,}8 \times 3{,}0 = 5{,}4$).'
+    - type: input
+      level: 2
+      prompt: 'Sur ce relevé de consommation, l''énergie passe de 0 kWh à 12 kWh entre $t = 0$ h et $t = 6$ h. Quelle est la **puissance instantanée** durant cette phase ?
+
+        {{fig:pc-energie-temps}}'
+      answer: '2'
+      numeric: true
+      tolerance: 0.05
+      unit: kW
+      explanation: '$p(t)$ est la **pente** de la courbe $e(t)$ : $(12 - 0)/(6 - 0) = 2$ kW. Erreur classique : multiplier ($12 \times 6 = 72$) ou lire directement 12.'
+    - type: mcq
+      level: 2
+      prompt: 'Toujours sur ce relevé, que vaut la puissance instantanée entre $t = 6$ h et $t = 12$ h ?
+
+        {{fig:pc-energie-temps}}'
+      choices:
+      - 0 kW, car la courbe est un palier horizontal (pente nulle)
+      - 12 kW, car l'énergie vaut 12 kWh sur tout l'intervalle
+      - 2 kW, car la puissance est la même sur les 24 heures
+      - 1 kW, car 12 kWh divisés par 12 h
+      answer: 0
+      feedback:
+      - null
+      - 'Non : on confond la **valeur** de l''énergie avec la puissance. La puissance est la pente de $e(t)$, pas son ordonnée.'
+      - 'Non : la puissance vaut 2 kW de 0 à 6 h puis de 12 à 18 h, mais elle est **nulle** sur les paliers.'
+      - 'Non : c''est une moyenne calculée depuis l''origine ; la question porte sur la puissance **instantanée**.'
+      explanation: 'Pente nulle sur le palier : aucune énergie supplémentaire n''est consommée, donc $p(t) = 0$ kW.'
+    - type: input
+      level: 2
+      prompt: Un téléviseur OLED de puissance 40 W fonctionne pendant 1 heure. Quelle énergie consomme-t-il, en joules ?
+      answer: '144000'
+      numeric: true
+      tolerance: 500
+      unit: J
+      explanation: $\Delta E = P \times \Delta t = 40 \times 3\,600 = 144\,000$ J, soit 144 kJ — ou encore $40$ W $\times\ 1$ h $= 40$ Wh.
+    - type: mcq
+      level: 2
+      prompt: À combien de joules correspond **1 kWh** ?
+      choices:
+      - $3{,}6 \times 10^{6}$ J
+      - $3\,600$ J
+      - $1\,000$ J
+      - $3{,}6 \times 10^{3}$ J
+      answer: 0
+      feedback:
+      - null
+      - 'Non : $3\,600$ J $= 1$ **Wh** ; il reste à multiplier par 1 000.'
+      - 'Non : le préfixe kilo ne suffit pas, il faut aussi convertir l''heure en secondes.'
+      - 'Non : $3{,}6 \times 10^{3}$ J $= 3\,600$ J $= 1$ Wh, pas 1 kWh.'
+      explanation: $1$ kWh $= 1\,000$ W $\times\ 3\,600$ s $= 3{,}6 \times 10^{6}$ J.
+    - type: input
+      level: 3
+      prompt: Un moteur électrique absorbe une puissance de 750 W et fournit 600 W de puissance mécanique utile. Quelle puissance est **perdue** (dissipée dans l'environnement) ?
+      answer: '150'
+      numeric: true
+      tolerance: 2
+      unit: W
+      explanation: 'L''énergie se conserve : absorbée = utile + pertes, donc pertes $= 750 - 600 = 150$ W. Le rendement vaut $\eta = 600/750 = 0{,}80$, soit 80 %.'
+    - type: input
+      level: 3
+      prompt: Une éolienne fournit une puissance moyenne de 2,0 MW pendant 6,0 h. Quelle énergie produit-elle, en kWh ?
+      answer: '12000'
+      numeric: true
+      tolerance: 100
+      unit: kWh
+      explanation: '$2{,}0$ MW $= 2\,000$ kW ; $\Delta E = P \times \Delta t = 2\,000 \times 6{,}0 = 12\,000$ kWh. Erreur classique : oublier de convertir les MW en kW (on trouverait 12 kWh).'
+    - type: mcq
+      level: 3
+      prompt: 'Sur ce relevé, l''énergie consommée sur les 24 heures vaut 24 kWh. Que vaut la **puissance moyenne** sur la journée ?
+
+        {{fig:pc-energie-temps}}'
+      choices:
+      - 1 kW
+      - 2 kW
+      - 24 kW
+      - 576 kW
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 2 kW est la puissance **instantanée** pendant les deux rampes ; sur les paliers elle est nulle.'
+      - 'Non : 24 kWh est une **énergie** ; il faut la diviser par la durée.'
+      - 'Non : il faut diviser par la durée, pas multiplier ($24 \times 24 = 576$).'
+      explanation: $P = \Delta E / \Delta t = 24 / 24 = 1$ kW. La puissance moyenne (1 kW) est bien inférieure à la puissance instantanée des phases actives (2 kW), car l'appareil ne consomme que la moitié du temps.
+  - id: pc-tension-intensite
+    title: Tension et intensité
+    icon: 🔌
+    description: Régimes continu et variable, valeur moyenne et valeur efficace, période et fréquence, conventions générateur et récepteur, loi d'Ohm, lois des mailles et des nœuds.
+    prerequisites:
+    - pc-energie-puissance
+    lesson: lessons/pc-tension-intensite.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'En France, la tension du réseau domestique est :'
+      choices:
+      - sinusoïdale alternative, de valeur efficace 230 V et de fréquence 50 Hz
+      - sinusoïdale alternative, d'amplitude 230 V et de fréquence 50 Hz
+      - continue, de valeur 230 V
+      - sinusoïdale alternative, de valeur efficace 325 V et de fréquence 60 Hz
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 230 V est la valeur **efficace** ; l''amplitude vaut $U_m = 230\sqrt{2} \approx 325$ V.'
+      - 'Non : la tension du réseau change de signe 100 fois par seconde ; elle est **alternative**.'
+      - 'Non : 325 V est l''amplitude, et la fréquence du réseau français est de 50 Hz (60 Hz aux États-Unis).'
+      explanation: 'Réseau français : sinusoïdal alternatif, $U_{\text{eff}} = 230$ V ($\pm\ 10$ %), $f = 50$ Hz.'
+    - type: input
+      level: 1
+      prompt: La tension du réseau a une fréquence $f = 50$ Hz. Calculer sa **période** $T$, en millisecondes.
+      answer: '20'
+      numeric: true
+      tolerance: 0.5
+      unit: ms
+      explanation: '$T = 1/f = 1/50 = 0{,}020$ s $= 20$ ms. Erreur classique : répondre 50 (c''est la fréquence) ou 0,02 en oubliant de convertir en ms.'
+    - type: mcq
+      level: 1
+      prompt: 'En **convention récepteur**, comment sont fléchées la tension $u(t)$ et l''intensité $i(t)$ ?
+
+        {{fig:pc-convention-generateur-recepteur}}'
+      choices:
+      - Dans le sens opposé
+      - Dans le même sens
+      - Perpendiculairement l'une à l'autre
+      - Cela dépend du signe de la puissance
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la convention **générateur** qui flèche $u(t)$ et $i(t)$ dans le même sens.'
+      - 'Non : les deux flèches sont portées par le circuit, il n''y a pas de perpendicularité.'
+      - 'Non : la convention est choisie **avant** le calcul ; c''est ensuite le signe de $P$ qui dit si le dipôle reçoit ou fournit.'
+      explanation: 'Convention générateur (cercle) : même sens. Convention récepteur (rectangle) : sens opposé.'
+    - type: mcq
+      level: 1
+      prompt: 'Quel dipôle se flèche naturellement en **convention générateur** ?
+
+        {{fig:pc-convention-generateur-recepteur}}'
+      choices:
+      - Une pile
+      - Un dipôle ohmique
+      - Un condensateur
+      - Une bobine
+      answer: 0
+      feedback:
+      - null
+      - 'Non : un dipôle ohmique est un **récepteur** ; il se flèche en convention récepteur.'
+      - 'Non : le condensateur est cité par le cours comme exemple de **récepteur**.'
+      - 'Non : dans le circuit d''étude, la bobine est l''un des récepteurs.'
+      explanation: 'Générateur (pile, etc.) : symbole rond, flèches dans le même sens. Récepteur (dipôle ohmique, condensateur, bobine) : symbole rectangulaire, flèches opposées.'
+    - type: mcq
+      level: 1
+      prompt: Quelle est l'expression de la **loi d'Ohm** pour un dipôle ohmique fléché en convention récepteur ?
+      choices:
+      - $u_R(t) = R \times i_R(t)$
+      - $u_R(t) = R / i_R(t)$
+      - $i_R(t) = R \times u_R(t)$
+      - $R = u_R(t) \times i_R(t)$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la loi d''Ohm est un **produit**, pas un quotient.'
+      - 'Non : c''est l''inverse. On a $i_R = u_R / R$.'
+      - 'Non : le produit $u_R \times i_R$ est une **puissance** (en watts), pas une résistance.'
+      explanation: $u_R = R \times i_R$ avec $u_R$ en volts (V), $i_R$ en ampères (A) et $R$ en ohms ($\Omega$).
+    - type: input
+      level: 1
+      prompt: Un dipôle ohmique de résistance $R = 100\ \Omega$ est parcouru par un courant continu $I = 0{,}25$ A. Calculer la tension $U$ à ses bornes.
+      answer: '25'
+      numeric: true
+      tolerance: 0.5
+      unit: V
+      explanation: '$U = R \times I = 100 \times 0{,}25 = 25$ V. Erreur classique : diviser ($100/0{,}25 = 400$).'
+    - type: grid
+      level: 2
+      prompt: Pour chaque dipôle, cochez la convention de fléchage utilisée dans le cours.
+      rows:
+      - id: pile
+        label: Une pile
+      - id: ohm
+        label: Un dipôle ohmique
+      - id: cond
+        label: Un condensateur
+      - id: bob
+        label: Une bobine
+      cols:
+      - id: G
+        label: Convention générateur
+      - id: R
+        label: Convention récepteur
+      answer:
+      - Gpile
+      - Rohm
+      - Rcond
+      - Rbob
+      cellFeedback:
+        Rpile: 'la pile est le **générateur** du circuit : tension et intensité dans le même sens'
+        Gohm: 'le dipôle ohmique est un récepteur : flèches en sens opposé'
+        Gcond: le condensateur est cité comme récepteur
+        Gbob: la bobine est l'un des récepteurs du circuit d'étude
+      explanation: Le cours flèche en convention générateur la pile, et en convention récepteur le dipôle ohmique, le condensateur et la bobine.
+    - type: input
+      level: 2
+      prompt: 'La tension du réseau est sinusoïdale alternative ($U_{\text{moy}} = 0$ V) de valeur efficace $U_{\text{eff}} = 230$ V. Calculer son **amplitude** $U_m$.
+
+        {{fig:pc-sinusoide-umax-ueff}}'
+      answer: '325'
+      numeric: true
+      tolerance: 3
+      unit: V
+      explanation: '$U_{\text{eff}} = U_m/\sqrt{2}$, donc $U_m = U_{\text{eff}} \times \sqrt{2} = 230 \times 1{,}414 = 325$ V. Erreurs classiques : **diviser** par $\sqrt{2}$ (163 V) ou multiplier par 2 (460 V).'
+    - type: input
+      level: 2
+      prompt: Une tension sinusoïdale alternative ($U_{\text{moy}} = 0$ V) a une amplitude $U_m = 12$ V. Calculer sa valeur efficace $U_{\text{eff}}$ (2 décimales).
+      answer: '8.49'
+      numeric: true
+      tolerance: 0.1
+      unit: V
+      explanation: '$U_{\text{eff}} = U_m/\sqrt{2} = 12/1{,}414 = 8{,}49$ V. Erreur classique : multiplier par $\sqrt{2}$ (on trouverait 17,0 V, supérieur à l''amplitude : impossible).'
+    - type: input
+      level: 2
+      prompt: Une tension sinusoïdale a une composante continue $U_{\text{moy}} = 5{,}0$ V et une amplitude $U_m = 4{,}0$ V. Calculer sa valeur efficace $U_{\text{eff}}$ (2 décimales).
+      answer: '5.74'
+      numeric: true
+      tolerance: 0.1
+      unit: V
+      explanation: '$U_{\text{eff}} = \sqrt{U_{\text{moy}}^{2} + U_m^{2}/2} = \sqrt{25 + 8} = \sqrt{33} = 5{,}74$ V. Erreur classique : oublier le facteur 2 sous $U_m^{2}$ ($\sqrt{41} = 6{,}40$ V).'
+    - type: mcq
+      level: 2
+      prompt: 'Dans ce circuit, le condensateur et la bobine sont en parallèle. Quelle relation traduit la **loi des nœuds** ?
+
+        {{fig:pc-loi-mailles-noeuds}}'
+      choices:
+      - $i_R(t) = i_C(t) + i_L(t)$
+      - $i_C(t) = i_R(t) + i_L(t)$
+      - $u_G(t) = u_R(t) + u_C(t) + u_L(t)$
+      - $i_R(t) \times i_C(t) = i_L(t)$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est $i_R$ qui **arrive** au nœud et se partage entre le condensateur et la bobine.'
+      - 'Non : c''est une relation entre **tensions**, donc une loi des mailles.'
+      - 'Non : la loi des nœuds est une **addition** d''intensités, jamais un produit.'
+      explanation: 'Au nœud, le courant $i_R$ se divise : $i_R(t) = i_C(t) + i_L(t)$.'
+    - type: mcq
+      level: 2
+      prompt: 'Dans le même circuit, quelle relation traduit la **loi des mailles** pour la maille générateur – dipôle ohmique – condensateur ?
+
+        {{fig:pc-loi-mailles-noeuds}}'
+      choices:
+      - $u_G(t) - u_R(t) - u_C(t) = 0$
+      - $u_G(t) + u_R(t) + u_C(t) = 0$
+      - $u_G(t) - u_R(t) - u_C(t) - u_L(t) = 0$
+      - $i_G(t) - i_R(t) - i_C(t) = 0$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les signes dépendent du sens des flèches. Le générateur est fléché en convention générateur, les récepteurs en convention récepteur : les tensions des récepteurs sont **retranchées**.'
+      - 'Non : la bobine n''est pas dans cette maille ; elle est en parallèle avec le condensateur ($u_C - u_L = 0$).'
+      - 'Non : une loi des mailles porte sur des **tensions**, pas des intensités.'
+      explanation: 'Les trois mailles du circuit : $u_G - u_R - u_L = 0$ ; $u_G - u_R - u_C = 0$ ; $u_C - u_L = 0$.'
+    - type: mcq
+      level: 2
+      prompt: Dans quel cas peut-on appliquer les lois des mailles et des nœuds directement aux **valeurs efficaces** $U_{\text{eff}}$ et $I_{\text{eff}}$ ?
+      choices:
+      - Uniquement si les récepteurs se limitent à des dipôles ohmiques
+      - Toujours, quelle que soit la nature des récepteurs
+      - Uniquement en régime continu
+      - 'Jamais : ces lois ne concernent que les valeurs instantanées'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : avec un condensateur ou une bobine, les tensions sont déphasées et leurs valeurs efficaces ne s''additionnent pas.'
+      - 'Non : en régime continu la question ne se pose pas, valeur efficace et valeur continue se confondent.'
+      - 'Non : le cours autorise explicitement ce calcul dans un cas particulier.'
+      explanation: 'Restriction du cours : « Les lois des mailles et des nœuds peuvent s''appliquer pour les valeurs efficaces uniquement si les récepteurs se limitent à des dipôles ohmiques. »'
+    - type: input
+      level: 3
+      prompt: 'Un oscillogramme montre une tension sinusoïdale telle que $U_{\max} = 8{,}0$ V et $U_{\min} = -2{,}0$ V. Calculer sa valeur moyenne $U_{\text{moy}}$.
+
+        {{fig:pc-sinusoide-umax-ueff}}'
+      answer: '3'
+      numeric: true
+      tolerance: 0.2
+      unit: V
+      explanation: '$U_{\text{moy}} = (U_{\max} + U_{\min})/2 = (8{,}0 - 2{,}0)/2 = 3{,}0$ V, et l''amplitude vaut $U_m = (U_{\max} - U_{\min})/2 = 5{,}0$ V. *Ces deux relations, indispensables pour exploiter un oscillogramme, ne sont pas écrites dans le livre : à retenir en plus.*'
+    - type: mcq
+      level: 3
+      prompt: Un élève calcule l'amplitude de la tension du réseau et écrit $U_m = U_{\text{eff}}/\sqrt{2} = 163$ V. Où est l'erreur ?
+      choices:
+      - 'Il faut **multiplier** par $\sqrt{2}$ : l''amplitude est toujours supérieure à la valeur efficace'
+      - Il faut diviser par 2 et non par $\sqrt{2}$
+      - Il n'y a pas d'erreur
+      - Il fallait ajouter la composante continue
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le facteur est bien $\sqrt{2}$, mais dans l''autre sens.'
+      - 'Non : 163 V est inférieur à 230 V, alors que les crêtes dépassent forcément la valeur efficace.'
+      - 'Non : la tension du réseau est **alternative** : $U_{\text{moy}} = 0$ V.'
+      explanation: '$U_{\text{eff}} = U_m/\sqrt{2}$ donc $U_m = U_{\text{eff}} \times \sqrt{2} = 325$ V. Retenir l''ordre de grandeur : les crêtes du réseau atteignent 325 V.'
+    - type: input
+      level: 3
+      prompt: Un dipôle ohmique de résistance $R = 50\ \Omega$ est branché sur le réseau ($U_{\text{eff}} = 230$ V). Calculer l'intensité efficace $I_{\text{eff}}$ qui le traverse.
+      answer: '4.6'
+      numeric: true
+      tolerance: 0.1
+      unit: A
+      explanation: 'La loi d''Ohm s''applique aux valeurs efficaces pour un dipôle ohmique : $I_{\text{eff}} = U_{\text{eff}}/R = 230/50 = 4{,}6$ A. Erreur classique : utiliser $U_m = 325$ V (on trouverait 6,5 A, la valeur **crête** du courant).'
+    - type: mcq
+      level: 3
+      prompt: Un oscilloscope affiche une tension sinusoïdale alternative d'amplitude 5,0 V. Que va indiquer un voltmètre mesurant la valeur efficace ?
+      choices:
+      - 3,54 V
+      - 5,00 V
+      - 7,07 V
+      - 2,50 V
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 5,0 V est la valeur **crête** lue à l''oscilloscope, pas la valeur efficace.'
+      - 'Non : $5{,}0 \times \sqrt{2} = 7{,}07$ V : on a multiplié au lieu de diviser.'
+      - 'Non : le facteur est $\sqrt{2} \approx 1{,}414$, pas 2.'
+      explanation: $U_{\text{eff}} = U_m/\sqrt{2} = 5{,}0/1{,}414 = 3{,}54$ V.
+  - id: pc-puissance-electrique
+    title: Puissance et énergie électriques
+    icon: 💡
+    description: P = U I, énergie électrique, effet Joule P = R I², bilan de puissance et lecture d'une facture.
+    prerequisites:
+    - pc-tension-intensite
+    lesson: lessons/pc-puissance-electrique.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'En régime continu, la puissance électrique reçue par un dipôle vaut :'
+      choices:
+      - $P = U \times I$
+      - $P = U / I$
+      - $P = U + I$
+      - $P = I / U$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : $U/I$ est une **résistance** (en ohms), d''après la loi d''Ohm.'
+      - 'Non : on n''additionne jamais des grandeurs d''unités différentes (V et A).'
+      - 'Non : $I/U$ est l''inverse d''une résistance.'
+      explanation: $P = U \times I$ avec $P$ en watts (W), $U$ en volts (V) et $I$ en ampères (A).
+    - type: mcq
+      level: 1
+      prompt: Quelle relation lie l'énergie électrique $\Delta E$, la puissance $P$ et la durée $\Delta t$ ?
+      choices:
+      - $\Delta E = P \times \Delta t$
+      - $\Delta E = P / \Delta t$
+      - $\Delta E = \Delta t / P$
+      - $\Delta E = P + \Delta t$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : $P/\Delta t$ n''a pas de sens physique ici ; c''est $P = \Delta E/\Delta t$ qu''on inverse.'
+      - 'Non : ce rapport donnerait des secondes par watt.'
+      - 'Non : on n''additionne pas des watts et des secondes.'
+      explanation: '$\Delta E = P \times \Delta t$ : en joules si $\Delta t$ est en secondes, en wattheures si $\Delta t$ est en heures ($1$ Wh $= 3\,600$ J).'
+    - type: mcq
+      level: 1
+      prompt: 'Pour un dipôle ohmique de résistance $R$ parcouru par un courant $I_R$, la puissance dissipée par **effet Joule** vaut :'
+      choices:
+      - $P = R \times I_R^{2}$
+      - $P = R \times I_R$
+      - $P = R^{2} \times I_R$
+      - $P = I_R^{2} / R$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : $R \times I_R$ est une **tension** (loi d''Ohm), pas une puissance.'
+      - 'Non : c''est l''intensité qui est au carré, pas la résistance.'
+      - 'Non : cette expression est fausse ; l''autre forme correcte est $P = U_R^{2}/R$.'
+      explanation: $P = U_R \times I_R = (R \times I_R) \times I_R = R \times I_R^{2}$.
+    - type: mcq
+      level: 1
+      prompt: Quelle autre expression de la puissance dissipée par effet Joule s'obtient en éliminant l'intensité ?
+      choices:
+      - $P = U_R^{2} / R$
+      - $P = U_R \times R$
+      - $P = R / U_R^{2}$
+      - $P = U_R / R^{2}$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : $U_R \times R$ n''a pas d''unité physique cohérente (V·Ω).'
+      - 'Non : c''est l''inverse ; on trouverait des ohms par volt carré.'
+      - 'Non : c''est $U_R$ qui est au carré, pas $R$.'
+      explanation: $P = U_R \times I_R = U_R \times \dfrac{U_R}{R} = \dfrac{U_R^{2}}{R}$.
+    - type: input
+      level: 1
+      prompt: Une lampe est traversée par un courant continu $I = 0{,}50$ A sous une tension $U = 230$ V. Calculer sa puissance.
+      answer: '115'
+      numeric: true
+      tolerance: 2
+      unit: W
+      explanation: $P = U \times I = 230 \times 0{,}50 = 115$ W.
+    - type: grid
+      level: 1
+      prompt: Associez chaque grandeur électrique à son unité.
+      rows:
+      - id: P
+        label: Puissance électrique P
+      - id: E
+        label: Énergie électrique ΔE
+      - id: U
+        label: Tension U
+      - id: I
+        label: Intensité I
+      cols:
+      - id: W
+        label: watt (W)
+      - id: J
+        label: joule (J)
+      - id: V
+        label: volt (V)
+      - id: A
+        label: ampère (A)
+      answer:
+      - WP
+      - JE
+      - VU
+      - AI
+      cellFeedback:
+        JP: le joule est une énergie ; la puissance est une énergie **par seconde**
+        WE: le watt est une puissance ; l'énergie s'exprime en joules (ou en Wh)
+        AU: l'ampère mesure l'intensité, pas la tension
+        VI: le volt mesure la tension, pas l'intensité
+      explanation: $P$ en watts (W), $\Delta E$ en joules (J) — ou en Wh —, $U$ en volts (V), $I$ en ampères (A).
+    - type: input
+      level: 2
+      prompt: Un dipôle ohmique de résistance $R = 100\ \Omega$ est soumis à une tension continue $U_R = 20$ V. Calculer la puissance dissipée par effet Joule.
+      answer: '4'
+      numeric: true
+      tolerance: 0.1
+      unit: W
+      explanation: '$P = U_R^{2}/R = 20^{2}/100 = 400/100 = 4$ W. Erreurs classiques : écrire $P = U_R \times R = 2\,000$ W, ou oublier le carré ($20/100 = 0{,}2$ W).'
+    - type: input
+      level: 2
+      prompt: Un dipôle ohmique de résistance $R = 50\ \Omega$ est parcouru par un courant de valeur efficace $I_{\text{eff}} = 2{,}0$ A pendant $\Delta t = 60$ s. Calculer l'énergie dissipée par effet Joule.
+      answer: '12000'
+      numeric: true
+      tolerance: 100
+      unit: J
+      explanation: '$\Delta E = R \times I_{\text{eff}}^{2} \times \Delta t = 50 \times 2{,}0^{2} \times 60 = 12\,000$ J (12 kJ). Erreur classique : oublier le **carré** de l''intensité ($50 \times 2 \times 60 = 6\,000$ J).'
+    - type: mcq
+      level: 2
+      prompt: En régime variable, quelles valeurs de tension et d'intensité faut-il utiliser pour calculer l'énergie dissipée par effet Joule dans un dipôle ohmique ?
+      choices:
+      - Les valeurs **efficaces** $U_{\text{eff}}$ et $I_{\text{eff}}$
+      - Les valeurs maximales $U_m$ et $I_m$
+      - Les valeurs moyennes, qui sont nulles en alternatif
+      - Les valeurs instantanées $u(t)$ et $i(t)$, prises à $t = 0$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : avec les amplitudes on trouverait une énergie **deux fois trop grande** ($U_m^{2} = 2\,U_{\text{eff}}^{2}$).'
+      - 'Non : une tension alternative a une valeur moyenne nulle, et pourtant un radiateur chauffe bien.'
+      - 'Non : la valeur à un instant donné ne représente pas l''ensemble de la période.'
+      explanation: '$\Delta E = R \times I_{\text{eff}}^{2} \times \Delta t = \dfrac{U_{\text{eff}}^{2}}{R} \times \Delta t$ : c''est justement l''intérêt de la valeur efficace.'
+    - type: input
+      level: 2
+      prompt: Un radiateur de puissance 2 000 W fonctionne sur le réseau 230 V. Calculer l'intensité efficace qu'il appelle (1 décimale).
+      answer: '8.7'
+      numeric: true
+      tolerance: 0.2
+      unit: A
+      explanation: '$I = P/U = 2\,000/230 = 8{,}7$ A. Erreur classique : multiplier ($2\,000 \times 230 = 460\,000$).'
+    - type: mcq
+      level: 2
+      prompt: 'Un dipôle est fléché en **convention récepteur** et on mesure une puissance moyenne $P = -15$ W. Que peut-on conclure ?
+
+        {{fig:pc-convention-generateur-recepteur}}'
+      choices:
+      - 'Le dipôle **fournit** de l''énergie électrique : il se comporte en générateur'
+      - Le dipôle **reçoit** de l'énergie électrique
+      - 'La mesure est fausse : une puissance ne peut pas être négative'
+      - Le dipôle n'échange aucune énergie
+      answer: 0
+      feedback:
+      - null
+      - 'Non : en convention récepteur, c''est $P > 0$ qui signifie que le dipôle reçoit de l''énergie.'
+      - 'Non : une puissance **algébrique** peut être négative ; son signe indique le sens réel du transfert.'
+      - 'Non : une puissance nulle correspondrait à $P = 0$ W.'
+      explanation: 'Convention récepteur : $P > 0$ le dipôle **reçoit**, $P < 0$ il **fournit**. Convention générateur : c''est l''inverse.'
+    - type: input
+      level: 2
+      prompt: Un radiateur de 2 000 W fonctionne 3,0 h. Le kilowattheure est facturé 0,25 €. Calculer le coût de ce fonctionnement, en euros (2 décimales).
+      answer: '1.5'
+      numeric: true
+      tolerance: 0.05
+      unit: €
+      explanation: '$\Delta E = 2{,}0$ kW $\times\ 3{,}0$ h $= 6{,}0$ kWh ; coût $= 6{,}0 \times 0{,}25 = 1{,}50$ €. Erreur classique : oublier de convertir les 2 000 W en 2,0 kW.'
+    - type: input
+      level: 2
+      prompt: Un générateur alimente trois récepteurs de puissances moyennes $P_1 = 60$ W, $P_2 = 250$ W et $P_3 = 1{,}2$ kW. Quelle est la puissance moyenne $P_G$ fournie par le générateur, en watts ?
+      answer: '1510'
+      numeric: true
+      tolerance: 10
+      unit: W
+      explanation: '$P_G = P_1 + P_2 + P_3 = 60 + 250 + 1\,200 = 1\,510$ W. Erreur classique : additionner $60 + 250 + 1{,}2$ sans convertir les kW en W.'
+    - type: input
+      level: 3
+      prompt: 'Le même générateur (trois récepteurs : 60 W, 250 W et 1,2 kW) fonctionne pendant 2,0 h. Quelle énergie fournit-il, en kWh (2 décimales) ?'
+      answer: '3.02'
+      numeric: true
+      tolerance: 0.05
+      unit: kWh
+      explanation: $P_G = 1\,510$ W $= 1{,}510$ kW ; $\Delta E_G = P_G \times \Delta t = 1{,}510 \times 2{,}0 = 3{,}02$ kWh. L'énergie fournie par le générateur est la somme des énergies reçues par les récepteurs, toutes exprimées dans la **même unité**.
+    - type: input
+      level: 3
+      prompt: Une résistance chauffante de $R = 46\ \Omega$ est branchée sur le réseau ($U_{\text{eff}} = 230$ V). Calculer la puissance qu'elle dissipe.
+      answer: '1150'
+      numeric: true
+      tolerance: 20
+      unit: W
+      explanation: '$P = U_{\text{eff}}^{2}/R = 230^{2}/46 = 52\,900/46 = 1\,150$ W. Vérification : $I_{\text{eff}} = 230/46 = 5{,}0$ A et $P = R\,I_{\text{eff}}^{2} = 46 \times 25 = 1\,150$ W.'
+    - type: input
+      level: 3
+      prompt: 'Un câble de résistance $R = 0{,}50\ \Omega$ est parcouru par un courant d''intensité efficace $I = 10$ A. Calculer la puissance perdue par effet Joule dans ce câble.
+
+        {{fig:pc-pertes-ligne}}'
+      answer: '50'
+      numeric: true
+      tolerance: 2
+      unit: W
+      explanation: '$P_{\text{pertes}} = R \times I^{2} = 0{,}50 \times 10^{2} = 50$ W. Si l''on divise l''intensité par 10 (1,0 A), les pertes sont divisées par 100 (0,50 W) : c''est tout l''intérêt du transport à haute tension.'
+    - type: mcq
+      level: 3
+      prompt: 'Pourquoi transporte-t-on l''électricité sur de longues distances avec des lignes à **haute tension** ?
+
+        {{fig:pc-pertes-ligne}}'
+      choices:
+      - Pour transporter la même puissance avec une intensité plus faible, ce qui réduit les pertes $R \times I^{2} \times \Delta t$
+      - Parce qu'une tension élevée réduit directement la résistance des câbles
+      - Parce que les pertes par effet Joule sont proportionnelles à la tension, qu'il faut donc augmenter
+      - Parce que l'énergie se conserve mieux quand la tension est élevée
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la résistance d''un câble dépend de sa longueur, de sa section et du matériau, pas de la tension appliquée.'
+      - 'Non, contresens : les pertes valent $R \times I^{2} \times \Delta t$, elles dépendent de l''**intensité**.'
+      - 'Non : l''énergie se conserve toujours ; ce sont les pertes par effet Joule qu''on cherche à réduire.'
+      explanation: À puissance $P = U \times I$ transportée fixée, augmenter $U$ permet de diminuer $I$ ; comme les pertes valent $R\,I^{2}\Delta t$, diviser $I$ par 10 divise les pertes par 100.
+  - id: pc-sinusoidal-transport
+    title: Régime sinusoïdal et transport
+    icon: 🗼
+    description: Puissance active P = U I cos φ, puissance apparente S = U I, facteur de puissance ; transformateur, pertes en ligne, protection des personnes et des matériels.
+    prerequisites:
+    - pc-puissance-electrique
+    lesson: lessons/pc-sinusoidal-transport.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Dans quelle unité s'exprime la **puissance apparente** $S$ ?
+      choices:
+      - Le volt-ampère (V·A)
+      - Le watt (W)
+      - Le joule (J)
+      - 'Aucune : $S$ est sans unité'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le watt est l''unité de la puissance **active** $P$.'
+      - 'Non : le joule est une unité d''énergie.'
+      - 'Non : c''est le **facteur de puissance** $k = P/S$ qui est sans unité.'
+      explanation: $S = U \times I$ s'exprime en volt-ampère (V·A) et se mesure avec un multimètre TRUE RMS ; $P$ s'exprime en watt (W) et se mesure au wattmètre (4 bornes).
+    - type: mcq
+      level: 1
+      prompt: 'En régime sinusoïdal, la **puissance active** d''un dipôle vaut :'
+      choices:
+      - $P = U \times I \times \cos\varphi$
+      - $P = U \times I$
+      - $P = U \times I \times \sin\varphi$
+      - $P = \dfrac{U \times I}{\cos\varphi}$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : $U \times I$ est la puissance **apparente** $S$ ; il manque le facteur $\cos\varphi$.'
+      - 'Non : c''est $\cos\varphi$ et non $\sin\varphi$ qui intervient dans la puissance active.'
+      - 'Non : on **multiplie** par $\cos\varphi$ ; $P$ est toujours inférieure ou égale à $S$.'
+      explanation: $P = \langle p(t)\rangle = U \times I \times \cos\varphi$, avec $U$ et $I$ les valeurs **efficaces** et $\varphi$ le déphasage entre $u(t)$ et $i(t)$.
+    - type: mcq
+      level: 1
+      prompt: 'Que vaut le **facteur de puissance** $k$ d''un récepteur ?
+
+        {{fig:pc-dephasage-u-i}}'
+      choices:
+      - $k = P/S = \cos\varphi$, sans unité, compris entre 0 et 1
+      - $k = S/P$, compris entre 1 et l'infini
+      - $k = P \times S$, en W·V·A
+      - $k = \varphi$, en degrés
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est l''inverse ; le facteur de puissance ne dépasse jamais 1.'
+      - 'Non : un produit de deux puissances n''a pas de sens ici ; $k$ est un **rapport**, sans unité.'
+      - 'Non : $k$ est le **cosinus** du déphasage, pas le déphasage lui-même.'
+      explanation: '$k = P/S = \cos\varphi$ : $k = 1$ pour un dipôle purement résistif, $k = 0$ pour un dipôle purement capacitif ou inductif.'
+    - type: mcq
+      level: 1
+      prompt: Quel est le calibre du **disjoncteur différentiel** exigé pour la protection des personnes ?
+      choices:
+      - 30 mA
+      - 10 mA
+      - 0,5 mA
+      - 1 A
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 10 mA est le seuil de **non-lâcher** (contraction musculaire), pas le calibre du disjoncteur.'
+      - 'Non : 0,5 mA est le seuil de **perception** (sensation très faible).'
+      - 'Non : 1 A correspond à l''**arrêt du cœur** : il serait beaucoup trop tard pour déclencher.'
+      explanation: Le disjoncteur différentiel de 30 mA ouvre le circuit dès qu'un courant de fuite supérieur à 30 mA est détecté ; 30 mA est aussi le seuil de paralysie respiratoire au-delà de 500 ms.
+    - type: mcq
+      level: 1
+      prompt: 'À quoi sert un **transformateur** électrique ?
+
+        {{fig:pc-transformateur}}'
+      choices:
+      - À diminuer ou augmenter une tension alternative
+      - À transformer une tension alternative en tension continue
+      - À diminuer la résistance des lignes
+      - À stocker l'énergie électrique
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est le rôle d''un redresseur ; un transformateur ne fonctionne qu''en **alternatif**.'
+      - 'Non : la résistance d''une ligne dépend de sa longueur, de sa section et du matériau.'
+      - 'Non : l''énergie électrique ne se stocke pas sur le réseau, c''est justement le problème.'
+      explanation: Constitué d'un noyau de fer doux et de deux enroulements (primaire et secondaire), il élève la tension après la production et l'abaisse avant la distribution. Il assure aussi une **isolation galvanique**.
+    - type: mcq
+      level: 1
+      prompt: Quels dispositifs protègent le **matériel** contre les courts-circuits et les surintensités ?
+      choices:
+      - Les fusibles et les disjoncteurs magnéto-thermiques
+      - La prise de terre et le disjoncteur différentiel de 30 mA
+      - Les varistances seules
+      - Le transformateur d'isolement
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la prise de terre et le différentiel 30 mA protègent les **personnes** contre les courants de fuite.'
+      - 'Non : les varistances, branchées en dérivation, protègent contre les **surtensions**.'
+      - 'Non : l''isolation galvanique est un effet utile du transformateur, mais ce n''est pas un organe de coupure.'
+      explanation: 'Personnes : prise de terre + disjoncteur différentiel 30 mA. Matériel : fusibles + disjoncteurs magnéto-thermiques (court-circuit, surintensité) et varistances en dérivation (surtension).'
+    - type: mcq
+      level: 2
+      prompt: Quel est le facteur de puissance d'un dipôle **purement résistif**, puis d'un dipôle purement capacitif ou purement inductif ?
+      choices:
+      - $\cos\varphi = 1$ pour le résistif ; $\cos\varphi = 0$ dans les deux autres cas
+      - $\cos\varphi = 0$ pour le résistif ; $\cos\varphi = 1$ dans les deux autres cas
+      - $\cos\varphi = 1$ dans les trois cas
+      - $\cos\varphi = 0{,}5$ pour le capacitif et l'inductif
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est l''inverse. Un dipôle résistif convertit toute la puissance apparente en puissance active.'
+      - 'Non : un condensateur ou une bobine parfaits ne dissipent **aucune** énergie : $P = 0$ W.'
+      - 'Non : pour $\varphi = \pm 90^{\circ}$, $\cos\varphi = 0$ exactement.'
+      explanation: 'Résistif : $\varphi = 0$, $\cos\varphi = 1$, $P = U I = R I^{2}$. Capacitif ou inductif pur : $\varphi = \pm 90^{\circ}$, $\cos\varphi = 0$, $P = 0$ W. *Attention : le livre (p. 134) attribue $\varphi = +90^{\circ}$ au capacitif et $\varphi = -90^{\circ}$ à l''inductif ; avec sa propre convention $i(t) = I\sqrt{2}\cos(\omega t - \varphi)$, les deux colonnes sont interverties. Cela ne change ni $\cos\varphi$ ni $P$.*'
+    - type: input
+      level: 2
+      prompt: Un moteur monophasé est alimenté sous $U = 230$ V et absorbe $I = 5{,}0$ A avec $\cos\varphi = 0{,}80$. Calculer sa **puissance active** $P$.
+      answer: '920'
+      numeric: true
+      tolerance: 10
+      unit: W
+      explanation: '$P = U \times I \times \cos\varphi = 230 \times 5{,}0 \times 0{,}80 = 920$ W. Erreur classique : oublier $\cos\varphi$ (on trouverait 1 150, qui est la puissance **apparente** en V·A).'
+    - type: input
+      level: 2
+      prompt: Le même moteur ($U = 230$ V, $I = 5{,}0$ A). Calculer sa **puissance apparente** $S$.
+      answer: '1150'
+      numeric: true
+      tolerance: 10
+      unit: V·A
+      explanation: '$S = U \times I = 230 \times 5{,}0 = 1\,150$ V·A. La puissance apparente ne fait pas intervenir $\cos\varphi$ : elle mesure ce que la ligne doit « supporter ».'
+    - type: input
+      level: 2
+      prompt: Un récepteur a une puissance active $P = 920$ W et une puissance apparente $S = 1\,150$ V·A. Calculer son facteur de puissance $k$ (2 décimales).
+      answer: '0.8'
+      numeric: true
+      tolerance: 0.02
+      unit: ''
+      explanation: '$k = P/S = 920/1\,150 = 0{,}80$, sans unité. Erreur classique : calculer $S/P = 1{,}25$, impossible car $k \leq 1$.'
+    - type: input
+      level: 2
+      prompt: 'Un transformateur possède $N_1 = 1\,000$ spires au primaire et $N_2 = 50$ spires au secondaire. Il est alimenté sous $U_1 = 230$ V. Calculer la tension efficace $U_2$ (1 décimale).
+
+        {{fig:pc-transformateur}}'
+      answer: '11.5'
+      numeric: true
+      tolerance: 0.3
+      unit: V
+      explanation: '$m = N_2/N_1 = 50/1\,000 = 0{,}050$ ; $U_2 = m \times U_1 = 0{,}050 \times 230 = 11{,}5$ V. C''est un transformateur **abaisseur** ($m < 1$). Erreur classique : inverser le rapport ($m = 20$, on trouverait 4 600 V).'
+    - type: input
+      level: 2
+      prompt: 'Le même transformateur ($m = 0{,}050$) débite $I_2 = 4{,}0$ A au secondaire. Calculer l''intensité efficace $I_1$ au primaire (2 décimales).
+
+        {{fig:pc-transformateur}}'
+      answer: '0.2'
+      numeric: true
+      tolerance: 0.02
+      unit: A
+      explanation: '$m = I_1/I_2$ donc $I_1 = m \times I_2 = 0{,}050 \times 4{,}0 = 0{,}20$ A. Abaisser la tension revient à **élever** le courant au secondaire : $U_1 I_1 = 230 \times 0{,}20 = 46$ V·A $= U_2 I_2 = 11{,}5 \times 4{,}0$.'
+    - type: order
+      level: 2
+      prompt: 'Remettez dans l''ordre le parcours de l''électricité, de la production jusqu''au logement, avec les niveaux de tension du cours.
+
+        {{fig:pc-reseau-transport}}'
+      steps:
+      - Production (centrale hydraulique, éolienne, thermique ou nucléaire)
+      - 'Poste de la centrale : 20 kV'
+      - 'Transport sur lignes très haute tension : 400 kV'
+      - 'Poste de transformation : 225 kV / 90 kV / 63 kV'
+      - 'Poste source : 20 kV'
+      - 'Distribution aux habitations : 400 V / 230 V'
+      explanation: Après la production, des transformateurs **élèvent** la tension pour le transport (limitation des pertes) puis, avant la distribution, d'autres l'**abaissent** jusqu'à 400 V / 230 V.
+    - type: mcq
+      level: 2
+      prompt: 'À partir de quelle intensité traversant le corps humain atteint-on le « seuil de non-lâcher » (contraction musculaire) ?
+
+        {{fig:pc-securite-abaque}}'
+      choices:
+      - 10 mA
+      - 0,5 mA
+      - 30 mA
+      - 50/75 mA
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 0,5 mA est le seuil de **perception** (sensation très faible).'
+      - 'Non : 30 mA est le seuil de **paralysie respiratoire** au-delà de 500 ms.'
+      - 'Non : 50/75 mA correspond au seuil de **fibrillation cardiaque irréversible**.'
+      explanation: 'Ordre croissant des seuils : 0,5 mA perception → 10 mA non-lâcher → 30 mA paralysie respiratoire (> 500 ms) → 50/75 mA fibrillation irréversible → 1 A arrêt du cœur.'
+    - type: mcq
+      level: 3
+      prompt: Deux dipôles absorbent la même puissance apparente $S = 1\,000$ V·A sous 230 V. Le premier est purement résistif, le second a $\cos\varphi = 0{,}50$. Que peut-on dire ?
+      choices:
+      - Ils appellent la même intensité (4,3 A), mais le second ne convertit que 500 W au lieu de 1 000 W
+      - Le second appelle deux fois moins de courant que le premier
+      - Les deux convertissent 1 000 W de puissance active
+      - Le second a un meilleur facteur de puissance
+      answer: 0
+      feedback:
+      - null
+      - 'Non : $I = S/U = 1\,000/230 \approx 4{,}3$ A dans les deux cas, puisque $S$ est identique.'
+      - 'Non : $P = S \times \cos\varphi$, soit 1 000 W pour le premier ($k = 1$) mais 500 W pour le second.'
+      - 'Non : $k = 0{,}50$ est **moins bon** que $k = 1$.'
+      explanation: $S = U \times I$ fixe l'intensité en ligne ; $P = S \times \cos\varphi$ fixe la puissance réellement convertie. Un mauvais facteur de puissance fait circuler du courant (et donc des pertes en ligne) sans produire de puissance active.
+    - type: input
+      level: 3
+      prompt: 'Une ligne transporte une puissance $P = 20$ kW sous une tension $U = 20$ kV (on prend $\cos\varphi = 1$). Calculer l''intensité $I$ dans la ligne.
+
+        {{fig:pc-pertes-ligne}}'
+      answer: '1'
+      numeric: true
+      tolerance: 0.05
+      unit: A
+      explanation: $I = P/U = 20\,000/20\,000 = 1{,}0$ A. Sous 230 V, la même puissance demanderait $20\,000/230 = 87$ A.
+    - type: input
+      level: 3
+      prompt: 'Cette ligne a une résistance $R = 2{,}0\ \Omega$ et est parcourue par $I = 1{,}0$ A. Calculer la puissance perdue par effet Joule dans la ligne.
+
+        {{fig:pc-pertes-ligne}}'
+      answer: '2'
+      numeric: true
+      tolerance: 0.2
+      unit: W
+      explanation: $P_{\text{pertes}} = R \times I^{2} = 2{,}0 \times 1{,}0^{2} = 2{,}0$ W, soit 0,01 % des 20 kW transportés. Sous 230 V ($I = 87$ A), on perdrait $2{,}0 \times 87^{2} \approx 15$ kW, c'est-à-dire les trois quarts de la puissance transportée.
+    - type: input
+      level: 3
+      prompt: 'À la sortie d''une centrale, un transformateur élève la tension de 20 kV à 400 kV. Calculer son rapport de transformation $m$.
+
+        {{fig:pc-transformateur}}'
+      answer: '20'
+      numeric: true
+      tolerance: 0.5
+      unit: ''
+      explanation: '$m = U_2/U_1 = 400/20 = 20$. $m > 1$ : transformateur **élévateur**, avec 20 fois plus de spires au secondaire qu''au primaire ($m = N_2/N_1$). L''intensité, elle, est divisée par 20 ($m = I_1/I_2$).'
+    - type: guided
+      level: 3
+      title: 'Le chauffe-eau électrique : de la prise à la facture'
+      intro: 'Un chauffe-eau est équipé d''une **résistance chauffante** de $R = 24\ \Omega$ branchée sur le réseau français ($U_{\text{eff}} = 230$ V, $f = 50$ Hz, sinusoïdal alternatif). Sa cuve contient $m = 150$ kg d''eau à porter de $\theta_i = 15$ °C à $\theta_f = 65$ °C. Le **rendement** du chauffe-eau (pertes thermiques par la cuve) vaut $\eta = 90$ %. Le kilowattheure est facturé 0,25 €.
+
+        {{fig:pc-chaine-energetique}}'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Calculer l''**amplitude** $U_m$ de la tension d''alimentation (3 chiffres significatifs).'
+        answer: '325'
+        numeric: true
+        tolerance: 3
+        unit: V
+        explanation: La tension est alternative ($U_{\text{moy}} = 0$ V) donc $U_{\text{eff}} = U_m/\sqrt{2}$, d'où $U_m = 230 \times 1{,}414 = 325$ V.
+      - kind: mcq
+        prompt: '**Étape 2.** Calculer la puissance moyenne $P$ dissipée par effet Joule dans la résistance chauffante.'
+        choices:
+        - 2,20 kW
+        - 4,40 kW
+        - 5,52 kW
+        - 9,58 kW
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : tu as utilisé l''amplitude $U_m = 325$ V au lieu de la valeur efficace. En régime variable, l''effet Joule se calcule avec $U_{\text{eff}}$.'
+        - 'Non : tu as calculé $U \times R = 230 \times 24$. La bonne formule est $P = U_{\text{eff}}^{2}/R$.'
+        - 'Non : 9,58 est la valeur de l''**intensité** en ampères ($230/24$), pas une puissance.'
+        explanation: $P = \dfrac{U_{\text{eff}}^{2}}{R} = \dfrac{230^{2}}{24} = \dfrac{52\,900}{24} = 2\,204$ W $\approx 2{,}20$ kW.
+      - kind: input
+        prompt: '**Étape 3.** Calculer l''intensité efficace $I_{\text{eff}}$ absorbée par la résistance chauffante (2 décimales).'
+        answer: '9.58'
+        numeric: true
+        tolerance: 0.1
+        unit: A
+        explanation: '$I_{\text{eff}} = U_{\text{eff}}/R = 230/24 = 9{,}58$ A. Vérification : $R \times I_{\text{eff}}^{2} = 24 \times 9{,}58^{2} = 2\,203$ W, cohérent avec l''étape 2.'
+      - kind: mcq
+        prompt: '**Étape 4.** La résistance chauffante est un dipôle **purement résistif**. Que valent son facteur de puissance $k$ et sa puissance apparente $S$ ?'
+        choices:
+        - $k = 1$ et $S = 2{,}20$ kV·A
+        - $k = 1$ et $S = 2{,}20$ kW
+        - $k = 0$ et $S = 0$ V·A
+        - $k = 0{,}80$ et $S = 2{,}75$ kV·A
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Presque : la valeur est bonne, mais la puissance **apparente** s''exprime en volt-ampère (V·A), pas en watt.'
+        - 'Non : $k = 0$ correspond à un dipôle purement capacitif ou inductif, qui ne dissipe rien — or ce radiateur chauffe.'
+        - 'Non : $\cos\varphi = 0{,}80$ concerne un dipôle non résistif (moteur, par exemple).'
+        explanation: 'Dipôle purement résistif : $\varphi = 0$, donc $k = \cos\varphi = 1$ et $S = U \times I = 230 \times 9{,}58 = 2\,204$ V·A $= P$.'
+      - kind: input
+        prompt: '**Étape 5.** Énergie thermique **utile** à fournir à l''eau : $Q = m \times c \times \Delta\theta$ avec $c_{\text{eau}} = 4{,}2$ kJ·kg⁻¹·°C⁻¹ (rappel de 1re, chapitre 5). Donner $Q$ en MJ (1 décimale).'
+        answer: '31.5'
+        numeric: true
+        tolerance: 0.3
+        unit: MJ
+        explanation: '$Q = 150 \times 4\,200 \times (65 - 15) = 150 \times 4\,200 \times 50 = 3{,}15 \times 10^{7}$ J $= 31{,}5$ MJ. Erreur classique : utiliser 65 au lieu de l''**écart** de 50 °C.'
+      - kind: input
+        prompt: '**Étape 6.** En tenant compte du rendement $\eta = 90$ %, calculer l''énergie électrique $E_{\text{reçue}}$ prélevée sur le réseau, en kWh (2 décimales). Rappel : $1$ kWh $= 3{,}6 \times 10^{6}$ J.'
+        answer: '9.72'
+        numeric: true
+        tolerance: 0.15
+        unit: kWh
+        explanation: '$\eta = E_{\text{utile}}/E_{\text{reçue}}$ donc $E_{\text{reçue}} = Q/\eta = 31{,}5/0{,}90 = 35{,}0$ MJ ; en kWh : $\dfrac{3{,}50 \times 10^{7}}{3{,}6 \times 10^{6}} = 9{,}72$ kWh. Erreur classique : **multiplier** par 0,90 (on trouverait moins que l''énergie utile, ce qui est impossible).'
+      - kind: input
+        prompt: '**Étape 7.** Le kilowattheure est facturé 0,25 €. Calculer le coût d''un cycle complet de chauffe, en euros (2 décimales).'
+        answer: '2.43'
+        numeric: true
+        tolerance: 0.05
+        unit: €
+        explanation: Coût $= 9{,}72 \times 0{,}25 = 2{,}43$ €. Pour information, la durée de chauffe vaut $\Delta t = E_{\text{reçue}}/P = 3{,}50 \times 10^{7}/2\,204 \approx 1{,}59 \times 10^{4}$ s, soit environ 4 h 25 min.
+      - kind: mcq
+        prompt: '**Étape 8.** L''intensité absorbée vaut $I_{\text{eff}} = 9{,}58$ A, soit 9 580 mA — environ 320 fois le calibre de 30 mA du disjoncteur différentiel. Pourquoi celui-ci ne déclenche-t-il pas ?'
+        choices:
+        - Parce qu'il ne surveille pas le courant de service, mais uniquement le courant de **fuite** vers la terre
+        - Parce que 9,58 A est inférieur à 30 mA
+        - Parce que le chauffe-eau n'est pas relié à la terre
+        - Parce que le différentiel ne fonctionne qu'en régime continu
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : 9,58 A $= 9\,580$ mA, soit bien plus que 30 mA.'
+        - 'Non, au contraire : la cuve **doit** être reliée à la terre, c''est ce qui permet au différentiel de détecter une fuite.'
+        - 'Non : le différentiel protège une installation alimentée en alternatif (230 V ~).'
+        explanation: 'Le courant de service (9,58 A) circule entièrement dans le circuit : il entre et ressort, le différentiel ne voit aucun écart. Le différentiel de 30 mA n''ouvre le circuit que si une **fuite** vers la terre dépasse 30 mA — seuil de paralysie respiratoire au-delà de 500 ms. C''est le rôle des disjoncteurs magnéto-thermiques et des fusibles de protéger contre les surintensités.'

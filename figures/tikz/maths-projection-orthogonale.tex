@@ -1,0 +1,47 @@
+%% Projection orthogonale d'un vecteur sur une droite (manuel p. 104).
+%% CD est la projection orthogonale de u = AB sur la droite D dirigée par v :
+%% u . v = CD x ||v|| si CD et v sont de même sens, -CD x ||v|| sinon.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1.05cm,y=1.05cm,
+  vect/.style={-{Stealth[length=7pt]}, line width=1.4pt},
+  rappel/.style={line width=0.6pt, dash pattern=on 3pt off 2pt, black!55},
+  droit/.style={line width=0.7pt, solideE}]
+
+\def\pente{14.036}              % la droite D monte avec une pente de 0,25
+
+\coordinate (P0) at (-0.8,-0.2);
+\coordinate (P1) at (5.7,1.425);
+\coordinate (A) at (1.2,1.6);
+\coordinate (B) at (3.7,2.5);
+\coordinate (C) at ($(P0)!(A)!(P1)$);   % pied de la perpendiculaire issue de A
+\coordinate (D) at ($(P0)!(B)!(P1)$);   % pied de la perpendiculaire issue de B
+
+%% ---------------- la droite D et son vecteur directeur -------------------
+\draw[line width=0.9pt] (P0) -- (P1)
+     node[anchor=north west, inner sep=3pt, font=\small] {$\mathcal{D}$};
+\draw[vect, solideB] (-0.45,-0.11) -- ++(\pente:1.1)
+     node[midway, sloped, below, font=\small, text=solideB, inner sep=3pt] {$\vec{v}$};
+
+%% ---------------- perpendiculaires à D issues de A et de B ---------------
+\draw[rappel] ($(A)+(\pente+90:0.3)$) -- ($(C)-(\pente+90:0.3)$);
+\draw[rappel] ($(B)+(\pente+90:0.3)$) -- ($(D)-(\pente+90:0.3)$);
+\draw[droit] ($(C)+(\pente:0.25)$) -- ($(C)+(\pente:0.25)+(\pente+90:0.25)$)
+             -- ($(C)+(\pente+90:0.25)$);
+\draw[droit] ($(D)-(\pente:0.25)$) -- ($(D)-(\pente:0.25)+(\pente+90:0.25)$)
+             -- ($(D)+(\pente+90:0.25)$);
+
+%% ---------------- le vecteur u = AB --------------------------------------
+\draw[vect, solideF] (A) -- (B)
+     node[midway, sloped, above, font=\small, text=solideF, inner sep=3pt] {$\vec{u}$};
+\fill (A) circle (1.7pt) node[font=\small, anchor=south east, inner sep=3pt] {$A$};
+\fill (B) circle (1.7pt) node[font=\small, anchor=south east, inner sep=3pt] {$B$};
+
+%% ---------------- la projection CD ----------------------------------------
+\draw[vect, solideA] (C) -- (D);
+\fill (C) circle (1.7pt) node[font=\small, anchor=north east, inner sep=3pt] {$C$};
+\fill (D) circle (1.7pt) node[font=\small, anchor=north west, inner sep=4pt] {$D$};
+\node[font=\small, anchor=north, inner sep=2pt] at ($(C)!0.5!(D)+(\pente-90:0.3)$) {$CD$};
+\end{tikzpicture}
+\end{document}

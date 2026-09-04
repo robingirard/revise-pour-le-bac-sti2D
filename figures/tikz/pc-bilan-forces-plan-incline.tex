@@ -1,0 +1,62 @@
+%% Caisse glissant à VITESSE CONSTANTE sur un plan incliné à 25° (leçon pc-forces).
+%% Principe d'inertie : P + R_N + f = 0. Les trois vecteurs sont tracés à l'échelle
+%% (P = 1,6 cm ; R_N = P cos25° = 1,45 cm ; f = P sin25° = 0,68 cm) et se referment,
+%% ce que rappelle le petit triangle des forces en haut à gauche.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  vect/.style={-{Stealth[length=6pt]}, line width=1.2pt},
+  mince/.style={-{Stealth[length=5pt]}, line width=0.7pt,
+                dash pattern=on 3pt off 2pt, black!60}]
+
+\def\alp{25}              % angle d'inclinaison du plan (degrés)
+\def\sG{4.41}             % abscisse du centre de la caisse le long de la pente
+
+%% ------------------- le plan incliné (triangle) -----------------------
+\filldraw[fill=black!12, draw=black!55, line width=0.8pt, line join=round]
+      (0,0) -- (6,0) -- (6,2.798) -- cycle;
+% hachures fines sous l'hypoténuse : le « sol »
+\begin{scope}[rotate=\alp]
+  \foreach \s in {0.9,1.18,...,6.5} { \draw[line width=0.45pt, black!60] (\s,0) -- (\s-0.13,-0.17); }
+\end{scope}
+
+%% ------------------- cotation de l'angle ------------------------------
+\fill[solideE!25] (0,0) -- (0.9,0) arc (0:\alp:0.9) -- cycle;
+\draw[line width=0.5pt, black!55] (0.9,0) arc (0:\alp:0.9);
+\node[font=\small] at (12:1.2) {$\alpha$};
+
+%% ------------------- la caisse et son centre G ------------------------
+\begin{scope}[rotate=\alp]
+  \filldraw[fill=solideD!30, draw=solideD, line width=1pt]
+        (\sG-0.45,0) rectangle (\sG+0.45,0.9);
+  \coordinate (G) at (\sG,0.45);
+  % vitesse constante, vers le bas de la pente, en avant de la caisse
+  \draw[mince] (3.72,0.45) -- (2.72,0.45);
+  \node[font=\footnotesize, anchor=south east, inner sep=1pt] at (3.68,0.72) {$\vec{v}$ = constante};
+\end{scope}
+\fill[black] (G) circle (1.6pt);
+\node[font=\small, anchor=north east, inner sep=2pt] at (G) {$G$};
+
+%% ------------------- les trois forces ---------------------------------
+% poids : vertical, vers le bas
+\draw[vect, black] (G) -- ++(0,-1.6)
+      node[anchor=west, inner sep=3pt, font=\small] {$\vec{P}$};
+% réaction normale : perpendiculaire au plan (25° + 90°)
+\draw[vect, solideE] (G) -- ++(\alp+90:1.45)
+      node[anchor=south, inner sep=2pt, font=\small, text=solideE, align=center]
+      {$\vec{R_N}$\\[-1pt]\footnotesize (réaction normale)};
+% frottement : parallèle au plan, vers le HAUT de la pente
+\draw[vect, solideB] (G) -- ++(\alp:0.68)
+      node[anchor=north west, inner sep=1pt, font=\small, text=solideB] {$\vec{f}$};
+
+%% ------------------- triangle des forces (rappel) ---------------------
+\begin{scope}[shift={(0.55,3.40)}]
+  \draw[line width=0.7pt, black]   (0,0) -- ++(0,-0.88);
+  \draw[line width=0.7pt, solideE] (0,-0.88) -- ++(\alp+90:0.80);
+  \draw[line width=0.7pt, solideB] ($(0,-0.88)+(\alp+90:0.80)$) -- ++(\alp:0.374);
+\end{scope}
+\node[font=\footnotesize, anchor=west] at (0.92,2.98)
+     {$\vec{P} + \vec{R_N} + \vec{f} = \vec{0}$};
+\end{tikzpicture}
+\end{document}

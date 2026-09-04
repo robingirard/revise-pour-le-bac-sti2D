@@ -1,0 +1,46 @@
+%% Influence de l'orientation de la force sur le moment.
+%% Même clé, même point d'application, même intensité, même distance d :
+%% seul l'angle change. Moment maximal si F est perpendiculaire au manche, nul si F est colinéaire.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  force/.style={-{Stealth[length=6pt]}, line width=1.2pt, solideA},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.7pt, solideD}]
+
+% --- macro locale : la clé articulée en O, point d'application M à droite ---
+\newcommand\cle{%
+  \draw[line width=1.1pt, solideB, fill=solideB!10, rounded corners=5.5pt]
+        (-0.22,-0.13) rectangle (1.68,0.13);
+  \draw[line width=1.1pt, solideB, fill=solideB!10] (1.45,0) circle (0.24);
+  \draw[line width=1pt, solideB, fill=white] (0,0) circle (0.17);
+  \fill (0,0) circle (1.6pt);
+  \node[font=\small, anchor=north east, inner sep=3pt] at (0,-0.05) {$O$};
+  \draw[cote] (0,-0.62) -- (1.45,-0.62);
+  \node[font=\small, text=solideD, anchor=north, inner sep=1.5pt] at (0.72,-0.63) {$d$};}
+
+%% ---------------- (a) force perpendiculaire : moment maximal --------
+\begin{scope}[shift={(0,0)}]
+  \cle
+  \draw[force] (1.45,0.26) -- ++(0,1.0) node[anchor=west, inner sep=2pt, font=\small, text=solideA] {$\vec{F}$};
+  \draw[line width=0.6pt, black!60] (1.30,0.26) -- (1.30,0.41) -- (1.45,0.41);
+  \node[font=\small, anchor=north, align=center] at (0.72,-1.05) {$\vec{F} \perp$ manche\\ moment \textbf{maximal}};
+\end{scope}
+
+%% ---------------- (b) force oblique : moment intermédiaire ----------
+\begin{scope}[shift={(2.85,0)}]
+  \cle
+  \draw[force] (1.45,0.18) -- ++(45:1.0) node[anchor=south west, inner sep=1pt, font=\small, text=solideA] {$\vec{F}$};
+  \draw[line width=0.6pt, black!60] (2.03,0.18) arc (0:45:0.58);
+  \node[font=\small, anchor=west, inner sep=1pt] at (2.06,0.40) {$45^\circ$};
+  \node[font=\small, anchor=north, align=center] at (0.72,-1.05) {$\vec{F}$ à $45^\circ$\\ moment\\ intermédiaire};
+\end{scope}
+
+%% ---------------- (c) force colinéaire : moment nul -----------------
+\begin{scope}[shift={(5.7,0)}]
+  \cle
+  \draw[force] (1.73,0) -- ++(0.9,0) node[anchor=south, inner sep=2pt, font=\small, text=solideA] {$\vec{F}$};
+  \node[font=\small, anchor=north, align=center] at (0.72,-1.05) {$\vec{F}$ dans l'axe\\ moment \textbf{nul}};
+\end{scope}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,48 @@
+%% Courbe d'une fonction sinusoïdale u(t) = A cos(omega t + phi) (manuel p. 103).
+%% Ici A = 1,6 ; T = 2,4 (donc omega = 2 pi / T) ; phi = -omega x 0,5 (premier maximum en t = 0,5).
+%% Amplitude lue sur les deux droites vertes, période entre deux maximums consécutifs.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=0.8cm,y=0.85cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={solideA, line width=1.4pt, line join=round},
+  ampli/.style={solideE, line width=0.9pt, dash pattern=on 4pt off 2.5pt},
+  periode/.style={solideB, line width=0.9pt, dash pattern=on 3pt off 2pt}]
+
+\def\A{1.6}
+\def\T{2.4}
+%% u(t) = A cos( 2 pi (t - 0.5) / T )
+
+%% ---------------- quadrillage -------------------------------------------
+\draw[solideE!25, line width=0.3pt, step=0.5] (0,-2) grid (6.2,2);
+
+%% ---------------- droites d'amplitude ------------------------------------
+\draw[ampli] (0,\A) -- (6.35,\A);
+\draw[ampli] (0,-\A) -- (6.35,-\A);
+\node[font=\small, text=solideE, anchor=east, inner sep=3pt] at (-0.1,\A) {$A$};
+\node[font=\small, text=solideE, anchor=east, inner sep=3pt] at (-0.1,-\A) {$-A$};
+
+%% ---------------- axes ---------------------------------------------------
+\draw[axe] (-0.15,0) -- (6.6,0) node[anchor=north east, inner sep=3pt, font=\small] {$t$};
+\draw[axe] (0,-2.2) -- (0,2.25);
+\node[font=\small, anchor=north east, inner sep=2pt] at (-0.04,-0.04) {$O$};
+
+%% ---------------- période : deux maximums consécutifs --------------------
+\draw[periode] (0.5,-2.1) -- (0.5,2.05);
+\draw[periode] (2.9,-2.1) -- (2.9,2.05);
+\draw[{Stealth[length=5pt]}-{Stealth[length=5pt]}, solideB, line width=0.9pt]
+     (0.5,1.85) -- (2.9,1.85);
+\node[font=\small, text=solideB, anchor=south, inner sep=2pt] at (1.7,1.9)
+     {$T=\frac{2\pi}{\omega}$};
+
+%% ---------------- la courbe ----------------------------------------------
+\draw[courbe] plot[domain=0:6.2, samples=200, smooth]
+     (\x,{\A*cos( (2*pi*(\x-0.5)/\T) r )});
+\node[font=\small, text=solideA, anchor=west, inner sep=2pt] at (5.45,1.72) {$\mathcal{C}$};
+
+%% ---------------- ordonnée à l'origine ------------------------------------
+\fill[solideA] (0,0.414) circle (2pt);
+\node[font=\small, anchor=east, inner sep=4pt] at (-0.1,0.414) {$u(0)=A\cos(\varphi)$};
+\end{tikzpicture}
+\end{document}

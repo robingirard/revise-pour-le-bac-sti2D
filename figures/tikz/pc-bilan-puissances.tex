@@ -1,0 +1,40 @@
+%% Bilan de puissance : la puissance fournie par le générateur se répartit
+%% sur les récepteurs. Valeurs cohérentes avec les exercices :
+%% P1 = 60 W, P2 = 250 W, P3 = 1,2 kW et P_G = 1 510 W.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  gen/.style={draw=solideD, text=solideD, line width=1pt, align=center,
+              minimum width=1.7cm, minimum height=0.9cm, inner sep=2pt,
+              font=\footnotesize\bfseries},
+  rec/.style={draw=solideB, text=solideB, line width=1pt, align=center,
+              minimum width=1.7cm, minimum height=0.75cm, inner sep=2pt,
+              font=\footnotesize\bfseries},
+  fleche/.style={-{Stealth[length=6pt]}, line width=1.1pt, draw=black!70},
+  etiq/.style={font=\scriptsize, inner sep=2pt}]
+
+%% ---- générateur et point de répartition ---------------------------------
+\node[gen] (G) at (0,0) {Générateur};
+\coordinate (S) at (2.55,0);
+\draw[fleche] (G.east) -- (S);
+\node[etiq, anchor=south] at (1.72,0.1) {$P_G = 1\,510$ W};
+
+%% ---- les trois récepteurs -----------------------------------------------
+\node[rec] (R1) at (5.15,1.5)  {Récepteur 1};
+\node[rec] (R2) at (5.15,0)     {Récepteur 2};
+\node[rec] (R3) at (5.15,-1.5) {Récepteur 3};
+
+\draw[fleche] (S) -- (R1.west);
+\draw[fleche] (S) -- (R2.west);
+\draw[fleche] (S) -- (R3.west);
+\node[etiq, anchor=south east] at (4.1,1.45)  {$P_1 = 60$ W};
+\node[etiq, anchor=north]      at (3.6,-0.08) {$P_2 = 250$ W};
+\node[etiq, anchor=north east] at (4.1,-1.45) {$P_3 = 1{,}2$ kW};
+
+%% ---- relations -----------------------------------------------------------
+\node[anchor=north, align=center, font=\small] at (2.8,-2.35)
+  {$P_G = P_1 + P_2 + \dots + P_n$\\[2pt]
+   $\Delta E_G = \Delta E_1 + \Delta E_2 + \dots + \Delta E_n$};
+\end{tikzpicture}
+\end{document}

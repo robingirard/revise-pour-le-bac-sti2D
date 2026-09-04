@@ -1,0 +1,47 @@
+%% Triangle des changements de base, sur l'exemple du nombre 59.
+%% 59 = (0011 1011)_2 = (3B)_16 ; les blocs de 4 bits donnent les symboles hexadécimaux.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  boite/.style={draw, line width=1.2pt, rounded corners=3pt, fill=white,
+                minimum width=2.6cm, minimum height=1cm, align=center, font=\footnotesize},
+  fl/.style={-{Stealth[length=5pt]}, line width=1pt},
+  etiq/.style={font=\scriptsize, align=center, text width=2cm, inner sep=1pt,
+               execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}}]
+
+%% ================== les trois écritures ===============================
+\node[boite, draw=solideB] (dix)  at (3.4,3.0) {Base 10\\$59_{(10)}$};
+\node[boite, draw=solideE] (deux) at (0,0.5)   {Base 2\\$(0011\,1011)_2$};
+\node[boite, draw=solideC] (hexa) at (6.8,0.5) {Base 16\\$(3\mathrm{B})_{16}$};
+
+%% ================== descentes : divisions successives =================
+\draw[fl, solideE] (2.05,2.5) -- (0.2,1.05);
+\node[etiq, text=solideE, anchor=south east] at (1.05,1.9)
+     {restes des divisions successives par 2};
+\draw[fl, solideC] (4.75,2.5) -- (6.6,1.05);
+\node[etiq, text=solideC, anchor=south west] at (5.75,1.9)
+     {restes des divisions successives par 16};
+
+%% ================== remontées : somme des poids =======================
+\draw[fl, solideB] (1.15,1.05) -- (2.75,2.5);
+\draw[fl, solideB] (5.65,1.05) -- (4.05,2.5);
+\node[etiq, text=solideB, fill=white, text width=1.7cm] at (3.4,1.75)
+     {somme des poids $\times$ chiffre};
+
+%% ================== équivalence binaire / hexadécimal =================
+\draw[{Stealth[length=5pt]}-{Stealth[length=5pt]}, line width=1pt, solideF] (1.4,0.5) -- (5.4,0.5);
+\node[font=\scriptsize, text=solideF, anchor=south, inner sep=2pt] at (3.4,0.56) {blocs de 4 bits};
+
+%% ================== tableaux de poids =================================
+\foreach \dx/\bits/\somme in {-0.9/{0,0,1,1}/{$2+1=3$}, 4.3/{1,0,1,1}/{$8+2+1=11=\mathrm{B}$}} {
+  \begin{scope}[shift={(\dx,-1.6)}]
+    \foreach \p [count=\i from 0] in {8,4,2,1} {
+      \node[font=\scriptsize] at (\i*0.45+0.225,0.62) {\p};
+      \draw[black!55, line width=0.6pt] (\i*0.45,0) rectangle (\i*0.45+0.45,0.45); }
+    \foreach \b [count=\i from 0] in \bits {
+      \node[font=\scriptsize] at (\i*0.45+0.225,0.225) {\b}; }
+    \node[font=\scriptsize, anchor=west] at (1.95,0.225) {\somme};
+  \end{scope} }
+\end{tikzpicture}
+\end{document}

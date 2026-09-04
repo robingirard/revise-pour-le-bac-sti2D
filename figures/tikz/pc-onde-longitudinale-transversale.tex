@@ -1,0 +1,55 @@
+%% pc-onde-longitudinale-transversale — direction de la perturbation / direction de propagation.
+%% Haut : onde transversale (spires régulièrement espacées, la main secoue de haut en bas).
+%% Bas  : onde longitudinale (spires resserrées au milieu : zone de compression).
+%% Le ressort est figuré par ses spires vues de côté (segments verticaux) ; aucun axe, aucune graduation.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  spire/.style={solideE, line width=0.9pt, line cap=round},
+  ame/.style={solideE, line width=0.5pt},
+  secousse/.style={{Stealth[length=5pt]}-{Stealth[length=5pt]}, solideA, line width=1.1pt},
+  propa/.style={-{Stealth[length=6pt]}, line width=1pt},
+  titre/.style={font=\small\bfseries, anchor=south west},
+  txt/.style={font=\scriptsize}]
+
+%% ---- mur d'accrochage (bâti hachuré) --------------------------------------
+\newcommand\mur{%
+  \draw[line width=1pt] (0,-0.62) -- (0,0.62);
+  \foreach \i in {-0.55,-0.4,...,0.62} { \draw[line width=0.5pt] (0,\i) -- (-0.17,\i-0.15); }}
+
+%% ================== vignette 1 : onde transversale =========================
+\begin{scope}[shift={(0,3.0)}]
+  \node[titre] at (0,0.95) {Onde transversale};
+  \mur
+  %% spires régulièrement espacées, déplacées perpendiculairement à la propagation
+  \draw[ame] plot[domain=0:5.05,samples=80,smooth] (\x,{0.22*sin(deg((\x)*2*pi/2.4))});
+  \foreach \i in {0,1,...,27} {
+    \pgfmathsetmacro\xs{0.05+\i*0.2}
+    \pgfmathsetmacro\ys{0.22*sin(deg(\xs*2*pi/2.4))}
+    \draw[spire] (\xs,\ys-0.3) -- (\xs,\ys+0.3); }
+  \draw[secousse] (5.4,-0.45) -- (5.4,0.45);
+  \draw[propa] (1.0,-0.75) -- (4.2,-0.75);
+  \node[txt, anchor=west] at (4.3,-0.75) {sens de propagation};
+  \node[txt, anchor=north west] at (0,-1.0)
+       {perturbation \textbf{perpendiculaire} à la propagation};
+\end{scope}
+
+%% ================== vignette 2 : onde longitudinale ========================
+\begin{scope}[shift={(0,0)}]
+  \node[titre] at (0,0.95) {Onde longitudinale};
+  \mur
+  \draw[ame] (0,0) -- (5.05,0);
+  %% spires resserrées au milieu (compression), écartées de part et d'autre
+  \foreach \i in {0,1,...,27} {
+    \pgfmathsetmacro\u{\i/27}
+    \pgfmathsetmacro\xs{0.05+5.0*(\u+0.105*sin(360*\u))}
+    \draw[spire] (\xs,-0.3) -- (\xs,0.3); }
+  \draw[secousse] (5.25,0) -- (5.75,0);
+  \draw[propa] (1.0,-0.75) -- (4.2,-0.75);
+  \node[txt, anchor=west] at (4.3,-0.75) {sens de propagation};
+  \node[txt, anchor=north west] at (0,-1.0)
+       {perturbation \textbf{parallèle} à la propagation};
+\end{scope}
+\end{tikzpicture}
+\end{document}

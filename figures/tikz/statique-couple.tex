@@ -1,0 +1,45 @@
+%% Le couple : deux forces opposées, de somme vectorielle nulle, qui font tourner.
+%% Cylindre vu en perspective ; F1 et F2 tangentielles au bout des rayons r1 et r2.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  force/.style={-{Stealth[length=6pt]}, line width=1.2pt, solideA},
+  rayon/.style={line width=0.9pt, solideD},
+  axe/.style={line width=0.5pt, dash pattern=on 6pt off 2pt on 1pt off 2pt, black!60}]
+
+\def\rx{1.25}\def\ry{0.42}
+\coordinate (C) at (0,1.05);          % centre de la face supérieure
+
+% --- axe de rotation ---------------------------------------------------
+\draw[axe] (0,-0.45) -- (0,2.85);
+
+% --- cylindre ----------------------------------------------------------
+\fill[black!8] (-\rx,1.05) -- (-\rx,0.2) arc (180:360:{\rx} and {\ry}) -- (\rx,1.05) -- cycle;
+\draw[line width=0.7pt, black!65]
+  (-\rx,1.05) -- (-\rx,0.2) arc (180:360:{\rx} and {\ry}) -- (\rx,1.05);
+\draw[line width=0.7pt, black!65, fill=black!4] (C) ellipse ({\rx} and {\ry});
+
+% --- rayons cotés ------------------------------------------------------
+\draw[rayon] (C) -- ++(-\rx,0);
+\draw[rayon] (C) -- ++(\rx,0);
+\fill[solideD] (C) circle (1.5pt);
+\node[font=\small, text=solideD, anchor=south, inner sep=2pt] at (-0.62,1.08) {$r_1$};
+\node[font=\small, text=solideD, anchor=south, inner sep=2pt] at ( 0.62,1.08) {$r_2$};
+
+% --- les deux forces tangentielles opposées ----------------------------
+\draw[force] (-\rx,1.05) -- ++(0,-0.95) node[anchor=north, inner sep=2pt, font=\small, text=solideA] {$\vec{F_1}$};
+\draw[force] ( \rx,1.05) -- ++(0, 0.85) node[anchor=west, inner sep=2pt, font=\small, text=solideA] {$\vec{F_2}$};
+
+% --- le couple résultant (flèche circulaire autour de l'axe) -----------
+\draw[-{Stealth[length=6pt]}, line width=1pt]
+     (200:0.62 and 0.22) ++(0,2.45) arc (200:340:0.62 and 0.22);
+\node[font=\small, anchor=east, inner sep=3pt] at (-0.68,2.45) {$\vec{T}$};
+
+% --- relations ---------------------------------------------------------
+\node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=5pt,
+      font=\small, align=center, anchor=north] at (0,-0.6)
+     {$\vec{F_1} + \vec{F_2} = \vec{0}$ \quad (la résultante est nulle)\\[1pt]
+      $T = F_1 \times r_1 + F_2 \times r_2$ \quad (le moment, lui, ne l'est pas)};
+\end{tikzpicture}
+\end{document}

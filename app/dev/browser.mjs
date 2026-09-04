@@ -10,7 +10,7 @@ const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /** Lance le serveur (dossier `dir`) et Chrome ; retourne des aides { goto, reload, shot, click, evaluate, close }. */
-export async function launch({ dir, out, port = 8766, debugPort = 9333, width = 390, height = 844,
+export async function launch({ dir, out, port = Number(process.env.PORT) || 8766, debugPort = Number(process.env.DEBUG_PORT) || 9333, width = 390, height = 844,
   chrome = process.env.CHROME || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' }) {
   fs.mkdirSync(out, { recursive: true });
   const server = http.createServer((req, res) => {

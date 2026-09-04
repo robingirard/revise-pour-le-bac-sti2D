@@ -1,0 +1,48 @@
+%% Les deux conventions de fléchage : générateur (u et i dans le même sens)
+%% et récepteur (u et i en sens opposé). Symboles dessinés en TikZ pur.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  fil/.style={line width=0.9pt, line cap=round},
+  fleche/.style={-{Stealth[length=5pt]}, line width=0.9pt, draw=solideB},
+  etiq/.style={font=\footnotesize, text=solideB, inner sep=2pt},
+  titre/.style={font=\footnotesize\bfseries},
+  legende/.style={font=\scriptsize, align=center, text width=3.1cm}]
+
+%% ================= convention générateur (à gauche) ======================
+\begin{scope}[shift={(0,0)}]
+  \draw[fil] (-1.25,0) -- (-0.3,0)  (0.3,0) -- (1.25,0);
+  \draw[fil] (0,0) circle (0.3);
+  \node[font=\tiny] at (0.14,0) {$+$};
+  \node[font=\tiny] at (-0.14,0) {$-$};
+  % intensité : au-dessus du fil, à gauche du symbole
+  \draw[fleche] (-1.1,0.28) -- (-0.45,0.28);
+  \node[etiq, anchor=south] at (-0.775,0.3) {$i(t)$};
+  % tension : sous le symbole, dans le même sens que i
+  \draw[fleche] (-0.8,-0.55) -- (0.8,-0.55);
+  \node[etiq, anchor=north] at (0,-0.58) {$u(t)$};
+  \node[titre, anchor=south] at (0,0.85) {Convention générateur};
+  \node[legende, anchor=north] at (0,-1.15)
+    {tension et intensité dans le \textbf{même sens}};
+\end{scope}
+
+%% ================= séparateur ============================================
+\draw[black!30, line width=0.6pt] (2.35,-1.6) -- (2.35,1.3);
+
+%% ================= convention récepteur (à droite) =======================
+\begin{scope}[shift={(4.7,0)}]
+  \draw[fil] (-1.25,0) -- (-0.5,0)  (0.5,0) -- (1.25,0);
+  \draw[fil] (-0.5,-0.25) rectangle (0.5,0.25);
+  % intensité : au-dessus du fil, à gauche du symbole
+  \draw[fleche] (-1.15,0.28) -- (-0.6,0.28);
+  \node[etiq, anchor=south] at (-0.875,0.3) {$i(t)$};
+  % tension : sous le symbole, en sens opposé
+  \draw[fleche] (0.8,-0.55) -- (-0.8,-0.55);
+  \node[etiq, anchor=north] at (0,-0.58) {$u(t)$};
+  \node[titre, anchor=south] at (0,0.85) {Convention récepteur};
+  \node[legende, anchor=north] at (0,-1.15)
+    {tension et intensité en \textbf{sens opposé}};
+\end{scope}
+\end{tikzpicture}
+\end{document}

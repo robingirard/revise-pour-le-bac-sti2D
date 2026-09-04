@@ -1,0 +1,50 @@
+%% Projection d'un vecteur force sur les axes (leçon pc-forces).
+%% T fait un angle theta = 30° avec l'axe des abscisses ; on lit Tx = T cos(theta)
+%% sur l'axe x et Ty = T sin(theta) sur l'axe y.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  vect/.style={-{Stealth[length=6pt]}, line width=1.2pt},
+  axe/.style={-{Stealth[length=5pt]}, line width=0.7pt},
+  rappel/.style={line width=0.5pt, dash pattern=on 2.5pt off 2pt, black!60}]
+
+\def\Tnorme{3.6}          % longueur du vecteur T (cm)
+\def\Tangle{30}           % angle theta (degrés)
+\coordinate (O) at (0,0);
+\coordinate (T) at (\Tangle:\Tnorme);        % extrémité de T : (3,117 ; 1,800)
+
+%% ------------------- secteur angulaire (tracé en premier, en fond) ----
+\fill[solideE!25] (O) -- (0.8,0) arc (0:\Tangle:0.8) -- cycle;
+
+%% ------------------- les axes -----------------------------------------
+\draw[axe] (-0.35,0) -- (4.5,0) node[anchor=north east, inner sep=3pt, font=\small] {$x$};
+\draw[axe] (0,-0.35) -- (0,3.0)  node[anchor=north west, inner sep=3pt, font=\small] {$y$};
+\node[font=\small, anchor=north east, inner sep=2pt] at (0,0) {$O$};
+
+%% ------------------- vecteurs unitaires -------------------------------
+\draw[-{Stealth[length=5pt]}, line width=1pt, solideA] (O) -- (0.6,0);
+\node[font=\small, text=solideA, anchor=north, inner sep=3pt] at (0.55,-0.02) {$\vec{\imath}$};
+\draw[-{Stealth[length=5pt]}, line width=1pt, solideA] (O) -- (0,0.6);
+\node[font=\small, text=solideA, anchor=east, inner sep=3pt] at (0,0.55) {$\vec{\jmath}$};
+
+%% ------------------- le vecteur T -------------------------------------
+\draw[vect, solideA] (O) -- (T);
+\node[font=\small, text=solideA, anchor=south east, inner sep=1pt] at (\Tangle:2.1) {$\vec{T}$};
+
+%% ------------------- projections --------------------------------------
+\draw[rappel] (T) -- (3.117,0);
+\draw[rappel] (T) -- (0,1.8);
+\draw[line width=0.7pt] (3.117,0.09) -- (3.117,-0.09)
+      node[anchor=north, inner sep=3pt, font=\small] {$T_x$};
+\draw[line width=0.7pt] (-0.09,1.8) -- (0.09,1.8);
+\node[anchor=east, inner sep=4pt, font=\small] at (0,1.8) {$T_y$};
+
+%% ------------------- l'angle ------------------------------------------
+\node[font=\small] at (15:1.05) {$\theta$};
+
+%% ------------------- relations ----------------------------------------
+\node[font=\footnotesize, anchor=north] at (2.2,-0.75)
+     {$T_x = T\cos\theta$ \qquad $T_y = T\sin\theta$};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,62 @@
+%% Solide soumis à TROIS forces : les trois droites d'action sont concourantes en I
+%% (schéma, à gauche) et le dynamique — les trois vecteurs bout à bout — est fermé (à droite).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  force/.style={-{Stealth[length=6pt]}, line width=1.2pt, solideA},
+  support/.style={line width=0.5pt, dash pattern=on 3pt off 2pt, black!55},
+  titre/.style={font=\small\bfseries, anchor=south, align=center}]
+
+%% ======================= le schéma ==================================
+\coordinate (A) at (0,0);
+\coordinate (B) at (3.4,1.95);
+\coordinate (G) at (1.7,0.975);
+\coordinate (I) at (1.7,1.95);
+
+% droites d'action (prolongées en pointillés)
+\draw[support] ($(A)-(0.26,0.30)$) -- ($(I)+(0.32,0.37)$);
+\draw[support] (1.7,-0.5) -- (1.7,2.45);
+\draw[support] (1.15,1.95) -- (3.80,1.95);
+
+% la barre isolée
+\draw[line width=3pt, solideB, line cap=round] (A) -- (B);
+
+% appui en A : articulation (demi-disque) sur le sol hachuré
+\draw[line width=1pt, draw=solideE, fill=solideE!15] (-0.26,0) arc (180:360:0.26);
+\hachures{(-0.66,-0.52) rectangle (0.66,-0.26)}
+% appui en B : butée contre un mur vertical hachuré
+\draw[line width=1pt, draw=solideE, fill=solideE!15] (B) -- ++(0.42,0.3) -- ++(0,-0.6) -- cycle;
+\hachures{(3.82,1.15) rectangle (4.06,2.75)}
+
+% les trois forces
+\draw[force] (A) -- ++(49:1.1)  node[anchor=south east, inner sep=1pt, font=\small, text=solideA] {$\vec{A_{2\rightarrow S}}$};
+\draw[force] (G) -- ++(0,-1.0)  node[anchor=west, inner sep=3pt, font=\small, text=solideA] {$\vec{P}$};
+\draw[force] (B) -- ++(-1.1,0)  node[anchor=south, inner sep=3pt, font=\small, text=solideA] {$\vec{B_{0\rightarrow S}}$};
+
+% points remarquables
+\foreach \p/\n/\a in {A/A/{north east}, B/B/{north west}, G/G/{west}}
+  { \fill (\p) circle (1.6pt); \node[font=\small, anchor=\a, inner sep=3pt] at (\p) {$\n$}; }
+\draw[line width=1pt, fill=white] (I) circle (0.09);
+\node[font=\small, anchor=north east, inner sep=3pt] at (I) {$I$};
+\node[titre] at (1.7,2.95) {les 3 supports concourent en $I$};
+
+%% ======================= le dynamique ===============================
+\begin{scope}[shift={(5.85,0.55)}]
+  \draw[force] (0,0) -- (1.06,1.21);
+  \draw[force] (1.06,1.21) -- (1.06,0);
+  \draw[force] (1.06,0) -- (0,0);
+  \foreach \p in {(0,0), (1.06,1.21), (1.06,0)}
+    { \fill[solideA] \p ++(-0.05,-0.05) rectangle ++(0.1,0.1); }
+  \node[anchor=east, inner sep=3pt, font=\small, text=solideA] at (0.48,0.69) {$\vec{A_{2\rightarrow S}}$};
+  \node[anchor=west, inner sep=3pt, font=\small, text=solideA] at (1.08,0.62) {$\vec{P}$};
+  \node[anchor=north, inner sep=3pt, font=\small, text=solideA] at (0.53,-0.02) {$\vec{B_{0\rightarrow S}}$};
+  \node[titre] at (0.53,2.4) {dynamique fermé};
+\end{scope}
+
+%% ------------------------- la relation ------------------------------
+\node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=5pt, anchor=north,
+      font=\small] at (3.6,-0.95)
+     {$\vec{A_{2\rightarrow S}} + \vec{B_{0\rightarrow S}} + \vec{P} = \vec{0}$};
+\end{tikzpicture}
+\end{document}

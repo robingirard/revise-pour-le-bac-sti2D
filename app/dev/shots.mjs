@@ -106,6 +106,7 @@ try {
   await goto('#/skill/liaisons-mobilites');
   await evaluate('(() => { const d = document.querySelector("details.lesson"); if (d) d.open = true; const h = [...document.querySelectorAll(".lesson-body h2")].find((e) => /KaTeX/.test(e.textContent)); if (h) h.scrollIntoView(); })()');
   await sleep(200); await shot('81-math-lesson', true);
+  await shot('82-code-lesson', true);
   const errors = await evaluate('document.querySelectorAll(".error").length');
   console.log('OK — captures dans', OUT, '; éléments .error visibles :', errors);
 } finally {

@@ -1,0 +1,85 @@
+%% Les six changements d'état, disposés sur un triangle « Gaz en haut ».
+%%   - côté gauche  : Solide <-> Gaz      (sublimation / condensation)
+%%   - côté droit   : Liquide <-> Gaz     (vaporisation / condensation-liquéfaction)
+%%   - côté bas     : Solide <-> Liquide  (fusion / solidification)
+%% Code couleur de l'unité : rouge (solideA) = le corps REÇOIT de l'énergie (Qp > 0),
+%% bleu (solideB) = le corps CÈDE de l'énergie (Qp < 0).
+%% Trois bulles montrent l'organisation microscopique des constituants.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,scale=0.85,
+    etat/.style={draw=black!70, line width=0.9pt, rounded corners=3pt, fill=black!4,
+                 inner sep=4pt, minimum width=1.5cm, font=\small\bfseries},
+    fleche/.style={-{Stealth[length=5pt]}, line width=1.1pt},
+    nom/.style={font=\scriptsize, inner sep=1pt, align=center},
+    bulle/.style={draw=black!45, line width=0.6pt, fill=white},
+    rappel/.style={draw=black!45, line width=0.4pt}]
+
+%% ---------- Macro locale : une flèche parallèle à un côté, décalée de #4 --------------
+%% #1 départ, #2 arrivée, #3 couleur, #4 décalage perpendiculaire (cm, signe = côté)
+\newcommand\flcote[4]{%
+  \pgfmathanglebetweenpoints{\pgfpointanchor{#1}{center}}{\pgfpointanchor{#2}{center}}%
+  \edef\anglecote{\pgfmathresult}%
+  \draw[fleche, #3] ([shift={(\anglecote+90:#4)}]$(#1)!0.19!(#2)$)
+                 -- ([shift={(\anglecote+90:#4)}]$(#1)!0.81!(#2)$);}
+
+%% ---------- Sommets du triangle ------------------------------------------------------
+\node[etat] (G) at (0,3.0)     {Gaz};
+\node[etat] (S) at (-3.1,0.15) {Solide};
+\node[etat] (L) at (3.1,0.15)  {Liquide};
+
+%% ---------- Côté gauche : solide <-> gaz ---------------------------------------------
+\flcote{S}{G}{solideA}{0.30}                       % montante : sublimation
+\flcote{G}{S}{solideB}{0.30}                       % descendante : condensation
+\node[nom, text=solideA, rotate=42.6] at ([shift={(132.6:0.60)}]$(S)!0.5!(G)$) {Sublimation};
+\node[nom, text=solideB, rotate=42.6] at ([shift={(-47.4:0.55)}]$(S)!0.55!(G)$) {Condensation};
+
+%% ---------- Côté droit : liquide <-> gaz ---------------------------------------------
+\flcote{L}{G}{solideA}{-0.30}                      % montante : vaporisation
+\flcote{G}{L}{solideB}{-0.30}                      % descendante : liquéfaction
+\node[nom, text=solideA, rotate=-42.6] at ([shift={(47.4:0.60)}]$(L)!0.5!(G)$) {Vaporisation};
+\node[nom, text=solideB, rotate=-42.6] at ([shift={(-132.6:0.66)}]$(L)!0.60!(G)$)
+  {Condensation\\(liquéfaction)};
+
+%% ---------- Côté bas : solide <-> liquide --------------------------------------------
+\flcote{S}{L}{solideA}{-0.30}                      % vers la droite, sous le côté : fusion
+\flcote{L}{S}{solideB}{-0.30}                      % vers la gauche, au-dessus : solidification
+\node[nom, text=solideA, anchor=north] at (0,-0.30) {Fusion};
+\node[nom, text=solideB, fill=white, inner sep=2pt] at (0,0.45) {Solidification};
+
+%% ---------- Bulles microscopiques ----------------------------------------------------
+%% solide : réseau régulier (20 disques)
+\draw[rappel] (S) -- (-2.55,-1.35);
+\draw[bulle] (-2.55,-1.35) circle (0.62);
+\begin{scope}[shift={(-2.55,-1.35)}]
+  \foreach \i in {-2,-1,0,1,2} \foreach \j in {-1.5,-0.5,0.5,1.5}
+    \fill[solideB!70!black] (0.21*\i,0.21*\j) circle (0.055);
+\end{scope}
+\node[font=\scriptsize, anchor=north] at (-2.55,-2.05) {réseau régulier};
+
+%% liquide : disques jointifs mais désordonnés (8 disques)
+\draw[rappel] (L) -- (2.55,-1.35);
+\draw[bulle] (2.55,-1.35) circle (0.62);
+\begin{scope}[shift={(2.55,-1.35)}]
+  \foreach \p in {(-0.24,0.22),(0.05,0.30),(0.30,0.12),(-0.30,-0.08),(-0.02,0.00),
+                  (0.25,-0.18),(-0.20,-0.30),(0.08,-0.32)}
+    \fill[solideB!70!black] \p circle (0.10);
+\end{scope}
+\node[font=\scriptsize, anchor=north] at (2.55,-2.05) {jointifs, désordonnés};
+
+%% gaz : 3 disques très espacés
+\draw[rappel] (G) -- (2.05,3.35);
+\draw[bulle] (2.05,3.35) circle (0.62);
+\begin{scope}[shift={(2.05,3.35)}]
+  \foreach \p in {(-0.28,0.24),(0.26,0.02),(-0.06,-0.32)}
+    \fill[solideB!70!black] \p circle (0.085);
+\end{scope}
+\node[font=\scriptsize, anchor=west] at (2.72,3.35) {très espacés};
+
+%% ---------- Légende ------------------------------------------------------------------
+\node[font=\scriptsize, align=center, anchor=north] at (0,-2.55)
+  {flèches \textcolor{solideA}{rouges} : le corps \textbf{reçoit} de l'énergie ($Q_p>0$)\\
+   flèches \textcolor{solideB}{bleues} : il en \textbf{cède} ($Q_p<0$)};
+\end{tikzpicture}
+\end{document}

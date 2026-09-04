@@ -1,0 +1,63 @@
+%% Moment d'une force et moment d'un couple (leçon pc-dynamique).
+%% Gauche  : une seule force, bras de levier d mesuré depuis l'axe (Delta).
+%% Droite  : un couple (clé en croix), d = distance entre les deux droites d'action.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  vect/.style={-{Stealth[length=6pt]}, line width=1.2pt, solideA},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.7pt, solideD},
+  action/.style={line width=0.5pt, dash pattern=on 3pt off 2pt, black!55}]
+
+%% ================= panneau gauche : moment d'une force ===============
+\begin{scope}[shift={(0,0)}]
+  % la barre
+  \filldraw[fill=black!15, draw=black!55, line width=0.7pt]
+        (0,-0.12) rectangle (4,0.12);
+  % l'axe de rotation en O
+  \filldraw[fill=white, draw=black!70, line width=0.7pt] (0,0) circle (0.17);
+  \draw[line width=0.9pt] (-0.11,-0.11) -- (0.11,0.11) (-0.11,0.11) -- (0.11,-0.11);
+  \node[font=\small, anchor=south, inner sep=4pt] at (0,0.14) {$(\Delta)$};
+  % la force et sa droite d'action
+  \draw[action] (4,0.55) -- (4,-2.15);
+  \draw[vect] (4,-0.12) -- (4,-1.42)
+       node[anchor=west, inner sep=3pt, font=\small, text=solideA] {$\vec{F}$};
+  % le bras de levier
+  \draw[action] (0,-0.2) -- (0,-2.15);
+  \draw[cote] (0,-1.95) -- (4,-1.95);
+  \node[font=\small, text=solideD, anchor=south, inner sep=2pt] at (2,-1.92) {$d$};
+  % légende
+  \node[font=\small, anchor=north] at (2,-2.35) {$M_\Delta(\vec{F}) = F \times d$};
+  \node[font=\footnotesize, anchor=north, align=center, text=black!70] at (2,-2.85)
+       {$d$ : distance la plus courte entre\\ $(\Delta)$ et la droite d'action};
+\end{scope}
+
+%% ---------------------------- filet ---------------------------------
+\draw[line width=0.5pt, black!20] (4.95,-3.55) -- (4.95,1.6);
+
+%% ================= panneau droit : moment d'un couple ================
+\begin{scope}[shift={(7.1,0)}]
+  % la jante et ses écrous
+  \filldraw[fill=black!8, draw=black!45, line width=0.7pt] (0,0) circle (1.1);
+  \foreach \a in {45,135,225,315} { \fill[black!55] (\a:0.62) circle (0.09); }
+  % la clé en croix
+  \draw[line width=2.4pt, black!70, line cap=round]
+       (-1.35,0) -- (1.35,0) (0,-1.35) -- (0,1.35);
+  \fill[black!70] (0,0) circle (0.14);
+  % les deux forces du couple et leurs droites d'action
+  \draw[action] (1.35,0.35) -- (1.35,-2.15);
+  \draw[action] (-1.35,1.55) -- (-1.35,-2.15);
+  \draw[vect] (1.35,-0.08) -- (1.35,-1.28)
+       node[anchor=west, inner sep=3pt, font=\small, text=solideA] {$\vec{F_1}$};
+  \draw[vect] (-1.35,0.08) -- (-1.35,1.28)
+       node[anchor=east, inner sep=3pt, font=\small, text=solideA] {$\vec{F_2}$};
+  % la distance entre les deux droites d'action
+  \draw[cote] (-1.35,-1.95) -- (1.35,-1.95);
+  \node[font=\small, text=solideD, anchor=south, inner sep=2pt] at (0,-1.92) {$d$};
+  % légende
+  \node[font=\small, anchor=north] at (0,-2.35) {$M = F \times d$ \quad ($F = F_1 = F_2$)};
+  \node[font=\footnotesize, anchor=north, align=center, text=black!70] at (0,-2.85)
+       {indépendant de la position\\ de l'axe de rotation};
+\end{scope}
+\end{tikzpicture}
+\end{document}

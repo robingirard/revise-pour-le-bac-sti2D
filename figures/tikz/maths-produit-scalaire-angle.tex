@@ -1,0 +1,33 @@
+%% Définition géométrique du produit scalaire : deux vecteurs de même origine et l'angle
+%% qu'ils forment. Le signe du produit est celui de cos(theta) (ici angle aigu : produit positif).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1.35cm,y=1.35cm,
+  vect/.style={-{Stealth[length=7pt]}, line width=1.4pt},
+  arc/.style={line width=0.8pt, black!70},
+  long/.style={font=\small, text=black!55, inner sep=3pt}]
+
+\coordinate (O) at (0,0);
+\coordinate (U) at (12:3);      % u : long, presque horizontal
+\coordinate (V) at (62:2);      % v : plus court, incliné d'environ 50° au-dessus de u
+
+%% ---------------- les deux vecteurs -------------------------------------
+\draw[vect, solideF] (O) -- (U)
+      node[midway, sloped, below, long] {$\left\|\vec{u}\right\|$}
+      node[anchor=west, inner sep=3pt, font=\small, text=solideF] {$\vec{u}$};
+\draw[vect, solideB] (O) -- (V)
+      node[midway, sloped, above, long] {$\left\|\vec{v}\right\|$}
+      node[anchor=south, inner sep=3pt, font=\small, text=solideB] {$\vec{v}$};
+\fill (O) circle (1.7pt);
+\node[font=\small, anchor=north east, inner sep=2pt] at (O) {$O$};
+
+%% ---------------- angle theta entre les deux vecteurs --------------------
+\draw[arc] (12:0.85) arc (12:62:0.85);
+\node[font=\small, anchor=west, inner sep=2pt] at (37:0.95) {$\theta$};
+
+%% ---------------- l'égalité ----------------------------------------------
+\node[font=\small, anchor=north, inner sep=2pt] at (1.55,-0.55)
+     {$\vec{u}\cdot\vec{v}=\left\|\vec{u}\right\|\times\left\|\vec{v}\right\|\times\cos(\theta)$};
+\end{tikzpicture}
+\end{document}

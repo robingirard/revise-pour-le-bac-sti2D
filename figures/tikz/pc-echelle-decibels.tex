@@ -1,0 +1,56 @@
+%% pc-echelle-decibels — échelle des niveaux sonores L (dB) et intensités acoustiques I (W.m^-2).
+%% L'axe des décibels est régulier ; en regard, les intensités progressent par puissances de 10
+%% (c'est tout l'intérêt de l'échelle logarithmique).
+%% Le dégradé vert -> orange -> rouge est obtenu par une suite de tranches de 5 dB (SVG léger).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  txt/.style={font=\scriptsize},
+  ent/.style={font=\scriptsize\bfseries}]
+
+%% échelle : 1 dB -> 0,0415 cm  (0 à 130 dB -> 5,4 cm) ; règle de x = 0 à x = 0,75
+\def\ech{0.0415}
+\def\rg{0.75}
+
+%% ---------------- règle graduée en dégradé --------------------------------
+\foreach \k in {0,1,...,12} {                     % 0 -> 65 dB : vert vers orange
+  \pgfmathsetmacro\p{100-100*(5*\k+2.5)/65}
+  \fill[solideE!\p!solideD] (0,{5*\k*\ech}) rectangle (\rg,{(5*\k+5)*\ech}); }
+\foreach \k in {13,14,...,25} {                   % 65 -> 130 dB : orange vers rouge
+  \pgfmathsetmacro\p{100-100*(5*\k+2.5-65)/65}
+  \fill[solideD!\p!solideA] (0,{5*\k*\ech}) rectangle (\rg,{(5*\k+5)*\ech}); }
+\draw[line width=0.6pt] (0,0) rectangle (\rg,{130*\ech});
+\foreach \L in {0,10,...,130} {                   % graduations tous les 10 dB
+  \draw[line width=0.5pt] (0,{\L*\ech}) -- (-0.09,{\L*\ech}); }
+
+%% ---------------- en-têtes des colonnes -----------------------------------
+\node[ent, anchor=east] at (-0.30,{142*\ech}) {$I$ (W$\cdot$m$^{-2}$)};
+\node[ent, anchor=south] at (0.375,{131.5*\ech}) {$L$ (dB)};
+
+%% ---------------- repères : niveau, intensité, situation -------------------
+\foreach \L/\I/\lab in {%
+    0/{$10^{-12}$}/{seuil d'audibilité ($I_0$)},
+    40/{$10^{-8}$}/{chuchotement},
+    60/{$10^{-6}$}/{conversation normale},
+    80/{$10^{-4}$}/{conversation à haute voix},
+    100/{$10^{-2}$}/{lecteur MP3},
+    110/{$10^{-1}$}/{discothèque, concert},
+    130/{$10^{1}$}/{réacteur d'avion\\\textbf{seuil de la douleur}}} {
+  \draw[line width=0.6pt] (0,{\L*\ech}) -- (-0.16,{\L*\ech});
+  \draw[line width=0.6pt] (\rg,{\L*\ech}) -- (\rg+0.09,{\L*\ech});
+  \node[txt, anchor=east] at (-1.05,{\L*\ech}) {\I};
+  \node[txt, anchor=east] at (-0.22,{\L*\ech}) {\L};
+  \node[txt, anchor=west, align=left] at (\rg+0.14,{\L*\ech}) {\lab}; }
+
+%% ---------------- encadré : définition du niveau sonore --------------------
+\draw[line width=0.6pt, rounded corners=2pt] (1.95,0.18) rectangle (5.42,1.45);
+\node[txt, anchor=center] at (3.68,1.27) {$L = 10\log\!\left(I/I_0\right)$};
+\node[txt, anchor=center] at (3.68,1.00) {avec $I_0 = 1{,}0 \times 10^{-12}$ W$\cdot$m$^{-2}$};
+\foreach \yy/\lab in {0.71/{$\times 2$ sur $I$ $\rightarrow$ $+3$ dB},
+                      0.42/{$\times 10$ sur $I$ $\rightarrow$ $+10$ dB}} {
+  \draw[solideD, line width=0.8pt, -{Stealth[length=4pt]}]
+       (2.20,\yy-0.07) arc (200:-20:0.11);
+  \node[txt, anchor=west, text=solideD] at (2.52,\yy) {\lab}; }
+\end{tikzpicture}
+\end{document}

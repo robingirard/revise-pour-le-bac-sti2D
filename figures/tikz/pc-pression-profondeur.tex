@@ -1,0 +1,61 @@
+%% Principe fondamental de l'hydrostatique (leçon pc-fluides).
+%% Dans un liquide au repos, la pression est la même en tout point d'un même plan
+%% horizontal (B et B') et augmente avec la profondeur : P_A - P_B = rho g h.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cote/.style={{Stealth[length=4.5pt]}-{Stealth[length=4.5pt]}, line width=0.8pt, solideD},
+  plan/.style={line width=0.6pt, dash pattern=on 3pt off 2pt, black!65},
+  croix/.style={line width=0.9pt, black}]
+
+\def\rx{1.4}     % demi-largeur du cylindre
+\def\ry{0.35}    % demi-hauteur des ellipses (perspective)
+\def\hc{4.2}     % hauteur de la colonne de liquide
+
+%% ------------------- la colonne de liquide ----------------------------
+\path[fill=solideB!20]
+      (-\rx,\hc) arc (180:360:\rx and \ry) -- (\rx,0) arc (0:-180:\rx and \ry) -- cycle;
+\draw[solideB, line width=1pt] (-\rx,\hc) -- (-\rx,0) (\rx,\hc) -- (\rx,0);
+\draw[solideB, line width=1pt] (\rx,0) arc (0:-180:\rx and \ry);
+\draw[solideB, line width=0.6pt, dash pattern=on 2pt off 2pt]
+      (-\rx,0) arc (180:0:\rx and \ry);
+\draw[solideB, line width=1pt] (0,\hc) ellipse (\rx and \ry);
+
+%% ------------------- étiquettes ---------------------------------------
+\node[font=\small, anchor=south] at (0,\hc+0.72) {AIR};
+\node[font=\footnotesize, anchor=south, text=black!70] at (0,\hc+0.42)
+     {$P = P_{\text{atm}}$ à la surface libre};
+\node[font=\small, text=solideB!70!black, anchor=west] at (-0.55,2.25) {LIQUIDE};
+\node[font=\small, text=solideB!70!black, anchor=west] at (-0.55,1.85) {$\rho_{\text{liquide}}$};
+
+%% ------------------- plans horizontaux B/B' et A ----------------------
+\def\zB{3.10}
+\def\zA{0.80}
+\draw[plan] (-\rx-0.15,\zB) -- (2.75,\zB);
+\draw[plan] (-\rx-0.15,\zA) -- (2.75,\zA);
+\foreach \px/\py/\lb/\an in {-0.75/\zB/{B}/{south}, 0.75/\zB/{B$'$}/{south},
+                             -0.35/\zA/{A}/{south}} {
+  \draw[croix] (\px-0.09,\py-0.09) -- (\px+0.09,\py+0.09)
+               (\px-0.09,\py+0.09) -- (\px+0.09,\py-0.09);
+  \node[font=\small, anchor=\an, inner sep=3pt] at (\px,\py) {\lb}; }
+
+%% ------------------- cotation de la dénivellation h -------------------
+\draw[cote] (-2.05,\zA) -- (-2.05,\zB);
+\draw[line width=0.4pt, black!45] (-2.15,\zA) -- (-\rx,\zA) (-2.15,\zB) -- (-\rx,\zB);
+\node[font=\small, text=solideD, anchor=east, inner sep=3pt] at (-2.08,1.95) {$h$};
+
+%% ------------------- axe des altitudes Z ------------------------------
+\draw[-{Stealth[length=5pt]}, line width=0.7pt] (2.75,0) -- (2.75,\hc+0.35)
+      node[anchor=south, inner sep=2pt, font=\footnotesize] {$Z$ (m)};
+\draw[line width=0.7pt] (2.65,\zB) -- (2.85,\zB);
+\draw[line width=0.7pt] (2.65,\zA) -- (2.85,\zA);
+\node[font=\footnotesize, anchor=west, inner sep=3pt] at (2.88,\zB) {$z_\mathrm{B} = z_{\mathrm{B}'}$};
+\node[font=\footnotesize, anchor=west, inner sep=3pt] at (2.88,\zA) {$z_\mathrm{A}$};
+
+%% ------------------- conclusion ---------------------------------------
+\node[font=\footnotesize, anchor=north, align=center] at (0.6,-0.85)
+     {$P_\mathrm{B} = P_{\mathrm{B}'}$ \qquad $P_\mathrm{A} > P_\mathrm{B}$
+      \qquad $\Delta P = \rho\,g\,h$};
+\end{tikzpicture}
+\end{document}

@@ -6,7 +6,8 @@ const FIG_RE = /\{\{fig:([\w.-]+)\}\}/g;
 const FIG_ONLY_RE = /^\s*\{\{fig:([\w.-]+)\}\}\s*$/;
 // Jetons traités avant l'échappement : figure, maths affichées ($$…$$ ou \[…\]), maths en ligne ($…$ ou \(…\)).
 // Un « $ » isolé (sans fermeture sur la même ligne) reste un simple caractère.
-const TOKEN_RE = /(\{\{fig:[\w.-]+\}\})|(\$\$[\s\S]+?\$\$)|(\\\[[\s\S]+?\\\])|(\$[^$\n]+?\$)|(\\\([^\n]+?\\\))/g;
+// Le code en ligne `…` est reconnu en premier : ni maths, ni figure, ni gras à l'intérieur.
+const TOKEN_RE = /(`[^`\n]+?`)|(\{\{fig:[\w.-]+\}\})|(\$\$[\s\S]+?\$\$)|(\\\[[\s\S]+?\\\])|(\$[^$\n]+?\$)|(\\\([^\n]+?\\\))/g;
 const MATH_ONLY_RE = /^\s*(\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\])\s*$/;
 const EMOJI_RE = /\{\{emoji:([^{}<>&]{1,16})\}\}/g;          // appliqué sur le texte déjà échappé
 const EMOJI_ONLY_RE = /^\s*\{\{emoji:[^{}<>&]{1,16}\}\}\s*$/;
@@ -48,7 +49,7 @@ export function mathHtml(src, { display = false } = {}) {
   return display ? `<div class="math-display">${html}</div>` : html;
 }
 
-/** Texte riche : **gras**, *italique*, \n, {{fig:ID}}, {{emoji:🚪}}, $math$, $$maths affichées$$. */
+/** Texte riche : **gras**, *italique*, \n, `code`, {{fig:ID}}, {{emoji:🚪}}, $math$, $$maths affichées$$. */
 export function renderRich(text, figures = {}) {
   if (text == null) return '';
   const str = String(text);
@@ -59,8 +60,9 @@ export function renderRich(text, figures = {}) {
   TOKEN_RE.lastIndex = 0;
   for (let m; (m = TOKEN_RE.exec(str));) {
     out += inline(escapeHtml(str.slice(last, m.index)), { emojiBlock });
-    const [tok, fig, dd, bracket, d, paren] = m;
-    if (fig) out += figureHtml(tok.slice(6, -2), figures, { block });
+    const [tok, code, fig, dd, bracket, d, paren] = m;
+    if (code) out += `<code>${escapeHtml(tok.slice(1, -1))}</code>`;
+    else if (fig) out += figureHtml(tok.slice(6, -2), figures, { block });
     else if (dd) out += mathHtml(dd.slice(2, -2), { display: true });
     else if (bracket) out += mathHtml(bracket.slice(2, -2), { display: true });
     else if (d) out += mathHtml(d.slice(1, -1));
@@ -73,11 +75,13 @@ export function renderRich(text, figures = {}) {
 
 const isSeparatorRow = (cells) => cells.every((c) => /^:?-{2,}:?$/.test(c));
 
-/** Markdown restreint : titres, paragraphes, listes, tableaux, figures, texte riche. */
+const codeBlockHtml = (lines) => `<pre class="code"><code>${escapeHtml(lines.join('\n'))}</code></pre>`;
+
+/** Markdown restreint : titres, paragraphes, listes, tableaux, figures, blocs de code ```, texte riche. */
 export function renderLesson(md, figures = {}) {
   const lines = String(md || '').replace(/\r\n?/g, '\n').split('\n');
   const out = [];
-  let para = [], list = null, olist = null, table = null;
+  let para = [], list = null, olist = null, table = null, code = null;
   const flushPara = () => {
     if (para.length) out.push(`<p>${renderRich(para.join(' '), figures)}</p>`);
     para = [];
@@ -100,7 +104,12 @@ export function renderLesson(md, figures = {}) {
 
   for (const raw of lines) {
     const t = raw.trim();
+    if (code) { // bloc de code ouvert : lignes conservées telles quelles jusqu'à la clôture
+      if (t.startsWith('```')) { out.push(codeBlockHtml(code)); code = null; } else code.push(raw.replace(/\s+$/, ''));
+      continue;
+    }
     if (t === '') { flushAll(); continue; }
+    if (t.startsWith('```')) { flushAll(); code = []; continue; }
     const heading = /^(#{1,3})\s+(.+)$/.exec(t);
     if (heading) {
       flushAll();
@@ -133,5 +142,6 @@ export function renderLesson(md, figures = {}) {
     para.push(t);
   }
   flushAll();
+  if (code) out.push(codeBlockHtml(code)); // bloc non refermé : affiché quand même
   return out.join('\n');
 }

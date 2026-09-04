@@ -1,0 +1,53 @@
+%% Circuit d'étude des lois des mailles et des nœuds : générateur, dipôle
+%% ohmique R en série, puis condensateur C et bobine L en parallèle.
+%% Le point noir marque le nœud où i_R = i_C + i_L.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  fil/.style={line width=0.9pt, line cap=round, line join=round},
+  fleche/.style={-{Stealth[length=5pt]}, line width=0.9pt, draw=solideB},
+  etiq/.style={font=\footnotesize, text=solideB, inner sep=2pt}]
+
+%% ================= les fils du circuit ===================================
+\draw[fil] (0,3) -- (4.8,3);          % fil du haut
+\draw[fil] (0,0) -- (4.8,0);          % fil du bas (retour)
+\draw[fil] (0,0) -- (0,1.2)  (0,1.8) -- (0,3);   % branche du générateur
+
+%% ================= générateur (branche gauche) ===========================
+\draw[fil] (0,1.5) circle (0.3);
+\node[font=\tiny] at (0,1.64) {$+$};
+\node[font=\tiny] at (0,1.36) {$-$};
+\draw[fleche] (-0.55,0.9) -- (-0.55,2.1);
+\node[etiq, anchor=east] at (-0.6,1.5) {$u_G(t)$};
+\draw[fleche] (0,2.25) -- (0,2.8);     % courant sortant du générateur
+
+%% ================= dipôle ohmique R (branche haute) ======================
+\draw[fil, fill=white] (1.25,2.75) rectangle (2.25,3.25);
+\node[font=\footnotesize] at (1.75,3) {$R$};
+\draw[fleche] (0.45,3.35) -- (1.05,3.35);
+\node[etiq, anchor=south] at (0.75,3.37) {$i_R(t)$};
+\draw[fleche] (2.35,2.5) -- (1.15,2.5);
+\node[etiq, anchor=north] at (1.6,2.47) {$u_R(t)$};
+
+%% ================= nœud ==================================================
+\fill (3,3) circle (1.8pt);
+\node[font=\scriptsize, anchor=south, inner sep=3pt] at (3,3.1) {nœud};
+
+%% ================= condensateur (branche parallèle 1) ====================
+\draw[fil] (3,3) -- (3,1.65)  (3,1.35) -- (3,0);
+\draw[fil] (2.72,1.65) -- (3.28,1.65)  (2.72,1.35) -- (3.28,1.35);
+\draw[fleche] (3,2.35) -- (3,1.95);
+\node[etiq, anchor=east] at (2.9,2.05) {$i_C(t)$};
+\draw[fleche] (3.55,0.9) -- (3.55,2.1);
+\node[etiq, anchor=west] at (3.6,1.5) {$u_C(t)$};
+
+%% ================= bobine (branche parallèle 2) ==========================
+\draw[fil] (4.8,3) -- (4.8,2)  (4.8,0.8) -- (4.8,0);
+\foreach \k in {0,1,2,3} { \draw[fil] (4.8,{2-0.3*\k}) arc (90:-90:0.15); }
+\draw[fleche] (4.8,2.7) -- (4.8,2.25);
+\node[etiq, anchor=east] at (4.7,2.45) {$i_L(t)$};
+\draw[fleche] (5.35,0.9) -- (5.35,2.1);
+\node[etiq, anchor=west] at (5.4,1.5) {$u_L(t)$};
+\end{tikzpicture}
+\end{document}

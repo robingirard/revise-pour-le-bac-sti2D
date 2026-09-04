@@ -1,0 +1,48 @@
+%% Oscillogramme d'une tension sinusoïdale avec composante continue :
+%% U_max = 8 V, U_min = -2 V, donc U_moy = U_DC = 3 V et amplitude U_m = 5 V.
+%% u(t) = 3 + 5 sin(2 pi f t) ; 2,5 périodes représentées.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1.9cm, y=0.28cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={solideD, line width=1.4pt, line join=round},
+  niveau/.style={solideE, line width=0.7pt, dash pattern=on 2.5pt off 2pt},
+  grad/.style={font=\scriptsize},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.6pt}]
+
+%% ---- axes ----------------------------------------------------------------
+\draw[axe] (-0.12,0) -- (2.75,0) node[anchor=south east, inner sep=3pt, font=\small] {$t$ (s)};
+\draw[axe] (0,-4.2) -- (0,10.6);
+\node[anchor=south, inner sep=2pt, font=\small] at (0.35,9.6) {$u(t)$ (V)};
+
+%% ---- niveaux caractéristiques -------------------------------------------
+\foreach \v/\lab in {8/{$U_{\max} = 8$ V}, 3/{$U_{\text{moy}} = U_{DC} = 3$ V}, -2/{$U_{\min} = -2$ V}} {
+  \draw[niveau] (0,\v) -- (2.6,\v);
+  \node[grad, text=solideE, anchor=east, inner sep=3pt] at (0,\v) {\lab}; }
+
+%% ---- graduations de l'axe vertical --------------------------------------
+\foreach \v in {-2,3,8} { \draw[line width=0.5pt] (-0.03,\v) -- (0.03,\v); }
+\node[grad, anchor=north east, inner sep=2pt] at (0,0) {0};
+
+%% ---- la sinusoïde --------------------------------------------------------
+\draw[courbe] plot[domain=0:2.55, samples=160] (\x,{3+5*sin(\x*360)});
+
+%% ---- amplitude U_m (crête au-dessus de la moyenne) -----------------------
+\draw[cote] (1.25,3) -- (1.25,8);
+\node[anchor=west, inner sep=2pt, font=\scriptsize] at (1.33,9.3) {Amplitude $U_m$};
+\draw[line width=0.4pt, black!60] (1.32,9.3) -- (1.25,8.4);
+
+%% ---- période T -----------------------------------------------------------
+\draw[cote] (0.25,-3.4) -- (1.25,-3.4)
+  node[pos=0.5, anchor=north, inner sep=2pt, font=\scriptsize] {$T = 1/f$};
+\draw[black!35, line width=0.4pt, dotted] (0.25,8) -- (0.25,-3.4);
+\draw[black!35, line width=0.4pt, dotted] (1.25,8) -- (1.25,-3.4);
+
+%% ---- rappel des deux relations de lecture -------------------------------
+\node[anchor=north west, draw=black!45, line width=0.5pt, rounded corners=2pt,
+      inner sep=4pt, align=left, font=\scriptsize] at (0.02,-5.2)
+  {$U_{\text{moy}} = \dfrac{U_{\max}+U_{\min}}{2}$ \\[2pt]
+   $U_m = \dfrac{U_{\max}-U_{\min}}{2}$};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,58 @@
+%% Diagramme de séquence (sd) : échanges entre l'utilisateur et la carte de commande.
+%% Se lit de haut en bas ; l'opérateur « loop » encadre une séquence répétée.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cadre/.style={draw=black!70, line width=0.9pt},
+  tete/.style={draw=solideB, line width=1.1pt, fill=white, minimum width=1.9cm,
+               minimum height=0.5cm, inner sep=2pt, font=\scriptsize},
+  vie/.style={black!60, dash pattern=on 3pt off 2.5pt, line width=0.6pt},
+  actif/.style={draw=solideB, line width=0.8pt, fill=solideB!15},
+  msg/.style={line width=0.9pt, solideA},
+  txt/.style={font=\scriptsize, anchor=south, inner sep=2pt, text=solideA}]
+
+%% ================== cadre à onglet ====================================
+\draw[cadre] (-0.6,-4.15) rectangle (7.1,0.95);
+\draw[cadre] (-0.6,0.5) -- (0.15,0.5) -- (0.35,0.72) -- (0.35,0.95);
+\node[font=\scriptsize, anchor=west, inner sep=3pt] at (-0.55,0.72) {\texttt{sd}};
+
+%% ================== lignes de vie =====================================
+\node[tete] (u) at (0.9,0.1)  {\texttt{utilisateur:Bloc}};
+\node[tete] (c) at (4.2,0.1)  {\texttt{carte:Bloc}};
+\draw[vie] (0.9,-0.15) -- (0.9,-3.95);
+\draw[vie] (4.2,-0.15) -- (4.2,-3.95);
+
+%% ================== opérateur loop ====================================
+\draw[cadre, black!50] (0.15,-3.9) rectangle (5.35,-0.75);
+\filldraw[fill=white, draw=black!50, line width=0.9pt]
+  (0.15,-0.75) -- (4.9,-0.75) -- (4.9,-1.0) -- (4.7,-1.25) -- (0.15,-1.25) -- cycle;
+\node[font=\scriptsize, anchor=west, inner sep=3pt] at (0.2,-1.0)
+     {\texttt{loop} [tant que le système est en marche]};
+
+%% ================== barres d'activation ===============================
+\draw[actif] (0.8,-1.48) rectangle (1.0,-3.78);
+\draw[actif] (4.1,-1.48) rectangle (4.3,-3.68);
+
+%% ================== messages ==========================================
+\draw[msg, -{Triangle[length=5pt,width=4.5pt]}] (1.0,-1.6) -- (4.1,-1.6);
+\node[txt] at (2.55,-1.58) {1 : demande de mesure};
+
+\draw[msg, -{Straight Barb[length=4pt]}, dash pattern=on 3pt off 2pt]
+      (4.1,-2.18) -- (1.0,-2.18);
+\node[txt] at (2.55,-2.16) {2 : valeur $N$};
+
+\draw[msg, -{Straight Barb[length=4pt]}] (1.0,-2.76) -- (4.1,-2.76);
+\node[txt] at (2.55,-2.74) {3 : ordre de fermeture};
+
+\draw[msg, -{Straight Barb[length=4pt]}, rounded corners=2pt]
+      (4.3,-3.2) -- (5.0,-3.2) -- (5.0,-3.58) -- (4.3,-3.58);
+\node[font=\scriptsize, text=solideA, anchor=west, align=left, text width=1.6cm]
+      at (5.45,-3.39) {4 : comparer $N$ au seuil};
+
+%% ================== sens du temps =====================================
+\draw[-{Stealth[length=6pt]}, line width=1.2pt, solideA] (-1.15,0.35) -- (-1.15,-4.0);
+\node[font=\scriptsize, text=solideA, rotate=90, anchor=south] at (-1.25,-1.85)
+     {sens d'écoulement du temps};
+\end{tikzpicture}
+\end{document}

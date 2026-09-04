@@ -1,0 +1,53 @@
+%% L'action de la pesanteur.
+%% Gauche : le poids s'exerce en TOUT point du solide (champ de petites flèches).
+%% Droite : ce champ se ramène à une seule force P appliquée au centre de gravité G.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  force/.style={-{Stealth[length=6pt]}, line width=1.2pt, solideA},
+  champ/.style={-{Stealth[length=3.4pt]}, line width=0.5pt, solideF},
+  axe/.style={-{Stealth[length=4.5pt]}, line width=0.6pt, solideF}]
+
+% --- macro locale : le même solide (parallélépipède en perspective) ---
+\newcommand\bloc{%
+  \fill[black!8]  (0,0) -- (2,0) -- (2,1.2) -- (0,1.2) -- cycle;
+  \fill[black!14] (0,1.2) -- (0.5,1.55) -- (2.5,1.55) -- (2,1.2) -- cycle;
+  \fill[black!20] (2,0) -- (2.5,0.35) -- (2.5,1.55) -- (2,1.2) -- cycle;
+  \draw[line width=0.7pt, black!65, line join=round]
+    (0,0) -- (2,0) -- (2.5,0.35) -- (2.5,1.55) -- (0.5,1.55) -- (0,1.2) -- cycle
+    (0,1.2) -- (2,1.2) -- (2,0)  (2,1.2) -- (2.5,1.55);}
+
+%% ================= (a) le champ de pesanteur =========================
+\begin{scope}[shift={(0,0)}]
+  \bloc
+  \foreach \x in {0.34,0.83,1.32,1.81}
+    \foreach \y in {1.02,0.69,0.36}
+      { \draw[champ] (\x,\y) -- (\x,\y-0.26); }
+  \node[font=\small, anchor=north, align=center, text=solideF] at (1.25,-1.05)
+       {une action\\ en tout point};
+\end{scope}
+
+%% ================= équivalence =======================================
+\node[font=\large] at (3.35,0.75) {$\Leftrightarrow$};
+
+%% ================= (b) le poids appliqué en G ========================
+\begin{scope}[shift={(4.2,0)}]
+  \bloc
+  \coordinate (G) at (1.25,0.77);
+  \fill (G) circle (1.7pt);
+  \node[font=\small, anchor=south east, inner sep=2pt] at (G) {$G$};
+  \draw[force] (G) -- ++(0,-1.5) node[anchor=west, inner sep=3pt, font=\small, text=solideA] {$\vec{P}$};
+  \node[font=\small, anchor=north, align=center, text=solideA] at (1.25,-1.05)
+       {une seule force\\ appliquée en $G$};
+\end{scope}
+
+%% ================= repère et cartouche ===============================
+\draw[axe] (-0.75,-1.62) -- ++(0.62,0) node[anchor=north, inner sep=1.5pt, font=\small] {$\vec{x}$};
+\draw[axe] (-0.75,-1.62) -- ++(0,0.62) node[anchor=east, inner sep=1.5pt, font=\small] {$\vec{y}$};
+
+\node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=5pt,
+      font=\small, align=center] at (3.35,-2.35)
+     {$P = m \times g$ \qquad (N) $=$ (kg) $\times$ (m/s$^2$) \qquad $g = 9{,}81$ m/s$^2$};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,36 @@
+%% Chaîne énergétique : batterie -> moteur électrique -> disque en rotation.
+%% Règle de lecture : les formes d'énergie sont encadrées, le convertisseur est
+%% entouré (ellipse), la nature du transfert est écrite au-dessus des flèches.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{shapes.geometric, positioning}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  forme/.style={draw=solideB, line width=1pt, align=center, minimum width=1.5cm,
+                minimum height=1.05cm, inner sep=2pt,
+                font=\scriptsize\bfseries, text=solideB},
+  conv/.style={ellipse, draw=solideE, line width=1pt, align=center,
+               minimum width=1.8cm, minimum height=1.1cm, inner sep=1pt,
+               font=\scriptsize\bfseries, text=solideE},
+  titre/.style={font=\scriptsize, text=black!70, align=center},
+  fleche/.style={-{Stealth[length=7pt]}, line width=1.2pt, draw=solideE},
+  etiq/.style={font=\scriptsize\bfseries, text=solideD, inner sep=2pt}]
+
+%% ---- les trois maillons de la chaîne -------------------------------------
+\node[forme] (chim) at (0,0)   {Énergie\\chimique};
+\node[conv]  (mot)  at (3.15,0) {Moteur\\électrique};
+\node[forme] (cin)  at (6.3,0) {Énergie\\cinétique};
+
+%% ---- titres au-dessus de chaque maillon ----------------------------------
+\node[titre, above=3pt of chim] {Batterie};
+\node[titre, above=3pt of mot]  {Convertisseur};
+\node[titre, above=3pt of cin]  {Disque\\en rotation};
+
+%% ---- transferts ----------------------------------------------------------
+\draw[fleche] (chim) -- node[etiq, above] {Électrique} (mot);
+\draw[fleche] (mot)  -- node[etiq, above] {Mécanique}  (cin);
+
+\node[font=\scriptsize, text=black!70] (env) at (5.0,-1.7) {Environnement};
+\draw[fleche] (mot.south) -- node[etiq, below left=-1pt] {Thermique} (env.north west);
+\end{tikzpicture}
+\end{document}

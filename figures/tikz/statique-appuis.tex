@@ -1,0 +1,40 @@
+%% Les trois symboles d'appui d'une poutre : appui simple (sur rouleaux),
+%% articulation (appui simple fixe) et encastrement.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  poutre/.style={line width=2.6pt, solideB, line cap=round},
+  triangle/.style={line width=1pt, draw=solideE, fill=solideE!12, line join=round},
+  titre/.style={font=\small\bfseries, anchor=south},
+  legende/.style={font=\small, anchor=north, align=center}]
+
+%% ---------------------- 1. appui simple -----------------------------
+\begin{scope}[shift={(0,0)}]
+  \draw[poutre] (-0.9,0) -- (0.9,0);
+  \draw[triangle] (0,-0.03) -- (-0.42,-0.62) -- (0.42,-0.62) -- cycle;
+  \draw[line width=0.9pt, draw=solideE, fill=white] (-0.22,-0.735) circle (0.115);
+  \draw[line width=0.9pt, draw=solideE, fill=white] ( 0.22,-0.735) circle (0.115);
+  \hachures{(-0.9,-1.07) rectangle (0.9,-0.85)}
+  \node[titre] at (0,0.72) {Appui simple};
+  \node[legende] at (0,-1.2) {rotation\\ \textbf{et} translation};
+\end{scope}
+
+%% ---------------------- 2. articulation -----------------------------
+\begin{scope}[shift={(2.9,0)}]
+  \draw[poutre] (-0.9,0) -- (0.9,0);
+  \draw[triangle] (0,-0.03) -- (-0.42,-0.62) -- (0.42,-0.62) -- cycle;
+  \hachures{(-0.9,-0.84) rectangle (0.9,-0.62)}
+  \node[titre] at (0,0.72) {Articulation};
+  \node[legende] at (0,-1.2) {rotation\\ seulement};
+\end{scope}
+
+%% ---------------------- 3. encastrement -----------------------------
+\begin{scope}[shift={(5.8,0)}]
+  \draw[poutre] (-0.52,0) -- (0.9,0);
+  \hachures{(-0.78,-0.62) rectangle (-0.52,0.62)}
+  \node[titre] at (0.05,0.72) {Encastrement};
+  \node[legende] at (0.05,-1.2) {aucun degré\\ de liberté};
+\end{scope}
+\end{tikzpicture}
+\end{document}

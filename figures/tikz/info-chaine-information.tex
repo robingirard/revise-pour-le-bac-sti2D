@@ -1,0 +1,36 @@
+%% Chaîne d'information : les trois blocs ACQUÉRIR / TRAITER / COMMUNIQUER.
+%% Entrée : grandeurs physiques et consignes ; sortie : informations (ordres, messages).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{positioning,fit}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  bloc/.style={draw=solideB, line width=1.2pt, rounded corners=4pt, fill=white,
+               minimum width=2.15cm, minimum height=1.9cm, inner sep=3pt,
+               align=center, font=\scriptsize},
+  fleche/.style={-{Stealth[length=6pt,width=5pt]}, line width=1.8pt, draw=solideB},
+  bord/.style={font=\scriptsize, text width=1.75cm, inner sep=1pt,
+               execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}}]
+
+%% ---- les trois blocs (même largeur imposée) --------------------------
+\node[bloc] (acq) at (0,0)    {\textbf{ACQUÉRIR}\\[3pt] capteurs\\ boutons,\\ clavier};
+\node[bloc] (tra) at (2.55,0) {\textbf{TRAITER}\\[3pt] carte\\ Arduino\\ automate};
+\node[bloc] (com) at (5.1,0)  {\textbf{COMMUNIQUER}\\[3pt] voyants, écran\\ relais,\\ transistors\\ réseau};
+
+%% ---- cadre englobant -------------------------------------------------
+\node[draw=solideB!45, line width=0.8pt, rounded corners=7pt, dash pattern=on 3pt off 2pt,
+      fit=(acq)(tra)(com), inner sep=6pt] (cadre) {};
+\node[anchor=south west, font=\footnotesize\bfseries, text=solideB, inner sep=2pt]
+      at (cadre.north west) {Chaîne d'information};
+
+%% ---- liaisons internes ----------------------------------------------
+\draw[fleche] (acq) -- (tra);
+\draw[fleche] (tra) -- (com);
+
+%% ---- entrée et sortie ------------------------------------------------
+\draw[fleche] (-2.5,0) -- (acq.west);
+\node[bord, align=right, anchor=south east] at (-1.5,0.12) {Grandeurs physiques, consignes};
+\draw[fleche] (com.east) -- (7.6,0);
+\node[bord, align=left, anchor=south west] at (6.55,0.12) {Informations (ordres, messages)};
+\end{tikzpicture}
+\end{document}

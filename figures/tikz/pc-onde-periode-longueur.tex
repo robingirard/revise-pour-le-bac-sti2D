@@ -1,0 +1,54 @@
+%% pc-onde-periode-longueur — la double périodicité d'une onde progressive.
+%% Repère du haut : « photographie » à un instant t fixé -> périodicité spatiale (longueur d'onde).
+%% Repère du bas  : enregistrement en un point x fixé   -> périodicité temporelle (période T).
+%% Les deux courbes sont identiques : seule la grandeur portée en abscisse change (m / s).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=0.85cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={solideA, line width=1.2pt, line join=round, line cap=round},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, solideD, line width=0.9pt},
+  rappel/.style={solideD, line width=0.5pt, dash pattern=on 1.5pt off 1.5pt},
+  txt/.style={font=\scriptsize},
+  titre/.style={font=\scriptsize\bfseries}]
+
+%% amplitude et sinusoïde commune : 2,5 périodes, période = 3 unités d'abscisse
+\def\amp{0.55}
+\def\per{3}
+
+%% ================= repère du haut : périodicité spatiale =================
+\begin{scope}[shift={(0,4.05)}]
+  \node[titre, anchor=south west] at (-0.5,1.28) {Photographie à un instant $t$ fixé};
+  \draw[axe] (-0.5,0) -- (8.3,0) node[txt, anchor=north east, inner sep=3pt] {$x$ (m)};
+  \draw[axe] (0,-1) -- (0,1.25);
+  \node[txt, anchor=south west, inner sep=1pt] at (0.05,1.2) {perturbation};
+  \draw[courbe] plot[domain=0:7.5,samples=120,smooth] (\x,{\amp*sin(deg(\x*2*pi/\per))});
+  %% cote lambda entre deux crêtes consécutives
+  \foreach \c in {0.75,3.75} { \draw[rappel] (\c,\amp) -- (\c,1.02); }
+  \draw[cote] (0.75,0.95) -- (3.75,0.95)
+      node[midway, fill=white, inner sep=1pt, font=\small, text=solideD] {$\lambda$};
+  \node[txt, anchor=north] at (3.75,-0.75) {périodicité \textbf{spatiale}};
+\end{scope}
+
+%% ================= repère du bas : périodicité temporelle ================
+\begin{scope}[shift={(0,1.2)}]
+  \node[titre, anchor=south west] at (-0.5,1.28) {Enregistrement en un point $x$ fixé};
+  \draw[axe] (-0.5,0) -- (8.3,0) node[txt, anchor=north east, inner sep=3pt] {$t$ (s)};
+  \draw[axe] (0,-1) -- (0,1.25);
+  \node[txt, anchor=south west, inner sep=1pt] at (0.05,1.2) {perturbation};
+  \draw[courbe] plot[domain=0:7.5,samples=120,smooth] (\x,{\amp*sin(deg(\x*2*pi/\per))});
+  %% cote T entre deux maximums consécutifs
+  \foreach \c in {0.75,3.75} { \draw[rappel] (\c,\amp) -- (\c,1.02); }
+  \draw[cote] (0.75,0.95) -- (3.75,0.95)
+      node[midway, fill=white, inner sep=1pt, font=\small, text=solideD] {$T$};
+  \node[txt, anchor=north] at (3.75,-0.75) {périodicité \textbf{temporelle}};
+\end{scope}
+
+%% ================= relation encadrée =====================================
+\node[draw, line width=0.7pt, rounded corners=2pt, inner sep=4pt, align=center,
+      font=\small] at (4.2,-0.40)
+  {$\lambda = v \times T = \dfrac{v}{f}$\quad
+   {\scriptsize (m) \ (m$\cdot$s$^{-1}$) \ (s) \ (Hz)}};
+\end{tikzpicture}
+\end{document}

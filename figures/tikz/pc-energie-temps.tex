@@ -1,0 +1,36 @@
+%% Énergie cumulée e(t) sur 24 h : deux rampes de pente 2 kW séparées et
+%% suivies de paliers (pente nulle). Points imposés :
+%% (0;0) -> (6;12) -> (12;12) -> (18;24) -> (24;24).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=0.25cm, y=0.145cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={solideD, line width=1.4pt, line join=round, line cap=round},
+  grad/.style={font=\scriptsize},
+  repere/.style={line width=0.5pt},
+  aide/.style={black!25, line width=0.4pt, dotted}]
+
+%% ---- axes ---------------------------------------------------------------
+\draw[axe] (-1.5,0) -- (27,0) node[anchor=south east, inner sep=4pt, font=\small] {$t$ (h)};
+\draw[axe] (0,-2) -- (0,29);
+\node[anchor=south west, inner sep=2pt, font=\small] at (0.5,27) {$e(t)$ (kWh)};
+
+%% ---- graduations --------------------------------------------------------
+\foreach \e in {12,24} {
+  \draw[repere] (0,\e) -- (-0.7,\e) node[grad, anchor=east, inner sep=2pt] {\e};
+  \draw[aide] (0,\e) -- (24,\e); }
+\node[grad, anchor=north east, inner sep=2pt] at (-0.2,0) {0};
+\foreach \t in {6,12,18,24} {
+  \draw[repere] (\t,0) -- (\t,-1) node[grad, anchor=north, inner sep=2pt] {\t}; }
+
+%% ---- courbe -------------------------------------------------------------
+\draw[courbe] (0,0) -- (6,12) -- (12,12) -- (18,24) -- (24,24);
+
+%% ---- annotations de pente ------------------------------------------------
+\node[font=\scriptsize, text=solideB, anchor=south, inner sep=3pt, rotate=49] at (3,6)
+  {pente = 2 kW};
+\node[font=\scriptsize, text=solideB, anchor=south, inner sep=4pt] at (9,12)
+  {pente nulle : 0 kW};
+\end{tikzpicture}
+\end{document}

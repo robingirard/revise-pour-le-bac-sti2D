@@ -1,0 +1,1070 @@
+# Physique-chimie — énergie thermique (1re : ch. 5 et 6 ; Tle : ch. 5)
+# Sources : docs/notes/pc-1re-cours-a.md (p. 23-27), docs/notes/pc-1re-cours-b.md (p. 28),
+#           docs/notes/pc-tle-cours-a.md (p. 139-141).
+units:
+- id: pc-thermique
+  matiere: physique
+  title: 'Physique : énergie thermique'
+  description: Température et agitation, chaleur massique, changements d'état, flux thermique et isolation des bâtiments.
+  skills:
+  - id: pc-temperature-chaleur
+    title: Température et chaleur massique
+    icon: 🌡️
+    description: États de la matière, température et agitation, °C et K, énergie interne, Q = m × c × Δθ, conduction, convection, rayonnement.
+    prerequisites: []
+    lesson: lessons/pc-temperature-chaleur.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Que se passe-t-il quand l''**agitation des constituants microscopiques** (atomes, ions, molécules) d''un corps augmente ?
+
+
+        {{fig:pc-agitation-thermique}}'
+      choices:
+      - Sa température augmente
+      - Sa température diminue
+      - Sa masse augmente
+      - Son volume reste rigoureusement constant
+      answer: 0
+      feedback:
+      - null
+      - 'Non, c''est l''inverse : plus les constituants s''agitent, plus la température est élevée. Refroidir un corps, c''est ralentir cette agitation.'
+      - 'Non : chauffer un corps ne change pas le nombre d''atomes qu''il contient, donc pas sa masse.'
+      - 'Non : la question porte sur la **température**, seule grandeur reliée directement à l''agitation microscopique.'
+      explanation: « Lorsque l'agitation des constituants microscopiques augmente au sein d'un corps, alors sa température augmente » (1re, p. 23).
+      tags:
+      - temperature
+    - type: mcq
+      level: 1
+      prompt: Quelle est l'unité de température du **système international**, celle qu'il faut employer dans tout calcul thermodynamique ?
+      choices:
+      - Le kelvin (K)
+      - Le degré Celsius (°C)
+      - Le degré Fahrenheit (°F)
+      - Le joule (J)
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le degré Celsius est l''unité d''usage courant, mais l''unité du système international est le kelvin.'
+      - 'Non : le degré Fahrenheit n''est utilisé que dans quelques pays, dont les États-Unis.'
+      - 'Non : le joule est l''unité d''**énergie**, pas de température.'
+      explanation: « En sciences, tout calcul thermodynamique s'effectue en prenant comme unité du système international de température le kelvin (K) » (1re, p. 23).
+      tags:
+      - temperature
+    - type: input
+      level: 1
+      prompt: 'Convertir une température de 25 °C en kelvin.
+
+
+        {{fig:pc-echelle-temperature}}'
+      answer: '298.15'
+      numeric: true
+      tolerance: 0.2
+      unit: K
+      explanation: '$T\,(\text{K}) = \theta\,(^\circ\text{C}) + 273{,}15 = 25 + 273{,}15 = 298{,}15$ K. Erreur classique : **soustraire** 273,15, ce qui donnerait −248,15 K, impossible puisque le zéro absolu (0 K) ne peut pas être franchi.'
+      tags:
+      - temperature
+    - type: mcq
+      level: 1
+      prompt: 'Un transfert thermique s''effectue toujours :'
+      choices:
+      - du corps le plus chaud vers le corps le plus froid, jusqu'à l'équilibre thermique
+      - du corps le plus froid vers le corps le plus chaud
+      - du corps le plus lourd vers le corps le plus léger
+      - dans les deux sens en même temps, de façon équilibrée
+      answer: 0
+      feedback:
+      - null
+      - 'Non : spontanément, l''énergie ne remonte jamais du froid vers le chaud.'
+      - 'Non : la masse intervient dans la **quantité** d''énergie échangée (Q = m × c × Δθ), pas dans le **sens** du transfert.'
+      - 'Non : le transfert a un sens unique tant que les températures diffèrent ; il s''arrête quand les deux corps sont à la même température.'
+      explanation: « Tout transfert thermique s'effectue du corps le plus chaud vers le corps le plus froid jusqu'à ce que l'équilibre thermique soit atteint » (1re, p. 23).
+      tags:
+      - transfert
+    - type: mcq
+      level: 1
+      prompt: 'La paroi d''une casserole transfère de l''énergie à sa poignée. De quel mode de transfert thermique s''agit-il ?
+
+
+        {{fig:pc-modes-transfert}}'
+      choices:
+      - 'La conduction : l''énergie est transportée de proche en proche, sans déplacement de matière'
+      - 'La convection : l''énergie est transportée par un mouvement de matière'
+      - 'Le rayonnement : l''énergie est transportée par des ondes électromagnétiques'
+      - 'Aucun : le métal ne transmet pas la chaleur'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le métal de la poignée ne se déplace pas ! La convection concerne les **gaz** et les **liquides**.'
+      - 'Non : le rayonnement n''a pas besoin de milieu matériel ; ici l''énergie chemine dans la matière solide de la casserole.'
+      - 'Non : au contraire, les métaux sont d''excellents conducteurs thermiques.'
+      explanation: 'Conduction : « l''énergie est transportée de proche en proche, sans déplacement de matière dans un milieu matériel », par agitation des particules (1re, p. 23).'
+      tags:
+      - transfert
+    - type: mcq
+      level: 1
+      prompt: 'Dans une casserole d''eau chauffée par le dessous, l''eau chaude du fond monte et l''eau froide de la surface descend. De quel mode de transfert s''agit-il ?
+
+
+        {{fig:pc-modes-transfert}}'
+      choices:
+      - La convection
+      - La conduction
+      - Le rayonnement
+      - La sublimation
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la conduction se fait **sans** déplacement de matière ; ici c''est l''eau elle-même qui circule.'
+      - 'Non : le rayonnement se propage sans milieu matériel (infrarouges) ; il n''explique pas ce courant d''eau.'
+      - 'Non : la sublimation est un **changement d''état** (solide → gaz), pas un mode de transfert.'
+      explanation: 'Convection : « l''énergie est transportée par des mouvements de la matière au sein d''un gaz ou d''un liquide ». L''eau chaude, moins dense, monte (1re, p. 23-24).'
+      tags:
+      - transfert
+    - type: mcq
+      level: 1
+      prompt: Quel mode de transfert thermique **ne nécessite pas** de milieu matériel pour se propager ?
+      choices:
+      - Le rayonnement thermique
+      - La conduction thermique
+      - La convection thermique
+      - 'Aucun : un transfert thermique exige toujours de la matière'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la conduction se fait « dans un milieu matériel », par agitation des particules de proche en proche.'
+      - 'Non : la convection suppose un gaz ou un liquide qui se déplace, donc de la matière.'
+      - 'Non : c''est précisément par rayonnement que le Soleil chauffe la Terre à travers le vide.'
+      explanation: 'Rayonnement : « l''énergie est transportée par des ondes électromagnétiques, le plus souvent invisibles (infrarouges). Cela ne nécessite pas de milieu matériel » (1re, p. 24).'
+      tags:
+      - transfert
+    - type: grid
+      level: 2
+      prompt: 'Pour chaque mode de transfert thermique, cochez les propriétés qui le caractérisent.
+
+
+        {{fig:pc-modes-transfert}}'
+      rows:
+      - id: cond
+        label: Conduction
+      - id: conv
+        label: Convection
+      - id: ray
+        label: Rayonnement
+      cols:
+      - id: MAT
+        label: Nécessite un milieu matériel
+      - id: DEP
+        label: S'accompagne d'un déplacement de matière
+      answer:
+      - MATcond
+      - MATconv
+      - DEPconv
+      cellFeedback:
+        MATcond: la conduction se fait bien dans un milieu matériel (mais sans déplacement de matière)
+        DEPcond: la conduction se fait de proche en proche, **sans** déplacement de matière
+        MATconv: 'la convection a lieu dans un gaz ou un liquide : il faut de la matière'
+        DEPconv: la convection transporte l'énergie **par** le mouvement de la matière
+        MATray: 'le rayonnement traverse le vide : aucun milieu matériel n''est nécessaire'
+        DEPray: le rayonnement transporte des ondes électromagnétiques, pas de la matière
+      explanation: 'Conduction : milieu matériel, sans déplacement de matière. Convection : milieu matériel (gaz ou liquide), avec déplacement de matière. Rayonnement : ni l''un ni l''autre (1re, p. 23-24).'
+      tags:
+      - transfert
+    - type: mcq
+      level: 1
+      prompt: Dans quelle unité s'exprime la **capacité thermique massique** $c$ d'un corps ?
+      choices:
+      - J·kg⁻¹·K⁻¹
+      - J·kg⁻¹
+      - J
+      - W
+      answer: 0
+      feedback:
+      - null
+      - 'Non : J·kg⁻¹ est l''unité de l''énergie massique de changement d''état $L$ (et du pouvoir calorifique) : il y manque le « par kelvin ».'
+      - 'Non : le joule seul est une énergie ; $c$ est une énergie **par kilogramme et par kelvin**.'
+      - 'Non : le watt est une puissance.'
+      explanation: Dans $Q = m \times c \times \Delta\theta$, avec $Q$ en J, $m$ en kg et $\Delta\theta$ en K (ou en °C), $c$ s'exprime en J·kg⁻¹·K⁻¹ (1re, p. 24).
+      tags:
+      - chaleur-massique
+    - type: mcq
+      level: 2
+      prompt: Quelle relation donne l'énergie échangée par un corps qui change de température **sans changer d'état** ?
+      choices:
+      - $Q = m \times c \times \Delta\theta$
+      - $Q = c \times \Delta\theta$
+      - $Q = m \times c \times \theta_{\text{finale}}$
+      - $Q = m \times L$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : tu as oublié la **masse**. Chauffer 10 kg d''eau demande dix fois plus d''énergie que chauffer 1 kg.'
+      - 'Non : c''est l''**écart** $\Delta\theta = \theta_{\text{finale}} - \theta_{\text{initiale}}$ qui intervient, pas la température finale seule.'
+      - 'Non : $Q = m \times L$ s''utilise **pendant** un changement d''état, à température constante.'
+      explanation: « Tant que l'état physique d'un corps pur n'est pas modifié, il faut appliquer la relation $Q = m \times c \times \Delta\theta$ » (1re, p. 27).
+      tags:
+      - chaleur-massique
+    - type: mcq
+      level: 2
+      prompt: Faut-il convertir les températures en kelvin pour appliquer $Q = m \times c \times \Delta\theta$ ?
+      choices:
+      - 'Non : un écart de température a la même valeur en °C et en K'
+      - Oui, toujours, sinon le résultat est faux de 273,15
+      - Oui, il faut ajouter 273,15 au résultat final
+      - Cela dépend de la masse du corps
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est une **différence** de températures. 50 °C − 20 °C = 30 °C et 323,15 K − 293,15 K = 30 K : le même nombre.'
+      - 'Non : $Q$ est une énergie en joules, on n''y ajoute pas une température.'
+      - 'Non : la masse n''a rien à voir avec le choix de l''échelle de température.'
+      explanation: « L'écart de température, qu'il soit exprimé en degrés Celsius ou en kelvin, a exactement la même valeur » (1re, p. 24). En revanche, une température **absolue** (et non un écart) doit être en K.
+      tags:
+      - temperature
+    - type: input
+      level: 2
+      prompt: Quel est, en kelvins, l'écart de température entre une pièce à 19 °C et l'extérieur à 4 °C ?
+      answer: '15'
+      numeric: true
+      tolerance: 0.5
+      unit: K
+      explanation: '19 − 4 = 15 °C, soit **15 K** : un écart de température a la même valeur dans les deux échelles. Erreur classique : convertir chaque température (292,15 K et 277,15 K) puis se tromper dans la soustraction — le résultat est identique.'
+      tags:
+      - temperature
+    - type: input
+      level: 2
+      prompt: 'Quelle énergie faut-il fournir pour chauffer $m = 2{,}0$ kg d''eau liquide de 20 °C à 50 °C ?
+
+        Donnée : $c_{\text{eau liquide}} = 4{,}2$ kJ·kg⁻¹·°C⁻¹.'
+      answer: '252000'
+      numeric: true
+      tolerance: 1000
+      unit: J
+      explanation: '$Q = m \times c \times \Delta\theta = 2{,}0 \times 4\,200 \times (50 - 20) = 252\,000$ J, soit 252 kJ. Erreurs classiques : oublier de convertir $c$ en J·kg⁻¹·°C⁻¹, ou utiliser 50 au lieu de l''écart 30 (on trouverait 420 kJ).'
+      tags:
+      - chaleur-massique
+    - type: input
+      level: 2
+      prompt: 'Un ballon reçoit $Q = 84$ kJ, ce qui élève la température de l''eau qu''il contient de 10 °C. Quelle masse d''eau contient-il ?
+
+        Donnée : $c_{\text{eau liquide}} = 4{,}2$ kJ·kg⁻¹·°C⁻¹.'
+      answer: '2'
+      numeric: true
+      tolerance: 0.1
+      unit: kg
+      explanation: '$m = \dfrac{Q}{c \times \Delta\theta} = \dfrac{84\,000}{4\,200 \times 10} = 2{,}0$ kg. Erreur classique : multiplier au lieu de diviser.'
+      tags:
+      - chaleur-massique
+    - type: mcq
+      level: 2
+      prompt: Une casserole d'eau chaude refroidit en cédant de l'énergie à la pièce. Que peut-on dire de $Q$ pour l'eau ?
+      choices:
+      - '$Q < 0$ : l''eau cède de l''énergie, sa température finale est inférieure à sa température initiale'
+      - '$Q > 0$ : l''eau reçoit de l''énergie'
+      - '$Q = 0$ : il n''y a pas d''échange puisque rien ne bouge'
+      - Le signe de $Q$ n'a aucune signification physique
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la **pièce** qui reçoit de l''énergie ; pour l''eau, l''énergie échangée est négative.'
+      - 'Non : le transfert a bien lieu, du corps chaud (l''eau) vers le corps froid (l''air de la pièce).'
+      - 'Non : le signe indique le **sens** du transfert, c''est une information essentielle.'
+      explanation: 'Si $\theta_{\text{finale}} < \theta_{\text{initiale}}$, alors $\Delta\theta < 0$ donc $Q = m\,c\,\Delta\theta < 0$ : le corps **cède** de l''énergie (1re, p. 24).'
+      tags:
+      - chaleur-massique
+    - type: input
+      level: 3
+      prompt: 'On fournit $Q = 63$ kJ à $m = 0{,}50$ kg d''eau liquide. De combien sa température s''élève-t-elle ?
+
+        Donnée : $c_{\text{eau liquide}} = 4{,}2$ kJ·kg⁻¹·°C⁻¹.'
+      answer: '30'
+      numeric: true
+      tolerance: 0.5
+      unit: °C
+      explanation: '$\Delta\theta = \dfrac{Q}{m \times c} = \dfrac{63\,000}{0{,}50 \times 4\,200} = \dfrac{63\,000}{2\,100} = 30$ °C. C''est une **élévation** de température : si l''eau partait de 15 °C, elle atteindrait 45 °C.'
+      tags:
+      - chaleur-massique
+    - type: mcq
+      level: 3
+      prompt: On fournit la **même** énergie à 1,0 kg de glace ($c = 2{,}1$ kJ·kg⁻¹·K⁻¹) et à 1,0 kg d'eau liquide ($c = 4{,}2$ kJ·kg⁻¹·°C⁻¹), sans changement d'état. Que peut-on dire ?
+      choices:
+      - La glace s'échauffe deux fois plus que l'eau liquide
+      - L'eau liquide s'échauffe deux fois plus que la glace
+      - Les deux s'échauffent autant
+      - On ne peut pas comparer, les unités sont différentes
+      answer: 0
+      feedback:
+      - null
+      - 'Non : à énergie et masse égales, $\Delta\theta = Q / (m\,c)$ est d''autant plus **grand** que $c$ est **petit**. Or $c$ est plus petit pour la glace.'
+      - 'Non : les capacités thermiques massiques valent 2,1 et 4,2, elles diffèrent d''un facteur 2.'
+      - 'Non : kJ·kg⁻¹·K⁻¹ et kJ·kg⁻¹·°C⁻¹ ont la **même valeur numérique**, puisqu''un écart de 1 K vaut un écart de 1 °C (1re, p. 28).'
+      explanation: '$\Delta\theta = \dfrac{Q}{m \times c}$ : $c$ deux fois plus petit ⇒ élévation de température deux fois plus grande. L''eau liquide est un excellent « réservoir » de chaleur, ce qui explique son emploi dans les circuits de chauffage.'
+      tags:
+      - chaleur-massique
+    - type: input
+      level: 3
+      prompt: 'Un chauffe-eau porte $m = 150$ kg d''eau liquide de 15 °C à 65 °C. Quelle énergie thermique l''eau reçoit-elle, en mégajoules ?
+
+        Donnée : $c_{\text{eau liquide}} = 4{,}2$ kJ·kg⁻¹·°C⁻¹.'
+      answer: '31.5'
+      numeric: true
+      tolerance: 0.3
+      unit: MJ
+      explanation: '$Q = 150 \times 4\,200 \times (65 - 15) = 150 \times 4\,200 \times 50 = 3{,}15 \times 10^{7}$ J $= 31{,}5$ MJ ($1$ MJ $= 10^{6}$ J). $Q > 0$ : l''eau reçoit de l''énergie.'
+      tags:
+      - chaleur-massique
+    - type: order
+      level: 3
+      prompt: Classez ces températures de la **plus froide** à la **plus chaude**.
+      steps:
+      - 0 K (zéro absolu)
+      - −39 °C (fusion du mercure)
+      - 250 K
+      - 0 °C (fusion de l'eau)
+      - 100 °C (ébullition de l'eau)
+      explanation: 'Conversion en kelvins : 0 K ; −39 °C = 234,15 K ; 250 K ; 0 °C = 273,15 K ; 100 °C = 373,15 K. Le piège : comparer un nombre en °C à un nombre en K sans convertir.'
+      tags:
+      - temperature
+  - id: pc-changements-etat
+    title: Changements d'état et bilans
+    icon: 🧊
+    description: Fusion, vaporisation, sublimation, chaleur latente Q = m × L, paliers de température et bilan énergétique d'un chauffage.
+    prerequisites:
+    - pc-temperature-chaleur
+    lesson: lessons/pc-changements-etat.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Comment s''appelle le passage de l''état **solide** à l''état **liquide** ?
+
+
+        {{fig:pc-etats-matiere}}'
+      choices:
+      - La fusion
+      - La solidification
+      - La vaporisation
+      - La sublimation
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la solidification est le passage **liquide → solide**, le sens inverse.'
+      - 'Non : la vaporisation est le passage **liquide → gaz**.'
+      - 'Non : la sublimation est le passage direct **solide → gaz**.'
+      explanation: Sur le diagramme, la flèche bleue solide → liquide porte le nom **fusion** (1re, p. 26). Pour l'eau, elle a lieu à 0 °C sous pression atmosphérique normale.
+      tags:
+      - changement-etat
+    - type: mcq
+      level: 1
+      prompt: 'Comment s''appelle le passage de l''état **liquide** à l''état **gazeux** ?
+
+
+        {{fig:pc-etats-matiere}}'
+      choices:
+      - La vaporisation
+      - La condensation (liquéfaction)
+      - La fusion
+      - La sublimation
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la condensation (liquéfaction) est le passage **gaz → liquide**, le sens inverse.'
+      - 'Non : la fusion est le passage solide → liquide.'
+      - 'Non : la sublimation part du **solide**, pas du liquide.'
+      explanation: 'Liquide → gaz : **vaporisation** (100 °C pour l''eau sous pression atmosphérique normale, 1re, p. 26).'
+      tags:
+      - changement-etat
+    - type: mcq
+      level: 1
+      prompt: 'Comment le cours nomme-t-il le passage **direct** de l''état solide à l''état gazeux ?
+
+
+        {{fig:pc-etats-matiere}}'
+      choices:
+      - La sublimation
+      - La condensation
+      - La vaporisation
+      - La fusion
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le livre appelle « condensation » le passage **gaz → solide**, c''est-à-dire le sens inverse.'
+      - 'Non : la vaporisation part du **liquide**.'
+      - 'Non : la fusion mène du solide au **liquide**, pas au gaz.'
+      explanation: Sur le diagramme p. 26, la flèche bleue montante solide → gaz porte le nom **sublimation** ; la flèche rouge en sens inverse porte le nom **condensation**.
+      tags:
+      - changement-etat
+    - type: mcq
+      level: 1
+      prompt: 'De la buée se dépose sur une vitre froide : la vapeur d''eau de l''air devient liquide. Comment nomme-t-on cette transformation ?
+
+
+        {{fig:pc-etats-matiere}}'
+      choices:
+      - La condensation (liquéfaction)
+      - La vaporisation
+      - La sublimation
+      - La solidification
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la vaporisation est le passage liquide → gaz, le sens inverse.'
+      - 'Non : la sublimation est le passage solide → gaz.'
+      - 'Non : la solidification est le passage **liquide → solide** ; ici la vapeur devient liquide, pas solide.'
+      explanation: 'Gaz → liquide : le livre écrit « **Condensation (Liquéfaction)** » (p. 26). Attention, il emploie le même mot « condensation » pour le passage gaz → solide : c''est une source d''erreur fréquente.'
+      tags:
+      - changement-etat
+    - type: mcq
+      level: 1
+      prompt: 'Pour un **corps pur**, que devient la température pendant un changement d''état ?
+
+
+        {{fig:pc-courbe-chauffage-eau}}'
+      choices:
+      - 'Elle reste constante : on observe un palier de température'
+      - Elle augmente régulièrement
+      - Elle diminue brutalement
+      - Elle oscille autour de la température de fusion
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les portions **montantes** de la courbe correspondent à l''échauffement sans changement d''état ; pendant le changement d''état, la courbe est horizontale.'
+      - 'Non : le corps continue de **recevoir** de l''énergie ; simplement, cette énergie ne sert pas à élever la température.'
+      - 'Non : la courbe est un palier bien net, pas une oscillation.'
+      explanation: « Pour un corps pur, lors des changements d'état physique, la température demeure constante (nous observons un palier de température) » (1re, p. 26). L'énergie reçue sert à modifier l'énergie potentielle microscopique, pas l'agitation.
+      tags:
+      - changement-etat
+    - type: mcq
+      level: 1
+      prompt: Que devient la **masse** d'un corps pur au cours d'un changement d'état ?
+      choices:
+      - Elle se conserve
+      - Elle augmente à la fusion
+      - Elle diminue à la vaporisation
+      - Elle est multipliée par la masse volumique
+      answer: 0
+      feedback:
+      - null
+      - 'Non : fondre de la glace ne crée pas de matière ; on retrouve exactement la même masse d''eau liquide.'
+      - 'Non : dans un récipient fermé, la vapeur formée a la même masse que le liquide disparu.'
+      - 'Non : c''est le **volume** qui change (l''eau et les alcools sont d''ailleurs des contre-exemples : leur volume solide est plus grand que leur volume liquide).'
+      explanation: « Le nombre d'entités chimiques ne variant pas au cours d'un changement d'état physique, la masse se conserve » (1re, p. 26).
+      tags:
+      - changement-etat
+    - type: mcq
+      level: 1
+      prompt: Dans quelle unité s'exprime l'**énergie massique de changement d'état** $L$ ?
+      choices:
+      - J·kg⁻¹
+      - J·kg⁻¹·K⁻¹
+      - J
+      - K
+      answer: 0
+      feedback:
+      - null
+      - 'Non : J·kg⁻¹·K⁻¹ est l''unité de la **capacité thermique massique** $c$. Il n''y a pas de « par kelvin » dans $L$, puisque la température ne varie pas !'
+      - 'Non : le joule seul est une énergie ; $L$ est une énergie **par kilogramme**.'
+      - 'Non : le kelvin est une température.'
+      explanation: Dans $Q_p = m \times L$, avec $Q_p$ en J et $m$ en kg, $L$ est en J·kg⁻¹ (1re, p. 27). Le livre tabule les valeurs de l'eau en kJ·kg⁻¹.
+      tags:
+      - chaleur-latente
+    - type: order
+      level: 1
+      prompt: 'Remettez dans l''ordre les **cinq étapes** du chauffage d''une masse $m$ d''un corps pur initialement solide.
+
+
+        {{fig:pc-courbe-chauffage-eau}}'
+      steps:
+      - '❶ Échauffement du solide : $Q_1 = m\,c_{\text{solide}}\,(\theta_{\text{Fusion}} - \theta_1)$'
+      - '❷ Palier de fusion : $Q_2 = m\,L_{\text{Fusion}}$'
+      - '❸ Échauffement du liquide : $Q_3 = m\,c_{\text{liquide}}\,(\theta_{\text{Ébullition}} - \theta_{\text{Fusion}})$'
+      - '❹ Palier d''ébullition : $Q_4 = m\,L_{\text{Vaporisation}}$'
+      - '❺ Échauffement du gaz : $Q_5 = m\,c_{\text{gaz}}\,(\theta_2 - \theta_{\text{Ébullition}})$'
+      explanation: L'ordre est solide → fusion → liquide → ébullition → gaz (1re, p. 28). L'énergie totale vaut $Q = Q_1 + Q_2 + Q_3 + Q_4 + Q_5$.
+      tags:
+      - bilan
+    - type: grid
+      level: 2
+      prompt: 'On chauffe de la glace de −20 °C jusqu''à la vapeur d''eau. Pour chaque étape, cochez la relation à utiliser.
+
+
+        {{fig:pc-courbe-chauffage-eau}}'
+      rows:
+      - id: s
+        label: Échauffement de la glace de −20 °C à 0 °C
+      - id: f
+        label: Fusion de la glace à 0 °C
+      - id: l
+        label: Échauffement de l'eau liquide de 0 °C à 100 °C
+      - id: v
+        label: Vaporisation de l'eau à 100 °C
+      cols:
+      - id: C
+        label: Q = m × c × Δθ
+      - id: L
+        label: Q = m × L
+      answer:
+      - Cs
+      - Lf
+      - Cl
+      - Lv
+      cellFeedback:
+        Cs: l'échauffement de la glace de −20 °C à 0 °C se calcule avec m × c_glace × Δθ
+        Ls: 'la glace s''échauffe sans changer d''état : c''est bien m × c × Δθ qu''il faut employer'
+        Cf: 'pendant la fusion, Δθ = 0 : la relation m × c × Δθ donnerait 0, ce qui est faux'
+        Lf: 'la fusion se produit à température constante : Q = m × L_fusion'
+        Cl: l'échauffement de l'eau liquide de 0 °C à 100 °C se calcule avec m × c_eau × Δθ
+        Ll: 'l''eau liquide s''échauffe sans changer d''état : c''est m × c × Δθ qu''il faut employer'
+        Cv: 'pendant la vaporisation, la température reste à 100 °C : il faut m × L'
+        Lv: 'la vaporisation se produit à température constante : Q = m × L_vaporisation'
+      explanation: 'Règle du livre (p. 27) : tant que l''état physique n''est pas modifié, $Q = m\,c\,\Delta\theta$ ; **pendant** un changement d''état, $Q_p = m\,L$.'
+      tags:
+      - bilan
+    - type: mcq
+      level: 2
+      prompt: Un élève calcule l'énergie nécessaire pour faire fondre de la glace **déjà à 0 °C** avec $Q = m \times c \times \Delta\theta$. Que trouve-t-il, et pourquoi est-ce faux ?
+      choices:
+      - Il trouve 0 J, car $\Delta\theta = 0$ ; pendant un changement d'état il faut utiliser $Q_p = m \times L$
+      - Il trouve la bonne valeur, les deux relations sont équivalentes
+      - Il trouve une valeur trop grande, il faut diviser par $L$
+      - 'Il trouve 0 J, ce qui est correct : la fusion ne coûte pas d''énergie'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : elles ne sont pas équivalentes. $c$ et $L$ n''ont même pas la même unité (J·kg⁻¹·K⁻¹ contre J·kg⁻¹).'
+      - 'Non : le calcul donne exactement zéro, puisque la température de départ et d''arrivée sont toutes deux 0 °C.'
+      - 'Non : faire fondre 1 kg de glace coûte 334 kJ, ce qui est loin d''être négligeable.'
+      explanation: 'Pendant un palier, $\Delta\theta = 0$ : la relation $m\,c\,\Delta\theta$ donne 0 et il faut lui substituer $Q_p = m \times L$ (1re, p. 27).'
+      tags:
+      - chaleur-latente
+    - type: input
+      level: 2
+      prompt: 'Quelle énergie faut-il fournir pour faire fondre $m = 0{,}50$ kg de glace **déjà à 0 °C** ?
+
+        Donnée : $L_{\text{fusion}} = 334$ kJ·kg⁻¹.'
+      answer: '167'
+      numeric: true
+      tolerance: 1
+      unit: kJ
+      explanation: '$Q_p = m \times L_{\text{fusion}} = 0{,}50 \times 334 = 167$ kJ. $Q_p > 0$ : la fusion est **endothermique**, la glace reçoit de l''énergie et l''état final est plus désordonné (1re, p. 27).'
+      tags:
+      - chaleur-latente
+    - type: input
+      level: 2
+      prompt: 'Quelle énergie faut-il fournir pour vaporiser $m = 1{,}0$ kg d''eau **déjà à 100 °C** ?
+
+        Donnée : $L_{\text{vaporisation}} = 2{,}26 \times 10^{3}$ kJ·kg⁻¹.'
+      answer: '2260'
+      numeric: true
+      tolerance: 10
+      unit: kJ
+      explanation: '$Q_p = m \times L_{\text{vaporisation}} = 1{,}0 \times 2\,260 = 2\,260$ kJ, soit 2,26 MJ. C''est près de sept fois l''énergie de fusion (334 kJ·kg⁻¹) : les changements d''état, et la vaporisation en particulier, sont très « coûteux » en énergie.'
+      tags:
+      - chaleur-latente
+    - type: input
+      level: 2
+      prompt: 'On dispose de 66,8 kJ pour faire fondre de la glace à 0 °C. Quelle masse de glace peut-on fondre ?
+
+        Donnée : $L_{\text{fusion}} = 334$ kJ·kg⁻¹.'
+      answer: '0.2'
+      numeric: true
+      tolerance: 0.01
+      unit: kg
+      explanation: '$m = \dfrac{Q_p}{L_{\text{fusion}}} = \dfrac{66{,}8}{334} = 0{,}20$ kg, soit 200 g. Erreur classique : multiplier (66,8 × 334 = 22 311) au lieu de diviser.'
+      tags:
+      - chaleur-latente
+    - type: mcq
+      level: 2
+      prompt: Sachant que $L_{\text{fusion}} = 334$ kJ·kg⁻¹ pour l'eau, que vaut $L_{\text{solidification}}$ ?
+      choices:
+      - −334 kJ·kg⁻¹
+      - +334 kJ·kg⁻¹
+      - 0 kJ·kg⁻¹
+      - $1/334$ kJ·kg⁻¹
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la solidification est le changement d''état **inverse** de la fusion ; l''eau **cède** de l''énergie, donc $Q_p < 0$.'
+      - 'Non : il faut bel et bien retirer de l''énergie à l''eau pour la geler.'
+      - 'Non : on change le signe, on ne prend pas l''inverse.'
+      explanation: '« On en déduit les autres très facilement (exemple : $L_{\text{solidification}} = -L_{\text{fusion}}$) » (1re, p. 27). La solidification est **exothermique** : état final plus ordonné.'
+      tags:
+      - chaleur-latente
+    - type: mcq
+      level: 2
+      prompt: Parmi ces changements d'état, lequel est **exothermique** (le corps pur cède de l'énergie, $Q_p < 0$) ?
+      choices:
+      - La condensation (liquéfaction) de la vapeur d'eau
+      - La fusion de la glace
+      - La vaporisation de l'eau
+      - La sublimation de la glace
+      answer: 0
+      feedback:
+      - null
+      - 'Non : pour fondre, la glace **reçoit** de l''énergie ; l''état final (liquide) est plus désordonné : transformation endothermique.'
+      - 'Non : la vaporisation demande 2 260 kJ par kilogramme : c''est endothermique.'
+      - 'Non : la sublimation mène à l''état le plus désordonné (gaz) : elle est endothermique.'
+      explanation: '$Q_p$ est négative « lorsque le corps pur cède de l''énergie (transformation exothermique, avec un état final plus ordonné) » (1re, p. 27). Gaz → liquide : l''état final est plus ordonné.'
+      tags:
+      - changement-etat
+    - type: mcq
+      level: 2
+      prompt: Le mercure a une température de fusion de −39 °C et une température d'ébullition de 357 °C. Dans quel état est-il à 20 °C, sous pression atmosphérique normale ?
+      choices:
+      - Liquide
+      - Solide
+      - Gazeux
+      - Moitié solide, moitié liquide
+      answer: 0
+      feedback:
+      - null
+      - 'Non : à 20 °C on est **au-dessus** de la température de fusion (−39 °C), le mercure a déjà fondu.'
+      - 'Non : il faudrait dépasser 357 °C pour le vaporiser.'
+      - 'Non : la coexistence de deux états n''a lieu que **pendant** un palier, donc à −39 °C exactement pour la fusion.'
+      explanation: 'Entre la température de fusion (−39 °C) et celle d''ébullition (357 °C), le corps pur est **liquide** : c''est le cas du mercure à 20 °C (1re, p. 26).'
+      tags:
+      - changement-etat
+    - type: input
+      level: 3
+      prompt: 'Quelle énergie faut-il pour porter $m = 0{,}50$ kg de glace de −20 °C à de l''eau liquide à 20 °C ?
+
+        Données : $c_{\text{glace}} = 2{,}1$ kJ·kg⁻¹·K⁻¹ ; $L_{\text{fusion}} = 334$ kJ·kg⁻¹ ; $c_{\text{eau liquide}} = 4{,}2$ kJ·kg⁻¹·°C⁻¹.'
+      answer: '230'
+      numeric: true
+      tolerance: 3
+      unit: kJ
+      explanation: 'Trois étapes : $Q_1 = 0{,}50 \times 2{,}1 \times 20 = 21$ kJ ; $Q_2 = 0{,}50 \times 334 = 167$ kJ ; $Q_3 = 0{,}50 \times 4{,}2 \times 20 = 42$ kJ. Total $Q = 21 + 167 + 42 = 230$ kJ. Erreur classique : oublier $Q_2$ (on trouverait 63 kJ), alors que la fusion représente à elle seule 73 % du total.'
+      tags:
+      - bilan
+    - type: input
+      level: 3
+      prompt: 'Quelle énergie totale faut-il pour porter $m = 1{,}0$ kg de glace de −20 °C à de la vapeur d''eau à 120 °C ?
+
+        Données : $c_{\text{glace}} = 2{,}1$ kJ·kg⁻¹·K⁻¹ ; $L_{\text{fusion}} = 334$ kJ·kg⁻¹ ; $c_{\text{eau liquide}} = 4{,}2$ kJ·kg⁻¹·°C⁻¹ ; $L_{\text{vaporisation}} = 2{,}26$ MJ·kg⁻¹ ; $c_{\text{vapeur}} = 2{,}0$ kJ·kg⁻¹·°C⁻¹.
+
+
+        {{fig:pc-courbe-chauffage-eau}}'
+      answer: '3096'
+      numeric: true
+      tolerance: 20
+      unit: kJ
+      explanation: $Q_1 = 1{,}0 \times 2{,}1 \times 20 = 42$ ; $Q_2 = 1{,}0 \times 334 = 334$ ; $Q_3 = 1{,}0 \times 4{,}2 \times 100 = 420$ ; $Q_4 = 1{,}0 \times 2\,260 = 2\,260$ ; $Q_5 = 1{,}0 \times 2{,}0 \times 20 = 40$ (en kJ). Total $Q = 3\,096$ kJ, soit environ 3,10 MJ (1re, p. 27).
+      tags:
+      - bilan
+    - type: mcq
+      level: 3
+      prompt: Dans le bilan précédent ($Q = 3\,096$ kJ pour aller de la glace à −20 °C à la vapeur à 120 °C), quelle part représentent les **deux changements d'état** ($Q_2 = 334$ kJ et $Q_4 = 2\,260$ kJ) ?
+      choices:
+      - Environ 84 % du total
+      - Environ 16 % du total
+      - Environ 50 % du total
+      - Moins de 10 % du total
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 16 % est la part des trois **échauffements** ($42 + 420 + 40 = 502$ kJ).'
+      - 'Non : les changements d''état pèsent bien plus que la moitié du bilan.'
+      - 'Non : à eux seuls, $Q_2 + Q_4 = 2\,594$ kJ, à comparer aux 3 096 kJ du total.'
+      explanation: $\dfrac{334 + 2\,260}{3\,096} = \dfrac{2\,594}{3\,096} = 0{,}838$, soit **84 %**. Oublier les termes de changement d'état est l'erreur qui coûte le plus cher dans un bilan énergétique.
+      tags:
+      - bilan
+    - type: mcq
+      level: 3
+      prompt: Le tableau du livre donne, pour l'eau, $L_{\text{fusion}} = 334$ kJ·kg⁻¹, $L_{\text{vaporisation}} = 2{,}26 \times 10^{3}$ kJ·kg⁻¹ et $L_{\text{sublimation}} = 2{,}83 \times 10^{3}$ kJ·kg⁻¹. Or $334 + 2\,260 = 2\,594$ kJ·kg⁻¹, et non 2 830. Qu'en conclure ?
+      choices:
+      - 'Les trois valeurs ne sont pas données à la même température : elles ne sont pas mutuellement cohérentes'
+      - 'Le tableau est juste : la sublimation coûte forcément plus que la somme des deux autres'
+      - $L_{\text{fusion}}$ est fausse, elle devrait valoir 570 kJ·kg⁻¹
+      - La différence vient de l'arrondi des valeurs
+      answer: 0
+      feedback:
+      - null
+      - 'Non : passer du solide au gaz directement ou en passant par le liquide met en jeu la même énergie, à température égale.'
+      - 'Non : $L_{\text{fusion}} = 334$ kJ·kg⁻¹ est la valeur usuelle pour l''eau à 0 °C.'
+      - 'Non : l''écart vaut 236 kJ·kg⁻¹, soit 9 % — bien trop pour un arrondi.'
+      explanation: 'L''énergie de vaporisation dépend de la température (environ 2 500 kJ·kg⁻¹ à 0 °C contre 2 260 kJ·kg⁻¹ à 100 °C). En prenant les valeurs à 0 °C, $334 + 2\,500 \approx 2\,830$ kJ·kg⁻¹ : le tableau devient cohérent. Toujours vérifier à quelle température une donnée est tabulée.'
+      tags:
+      - chaleur-latente
+  - id: pc-flux-isolation
+    title: Flux thermique et isolation
+    icon: 🏠
+    description: Flux thermique Φ, conductivité λ, résistance thermique R_th = e / λ, parois composites, isolation d'un bâtiment et réglementation.
+    prerequisites:
+    - pc-temperature-chaleur
+    lesson: lessons/pc-flux-isolation.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Le **flux thermique** $\Phi$ à travers une paroi est un débit d''énergie. Dans quelle unité s''exprime-t-il ?
+
+
+        {{fig:pc-mur-flux-thermique}}'
+      choices:
+      - Le watt (W)
+      - Le joule (J)
+      - Le kilowattheure (kWh)
+      - Le m²·K·W⁻¹
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le joule est une **énergie**. Le flux est une énergie **par seconde**, donc une puissance.'
+      - 'Non : le kWh est aussi une énergie (1 kWh = 3,6 × 10⁶ J), pas une puissance.'
+      - 'Non : m²·K·W⁻¹ est l''unité de la **résistance thermique** $R_{\text{th}}$.'
+      explanation: '$\Phi = \dfrac{E}{\Delta t}$ : un débit d''énergie, « donc il s''agit d''une puissance exprimée en watt (W) » (Tle, p. 139).'
+      tags:
+      - flux
+    - type: mcq
+      level: 1
+      prompt: Dans quelle unité s'exprime la **résistance thermique** $R_{\text{th}}$ d'un mètre carré de paroi ?
+      choices:
+      - m²·K·W⁻¹
+      - W·m⁻¹·K⁻¹
+      - W·m⁻²
+      - Ω (ohm)
+      answer: 0
+      feedback:
+      - null
+      - 'Non : W·m⁻¹·K⁻¹ est l''unité de la **conductivité thermique** $\lambda$, la grandeur du matériau, pas de la paroi.'
+      - 'Non : W·m⁻² est une densité surfacique de flux.'
+      - 'Non : l''ohm est l''unité de la résistance **électrique**. La résistance thermique lui ressemble par ses lois (association en série) mais pas par son unité.'
+      explanation: '$R_{\text{th}} = \dfrac{e}{\lambda}$ avec $e$ en m et $\lambda$ en W·m⁻¹·K⁻¹ : $R_{\text{th}}$ est en **m²·K·W⁻¹** (Tle, p. 139-140).'
+      tags:
+      - resistance-thermique
+    - type: mcq
+      level: 1
+      prompt: Dans quelle unité s'exprime la **conductivité thermique** $\lambda$ d'un matériau ?
+      choices:
+      - W·m⁻¹·K⁻¹
+      - m²·K·W⁻¹
+      - J·kg⁻¹·K⁻¹
+      - W
+      answer: 0
+      feedback:
+      - null
+      - 'Non : m²·K·W⁻¹ est l''unité de la **résistance** thermique $R_{\text{th}}$, qui dépend en plus de l''épaisseur.'
+      - 'Non : J·kg⁻¹·K⁻¹ est l''unité de la capacité thermique massique $c$.'
+      - 'Non : le watt est l''unité du flux thermique $\Phi$.'
+      explanation: '$\lambda$ s''exprime en **W·m⁻¹·K⁻¹**. Le livre l''écrit tantôt W·K⁻¹·m⁻¹ (texte), tantôt W·m⁻¹·K⁻¹ (tableau) : les deux écritures sont équivalentes.'
+      tags:
+      - resistance-thermique
+    - type: mcq
+      level: 1
+      prompt: Plus un matériau est **isolant**, …
+      choices:
+      - plus sa résistance thermique $R_{\text{th}}$ est grande et plus le flux thermique est faible
+      - plus sa résistance thermique $R_{\text{th}}$ est petite
+      - plus sa conductivité thermique $\lambda$ est grande
+      - plus le flux thermique qui le traverse est grand
+      answer: 0
+      feedback:
+      - null
+      - 'Non : une petite $R_{\text{th}}$ laisse passer beaucoup d''énergie, c''est le comportement d''un **conducteur**.'
+      - 'Non : un bon isolant a une **faible** conductivité (laine de verre, moquette), un conducteur une conductivité élevée (carrelage, verre).'
+      - 'Non : isoler sert précisément à **réduire** le flux thermique.'
+      explanation: $R_{\text{th}}$ « quantifie l'opposition du matériau au passage du flux thermique. Plus la paroi est isolante, plus sa résistance thermique est élevée » (Tle, p. 139).
+      tags:
+      - isolation
+    - type: mcq
+      level: 1
+      prompt: 'Quelle relation donne le flux thermique traversant une paroi ?
+
+
+        {{fig:pc-mur-flux-thermique}}'
+      choices:
+      - $\Phi = \dfrac{S \times (T_{\text{chaud}} - T_{\text{froid}})}{R_{\text{th}}}$
+      - $\Phi = S \times (T_{\text{chaud}} - T_{\text{froid}}) \times R_{\text{th}}$
+      - $\Phi = \dfrac{R_{\text{th}}}{S \times (T_{\text{chaud}} - T_{\text{froid}})}$
+      - $\Phi = \dfrac{S \times R_{\text{th}}}{T_{\text{chaud}} - T_{\text{froid}}}$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la résistance est **au dénominateur**. Avec ta formule, mieux on isole (plus $R_{\text{th}}$ est grande), plus on perdrait d''énergie : absurde.'
+      - 'Non : la formule est **inversée**. Un grand écart de température doit **augmenter** le flux, pas le diminuer.'
+      - 'Non : $R_{\text{th}}$ ne peut pas être au numérateur ; c''est elle qui **freine** le flux.'
+      explanation: '$\Phi$ augmente avec la surface $S$ et avec l''écart de température, et diminue quand $R_{\text{th}}$ augmente (Tle, p. 139). Analogie : $\Phi$ ↔ intensité, écart de température ↔ tension, $R_{\text{th}}$ ↔ résistance.'
+      tags:
+      - flux
+    - type: mcq
+      level: 2
+      prompt: Faut-il convertir les températures en kelvin pour calculer $\Phi = \dfrac{S \times (T_{\text{chaud}} - T_{\text{froid}})}{R_{\text{th}}}$ ?
+      choices:
+      - 'Non, à condition d''employer la même unité pour les deux températures : leur différence est identique'
+      - Oui, obligatoirement, sinon le flux est faux de 273,15 W
+      - Oui, il faut ajouter 273,15 au flux obtenu
+      - Non, mais il faut alors diviser le résultat par 273,15
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est une **différence** de températures ; l''écart de 19 °C à 4 °C vaut 15 °C, soit exactement 15 K.'
+      - 'Non : $\Phi$ est une puissance en watts, on n''y ajoute pas une température.'
+      - 'Non : aucun facteur correctif n''est nécessaire.'
+      explanation: « Il est inutile de convertir les températures de °C en kelvin (K) car la valeur de leur différence est identique si la même unité est choisie pour les deux températures » (Tle, p. 139).
+      tags:
+      - flux
+    - type: input
+      level: 2
+      prompt: Une cloison de placoplâtre a une épaisseur $e = 13$ mm et une conductivité thermique $\lambda = 0{,}25$ W·m⁻¹·K⁻¹. Calculer sa résistance thermique $R_{\text{th}}$.
+      answer: '0.052'
+      numeric: true
+      tolerance: 0.002
+      unit: m²·K·W⁻¹
+      explanation: '$R_{\text{th}} = \dfrac{e}{\lambda} = \dfrac{0{,}013}{0{,}25} = 5{,}2 \times 10^{-2}$ m²·K·W⁻¹. **L''épaisseur doit être convertie en mètres** : avec 13 mm laissés tels quels, on trouverait 52, soit mille fois trop.'
+      tags:
+      - resistance-thermique
+    - type: input
+      level: 2
+      prompt: Un mur de parpaing a une épaisseur $e = 200$ mm et une conductivité thermique $\lambda = 0{,}95$ W·m⁻¹·K⁻¹. Calculer sa résistance thermique $R_{\text{th}}$.
+      answer: '0.21'
+      numeric: true
+      tolerance: 0.01
+      unit: m²·K·W⁻¹
+      explanation: '$R_{\text{th}} = \dfrac{0{,}200}{0{,}95} = 0{,}21$ m²·K·W⁻¹ (Tle, tableau p. 140-141). Un mur de 20 cm de parpaing isole donc quatre fois moins bien qu''un simple parquet stratifié de 12 mm ($R_{\text{th}} = 7{,}5 \times 10^{-2}$) : le parpaing est un matériau **porteur**, pas un isolant.'
+      tags:
+      - resistance-thermique
+    - type: mcq
+      level: 2
+      prompt: 'À épaisseur égale, lequel de ces deux revêtements de sol limite le mieux les transferts thermiques : la moquette ($\lambda = 0{,}09$ W·m⁻¹·K⁻¹) ou le carrelage en grès ($\lambda = 1{,}3$ W·m⁻¹·K⁻¹) ?'
+      choices:
+      - La moquette, car sa conductivité thermique est plus faible
+      - Le carrelage, car sa conductivité thermique est plus grande
+      - Les deux se valent, seule l'épaisseur compte
+      - La moquette, car elle est plus épaisse
+      answer: 0
+      feedback:
+      - null
+      - 'Non : une **grande** conductivité signifie que le matériau conduit bien l''énergie, donc qu''il isole mal.'
+      - 'Non : à épaisseur égale, $R_{\text{th}} = e/\lambda$ ne dépend plus que de $\lambda$.'
+      - 'Non : l''énoncé impose la même épaisseur ; c''est bien $\lambda$ qui départage.'
+      explanation: '$R_{\text{th}} = e/\lambda$ : à épaisseur égale, le plus petit $\lambda$ donne la plus grande résistance thermique. Avec les épaisseurs usuelles du livre, moquette 4,0 mm → $4{,}4 \times 10^{-2}$ et carrelage 10 mm → $7{,}7 \times 10^{-3}$ m²·K·W⁻¹.'
+      tags:
+      - isolation
+    - type: input
+      level: 2
+      prompt: 'Un mur de parpaing de surface $S = 10$ m² et de résistance thermique $R_{\text{th}} = 0{,}21$ m²·K·W⁻¹ sépare un intérieur à 20 °C d''un extérieur à 5 °C. Calculer le flux thermique $\Phi$.
+
+
+        {{fig:pc-mur-flux-thermique}}'
+      answer: '714'
+      numeric: true
+      tolerance: 6
+      unit: W
+      explanation: $\Phi = \dfrac{S \times (T_{\text{chaud}} - T_{\text{froid}})}{R_{\text{th}}} = \dfrac{10 \times (20 - 5)}{0{,}21} = \dfrac{150}{0{,}21} \approx 714$ W. Ce mur non isolé perd à lui seul autant qu'un radiateur de 700 W allumé en permanence.
+      tags:
+      - flux
+    - type: mcq
+      level: 2
+      prompt: 'Une paroi **composite** est faite de plusieurs couches accolées. Comment obtient-on sa résistance thermique globale ?
+
+
+        {{fig:pc-resistances-serie}}'
+      choices:
+      - On additionne les résistances thermiques des couches
+      - On additionne les conductivités thermiques des couches
+      - On prend la plus grande des résistances thermiques
+      - On additionne l'inverse de chaque résistance thermique
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les conductivités ne s''additionnent pas ; il faut d''abord convertir chaque couche en résistance $e/\lambda$.'
+      - 'Non : chaque couche ajoute son obstacle, même les plus minces ; on les somme toutes.'
+      - 'Non : c''est la règle des résistances électriques en **parallèle** ; ici les couches sont en **série**, traversées par le même flux.'
+      explanation: '$R_{\text{th, paroi}} = \sum \dfrac{e_{\text{matériau}}}{\lambda_{\text{matériau}}}$ : les résistances thermiques de couches accolées s''ajoutent, comme des résistances électriques en série (Tle, p. 140-141).'
+      tags:
+      - isolation
+    - type: order
+      level: 2
+      prompt: 'Ordonnez les cinq couches du toit de combles aménagés, de l''**extérieur** vers l''**intérieur** (résistances thermiques en m²·K·W⁻¹).
+
+
+        {{fig:pc-resistances-serie}}'
+      steps:
+      - Ardoise (0,003)
+      - Bois de charpente (0,333)
+      - Air peu ventilé (0,130)
+      - Laine de verre (5,400)
+      - Plaque de plâtre (0,040)
+      explanation: 'La somme vaut $0{,}003 + 0{,}333 + 0{,}130 + 5{,}400 + 0{,}040 = 5{,}906$ m²·K·W⁻¹ : la laine de verre apporte à elle seule plus de 91 % de la résistance thermique (Tle, p. 140).'
+      tags:
+      - isolation
+    - type: input
+      level: 2
+      prompt: 'Calculer la résistance thermique totale d''un mètre carré de ce toit de combles aménagés : ardoise 0,003 ; bois de charpente 0,333 ; air peu ventilé 0,130 ; laine de verre 5,400 ; plaque de plâtre 0,040 (en m²·K·W⁻¹).
+
+
+        {{fig:pc-resistances-serie}}'
+      answer: '5.906'
+      numeric: true
+      tolerance: 0.01
+      unit: m²·K·W⁻¹
+      explanation: $R_{\text{th}} = 0{,}003 + 0{,}333 + 0{,}130 + 5{,}400 + 0{,}040 = 5{,}906$ m²·K·W⁻¹ (Tle, p. 140).
+      tags:
+      - isolation
+    - type: mcq
+      level: 2
+      prompt: Si l'on **double** la résistance thermique d'une paroi sans rien changer d'autre, que devient le flux thermique ?
+      choices:
+      - Il est divisé par deux
+      - Il est multiplié par deux
+      - Il ne change pas
+      - Il est divisé par quatre
+      answer: 0
+      feedback:
+      - null
+      - 'Non : $R_{\text{th}}$ est au **dénominateur** ; l''augmenter réduit le flux.'
+      - 'Non : isoler deux fois mieux change bien quelque chose — c''est tout l''intérêt des travaux d''isolation.'
+      - 'Non : $\Phi$ est inversement proportionnel à $R_{\text{th}}$ (puissance 1), pas à son carré.'
+      explanation: '$\Phi = \dfrac{S \times \Delta T}{R_{\text{th}}}$ : $\Phi$ est **inversement proportionnel** à $R_{\text{th}}$. Doubler $R_{\text{th}}$ divise le flux par 2.'
+      tags:
+      - flux
+    - type: input
+      level: 3
+      prompt: Ce toit ($R_{\text{th}} = 5{,}906$ m²·K·W⁻¹) a une surface $S = 60$ m². L'intérieur est à 19 °C, l'extérieur à 4 °C. Calculer le flux thermique $\Phi$ (arrondir à l'unité).
+      answer: '152'
+      numeric: true
+      tolerance: 2
+      unit: W
+      explanation: '$\Phi = \dfrac{60 \times (19 - 4)}{5{,}906} = \dfrac{900}{5{,}906} \approx 152$ W. À comparer aux 714 W perdus par 10 m² de parpaing nu : l''isolation change tout.'
+      tags:
+      - flux
+    - type: input
+      level: 3
+      prompt: Ce toit laisse passer un flux thermique $\Phi = 152$ W. Quelle énergie perd-il en 24 heures, exprimée en kilowattheures ?
+      answer: '3.65'
+      numeric: true
+      tolerance: 0.1
+      unit: kWh
+      explanation: '$E = \Phi \times \Delta t = 152 \text{ W} \times 24 \text{ h} = 3\,648$ W·h $\approx 3{,}65$ kWh (soit $1{,}3 \times 10^{7}$ J). Erreur classique : multiplier par 24 **et** par 3 600 tout en gardant l''unité kWh.'
+      tags:
+      - flux
+    - type: input
+      level: 3
+      prompt: On retire la laine de verre ($R = 5{,}400$ m²·K·W⁻¹) du toit précédent ($R_{\text{th}} = 5{,}906$ m²·K·W⁻¹). Par combien le flux thermique est-il multiplié ? (arrondir au dixième)
+      answer: '11.7'
+      numeric: true
+      tolerance: 0.3
+      unit: ''
+      explanation: Sans laine de verre, $R_{\text{th}} = 5{,}906 - 5{,}400 = 0{,}506$ m²·K·W⁻¹. Le flux étant inversement proportionnel à $R_{\text{th}}$, il est multiplié par $\dfrac{5{,}906}{0{,}506} \approx 11{,}7$.
+      tags:
+      - isolation
+    - type: mcq
+      level: 3
+      prompt: 'Le toit de combles aménagés a une résistance thermique totale de 5,906 m²·K·W⁻¹. Exigences pour l''isolation d''un **toit** : RT 2005 → 5,0 ; « basse énergie » → 6,7 ; « très basse énergie » → 10 (en m²·K·W⁻¹). Que conclure ?
+
+
+        {{fig:pc-isolation-niveaux}}'
+      choices:
+      - Il respecte la RT 2005, mais ni le niveau « basse énergie » ni le « très basse énergie »
+      - Il respecte les trois niveaux
+      - Il ne respecte aucun des trois niveaux
+      - Il respecte la RT 2005 et le niveau « basse énergie », mais pas le « très basse énergie »
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 5,906 est inférieur aux 6,7 m²·K·W⁻¹ exigés pour le niveau « basse énergie ».'
+      - 'Non : 5,906 dépasse bien les 5,0 m²·K·W⁻¹ de la RT 2005.'
+      - 'Non : 5,906 < 6,7, le niveau « basse énergie » n''est pas atteint.'
+      explanation: 'Seule la RT 2005 est satisfaite (Tle, p. 140-141). Attention : le tableau du livre note ces exigences $R_{\max}$ alors qu''il s''agit de valeurs **minimales** à atteindre — il faudrait lire $R_{\min}$.'
+      tags:
+      - isolation
+    - type: mcq
+      level: 3
+      prompt: Les exigences d'isolation « basse énergie » sont de 6,7 m²·K·W⁻¹ pour le toit et de 3,3 m²·K·W⁻¹ pour la façade. Pourquoi le toit est-il le plus exigeant ?
+      choices:
+      - 'Parce que l''air chaud s''accumule en haut : l''écart de température y est le plus grand et le toit est la paroi la plus déperditive'
+      - Parce que le toit a toujours une surface plus grande que les façades
+      - Parce que la conductivité de l'ardoise est très faible
+      - Parce que la réglementation ne s'applique qu'aux toitures
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la surface du toit n''est pas systématiquement la plus grande ; c''est l''écart de température et le mode de transfert (convection de l''air chaud) qui commandent.'
+      - 'Non : l''ardoise n''apporte que 0,003 m²·K·W⁻¹ sur 5,906, soit 0,05 % de la résistance du toit : c''est négligeable.'
+      - 'Non : le tableau du livre fixe aussi des exigences pour le plancher (2,0 / 3,3 / 6,7) et pour la façade (2,2 / 3,3 / 6,7).'
+      explanation: 'Par convection, l''air chaud monte : la température sous le toit est plus élevée que dans le reste du logement, ce qui augmente $(T_{\text{chaud}} - T_{\text{froid}})$ et donc le flux. D''où l''exigence renforcée sur $R_{\text{th}}$ du toit (Tle, p. 141).'
+      tags:
+      - isolation
+    - type: guided
+      level: 3
+      title: Isolation et chauffage électrique d'une pièce sous combles
+      intro: 'On aménage une pièce sous les combles d''une maison.
+
+
+        La **toiture**, de surface $S = 60$ m², est constituée de cinq couches dont voici les résistances thermiques, pour 1 m² de paroi, de l''extérieur vers l''intérieur (en m²·K·W⁻¹) : **ardoise 0,003**, **bois de charpente 0,333**, **air peu ventilé 0,130**, **laine de verre 5,400**, **plaque de plâtre 0,040**.
+
+
+        L''intérieur est maintenu à **19 °C**, l''extérieur est à **4 °C**. Le chauffage est assuré par un **convecteur électrique** (dipôle purement résistif) alimenté sous $U = 230$ V.
+
+
+        {{fig:pc-resistances-serie}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** La toiture est une paroi composite de cinq couches accolées. Comment calcule-t-on sa résistance thermique globale ?'
+        choices:
+        - En additionnant les résistances thermiques des cinq couches
+        - En additionnant les conductivités thermiques des cinq couches
+        - En ne gardant que la résistance de la laine de verre
+        - En faisant la moyenne des cinq résistances thermiques
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : les conductivités ne s''additionnent pas ; ici, ce sont déjà des résistances thermiques qui sont fournies.'
+        - 'Non : même faibles, les autres couches ajoutent 0,506 m²·K·W⁻¹ au total, soit 8,6 % de la résistance.'
+        - 'Non : les couches sont traversées par le **même** flux (association en série) : leurs résistances s''ajoutent, elles ne se moyennent pas.'
+        explanation: '$R_{\text{th, paroi}} = \sum \dfrac{e}{\lambda}$ : les couches accolées sont en série (Tle, p. 140-141).'
+      - kind: input
+        prompt: '**Étape 2.** Calculer la résistance thermique $R_{\text{th}}$ de 1 m² de toiture.'
+        answer: '5.906'
+        numeric: true
+        tolerance: 0.01
+        unit: m²·K·W⁻¹
+        explanation: $R_{\text{th}} = 0{,}003 + 0{,}333 + 0{,}130 + 5{,}400 + 0{,}040 = 5{,}906$ m²·K·W⁻¹.
+      - kind: input
+        prompt: '**Étape 3.** Calculer le flux thermique $\Phi$ traversant la toiture (arrondir à l''unité).'
+        answer: '152'
+        numeric: true
+        tolerance: 2
+        unit: W
+        explanation: '$\Phi = \dfrac{S \times (T_{\text{chaud}} - T_{\text{froid}})}{R_{\text{th}}} = \dfrac{60 \times (19 - 4)}{5{,}906} = \dfrac{900}{5{,}906} \approx 152$ W. Inutile de convertir en kelvins : l''écart de 15 °C vaut 15 K.'
+      - kind: mcq
+        prompt: '**Étape 4.** Exigences d''isolation du toit : RT 2005 → 5,0 ; « basse énergie » → 6,7 ; « très basse énergie » → 10 (en m²·K·W⁻¹). Cette toiture est-elle conforme ?'
+        choices:
+        - Elle respecte la RT 2005, mais ni le niveau « basse énergie » ni le « très basse énergie »
+        - Elle respecte les trois niveaux
+        - Elle ne respecte aucun niveau
+        - Elle respecte les niveaux « basse énergie » et « très basse énergie », mais pas la RT 2005
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : 5,906 < 6,7, le niveau « basse énergie » n''est pas atteint.'
+        - 'Non : 5,906 > 5,0, la RT 2005 est bien respectée.'
+        - 'Non : c''est l''inverse — plus le niveau est ambitieux, plus la résistance exigée est grande.'
+        explanation: 5,906 > 5,0 (RT 2005) ✔ ; 5,906 < 6,7 (« basse énergie ») ✘ ; 5,906 < 10 (« très basse énergie ») ✘ (Tle, p. 141).
+      - kind: input
+        prompt: '**Étape 5.** Quelle résistance thermique **supplémentaire** faut-il ajouter pour atteindre le niveau « basse énergie » (6,7 m²·K·W⁻¹) ?'
+        answer: '0.794'
+        numeric: true
+        tolerance: 0.02
+        unit: m²·K·W⁻¹
+        explanation: $\Delta R = 6{,}7 - 5{,}906 = 0{,}794$ m²·K·W⁻¹, soit 13 % de résistance thermique à ajouter (une couche d'isolant supplémentaire).
+      - kind: input
+        prompt: '**Étape 6.** Avec $R_{\text{th}} = 6{,}7$ m²·K·W⁻¹, calculer le nouveau flux thermique $\Phi''$ (arrondir à l''unité).'
+        answer: '134'
+        numeric: true
+        tolerance: 2
+        unit: W
+        explanation: '$\Phi'' = \dfrac{900}{6{,}7} \approx 134$ W, contre 152 W avant travaux : une réduction d''environ 12 %.'
+      - kind: input
+        prompt: '**Étape 7.** On revient à la toiture initiale ($\Phi = 152$ W). Quelle énergie la toiture laisse-t-elle échapper en 24 heures, en kilowattheures ?'
+        answer: '3.65'
+        numeric: true
+        tolerance: 0.1
+        unit: kWh
+        explanation: $E = \Phi \times \Delta t = 152 \times 24 = 3\,648$ W·h $\approx 3{,}65$ kWh (3,66 kWh si l'on garde $\Phi = 152{,}4$ W sans arrondir), soit environ $1{,}3 \times 10^{7}$ J.
+      - kind: input
+        prompt: '**Étape 8.** Un convecteur électrique **purement résistif** compense exactement ces pertes : sa puissance vaut $P = \Phi = 152$ W. Quelle intensité efficace appelle-t-il sur le réseau 230 V ? (arrondir au centième)'
+        answer: '0.66'
+        numeric: true
+        tolerance: 0.03
+        unit: A
+        explanation: '$I = \dfrac{P}{U} = \dfrac{152}{230} \approx 0{,}66$ A. Bilan de l''étude : une toiture correctement isolée ramène les déperditions d''une pièce de 60 m² à la puissance d''une simple ampoule halogène.'

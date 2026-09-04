@@ -1,0 +1,50 @@
+%% Enroulement de l'axe réel sur le cercle trigonométrique (manuel p. 97).
+%% Repère (O,I,J), cercle C vert de rayon 1 ; l'axe réel (rouge) est tangent au cercle en I ;
+%% en l'enroulant, le réel 1 vient sur le point M et la longueur de l'arc IM vaut 1.
+%% Sens direct (antihoraire, +) et sens indirect (horaire, en tirets).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1.7cm,y=1.7cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  cercle/.style={solideE, line width=1.1pt},
+  reel/.style={solideA, line width=1.1pt},
+  sens/.style={-{Stealth[length=6pt]}, line width=0.8pt},
+  rayon/.style={line width=0.6pt, black!70}]
+
+%% ---------------- repère ---------------------------------------------
+\draw[axe] (-1.95,0) -- (1.42,0);
+\draw[axe] (0,-1.5) -- (0,1.5);
+\node[font=\small, anchor=north east, inner sep=2pt] at (-0.03,-0.03) {$O$};
+
+%% ---------------- cercle trigonométrique ------------------------------
+\draw[cercle] (0,0) circle (1);
+\node[font=\small, text=solideE, anchor=east, inner sep=3pt] at (200:1) {$\mathcal{C}$};
+
+%% ---------------- l'axe réel, tangent en I ----------------------------
+\draw[reel, -{Stealth[length=6pt]}] (1,-1.45) -- (1,2.3);
+\foreach \yv/\lab in {-1/{$-1$}, 1/{$1$}, 2/{$2$}} {
+  \draw[reel] (1,\yv) -- (1.12,\yv);
+  \node[font=\small, text=solideA, anchor=west, inner sep=2pt] at (1.14,\yv) {\lab};}
+\draw[reel] (1,0) -- (1.12,0);
+\node[font=\small, text=solideA, anchor=west, inner sep=2pt] at (1.14,0) {$0$};
+
+%% ---------------- points I, J et M ------------------------------------
+\fill (1,0) circle (1.6pt);
+\node[font=\small, anchor=north east, inner sep=2pt] at (0.99,-0.02) {$I$};
+\fill (0,1) circle (1.6pt);
+\node[font=\small, anchor=east, inner sep=3pt] at (0,1) {$J$};
+
+%% M : point associé au réel 1 (angle de 1 radian), arc IM de longueur 1
+\draw[rayon] (0,0) -- (57.2958:1);
+\draw[solideA, line width=1.8pt] (0,0) ++(0:1) arc (0:57.2958:1);
+\fill[solideA] (57.2958:1) circle (1.7pt);
+\node[font=\small, anchor=south east, inner sep=2pt] at (57.2958:1) {$M$};
+
+%% ---------------- sens direct et sens indirect ------------------------
+\draw[sens] (40:1.28) arc (40:128:1.28);
+\node[font=\small, anchor=east, inner sep=2pt] at (-0.88,1.24) {$+$ sens direct};
+\draw[sens, dash pattern=on 3pt off 2pt] (-40:1.28) arc (-40:-128:1.28);
+\node[font=\small, anchor=east, inner sep=2pt] at (-0.88,-1.24) {sens indirect};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,33 @@
+%% Théorème d'Al-Kashi dans un triangle quelconque ABC.
+%% Convention du manuel : a = BC (côté opposé à A), b = AC, c = AB.
+%% Le triangle n'est pas rectangle : Pythagore ne s'applique pas, Al-Kashi le généralise.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1.4cm,y=1.4cm,
+  cote/.style={line width=1.1pt, line join=round},
+  etiq/.style={font=\small, inner sep=3pt}]
+
+\coordinate (A) at (0,0);
+\coordinate (B) at (4,0);
+\coordinate (C) at (1.2,2.4);
+
+%% ---------------- les trois côtés, étiquetés par leur longueur -----------
+\draw[cote] (A) -- (B) node[midway, below, etiq] {$c=AB$};
+\draw[cote] (A) -- (C) node[midway, sloped, above, etiq] {$b=AC$};
+\draw[cote] (C) -- (B) node[midway, sloped, above, etiq] {$a=BC$};
+
+%% ---------------- angle Â au sommet A ------------------------------------
+\draw[solideA, line width=1pt] (0.6,0) arc (0:63.435:0.6);
+\node[font=\small, text=solideA, anchor=west, inner sep=2pt] at (31:0.72) {$\hat{A}$};
+
+%% ---------------- sommets --------------------------------------------------
+\fill (A) circle (1.8pt) node[etiq, anchor=north east] {$A$};
+\fill (B) circle (1.8pt) node[etiq, anchor=north west] {$B$};
+\fill (C) circle (1.8pt) node[etiq, anchor=south] {$C$};
+
+%% ---------------- le théorème ----------------------------------------------
+\node[font=\small, anchor=north, inner sep=2pt] at (2,-0.62)
+     {$a^{2}=b^{2}+c^{2}-2bc\cos(\hat{A})$};
+\end{tikzpicture}
+\end{document}

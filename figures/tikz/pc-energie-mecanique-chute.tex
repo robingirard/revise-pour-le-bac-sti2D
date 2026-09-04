@@ -1,0 +1,51 @@
+%% Répartition de l'énergie mécanique au cours d'une chute (leçon pc-travail-energie).
+%% À gauche, sans frottement : Em = Ec + Epp est constante.
+%% À droite, avec frottements : Em décroît, mais à chaque instant Ec + Epp = Em.
+%% Modèles utilisés (unités arbitraires, 5 lignes x 8 colonnes de quadrillage) :
+%%   gauche : Em = 4          Ec = 0,25 t^2        Epp = Em - Ec
+%%   droite : Em = 4 - 0,22 t  Ec = 0,20 t^2       Epp = Em - Ec
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=0.56cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.7pt},
+  courbe/.style={line width=1.3pt, line join=round, line cap=round},
+  etiq/.style={font=\footnotesize, anchor=west, inner sep=2pt}]
+
+%% --- macro locale : le repère quadrillé (8 colonnes x 5 lignes) -------
+\newcommand\repereE{%
+  \draw[solideB!12, line width=0.4pt]
+    \foreach \i in {0.5,1,...,4} { (\i,0) -- (\i,5) }
+    \foreach \j in {1,...,5} { (0,\j) -- (4,\j) };
+  \draw[axe] (0,0) -- (4.35,0) node[anchor=north east, inner sep=3pt, font=\footnotesize] {$t$ (s)};
+  \draw[axe] (0,0) -- (0,5.5)  node[anchor=north west, inner sep=3pt, font=\footnotesize] {$E$ (J)};}
+
+%% ===================== (a) sans frottement ===========================
+\begin{scope}[shift={(0,0)}]
+  \repereE
+  \node[font=\small, anchor=south] at (2,5.75) {Sans frottement};
+  \draw[courbe, solideE] (0,4) -- (3.6,4);
+  \draw[courbe, solideB] plot[domain=0:3.6, samples=41, smooth] (\x,{0.25*\x*\x});
+  \draw[courbe, solideD] plot[domain=0:3.6, samples=41, smooth] (\x,{4-0.25*\x*\x});
+  \node[etiq, text=solideE] at (3.65,4.05) {$E_m$};
+  \node[etiq, text=solideB] at (3.65,3.24) {$E_c$};
+  \node[etiq, text=solideD] at (3.65,0.76) {$E_{pp}$};
+\end{scope}
+
+%% ===================== (b) avec frottements ==========================
+\begin{scope}[shift={(5.4,0)}]
+  \repereE
+  \node[font=\small, anchor=south] at (2,5.75) {Avec frottements};
+  \draw[courbe, solideE] (0,4) -- (3.6,3.208);
+  \draw[courbe, solideB] plot[domain=0:3.6, samples=41, smooth] (\x,{0.20*\x*\x});
+  \draw[courbe, solideD] plot[domain=0:3.6, samples=41, smooth] (\x,{4-0.22*\x-0.20*\x*\x});
+  \node[etiq, text=solideE] at (3.65,3.28) {$E_m$};
+  \node[etiq, text=solideB] at (3.65,2.55) {$E_c$};
+  \node[etiq, text=solideD] at (3.65,0.62) {$E_{pp}$};
+\end{scope}
+
+%% ===================== rappel ========================================
+\node[font=\footnotesize, anchor=north] at (4.7,-0.55)
+     {à chaque instant $E_c + E_{pp} = E_m$};
+\end{tikzpicture}
+\end{document}

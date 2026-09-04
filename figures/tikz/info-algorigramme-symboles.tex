@@ -1,0 +1,49 @@
+%% Les cinq symboles normalisés d'un algorigramme (organigramme de programmation).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  forme/.style={draw=solideB, line width=1.1pt, fill=white, line join=round},
+  fl/.style={-{Stealth[length=4.5pt]}, line width=0.8pt},
+  leg/.style={font=\scriptsize\bfseries, anchor=north, align=center, text width=1.75cm},
+  oui/.style={font=\scriptsize, inner sep=1.5pt}]
+
+\def\p{1.85} %% pas horizontal entre deux cellules
+
+%% ---- flèches entrantes, identiques pour les cinq cellules ------------
+\foreach \i in {0,...,4} { \draw[fl] ({\i*\p},0.9) -- ({\i*\p},0.38); }
+
+%% ---- 1. début / fin : rectangle à bouts arrondis ---------------------
+\draw[forme, rounded corners=0.28cm] (-0.6,-0.28) rectangle (0.6,0.28);
+\node[leg] at (0,-0.85) {Début / fin};
+
+%% ---- 2. traitement : rectangle --------------------------------------
+\begin{scope}[shift={(\p,0)}]
+  \draw[forme] (-0.6,-0.28) rectangle (0.6,0.28);
+  \node[leg] at (0,-0.85) {Traitement};
+\end{scope}
+
+%% ---- 3. sous-programme : rectangle à double barre --------------------
+\begin{scope}[shift={(2*\p,0)}]
+  \draw[forme] (-0.65,-0.28) rectangle (0.65,0.28);
+  \draw[solideB, line width=1.1pt] (-0.45,-0.28) -- (-0.45,0.28) (0.45,-0.28) -- (0.45,0.28);
+  \node[leg] at (0,-0.85) {Sous-programme};
+\end{scope}
+
+%% ---- 4. entrée / sortie : parallélogramme ----------------------------
+\begin{scope}[shift={(3*\p,0)}]
+  \draw[forme] (-0.6,-0.28) -- (0.48,-0.28) -- (0.6,0.28) -- (-0.48,0.28) -- cycle;
+  \node[leg] at (0,-0.85) {Entrée / sortie};
+\end{scope}
+
+%% ---- 5. test : losange ----------------------------------------------
+\begin{scope}[shift={(4*\p,0)}]
+  \draw[forme] (0,-0.36) -- (0.68,0) -- (0,0.36) -- (-0.68,0) -- cycle;
+  \draw[fl, solideE] (0,-0.36) -- (0,-0.7);
+  \node[oui, text=solideE, anchor=west] at (0.05,-0.55) {oui};
+  \draw[fl, solideA] (0.68,0) -- (1.05,0);
+  \node[oui, text=solideA, anchor=south] at (0.88,0.02) {non};
+  \node[leg] at (0,-0.85) {Test / condition};
+\end{scope}
+\end{tikzpicture}
+\end{document}

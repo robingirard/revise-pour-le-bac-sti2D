@@ -1,0 +1,61 @@
+%% Échelles Celsius et kelvin : un même thermomètre gradué des deux côtés.
+%% Échelle LINÉAIRE de -273,15 °C à 110 °C : y(theta) = (theta + 273,15) * \uy.
+%% Les repères ne sont donc pas régulièrement espacés.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+    grad/.style={font=\scriptsize, inner sep=1.5pt},
+    desc/.style={font=\scriptsize, inner sep=1.5pt, anchor=west, text=black!70},
+    repere/.style={line width=0.6pt, black!80}]
+
+%% ---------- Échelle : 1 °C -> \uy cm, origine au zéro absolu ---------------------
+\def\uy{0.014616}
+\newcommand\yt[1]{{(#1+273.15)*\uy}}     % ordonnée d'une température en °C
+
+%% ---------- Tube du thermomètre : dégradé bleu (froid) -> rouge (chaud) ----------
+%% ampoule (dessinée d'abord : le tube vient se raccorder dessus)
+\fill[solideB] (0,-0.42) circle (0.42);
+\begin{scope}
+  \path[clip, rounded corners=0.28cm] (-0.30,-0.45) rectangle (0.30,5.62);
+  \foreach \i in {0,...,29} {
+    \pgfmathsetmacro\melange{100-100*(\i-2)/27}
+    \fill[solideB!\melange!solideA] (-0.32,{-0.51+\i*0.205}) rectangle (0.32,{-0.30+\i*0.205});}
+\end{scope}
+%% contours : tube ouvert en bas, ampoule ouverte en haut (raccord net)
+\draw[line width=0.9pt, black!70]
+  (-0.30,-0.13) -- (-0.30,5.32) arc (180:0:0.30) -- (0.30,-0.13);
+\draw[line width=0.9pt, black!70] ([shift={(44.4:0.42)}]0,-0.42) arc (44.4:-224.4:0.42);
+
+%% ---------- En-têtes des deux graduations ---------------------------------------
+\node[font=\small\bfseries, anchor=south east] at (-0.35,5.72) {$^\circ$C};
+\node[font=\small\bfseries, anchor=south west] at (0.35,5.72)  {K};
+
+%% ---------- Repères : °C à gauche, K à droite, description à droite -------------
+%% \c = valeur en °C (calcul), puis les deux étiquettes et la description
+\foreach \c/\lc/\lk/\txt in {%
+    -273.15/{$-273{,}15$}/{0}/{zéro absolu (inaccessible)},
+    -39/{$-39$}/{$234{,}15$}/{fusion du mercure},
+    0/{0}/{$273{,}15$}/{fusion de l'eau},
+    25/{25}/{$298{,}15$}/{température ambiante},
+    100/{100}/{$373{,}15$}/{ébullition de l'eau}} {
+  \draw[repere] (-0.62,\yt{\c}) -- (0.62,\yt{\c});
+  \node[grad, anchor=east] at (-0.66,\yt{\c}) {\lc};
+  \node[grad, anchor=west] at (0.66,\yt{\c})  {\lk};
+  \node[desc] at (1.85,\yt{\c}) {\txt};}
+
+%% ---------- Écart de température : identique dans les deux échelles -------------
+\draw[{Stealth[length=5pt]}-{Stealth[length=5pt]}, line width=0.8pt, solideF]
+  (-1.85,\yt{0}) -- (-1.85,\yt{100});
+\draw[line width=0.4pt, black!40] (-1.85,\yt{0}) -- (-0.62,\yt{0});
+\draw[line width=0.4pt, black!40] (-1.85,\yt{100}) -- (-0.62,\yt{100});
+\node[font=\scriptsize, text=solideF, align=center, rotate=90, anchor=south]
+  at (-1.95,4.723)  % 4,723 = milieu de [0 °C ; 100 °C]
+  {$\Delta\theta = 100\ ^\circ$C\\$= 100$ K};
+
+%% ---------- Relation entre les deux échelles ------------------------------------
+\node[draw=black!70, line width=0.7pt, rounded corners=3pt, fill=black!3,
+      font=\small, inner sep=5pt, anchor=west] at (0.9,1.75)
+  {$T\,(\text{K}) = \theta\,(^\circ\text{C}) + 273{,}15$};
+\end{tikzpicture}
+\end{document}

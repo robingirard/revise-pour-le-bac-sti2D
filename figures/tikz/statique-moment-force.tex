@@ -1,0 +1,51 @@
+%% Moment d'une force et bras de levier.
+%% (a) force perpendiculaire : d = distance PA.
+%% (b) force oblique : d se mesure perpendiculairement au SUPPORT de la force.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  force/.style={-{Stealth[length=6pt]}, line width=1.2pt, solideA},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.7pt, solideD},
+  support/.style={line width=0.5pt, dash pattern=on 3pt off 2pt, black!55},
+  bras/.style={line width=0.6pt, dash pattern=on 3pt off 2pt, black!55}]
+
+%% ============================ (a) ====================================
+\begin{scope}[shift={(0,0)}]
+  \coordinate (P) at (0,0);   \coordinate (A) at (2.2,0);
+  \draw[bras] (P) -- (A);
+  \fill (P) circle (2pt);  \fill (A) circle (1.7pt);
+  \node[font=\small, anchor=north east, inner sep=2pt] at (P) {$P$};
+  \node[font=\small, anchor=south east, inner sep=3pt] at (A) {$A$};
+  \draw[force] (A) -- ++(0,1.25) node[anchor=west, inner sep=2pt, font=\small, text=solideA] {$\vec{F}$};
+  \draw[line width=0.6pt, black!60] (2.05,0) -- (2.05,0.15) -- (2.2,0.15);
+  \draw[cote] (0,-0.55) -- (2.2,-0.55);
+  \node[font=\small, text=solideD, anchor=north, inner sep=2pt] at (1.1,-0.58) {$d$};
+  \node[font=\small, anchor=north, align=center] at (1.1,-1.62)
+       {(a) $\vec{F} \perp PA$\\ $M = F \times d$};
+\end{scope}
+
+%% ---------------------------- filet ---------------------------------
+\draw[line width=0.4pt, black!35] (3.15,-1.9) -- (3.15,1.5);
+
+%% ============================ (b) ====================================
+\begin{scope}[shift={(4.1,0)}]
+  \coordinate (P) at (0,0);   \coordinate (A) at (2.2,0);
+  % support de F (droite d'action), prolongé de part et d'autre
+  \draw[support] ($(A)+(220:1.9)$) -- ($(A)+(40:1.6)$);
+  \draw[bras] (P) -- (A);
+  \fill (P) circle (2pt);  \fill (A) circle (1.7pt);
+  \node[font=\small, anchor=north east, inner sep=2pt] at (P) {$P$};
+  \node[font=\small, anchor=north west, inner sep=3pt] at (A) {$A$};
+  \draw[force] (A) -- ++(40:1.35) node[anchor=south west, inner sep=1pt, font=\small, text=solideA] {$\vec{F}$};
+  % pied de la perpendiculaire abaissée de P sur le support
+  \coordinate (H) at (0.909,-1.083);
+  \draw[line width=1.1pt, solideD] (P) -- (H);
+  \node[font=\small, text=solideD, anchor=west, inner sep=3pt] at (0.5,-0.55) {$d$};
+  % marque d'angle droit en H
+  \draw[line width=0.6pt, black!60] ($(H)+(40:0.16)$) -- ($(H)+(40:0.16)+(130:0.16)$) -- ($(H)+(130:0.16)$);
+  \node[font=\small, anchor=north, align=center] at (1.1,-1.62)
+       {(b) $d$ se mesure $\perp$\\ au support de $\vec{F}$};
+\end{scope}
+\end{tikzpicture}
+\end{document}

@@ -58,6 +58,7 @@ Règle : **tout ce qui est dans `dist/` et `figures/build/` est régénéré** p
   "units": [
     {
       "id": "liaisons",
+      "matiere": "ingenierie",           // ingenierie | physique | maths : regroupement sur l'accueil
       "title": "Les liaisons mécaniques",
       "description": "…",
       "skills": [
@@ -199,7 +200,9 @@ Un item est **dû** si `due ≤ aujourd'hui`. **Maîtrisé** si `interval ≥ 21
 - `localStorage["revise-sti2d.progress.v1"]` =
   `{ "version":1, "items":{id:état}, "skills":{id:état}, "xp":0, "streak":{"count":0,"last":"YYYY-MM-DD"}, "history":[{"date","skill","correct","total","xp"}], "settings":{"dailyGoal":30} }`.
 - Écrans : **Accueil** (série, XP du jour, bouton Réviser avec nombre d'items dus,
-  arbre des unités/compétences avec niveau et verrouillage) → **Compétence**
+  arbre des unités/compétences avec niveau et verrouillage, unités regroupées par **matière**
+  — Ingénierie 2I2D, Physique-chimie, Mathématiques — dans des sections repliables dont l'état
+  est mémorisé, chaque section affichant sa progression : compétences au niveau ≥ 1 / total) → **Compétence**
   (leçon repliable, stats, bouton *Commencer*) → **Séance** (barre de progression,
   exercice, retour immédiat vert/rouge + explication, bouton *Continuer*) →
   **Bilan** (score, XP, niveau) ; **Progrès** (tableau par compétence : dus, nouveaux,

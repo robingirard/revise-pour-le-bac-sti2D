@@ -1,0 +1,37 @@
+%% Symbole normalisé du convertisseur analogique-numérique (CAN, en anglais ADC).
+%% Entrée analogique Ve, sortie numérique sur N = 3 bits (b0, b1, b2).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{decorations.pathreplacing}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  fl/.style={-{Stealth[length=5pt]}, line width=1pt},
+  grad/.style={font=\scriptsize}]
+
+%% ================== le carré et sa diagonale ==========================
+\draw[line width=1.1pt] (0,-1) rectangle (2,1);
+\draw[line width=1.1pt] (0,-1) -- (2,1);
+% côté analogique (en haut à gauche) : une sinusoïde
+\draw[solideA, line width=1pt]
+      plot[domain=0:1, samples=40, smooth] ({0.25+0.7*\x},{0.45+0.22*sin(360*\x)});
+% côté numérique (en bas à droite) : le dièse
+\node[font=\large, text=solideB] at (1.4,-0.45) {\#};
+
+%% ================== entrée analogique =================================
+\draw[fl, solideA] (-1.35,0) -- (0,0);
+\node[anchor=south, font=\small, inner sep=2pt] at (-0.7,0.06) {$V_e$};
+\node[grad, anchor=north, align=center, text width=1.5cm, inner sep=2pt]
+      at (-0.7,-0.06) {tension analogique};
+
+%% ================== sorties numériques ================================
+\foreach \y/\b in {-0.6/b_0, 0/b_1, 0.6/b_2} {
+  \draw[fl, solideB] (2,\y) -- (2.95,\y);
+  \node[anchor=west, font=\small, inner sep=2pt] at (2.98,\y) {$\b$}; }
+\draw[decorate, decoration={brace, amplitude=4pt}, line width=0.8pt]
+      (3.55,0.78) -- (3.55,-0.78);
+\node[anchor=west, font=\small, inner sep=3pt] at (3.68,0) {$N$};
+
+%% ================== légende ===========================================
+\node[anchor=north, font=\small\bfseries, inner sep=6pt] at (1,-1) {CAN (ADC)};
+\end{tikzpicture}
+\end{document}

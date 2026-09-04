@@ -1,0 +1,55 @@
+%% Définition d'une poutre : une section droite (S), de centre de surface G,
+%% que l'on déplace le long d'une ligne moyenne (C) droite ou peu courbée.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.7pt, solideD},
+  attache/.style={line width=0.4pt, draw=black!45},
+  amorce/.style={line width=0.5pt, black!55}]
+
+% --- macros locales : la ligne moyenne, décalée verticalement de #1 ----
+\newcommand\ligne[1]{(0,#1) .. controls (2,{0.55+#1}) and (4,{0.65+#1}) .. (6,{0.35+#1})}
+
+% --- corps de la poutre (prisme droit légèrement courbé) ---------------
+\fill[black!8]  (0,-0.45) .. controls (2,0.10) and (4,0.20) .. (6,-0.10)
+                -- (6,0.80) .. controls (4,1.10) and (2,1.00) .. (0,0.45) -- cycle;
+\fill[black!15] (0,0.45) .. controls (2,1.00) and (4,1.10) .. (6,0.80)
+                -- (6.55,1.22) .. controls (4.55,1.52) and (2.55,1.42) .. (0.55,0.87) -- cycle;
+\fill[black!20] (6,-0.10) -- (6.55,0.32) -- (6.55,1.22) -- (6,0.80) -- cycle;
+\draw[line width=0.7pt, black!65, line join=round]
+  \ligne{-0.45} -- (6,0.80)
+  (6,-0.10) -- (6.55,0.32) -- (6.55,1.22) -- (6,0.80)
+  (0,0.45) -- (0.55,0.87) (0.55,0.87) .. controls (2.55,1.42) and (4.55,1.52) .. (6.55,1.22);
+\draw[line width=0.7pt, black!65] \ligne{0.45};
+
+% --- section droite (S) à l'extrémité gauche --------------------------
+\hachures{(0,-0.45) -- (0.55,-0.03) -- (0.55,0.87) -- (0,0.45) -- cycle}
+\node[font=\small, anchor=south east, inner sep=1pt] (labS) at (0.15,1.55) {section droite $(S)$};
+\draw[attache] (0.1,1.5) -- (0.3,0.72);
+
+% --- centre de surface G et ligne moyenne (C) -------------------------
+\draw[line width=0.9pt, solideE, dash pattern=on 6pt off 2pt on 1pt off 2pt]
+  (0.275,0.21) .. controls (2.275,0.76) and (4.275,0.86) .. (6.275,0.56);
+\fill (0.275,0.21) circle (1.7pt);
+\node[font=\small, anchor=north, fill=white, inner sep=1pt] at (0.31,0.11) {$G$};
+\node[font=\small, text=solideE, anchor=south] (labC) at (4.9,1.75) {ligne moyenne $(C)$};
+\draw[attache] (4.9,1.7) -- (4.6,0.78);
+
+% --- cotes : longueur L et dimension transversale h -------------------
+\draw[attache] (0,-0.45) -- (0,-1.05)  (6,-0.10) -- (6,-1.05);
+\draw[cote] (0,-0.95) -- (6,-0.95);
+\node[font=\small, text=solideD, anchor=north, inner sep=2pt] at (3,-0.97) {$L$ (grande longueur)};
+\draw[attache] (0,-0.45) -- (-0.75,-0.45)  (0,0.45) -- (-0.75,0.45);
+\draw[cote] (-0.6,-0.45) -- (-0.6,0.45);
+\node[font=\small, text=solideD, anchor=east, inner sep=2pt] at (-0.62,0) {$h$};
+
+% --- encart : la section peut être de n'importe quelle forme ----------
+\begin{scope}[shift={(5.6,-1.95)}]
+  \draw[rounded corners=3pt, draw=black!40, fill=black!3] (-0.5,-0.42) rectangle (0.5,0.48);
+  \hachures{(0,0.03) circle (0.32)}
+  \fill (0,0.03) circle (1.4pt);
+  \node[font=\small, anchor=north, inner sep=1.5pt] at (0,-0.5) {$(S)$ quelconque};
+\end{scope}
+\end{tikzpicture}
+\end{document}

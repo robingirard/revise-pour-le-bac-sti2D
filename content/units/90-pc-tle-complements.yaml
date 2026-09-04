@@ -1,0 +1,1386 @@
+units:
+- id: pc-tle-complements
+  matiere: physique
+  title: 'Physique-chimie de Terminale : compléments'
+  description: Radioactivité et énergie nucléaire, générateurs électrochimiques (piles, accumulateurs, piles à combustible), réactions acido-basiques et pH, signaux périodiques, sons et transmission des ondes.
+  skills:
+  - id: pc-radioactivite
+    title: La radioactivité
+    icon: ☢️
+    description: Noyaux et isotopes, désintégrations α, β⁻, β⁺ et rayonnement γ, activité en becquerel, loi de décroissance, demi-vie et constante de temps, énergie libérée E = Δm c².
+    prerequisites: []
+    lesson: lessons/pc-radioactivite.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Le noyau de carbone 14 s'écrit $^{14}_{6}\mathrm{C}$. Combien contient-il de **neutrons** ?
+      choices:
+      - '8'
+      - '6'
+      - '14'
+      - '20'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 6 est le numéro atomique $Z$, c''est-à-dire le nombre de **protons**.'
+      - 'Non : 14 est le nombre de masse $A$, c''est-à-dire le nombre total de **nucléons** (protons + neutrons).'
+      - 'Non : on soustrait, on n''additionne pas. Le nombre de neutrons vaut $A - Z$, pas $A + Z$.'
+      explanation: 'Le nombre de neutrons vaut $A - Z = 14 - 6 = 8$. Le livre l''écrit ainsi : $^{14}_{6}\mathrm{C}$, 6 protons / 8 neutrons.'
+      tags:
+      - noyau
+    - type: mcq
+      level: 1
+      prompt: Lors d'une radioactivité **α**, quelle particule le noyau père émet-il ?
+      choices:
+      - Un noyau d'hélium 4, noté $^{4}_{2}\mathrm{He}$
+      - Un électron
+      - Un positron (positon)
+      - Un neutron lent
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''électron est émis lors de la radioactivité **β⁻**.'
+      - 'Non : le positron est émis lors de la radioactivité **β⁺**.'
+      - 'Non : le neutron lent est la particule **envoyée** vers les noyaux d''uranium 235 pour provoquer une fission ; ce n''est pas un rayonnement émis.'
+      explanation: Un noyau père se désintègre en un noyau fils en émettant un noyau d'hélium 4, la particule α, notée $^{4}_{2}\mathrm{He}$. Le noyau fils perd donc 2 protons et 2 neutrons.
+      tags:
+      - desintegrations
+    - type: mcq
+      level: 1
+      prompt: 'Le carbone 14 $^{14}_{6}\mathrm{C}$ se désintègre par radioactivité **β⁻**. Quel est le noyau fils ?
+
+        {{fig:pc-desintegrations}}'
+      choices:
+      - L'azote 14, $^{14}_{7}\mathrm{N}$
+      - Le bore 10, $^{10}_{5}\mathrm{B}$
+      - Le carbone 13, $^{13}_{6}\mathrm{C}$
+      - L'azote 15, $^{15}_{7}\mathrm{N}$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le bore 10 est le noyau fils du **carbone 10** par radioactivité β⁺.'
+      - 'Non : le nombre de masse $A$ est conservé, il reste égal à 14. Seul $Z$ change.'
+      - 'Non : $A$ est conservé, donc $A = 14$ et non 15. C''est le numéro atomique qui passe de 6 à 7.'
+      explanation: '$^{14}_{6}\mathrm{C} \rightarrow {}^{14}_{7}\mathrm{N} + {}^{0}_{-1}\mathrm{e}$ : le carbone 14 (6 protons / 8 neutrons) devient l''azote 14 (7 protons / 7 neutrons).'
+      tags:
+      - desintegrations
+    - type: mcq
+      level: 1
+      prompt: Que représente la **demi-vie** $t_{1/2}$ d'un radionucléide ?
+      choices:
+      - La durée au bout de laquelle la quantité de ce radionucléide est divisée par deux
+      - La durée au bout de laquelle tous les noyaux père ont disparu
+      - La moitié de la durée de vie d'un noyau père
+      - Le nombre de désintégrations par seconde
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la décroissance est **exponentielle**, elle ne s''annule jamais exactement. Après 3 demi-vies il reste encore $N_0/8$ noyaux.'
+      - 'Non : ce n''est pas « la moitié d''une durée de vie ». C''est la durée au bout de laquelle la **population** est divisée par 2.'
+      - 'Non : c''est la définition de l''**activité** $A$, exprimée en becquerel.'
+      explanation: '$t_{1/2}$ est la demi-vie, durée au bout de laquelle la quantité d''un même radionucléide est divisée par deux. Exemples : 12,32 ans pour $^{3}_{1}\mathrm{H}$, 5 730 ans pour $^{14}_{6}\mathrm{C}$, 7,038 × 10⁸ ans pour $^{235}_{92}\mathrm{U}$.'
+      tags:
+      - decroissance
+    - type: mcq
+      level: 1
+      prompt: Dans quelle unité s'exprime l'**activité** $A$ d'une source radioactive ?
+      choices:
+      - Le becquerel (Bq)
+      - Le gray (Gy)
+      - Le hertz (Hz)
+      - Le joule (J)
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le gray mesure une **dose absorbée** (énergie de rayonnement reçue par kilogramme de matière), pas un nombre de désintégrations par seconde.'
+      - 'Non : le hertz est l''unité d''une **fréquence**. L''activité est bien un nombre par seconde, mais son unité dédiée est le becquerel.'
+      - 'Non : le joule est l''unité d''une **énergie**, par exemple celle de $E = \Delta m \times c^2$.'
+      explanation: 'L''activité $A$ d''une population de noyaux père, exprimée en **becquerel (Bq)**, est le nombre de désintégrations **par seconde** : 1 Bq = 1 désintégration par seconde.'
+      tags:
+      - activite
+    - type: mcq
+      level: 1
+      prompt: Qu'est-ce que le **rayonnement γ** ?
+      choices:
+      - Un photon très énergétique émis quand le noyau fils, trop excité, se désexcite
+      - Un noyau d'hélium 4 émis par le noyau père
+      - Un électron arraché au cortège électronique de l'atome
+      - Un neutron lent envoyé sur le noyau père
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la particule **α**.'
+      - 'Non : l''électron émis lors d''une désintégration β⁻ vient du **noyau**, pas du cortège électronique — et ce n''est pas un rayonnement γ.'
+      - 'Non : le neutron lent est la particule **envoyée** sur l''uranium 235 pour provoquer une fission.'
+      explanation: 'Au cours des trois désintégrations α, β⁻ et β⁺, un rayonnement γ peut être émis si le noyau fils, trop excité, se désexcite en l''émettant. $A$ et $Z$ sont alors inchangés : le γ n''est pas une désintégration.'
+      tags:
+      - desintegrations
+    - type: grid
+      level: 1
+      prompt: 'Pour chaque rayonnement, cochez la particule émise.
+
+        {{fig:pc-desintegrations}}'
+      rows:
+      - id: al
+        label: Radioactivité α
+      - id: bm
+        label: Radioactivité β⁻
+      - id: bp
+        label: Radioactivité β⁺
+      - id: ga
+        label: Rayonnement γ
+      cols:
+      - id: He
+        label: Noyau d'hélium 4
+      - id: El
+        label: Électron
+      - id: Po
+        label: Positron
+      - id: Ph
+        label: Photon
+      answer:
+      - Heal
+      - Elbm
+      - Pobp
+      - Phga
+      labels:
+        Heal: α → noyau d'hélium 4
+        Elal: α → électron
+        Poal: α → positron
+        Phal: α → photon
+        Hebm: β⁻ → noyau d'hélium 4
+        Elbm: β⁻ → électron
+        Pobm: β⁻ → positron
+        Phbm: β⁻ → photon
+        Hebp: β⁺ → noyau d'hélium 4
+        Elbp: β⁺ → électron
+        Pobp: β⁺ → positron
+        Phbp: β⁺ → photon
+        Hega: γ → noyau d'hélium 4
+        Elga: γ → électron
+        Poga: γ → positron
+        Phga: γ → photon
+      cellFeedback:
+        Elbp: en β⁺ c'est un **positron** (antiélectron, charge +) qui est émis, pas un électron
+        Pobm: en β⁻ c'est un **électron** (charge −) qui est émis, pas un positron
+        Hega: 'le rayonnement γ n''emporte aucun nucléon : c''est un photon, $A$ et $Z$ ne changent pas'
+        Elal: la particule α est un noyau d'hélium 4, faite de 2 protons et 2 neutrons
+      explanation: α → $^{4}_{2}\mathrm{He}$ ; β⁻ → électron ; β⁺ → positron ; γ → photon de désexcitation. Le rayonnement γ accompagne éventuellement les trois autres, il ne les remplace pas.
+      tags:
+      - desintegrations
+    - type: mcq
+      level: 2
+      prompt: Le carbone 10 se désintègre par radioactivité **β⁺**. Quelle équation est correcte ?
+      choices:
+      - $^{10}_{6}\mathrm{C} \rightarrow {}^{10}_{5}\mathrm{B} + {}^{0}_{+1}\mathrm{e}$
+      - $^{10}_{6}\mathrm{C} \rightarrow {}^{10}_{7}\mathrm{N} + {}^{0}_{+1}\mathrm{e}$
+      - $^{10}_{6}\mathrm{C} \rightarrow {}^{10}_{5}\mathrm{B} + {}^{0}_{-1}\mathrm{e}$
+      - $^{10}_{6}\mathrm{C} \rightarrow {}^{6}_{4}\mathrm{Be} + {}^{4}_{2}\mathrm{He}$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : $Z$ n''est pas conservé ($6 \neq 7 + 1$). En β⁺ le numéro atomique **diminue** de 1 : 6 → 5.'
+      - 'Non : la particule émise en β⁺ est un **positron** (charge +1). Avec un électron, $Z$ ne serait pas conservé ($6 \neq 5 - 1$).'
+      - Cette équation est bien équilibrée ($10 = 6 + 4$ et $6 = 4 + 2$) mais elle décrit une désintégration **α**, pas β⁺.
+      explanation: '$^{10}_{6}\mathrm{C} \rightarrow {}^{10}_{5}\mathrm{B} + {}^{0}_{+1}\mathrm{e}$ : $A$ est conservé (10) et $Z$ diminue de 1 (6 → 5). Le noyau fils est le bore 10, 5 protons / 5 neutrons.'
+      tags:
+      - desintegrations
+    - type: mcq
+      level: 2
+      prompt: 'Au bout d''une durée $t = 3 \times t_{1/2}$, quelle fraction des noyaux père initiaux reste-t-il ?
+
+        {{fig:pc-decroissance-radioactive}}'
+      choices:
+      - $N_0/8$
+      - $N_0/3$
+      - $N_0/6$
+      - $N_0/2$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la décroissance n''est pas proportionnelle au temps. À chaque demi-vie la population est **divisée** par 2.'
+      - 'Non : on ne multiplie pas 2 par 3, on élève 2 à la puissance 3 : $2^3 = 8$.'
+      - 'Non : $N_0/2$ correspond à **une seule** demi-vie.'
+      explanation: 'Après $1\,t_{1/2}$ : $N_0/2$ ; après $2\,t_{1/2}$ : $N_0/4$ ; après $3\,t_{1/2}$ : $N_0/8$. C''est exactement la graduation de l''axe des ordonnées de la courbe de décroissance.'
+      tags:
+      - decroissance
+    - type: input
+      level: 2
+      prompt: La demi-vie du tritium $^{3}_{1}\mathrm{H}$ vaut $t_{1/2} = 12{,}32$ ans. Au bout de combien d'années la quantité initiale de tritium est-elle divisée par **4** ?
+      answer: '24.64'
+      numeric: true
+      tolerance: 0.1
+      unit: ans
+      explanation: 'Diviser par 4, c''est diviser deux fois par 2 : $t = 2 \times t_{1/2} = 2 \times 12{,}32 = 24{,}64$ ans. Erreur fréquente : diviser la demi-vie par 4 au lieu de la multiplier par 2.'
+      tags:
+      - decroissance
+    - type: input
+      level: 2
+      prompt: Une source d'activité initiale $A_0 = 800$ Bq a une demi-vie $t_{1/2} = 30$ ans. Quelle est son activité au bout de 60 ans ?
+      answer: '200'
+      numeric: true
+      tolerance: 1
+      unit: Bq
+      explanation: '60 ans $= 2 \times t_{1/2}$ : l''activité est divisée deux fois par 2, soit par $2^2 = 4$. $A = 800/4 = 200$ Bq. Erreur fréquente : retrancher deux fois la moitié de $A_0$, ce qui donnerait 0.'
+      tags:
+      - activite
+    - type: input
+      level: 2
+      prompt: L'activité du carbone 14 d'un ossement fossile vaut le **quart** de son activité initiale. Quel est l'âge de l'ossement, en années ? ($t_{1/2} = 5\,730$ ans)
+      answer: '11460'
+      numeric: true
+      tolerance: 50
+      unit: ans
+      explanation: 'Diviser par 4 = deux demi-vies : $t = 2 \times 5\,730 = 11\,460$ ans, soit $1{,}15 \times 10^{4}$ ans.'
+      tags:
+      - decroissance
+    - type: input
+      level: 2
+      prompt: Une réaction nucléaire s'accompagne d'une perte de masse $\Delta m = 2{,}0 \times 10^{-28}$ kg. Calculer l'énergie libérée, en joules ($c = 3{,}00 \times 10^{8}$ m·s⁻¹). Écriture scientifique, par exemple 1,8e-11.
+      answer: '1.8e-11'
+      numeric: true
+      tolerance: 1.0e-12
+      unit: J
+      explanation: '$E = \Delta m \times c^2 = 2{,}0 \times 10^{-28} \times (3{,}00 \times 10^{8})^2 = 2{,}0 \times 10^{-28} \times 9{,}00 \times 10^{16} = 1{,}8 \times 10^{-11}$ J. Erreur fréquente : oublier d''élever $c$ au carré (on trouverait $6{,}0 \times 10^{-20}$ J).'
+      tags:
+      - energie-nucleaire
+    - type: mcq
+      level: 2
+      prompt: 'Un neutron lent provoque la fission de l''uranium 235 :
+
+        $^{1}_{0}\mathrm{n} + {}^{235}_{92}\mathrm{U} \rightarrow {}^{94}_{38}\mathrm{Sr} + {}^{140}_{54}\mathrm{Xe} + x\,^{1}_{0}\mathrm{n}$
+
+        Que vaut $x$ ?
+
+        {{fig:pc-fission-fusion}}'
+      choices:
+      - '2'
+      - '1'
+      - '3'
+      - '0'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : à gauche $1 + 235 = 236$ nucléons, à droite $94 + 140 = 234$ : il en manque **2**, donc 2 neutrons.'
+      - 'Non : avec 3 neutrons on aurait $94 + 140 + 3 = 237$ nucléons à droite, contre 236 à gauche.'
+      - 'Non : sans neutron émis, $94 + 140 = 234 \neq 236$. Ce sont d''ailleurs ces neutrons libérés qui permettent la réaction en chaîne.'
+      explanation: 'Conservation de $A$ : $1 + 235 = 236$ et $94 + 140 + 2 \times 1 = 236$. Conservation de $Z$ : $0 + 92 = 92$ et $38 + 54 + 0 = 92$. Donc $x = 2$.'
+      tags:
+      - energie-nucleaire
+    - type: mcq
+      level: 2
+      prompt: 'Deutérium + tritium → hélium + neutron libre + ÉNERGIE. De quelle réaction s''agit-il ?
+
+        {{fig:pc-fission-fusion}}'
+      choices:
+      - 'Une **fusion** nucléaire : des noyaux légers forment un noyau plus lourd'
+      - 'Une **fission** nucléaire : un noyau lourd se casse en noyaux plus légers'
+      - Une désintégration β⁻
+      - Une réaction chimique de combustion
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la fission part d''un noyau **lourd** bombardé par un neutron, comme $^{235}_{92}\mathrm{U}$, et donne des noyaux fils plus légers.'
+      - 'Non : dans une désintégration β⁻ il y a **un seul** noyau père et l''émission d''un électron ; ici deux noyaux s''assemblent.'
+      - 'Non : une combustion met en jeu les **électrons** des atomes, pas les noyaux, et libère bien moins d''énergie.'
+      explanation: Comme dans les étoiles, des noyaux légers (deutérium et tritium, isotopes de l'hydrogène) réalisent une **fusion nucléaire** pour former un noyau plus lourd (hélium), en libérant un neutron et de l'énergie.
+      tags:
+      - energie-nucleaire
+    - type: mcq
+      level: 2
+      prompt: Une source contient $N = 1{,}0 \times 10^{12}$ noyaux radioactifs et son activité vaut $A = 500$ Bq. Que signifie cette valeur de 500 Bq ?
+      choices:
+      - 500 noyaux se désintègrent en moyenne chaque seconde
+      - Il reste 500 noyaux radioactifs dans la source
+      - La source libère 500 J d'énergie par seconde
+      - Il faut 500 s pour que la moitié des noyaux se désintègrent
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le nombre de noyaux est $N = 1{,}0 \times 10^{12}$. L''activité, elle, compte les désintégrations **par seconde**.'
+      - 'Non : le becquerel compte des désintégrations, pas des joules. Une puissance s''obtiendrait en multipliant $A$ par l''énergie libérée à chaque désintégration.'
+      - 'Non : cette durée serait la **demi-vie** $t_{1/2}$ ; elle ne se lit pas sur la seule valeur de l''activité.'
+      explanation: '1 Bq = 1 désintégration par seconde. L''activité décroît au cours du temps comme le nombre de noyaux : $A(t) = A_0\,e^{-\lambda t}$.'
+      tags:
+      - activite
+    - type: mcq
+      level: 3
+      prompt: Pour le carbone 14, $t_{1/2} = 5\,730$ ans. Que vaut la **constante de temps** $\tau$, et que représente-t-elle ?
+      choices:
+      - '$\tau = t_{1/2}/\ln 2 \approx 8\,268$ ans : une **durée**, inverse de la constante radioactive $\lambda$'
+      - '$\tau = t_{1/2} = 5\,730$ ans : demi-vie et constante de temps sont deux noms de la même grandeur'
+      - '$\tau = \ln 2 / t_{1/2} \approx 1{,}21 \times 10^{-4}$ an⁻¹ : le nombre de désintégrations par an'
+      - '$\tau = t_{1/2}/2 = 2\,865$ ans : la moitié de la demi-vie'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : $\tau$ est **plus grande** que $t_{1/2}$, car on divise par $\ln 2 = 0{,}693 < 1$ (soit $\tau \approx 1{,}44\,t_{1/2}$). Au bout de $\tau$ il reste $N_0/e \approx 37$ % des noyaux, et non 50 %.'
+      - 'Non : c''est l''expression de la **constante radioactive** $\lambda = \ln 2 / t_{1/2}$, en an⁻¹ ; $\tau$ en est l''inverse. Et $\lambda$ n''est pas un nombre de désintégrations : celui-ci dépend aussi du nombre de noyaux présents.'
+      - 'Non : $\tau = t_{1/2}/\ln 2$, et diviser par 0,693 **augmente** la valeur. La demi-vie n''est pas non plus « la moitié d''une durée de vie ».'
+      explanation: '$\tau = t_{1/2}/\ln 2 = 5\,730/0{,}693 = 8\,268$ ans. Attention : le livre écrit « τ exprimée en s⁻¹ », c''est une coquille — cette relation donne bien une **durée**. C''est $\lambda = 1/\tau$ qui s''exprime en s⁻¹ (ou an⁻¹).'
+      tags:
+      - decroissance
+    - type: input
+      level: 3
+      prompt: Calculer la constante de temps $\tau$ du carbone 14, avec $\tau = t_{1/2}/\ln 2$, $t_{1/2} = 5\,730$ ans et $\ln 2 = 0{,}693$. Répondre en années, arrondi à l'unité.
+      answer: '8268'
+      numeric: true
+      tolerance: 20
+      unit: ans
+      explanation: '$\tau = 5\,730 / 0{,}693 = 8\,268$ ans, soit $8{,}27 \times 10^{3}$ ans. Vérification de cohérence : $\tau$ doit être **plus grande** que la demi-vie.'
+      tags:
+      - decroissance
+    - type: input
+      level: 3
+      prompt: Au bout de combien de **demi-vies** reste-t-il, pour la première fois, **moins de 10 %** des noyaux père initiaux ? (répondre par un nombre entier)
+      answer: '4'
+      numeric: true
+      tolerance: 0
+      explanation: Après $n$ demi-vies il reste $N_0/2^n$. $1/2^3 = 0{,}125 = 12{,}5$ % (encore plus de 10 %) ; $1/2^4 = 0{,}0625 = 6{,}25$ % (moins de 10 %). Il faut donc $n = 4$ demi-vies.
+      tags:
+      - decroissance
+    - type: guided
+      level: 3
+      title: Datation d'un charbon de bois par le carbone 14
+      intro: 'Un archéologue prélève un fragment de **charbon de bois** dans un foyer préhistorique et mesure son activité : $A = 0{,}15$ Bq. À la mort de l''arbre, l''activité de ce fragment valait $A_0 = 0{,}25$ Bq.
+
+
+        **Données** : demi-vie du carbone 14, $t_{1/2} = 5\,730$ ans ; $\ln 2 = 0{,}693$ ; célérité de la lumière, $c = 3{,}00 \times 10^{8}$ m·s⁻¹ ; perte de masse lors d''une désintégration de $^{14}_{6}\mathrm{C}$, $\Delta m = 2{,}8 \times 10^{-31}$ kg.
+
+        {{fig:pc-decroissance-radioactive}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Écrire l''équation de la désintégration β⁻ du carbone 14 et identifier le noyau fils.'
+        choices:
+        - $^{14}_{6}\mathrm{C} \rightarrow {}^{14}_{7}\mathrm{N} + {}^{0}_{-1}\mathrm{e}$ — le noyau fils est l'azote 14
+        - $^{14}_{6}\mathrm{C} \rightarrow {}^{14}_{5}\mathrm{B} + {}^{0}_{+1}\mathrm{e}$ — le noyau fils est le bore 14
+        - $^{14}_{6}\mathrm{C} \rightarrow {}^{13}_{6}\mathrm{C} + {}^{1}_{0}\mathrm{n}$ — le noyau fils est le carbone 13
+        - $^{14}_{6}\mathrm{C} \rightarrow {}^{10}_{4}\mathrm{Be} + {}^{4}_{2}\mathrm{He}$ — le noyau fils est le béryllium 10
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'C''est une désintégration β⁺ (émission d''un positron), pour laquelle $Z$ **diminue**. En β⁻, $Z$ **augmente** de 1 : 6 → 7.'
+        - 'Ce n''est pas une désintégration β⁻ : aucune particule β n''est émise et le nombre de masse passerait de 14 à 13, alors que $A$ doit être conservé.'
+        - Cette équation est équilibrée ($14 = 10 + 4$ et $6 = 4 + 2$) mais elle décrit une désintégration **α**, pas β⁻.
+        explanation: '$^{14}_{6}\mathrm{C} \rightarrow {}^{14}_{7}\mathrm{N} + {}^{0}_{-1}\mathrm{e}$. Le noyau fils est l''**azote 14** (7 protons, 7 neutrons) : $A$ est conservé (14), $Z$ passe de 6 à 7.'
+      - kind: mcq
+        prompt: '**Étape 2.** Sans calculer l''âge, encadrer la date $t$ du fragment. On compare pour cela le rapport $A/A_0$ à 0,5.'
+        choices:
+        - $0 < t < t_{1/2}$, soit un âge inférieur à 5 730 ans
+        - $t_{1/2} < t < 2\,t_{1/2}$, soit entre 5 730 et 11 460 ans
+        - $t > 3\,t_{1/2}$, soit plus de 17 190 ans
+        - $t = t_{1/2}$ exactement, soit 5 730 ans
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : $A/A_0 = 0{,}60 > 0{,}5$, l''activité n''a pas encore été divisée par 2 : la première demi-vie n''est pas écoulée.'
+        - 'Non : après 3 demi-vies il ne resterait que $1/8 = 0{,}125$ de l''activité initiale, bien moins que 0,60.'
+        - 'Non : au bout d''exactement une demi-vie on aurait $A/A_0 = 0{,}50$ ; ici le rapport vaut 0,60.'
+        explanation: '$A/A_0 = 0{,}15/0{,}25 = 0{,}60$. Comme $0{,}5 < 0{,}60 < 1$, moins d''une demi-vie s''est écoulée : $0 < t < 5\,730$ ans.'
+      - kind: input
+        prompt: '**Étape 3.** Calculer la constante de temps du carbone 14, $\tau = t_{1/2}/\ln 2$, en années (arrondir à l''unité).'
+        answer: '8268'
+        numeric: true
+        tolerance: 20
+        unit: ans
+        explanation: $\tau = 5\,730/0{,}693 = 8\,268$ ans, soit $8{,}27 \times 10^{3}$ ans. $\tau$ est une **durée** ; c'est $\lambda = 1/\tau = 1{,}21 \times 10^{-4}$ an⁻¹ qui s'exprime en an⁻¹.
+      - kind: input
+        prompt: '**Étape 4.** De $A(t) = A_0\,e^{-t/\tau}$ on tire $t = \tau \times \ln(A_0/A)$. Calculer l''âge du fragment, en années.'
+        answer: '4224'
+        numeric: true
+        tolerance: 60
+        unit: ans
+        explanation: $t = \tau \times \ln(A_0/A) = 8\,268 \times \ln(0{,}25/0{,}15) = 8\,268 \times \ln(1{,}667) = 8\,268 \times 0{,}511 = 4{,}22 \times 10^{3}$ ans. Le fragment a environ 4 220 ans, bien compris entre 0 et 5 730 ans comme prévu à l'étape 2.
+      - kind: input
+        prompt: '**Étape 5.** Quelle sera l''activité de cet échantillon dans 5 730 ans **supplémentaires** ? Répondre en becquerels.'
+        answer: '0.075'
+        numeric: true
+        tolerance: 0.005
+        unit: Bq
+        explanation: 'Une durée supplémentaire égale à une demi-vie divise l''activité par 2 : $A'' = A/2 = 0{,}15/2 = 0{,}075$ Bq.'
+      - kind: input
+        prompt: '**Étape 6.** Calculer l''énergie libérée par **une seule** désintégration : $E = \Delta m \times c^2$, avec $\Delta m = 2{,}8 \times 10^{-31}$ kg. Répondre en joules, en écriture scientifique (par exemple 2,5e-14).'
+        answer: '2.52e-14'
+        numeric: true
+        tolerance: 5.0e-16
+        unit: J
+        explanation: $E = 2{,}8 \times 10^{-31} \times (3{,}00 \times 10^{8})^2 = 2{,}8 \times 10^{-31} \times 9{,}00 \times 10^{16} = 2{,}52 \times 10^{-14}$ J.
+      - kind: input
+        prompt: '**Étape 7.** L''activité vaut $A = 0{,}15$ Bq, c''est-à-dire 0,15 désintégration par seconde. En déduire la puissance libérée $P = A \times E$, en watts (écriture scientifique).'
+        answer: '3.78e-15'
+        numeric: true
+        tolerance: 1.0e-16
+        unit: W
+        explanation: '$P = 0{,}15 \times 2{,}52 \times 10^{-14} = 3{,}78 \times 10^{-15}$ W, soit environ $3{,}8 \times 10^{-15}$ W. C''est une puissance minuscule : l''échantillon est sans danger.'
+      - kind: mcq
+        prompt: '**Étape 8.** Pourquoi le carbone 14 ($t_{1/2} = 5\,730$ ans) convient-il à la datation **archéologique**, alors que l''uranium 235 ($t_{1/2} = 7{,}038 \times 10^{8}$ ans) n''y convient pas ?'
+        choices:
+        - Sur quelques milliers d'années l'activité du carbone 14 varie de façon mesurable, alors que celle de l'uranium 235 resterait indiscernable de $A_0$
+        - Parce que l'uranium 235 n'est pas radioactif
+        - Parce que l'uranium 235 se désintègre trop vite pour qu'il en reste
+        - Parce que le carbone 14 a une activité initiale $A_0$ plus grande
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : l''uranium 235 est bien radioactif, mais très **lentement** ($t_{1/2} = 7{,}038 \times 10^{8}$ ans).'
+        - 'C''est l''inverse : sa demi-vie est très **longue**, donc il se désintègre très lentement. Il sert d''ailleurs aux datations géologiques.'
+        - 'Non : ce n''est pas la valeur de $A_0$ qui compte, mais la **variation** relative $A/A_0$ sur la durée à mesurer.'
+        explanation: 'Pour dater, il faut que le rapport $A/A_0$ ait sensiblement changé : la durée à mesurer doit être du même ordre de grandeur que $t_{1/2}$. Quelques milliers d''années, c''est l''ordre de la demi-vie du carbone 14 ; pour l''uranium 235, $t \ll t_{1/2}$ et la mesure serait indiscernable de $A_0$ — il convient en revanche aux datations géologiques.'
+      tags:
+      - decroissance
+      - energie-nucleaire
+  - id: pc-piles-accumulateurs
+    title: Piles, accumulateurs et piles à combustible
+    icon: 🔋
+    description: Anode et cathode, polarité, pont salin ; pile, accumulateur (charge et décharge) et pile à combustible ; bilan de matière, capacité en A·h et énergie stockée.
+    prerequisites:
+    - pc-oxydoreduction
+    lesson: lessons/pc-piles-accumulateurs.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Dans un générateur électrochimique, à quelle électrode a lieu l''**oxydation** ?
+
+        {{fig:pc-pile-accumulateur}}'
+      choices:
+      - À l'anode
+      - À la cathode
+      - Au pont salin
+      - Cela dépend du sens du courant
+      answer: 0
+      feedback:
+      - null
+      - 'Non : à la cathode a lieu la **réduction**. Moyen mnémotechnique : anode/oxydation (les deux voyelles), cathode/réduction (les deux consonnes).'
+      - 'Non : le pont salin n''est pas une électrode ; il assure la neutralité électrique de chaque compartiment.'
+      - 'Non : c''est toujours vrai. « L''oxydation a toujours lieu à l''anode, et la réduction à la cathode », en décharge comme en recharge.'
+      explanation: 'Anode : oxydation, $\mathrm{red_1} = \mathrm{ox_1} + n_1\,e^-$. Cathode : réduction, $\mathrm{ox_2} + n_2\,e^- = \mathrm{red_2}$.'
+      tags:
+      - electrodes
+    - type: mcq
+      level: 1
+      prompt: À quoi sert le **pont salin** dans une pile ?
+      choices:
+      - À assurer la neutralité électrique dans chaque compartiment
+      - À laisser circuler les électrons entre les deux électrodes
+      - À imposer le sens conventionnel du courant
+      - À empêcher toute réaction chimique entre les deux compartiments
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les électrons circulent par le **circuit extérieur** (« un échange d''électrons, via un circuit extérieur, entre deux électrodes »), pas par le pont salin, où seuls des ions se déplacent.'
+      - 'Non : le sens conventionnel du courant découle de la polarité des électrodes, pas du pont salin.'
+      - 'Au contraire : sans pont salin, la réaction s''arrêterait très vite, faute de neutralité électrique.'
+      explanation: Le pont salin permet d'assurer la neutralité électrique dans chaque compartiment, en laissant migrer des ions.
+      tags:
+      - electrodes
+    - type: mcq
+      level: 1
+      prompt: Qu'est-ce qui distingue un **accumulateur** d'une pile ?
+      choices:
+      - 'Sa transformation chimique est **réversible** : on peut le recharger en régénérant les réactifs'
+      - Il ne met pas en jeu de couples oxydant/réducteur
+      - Il délivre un courant alternatif
+      - 'Sa transformation n''est pas spontanée : il faut un générateur pour l''amorcer'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : comme la pile, un accumulateur fonctionne grâce à deux couples oxydant/réducteur qui échangent des électrons.'
+      - 'Non : un générateur électrochimique délivre un courant **continu**.'
+      - 'Non : la **décharge** d''un accumulateur est bien spontanée ; c''est la **recharge** qui exige un générateur extérieur.'
+      explanation: 'La transformation d''un accumulateur est spontanée et **réversible** : il se décharge, puis on inverse le sens de la réaction pour régénérer les réactifs (quasi) disparus. Une pile met en jeu une transformation **irréversible**.'
+      tags:
+      - accumulateur
+    - type: mcq
+      level: 1
+      prompt: 'Quels sont les deux réactifs d''une **pile à combustible** ?
+
+        {{fig:pc-pile-combustible}}'
+      choices:
+      - Le dihydrogène $\mathrm{H_2}$ et le dioxygène $\mathrm{O_2}$
+      - Le dihydrogène $\mathrm{H_2}$ et l'eau $\mathrm{H_2O}$
+      - Le plomb $\mathrm{Pb}$ et le dioxyde de plomb $\mathrm{PbO_2}$
+      - Le zinc $\mathrm{Zn}$ et le cuivre $\mathrm{Cu}$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''eau est le **produit** de la réaction, pas un réactif.'
+      - 'Non : $\mathrm{Pb}$ et $\mathrm{PbO_2}$ sont les électrodes d''un **accumulateur au plomb**.'
+      - 'Non : $\mathrm{Zn}$ et $\mathrm{Cu}$ interviennent dans la **pile Daniell**.'
+      explanation: $2\,\mathrm{H_2} + \mathrm{O_2} \rightarrow 2\,\mathrm{H_2O}$. Les couples sont $\mathrm{O_2}/\mathrm{H_2O}$ et $\mathrm{H^+}/\mathrm{H_2}$ ; le seul produit est de l'eau.
+      tags:
+      - pile-combustible
+    - type: mcq
+      level: 1
+      prompt: Dans quelle unité exprime-t-on couramment la **capacité** d'un accumulateur ?
+      choices:
+      - L'ampère-heure (A·h)
+      - L'ampère (A)
+      - Le watt (W)
+      - Le volt (V)
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''ampère mesure l''**intensité** du courant débité à un instant donné. La capacité vaut $Q = I \times t$ : il manque la durée.'
+      - 'Non : le watt mesure une **puissance**. L''énergie stockée, elle, s''exprime en W·h avec $E = Q \times U$.'
+      - 'Non : le volt mesure la **tension** aux bornes de l''accumulateur.'
+      explanation: '$Q = I \times t$ : avec $I$ en ampères et $t$ en heures, $Q$ est en **ampère-heures (A·h)**. Conversion : 1 A·h = 3 600 C.'
+      tags:
+      - capacite
+    - type: mcq
+      level: 2
+      prompt: Dans une pile en fonctionnement (transformation spontanée), quelle est la **polarité de l'anode** ?
+      choices:
+      - Borne négative, car les électrons produits par l'oxydation quittent l'anode
+      - Borne positive, car les électrons arrivent à l'anode
+      - Borne négative, car la réduction y a lieu
+      - Borne positive, car l'oxydation y a lieu
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les électrons **arrivent** à la cathode, qui est la borne positive.'
+      - 'Non : c''est la **réduction** qui a lieu à la cathode ; l''anode est le siège de l''oxydation.'
+      - 'L''oxydation a bien lieu à l''anode, mais l''anode est la borne **négative** : les électrons qu''elle produit la quittent.'
+      explanation: 'Anode : oxydation $\mathrm{red_1} = \mathrm{ox_1} + n_1\,e^-$, les électrons quittent l''électrode : c''est la borne **négative**. Cathode : réduction, les électrons y arrivent : borne **positive**.'
+      tags:
+      - electrodes
+    - type: mcq
+      level: 2
+      prompt: Dans le **circuit extérieur** d'une pile en fonctionnement, dans quel sens circulent les électrons ?
+      choices:
+      - De l'anode ⊖ vers la cathode ⊕, donc en sens **inverse** du courant conventionnel
+      - De la cathode ⊕ vers l'anode ⊖, dans le même sens que le courant conventionnel
+      - Par le pont salin, de l'anode vers la cathode
+      - 'Ils ne circulent pas : seuls les ions se déplacent'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le sens conventionnel du courant va de la borne + vers la borne − dans le circuit extérieur ; les électrons, négatifs, vont en sens **inverse**.'
+      - 'Non : les électrons passent par le **circuit extérieur**. Le pont salin ne fait circuler que des ions.'
+      - 'Non : il y a bien un échange d''électrons via le circuit extérieur entre les deux électrodes — c''est lui qui produit le courant.'
+      explanation: Les électrons sont produits par l'oxydation à l'anode ⊖, traversent le circuit extérieur et sont consommés par la réduction à la cathode ⊕. Le courant conventionnel, lui, va de ⊕ vers ⊖ dans le circuit extérieur.
+      tags:
+      - electrodes
+    - type: mcq
+      level: 2
+      prompt: 'Lors de la **décharge** d''un accumulateur au plomb, quelle demi-équation a lieu à l''électrode de $\mathrm{PbO_2}$ (borne ⊕) ?
+
+        {{fig:pc-pile-accumulateur}}'
+      choices:
+      - $\mathrm{PbO_2} + 4\,\mathrm{H^+} + 2\,e^- = \mathrm{Pb^{2+}} + 2\,\mathrm{H_2O}$ (réduction)
+      - $\mathrm{Pb^{2+}} + 2\,\mathrm{H_2O} = \mathrm{PbO_2} + 4\,\mathrm{H^+} + 2\,e^-$ (oxydation)
+      - $\mathrm{Pb} = \mathrm{Pb^{2+}} + 2\,e^-$ (oxydation)
+      - $\mathrm{Pb^{2+}} + 2\,e^- = \mathrm{Pb}$ (réduction)
+      answer: 0
+      feedback:
+      - null
+      - 'C''est la demi-équation de la **recharge** à cette même électrode : les polarités ne changent pas, mais le sens de la réaction s''inverse.'
+      - C'est ce qui se passe à l'**autre** électrode (Pb, borne ⊖) pendant la décharge.
+      - C'est ce qui se passe à l'électrode Pb (borne ⊖) pendant la **recharge**.
+      explanation: 'En décharge, l''électrode $\mathrm{PbO_2}$ (⊕) est le siège d''une **réduction** : $\mathrm{PbO_2} + 4\,\mathrm{H^+} + 2\,e^- = \mathrm{Pb^{2+}} + 2\,\mathrm{H_2O}$ ; l''électrode Pb (⊖) est le siège d''une oxydation : $\mathrm{Pb} = \mathrm{Pb^{2+}} + 2\,e^-$.'
+      tags:
+      - accumulateur
+    - type: grid
+      level: 2
+      prompt: 'Accumulateur au plomb : pour chaque électrode, cochez la transformation qui s''y produit.
+
+        {{fig:pc-pile-accumulateur}}'
+      rows:
+      - id: d1
+        label: Décharge — électrode PbO₂ (⊕)
+      - id: d2
+        label: Décharge — électrode Pb (⊖)
+      - id: r1
+        label: Recharge — électrode PbO₂ (⊕)
+      - id: r2
+        label: Recharge — électrode Pb (⊖)
+      cols:
+      - id: Ox
+        label: Oxydation
+      - id: Re
+        label: Réduction
+      answer:
+      - Red1
+      - Oxd2
+      - Oxr1
+      - Rer2
+      labels:
+        Oxd1: 'décharge, PbO₂ : oxydation'
+        Red1: 'décharge, PbO₂ : réduction'
+        Oxd2: 'décharge, Pb : oxydation'
+        Red2: 'décharge, Pb : réduction'
+        Oxr1: 'recharge, PbO₂ : oxydation'
+        Rer1: 'recharge, PbO₂ : réduction'
+        Oxr2: 'recharge, Pb : oxydation'
+        Rer2: 'recharge, Pb : réduction'
+      cellFeedback:
+        Oxd1: 'en décharge, PbO₂ **gagne** des électrons pour donner Pb²⁺ : c''est une réduction'
+        Red2: 'en décharge, Pb **perd** des électrons (Pb = Pb²⁺ + 2 e⁻) : c''est une oxydation'
+        Rer1: 'en recharge, Pb²⁺ redevient PbO₂ en **perdant** des électrons : c''est une oxydation'
+        Oxr2: 'en recharge, Pb²⁺ redevient Pb en **gagnant** des électrons : c''est une réduction'
+      explanation: 'Décharge : réduction de PbO₂ (⊕) et oxydation de Pb (⊖). Recharge : tout s''inverse. Les **polarités** ⊕ et ⊖ restent les mêmes ; c''est le sens de circulation des électrons — donc le rôle anode/cathode de chaque électrode — qui change.'
+      tags:
+      - accumulateur
+    - type: input
+      level: 2
+      prompt: Lors de la décharge d'un accumulateur au plomb, 0,50 mol de $\mathrm{PbO_2}$ disparaît. D'après la demi-équation $\mathrm{PbO_2} + 4\,\mathrm{H^+} + 2\,e^- = \mathrm{Pb^{2+}} + 2\,\mathrm{H_2O}$, quelle quantité de matière d'électrons a été échangée, en mol ?
+      answer: '1.0'
+      numeric: true
+      tolerance: 0.01
+      unit: mol
+      explanation: 'La quantité de matière d''électrons échangés est égale au **double** de celle de $\mathrm{PbO_2}$ disparue : $n(e^-) = 2 \times 0{,}50 = 1{,}0$ mol.'
+      tags:
+      - bilan-matiere
+    - type: input
+      level: 2
+      prompt: Une pile à combustible consomme 0,80 mol de dioxygène ($2\,\mathrm{H_2} + \mathrm{O_2} \rightarrow 2\,\mathrm{H_2O}$). Quelle quantité de matière d'eau se forme, en mol ?
+      answer: '1.6'
+      numeric: true
+      tolerance: 0.01
+      unit: mol
+      explanation: 'L''équation indique 2 mol d''eau formée pour 1 mol de $\mathrm{O_2}$ consommée : $n(\mathrm{H_2O}) = 2 \times 0{,}80 = 1{,}6$ mol. C''est aussi la quantité de $\mathrm{H_2}$ consommée.'
+      tags:
+      - bilan-matiere
+      - pile-combustible
+    - type: input
+      level: 2
+      prompt: Un accumulateur débite un courant constant $I = 2{,}5$ A pendant 4,0 h avant d'être vide. Quelle est sa **capacité** $Q$, en ampères-heures ?
+      answer: '10'
+      numeric: true
+      tolerance: 0.1
+      unit: A·h
+      explanation: '$Q = I \times t = 2{,}5 \times 4{,}0 = 10$ A·h. Attention à l''unité de temps : la capacité en A·h s''obtient avec $t$ en **heures**.'
+      tags:
+      - capacite
+    - type: input
+      level: 2
+      prompt: Une batterie de voiture a une capacité $Q = 60$ A·h et une tension nominale $U = 12$ V. Quelle énergie stocke-t-elle, en wattheures ?
+      answer: '720'
+      numeric: true
+      tolerance: 5
+      unit: W·h
+      explanation: $E = Q \times U = 60 \times 12 = 720$ W·h, soit 0,72 kW·h. Avec $Q$ en A·h et $U$ en V, $E$ est directement en W·h.
+      tags:
+      - capacite
+    - type: input
+      level: 2
+      prompt: Une batterie de téléphone a une capacité $Q = 3\,000$ mA·h ; l'appareil consomme en moyenne $I = 250$ mA. Quelle est son autonomie, en heures ?
+      answer: '12'
+      numeric: true
+      tolerance: 0.2
+      unit: h
+      explanation: '$t = Q/I = 3\,000/250 = 12$ h. Les milliampères-heures se divisent par des milliampères : inutile de convertir, mais les deux unités doivent être cohérentes.'
+      tags:
+      - capacite
+    - type: mcq
+      level: 3
+      prompt: 'Deux batteries ont la même tension nominale : l''une porte l''indication « 5 A·h », l''autre « 5 A ». Que peut-on en conclure ?'
+      choices:
+      - 'Ce ne sont pas les mêmes grandeurs : 5 A·h est une **capacité** (réserve de charge), 5 A un **courant** (débit)'
+      - Elles stockent la même énergie
+      - La seconde se décharge dix fois plus vite
+      - 5 A·h et 5 A, c'est la même chose écrite autrement
+      answer: 0
+      feedback:
+      - null
+      - 'Non : seule la capacité (en A·h), associée à la tension, donne l''énergie $E = Q \times U$. Une intensité seule ne dit rien sur la réserve d''énergie.'
+      - 'Non : on ne peut pas comparer un débit et une réserve. « 5 A » indique sans doute le courant maximal admissible, pas l''autonomie.'
+      - 'Non : l''ampère-heure est un ampère **multiplié par une heure** (1 A·h = 3 600 C) : c''est une quantité d''électricité, pas une intensité.'
+      explanation: '$Q = I \times t$ : la capacité (A·h) est le produit d''un courant par une durée. Une batterie de 5 A·h débite 5 A pendant 1 h, ou 1 A pendant 5 h, ou 0,5 A pendant 10 h.'
+      tags:
+      - capacite
+    - type: mcq
+      level: 3
+      prompt: On branche un accumulateur au plomb sur un chargeur. Que deviennent les **polarités** de ses électrodes ?
+      choices:
+      - Elles restent inchangées (PbO₂ reste ⊕, Pb reste ⊖) ; c'est le sens de circulation des électrons qui s'inverse
+      - 'Elles s''inversent : l''électrode PbO₂ devient la borne ⊖'
+      - 'Elles disparaissent : en recharge l''accumulateur n''a plus de polarité'
+      - Elles restent inchangées, et le sens de circulation des électrons aussi
+      answer: 0
+      feedback:
+      - null
+      - 'Non : « les polarités demeurent inchangées, contrairement au sens de circulation des électrons ». Ce qui change, c''est le rôle anode/cathode de chaque électrode.'
+      - 'Non : les électrodes gardent leurs bornes ⊕ et ⊖ — c''est d''ailleurs pourquoi il faut respecter le branchement du chargeur.'
+      - 'Non : si le sens des électrons ne changeait pas, la réaction ne s''inverserait pas et l''accumulateur ne se rechargerait pas.'
+      explanation: 'En recharge, le générateur impose le sens du courant : l''électrode PbO₂ (toujours ⊕) devient le siège d''une **oxydation**, donc l''anode ; l''électrode Pb (toujours ⊖) devient le siège d''une **réduction**, donc la cathode.'
+      tags:
+      - accumulateur
+    - type: mcq
+      level: 3
+      prompt: 'Pile Daniell : $\mathrm{Cu^{2+}} + \mathrm{Zn} \rightarrow \mathrm{Cu} + \mathrm{Zn^{2+}}$. Si 0,30 mol d''ions $\mathrm{Cu^{2+}}$ ont été consommés, quelle quantité de matière d''électrons a circulé dans le circuit extérieur ?'
+      choices:
+      - 0,60 mol
+      - 0,30 mol
+      - 0,15 mol
+      - 2 mol
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la demi-équation est $\mathrm{Cu^{2+}} + 2\,e^- = \mathrm{Cu}$ : il faut **2** électrons par ion $\mathrm{Cu^{2+}}$.'
+      - 'Non : c''est la moitié. Il faut au contraire **doubler** la quantité de matière.'
+      - 'Non : le 2 de la demi-équation est un **coefficient**, il multiplie la quantité consommée : $2 \times 0{,}30 = 0{,}60$ mol.'
+      explanation: $n(e^-) = 2 \times n(\mathrm{Cu^{2+}}) = 2 \times 0{,}30 = 0{,}60$ mol. Par ailleurs $n(\mathrm{Zn^{2+}})$ formé $= n(\mathrm{Cu^{2+}})$ consommé $= 0{,}30$ mol.
+      tags:
+      - bilan-matiere
+  - id: pc-acido-basique
+    title: Réactions acido-basiques et pH
+    icon: 🧪
+    description: Acide et base de Brønsted, couples acide/base, réaction acido-basique, pH et concentration en ions oxonium, mesure du pH, effet d'une dilution.
+    prerequisites: []
+    lesson: lessons/pc-acido-basique.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Selon Brønsted, qu'est-ce qu'un **acide** ?
+      choices:
+      - Une espèce chimique capable de **céder** au moins un proton $\mathrm{H^+}$
+      - Une espèce chimique capable de **capter** au moins un proton $\mathrm{H^+}$
+      - Une espèce chimique capable de capter au moins un électron
+      - Une solution dont le pH est inférieur à 7,0
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la définition de la **base** selon Brønsted.'
+      - 'Non : capter un **électron**, c''est être un oxydant ; céder un **proton**, c''est être un acide.'
+      - 'Non : le pH caractérise une **solution**. La définition de Brønsted porte sur une **espèce chimique** et sur l''échange de protons.'
+      explanation: 'Un acide cède au moins un proton : $\mathrm{AH} \rightarrow \mathrm{A^-} + \mathrm{H^+}$ (ou $\mathrm{AH^+} \rightarrow \mathrm{A} + \mathrm{H^+}$).'
+      tags:
+      - bronsted
+    - type: mcq
+      level: 1
+      prompt: Selon Brønsted, qu'est-ce qu'une **base** ?
+      choices:
+      - Une espèce chimique capable de **capter** au moins un proton $\mathrm{H^+}$
+      - Une espèce chimique capable de **céder** au moins un proton $\mathrm{H^+}$
+      - Une espèce chimique capable de céder au moins un électron
+      - Une espèce chimique dont le pH est supérieur à 7,0
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la définition de l''**acide** selon Brønsted.'
+      - 'Non : céder un **électron**, c''est être un réducteur ; capter un **proton**, c''est être une base.'
+      - 'Non : le pH caractérise une **solution**, pas une espèce chimique.'
+      explanation: 'Une base capte au moins un proton : $\mathrm{A^-} + \mathrm{H^+} \rightarrow \mathrm{AH}$ (ou $\mathrm{A} + \mathrm{H^+} \rightarrow \mathrm{AH^+}$).'
+      tags:
+      - bronsted
+    - type: mcq
+      level: 1
+      prompt: Quel **couple acide/base** est correctement écrit ?
+      choices:
+      - $\mathrm{CH_3COOH}/\mathrm{CH_3COO^-}$
+      - $\mathrm{CH_3COO^-}/\mathrm{CH_3COOH}$
+      - $\mathrm{HO^-}/\mathrm{H_2O}$
+      - $\mathrm{H_2O}/\mathrm{H_3O^+}$
+      answer: 0
+      feedback:
+      - null
+      - 'L''ordre est inversé : dans un couple on écrit l''**acide** en premier (celui qui cède le proton), puis la base.'
+      - 'L''ordre est inversé : c''est $\mathrm{H_2O}$ qui cède un proton pour donner $\mathrm{HO^-}$, donc le couple s''écrit $\mathrm{H_2O}/\mathrm{HO^-}$.'
+      - 'L''ordre est inversé : c''est $\mathrm{H_3O^+}$ qui cède un proton pour donner $\mathrm{H_2O}$, donc le couple s''écrit $\mathrm{H_3O^+}/\mathrm{H_2O}$.'
+      explanation: 'Un couple acide/base réunit deux espèces qui ne diffèrent que d''un proton $\mathrm{H^+}$, l''**acide en premier** : $\mathrm{CH_3COOH}/\mathrm{CH_3COO^-}$, $\mathrm{H_2O}/\mathrm{HO^-}$, $\mathrm{H_3O^+}/\mathrm{H_2O}$.'
+      tags:
+      - bronsted
+    - type: mcq
+      level: 1
+      prompt: Quelle méthode donne la valeur du pH **à 0,1 près** ?
+      choices:
+      - Le pH-mètre
+      - Le papier indicateur de pH
+      - L'indicateur coloré
+      - Les trois méthodes ont la même précision
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le papier indicateur donne la valeur du pH à **l''unité** près.'
+      - 'Non : l''indicateur coloré est une méthode « peu précise mais parfois suffisante » : il change de couleur selon le pH.'
+      - 'Non : le cours classe explicitement les trois méthodes par précision croissante.'
+      explanation: Indicateur coloré (peu précis) → papier indicateur de pH (à l'unité près) → pH-mètre (à 0,1 près).
+      tags:
+      - mesure-ph
+    - type: mcq
+      level: 1
+      prompt: Que peut-on dire du **pH** d'une solution aqueuse ?
+      choices:
+      - C'est une grandeur positive et **sans unité**
+      - Il s'exprime en mol·L⁻¹
+      - Il s'exprime en degrés
+      - Il devient négatif quand la solution est très basique
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la **concentration** $[\mathrm{H_3O^+}]$ qui s''exprime en mol·L⁻¹. Le pH en est le logarithme changé de signe, donc un nombre sans unité.'
+      - 'Non : le pH n''a aucune unité.'
+      - 'Non : sur l''échelle usuelle le pH va de 0 à 14 et reste positif ; ce sont les solutions **basiques** qui ont les pH les plus élevés.'
+      explanation: 'Le pH est une grandeur positive (entière ou décimale) et sans dimension. Échelle usuelle : 0 → 7 solutions acides, 7 → 14 solutions basiques.'
+      tags:
+      - ph
+    - type: mcq
+      level: 1
+      prompt: 'Une solution aqueuse a un pH de 9,2. Que peut-on affirmer ?
+
+        {{fig:pc-echelle-ph}}'
+      choices:
+      - Elle est basique et $[\mathrm{H_3O^+}] < 1{,}0 \times 10^{-7}$ mol·L⁻¹
+      - Elle est basique et $[\mathrm{H_3O^+}] > 1{,}0 \times 10^{-7}$ mol·L⁻¹
+      - Elle est acide et $[\mathrm{H_3O^+}] > 1{,}0 \times 10^{-7}$ mol·L⁻¹
+      - Elle est neutre
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la concentration en ions oxonium **diminue** quand le pH augmente, puisque $[\mathrm{H_3O^+}] = 10^{-\mathrm{pH}}$.'
+      - 'Non : pH = 9,2 > 7,0, la solution est **basique**, pas acide.'
+      - 'Non : une solution neutre a un pH égal à 7,0 exactement.'
+      explanation: Solution basique ⇔ pH > 7,0 ⇔ $[\mathrm{H_3O^+}] < 1{,}0 \times 10^{-7}$ mol·L⁻¹.
+      tags:
+      - ph
+    - type: grid
+      level: 2
+      prompt: 'Pour chaque solution, cochez la case qui convient.
+
+        {{fig:pc-echelle-ph}}'
+      rows:
+      - id: s1
+        label: pH = 3,0
+      - id: s2
+        label: pH = 7,0
+      - id: s3
+        label: pH = 11,5
+      - id: s4
+        label: '[H₃O⁺] = 5,0 × 10⁻³ mol·L⁻¹'
+      - id: s5
+        label: '[H₃O⁺] = 2,0 × 10⁻⁹ mol·L⁻¹'
+      cols:
+      - id: Ac
+        label: Acide
+      - id: Ne
+        label: Neutre
+      - id: Ba
+        label: Basique
+      answer:
+      - Acs1
+      - Nes2
+      - Bas3
+      - Acs4
+      - Bas5
+      labels:
+        Acs1: pH = 3,0 → acide
+        Nes1: pH = 3,0 → neutre
+        Bas1: pH = 3,0 → basique
+        Acs2: pH = 7,0 → acide
+        Nes2: pH = 7,0 → neutre
+        Bas2: pH = 7,0 → basique
+        Acs3: pH = 11,5 → acide
+        Nes3: pH = 11,5 → neutre
+        Bas3: pH = 11,5 → basique
+        Acs4: '[H₃O⁺] = 5,0 × 10⁻³ → acide'
+        Nes4: '[H₃O⁺] = 5,0 × 10⁻³ → neutre'
+        Bas4: '[H₃O⁺] = 5,0 × 10⁻³ → basique'
+        Acs5: '[H₃O⁺] = 2,0 × 10⁻⁹ → acide'
+        Nes5: '[H₃O⁺] = 2,0 × 10⁻⁹ → neutre'
+        Bas5: '[H₃O⁺] = 2,0 × 10⁻⁹ → basique'
+      cellFeedback:
+        Bas1: 'pH = 3,0 < 7,0 : la solution est acide'
+        Acs3: 'pH = 11,5 > 7,0 : la solution est basique'
+        Bas4: '5,0 × 10⁻³ est **plus grand** que 1,0 × 10⁻⁷ (10⁻³ > 10⁻⁷) : la solution est acide'
+        Acs5: '2,0 × 10⁻⁹ est **plus petit** que 1,0 × 10⁻⁷ (10⁻⁹ < 10⁻⁷) : la solution est basique'
+      explanation: 'Acide : pH < 7,0 ou $[\mathrm{H_3O^+}] > 1{,}0 \times 10^{-7}$ mol·L⁻¹. Neutre : pH = 7,0. Basique : pH > 7,0 ou $[\mathrm{H_3O^+}] < 1{,}0 \times 10^{-7}$ mol·L⁻¹. Attention aux exposants négatifs : plus l''exposant est petit (plus négatif), plus la concentration est faible.'
+      tags:
+      - ph
+    - type: input
+      level: 2
+      prompt: Une solution a un pH de 3,0. Calculer sa concentration en ions oxonium $[\mathrm{H_3O^+}]$, en mol·L⁻¹ (écriture scientifique, par exemple 1,0e-3).
+      answer: '1.0e-3'
+      numeric: true
+      tolerance: 1.0e-05
+      unit: mol·L⁻¹
+      explanation: $[\mathrm{H_3O^+}] = 10^{-\mathrm{pH}} = 10^{-3{,}0} = 1{,}0 \times 10^{-3}$ mol·L⁻¹. Attention au signe « − » de l'exposant.
+      tags:
+      - ph
+    - type: input
+      level: 2
+      prompt: Une solution a une concentration en ions oxonium $[\mathrm{H_3O^+}] = 2{,}0 \times 10^{-5}$ mol·L⁻¹. Calculer son pH (à 0,1 près).
+      answer: '4.7'
+      numeric: true
+      tolerance: 0.05
+      explanation: $\mathrm{pH} = -\log([\mathrm{H_3O^+}]) = -\log(2{,}0 \times 10^{-5}) = 4{,}70$. La solution est acide (pH < 7,0), ce qui est cohérent car $[\mathrm{H_3O^+}] > 1{,}0 \times 10^{-7}$ mol·L⁻¹.
+      tags:
+      - ph
+    - type: input
+      level: 2
+      prompt: Une solution d'acide chlorhydrique (acide fort) a une concentration apportée $c = 5{,}0 \times 10^{-3}$ mol·L⁻¹, si bien que $[\mathrm{H_3O^+}] = c$. Calculer son pH (à 0,1 près).
+      answer: '2.3'
+      numeric: true
+      tolerance: 0.05
+      explanation: '$\mathrm{pH} = -\log c = -\log(5{,}0 \times 10^{-3}) = 2{,}30$. Pour un acide fort monoprotique, tout l''acide cède son proton : $[\mathrm{H_3O^+}] = c$.'
+      tags:
+      - ph
+    - type: mcq
+      level: 2
+      prompt: Une solution a $[\mathrm{H_3O^+}] = 1{,}0 \times 10^{-4}$ mol·L⁻¹. Que vaut son pH ?
+      choices:
+      - 4,0
+      - −4,0
+      - $10^{-4}$
+      - 0,4
+      answer: 0
+      feedback:
+      - null
+      - 'Attention au signe : $\mathrm{pH} = -\log(10^{-4}) = -(-4) = +4{,}0$. Le pH est toujours positif.'
+      - 'Non : le pH est un **nombre** sans unité, pas une puissance de 10. C''est la concentration qui vaut $10^{-4}$ mol·L⁻¹.'
+      - 'Non : $\log(10^{-4}) = -4$, et non $-0{,}4$. Le logarithme décimal d''une puissance de 10 donne directement l''exposant.'
+      explanation: '$\mathrm{pH} = -\log([\mathrm{H_3O^+}]) = -\log(1{,}0 \times 10^{-4}) = 4{,}0$, et réciproquement $[\mathrm{H_3O^+}] = 10^{-4}$ mol·L⁻¹. À retenir : $\log(10^{n}) = n$.'
+      tags:
+      - ph
+    - type: mcq
+      level: 2
+      prompt: Dans la réaction $\mathrm{CH_3COOH} + \mathrm{HO^-} \rightarrow \mathrm{CH_3COO^-} + \mathrm{H_2O}$, quels sont les deux couples acide/base mis en jeu ?
+      choices:
+      - $\mathrm{CH_3COOH}/\mathrm{CH_3COO^-}$ et $\mathrm{H_2O}/\mathrm{HO^-}$
+      - $\mathrm{CH_3COOH}/\mathrm{HO^-}$ et $\mathrm{CH_3COO^-}/\mathrm{H_2O}$
+      - $\mathrm{CH_3COOH}/\mathrm{H_2O}$ et $\mathrm{CH_3COO^-}/\mathrm{HO^-}$
+      - $\mathrm{H_3O^+}/\mathrm{H_2O}$ et $\mathrm{CH_3COOH}/\mathrm{CH_3COO^-}$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : un couple réunit deux espèces qui ne diffèrent **que d''un proton**. Ici tu as associé l''acide d''un couple à la base de l''**autre** couple.'
+      - 'Non : $\mathrm{CH_3COOH}$ et $\mathrm{H_2O}$ appartiennent à des couples différents. Regarde qui **donne** le proton ($\mathrm{CH_3COOH} \rightarrow \mathrm{CH_3COO^-}$) et qui le **reçoit** ($\mathrm{HO^-} \rightarrow \mathrm{H_2O}$).'
+      - 'Non : l''ion oxonium $\mathrm{H_3O^+}$ n''apparaît pas dans cette équation. L''eau y est formée à partir de $\mathrm{HO^-}$, donc le couple en jeu est $\mathrm{H_2O}/\mathrm{HO^-}$.'
+      explanation: L'acide éthanoïque cède un proton ($\mathrm{CH_3COOH} \rightarrow \mathrm{CH_3COO^-}$, couple $\mathrm{CH_3COOH}/\mathrm{CH_3COO^-}$) et l'ion hydroxyde le capte ($\mathrm{HO^-} \rightarrow \mathrm{H_2O}$, couple $\mathrm{H_2O}/\mathrm{HO^-}$). Une réaction acido-basique est un **échange de protons** entre l'acide d'un couple et la base d'un autre.
+      tags:
+      - bronsted
+    - type: mcq
+      level: 2
+      prompt: 'On dilue **10 fois** une solution d''acide fort de pH = 2,0. Que vaut le pH de la solution diluée ?
+
+        {{fig:pc-dilution-ph}}'
+      choices:
+      - 3,0
+      - 1,0
+      - 0,2
+      - '20'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : diluer rend la solution **moins** acide, donc le pH **augmente**. Un pH de 1,0 correspondrait à une solution 10 fois plus **concentrée**.'
+      - 'Non : on ne divise pas le pH par 10. C''est la **concentration** qui est divisée par 10, ce qui ajoute 1,0 au pH.'
+      - 'Non : on ne multiplie pas le pH par 10 — et un pH de 20 sortirait de l''échelle usuelle 0-14.'
+      explanation: 'Diviser $[\mathrm{H_3O^+}]$ par 10 augmente le pH de 1,0 : $-\log(c/10) = -\log c + 1$. On passe de $1{,}0 \times 10^{-2}$ à $1{,}0 \times 10^{-3}$ mol·L⁻¹, donc de pH 2,0 à pH 3,0 — bien compris entre 2,0 et 7,0.'
+      tags:
+      - dilution
+    - type: mcq
+      level: 3
+      prompt: 'On dilue, avec de l''eau distillée de pH = 7,0, une solution acide de pH = 2,0. Que peut-on affirmer sur le pH mesuré après dilution ?
+
+        {{fig:pc-dilution-ph}}'
+      choices:
+      - Il est compris entre 2,0 et 7,0
+      - Il est inférieur à 2,0
+      - Il est supérieur à 7,0
+      - Il vaut exactement 7,0, car la dilution neutralise l'acide
+      answer: 0
+      feedback:
+      - null
+      - 'Non : diluer un acide le rend **moins** acide, son pH augmente ; il ne peut pas descendre sous 2,0.'
+      - 'Non : la dilution rapproche le pH de celui de l''eau distillée **sans jamais le dépasser** : la solution reste acide.'
+      - 'Non : une dilution n''est pas une neutralisation. Le pH tend vers 7,0 sans l''atteindre.'
+      explanation: 'Cas 1 : si la solution initiale a un pH **inférieur** à celui de l''eau distillée, le pH mesuré après dilution est compris entre celui de la solution initiale et celui de l''eau distillée.'
+      tags:
+      - dilution
+    - type: mcq
+      level: 3
+      prompt: On dilue une solution basique de pH = 12,0 avec de l'eau distillée de pH = 7,0. Que devient le pH ?
+      choices:
+      - Il diminue et reste compris entre 7,0 et 12,0
+      - Il augmente et dépasse 12,0
+      - 'Il devient inférieur à 7,0 : la solution devient acide'
+      - 'Il ne change pas : une dilution ne modifie pas le pH'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : ajouter de l''eau **rapproche** le pH de celui de l''eau distillée (7,0), donc ici le pH diminue.'
+      - 'Non : la dilution ne peut pas franchir le pH de l''eau distillée ; la solution reste basique.'
+      - 'Non : la dilution modifie bien le pH, puisqu''elle change la concentration des ions oxonium.'
+      explanation: 'Cas 2 : si la solution initiale a un pH **supérieur** à celui de l''eau distillée, le pH après dilution est compris entre celui de l''eau distillée et celui de la solution initiale. Autrement dit, la dilution rapproche toujours le pH de celui de l''eau distillée.'
+      tags:
+      - dilution
+    - type: input
+      level: 3
+      prompt: Un pH-mètre affiche pH = 5,4. Calculer $[\mathrm{H_3O^+}]$ en mol·L⁻¹, en écriture scientifique à **2 chiffres significatifs** (par exemple 1,2e-5).
+      answer: '4.0e-6'
+      numeric: true
+      tolerance: 1.0e-07
+      unit: mol·L⁻¹
+      explanation: '$[\mathrm{H_3O^+}] = 10^{-5{,}4} = 3{,}98 \times 10^{-6} \approx 4{,}0 \times 10^{-6}$ mol·L⁻¹. Le pH n''étant connu qu''à 0,1 près, la concentration ne comporte que **2 chiffres significatifs**. Cohérence : pH < 7,0, la solution est acide.'
+      tags:
+      - ph
+      - mesure-ph
+    - type: mcq
+      level: 3
+      prompt: Pour diluer une solution acide très concentrée, comment procède-t-on ?
+      choices:
+      - On verse l'acide dans l'eau, lentement
+      - On verse l'eau dans l'acide, lentement
+      - On verse les deux en même temps dans un bécher vide
+      - 'Peu importe : le résultat est le même'
+      answer: 0
+      feedback:
+      - null
+      - 'Non, c''est justement le geste dangereux : la dilution dégage beaucoup de chaleur et l''eau versée sur l''acide concentré peut provoquer des projections.'
+      - 'Non : la règle est de verser l''acide **dans** l''eau, jamais l''inverse.'
+      - 'Non : le résultat chimique est le même, mais pas le risque. La règle de sécurité est explicite.'
+      explanation: « Quand il s'agit de diluer des solutions acides ou basiques très concentrées, il faut toujours les verser dans l'eau et non l'inverse. »
+      tags:
+      - dilution
+  - id: pc-signaux-spectres
+    title: Signaux, spectres et transmission
+    icon: 📶
+    description: Signal périodique, fondamental et harmoniques, spectre d'amplitude, sons purs et complexes, timbre, niveau sonore, modulation et domaines des télécommunications.
+    prerequisites:
+    - pc-ondes-bases
+    lesson: lessons/pc-signaux-spectres.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Quelle est la définition de la **période** $T$ d'un signal périodique ?
+      choices:
+      - La plus petite durée au bout de laquelle le signal se reproduit identique à lui-même
+      - La durée totale de l'enregistrement du signal
+      - L'inverse de l'amplitude du signal
+      - La durée séparant deux maximums quelconques du signal
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la durée d''enregistrement contient en général plusieurs périodes.'
+      - 'Non : l''amplitude (en V) et la période (en s) sont deux grandeurs indépendantes. L''inverse de la période est la **fréquence**.'
+      - 'Attention : un signal complexe peut avoir plusieurs maximums par période. Il faut la **plus petite** durée de répétition du motif entier.'
+      explanation: La période $T$ d'un signal est la plus petite durée au bout de laquelle le signal se reproduit identique à lui-même. La fréquence du fondamental vaut $f_1 = 1/T$, en hertz.
+      tags:
+      - signal-periodique
+    - type: mcq
+      level: 1
+      prompt: 'Quand un son est-il dit **pur** ?
+
+        {{fig:pc-spectre-signal}}'
+      choices:
+      - Si son signal périodique est sinusoïdal et si son spectre d'amplitude ne comporte qu'une seule fréquence
+      - Si son niveau sonore est inférieur au seuil de douleur
+      - Si sa fréquence est comprise entre 20 Hz et 20 000 Hz
+      - Si son spectre ne comporte que des harmoniques de rang pair
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le seuil de douleur concerne la sensation auditive, pas la pureté du son.'
+      - 'Non : c''est la définition du domaine **audible**, par opposition aux infrasons et aux ultrasons.'
+      - 'Non : dès que le spectre comporte plusieurs raies, le son est **complexe**, quel que soit le rang des harmoniques.'
+      explanation: Un son est pur si son signal périodique est sinusoïdal et si on n'observe qu'une seule fréquence sur son spectre d'amplitude. Sinon, le son est complexe.
+      tags:
+      - sons
+    - type: mcq
+      level: 1
+      prompt: À quelle grandeur physique correspond la **hauteur** d'un son ?
+      choices:
+      - À la fréquence $f_1$ du fondamental
+      - À l'amplitude du fondamental
+      - Au niveau sonore $L$, en décibels
+      - Au nombre d'harmoniques présents
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''amplitude est liée à l''intensité acoustique, donc au niveau sonore, pas à la hauteur.'
+      - 'Non : le niveau sonore dit si le son est fort ou faible, pas s''il est aigu ou grave.'
+      - 'Non : le nombre d''harmoniques et leurs amplitudes définissent le **timbre** du son.'
+      explanation: La hauteur d'un son — la sensation qu'il est plus aigu ou plus grave qu'un autre — est donnée par la fréquence $f_1$ du fondamental.
+      tags:
+      - sons
+    - type: mcq
+      level: 1
+      prompt: Quelle est la valeur de l'intensité sonore de référence $I_0$ ?
+      choices:
+      - $10^{-12}$ W·m⁻²
+      - $10^{-12}$ W
+      - $10^{-6}$ W·m⁻²
+      - 0 dB·m⁻²
+      answer: 0
+      feedback:
+      - null
+      - 'Il manque la surface : une intensité acoustique s''exprime en watt **par mètre carré**.'
+      - 'Non : $10^{-6}$ W·m⁻² correspond à une conversation normale (60 dB), pas au seuil d''audibilité.'
+      - 'Non : $I_0$ est une **intensité** (W·m⁻²) ; c''est le **niveau** sonore correspondant qui vaut 0 dB.'
+      explanation: '$I_0$ correspond au seuil d''audibilité de l''oreille humaine pour un son de fréquence 1 000 Hz : $I_0 = 10^{-12}$ W·m⁻².'
+      tags:
+      - niveau-sonore
+    - type: mcq
+      level: 1
+      prompt: Quel est le domaine des fréquences **audibles** par l'oreille humaine ?
+      choices:
+      - De 20 Hz à 20 000 Hz
+      - De 0 Hz à 1 000 Hz
+      - De 20 Hz à 20 000 000 Hz
+      - De 20 000 Hz à 200 000 Hz
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 1 000 Hz est la fréquence de référence du seuil d''audibilité, pas la limite du champ auditif.'
+      - 'Attention aux puissances de 10 : la limite haute est 20 000 Hz = 20 kHz, pas 20 MHz.'
+      - 'Non : au-delà de 20 000 Hz, ce sont les **ultrasons**, inaudibles.'
+      explanation: 'Infrasons : $f < 20$ Hz. Champ auditif : 20 Hz $< f <$ 20 000 Hz. Ultrasons : $f > 20\,000$ Hz. Les seuils d''audibilité et de douleur dépendent en outre de la fréquence.'
+      tags:
+      - niveau-sonore
+    - type: mcq
+      level: 1
+      prompt: Deux instruments jouent la **même note**. Qu'est-ce qui permet de les distinguer à l'oreille ?
+      choices:
+      - Le **timbre**, lié au nombre d'harmoniques et à leurs amplitudes respectives
+      - La hauteur, c'est-à-dire la fréquence du fondamental
+      - Le niveau sonore, en décibels
+      - La période du signal
+      answer: 0
+      feedback:
+      - null
+      - 'Non : jouer la même note, c''est justement avoir la **même** hauteur, donc le même $f_1$.'
+      - 'Non : on peut jouer les deux instruments au même volume et les distinguer quand même.'
+      - 'Non : la période $T = 1/f_1$ est la même pour les deux, puisque la note est la même.'
+      explanation: 'Deux sons de même hauteur joués par deux instruments différents ne sont pas perçus de la même manière : cela dépend du **timbre**, lié au nombre d''harmoniques présents et à leurs amplitudes respectives — c''est-à-dire à la forme du spectre au-delà du fondamental.'
+      tags:
+      - sons
+    - type: mcq
+      level: 1
+      prompt: Sur quel phénomène physique repose la propagation de la lumière dans une **fibre optique** ?
+      choices:
+      - 'La **réflexion totale** : la lumière est piégée dans le cœur de la fibre'
+      - La modulation d'amplitude de la lumière
+      - La diffraction de la lumière par la gaine optique
+      - L'échauffement de l'enveloppe protectrice
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la modulation sert à **coder** l''information sur une porteuse ; elle n''explique pas pourquoi la lumière reste dans la fibre.'
+      - 'Non : le cours cite explicitement la **réflexion totale**. La fibre est constituée d''un cœur, d''une gaine optique et d''une enveloppe protectrice.'
+      - 'Non : l''enveloppe protectrice ne sert qu''à protéger mécaniquement la fibre.'
+      explanation: 'La fibre optique transmet des données sous forme d''**impulsions lumineuses**, avec un débit nettement supérieur aux autres supports filaires. La lumière est « piégée » dans le cœur et s''y propage en se réfléchissant : c''est la réflexion totale.'
+      tags:
+      - telecom
+    - type: mcq
+      level: 2
+      prompt: Le fondamental d'un son vaut $f_1 = 220$ Hz. Quelle est la fréquence de l'harmonique de **rang 3** ?
+      choices:
+      - 660 Hz
+      - 3 Hz
+      - 73,3 Hz
+      - 440 Hz
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 3 est le **rang** de l''harmonique, un entier sans unité, pas une fréquence.'
+      - 'Non : on ne divise pas par le rang, on **multiplie** : $f_n = n \times f_1$.'
+      - '440 Hz est l''harmonique de rang **2** ($2 \times 220$). Pour le rang 3 : $3 \times 220 = 660$ Hz.'
+      explanation: $f_n = n \times f_1 = 3 \times 220 = 660$ Hz. Réciproquement, le rang se retrouve par $n = f_n/f_1$.
+      tags:
+      - harmoniques
+    - type: input
+      level: 2
+      prompt: Un signal périodique a une période $T = 4{,}0$ ms. Calculer la fréquence $f_1$ de son fondamental, en hertz.
+      answer: '250'
+      numeric: true
+      tolerance: 1
+      unit: Hz
+      explanation: '$f_1 = 1/T = 1/(4{,}0 \times 10^{-3}) = 250$ Hz. Erreur fréquente : oublier de convertir les millisecondes en secondes (on trouverait 0,25 Hz).'
+      tags:
+      - signal-periodique
+    - type: input
+      level: 2
+      prompt: 'Sur un spectre d''amplitude, le fondamental est à $f_1 = 250$ Hz et une raie apparaît à $f_n = 1\,250$ Hz. Quel est le **rang** $n$ de cet harmonique ?
+
+        {{fig:pc-spectre-signal}}'
+      answer: '5'
+      numeric: true
+      tolerance: 0
+      explanation: $n = f_n/f_1 = 1\,250/250 = 5$. Le rang est un entier naturel non nul, sans unité.
+      tags:
+      - harmoniques
+    - type: input
+      level: 2
+      prompt: Une source émet une intensité acoustique $I = 10^{-4}$ W·m⁻². Calculer le niveau sonore $L$, en décibels ($I_0 = 10^{-12}$ W·m⁻²).
+      answer: '80'
+      numeric: true
+      tolerance: 0.5
+      unit: dB
+      explanation: $L = 10 \log(I/I_0) = 10 \log(10^{-4}/10^{-12}) = 10 \log(10^{8}) = 10 \times 8 = 80$ dB — le niveau d'un restaurant scolaire.
+      tags:
+      - niveau-sonore
+    - type: input
+      level: 2
+      prompt: Une onde électromagnétique a une fréquence $f = 100$ MHz (bande FM). Calculer sa longueur d'onde $\lambda$, en mètres ($c = 3{,}00 \times 10^{8}$ m·s⁻¹).
+      answer: '3.0'
+      numeric: true
+      tolerance: 0.05
+      unit: m
+      explanation: '$\lambda = c/f = 3{,}00 \times 10^{8} / (1{,}00 \times 10^{8}) = 3{,}00$ m. Erreur fréquente : oublier que 100 MHz $= 1{,}00 \times 10^{8}$ Hz.'
+      tags:
+      - telecom
+    - type: mcq
+      level: 2
+      prompt: 'Pour la modulation de **fréquence** (FM), quelle grandeur de l''onde porteuse varie ?
+
+        {{fig:pc-modulation}}'
+      choices:
+      - Sa fréquence
+      - Son amplitude
+      - Sa phase
+      - Sa longueur d'onde seulement, la fréquence restant fixe
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la modulation d''**amplitude** (AM). « Pour la modulation de fréquence, ce n''est pas l''amplitude de l''onde porteuse qui est modulée mais sa fréquence. »'
+      - 'Non : c''est le troisième type de modulation, la modulation de **phase**.'
+      - 'Non : $\lambda = c/f$. Si $f$ varie, $\lambda$ varie aussi : les deux ne peuvent pas être découplées.'
+      explanation: 'Il existe trois types de modulation : d''**amplitude**, de **fréquence** et de **phase**. À chaque fois, la grandeur de la porteuse qui donne son nom à la modulation varie au rythme de l''information à transmettre.'
+      tags:
+      - modulation
+    - type: order
+      level: 2
+      prompt: 'Remettez dans l''ordre les étapes de la transmission d''un signal périodique par voie hertzienne.
+
+        {{fig:pc-modulation}}'
+      steps:
+      - Décomposer le signal périodique en son fondamental $f_1$ et ses harmoniques (décomposition de Fourier).
+      - Filtrer les harmoniques d'amplitude très faible, pour limiter la largeur de la bande de fréquences émise.
+      - Moduler la porteuse, onde électromagnétique de haute fréquence, avec le signal filtré.
+      - Émettre la bande de fréquences obtenue autour de la fréquence porteuse $f_p$.
+      tags:
+      - modulation
+    - type: grid
+      level: 2
+      prompt: 'Associez chaque bande du spectre radiofréquence à son domaine de longueurs d''onde.
+
+        {{fig:pc-spectre-radiofrequence}}'
+      rows:
+      - id: ehf
+        label: EHF (300 GHz → 30 GHz)
+      - id: shf
+        label: SHF (30 GHz → 3 GHz)
+      - id: uhf
+        label: UHF (3 GHz → 300 MHz)
+      - id: mf
+        label: MF (3 MHz → 300 kHz)
+      cols:
+      - id: Mm
+        label: 1 mm → 1 cm
+      - id: Cm
+        label: 1 cm → 10 cm
+      - id: Dm
+        label: 10 cm → 1 m
+      - id: Hm
+        label: 100 m → 1 km
+      answer:
+      - Mmehf
+      - Cmshf
+      - Dmuhf
+      - Hmmf
+      labels:
+        Mmehf: EHF ↔ 1 mm → 1 cm
+        Cmehf: EHF ↔ 1 cm → 10 cm
+        Dmehf: EHF ↔ 10 cm → 1 m
+        Hmehf: EHF ↔ 100 m → 1 km
+        Mmshf: SHF ↔ 1 mm → 1 cm
+        Cmshf: SHF ↔ 1 cm → 10 cm
+        Dmshf: SHF ↔ 10 cm → 1 m
+        Hmshf: SHF ↔ 100 m → 1 km
+        Mmuhf: UHF ↔ 1 mm → 1 cm
+        Cmuhf: UHF ↔ 1 cm → 10 cm
+        Dmuhf: UHF ↔ 10 cm → 1 m
+        Hmuhf: UHF ↔ 100 m → 1 km
+        Mmmf: MF ↔ 1 mm → 1 cm
+        Cmmf: MF ↔ 1 cm → 10 cm
+        Dmmf: MF ↔ 10 cm → 1 m
+        Hmmf: MF ↔ 100 m → 1 km
+      explanation: 'Chaque correspondance se retrouve avec $\lambda = c/f$ : 300 GHz ↔ 1 mm ; 30 GHz ↔ 1 cm ; 3 GHz ↔ 10 cm ; 300 MHz ↔ 1 m ; 3 MHz ↔ 100 m ; 300 kHz ↔ 1 km. Plus la fréquence est grande, plus la longueur d''onde est petite.'
+      tags:
+      - telecom
+    - type: order
+      level: 3
+      prompt: Ordonnez ces situations sonores, du niveau sonore le plus **faible** au plus **élevé**.
+      steps:
+      - Désert (20 dB)
+      - Conversation normale (60 dB)
+      - Restaurant scolaire (80 dB)
+      - Marteau piqueur (100 dB)
+      - Passage d'une F1 (120 dB)
+      - Ariane au décollage (140 dB)
+      tags:
+      - niveau-sonore
+    - type: mcq
+      level: 3
+      prompt: Deux trompettes identiques jouent ensemble au lieu d'une seule. De combien augmente le niveau sonore $L$ ?
+      choices:
+      - D'environ 3 dB, car $10 \log 2 \approx 3{,}0$ dB
+      - 'Il double : il passe par exemple de 60 dB à 120 dB'
+      - Il n'augmente pas, car la sensation auditive n'est pas proportionnelle à l'intensité
+      - Il augmente de 10 dB
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les décibels ne se doublent pas. Ce sont les **intensités acoustiques** (en W·m⁻²) qui s''additionnent.'
+      - 'Non : le niveau augmente bien, puisque l''intensité double ; c''est la **sensation** qui n''est pas doublée.'
+      - 'Non : +10 dB correspondrait à une intensité multipliée par **10**, pas par 2.'
+      explanation: 'Les intensités acoustiques s''additionnent : $I$ devient $2I$, donc $L'' = 10 \log(2I/I_0) = L + 10 \log 2 = L + 3{,}0$ dB. À retenir : $\times 2$ sur $I$ → $+3$ dB ; $\times 10$ sur $I$ → $+10$ dB.'
+      tags:
+      - niveau-sonore
+    - type: mcq
+      level: 3
+      prompt: 'En modulation d''amplitude, une porteuse de fréquence $F$ est modulée par un signal contenant deux harmoniques $f_A$ et $f_B$. Combien de fréquences le signal modulé comporte-t-il ?
+
+        {{fig:pc-modulation}}'
+      choices:
+      - 'Cinq : $F$, $F - f_A$, $F - f_B$, $F + f_B$, $F + f_A$'
+      - 'Trois : $F$, $f_A$ et $f_B$'
+      - 'Deux : $F - f_A$ et $F + f_A$'
+      - 'Quatre : $F - f_A$, $F - f_B$, $F + f_B$, $F + f_A$ (la porteuse disparaît)'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : après modulation les raies basses fréquences $f_A$ et $f_B$ ont disparu ; le spectre a été **translaté** autour de $F$.'
+      - 'Non : chaque harmonique du signal modulant crée **deux** raies latérales, une de chaque côté de $F$ — et la porteuse subsiste.'
+      - 'Non : la porteuse $F$ reste présente, et c''est même la raie la plus intense du spectre modulé.'
+      explanation: 'Le signal modulé reçu sur la bande AM comporte **cinq** fréquences : la porteuse $F$ et les quatre raies latérales $F \pm f_A$ et $F \pm f_B$. C''est une transposition de fréquence : le spectre est translaté sans perte d''information.'
+      tags:
+      - modulation
+    - type: mcq
+      level: 3
+      prompt: Un matériau isolant a un indice d'affaiblissement acoustique $R_w = 30$ dB. Un bruit de 85 dB (niveau « Risque ») arrive sur la paroi. Quel niveau perçoit-on en moyenne de l'autre côté ?
+      choices:
+      - Environ 55 dB
+      - Environ 30 dB
+      - Environ 115 dB
+      - Environ 2,8 dB (85 divisé par 30)
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 30 dB est l''**affaiblissement** apporté par le matériau, pas le niveau résiduel.'
+      - 'Non : un isolant **diminue** le niveau transmis, il ne l''augmente pas.'
+      - 'Non : les décibels se **soustraient**, ils ne se divisent pas.'
+      explanation: 'Le matériau permet en moyenne de diminuer de 30 dB le niveau sonore perçu : $85 - 30 = 55$ dB, ce qui repasse sous le seuil de risque (85 dB).'
+      tags:
+      - niveau-sonore
+    - type: mcq
+      level: 3
+      prompt: 'Une antenne doit capter une porteuse de fréquence $f = 900$ MHz. Quel ordre de grandeur de taille est le plus adapté ?
+
+        {{fig:pc-spectre-radiofrequence}}'
+      choices:
+      - Environ 30 cm, car $\lambda = c/f \approx 0{,}33$ m
+      - Environ 3 m, car $\lambda = c/f \approx 3$ m
+      - Environ 3 mm, car les hautes fréquences imposent des antennes millimétriques
+      - La taille n'a pas d'importance, seule la puissance d'émission compte
+      answer: 0
+      feedback:
+      - null
+      - 'Non : $\lambda = 3{,}00 \times 10^{8}/(9{,}00 \times 10^{8}) = 0{,}33$ m, pas 3 m. Une longueur d''onde de 3 m correspondrait à $f = 100$ MHz.'
+      - 'Non : 3 mm correspondrait à environ 100 GHz, bien au-delà de la bande UHF.'
+      - 'Non : « pour que la réception soit optimale, il faut que la taille de l''antenne soit du même ordre de grandeur que la longueur d''onde de l''onde porteuse ».'
+      explanation: $\lambda = c/f = 3{,}00 \times 10^{8}/(900 \times 10^{6}) = 0{,}33$ m, soit 33 cm. 900 MHz appartient bien à la bande UHF (3 GHz → 300 MHz, soit 10 cm → 1 m).
+      tags:
+      - telecom

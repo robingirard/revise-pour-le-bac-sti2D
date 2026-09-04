@@ -1,0 +1,59 @@
+%% Les trois natures d'information : logique, analogique, numérique.
+%% Même grandeur physique (courbe en cloche) vue de trois façons.
+%%   - logique   : créneau obtenu par comparaison à une valeur seuil ;
+%%   - analogique: la grandeur elle-même, continue ;
+%%   - numérique : échantillonnage + quantification sur 3 bits (000 à 111).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=4.5pt]}, line width=0.6pt},
+  grad/.style={font=\scriptsize},
+  titre/.style={font=\small\bfseries, anchor=south}]
+
+%% cloche commune : b(x) = 2 exp(-(x-1.5)^2/0.6), x de 0 à 3
+\def\cloche{2*exp(-(\x-1.5)*(\x-1.5)/0.6)}
+
+%% ================= panneau 1 : logique ================================
+\begin{scope}[shift={(0,0)}, x=0.82cm, y=1cm]
+  \draw[axe] (-0.15,0) -- (3.25,0) node[grad, anchor=north east, inner sep=3pt] {Temps};
+  \draw[axe] (0,-0.15) -- (0,2.9);
+  % grandeur physique (grise) et seuil
+  \draw[black!45, line width=1pt] plot[domain=0:3, samples=60, smooth] (\x,{\cloche});
+  \draw[black!70, dash pattern=on 2.5pt off 2pt, line width=0.7pt] (0,1.1) -- (3.1,1.1);
+  \node[grad, anchor=east, align=right, text width=0.85cm] at (-0.18,1.1) {valeur seuil};
+  % créneau logique
+  \draw[solideD, line width=1.4pt, line join=round]
+        (0,0.15) -- (0.901,0.15) -- (0.901,2.5) -- (2.099,2.5) -- (2.099,0.15) -- (3,0.15);
+  \fill[solideE] (0.901,1.1) circle (2.2pt) (2.099,1.1) circle (2.2pt);
+\end{scope}
+\node[titre] at (1.23,3.1) {Logique};
+
+%% ================= panneau 2 : analogique =============================
+\begin{scope}[shift={(3.4,0)}, x=0.82cm, y=1cm]
+  \draw[axe] (-0.15,0) -- (3.25,0) node[grad, anchor=north east, inner sep=3pt] {Temps};
+  \draw[axe] (0,-0.15) -- (0,2.9);
+  \draw[solideA, line width=1.4pt] plot[domain=0:3, samples=60, smooth] (\x,{\cloche});
+\end{scope}
+\node[titre] at (4.63,3.1) {Analogique};
+
+%% ================= panneau 3 : numérique ==============================
+%% unité verticale = 1 palier de quantification (0,36 cm)
+\begin{scope}[shift={(6.9,0)}, x=0.82cm, y=0.36cm]
+  \draw[axe] (-0.15,0) -- (3.25,0) node[grad, anchor=north east, inner sep=3pt] {Temps};
+  \draw[axe] (0,-0.4) -- (0,8.1);
+  \foreach \k/\mot in {0/000,1/001,2/010,3/011,4/100,5/101,6/110,7/111} {
+    \draw[line width=0.5pt] (0,\k) -- (-0.1,\k);
+    \node[grad, anchor=east, inner sep=2pt] at (-0.12,\k) {\mot}; }
+  % grandeur d'origine, en pointillé
+  \draw[black!45, line width=0.9pt, dash pattern=on 2pt off 2pt]
+        plot[domain=0:3, samples=60, smooth] (\x,{5.5*exp(-(\x-1.5)*(\x-1.5)/0.6)});
+  % escalier : valeur échantillonnée puis quantifiée
+  \draw[solideA, line width=1.4pt, line join=round]
+    (0,0) -- (0.25,0) -- (0.25,1) -- (0.75,1) -- (0.75,2) -- (1,2) -- (1,3) --
+    (1.25,3) -- (1.25,4) -- (1.5,4) -- (1.5,5) -- (1.75,5) -- (1.75,4) -- (2,4) --
+    (2,3) -- (2.25,3) -- (2.25,2) -- (2.5,2) -- (2.5,1) -- (3,1) -- (3,0);
+\end{scope}
+\node[titre] at (8.13,3.1) {Numérique};
+\end{tikzpicture}
+\end{document}

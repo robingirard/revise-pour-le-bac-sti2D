@@ -1,0 +1,34 @@
+%% Bilan énergétique d'un convertisseur (diagramme sagittal) :
+%% énergie absorbée -> convertisseur -> énergie utile, plus les pertes.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{shapes.geometric, positioning}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  bloc/.style={draw, line width=1pt, rounded corners=3pt, align=center,
+               text width=1.5cm, minimum height=1cm, inner sep=2pt,
+               font=\footnotesize\bfseries},
+  conv/.style={ellipse, draw=solideE, text=solideE, line width=1pt,
+               minimum width=2.3cm, minimum height=1.1cm, inner sep=1pt,
+               font=\footnotesize\bfseries},
+  grosse/.style={-{Stealth[length=8pt,width=7pt]}, line width=2.2pt}]
+
+%% ---- chaîne principale ---------------------------------------------------
+\node[bloc, draw=solideD, text=solideD] (abs) at (0,0)   {Énergie absorbée};
+\node[conv]                             (cv)  at (3.1,0) {Convertisseur};
+\node[bloc, draw=solideB, text=solideB] (ut)  at (6.1,0)  {Énergie utile};
+
+\draw[grosse, solideD] (abs) -- (cv);
+\draw[grosse, solideE] (cv)  -- (ut);
+
+%% ---- pertes --------------------------------------------------------------
+\node[bloc, draw=solideB!70, text=solideB!70, text width=1.1cm,
+      minimum height=0.7cm] (pertes) at (3.1,-1.9) {Pertes};
+\draw[grosse, solideE] (cv) -- (pertes);
+
+%% ---- rappel du rendement -------------------------------------------------
+\node[font=\small, align=center, anchor=north] at (3.1,-2.65)
+  {$\eta = \dfrac{E_{\text{utile}}}{E_{\text{reçue}}}$\quad
+   \footnotesize toujours entre 0 et 100~\%};
+\end{tikzpicture}
+\end{document}

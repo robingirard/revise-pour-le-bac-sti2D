@@ -1,0 +1,52 @@
+%% La contrainte normale sigma = F / S, en trois temps :
+%% 1. la barre tendue ; 2. la coupure imaginaire et l'isolement d'un tronçon ;
+%% 3. la section coupée, où l'effort normal N se répartit uniformément.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  force/.style={-{Stealth[length=6pt]}, line width=1.2pt, solideA},
+  petite/.style={-{Stealth[length=3.6pt]}, line width=0.7pt, solideA},
+  etape/.style={-{Stealth[length=5pt]}, line width=0.7pt, black!55},
+  titre/.style={font=\small, anchor=north, align=center}]
+
+%% ==================== 1. la barre tendue ============================
+\begin{scope}[shift={(0,0)}]
+  \draw[line width=1pt, solideB, fill=solideB!10, rounded corners=2pt] (-0.8,-0.3) rectangle (0.8,0.3);
+  \draw[force] (0.85,0) -- (1.45,0) node[font=\small, text=solideA, anchor=south, inner sep=2pt] {$F$};
+  \draw[force] (-0.85,0) -- (-1.45,0) node[font=\small, text=solideA, anchor=south, inner sep=2pt] {$F$};
+  \node[titre] at (0,-0.45) {\textbf{1.} la pièce\\ est tendue};
+\end{scope}
+\draw[etape] (1.72,0) -- (2.18,0);
+
+%% =============== 2. la coupure imaginaire ===========================
+\begin{scope}[shift={(3.35,0)}]
+  \draw[line width=1pt, solideB, fill=solideB!10, rounded corners=2pt] (-0.8,-0.3) rectangle (0,0.3);
+  \draw[line width=0.7pt, draw=black!45, fill=black!10, rounded corners=2pt] (0,-0.3) rectangle (0.8,0.3);
+  \draw[line width=1.1pt, solideD, dash pattern=on 3pt off 2pt] (0,-0.5) -- (0,0.5);
+  \draw[force] (-0.85,0) -- (-1.45,0) node[font=\small, text=solideA, anchor=south, inner sep=2pt] {$F$};
+  \node[font=\small, anchor=south, inner sep=2pt, text=black!60] at (0.42,0.34) {supprimé};
+  \node[titre] at (-0.1,-0.55) {\textbf{2.} coupure imaginaire :\\ on isole un tronçon};
+\end{scope}
+\draw[etape] (4.9,0) -- (5.36,0);
+
+%% =============== 3. la section coupée ===============================
+\begin{scope}[shift={(6.2,0)}]
+  \hachures{(0,0) ellipse (0.3 and 0.62)}
+  \foreach \y in {-0.46,-0.23,0,0.23,0.46}
+    { \pgfmathsetmacro\dx{0.3*sqrt(1-(\y/0.62)^2)}
+      \draw[petite] (\dx,\y) -- ++(0.42,0); }
+  \fill (0,0) circle (1.6pt);
+  \node[font=\small, anchor=east, fill=white, inner sep=1pt] at (-0.06,0.02) {$G$};
+  \node[font=\small, text=solideA, anchor=west, inner sep=2pt] at (0.76,0) {$N$};
+  \node[font=\small, anchor=south, align=center] at (0.3,0.68) {répartition\\ uniforme};
+  \node[titre] at (0.2,-0.72) {\textbf{3.} l'effort $N$ se\\ répartit sur $S$};
+\end{scope}
+
+%% ------------------------- cartouche --------------------------------
+\node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=5pt, anchor=north,
+      font=\small, align=center] at (2.9,-1.62)
+     {$\sigma = \dfrac{F}{S}$ \quad $F$ en N, $S$ en mm$^2$, $\sigma$ en N/mm$^2$ = MPa\\[2pt]
+      section circulaire de diamètre $d$ : $S = \dfrac{\pi d^2}{4}$};
+\end{tikzpicture}
+\end{document}

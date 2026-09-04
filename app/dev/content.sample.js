@@ -202,7 +202,22 @@ $$x(t) = \\tfrac{1}{2} a t^2 + v_0 t + x_0$$
 | Mouvement | Notation |
 |---|---|
 | Translation suivant $\\vec{x}$ | Tx |
-| Rotation autour de $\\vec{x}$ | Rx |`,
+| Rotation autour de $\\vec{x}$ | Rx |
+
+## Un algorithme (test des blocs de code)
+
+Le pseudo-code d'un capteur de fin de course, avec du \`code en ligne\` :
+
+\`\`\`
+DEBUT
+  SI capteur = 1 ALORS
+    moteur <- ARRET   # le $ et {{fig:pivot}} restent tels quels ici : $x$
+  SINON
+    moteur <- MARCHE
+  FIN SI
+FIN
+\`\`\`
+`,
             items: idsOf('liaisons-mobilites'),
           },
           {

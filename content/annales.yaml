@@ -63,3 +63,23 @@ annales:
     themes: ["chaîne d'information", "capteurs", "transmission"]
     prerequis: [{skill: mobilites, level: 1}]
     guided: ""
+  - id: pcm-sujet-zero-2020
+    titre: "Sujet zéro 2020 — physique-chimie et mathématiques STI2D"
+    session: 2020
+    epreuve: "physique-chimie et mathématiques"
+    partie: "Sujet zéro de la nouvelle épreuve (format de référence), avec corrigé APMEP"
+    url: "https://www.apmep.fr/IMG/pdf/STI2D_Sujet_0_2020_DV.pdf"
+    corrige: ""
+    themes: ["énergie", "électricité", "trigonométrie", "primitives"]
+    prerequis: [{skill: pc-puissance-electrique, level: 2}, {skill: maths-fonctions-trigo, level: 2}]
+    guided: ""
+  - id: pcm-2022-metropole
+    titre: "Bac 2022 (métropole, 11 mai) — physique-chimie et mathématiques"
+    session: 2022
+    epreuve: "physique-chimie et mathématiques"
+    partie: "Sujet complet retranscrit par l'APMEP (exercices de mathématiques et de physique)"
+    url: "https://www.apmep.fr/IMG/pdf/sti2d_metropole_11_mai_2022dv.pdf"
+    corrige: ""
+    themes: ["énergie", "thermique", "nombres complexes", "primitives"]
+    prerequis: [{skill: pc-flux-isolation, level: 2}, {skill: maths-complexes, level: 2}]
+    guided: ""

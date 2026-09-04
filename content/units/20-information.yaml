@@ -1,0 +1,1465 @@
+units:
+- id: information
+  matiere: ingenierie
+  title: Chaîne d'information et numérique
+  description: De la grandeur physique au nombre binaire — capteurs, signaux, conversion analogique-numérique, numération, logique et algorithmes.
+  skills:
+  - id: info-chaine
+    title: La chaîne d'information
+    icon: 📡
+    description: Acquérir, traiter, communiquer ; nature des signaux (logique, analogique, numérique) et types de capteurs.
+    prerequisites: []
+    lesson: lessons/info-chaine.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Quels sont les trois blocs de la **chaîne d''information** ?
+
+        {{emoji:📡}}'
+      choices:
+      - ACQUÉRIR — TRAITER — COMMUNIQUER
+      - ALIMENTER — DISTRIBUER — CONVERTIR
+      - CAPTER — CALCULER — AGIR
+      - ENTRÉE — PROCESSEUR — SORTIE
+      answer: 0
+      feedback:
+      - null
+      - 'Non : ce sont les blocs de la chaîne de **puissance**, pas de la chaîne d''information.'
+      - 'Non : ce vocabulaire n''est pas celui du cours, qui impose les verbes ACQUÉRIR, TRAITER, COMMUNIQUER.'
+      - 'Non : c''est le vocabulaire général de l''informatique, pas la décomposition fonctionnelle du cours.'
+      explanation: 'La chaîne d''information reçoit des grandeurs physiques et des consignes, et délivre des informations (ordres, messages) : ACQUÉRIR (capteurs, clavier), TRAITER (carte Arduino, automate), COMMUNIQUER (voyants, écran, relais, réseau).'
+      tags:
+      - chaine-information
+    - type: mcq
+      level: 1
+      prompt: 'Un signal est dit **logique** si :'
+      choices:
+      - la grandeur de l'information ne peut prendre que deux valeurs
+      - la grandeur de l'information varie de façon continue dans le temps
+      - il est constitué d'une suite de 0 et de 1 représentant des nombres
+      - il est périodique
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la définition d''un signal **analogique**.'
+      - 'Non : c''est la définition d''un signal **numérique**, une suite d''informations logiques qui code un nombre.'
+      - 'Non : la périodicité ne dit rien sur la nature du signal ; un signal logique peut être périodique ou non.'
+      explanation: 'Deux valeurs seulement : tout ou rien (TOR), 0 ou 1, Low ou High, 0 V ou 5 V.'
+      tags:
+      - signaux
+    - type: mcq
+      level: 1
+      prompt: 'Un signal est dit **analogique** si :'
+      choices:
+      - il évolue de façon continue dans le temps
+      - il ne peut prendre que deux valeurs
+      - il prend un nombre fini de valeurs codées en 0 et en 1
+      - il est toujours sinusoïdal
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la définition d''un signal logique (ou binaire).'
+      - 'Non : c''est la définition d''un signal numérique.'
+      - 'Non : un signal analogique peut être périodique ou non, sinusoïdal ou non.'
+      explanation: 'Exemple : la tension aux bornes d''une photorésistance varie continûment avec la luminosité.'
+      tags:
+      - signaux
+    - type: mcq
+      level: 1
+      prompt: 'Un signal est dit **numérique** si :'
+      choices:
+      - il prend un nombre fini de valeurs, codées par une suite de 0 et de 1
+      - il varie de façon continue dans le temps
+      - il ne prend que deux valeurs
+      - il est délivré par un capteur analogique
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est le signal analogique qui varie continûment ; un signal numérique avance par paliers.'
+      - 'Non : deux valeurs seulement, c''est un signal **logique** ; un signal numérique est une **suite** de valeurs logiques.'
+      - 'Non : un capteur analogique délivre une tension continue ; il faut un CAN pour obtenir un signal numérique.'
+      explanation: 'Un signal numérique se compose d''une suite d''informations logiques (0 et 1) qui représentent des nombres : sur 2 bits, 4 valeurs (00, 01, 10, 11).'
+      tags:
+      - signaux
+    - type: mcq
+      level: 1
+      prompt: Que délivre un capteur **tout ou rien** (TOR) ?
+      choices:
+      - une information binaire, 0 ou 1
+      - une tension proportionnelle à la grandeur mesurée
+      - un mot de 8 bits
+      - une fréquence
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est un capteur proportionnel **analogique**.'
+      - 'Non : c''est un capteur proportionnel **numérique** (codeur absolu, par exemple).'
+      - 'Non : le capteur TOR compare la grandeur d''entrée à un seuil ; il ne mesure rien.'
+      explanation: 'Sous le seuil, la sortie vaut 0 ; au-dessus, elle vaut 1. Exemples : détecteur de présence, interrupteur de fin de course.'
+      tags:
+      - capteurs
+    - type: match
+      level: 1
+      prompt: Associez chaque composant au bloc de la chaîne d'information auquel il appartient.
+      pairs:
+      - left: Photorésistance
+        right: ACQUÉRIR
+      - left: Carte Arduino
+        right: TRAITER
+      - left: Écran d'affichage
+        right: COMMUNIQUER
+      tags:
+      - chaine-information
+    - type: match
+      level: 2
+      prompt: Associez chaque caractéristique d'un capteur à sa définition.
+      pairs:
+      - left: Étendue de mesure
+        right: valeurs extrêmes pouvant être mesurées
+      - left: Résolution
+        right: plus petite variation mesurable
+      - left: Sensibilité
+        right: variation de la sortie rapportée à la variation de l'entrée
+      - left: Précision
+        right: aptitude à donner une mesure proche de la valeur vraie
+      tags:
+      - capteurs
+    - type: mcq
+      level: 2
+      prompt: Une **photorésistance** est insérée dans un pont diviseur alimenté en 5 V, la tension étant lue sur une broche analogique de la carte. Quelle est la nature du signal envoyé à la carte ?
+      choices:
+      - Analogique
+      - Logique
+      - Numérique
+      - Aucune, la photorésistance n'est pas un capteur
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la tension ne prend pas seulement deux valeurs, elle varie continûment avec la luminosité.'
+      - 'Non : le signal ne devient numérique qu''**après** le convertisseur analogique-numérique de la carte.'
+      - 'Non : c''est un capteur **passif** (il doit être alimenté), mais c''est bien un capteur.'
+      explanation: 'La luminosité fait varier la résistance, donc la tension du pont diviseur : signal analogique, converti ensuite par le CAN de la carte.'
+      tags:
+      - capteurs
+    - type: mcq
+      level: 2
+      prompt: 'Un **codeur absolu** délivre, pour chaque position angulaire de son axe, un mot de données lu sur un disque optique. Ce capteur est :'
+      choices:
+      - un capteur proportionnel numérique
+      - un capteur tout ou rien
+      - un capteur proportionnel analogique
+      - un actionneur
+      answer: 0
+      feedback:
+      - null
+      - 'Non : un capteur TOR ne donne qu''un seul bit ; ici chaque position a un **mot** de plusieurs bits.'
+      - 'Non : la sortie n''est pas une tension continue mais une suite de 0 et de 1.'
+      - 'Non : un actionneur agit sur le système ; un codeur mesure.'
+      explanation: 'Le mot binaire lu sur le disque est proportionnel à la position : c''est un capteur proportionnel numérique. Exemple : N = (10100001)₂ = (161)₁₀.'
+      tags:
+      - capteurs
+    - type: grid
+      level: 2
+      prompt: Parmi ces capteurs, cochez ceux qui délivrent un signal **analogique**.
+      rows:
+      - id: pres
+        label: Détecteur de présence (tout ou rien)
+      - id: photo
+        label: Photorésistance dans un pont diviseur
+      - id: temp
+        label: Sonde de température de sortie 0 à 5 V
+      - id: cod
+        label: Codeur absolu 8 bits
+      - id: bp
+        label: Bouton poussoir
+      cols:
+      - id: A
+        label: Signal analogique
+      answer:
+      - Aphoto
+      - Atemp
+      labels:
+        Apres: détecteur de présence
+        Aphoto: photorésistance
+        Atemp: sonde de température
+        Acod: codeur absolu
+        Abp: bouton poussoir
+      cellFeedback:
+        Apres: 'sa sortie ne prend que deux valeurs : signal logique (TOR)'
+        Aphoto: 'la tension varie continûment avec la luminosité : signal analogique'
+        Atemp: 'la tension varie continûment entre 0 et 5 V : signal analogique'
+        Acod: 'il délivre un mot de 8 bits : signal numérique'
+        Abp: 'appuyé ou relâché : signal logique'
+      explanation: Analogique = variation continue. Le détecteur de présence et le bouton poussoir sont logiques (TOR) ; le codeur absolu est numérique.
+      tags:
+      - capteurs
+    - type: mcq
+      level: 2
+      prompt: Pourquoi un capteur TOR possède-t-il en pratique **deux** seuils distincts, un seuil haut VT+ et un seuil bas VT− ?
+      choices:
+      - Pour éviter que la sortie ne devienne instable quand l'entrée est très proche du seuil
+      - Pour mesurer deux grandeurs physiques différentes
+      - Pour augmenter la précision de la mesure
+      - Pour coder la sortie sur 2 bits
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les deux seuils portent sur la **même** grandeur d''entrée.'
+      - 'Non : un capteur TOR ne mesure pas, il détecte un franchissement.'
+      - 'Non : la sortie d''un capteur TOR est binaire, donc sur 1 bit.'
+      explanation: 'La sortie passe à 1 quand l''entrée dépasse VT+ et ne retombe à 0 que lorsqu''elle passe sous VT− : ce décalage (hystérésis) empêche la sortie de battre autour du seuil.'
+      tags:
+      - capteurs
+    - type: mcq
+      level: 2
+      prompt: Qu'est-ce qui caractérise le schéma-bloc d'un **système asservi** (régulateur de vitesse, servomoteur…) ?
+      choices:
+      - Il comporte une boucle de retour avec un capteur
+      - Il ne comporte que des blocs en série
+      - Il ne comporte aucun capteur
+      - Il ne fonctionne qu'avec des signaux logiques
+      answer: 0
+      feedback:
+      - null
+      - 'Non : sans retour d''information, le système ne peut pas comparer ce qu''il fait à ce qu''il doit faire.'
+      - 'Non : c''est justement le capteur de la boucle de retour qui mesure la sortie.'
+      - 'Non : la nature des signaux ne change rien au principe de l''asservissement.'
+      explanation: 'Consigne → comparateur → correcteur → système → sortie, et une boucle de retour passant par le capteur : le système corrige en permanence l''écart détecté.'
+      tags:
+      - asservissement
+    - type: order
+      level: 2
+      prompt: Dans une serre automatisée, remettez dans l'ordre le trajet de l'information, de la grandeur physique à l'action.
+      steps:
+      - La luminosité éclaire la photorésistance (grandeur physique)
+      - Le pont diviseur délivre une tension analogique (ACQUÉRIR)
+      - Le convertisseur analogique-numérique fournit la valeur N (ACQUÉRIR)
+      - La carte compare N au seuil programmé (TRAITER)
+      - Le transistor de commande alimente le moteur du volet (COMMUNIQUER)
+      tags:
+      - chaine-information
+    - type: input
+      level: 3
+      prompt: Dans un pont diviseur alimenté sous Ve = 5,0 V, la photorésistance R1 vaut 3,0 kΩ et la résistance fixe R2 vaut 2,0 kΩ. Quelle tension Vs mesure-t-on aux bornes de R1 ?
+      answer: '3'
+      numeric: true
+      tolerance: 0.05
+      unit: V
+      explanation: 'Vs = R1 × Ve ÷ (R1 + R2) = 3 000 × 5 ÷ 5 000 = 3,0 V. Erreur classique : mettre R2 au numérateur, ce qui donne 2,0 V (la tension aux bornes de R2).'
+      tags:
+      - capteurs
+    - type: mcq
+      level: 3
+      prompt: Sur un codeur incrémental à deux pistes A et B décalées d'un quart de période, comment détermine-t-on le **sens de rotation** du disque ?
+      choices:
+      - En regardant, au moment d'un front descendant de la voie A, si la voie B est à 1 ou à 0
+      - En comptant le nombre d'impulsions de la voie A par seconde
+      - En mesurant la largeur des impulsions de la piste Z
+      - En comparant l'amplitude des signaux A et B
+      answer: 0
+      feedback:
+      - null
+      - 'Non : compter les impulsions donne l''angle parcouru ou la vitesse, pas le sens.'
+      - 'Non : la piste Z donne une impulsion par tour, c''est un repère de position, pas un sens.'
+      - 'Non : les deux voies délivrent des signaux logiques de même amplitude ; seul leur décalage dans le temps change.'
+      explanation: 'La seconde piste est décalée de 25 % : selon le sens, la voie B vaut 1 ou 0 au moment d''un front descendant de la voie A.'
+      tags:
+      - capteurs
+  - id: info-signaux
+    title: Signaux, MLI et conversion
+    icon: 📈
+    description: Période, fréquence, rapport cyclique et valeur moyenne d'une MLI ; quantum, nombre de bits et résolution d'un CAN.
+    prerequisites:
+    - info-chaine
+    lesson: lessons/info-signaux.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Que représente la **période** T d'un signal périodique ?
+      choices:
+      - La durée au bout de laquelle le signal se répète, en secondes
+      - Le nombre de répétitions par seconde
+      - La valeur maximale du signal
+      - La durée du niveau haut
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la **fréquence**, en hertz.'
+      - 'Non : c''est l''amplitude du signal.'
+      - 'Non : c''est la durée Th du niveau haut, utilisée pour le rapport cyclique.'
+      explanation: La période s'exprime en secondes (s) ; la fréquence en est l'inverse.
+      tags:
+      - signaux
+    - type: mcq
+      level: 1
+      prompt: Un signal périodique a une période T = 20 ms. Quelle est sa fréquence ?
+      choices:
+      - 50 Hz
+      - 20 Hz
+      - 0,05 Hz
+      - 2 000 Hz
+      answer: 0
+      feedback:
+      - null
+      - 'Non : tu as recopié la valeur de la période ; la fréquence n''est pas égale à la période.'
+      - 'Non : tu as calculé T au lieu de 1 ÷ T, ou tu as oublié de convertir les millisecondes en secondes.'
+      - 'Non : erreur de conversion, 20 ms = 0,020 s et non 0,000 5 s.'
+      explanation: f = 1 ÷ T = 1 ÷ 0,020 = 50 Hz. Il faut toujours convertir la période en secondes avant de calculer.
+      tags:
+      - signaux
+    - type: mcq
+      level: 1
+      prompt: Quelle relation lie la tension efficace à la tension maximale d'une tension alternative sinusoïdale ?
+      choices:
+      - U eff = U max ÷ √2
+      - U eff = U max × √2
+      - U eff = U max ÷ 2
+      - U eff = 2 × U max
+      answer: 0
+      feedback:
+      - null
+      - 'Non : √2 est au dénominateur ; la valeur efficace est toujours **plus petite** que la valeur maximale.'
+      - 'Non : on divise par √2 ≈ 1,414, pas par 2.'
+      - 'Non : la valeur efficace ne peut pas dépasser la valeur maximale.'
+      explanation: La tension efficace est la valeur de la tension continue qui produirait le même effet ; c'est elle que mesure un voltmètre.
+      tags:
+      - signaux
+    - type: mcq
+      level: 1
+      prompt: Dans un signal **MLI** (modulation par largeur d'impulsion), à quoi correspond le rapport cyclique α ?
+      choices:
+      - À la durée du niveau haut divisée par la période
+      - À la période divisée par la durée du niveau haut
+      - À la tension maximale divisée par la tension moyenne
+      - À la fréquence du signal
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est l''inverse ; le rapport cyclique ne peut jamais dépasser 100 %.'
+      - 'Non : c''est le rapport de deux durées, pas de deux tensions.'
+      - 'Non : la fréquence d''une MLI est fixe ; c''est la largeur des impulsions que l''on fait varier.'
+      explanation: 'α = Th ÷ T, sans unité, ou exprimé en pourcents : α = Th ÷ T × 100.'
+      tags:
+      - mli
+    - type: input
+      level: 2
+      prompt: Un signal MLI a une période T = 2 ms et reste au niveau haut pendant Th = 0,5 ms. Quel est son rapport cyclique, en % ?
+      answer: '25'
+      numeric: true
+      tolerance: 0.5
+      unit: '%'
+      explanation: α = Th ÷ T × 100 = 0,5 ÷ 2 × 100 = 25 %. Les deux durées doivent être exprimées dans la même unité, ici en millisecondes.
+      tags:
+      - mli
+    - type: input
+      level: 2
+      prompt: Un moteur à courant continu est piloté en MLI sous U max = 12 V, avec T = 2 ms et Th = 1,4 ms. Quelle est la tension moyenne appliquée au moteur ?
+      answer: '8.4'
+      numeric: true
+      tolerance: 0.1
+      unit: V
+      explanation: U moyenne = U max × Th ÷ T = 12 × 1,4 ÷ 2 = 12 × 0,70 = 8,4 V. Le rapport cyclique vaut ici 70 %.
+      tags:
+      - mli
+    - type: mcq
+      level: 1
+      prompt: 'Le **quantum** q d''un convertisseur analogique-numérique est :'
+      choices:
+      - la variation minimale du signal d'entrée qui fait varier d'une unité la sortie numérique
+      - la valeur maximale que peut prendre le signal d'entrée
+      - le nombre de bits du convertisseur
+      - le temps mis pour effectuer une conversion
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est l''amplitude (l''étendue) du signal d''entrée, qui figure au numérateur de q.'
+      - 'Non : le nombre de bits est n ; il intervient par 2ⁿ au dénominateur.'
+      - 'Non : c''est le temps de conversion, une autre caractéristique du convertisseur.'
+      explanation: q = amplitude du signal d'entrée ÷ 2ⁿ. Le quantum s'exprime dans l'unité de la grandeur d'entrée (souvent le volt). Plus q est petit, plus le signal numérisé est fidèle.
+      tags:
+      - can
+    - type: mcq
+      level: 1
+      prompt: Comment appelle-t-on, en anglais, un convertisseur analogique-numérique (CAN) ?
+      choices:
+      - ADC (*Analog to Digital Converter*)
+      - DAC (*Digital to Analog Converter*)
+      - PWM (*Pulse Width Modulation*)
+      - CAN (*Controller Area Network*)
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le DAC est le convertisseur **numérique-analogique**, c''est-à-dire l''opération inverse (attention, certains manuels commettent cette erreur).'
+      - 'Non : PWM est le nom anglais de la MLI, une modulation, pas une conversion.'
+      - 'Non : CAN est bien le sigle français, mais *Controller Area Network* désigne un bus de communication automobile.'
+      explanation: CAN (français) = ADC (anglais). Le convertisseur inverse, du numérique vers l'analogique, est le DAC (CNA en français).
+      tags:
+      - can
+    - type: input
+      level: 2
+      prompt: Un CAN **8 bits** numérise une tension d'entrée d'amplitude 5 V. Quel est son quantum, exprimé en mV ? (arrondir au centième)
+      answer: '19.53'
+      numeric: true
+      tolerance: 0.1
+      unit: mV
+      explanation: 'q = amplitude ÷ 2ⁿ = 5 ÷ 2⁸ = 5 ÷ 256 = 0,019 531 25 V ≈ 19,53 mV. Erreur classique : diviser par 8 (le nombre de bits) au lieu de 2⁸.'
+      tags:
+      - can
+    - type: input
+      level: 2
+      prompt: Un CAN **10 bits** numérise une tension d'entrée d'amplitude 5 V. Quel est son quantum, exprimé en mV ? (arrondir au centième)
+      answer: '4.88'
+      numeric: true
+      tolerance: 0.05
+      unit: mV
+      explanation: 'q = 5 ÷ 2¹⁰ = 5 ÷ 1 024 = 0,004 882 8 V ≈ 4,88 mV : quatre fois plus fin qu''avec un CAN 8 bits.'
+      tags:
+      - can
+    - type: mcq
+      level: 2
+      prompt: Combien de valeurs différentes peut-on coder sur **3 bits** ?
+      choices:
+      - 8 valeurs, de 0 à 7
+      - 3 valeurs, de 0 à 2
+      - 6 valeurs, de 0 à 5
+      - 9 valeurs, de 0 à 8
+      answer: 0
+      feedback:
+      - null
+      - 'Non : tu confonds le nombre de bits et le nombre de valeurs.'
+      - 'Non : tu as calculé 2 × 3 au lieu de 2³.'
+      - 'Non : tu as calculé 3² = 9 au lieu de 2³ = 8 ; et le comptage commence à 0, donc on va de 0 à 7.'
+      explanation: 'Sur n bits, on code 2ⁿ valeurs, numérotées de 0 à 2ⁿ − 1 : sur 3 bits, 8 valeurs de 000 à 111.'
+      tags:
+      - can
+    - type: mcq
+      level: 2
+      prompt: Un CAN 10 bits réalise une conversion **unipolaire**. Quelles valeurs sa sortie numérique peut-elle prendre ?
+      choices:
+      - de 0 à 1 023
+      - de 0 à 1 024
+      - de 1 à 1 024
+      - de −512 à 511
+      answer: 0
+      feedback:
+      - null
+      - 'Non : il y a bien 1 024 valeurs, mais la première est 0, donc la dernière est 2¹⁰ − 1 = 1 023.'
+      - 'Non : le comptage commence à 0, pas à 1.'
+      - 'Non : c''est l''intervalle d''une conversion **bipolaire**, de −2ⁿ⁻¹ à 2ⁿ⁻¹ − 1.'
+      explanation: 'Conversion unipolaire : la sortie va de 0 à 2ⁿ − 1. Piège classique : 2ⁿ est le **nombre** de valeurs, 2ⁿ − 1 la **plus grande** valeur.'
+      tags:
+      - can
+    - type: order
+      level: 2
+      prompt: Remettez dans l'ordre les étapes de la numérisation d'une grandeur physique.
+      steps:
+      - Le capteur transforme la grandeur physique en une tension analogique
+      - On prélève la valeur de cette tension à intervalles de temps réguliers (échantillonnage)
+      - Le convertisseur compare la tension prélevée à des paliers de largeur q
+      - Le convertisseur délivre le mot binaire N, codé sur n bits
+      - La carte à microcontrôleur traite la valeur N
+      tags:
+      - can
+    - type: input
+      level: 3
+      prompt: Deux signaux de même période T = 20 ms sont décalés de Δt = 2 ms. Quel est leur déphasage, en degrés ?
+      answer: '36'
+      numeric: true
+      tolerance: 0.5
+      unit: °
+      explanation: 'φ = Δt × 360 ÷ T = 2 × 360 ÷ 20 = 36°. En radians : φ = 2 × 2π ÷ 20 ≈ 0,63 rad. Une période entière correspond à un tour, soit 360°.'
+      tags:
+      - signaux
+    - type: mcq
+      level: 3
+      prompt: On numérise la même tension analogique 0 à 5 V avec un CAN 8 bits, puis avec un CAN 10 bits. Que peut-on affirmer ?
+      choices:
+      - Le CAN 10 bits a un quantum plus petit, donc un signal numérisé plus fidèle
+      - Le CAN 10 bits a un quantum plus grand, donc un signal numérisé plus fidèle
+      - Les deux CAN ont le même quantum, seule la vitesse change
+      - Le CAN 8 bits est plus fidèle car il occupe moins de mémoire
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le raisonnement sur la fidélité est bon, mais q = amplitude ÷ 2ⁿ **diminue** quand n augmente.'
+      - 'Non : le quantum dépend du nombre de bits : 5 ÷ 256 ≈ 19,53 mV contre 5 ÷ 1 024 ≈ 4,88 mV.'
+      - 'Non : l''occupation mémoire n''a aucun rapport avec la fidélité de la numérisation.'
+      explanation: q (8 bits) ≈ 19,53 mV ; q (10 bits) ≈ 4,88 mV, soit 4 fois moins (2¹⁰⁻⁸ = 4). Plus le quantum est petit, plus le signal numérisé est fidèle.
+      tags:
+      - can
+    - type: input
+      level: 3
+      prompt: Un codeur absolu doit distinguer au moins 360 positions angulaires (une par degré). Combien de bits, au minimum, son mot de données doit-il comporter ?
+      answer: '9'
+      numeric: true
+      tolerance: 0
+      unit: bits
+      explanation: 'Sur n bits, on code 2ⁿ positions : 2⁸ = 256 < 360, donc 8 bits ne suffisent pas ; 2⁹ = 512 ≥ 360. Il faut 9 bits.'
+      tags:
+      - can
+    - type: guided
+      level: 3
+      title: 'Serre automatisée : de la luminosité à la commande du volet'
+      intro: 'Une serre pédagogique est équipée d''une **photorésistance** montée en pont diviseur (résistance fixe R2 = 2,0 kΩ, alimentation Ve = 5,0 V), d''une **carte à microcontrôleur** dont le CAN est un **convertisseur 10 bits** de plage d''entrée 0 à 5 V, et d''un **moteur à courant continu 12 V** qui entraîne un volet d''ombrage, piloté en MLI.
+
+
+        Au moment de la mesure, la photorésistance vaut R1 = 3,0 kΩ.
+
+        {{emoji:🌱}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelle est la nature du signal délivré par la photorésistance à l''entrée du CAN ?'
+        choices:
+        - Analogique
+        - Logique
+        - Numérique
+        - Périodique
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la tension ne prend pas seulement deux valeurs, elle varie continûment avec la luminosité.'
+        - 'Non : le signal ne devient numérique qu''à la **sortie** du CAN.'
+        - 'Non : la luminosité n''a aucune raison de se répéter à intervalles réguliers.'
+        explanation: 'La photorésistance délivre une tension qui varie continûment : signal analogique, qu''il faut convertir pour le traiter.'
+      - kind: input
+        prompt: '**Étape 2.** Calculer la tension Vs envoyée sur l''entrée analogique, avec Vs = R1 × Ve ÷ (R1 + R2), R1 = 3,0 kΩ, R2 = 2,0 kΩ et Ve = 5,0 V.'
+        answer: '3'
+        numeric: true
+        tolerance: 0.05
+        unit: V
+        explanation: Vs = 3 000 × 5 ÷ (3 000 + 2 000) = 3 000 × 0,001 = 3,0 V.
+      - kind: input
+        prompt: '**Étape 3.** Calculer le quantum q du CAN 10 bits sur la plage 0 à 5 V, en mV (arrondir au centième).'
+        answer: '4.88'
+        numeric: true
+        tolerance: 0.05
+        unit: mV
+        explanation: q = 5 ÷ 2¹⁰ = 5 ÷ 1 024 = 0,004 882 812 5 V ≈ 4,88 mV.
+      - kind: input
+        prompt: '**Étape 4.** En déduire la valeur numérique N délivrée par le CAN pour Vs = 3,0 V (partie entière de Vs ÷ q).'
+        answer: '614'
+        numeric: true
+        tolerance: 0
+        explanation: 'N = partie entière de 3,0 ÷ 0,004 882 812 5 = partie entière de 614,4 = 614. Vérification : 614 × 4,882 8 mV = 2,998 V, à moins d''un quantum de 3,0 V.'
+      - kind: mcq
+        prompt: '**Étape 5.** Écrire N = 614 en binaire sur 10 bits. On remarque que 614 = 512 + 64 + 32 + 4 + 2.'
+        choices:
+        - (1001100110)₂
+        - (0110011001)₂
+        - (1001100010)₂
+        - (1001100111)₂
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : tu as écrit les bits à l''envers ; le bit de **poids fort** (512 = 2⁹) est à gauche.'
+        - 'Non : il manque le poids 4 (2²) ; ce nombre vaut 610.'
+        - 'Non : tu as ajouté le poids 1 (2⁰) ; ce nombre vaut 615.'
+        explanation: 'Poids : 512 (1), 256 (0), 128 (0), 64 (1), 32 (1), 16 (0), 8 (0), 4 (1), 2 (1), 1 (0) → (1001100110)₂.'
+      - kind: input
+        prompt: '**Étape 6.** Écrire N = 614 en hexadécimal. On complète le mot à 12 bits, soit 0010 0110 0110, puis on convertit chaque bloc de 4 bits.'
+        answer: '266'
+        accept:
+        - (266)16
+        - '0x266'
+        - 266h
+        numeric: false
+        explanation: '0010 = 2, 0110 = 6, 0110 = 6, donc 614₍₁₀₎ = (266)₁₆. Vérification : 2 × 256 + 6 × 16 + 6 = 512 + 96 + 6 = 614.'
+      - kind: grid
+        prompt: '**Étape 7.** On remplace le CAN 10 bits par un CAN 8 bits, sur la même plage 0 à 5 V. Cochez les affirmations **vraies**.'
+        rows:
+        - id: '1'
+          label: Le quantum devient 4 fois plus grand (19,53 mV au lieu de 4,88 mV)
+        - id: '2'
+          label: Pour la même tension de 3,0 V, la sortie devient N′ = 153
+        - id: '3'
+          label: Le CAN 8 bits code 256 valeurs, de 0 à 256
+        - id: '4'
+          label: Le signal numérisé est moins fidèle qu'avec le CAN 10 bits
+        cols:
+        - id: V
+          label: Affirmation vraie
+        answer:
+        - V1
+        - V2
+        - V4
+        labels:
+          V1: affirmation 1
+          V2: affirmation 2
+          V3: affirmation 3
+          V4: affirmation 4
+        cellFeedback:
+          V1: 5 ÷ 256 = 19,53 mV et 5 ÷ 1 024 = 4,88 mV, soit un rapport 2¹⁰⁻⁸ = 4
+          V2: N′ = partie entière de 3,0 ÷ 0,019 531 25 = partie entière de 153,6 = 153
+          V3: '256 valeurs, mais numérotées de 0 à 255 : la plus grande vaut 2⁸ − 1'
+          V4: plus le quantum est grand, moins le signal numérisé est fidèle
+        explanation: q′ = 5 ÷ 256 = 19,53 mV ; N′ = 153, soit 153 × 19,53 mV = 2,988 V. Seules les valeurs 0 à 255 sont possibles sur 8 bits.
+      - kind: mcq
+        prompt: '**Étape 8.** Le moteur du volet est piloté en MLI sous U max = 12 V, à la fréquence f = 500 Hz, avec Th = 1,4 ms. Calculer le rapport cyclique α, puis la tension moyenne appliquée au moteur.'
+        choices:
+        - α = 70 % et U moyenne = 8,4 V
+        - α = 70 % et U moyenne = 12 V
+        - α = 143 % et U moyenne = 17,1 V
+        - α = 30 % et U moyenne = 3,6 V
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : 12 V est la tension du niveau haut ; la moyenne vaut U max × α.'
+        - 'Non : tu as calculé T ÷ Th au lieu de Th ÷ T ; un rapport cyclique ne dépasse jamais 100 %.'
+        - 'Non : 30 % correspond au temps passé au niveau **bas** (2,0 − 1,4 = 0,6 ms).'
+        explanation: T = 1 ÷ f = 1 ÷ 500 = 2,0 ms ; α = 1,4 ÷ 2,0 = 0,70 soit 70 % ; U moyenne = 12 × 0,70 = 8,4 V.
+      tags:
+      - can
+      - mli
+  - id: info-numeration
+    title: Numération et codage
+    icon: 🔢
+    description: Binaire, décimal, hexadécimal, conversions, bit et octet, poids des bits, masques et code ASCII.
+    prerequisites:
+    - info-chaine
+    lesson: lessons/info-numeration.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Que désigne le mot **bit** ?
+      choices:
+      - Un chiffre binaire (*binary digit*), qui vaut 0 ou 1
+      - Un groupe de 8 chiffres binaires
+      - Un octet
+      - Un nombre décimal
+      answer: 0
+      feedback:
+      - null
+      - 'Non : un groupe de 8 bits est un **octet**.'
+      - 'Non : l''octet vaut 8 bits ; le bit est la plus petite unité d''information.'
+      - 'Non : le bit n''existe qu''en base 2.'
+      explanation: 'Le bit (*binary digit*) est la plus petite unité d''information manipulable par une machine numérique : 0 ou 1.'
+      tags:
+      - numeration
+    - type: mcq
+      level: 1
+      prompt: Combien de bits comporte un **octet** (*byte* en anglais) ?
+      choices:
+      - '8'
+      - '2'
+      - '16'
+      - '256'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 2 est la **base**, pas le nombre de bits d''un octet.'
+      - 'Non : 16 bits font 2 octets.'
+      - 'Non : 256 est le nombre de valeurs codables sur un octet, pas son nombre de bits.'
+      explanation: '1 octet = 8 bits. Attention aux notations : b minuscule pour le bit, B majuscule pour l''octet (*byte*).'
+      tags:
+      - numeration
+    - type: mcq
+      level: 1
+      prompt: Combien de valeurs différentes peut-on coder sur un octet ?
+      choices:
+      - 256 valeurs, de 0 à 255
+      - 255 valeurs, de 1 à 255
+      - 8 valeurs, de 0 à 7
+      - 128 valeurs, de 0 à 127
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la valeur 0 (0000 0000) compte aussi ; il y a bien 2⁸ = 256 valeurs.'
+      - 'Non : 8 est le nombre de bits, pas le nombre de valeurs.'
+      - 'Non : 128 = 2⁷ correspond à 7 bits seulement.'
+      explanation: Un octet code 2⁸ = 256 valeurs, de 0 (0000 0000) à 255 (1111 1111).
+      tags:
+      - numeration
+    - type: mcq
+      level: 1
+      prompt: En hexadécimal, quel symbole représente le nombre décimal **11** ?
+      choices:
+      - B
+      - A
+      - '11'
+      - C
+      answer: 0
+      feedback:
+      - null
+      - 'Non : A vaut 10 en décimal.'
+      - 'Non : en hexadécimal, 11 s''écrit avec **un seul** symbole ; écrire « 11 » désignerait 1 × 16 + 1 = 17.'
+      - 'Non : C vaut 12 en décimal.'
+      explanation: 'Au-delà de 9, on utilise des lettres : 10 = A, 11 = B, 12 = C, 13 = D, 14 = E, 15 = F.'
+      tags:
+      - hexadecimal
+    - type: input
+      level: 1
+      prompt: Écrire le nombre décimal 12 en hexadécimal (un seul symbole).
+      answer: C
+      accept:
+      - (c)16
+      - '0xc'
+      - c16
+      numeric: false
+      explanation: '10 = A, 11 = B, 12 = C. En binaire sur 4 bits : 1100.'
+      tags:
+      - hexadecimal
+    - type: input
+      level: 2
+      prompt: Convertir (1101)₂ en base 10.
+      answer: '13'
+      numeric: true
+      tolerance: 0
+      explanation: 1 × 2³ + 1 × 2² + 0 × 2¹ + 1 × 2⁰ = 8 + 4 + 0 + 1 = 13. Le poids d'un bit croît d'une puissance de 2 en allant de la droite vers la gauche.
+      tags:
+      - binaire
+    - type: input
+      level: 2
+      prompt: Convertir 59₍₁₀₎ en binaire, sur 8 bits (écrire les huit chiffres, avec ou sans espace).
+      answer: '00111011'
+      accept:
+      - 0011 1011
+      - '111011'
+      numeric: false
+      explanation: 'Divisions successives par 2, restes lus de bas en haut : 111011, soit 0011 1011 sur 8 bits. Vérification : 32 + 16 + 8 + 2 + 1 = 59.'
+      tags:
+      - binaire
+    - type: mcq
+      level: 2
+      prompt: Quelle est l'écriture hexadécimale de (0011 1011)₂ ?
+      choices:
+      - (3B)₁₆
+      - (B3)₁₆
+      - (59)₁₆
+      - (1D)₁₆
+      answer: 0
+      feedback:
+      - null
+      - 'Non : tu as inversé les deux blocs de 4 bits ; le bloc de **poids fort** (0011 = 3) s''écrit à gauche.'
+      - 'Non : 59 est l''écriture **décimale** de ce nombre, pas son écriture hexadécimale.'
+      - 'Non : tu as décalé les bits d''un rang ; il faut regrouper strictement par blocs de 4 bits **à partir de la droite**.'
+      explanation: 0011 → 2 + 1 = 3 ; 1011 → 8 + 2 + 1 = 11 = B. Donc (0011 1011)₂ = (3B)₁₆ = 59₍₁₀₎.
+      tags:
+      - hexadecimal
+    - type: input
+      level: 3
+      prompt: Convertir (0100 1101)₂ en hexadécimal (deux symboles).
+      answer: 4D
+      accept:
+      - (4d)16
+      - '0x4d'
+      - 4d16
+      numeric: false
+      explanation: 'Blocs de 4 bits : 0100 = 4 et 1101 = 8 + 4 + 1 = 13 = D, donc (4D)₁₆. En décimal : 4 × 16 + 13 = 77.'
+      tags:
+      - hexadecimal
+    - type: input
+      level: 3
+      prompt: Convertir (3B)₁₆ en base 10.
+      answer: '59'
+      numeric: true
+      tolerance: 0
+      explanation: 3 × 16¹ + 11 × 16⁰ = 48 + 11 = 59. Le symbole B vaut 11 en décimal.
+      tags:
+      - hexadecimal
+    - type: order
+      level: 2
+      prompt: Remettez dans l'ordre les divisions successives qui convertissent 59 en binaire.
+      steps:
+      - 59 ÷ 2 = 29 reste 1
+      - 29 ÷ 2 = 14 reste 1
+      - 14 ÷ 2 = 7 reste 0
+      - 7 ÷ 2 = 3 reste 1
+      - 3 ÷ 2 = 1 reste 1
+      - 1 ÷ 2 = 0 reste 1
+      tags:
+      - binaire
+    - type: match
+      level: 2
+      prompt: Associez chaque nombre décimal à son écriture binaire sur 4 bits.
+      pairs:
+      - left: 9₍₁₀₎
+        right: (1001)₂
+      - left: 10₍₁₀₎
+        right: (1010)₂
+      - left: 12₍₁₀₎
+        right: (1100)₂
+      - left: 15₍₁₀₎
+        right: (1111)₂
+      tags:
+      - binaire
+    - type: mcq
+      level: 2
+      prompt: 'Dans le mot binaire 1000 0000, le seul bit à 1 est :'
+      choices:
+      - le bit de poids fort (*msb*), de poids 128
+      - le bit de poids faible (*lsb*), de poids 1
+      - le bit de poids 8
+      - un bit sans poids particulier
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le bit de poids faible est celui **le plus à droite**, de poids 2⁰ = 1.'
+      - 'Non : le poids 8 = 2³ est le quatrième bit en partant de la droite.'
+      - 'Non : chaque bit a un poids, qui dépend de sa position.'
+      explanation: Le bit le plus à gauche est le bit de poids fort (*most significant bit*), ici 2⁷ = 128 ; le plus à droite est le bit de poids faible (*least significant bit*), 2⁰ = 1.
+      tags:
+      - binaire
+    - type: input
+      level: 2
+      prompt: Combien de valeurs différentes peut-on coder sur 4 bits ?
+      answer: '16'
+      numeric: true
+      tolerance: 0
+      explanation: '2⁴ = 16 valeurs, de 0 (0000) à 15 (1111) : c''est exactement ce que code un symbole hexadécimal.'
+      tags:
+      - binaire
+    - type: mcq
+      level: 2
+      prompt: 'D''après la table ASCII, le caractère « A » est codé par :'
+      choices:
+      - 41 en hexadécimal
+      - 14 en hexadécimal
+      - 41 en décimal
+      - A en hexadécimal
+      answer: 0
+      feedback:
+      - null
+      - 'Non : tu as inversé les deux symboles ; on lit d''abord la ligne (4) puis la colonne (1).'
+      - 'Non : le code est donné en hexadécimal ; (41)₁₆ vaut 65 en décimal.'
+      - 'Non : « A » est le caractère, pas son code ; le symbole hexadécimal A vaut 10.'
+      explanation: 'Chaque caractère ASCII est codé sur 8 bits, donc sur 2 symboles hexadécimaux : « A » = (41)₁₆ = 65₍₁₀₎ = (0100 0001)₂.'
+      tags:
+      - ascii
+    - type: mcq
+      level: 2
+      prompt: Sur combien de bits, et donc sur combien de symboles hexadécimaux, est codé un caractère du code ASCII ?
+      choices:
+      - 8 bits, soit 2 symboles hexadécimaux
+      - 8 bits, soit 8 symboles hexadécimaux
+      - 4 bits, soit 1 symbole hexadécimal
+      - 16 bits, soit 4 symboles hexadécimaux
+      answer: 0
+      feedback:
+      - null
+      - 'Non : un symbole hexadécimal code 4 bits, donc 8 bits en demandent 2.'
+      - 'Non : 4 bits ne permettraient de coder que 16 caractères.'
+      - 'Non : 16 bits correspondent à l''encodage UTF-16, pas au code ASCII.'
+      explanation: 8 bits = 2 blocs de 4 bits = 2 symboles hexadécimaux. En UTF-8, « A » s'écrit 01000001, comme en ASCII.
+      tags:
+      - ascii
+    - type: mcq
+      level: 3
+      prompt: On applique le masque 0000 1111 à la donnée 1011 0110 par une opération logique **ET**. Quel est le résultat ?
+      choices:
+      - 0000 0110
+      - 1011 0000
+      - 1011 1111
+      - 0000 1111
+      answer: 0
+      feedback:
+      - null
+      - 'Non : tu as conservé les bits de poids fort ; ce serait le résultat du masque 1111 0000.'
+      - 'Non : c''est le résultat d''un **OU** logique, pas d''un ET.'
+      - 'Non : tu as recopié le masque au lieu de le combiner avec la donnée.'
+      explanation: 'Le ET bit à bit ne conserve les bits de la donnée qu''aux positions où le masque vaut 1 : ici les 4 bits de poids faible, soit 0110, d''où 0000 0110.'
+      tags:
+      - binaire
+  - id: info-logique
+    title: Logique combinatoire
+    icon: 🔀
+    description: Variables logiques, fonctions ET, OU et NON, tables de vérité, équations logiques et chronogrammes.
+    prerequisites:
+    - info-numeration
+    lesson: lessons/info-logique.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Qu'est-ce qu'une **variable logique** ?
+      choices:
+      - Une variable qui ne peut prendre que deux valeurs, 0 ou 1
+      - Une variable qui prend n'importe quelle valeur entière
+      - Une variable qui varie continûment
+      - Une variable codée sur 8 bits
+      answer: 0
+      feedback:
+      - null
+      - 'Non : ce serait une variable de type entier.'
+      - 'Non : une variation continue caractérise une grandeur analogique.'
+      - 'Non : une variable logique (booléen) tient sur **1 bit**.'
+      explanation: 'Les variables logiques modélisent des événements vrais ou faux : 0 ou 1, *False* ou *True*, *Low* ou *High*.'
+      tags:
+      - logique
+    - type: mcq
+      level: 1
+      prompt: Quand la sortie d'une fonction **ET** vaut-elle 1 ?
+      choices:
+      - Seulement si toutes les entrées valent 1
+      - Dès qu'au moins une entrée vaut 1
+      - Seulement si toutes les entrées valent 0
+      - Quand les entrées sont différentes
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la fonction **OU**.'
+      - 'Non : ce serait la fonction NON-OU, hors programme du cours.'
+      - 'Non : c''est un OU exclusif, qui n''est pas au programme de ce chapitre.'
+      explanation: 'S = e₁ · e₂ vaut 1 uniquement pour e₁ = 1 et e₂ = 1 : les trois autres combinaisons donnent 0.'
+      tags:
+      - logique
+    - type: mcq
+      level: 1
+      prompt: Quand la sortie d'une fonction **OU** vaut-elle 1 ?
+      choices:
+      - Dès qu'au moins une entrée vaut 1
+      - Seulement si toutes les entrées valent 1
+      - Seulement si une seule entrée vaut 1
+      - Jamais si les deux entrées valent 1
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la fonction **ET**.'
+      - 'Non : le OU du cours n''est pas exclusif : il vaut aussi 1 quand les deux entrées valent 1.'
+      - 'Non : pour e₁ = 1 et e₂ = 1, le OU vaut bien 1.'
+      explanation: 'S = e₁ + e₂ ne vaut 0 que dans un seul cas : e₁ = 0 et e₂ = 0.'
+      tags:
+      - logique
+    - type: mcq
+      level: 1
+      prompt: Que fait la fonction **NON** appliquée à une entrée e₁ ?
+      choices:
+      - Elle inverse l'entrée: 0 devient 1 et 1 devient 0
+      - Elle recopie l'entrée
+      - Elle met la sortie à 0 dans tous les cas
+      - Elle compare deux entrées
+      answer: 0
+      feedback:
+      - null
+      - 'Non : recopier l''entrée, c''est la fonction **OUI**.'
+      - 'Non : la sortie dépend de l''entrée.'
+      - 'Non : la fonction NON n''a qu''une seule entrée.'
+      explanation: 'S = e₁ barre : la table de vérité comporte 2 lignes, 0 → 1 et 1 → 0.'
+      tags:
+      - logique
+    - type: mcq
+      level: 1
+      prompt: Dans une équation logique, comment note-t-on la fonction **ET** ?
+      choices:
+      - Par un point, S = e₁ · e₂
+      - Par un signe plus, S = e₁ + e₂
+      - Par une barre au-dessus de la variable
+      - Par un point d'exclamation
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le signe + note la fonction **OU**.'
+      - 'Non : la barre note la fonction **NON** (complément).'
+      - 'Non : le point d''exclamation est la notation du NON en langage C.'
+      explanation: 'Notations du cours : ET = point, OU = +, NON = barre. En langage C : ET = &&, OU = ||, NON = !.'
+      tags:
+      - logique
+    - type: mcq
+      level: 1
+      prompt: Combien de lignes comporte la table de vérité d'une fonction à n variables d'entrée ?
+      choices:
+      - 2ⁿ lignes
+      - n lignes
+      - 2 × n lignes
+      - n² lignes
+      answer: 0
+      feedback:
+      - null
+      - 'Non : il y a n variables, mais 2ⁿ combinaisons possibles de leurs valeurs.'
+      - 'Non : pour n = 3, on obtient 8 lignes et non 6.'
+      - 'Non : c''est 2ⁿ, pas n².'
+      explanation: 'Chaque variable prend 2 valeurs : la table énumère toutes les combinaisons, soit 2ⁿ lignes.'
+      tags:
+      - logique
+    - type: grid
+      level: 2
+      prompt: Cochez les cases où la sortie S vaut **1**, pour la fonction ET (S = e₁ · e₂) et pour la fonction OU (S = e₁ + e₂).
+      rows:
+      - id: '00'
+        label: e₁ = 0, e₂ = 0
+      - id: '01'
+        label: e₁ = 0, e₂ = 1
+      - id: '10'
+        label: e₁ = 1, e₂ = 0
+      - id: '11'
+        label: e₁ = 1, e₂ = 1
+      cols:
+      - id: ET
+        label: ET (S = e₁ · e₂)
+      - id: OU
+        label: OU (S = e₁ + e₂)
+      answer:
+      - ET11
+      - OU01
+      - OU10
+      - OU11
+      labels:
+        ET00: ET (0, 0)
+        ET01: ET (0, 1)
+        ET10: ET (1, 0)
+        ET11: ET (1, 1)
+        OU00: OU (0, 0)
+        OU01: OU (0, 1)
+        OU10: OU (1, 0)
+        OU11: OU (1, 1)
+      cellFeedback:
+        ET01: le ET exige que **toutes** les entrées valent 1
+        ET10: le ET exige que **toutes** les entrées valent 1
+        OU00: 'aucune entrée à 1 : le OU vaut 0'
+      explanation: La fonction ET ne vaut 1 que sur la dernière ligne ; la fonction OU vaut 0 seulement sur la première.
+      tags:
+      - logique
+    - type: input
+      level: 2
+      prompt: Une fonction logique possède 4 variables d'entrée. Combien de lignes comporte sa table de vérité ?
+      answer: '16'
+      numeric: true
+      tolerance: 0
+      unit: lignes
+      explanation: '2ⁿ combinaisons, donc 2⁴ = 16 lignes. Erreur classique : répondre 8 (2³) ou 4 (le nombre de variables).'
+      tags:
+      - logique
+    - type: mcq
+      level: 2
+      prompt: Que signifie l'équation logique S = a · (e barre + c) ?
+      choices:
+      - S vaut 1 si a vaut 1 ET si (e vaut 0 OU c vaut 1)
+      - S vaut 1 si a vaut 1 OU si (e vaut 0 ET c vaut 1)
+      - S vaut 1 si a, e et c valent tous 1
+      - S vaut 1 si a vaut 0
+      answer: 0
+      feedback:
+      - null
+      - 'Non : tu as échangé le point (ET) et le signe + (OU).'
+      - 'Non : la barre au-dessus de e signifie que c''est e = 0 qui rend ce terme vrai.'
+      - 'Non : a n''est pas complémenté, il doit valoir 1.'
+      explanation: Le point est un ET, le signe + un OU, la barre un NON. La parenthèse se calcule d'abord, comme en algèbre.
+      tags:
+      - logique
+    - type: mcq
+      level: 2
+      prompt: Qu'est-ce qu'un **chronogramme** en logique combinatoire ?
+      choices:
+      - Un graphe qui montre l'état logique des entrées et des sorties en fonction du temps
+      - Un tableau qui donne la sortie pour chaque combinaison des entrées
+      - Une équation reliant les variables logiques
+      - Un schéma des composants électroniques
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la **table de vérité**.'
+      - 'Non : c''est l''**équation logique**.'
+      - 'Non : c''est un schéma structurel ; le chronogramme montre le comportement dans le temps.'
+      explanation: Table de vérité, équation logique et chronogramme sont trois descriptions équivalentes d'une même fonction.
+      tags:
+      - logique
+    - type: mcq
+      level: 2
+      prompt: En langage de type C, comment s'écrivent les opérateurs logiques ET, OU et NON ?
+      choices:
+      - '&& , || , !'
+      - '& , | , ~'
+      - ET , OU , NON
+      - + , · , barre
+      answer: 0
+      feedback:
+      - null
+      - 'Non : &, | et ~ agissent bit à bit (opérations sur des masques), pas sur des booléens.'
+      - 'Non : les mots français sont ceux du pseudo-code, pas du langage C.'
+      - 'Non : ce sont les notations de l''équation logique écrite à la main.'
+      explanation: ET booléen = &&, OU booléen = ||, NON booléen = !.
+      tags:
+      - logique
+    - type: order
+      level: 2
+      prompt: Remettez dans l'ordre la méthode pour décrire une fonction logique à partir d'un cahier des charges.
+      steps:
+      - Repérer les variables d'entrée et la variable de sortie
+      - Compter le nombre n de variables d'entrée
+      - Tracer une table de vérité de 2ⁿ lignes
+      - Écrire toutes les combinaisons des entrées, ligne par ligne
+      - Remplir la colonne de sortie d'après le cahier des charges
+      - En déduire l'équation logique de la sortie
+      tags:
+      - logique
+    - type: mcq
+      level: 3
+      prompt: Un convecteur doit chauffer **uniquement** si le local est occupé (a = 1) et si la température de consigne n'est pas atteinte (b = 0). Quelle équation logique décrit la sortie S ?
+      choices:
+      - S = a · b barre
+      - S = a · b
+      - S = a + b barre
+      - S = a barre · b
+      answer: 0
+      feedback:
+      - null
+      - 'Non : S = a · b ferait chauffer quand la consigne **est** atteinte.'
+      - 'Non : avec un OU, le convecteur chaufferait aussi quand le local est vide.'
+      - 'Non : tu as complémenté la mauvaise variable ; c''est b qui doit valoir 0.'
+      explanation: 'Les deux conditions doivent être réunies : ET. La seconde est « consigne non atteinte », donc b barre. En C : S = a && !b.'
+      tags:
+      - logique
+    - type: mcq
+      level: 3
+      prompt: Une table de vérité donne S = 1 pour (a, b) = (0, 1) et (1, 0), et S = 0 pour (0, 0) et (1, 1). Peut-on écrire S = a + b ?
+      choices:
+      - 'Non : le OU donnerait S = 1 pour (1, 1)'
+      - 'Oui : le OU vaut 1 dès qu''une entrée vaut 1'
+      - 'Non : il faudrait écrire S = a · b'
+      - Oui, à condition d'inverser a
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le OU vaut effectivement 1 dès qu''une entrée vaut 1, y compris pour (1, 1) : la table ne correspond donc pas.'
+      - 'Non : le ET ne vaudrait 1 que pour (1, 1), c''est encore plus faux.'
+      - 'Non : inverser a échangerait deux lignes, sans corriger la ligne (1, 1).'
+      explanation: 'Cette fonction vaut 1 quand les entrées sont **différentes** : c''est un OU exclusif, différent du OU du cours (dont la seule ligne à 0 est (0, 0)).'
+      tags:
+      - logique
+    - type: mcq
+      level: 3
+      prompt: Sur un chronogramme, l'entrée a est au niveau haut de 0 à 4 s, l'entrée b de 2 à 6 s. Pour S = a · b, quand la sortie est-elle au niveau haut ?
+      choices:
+      - De 2 à 4 s
+      - De 0 à 6 s
+      - De 0 à 2 s puis de 4 à 6 s
+      - Jamais
+      answer: 0
+      feedback:
+      - null
+      - 'Non : de 0 à 6 s, c''est la sortie du **OU** (au moins une entrée haute).'
+      - 'Non : ce serait l''intervalle où une seule entrée est haute, donc un OU exclusif.'
+      - 'Non : les deux entrées sont bien hautes en même temps entre 2 et 4 s.'
+      explanation: Le ET est haut seulement lorsque les deux entrées sont hautes simultanément, soit sur l'intersection des deux intervalles.
+      tags:
+      - logique
+    - type: grid
+      level: 3
+      prompt: Cochez les lignes où la sortie vaut 1 pour l'équation S = a · (b barre + c).
+      rows:
+      - id: '000'
+        label: a = 0, b = 0, c = 0
+      - id: '001'
+        label: a = 0, b = 0, c = 1
+      - id: '010'
+        label: a = 0, b = 1, c = 0
+      - id: '011'
+        label: a = 0, b = 1, c = 1
+      - id: '100'
+        label: a = 1, b = 0, c = 0
+      - id: '101'
+        label: a = 1, b = 0, c = 1
+      - id: '110'
+        label: a = 1, b = 1, c = 0
+      - id: '111'
+        label: a = 1, b = 1, c = 1
+      cols:
+      - id: S
+        label: S = 1
+      answer:
+      - S100
+      - S101
+      - S111
+      labels:
+        S000: (0, 0, 0)
+        S001: (0, 0, 1)
+        S010: (0, 1, 0)
+        S011: (0, 1, 1)
+        S100: (1, 0, 0)
+        S101: (1, 0, 1)
+        S110: (1, 1, 0)
+        S111: (1, 1, 1)
+      cellFeedback:
+        S000: 'a = 0 : le ET impose S = 0, quelle que soit la parenthèse'
+        S001: 'a = 0 : le ET impose S = 0'
+        S010: 'a = 0 : le ET impose S = 0'
+        S011: 'a = 0 : le ET impose S = 0'
+        S110: a = 1 mais b = 1 et c = 0, donc la parenthèse vaut 0 + 0 = 0
+      explanation: 'S = 1 exige a = 1 **et** une parenthèse à 1, c''est-à-dire b = 0 ou c = 1 : les lignes (1, 0, 0), (1, 0, 1) et (1, 1, 1).'
+      tags:
+      - logique
+  - id: info-algo
+    title: Algorithmes et diagrammes
+    icon: 🧭
+    description: Algorithme, variables, structures SI, TANT QUE et POUR, algorigramme et diagrammes SysML (activité, états-transitions, séquence).
+    prerequisites:
+    - info-logique
+    lesson: lessons/info-algo.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Qu'est-ce qu'un **algorithme** ?
+      choices:
+      - Une suite finie d'instructions élémentaires exécutées dans un ordre déterminé
+      - Un programme écrit dans un langage de programmation
+      - Un schéma électronique
+      - Un diagramme SysML
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le **programme** est la traduction de l''algorithme dans un langage compris par la machine.'
+      - 'Non : un algorithme décrit un traitement, pas un montage.'
+      - 'Non : le diagramme est une représentation possible, pas la définition de l''algorithme.'
+      explanation: 'L''algorithme décrit la méthode de résolution, indépendamment du langage : on l''écrit en pseudo-code ou sous forme d''algorigramme.'
+      tags:
+      - algorithme
+    - type: order
+      level: 1
+      prompt: Remettez dans l'ordre les trois étapes qui mènent d'un problème à son programme.
+      steps:
+      - 'Analyse : définir le problème'
+      - 'Algorithme : définir la méthode amenant à la solution'
+      - 'Programme : transcrire dans le langage de programmation'
+      tags:
+      - algorithme
+    - type: mcq
+      level: 1
+      prompt: Dans un algorigramme, quelle forme normalisée représente un **test** (une condition) ?
+      choices:
+      - Le losange
+      - Le parallélogramme
+      - Le rectangle
+      - Le rectangle à bouts arrondis
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le parallélogramme représente une entrée ou une sortie de données.'
+      - 'Non : le rectangle simple représente un traitement.'
+      - 'Non : le rectangle à bouts arrondis marque le début ou la fin.'
+      explanation: Le losange pose une question à laquelle on répond par oui ou par non ; il a donc deux sorties.
+      tags:
+      - algorigramme
+    - type: match
+      level: 2
+      prompt: Associez chaque symbole normalisé d'algorigramme à son rôle.
+      pairs:
+      - left: Rectangle à bouts arrondis
+        right: Début ou fin
+      - left: Rectangle
+        right: Traitement
+      - left: Rectangle à double barre verticale
+        right: Sous-programme
+      - left: Parallélogramme
+        right: Entrée ou sortie de données
+      - left: Losange
+        right: Test ou condition
+      tags:
+      - algorigramme
+    - type: mcq
+      level: 1
+      prompt: Quelle est la différence entre une **constante** et une **variable** ?
+      choices:
+      - La constante ne change pas au cours du programme, la variable peut changer
+      - La constante est un nombre, la variable est du texte
+      - La constante est locale, la variable est globale
+      - La constante occupe plus de place en mémoire
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le type de la donnée n''a rien à voir avec son caractère constant ou variable.'
+      - 'Non : local et global décrivent la **portée**, pas la distinction constante/variable.'
+      - 'Non : la place occupée dépend du **type** de la donnée.'
+      explanation: 'On déclare une constante par nom = valeur (Pi = 3,1416) et une variable par nom : type. La variable est une boîte dont on peut changer le contenu.'
+      tags:
+      - algorithme
+    - type: mcq
+      level: 1
+      prompt: Quel type déclare-t-on pour une variable qui ne peut valoir que 0 ou 1 ?
+      choices:
+      - Le type booléen
+      - Le type entier
+      - Le type décimal
+      - Le type chaîne de caractères
+      answer: 0
+      feedback:
+      - null
+      - 'Non : un entier peut prendre bien d''autres valeurs ; on gaspillerait de la mémoire.'
+      - 'Non : un décimal sert aux nombres à virgule.'
+      - 'Non : une chaîne sert à représenter du texte.'
+      explanation: Un booléen est une variable logique codée sur 1 bit, parfois notée *True* / *False* ou *High* / *Low*.
+      tags:
+      - algorithme
+    - type: mcq
+      level: 2
+      prompt: 'Une variable déclarée **à l''intérieur** d''une fonction est :'
+      choices:
+      - une variable locale, utilisable seulement dans cette fonction
+      - une variable globale, utilisable partout dans le programme
+      - une constante
+      - un paramètre de la fonction
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les variables globales sont définies en dehors de toute fonction.'
+      - 'Non : une constante ne change pas de valeur ; ici rien ne l''interdit.'
+      - 'Non : les paramètres figurent dans l''en-tête de la fonction, entre parenthèses.'
+      explanation: 'La portée d''une variable désigne les espaces du programme où elle est accessible : locale (dans sa fonction) ou globale (partout).'
+      tags:
+      - algorithme
+    - type: order
+      level: 2
+      prompt: Remettez dans l'ordre le pseudo-code qui fait clignoter une DEL branchée sur la broche 2.
+      steps:
+      - Début
+      - Allumer la DEL branchée sur la broche 2
+      - Attendre 1 seconde
+      - Éteindre la DEL
+      - Attendre 1 seconde
+      - Recommencer
+      - Fin
+      tags:
+      - algorithme
+    - type: mcq
+      level: 2
+      prompt: À quoi reconnaît-on une **structure alternative** (conditionnelle) ?
+      choices:
+      - Une condition est testée et offre deux issues qui s'excluent mutuellement
+      - Un traitement est répété tant qu'une condition est vraie
+      - Les traitements s'enchaînent sans test
+      - Un compteur est décrémenté jusqu'à zéro
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la structure **répétitive** (TANT QUE).'
+      - 'Non : c''est la structure **linéaire**.'
+      - 'Non : c''est la boucle avec comptage (POUR).'
+      explanation: 'SI condition ALORS traitement 1 SINON traitement 2 FIN SI : sur l''algorigramme, le losange a une sortie oui et une sortie non.'
+      tags:
+      - algorithme
+    - type: mcq
+      level: 2
+      prompt: 'Quelle structure correspond au pseudo-code : TANT QUE condition vraie FAIRE traitement FIN TANT QUE ?'
+      choices:
+      - La structure répétitive (itérative)
+      - La structure linéaire
+      - La structure alternative
+      - La boucle avec comptage
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la structure linéaire enchaîne des traitements sans aucun test.'
+      - 'Non : la structure alternative utilise SI… ALORS… SINON et offre deux issues exclusives.'
+      - 'Non : la boucle avec comptage s''écrit POUR… REPETER… DECREMENTER… FIN POUR.'
+      explanation: On teste d'abord la condition ; si elle est vraie, le traitement est exécuté, puis on reboucle sur le test.
+      tags:
+      - algorithme
+    - type: order
+      level: 2
+      prompt: Remettez dans l'ordre les blocs de l'algorigramme d'une boucle avec comptage (structure POUR).
+      steps:
+      - 'Initialiser la variable : N = x'
+      - 'Tester la condition : N = 0 ?'
+      - 'Si non : exécuter le traitement'
+      - 'Décrémenter la variable : N = N − 1'
+      - Reboucler sur le test
+      - 'Si oui : sortir de la boucle'
+      tags:
+      - algorigramme
+    - type: input
+      level: 3
+      prompt: Dans une boucle avec comptage initialisée par N = 5 et décrémentée d'une unité à chaque passage, combien de fois le traitement est-il exécuté ?
+      answer: '5'
+      numeric: true
+      tolerance: 0
+      unit: fois
+      explanation: Le traitement est exécuté pour N = 5, 4, 3, 2 et 1 ; la boucle s'arrête dès que N = 0, sans exécuter le traitement une sixième fois.
+      tags:
+      - algorithme
+    - type: mcq
+      level: 2
+      prompt: Dans un **diagramme de séquence** (sd), comment appelle-t-on le trait vertical pointillé surmonté d'un rectangle de description ?
+      choices:
+      - Une ligne de vie
+      - Un message réflexif
+      - Une transition
+      - Un état initial
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le message réflexif est une flèche qui part d''une ligne de vie et y revient.'
+      - 'Non : la transition appartient aux diagrammes d''activité et d''états.'
+      - 'Non : l''état initial est le disque noir des diagrammes d''activité et d''états.'
+      explanation: 'Le diagramme de séquence se lit de haut en bas : chaque bloc ou acteur possède une ligne de vie, et les flèches sont les messages échangés.'
+      tags:
+      - sysml
+    - type: match
+      level: 2
+      prompt: Associez chaque opérateur du diagramme de séquence à sa fonction.
+      pairs:
+      - left: alt
+        right: séquence conditionnelle (sinon, la seconde alternative)
+      - left: loop
+        right: séquence répétitive (tant que la condition est vraie)
+      - left: par
+        right: séquence simultanée (plusieurs actions en même temps)
+      tags:
+      - sysml
+    - type: mcq
+      level: 2
+      prompt: 'Dans un diagramme d''états-transitions, l''activité écrite après le mot-clé **exit** est exécutée :'
+      choices:
+      - au moment où la machine sort de l'état
+      - au moment où la machine entre dans l'état
+      - en permanence tant que la machine reste dans l'état
+      - à la fin du programme
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est le rôle du mot-clé **entry**.'
+      - 'Non : c''est le rôle du mot-clé **do**.'
+      - 'Non : l''activité est liée à l''état, pas à la fin du programme.'
+      explanation: entry = en entrant dans l'état, do = tant qu'on y reste, exit = en en sortant.
+      tags:
+      - sysml
+    - type: mcq
+      level: 3
+      prompt: Qu'est-ce qui distingue le **diagramme d'activité** du **diagramme d'états-transitions** ?
+      choices:
+      - Dans le diagramme d'activité, aucun événement n'est associé aux transitions
+      - Le diagramme d'activité décrit des états, celui d'états-transitions décrit des actions
+      - Le diagramme d'activité n'existe qu'en SysML, l'autre qu'en UML
+      - Le diagramme d'activité ne peut pas comporter de branchement conditionnel
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est l''inverse, le diagramme d''activité décrit des **actions**.'
+      - 'Non : les deux diagrammes font partie du langage SysML.'
+      - 'Non : un diagramme d''activité comporte des nœuds de décision avec des gardes entre crochets.'
+      explanation: Dans un diagramme d'activité, dès qu'une tâche est terminée la suivante commence ; dans un diagramme d'états, c'est un événement qui déclenche la transition.
+      tags:
+      - sysml
+    - type: mcq
+      level: 3
+      prompt: Une boucle répète l'action « Mesurer la température » tant que la condition « Température ≤ 17 °C ? » est fausse, puis alimente la pompe. Que se passe-t-il quand la température atteint 16 °C ?
+      choices:
+      - La condition devient vraie, on sort de la boucle et on alimente la pompe
+      - La condition devient fausse, on continue de mesurer
+      - Le programme s'arrête immédiatement
+      - La pompe est alimentée, puis la mesure reprend dans la boucle
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 16 °C est bien inférieur ou égal à 17 °C, la condition est donc **vraie**.'
+      - 'Non : sortir d''une boucle n''arrête pas le programme ; l''action suivante est exécutée.'
+      - 'Non : « Alimenter la pompe » est placé **après** la sortie oui du test, donc hors de la boucle.'
+      explanation: Tant que la condition est fausse, on reboucle sur la mesure ; dès qu'elle devient vraie, on quitte la boucle et on exécute l'action suivante.
+      tags:
+      - algorigramme
+    - type: mcq
+      level: 3
+      prompt: Dans le diagramme d'activité de commande d'une vanne, trois gardes sortent du nœud de décision qui teste deux codeurs de position. Que fait le système si **un seul** des deux codeurs répond ?
+      choices:
+      - Il transmet l'erreur E1COD puis ne garde que la valeur du codeur actif
+      - Il arrête la vanne et met fin au traitement
+      - Il fait la moyenne des deux valeurs de position
+      - Il transmet l'erreur E2COD puis calcule la position réelle
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''arrêt de la vanne correspond à la garde « aucune réponse des deux codeurs » (erreur E2COD).'
+      - 'Non : la moyenne n''est calculée que si les **deux** codeurs répondent.'
+      - 'Non : E2COD identifie l''erreur « aucun codeur ne répond », pas celle d''un seul codeur muet.'
+      explanation: 'Branche « un des codeurs ne répond pas » : transmission de E1COD à la supervision, puis on ne garde que la valeur du codeur actif avant de calculer la position réelle.'
+      tags:
+      - sysml

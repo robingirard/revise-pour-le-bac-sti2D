@@ -1,0 +1,47 @@
+%% Cosinus et sinus d'un réel x (manuel p. 98).
+%% M est le point du cercle trigonométrique associé à x (ici x = 0,9 rad) :
+%% cos(x) est son abscisse, sin(x) son ordonnée.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=2.2cm,y=2.2cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  cercle/.style={solideE, line width=1.1pt},
+  rappel/.style={line width=0.5pt, dash pattern=on 3pt off 2pt, black!55},
+  droit/.style={line width=0.5pt, black!70}]
+
+%% ---------------- coordonnées de M : x = 0,9 rad -----------------------
+\def\cosx{0.6216}
+\def\sinx{0.7833}
+
+%% ---------------- repère et cercle -------------------------------------
+\draw[axe] (-1.28,0) -- (1.32,0);
+\draw[axe] (0,-1.28) -- (0,1.32);
+\draw[cercle] (0,0) circle (1);
+\node[font=\small, text=solideE, anchor=east, inner sep=3pt] at (203:1) {$\mathcal{C}$};
+\node[font=\small, anchor=north east, inner sep=2pt] at (-0.03,-0.03) {$O$};
+\fill (1,0) circle (1.6pt);
+\node[font=\small, anchor=north west, inner sep=3pt] at (1,0) {$I$};
+\fill (0,1) circle (1.6pt);
+\node[font=\small, anchor=south east, inner sep=3pt] at (0,1) {$J$};
+
+%% ---------------- traits de rappel et angles droits --------------------
+\draw[rappel] (\cosx,\sinx) -- (0,\sinx);
+\draw[rappel] (\cosx,\sinx) -- (\cosx,0);
+\draw[droit] (\cosx-0.1,0) -- (\cosx-0.1,0.1) -- (\cosx,0.1);
+\draw[droit] (0.1,\sinx) -- (0.1,\sinx-0.1) -- (0,\sinx-0.1);
+
+%% ---------------- rayon OM, arc x et point M ---------------------------
+\draw[solideA, line width=1.2pt] (0,0) -- (\cosx,\sinx);
+\draw[solideA, line width=1pt] (0.42,0) arc (0:51.566:0.42);
+\node[font=\small, text=solideA, anchor=west, inner sep=2pt] at (24:0.46) {$x$};
+\fill[solideA] (\cosx,\sinx) circle (1.8pt);
+\node[font=\small, anchor=south west, inner sep=2pt] at (\cosx,\sinx) {$M$};
+
+%% ---------------- projections : cos(x) et sin(x) -----------------------
+\fill (\cosx,0) circle (1.6pt);
+\node[font=\small, anchor=north, inner sep=4pt] at (\cosx,0) {$\cos(x)$};
+\fill (0,\sinx) circle (1.6pt);
+\node[font=\small, anchor=east, inner sep=4pt] at (0,\sinx) {$\sin(x)$};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,62 @@
+%% Point de fonctionnement d'un ensemble moteur-charge (leçon pc-dynamique).
+%% Couple utile Tu (N.m) en fonction de la vitesse de rotation n (tr/min).
+%% Le point de fonctionnement A est à l'INTERSECTION des deux caractéristiques :
+%% ici Tu ~ 104 N.m pour n ~ 905 tr/min (lecture graphique, valeurs du manuel :
+%% « 100 N.m à une vitesse légèrement supérieure à 900 tr/min »).
+%% Échelles : 1 tr/min -> 0,0075 cm ; 1 N.m -> 0,028 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[
+  axe/.style={-{Stealth[length=5pt]}, line width=0.7pt},
+  courbe/.style={line width=1.3pt, line join=round, line cap=round},
+  rappel/.style={line width=0.6pt, dash pattern=on 2.5pt off 2pt, black!65},
+  grad/.style={font=\scriptsize}]
+
+\begin{scope}[x=0.0075cm, y=0.028cm]
+
+  %% ---------------- quadrillage (100 tr/min x 10 N.m) ----------------
+  \draw[solideB!12, line width=0.4pt]
+    \foreach \i in {0,100,...,1000} { (\i,0) -- (\i,155) }
+    \foreach \j in {0,10,...,150} { (0,\j) -- (1000,\j) };
+
+  %% ---------------- axes et graduations -------------------------------
+  \draw[axe] (0,0) -- (1080,0);
+  \draw[axe] (0,0) -- (0,170);
+  \foreach \i in {0,200,...,1000} {
+    \draw[line width=0.6pt] (\i,0) -- (\i,-4) node[grad, anchor=north, inner sep=2pt] {\i}; }
+  \foreach \j in {50,100,150} {
+    \draw[line width=0.6pt] (0,\j) -- (-8,\j) node[grad, anchor=east, inner sep=2pt] {\j}; }
+  \node[grad, anchor=north east, inner sep=3pt] at (0,0) {0};
+  \node[font=\footnotesize, anchor=north] at (500,-22)
+       {Vitesse de rotation $n$ (tr.min$^{-1}$)};
+  \node[font=\footnotesize, rotate=90, anchor=south] at (-78,80)
+       {Couple utile $T_u$ (N.m)};
+
+  %% ---------------- caractéristique de la charge ----------------------
+  \draw[courbe, solideA] (0,0) -- (1000,115);
+
+  %% ---------------- caractéristique du moteur -------------------------
+  % montée douce jusqu'au maximum (790 ; 145) puis chute brutale vers (1000 ; 0)
+  \draw[courbe, solideB] plot[smooth, tension=0.7] coordinates
+        {(0,60) (150,63) (300,70) (450,82) (600,103) (700,124) (790,145)}
+     -- plot[smooth, tension=0.7] coordinates
+        {(790,145) (850,136) (905,104) (950,65) (1000,0)};
+  \foreach \i/\j in {0/60, 300/70, 600/103, 790/145, 1000/0} {
+    \filldraw[fill=white, draw=solideB, line width=0.9pt] (\i,\j) circle (0.055cm); }
+
+  %% ---------------- point de fonctionnement A -------------------------
+  \draw[rappel] (905,0) -- (905,104) -- (0,104);
+  \fill[black] (905,104) circle (0.075cm);
+  \node[font=\small, anchor=south west, inner sep=3pt] at (905,104) {\textbf{A}};
+  \draw[line width=0.9pt] (905,0) -- (905,-7);
+  \draw[line width=0.9pt] (0,104) -- (-12,104);
+\end{scope}
+
+%% ---------------- encadré de légende (coordonnées en cm) -------------
+\node[draw=black!45, fill=white, rounded corners=2pt, line width=0.5pt,
+      inner sep=4pt, anchor=north west, font=\scriptsize, align=left] at (0.20,4.18)
+     {\textcolor{solideB}{\rule[1pt]{10pt}{1.4pt}}~Caractéristique du moteur\\[1pt]
+      \textcolor{solideA}{\rule[1pt]{10pt}{1.4pt}}~Caractéristique de la charge};
+\end{tikzpicture}
+\end{document}

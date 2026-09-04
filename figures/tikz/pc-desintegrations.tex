@@ -1,0 +1,109 @@
+%% Les trois désintégrations (alpha, bêta moins, bêta plus) et le rayonnement gamma.
+%% Chaque ligne : noyau père à gauche, flèche du type de rayonnement, noyau fils à droite,
+%% puis flèche oblique vers la particule (ou le photon) émise.
+%% Les noyaux sont des amas de disques : orange (solideD) = proton, bleu (solideB) = neutron.
+%% Le nombre exact de nucléons n'est pas figuré (c'est l'étiquette qui le donne).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  fl/.style={-{Stealth[length=5pt]}, line width=0.9pt},
+  ray/.style={font=\small, inner sep=2.5pt},
+  noy/.style={font=\small, inner sep=2pt, anchor=north, align=center},
+  det/.style={font=\scriptsize, inner sep=1pt, anchor=north, text=black!65, align=center},
+  part/.style={font=\scriptsize, inner sep=2pt, anchor=west, align=left}]
+
+%% ---------- Amas de nucléons : disques de 1,6 mm en quinconce -----------------
+%% \amasgen{<centre>}{<liste colonne/ligne/couleur>} : réseau hexagonal
+%% (pas horizontal 0,16 cm ; pas vertical 0,1386 cm = 0,08 x racine de 3).
+\newcommand\amasgen[2]{%
+  \begin{scope}[shift={#1}, x=0.16cm, y=0.1386cm]
+    \foreach \cx/\cy/\cc in {#2} {
+      \fill[\cc] (\cx,\cy) circle[radius=0.08cm];
+      \draw[black!55, line width=0.25pt] (\cx,\cy) circle[radius=0.08cm];}
+  \end{scope}}
+%% amas « père » : 10 nucléons (5 protons, 5 neutrons)
+\newcommand\amaspere[1]{\amasgen{#1}{-1/1/solideD, 0/1/solideB, 1/1/solideD,
+  -1.5/0/solideB, -0.5/0/solideD, 0.5/0/solideB, 1.5/0/solideD,
+  -1/-1/solideB, 0/-1/solideD, 1/-1/solideB}}
+%% amas « fils » : 7 nucléons
+\newcommand\amasfils[1]{\amasgen{#1}{-0.5/1/solideD, 0.5/1/solideB,
+  -1/0/solideB, 0/0/solideD, 1/0/solideB, -0.5/-1/solideD, 0.5/-1/solideB}}
+%% amas « hélium » : 4 nucléons (2 protons, 2 neutrons)
+\newcommand\amashe[1]{\amasgen{#1}{0/1/solideB, -0.5/0/solideD, 0.5/0/solideB, 0/-1/solideD}}
+
+%% ---------- Cadre léger --------------------------------------------------------
+\draw[black!25, line width=0.6pt, rounded corners=4pt] (-0.7,-1.25) rectangle (7.55,5.9);
+
+%% ================= ligne 1 : désintégration alpha =============================
+\begin{scope}[shift={(0,5.0)}]
+  \amaspere{(0.35,0)}
+  \node[noy] at (0.35,-0.32) {$^{A}_{Z}\mathrm{X}$};
+  \draw[fl] (1.05,0) -- (2.45,0) node[ray, midway, above] {$\alpha$};
+  \amasfils{(3.10,0)}
+  \node[noy] at (3.10,-0.32) {$^{A-4}_{Z-2}\mathrm{Y}$};
+  \draw[fl, solideD] (3.55,0.16) -- (4.35,0.58);
+  \amashe{(4.65,0.66)}
+  \node[part] at (4.92,0.66) {particule $\alpha$ : $^{4}_{2}\mathrm{He}$};
+\end{scope}
+
+%% ================= ligne 2 : désintégration bêta moins ========================
+\begin{scope}[shift={(0,3.35)}]
+  \amaspere{(0.35,0)}
+  \node[noy] at (0.35,-0.32) {$^{14}_{6}\mathrm{C}$};
+  \node[det] at (0.35,-0.68) {6 protons\\8 neutrons};
+  \draw[fl] (1.05,0) -- (2.45,0) node[ray, midway, above] {$\beta^{-}$};
+  \amaspere{(3.10,0)}
+  \node[noy] at (3.10,-0.32) {$^{14}_{7}\mathrm{N}$};
+  \node[det] at (3.10,-0.68) {7 protons\\7 neutrons};
+  \draw[fl, solideE] (3.55,0.16) -- (4.40,0.58);
+  \fill[solideE] (4.60,0.66) circle (0.13);
+  \node[font=\scriptsize, text=white] at (4.60,0.66) {$-$};
+  \node[part] at (4.80,0.66) {électron : $^{\,0}_{-1}\mathrm{e}$};
+\end{scope}
+
+%% ================= ligne 3 : désintégration bêta plus =========================
+\begin{scope}[shift={(0,1.7)}]
+  \amaspere{(0.35,0)}
+  \node[noy] at (0.35,-0.32) {$^{10}_{6}\mathrm{C}$};
+  \node[det] at (0.35,-0.68) {6 protons\\4 neutrons};
+  \draw[fl] (1.05,0) -- (2.45,0) node[ray, midway, above] {$\beta^{+}$};
+  \amaspere{(3.10,0)}
+  \node[noy] at (3.10,-0.32) {$^{10}_{5}\mathrm{B}$};
+  \node[det] at (3.10,-0.68) {5 protons\\5 neutrons};
+  \draw[fl, solideA] (3.55,0.16) -- (4.40,0.58);
+  \fill[solideA] (4.60,0.66) circle (0.13);
+  \node[font=\scriptsize, text=white] at (4.60,0.66) {$+$};
+  \node[part] at (4.80,0.66) {positron : $^{0}_{+1}\mathrm{e}$};
+\end{scope}
+
+%% ================= ligne 4 : rayonnement gamma (désexcitation) ================
+\begin{scope}[shift={(0,0)}]
+  \amaspere{(0.35,0)}
+  \draw[solideF, line width=0.5pt, dash pattern=on 1.6pt off 1.4pt] (0.35,0) circle (0.40);
+  \node[noy] at (0.35,-0.50) {$^{A}_{Z}\mathrm{Y}^{*}$};
+  \node[det] at (0.35,-0.86) {noyau excité};
+  \draw[fl] (1.05,0) -- (2.45,0) node[ray, midway, above] {$\gamma$};
+  \amaspere{(3.10,0)}
+  \node[noy] at (3.10,-0.32) {$^{A}_{Z}\mathrm{Y}$};
+  \node[det] at (3.10,-0.68) {désexcité};
+  % photon : onde sinusoïdale terminée par une pointe de flèche
+  \begin{scope}[shift={(3.55,0.16)}, rotate=27]
+    \draw[solideF, line width=1pt, line join=round, -{Stealth[length=4.5pt]}]
+      plot[domain=0:0.86, samples=61] (\x,{0.075*sin(\x*1080)});
+  \end{scope}
+  \node[part, text=solideF] at (4.50,0.66) {photon $\gamma$};
+  \node[draw=black!55, line width=0.6pt, rounded corners=3pt, fill=black!3,
+        font=\scriptsize, inner sep=4pt, anchor=west, align=center] at (5.55,0.10)
+    {$A$ et $Z$\\inchangés};
+\end{scope}
+
+%% ---------- Légende ------------------------------------------------------------
+\fill[solideD] (1.55,-1.58) circle (0.09);
+\draw[black!55, line width=0.25pt] (1.55,-1.58) circle (0.09);
+\node[font=\small, anchor=west, inner sep=3pt] at (1.65,-1.58) {proton};
+\fill[solideB] (3.75,-1.58) circle (0.09);
+\draw[black!55, line width=0.25pt] (3.75,-1.58) circle (0.09);
+\node[font=\small, anchor=west, inner sep=3pt] at (3.85,-1.58) {neutron};
+\end{tikzpicture}
+\end{document}

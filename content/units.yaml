@@ -1,6 +1,7 @@
 title: Révise STI2D
 units:
 - id: liaisons
+  matiere: ingenierie
   title: Les liaisons mécaniques
   description: Les 10 liaisons normalisées — symboles, mobilités, contacts, efforts.
   skills:
@@ -286,6 +287,7 @@ units:
       numeric: true
       explanation: ddl + composantes transmissibles = 6, donc 6 − 2 = 4.
 - id: schema
+  matiere: ingenierie
   title: Le schéma cinématique
   description: Du mécanisme réel au schéma — classes d'équivalence, graphe des liaisons, tracé.
   skills:
@@ -427,6 +429,7 @@ units:
       - 'Non : les symboles se placent aux centres réels des liaisons.'
       - 'Non : la taille des pièces ne compte pas, la position des liaisons si.'
 - id: transmission-mvt
+  matiere: ingenierie
   title: Transmettre et transformer le mouvement
   description: Engrenages, poulies, roue et vis sans fin, pignon-crémaillère, vis-écrou, bielle-manivelle ; couple et rendement.
   skills:
@@ -875,6 +878,7 @@ units:
         unit: N
         explanation: 'F = 18 ÷ 0,025 = 720 N. Vérification : P m = 0,5 × 314 = 157 W ; P s = F × V = 720 × 0,157 = 113 W ; 113 ÷ 157 = 0,72 = η.'
 - id: cinematique
+  matiere: ingenierie
   title: Mouvements et cinématique
   description: Trajectoires, translation et rotation, vitesses, accélération, équations du mouvement.
   skills:

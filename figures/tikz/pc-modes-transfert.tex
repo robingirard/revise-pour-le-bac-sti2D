@@ -1,0 +1,89 @@
+%% Les trois modes de transfert thermique sur une même scène : une casserole d'eau sur un feu.
+%%   - conduction  : de proche en proche dans la paroi et le manche (petites flèches en chaîne) ;
+%%   - convection  : boucles de matière dans l'eau (montée chaude au centre, descente froide au bord) ;
+%%   - rayonnement : ondes issues des flammes, qui s'échappent hors du cadre (aucun milieu requis).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+    metal/.style={draw=black!65, line width=0.8pt, fill=black!22, line join=round},
+    etiq/.style={font=\footnotesize\bfseries, fill=white, inner sep=2pt, align=center},
+    pointe/.style={-{Stealth[length=5pt]}, line width=0.8pt},
+    chaine/.style={-{Stealth[length=3.5pt]}, line width=0.9pt, solideD},
+    pastille/.style={draw=black!45, line width=0.6pt, rounded corners=3pt, fill=black!3,
+                     font=\scriptsize, align=center, text width=2.10cm, inner sep=3pt, anchor=north}]
+
+%% ---------- Macros locales ------------------------------------------------------
+%% flamme : #1 = abscisse, #2 = ordonnée de la base, #3 = hauteur
+\newcommand\flamme[3]{%
+  \fill[solideA] (#1,#2)
+    .. controls ({#1-0.42*#3},{#2+0.45*#3}) and ({#1-0.18*#3},{#2+0.62*#3}) .. ({#1},{#2+#3})
+    .. controls ({#1+0.18*#3},{#2+0.62*#3}) and ({#1+0.42*#3},{#2+0.45*#3}) .. (#1,#2) -- cycle;
+  \fill[solideD] ({#1},{#2+0.10*#3})
+    .. controls ({#1-0.24*#3},{#2+0.42*#3}) and ({#1-0.10*#3},{#2+0.50*#3}) .. ({#1},{#2+0.72*#3})
+    .. controls ({#1+0.10*#3},{#2+0.50*#3}) and ({#1+0.24*#3},{#2+0.42*#3}) .. ({#1},{#2+0.10*#3})
+    -- cycle;}
+%% onde de rayonnement : #1 = angle, #2 = rayon de départ, #3 = rayon d'arrivée, #4 = couleur
+\newcommand\onde[4]{%
+  \begin{scope}[shift={(0,0.30)}, rotate=#1]
+    \draw[#4, line width=0.7pt] plot[domain=#2:#3, samples=60, smooth]
+         (\x, {0.075*sin(360*\x/0.34)});
+  \end{scope}}
+
+%% ---------- Cadre de la scène ---------------------------------------------------
+\draw[draw=black!30, line width=0.6pt, dash pattern=on 3pt off 2pt, rounded corners=4pt]
+     (-3.60,-1.05) rectangle (3.60,3.35);
+
+%% ---------- Rayonnement : ondes issues des flammes ------------------------------
+\onde{172}{1.05}{3.90}{solideA}
+\onde{186}{1.05}{3.25}{solideD}
+\onde{202}{0.95}{2.60}{solideA}
+\onde{222}{0.85}{2.40}{solideD}
+\onde{246}{0.80}{1.90}{solideA}
+\onde{294}{0.80}{1.90}{solideD}
+\onde{318}{0.85}{2.40}{solideA}
+\onde{338}{0.95}{2.60}{solideD}
+\onde{354}{1.05}{3.25}{solideA}
+\onde{8}{1.05}{3.90}{solideD}
+
+%% ---------- Le feu : deux bûches croisées + trois flammes -----------------------
+\draw[line width=4pt, line cap=round, brown!60!black] (-1.05,-0.62) -- (0.95,-0.18);
+\draw[line width=4pt, line cap=round, brown!45!black] (-0.95,-0.18) -- (1.05,-0.62);
+\flamme{-0.60}{-0.15}{0.62}
+\flamme{0.60}{-0.15}{0.62}
+\flamme{0.00}{-0.20}{0.85}
+
+%% ---------- La casserole vue en coupe -------------------------------------------
+\fill[solideB!16] (-1.45,0.70) rectangle (1.45,2.05);
+\draw[solideB!55, line width=0.7pt] (-1.45,2.05) -- (1.45,2.05);
+\draw[metal] (1.60,1.95) -- (2.95,1.95) arc (-90:90:0.11) -- (1.60,2.17) -- cycle;
+\draw[metal] (-1.60,2.35) -- (-1.60,0.55) -- (1.60,0.55) -- (1.60,2.35) -- (1.45,2.35)
+          -- (1.45,0.70) -- (-1.45,0.70) -- (-1.45,2.35) -- cycle;
+
+%% ---------- Convection : deux boucles fermées dans l'eau ------------------------
+\foreach \s in {-1,1} {
+  \draw[solideA, line width=1pt, rounded corners=0.22cm, -{Stealth[length=5pt]}]
+       (\s*0.30,0.88) -- (\s*0.30,1.82) -- (\s*1.22,1.82);
+  \draw[solideB, line width=1pt, rounded corners=0.22cm, -{Stealth[length=5pt]}]
+       (\s*1.22,1.82) -- (\s*1.22,0.88) -- (\s*0.30,0.88);}
+
+%% ---------- Conduction : petites flèches en chaîne le long de la paroi et du manche
+\foreach \y in {0.72,1.12,1.52} { \draw[chaine] (1.74,\y) -- (1.74,{\y+0.28}); }
+\foreach \x in {1.78,2.14,2.50} { \draw[chaine] (\x,2.32) -- ({\x+0.28},2.32); }
+
+%% ---------- Étiquettes des trois modes ------------------------------------------
+\node[etiq, text=solideD] (lc) at (2.65,1.05) {CONDUCTION};
+\draw[pointe, solideD] (lc.north) -- (2.60,2.00);
+\node[etiq, text=solideA] (lv) at (-2.60,2.95) {CONVECTION};
+\draw[pointe, solideA] (lv.south east) -- (-0.95,1.55);
+\node[etiq, text=solideA] (lr) at (-2.55,-0.62) {RAYONNEMENT};
+
+%% ---------- Rappel des trois définitions ----------------------------------------
+\node[pastille, text=solideD] at (-2.50,-1.30)
+  {\textbf{Conduction}\\ milieu matériel, sans déplacement de matière};
+\node[pastille, text=solideA] at (0,-1.30)
+  {\textbf{Convection}\\ déplacement de matière (gaz ou liquide)};
+\node[pastille, text=solideA] at (2.50,-1.30)
+  {\textbf{Rayonnement}\\ ondes électromagnétiques, sans milieu};
+\end{tikzpicture}
+\end{document}

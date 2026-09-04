@@ -1,0 +1,51 @@
+%% Température et agitation microscopique : deux vignettes du MÊME corps.
+%% À gauche (froid, solideB) et à droite (chaud, solideA) : mêmes constituants,
+%% aux mêmes positions ; seule la longueur des flèches d'agitation change.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+    cadre/.style={draw=black!65, line width=0.9pt, rounded corners=2pt, fill=black!3},
+    titre/.style={font=\small\bfseries, anchor=south},
+    sous/.style={font=\small, anchor=north},
+    agit/.style={-{Stealth[length=3.5pt]}, line width=0.7pt}]
+
+%% ---------- Macro locale : une vignette -----------------------------------------
+%% #1 = abscisse du centre, #2 = couleur, #3 = longueur des flèches (cm),
+%% #4 = 1 pour ajouter les traits de vibration (corps chaud), 0 sinon
+\newcommand\vignette[4]{%
+  \begin{scope}[shift={(#1,0)}]
+    \draw[cadre] (-1.55,-1.5) rectangle (1.55,1.5);
+    \foreach \px/\py/\ang in {%
+        -1.125/0.75/110, -0.375/0.75/20,  0.375/0.75/255, 1.125/0.75/155,
+        -1.125/0/-40,    -0.375/0/70,     0.375/0/190,    1.125/0/-100,
+        -1.125/-0.75/15, -0.375/-0.75/230, 0.375/-0.75/85, 1.125/-0.75/300} {
+      \fill[#2] (\px,\py) circle (0.115);
+      \draw[agit, #2] ([shift={(\ang:0.15)}]\px,\py) -- ([shift={(\ang:{0.15+#3})}]\px,\py);
+      \ifnum#4=1
+        \draw[line width=0.45pt, #2!55] ([shift={(\ang+125:0.20)}]\px,\py)
+                                     -- ([shift={(\ang+125:0.33)}]\px,\py);
+        \draw[line width=0.45pt, #2!55] ([shift={(\ang-125:0.20)}]\px,\py)
+                                     -- ([shift={(\ang-125:0.33)}]\px,\py);
+      \fi}
+  \end{scope}}
+
+%% ---------- Les deux vignettes --------------------------------------------------
+\vignette{-2.45}{solideB}{0.20}{0}          % agitation faible (~2 mm)
+\vignette{2.45}{solideA}{0.50}{1}           % agitation forte  (~5 mm)
+
+\node[titre, text=solideB] at (-2.45,1.6) {Corps froid};
+\node[titre, text=solideA] at (2.45,1.6)  {Corps chaud};
+\node[sous] at (-2.45,-1.62) {$\theta$ faible};
+\node[sous] at (2.45,-1.62)  {$\theta$ élevée};
+
+%% ---------- Apport d'énergie ----------------------------------------------------
+\draw[-{Stealth[length=7pt]}, line width=2.4pt, solideD] (-0.75,0) -- (0.75,0);
+\node[font=\small, text=solideD, anchor=south, inner sep=3pt] at (0,0.16) {on chauffe};
+
+%% ---------- Légende -------------------------------------------------------------
+\node[font=\scriptsize, align=center, anchor=north] at (0,-2.15)
+  {Ni le nombre ni la masse des constituants ne changent :\\
+   seule leur \textbf{agitation} augmente avec la température.};
+\end{tikzpicture}
+\end{document}

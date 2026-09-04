@@ -1,0 +1,43 @@
+%% Signe du travail d'une force selon l'angle alpha entre F et le déplacement AB
+%% (leçon pc-travail-energie) : W = F x AB x cos(alpha).
+%% (1) alpha = 40° : moteur — (2) alpha = 90° : nul — (3) alpha = 140° : résistant.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  vect/.style={-{Stealth[length=6pt]}, line width=1.2pt},
+  croix/.style={line width=0.9pt, black}]
+
+%% --- macro locale : un schéma complet, paramétré par l'angle alpha ----
+%%  #1 décalage horizontal, #2 numéro, #3 angle alpha, #4 légende
+\newcommand\cas[4]{%
+  \begin{scope}[shift={(#1,0)}]
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (2.2,0);
+    % secteur de l'angle alpha (en fond)
+    \fill[solideE!25] (A) -- (0.55,0) arc (0:#3:0.55) -- cycle;
+    \draw[line width=0.5pt, black!55] (0.55,0) arc (0:#3:0.55);
+    \node[font=\small] at ({#3/2}:0.82) {$\alpha$};
+    % le déplacement AB
+    \draw[vect, solideB] (A) -- (B);
+    \node[font=\small, text=solideB, anchor=north, inner sep=3pt] at (1.1,-0.06)
+         {$\overrightarrow{\mathrm{AB}}$};
+    % les points A et B (croix)
+    \foreach \px in {0,2.2} {
+      \draw[croix] (\px-0.09,-0.09) -- (\px+0.09,0.09)
+                   (\px-0.09,0.09) -- (\px+0.09,-0.09); }
+    \node[font=\small, anchor=north east, inner sep=2pt] at (A) {A};
+    \node[font=\small, anchor=north west, inner sep=2pt] at (B) {B};
+    % la force F, appliquée en A
+    \draw[vect, solideA] (A) -- (#3:1.5)
+         node[anchor=south, inner sep=2pt, font=\small, text=solideA] {$\vec{F}$};
+    % numéro et légende
+    \node[font=\small, anchor=south] at (1.1,1.75) {\textbf{(#2)}};
+    \node[font=\footnotesize, anchor=north, align=center] at (1.1,-0.75) {#4};
+  \end{scope}}
+
+\cas{0}{1}{40}{$\alpha < 90^\circ$\\ travail \textbf{moteur}\\ $W > 0$}
+\cas{3.6}{2}{90}{$\alpha = 90^\circ$\\ la force \textbf{ne travaille pas}\\ $W = 0$}
+\cas{7.2}{3}{140}{$\alpha > 90^\circ$\\ travail \textbf{résistant}\\ $W < 0$}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,38 @@
+%% Modulation par largeur d'impulsion (MLI, PWM) : rapport cyclique de 70 %.
+%% alpha = Th/T = 1,4/2 = 70 %  et  Umoyenne = 0,70 x Umax.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  grad/.style={font=\scriptsize},
+  cote/.style={{Stealth[length=4.5pt]}-{Stealth[length=4.5pt]}, line width=1pt},
+  guide/.style={black!45, dash pattern=on 2pt off 2pt, line width=0.6pt}]
+
+%% ================== repère ============================================
+\draw[axe] (-0.3,0) -- (6.6,0) node[anchor=north east, inner sep=3pt, font=\small] {$t$};
+\draw[axe] (0,-0.25) -- (0,1.85) node[anchor=south east, inner sep=3pt, font=\small] {$V$};
+\node[grad, anchor=east, inner sep=4pt] at (0,0) {0};
+\draw[line width=0.5pt] (0,1.2) -- (-0.1,1.2);
+\node[grad, anchor=east, inner sep=3pt] at (-0.12,1.2) {$U_{\max}$};
+
+%% ================== créneaux : T = 2, Th = 1,4 ========================
+\draw[solideB, line width=1.4pt, line join=round]
+  (0,0) -- (0.3,0) -- (0.3,1.2) -- (1.7,1.2) -- (1.7,0) --
+  (2.3,0) -- (2.3,1.2) -- (3.7,1.2) -- (3.7,0) --
+  (4.3,0) -- (4.3,1.2) -- (5.7,1.2) -- (5.7,0) -- (6.2,0);
+
+%% ================== tension moyenne ===================================
+\draw[solideA, line width=1.1pt, dash pattern=on 3pt off 2pt] (0,0.84) -- (6.3,0.84);
+\node[grad, text=solideA, anchor=west, align=left, text width=1.5cm] at (6.4,0.84)
+      {Tension moyenne};
+
+%% ================== cotes T et Th =====================================
+\draw[guide] (0.3,1.2) -- (0.3,1.68);
+\draw[guide] (2.3,1.2) -- (2.3,1.68);
+\draw[cote, solideE] (0.3,1.55) -- (2.3,1.55);
+\node[grad, text=solideE, anchor=south, inner sep=1pt] at (1.3,1.58) {Période $T$};
+\draw[cote, solideD] (0.3,0.42) -- (1.7,0.42);
+\node[grad, text=solideD, anchor=north, inner sep=2pt] at (1.0,0.4) {$T_h$};
+\end{tikzpicture}
+\end{document}

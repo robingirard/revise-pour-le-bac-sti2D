@@ -1,0 +1,49 @@
+%% Diagramme d'états-transitions (stm) d'un volet roulant automatique.
+%% Deux états, deux transitions déclenchées par la comparaison de N au seuil 614.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cadre/.style={draw=black!70, line width=0.9pt},
+  etat/.style={draw=solideB, line width=1.1pt, fill=white, rounded corners=5pt},
+  fl/.style={-{Stealth[length=5pt]}, line width=1pt, solideA},
+  ev/.style={font=\scriptsize, text=solideA, inner sep=2pt},
+  leg/.style={font=\scriptsize, text=black!60, anchor=west, align=left, text width=1.9cm},
+  amorce/.style={black!55, dash pattern=on 2pt off 2pt, line width=0.5pt}]
+
+%% ================== cadre à onglet ====================================
+\draw[cadre] (0,0) rectangle (5.3,4.4);
+\draw[cadre] (0,3.95) -- (3.3,3.95) -- (3.55,4.18) -- (3.55,4.4);
+\node[font=\scriptsize, anchor=west, inner sep=3pt] at (0.1,4.17)
+     {\texttt{stm} [Machine à État] Volet};
+
+%% ================== pseudo-état de démarrage ==========================
+\fill[black] (0.75,3.65) circle (0.11);
+\draw[fl] (0.86,3.6) -- (1.7,3.27);
+
+%% ================== état « Volet ouvert » =============================
+\draw[etat] (1.4,2.55) rectangle (3.8,3.25);
+\node[font=\small] at (2.6,2.9) {Volet ouvert};
+
+%% ================== état « Volet fermé » (avec activités internes) ====
+\draw[etat] (0.55,0.5) rectangle (4.65,1.78);
+\node[font=\small] at (2.6,1.55) {Volet fermé};
+\draw[solideB, line width=0.8pt] (0.55,1.34) -- (4.65,1.34);
+\node[font=\scriptsize, anchor=west] at (0.7,1.13) {\texttt{entry} / Éclairer voyant rouge};
+\node[font=\scriptsize, anchor=west] at (0.7,0.76) {\texttt{exit} / Éteindre voyant rouge};
+
+%% ================== transitions =======================================
+\draw[fl] (1.9,2.55) -- (1.9,1.81);
+\node[ev, anchor=east] at (1.82,2.25) {$N > 614$};
+\draw[fl] (3.5,1.78) -- (3.5,2.52);
+\node[ev, anchor=west] at (3.58,2.25) {$N \le 614$};
+
+%% ================== légende ===========================================
+\draw[amorce] (0.9,3.65) -- (5.55,3.65);
+\node[leg] at (5.6,3.65) {Pseudo état de démarrage};
+\draw[amorce] (3.85,2.9) -- (5.55,2.9);
+\node[leg] at (5.6,2.9) {État};
+\draw[amorce] (3.52,1.95) -- (5.55,1.95);
+\node[leg] at (5.6,1.95) {Transition (événement)};
+\end{tikzpicture}
+\end{document}

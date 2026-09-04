@@ -1,0 +1,81 @@
+%% Les cinq sollicitations simples. Dans chaque vignette : la même poutre (bleu),
+%% sa ligne moyenne en pointillés, le chargement en rouge et, en trait fin,
+%% la forme prise par la poutre déformée.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  force/.style={-{Stealth[length=5.5pt]}, line width=1.1pt, solideA},
+  reaction/.style={-{Stealth[length=4.5pt]}, line width=0.8pt, solideA},
+  ligne/.style={line width=0.4pt, dash pattern=on 3pt off 2pt, black!60},
+  deforme/.style={line width=0.6pt, black!55},
+  titre/.style={font=\small\bfseries, anchor=south},
+  etiq/.style={font=\small, text=solideA, inner sep=2pt}]
+
+% --- macro locale : la poutre non déformée ----------------------------
+\newcommand\poutre{%
+  \draw[line width=1pt, solideB, fill=solideB!10] (-0.7,-0.15) rectangle (0.7,0.15);
+  \draw[ligne] (-0.95,0) -- (0.95,0);}
+
+%% ============================ Traction ==============================
+\begin{scope}[shift={(0,0)}]
+  \node[titre] at (0,0.72) {Traction};
+  \poutre
+  \draw[force] (0.75,0) -- (1.3,0) node[etiq, anchor=south east] {$N$};
+  \draw[force] (-0.75,0) -- (-1.3,0) node[etiq, anchor=south west] {$N$};
+  \draw[deforme] (-0.95,-0.72) rectangle (0.95,-0.48);
+  \node[font=\small, anchor=north] at (0,-0.82) {allongement};
+\end{scope}
+
+%% ========================== Compression =============================
+\begin{scope}[shift={(2.85,0)}]
+  \node[titre] at (0,0.72) {Compression};
+  \poutre
+  \draw[force] (1.3,0) -- (0.75,0) node[etiq, anchor=south west] {$N$};
+  \draw[force] (-1.3,0) -- (-0.75,0) node[etiq, anchor=south east] {$N$};
+  \draw[deforme] (-0.5,-0.72) rectangle (0.5,-0.48);
+  \node[font=\small, anchor=north] at (0,-0.82) {raccourcissement};
+\end{scope}
+
+%% ============================ Flexion ===============================
+\begin{scope}[shift={(5.7,0)}]
+  \node[titre] at (0,0.72) {Flexion};
+  \poutre
+  \draw[force] (0,0.62) -- (0,0.2) node[etiq, anchor=west, pos=0] {$T$};
+  \foreach \x in {-0.6,0.6}
+    { \draw[line width=0.9pt, draw=solideE, fill=solideE!12] (\x,-0.16) -- ++(-0.2,-0.28) -- ++(0.4,0) -- cycle;
+      \draw[reaction] (\x,-0.75) -- (\x,-0.5); }
+  \draw[deforme] (-0.95,-1.0) .. controls (-0.3,-1.32) and (0.3,-1.32) .. (0.95,-1.0);
+  \node[font=\small, anchor=north] at (0,-1.32) {fléchissement};
+\end{scope}
+
+%% ========================= Cisaillement =============================
+\begin{scope}[shift={(1.43,-2.95)}]
+  \node[titre] at (0,0.72) {Cisaillement};
+  \poutre
+  \draw[line width=1.1pt, solideD] (0,-0.32) -- (0,0.32);
+  \node[font=\small, text=solideD, anchor=east, inner sep=2pt] at (-0.25,-0.45) {plan de coupe};
+  \draw[line width=0.4pt, black!45] (-0.22,-0.43) -- (-0.03,-0.26);
+  \draw[force] (-0.13,0.72) -- (-0.13,0.2);
+  \draw[force] ( 0.13,-0.72) -- (0.13,-0.2);
+  \node[etiq, anchor=east] at (-0.16,0.5) {$T$};
+  \node[etiq, anchor=west] at (0.16,-0.55) {$T$};
+  \node[font=\small, anchor=north] at (0,-0.92) {glissement des sections};
+\end{scope}
+
+%% ============================ Torsion ===============================
+\begin{scope}[shift={(4.28,-2.95)}]
+  \node[titre] at (0,0.72) {Torsion};
+  \poutre
+  % génératrice droite (pointillés) et sa position après torsion
+  \draw[line width=0.5pt, dash pattern=on 2pt off 2pt, black!45] (-0.7,0.15) -- (0.7,0.15);
+  \draw[deforme] (-0.7,0.15) .. controls (0,0.12) and (0.2,-0.02) .. (0.7,-0.12);
+  % deux couples opposés aux deux extrémités
+  \draw[force] ([shift={(-0.7,0)}]110:0.16 and 0.34) arc (110:-110:0.16 and 0.34);
+  \draw[force] ([shift={( 0.7,0)}]-70:0.16 and 0.34) arc (-70:70:0.16 and 0.34);
+  \node[etiq, anchor=east] at (-0.92,0.42) {$T$};
+  \node[etiq, anchor=west] at ( 0.92,0.42) {$T$};
+  \node[font=\small, anchor=north] at (0,-0.62) {les sections tournent};
+\end{scope}
+\end{tikzpicture}
+\end{document}

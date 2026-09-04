@@ -1,0 +1,43 @@
+%% Capteur tout ou rien à hystérésis : deux seuils distincts VT+ et VT-.
+%% La sortie passe à 1 quand l'entrée dépasse le seuil haut en montant,
+%% et ne retombe à 0 que lorsqu'elle passe sous le seuil bas en descendant.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=0.92cm,y=1cm,
+  axe/.style={-{Stealth[length=4.5pt]}, line width=0.6pt},
+  grad/.style={font=\scriptsize},
+  guide/.style={black!55, dash pattern=on 2pt off 2pt, line width=0.6pt}]
+
+%% instants de basculement (radians) : sin = 0,75/1,1 en montant ; 0,25/1,1 en descendant
+\def\tm{0.7503}
+\def\td{2.9124}
+
+%% ================== entrée : sinusoïde et seuils ======================
+\draw[axe] (-0.25,0) -- (6.9,0);
+\draw[axe] (0,-1.45) -- (0,1.75);
+\node[grad, anchor=west, align=left, text width=1.3cm] at (0.12,1.62) {Grandeur d'entrée};
+\draw[solideB, line width=1.4pt] plot[domain=0:6.283, samples=80, smooth] (\x,{1.1*sin(deg(\x))});
+% seuil haut (trait plein) et seuil bas (pointillé)
+\draw[solideD, line width=1pt] (0,0.75) -- (6.35,0.75);
+\node[grad, text=solideD, anchor=west, inner sep=2pt] at (6.4,0.75) {Seuil haut ($V_{T+}$)};
+\draw[solideA, line width=1pt, dash pattern=on 3pt off 2pt] (0,0.25) -- (6.35,0.25);
+\node[grad, text=solideA, anchor=west, inner sep=2pt] at (6.4,0.25) {Seuil bas ($V_{T-}$)};
+\fill[solideE] (\tm,0.75) circle (2pt) (\td,0.25) circle (2pt);
+
+%% ================== sortie : créneau ==================================
+\begin{scope}[shift={(0,-2.55)}]
+  \draw[axe] (-0.25,0) -- (6.9,0) node[grad, anchor=north east, inner sep=3pt] {Temps};
+  \draw[axe] (0,-0.2) -- (0,1.15);
+  \draw[solideE, line width=1.4pt, line join=round]
+        (0,0) -- (\tm,0) -- (\tm,0.75) -- (\td,0.75) -- (\td,0) -- (6.283,0);
+  \node[grad, text=solideE, anchor=west, inner sep=2pt] at (6.4,0.4) {Sortie};
+  \node[grad, anchor=east, inner sep=2pt] at (-0.1,0.75) {1};
+  \node[grad, anchor=east, inner sep=2pt] at (-0.1,0) {0};
+\end{scope}
+
+%% ================== traits de report ==================================
+\draw[guide] (\tm,0.75) -- (\tm,-1.85);
+\draw[guide] (\td,0.25) -- (\td,-1.85);
+\end{tikzpicture}
+\end{document}

@@ -289,21 +289,27 @@ class Builder:
         return self.add({"id": iid, "skill": skill, "type": "flashcard", "level": level, "tags": list(tags),
                          "payload": {"front": front, "back": back}})
 
-    def grid(self, iid, skill, level, prompt, rows, cols, answer, explanation="", labels=None, tags=(), cell_feedback=None):
+    def grid(self, iid, skill, level, prompt, rows, cols, answer, explanation="", labels=None, tags=(), cell_feedback=None, hint=None):
         payload = {"prompt": prompt, "rows": rows, "cols": cols, "answer": list(answer), "explanation": explanation}
         if labels:
             payload["labels"] = labels
+        if hint:
+            payload["hint"] = hint
         if cell_feedback:
             payload["cellFeedback"] = cell_feedback
         return self.add({"id": iid, "skill": skill, "type": "grid", "level": level, "tags": list(tags), "payload": payload})
 
-    def match(self, iid, skill, level, prompt, pairs, tags=()):
-        return self.add({"id": iid, "skill": skill, "type": "match", "level": level, "tags": list(tags),
-                         "payload": {"prompt": prompt, "pairs": pairs}})
+    def match(self, iid, skill, level, prompt, pairs, tags=(), explanation=""):
+        payload = {"prompt": prompt, "pairs": pairs}
+        if explanation:
+            payload["explanation"] = explanation
+        return self.add({"id": iid, "skill": skill, "type": "match", "level": level, "tags": list(tags), "payload": payload})
 
-    def order(self, iid, skill, level, prompt, steps, tags=()):
-        return self.add({"id": iid, "skill": skill, "type": "order", "level": level, "tags": list(tags),
-                         "payload": {"prompt": prompt, "steps": steps}})
+    def order(self, iid, skill, level, prompt, steps, tags=(), explanation=""):
+        payload = {"prompt": prompt, "steps": steps}
+        if explanation:
+            payload["explanation"] = explanation
+        return self.add({"id": iid, "skill": skill, "type": "order", "level": level, "tags": list(tags), "payload": payload})
 
     def input(self, iid, skill, level, prompt, answer, accept=(), numeric=False, tolerance=0, unit="", explanation="", tags=()):
         return self.add({"id": iid, "skill": skill, "type": "input", "level": level, "tags": list(tags),
@@ -576,14 +582,14 @@ class Builder:
             names = {"T": "Translation", "R": "Rotation", "F": "Force", "M": "Moment"}
             cols = [{"id": c, "label": names.get(c, c)} if isinstance(c, str) else c for c in q["cols"]]
             self.grid(iid, skill, level, q["prompt"], rows, cols, q["answer"], q.get("explanation", ""),
-                      labels=q.get("labels"), tags=q.get("tags", []), cell_feedback=q.get("cellFeedback"))
+                      labels=q.get("labels"), tags=q.get("tags", []), cell_feedback=q.get("cellFeedback"), hint=q.get("hint"))
         elif t == "order":
-            self.order(iid, skill, level, q["prompt"], list(q["steps"]), tags=q.get("tags", []))
+            self.order(iid, skill, level, q["prompt"], list(q["steps"]), tags=q.get("tags", []), explanation=q.get("explanation", ""))
         elif t == "input":
             self.input(iid, skill, level, q["prompt"], q["answer"], q.get("accept", []), q.get("numeric", False),
                        q.get("tolerance", 0), q.get("unit", ""), q.get("explanation", ""), tags=q.get("tags", []))
         elif t == "match":
-            self.match(iid, skill, level, q["prompt"], list(q["pairs"]), tags=q.get("tags", []))
+            self.match(iid, skill, level, q["prompt"], list(q["pairs"]), tags=q.get("tags", []), explanation=q.get("explanation", ""))
         elif t == "guided":
             self.guided(iid, skill, q["title"], q.get("intro", ""), list(q["steps"]), tags=q.get("tags", []))
         else:
@@ -1173,7 +1179,8 @@ def build():
             skills.append({"id": sid, "title": s["title"], "icon": s.get("icon", "📘"),
                            "description": s.get("description", ""), "prerequisites": s.get("prerequisites", []),
                            "lesson": lesson, "levels": s.get("levels", 3), "items": new_ids})
-        units.append({"id": u["id"], "title": u["title"], "description": u.get("description", ""), "skills": skills})
+        units.append({"id": u["id"], "matiere": u.get("matiere", "ingenierie"), "title": u["title"],
+                      "description": u.get("description", ""), "skills": skills})
 
     # vérifications
     for u in units:

@@ -1,0 +1,48 @@
+%% Pertes par effet Joule dans une ligne de transport : P_pertes = R x I^2.
+%% Comparaison imposée : P = 20 kW transportée, R = 2,0 ohms ;
+%% sous 230 V, I = 87 A (pertes ~ 15 kW) ; sous 20 kV, I = 1,0 A (pertes 2,0 W).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  fil/.style={line width=0.9pt, line cap=round, line join=round},
+  fleche/.style={-{Stealth[length=5pt]}, line width=0.9pt, draw=solideB},
+  etiq/.style={font=\scriptsize, inner sep=2pt}]
+
+%% ---- générateur (production) --------------------------------------------
+\draw[fil] (0,1) circle (0.35);
+\node[font=\tiny] at (0,1.15) {$+$};
+\node[font=\tiny] at (0,0.85) {$-$};
+\draw[fil] (0,1.35) -- (0,2)  (0,0.65) -- (0,0);
+\node[etiq, align=center, anchor=west, text=black!75] at (0.5,1) {Production\\$U$};
+
+%% ---- ligne : deux fils, chacun de résistance R --------------------------
+\draw[fil] (0,2) -- (2.1,2)  (3.1,2) -- (5.3,2);
+\draw[fil] (0,0) -- (2.1,0)  (3.1,0) -- (5.3,0);
+\draw[fil, fill=white] (2.1,1.75) rectangle (3.1,2.25);
+\draw[fil, fill=white] (2.1,-0.25) rectangle (3.1,0.25);
+\node[font=\footnotesize] at (2.6,2) {$R$};
+\node[font=\footnotesize] at (2.6,0) {$R$};
+\draw[fleche] (0.7,2.3) -- (1.5,2.3);
+\node[etiq, text=solideB, anchor=south] at (1.1,2.32) {$I$};
+
+%% ---- consommateur --------------------------------------------------------
+\draw[fil] (5.3,2) -- (5.3,1.7)  (5.3,0.3) -- (5.3,0);
+\draw[fil, fill=white] (4.3,0.3) rectangle (6.3,1.7);
+\node[etiq, align=center] at (5.3,1) {Consommateur\\$P$};
+
+%% ---- pertes par effet Joule ---------------------------------------------
+\node[font=\small, text=solideA, anchor=south] at (2.6,2.75)
+  {$P_{\text{pertes}} = R \times I^{2}$};
+
+%% ---- comparaison des deux tensions de transport -------------------------
+\draw[black!30, line width=0.5pt] (-0.4,-0.75) -- (6.3,-0.75);
+\node[anchor=north, font=\scriptsize, text=black!75] at (2.85,-0.85)
+  {$P = 20$ kW transportée, ligne $R = 2{,}0\ \Omega$};
+\node[anchor=north, align=center, font=\scriptsize] at (1.15,-1.35)
+  {sous 230 V : $I = 87$ A\\[1pt] $P_{\text{pertes}} \approx 15$ kW};
+\draw[black!30, line width=0.5pt] (2.85,-1.35) -- (2.85,-2.2);
+\node[anchor=north, align=center, font=\scriptsize] at (4.55,-1.35)
+  {sous 20 kV : $I = 1{,}0$ A\\[1pt] $P_{\text{pertes}} = 2{,}0$ W};
+\end{tikzpicture}
+\end{document}

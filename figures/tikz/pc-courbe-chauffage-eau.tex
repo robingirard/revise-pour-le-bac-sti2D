@@ -1,0 +1,69 @@
+%% Courbe de chauffage de 1,0 kg d'eau, de -20 °C à 120 °C, à puissance constante.
+%% La puissance étant constante, la LONGUEUR de chaque portion en abscisse est
+%% proportionnelle à l'énergie reçue (bilan : 42 + 334 + 420 + 2260 + 40 = 3096 kJ).
+%% Échelle des abscisses : 3096 kJ -> 6,8 cm, soit 0,0021964 cm par kJ
+%%   x1 = 0,092 | x2 = 0,826 | x3 = 1,748 | x4 = 6,712 | x5 = 6,800
+%% Échelle des ordonnées : 1 °C -> 0,0215 cm, origine à -20 °C.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+    axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+    courbe/.style={solideB, line width=1.6pt, line join=round, line cap=round},
+    grad/.style={font=\scriptsize, inner sep=2pt},
+    aide/.style={black!25, line width=0.4pt, dotted},
+    repere/.style={line width=0.5pt},
+    rappel/.style={line width=0.4pt, black!45},
+    formule/.style={font=\scriptsize, anchor=west, inner sep=1pt}]
+
+%% ---------- Macros locales ------------------------------------------------------
+\newcommand\yt[1]{{(#1+20)*0.0215}}                % ordonnée d'une température en °C
+\newcommand\pastille[3]{%                            % #1,#2 = position, #3 = numéro
+  \fill[solideA] (#1,#2) circle (0.155);
+  \node[font=\tiny\bfseries, text=white, inner sep=0pt] at (#1,#2) {#3};}
+
+%% ---------- Axes et graduations -------------------------------------------------
+\draw[aide] (0,\yt{0})   -- (7.05,\yt{0});
+\draw[aide] (0,\yt{100}) -- (7.05,\yt{100});
+\draw[aide] (0,\yt{120}) -- (7.05,\yt{120});
+\draw[axe] (0,-0.10) -- (0,3.30);
+\draw[axe] (-0.10,0)  -- (7.20,0) node[anchor=north east, inner sep=4pt, font=\small] {$t$ (s)};
+\node[anchor=south west, inner sep=2pt, font=\small] at (0.05,3.32) {$\theta$ ($^\circ$C)};
+\foreach \t/\lbl in {-20/{$-20$}, 0/{0}, 100/{100}, 120/{120}} {
+  \draw[repere] (0,\yt{\t}) -- (-0.10,\yt{\t});
+  \node[grad, anchor=east] at (-0.12,\yt{\t}) {\lbl};}
+
+%% ---------- La courbe en cinq portions ------------------------------------------
+\draw[courbe] (0,\yt{-20}) -- (0.092,\yt{0}) -- (0.826,\yt{0}) -- (1.748,\yt{100})
+           -- (6.712,\yt{100}) -- (6.800,\yt{120});
+
+%% ---------- Les deux paliers ----------------------------------------------------
+\draw[rappel] (0.55,1.00) -- (0.47,\yt{4});
+\node[font=\footnotesize, text=solideA, anchor=south] at (0.55,1.00) {Fusion};
+\node[font=\footnotesize, text=solideA, anchor=south] at (4.23,\yt{104}) {Ébullition};
+\draw[{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.6pt, black!60]
+  (1.748,\yt{88}) -- (6.712,\yt{88});
+\node[font=\scriptsize, fill=white, inner sep=1.5pt] at (4.23,\yt{88})
+  {73 \% de l'énergie totale};
+
+%% ---------- Numéros des portions ------------------------------------------------
+\draw[rappel] (0.10,\yt{-11}) -- (0.30,\yt{-13});
+\pastille{0.42}{\yt{-13}}{1}
+\pastille{0.98}{\yt{0}}{2}
+\pastille{1.287}{\yt{50}}{3}
+\pastille{3.40}{\yt{100}}{4}
+\draw[rappel] (6.76,\yt{110}) -- (6.45,\yt{113});
+\pastille{6.30}{\yt{113}}{5}
+
+%% ---------- Les cinq énergies ---------------------------------------------------
+\newcommand\legformule[4]{\pastille{#1}{#2}{#3}\node[formule] at (#1+0.24,#2) {#4};}
+\legformule{0.10}{-0.60}{1}{$Q_1 = m\,c_{\text{solide}}\,\Delta\theta$}
+\legformule{2.55}{-0.60}{2}{$Q_2 = m\,L_{\text{fusion}}$}
+\legformule{4.70}{-0.60}{3}{$Q_3 = m\,c_{\text{liquide}}\,\Delta\theta$}
+\legformule{1.10}{-1.12}{4}{$Q_4 = m\,L_{\text{vaporisation}}$}
+\legformule{4.00}{-1.12}{5}{$Q_5 = m\,c_{\text{gaz}}\,\Delta\theta$}
+\node[font=\scriptsize, align=center, anchor=north] at (3.55,-1.45)
+  {Chauffage à puissance constante : la longueur de chaque portion\\
+   est proportionnelle à l'énergie reçue (1,0 kg d'eau, $Q = 3\,096$ kJ).};
+\end{tikzpicture}
+\end{document}

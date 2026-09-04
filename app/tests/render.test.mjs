@@ -117,3 +117,18 @@ test('leçon : maths dans une cellule de tableau, une liste et une ligne $$…$$
     delete globalThis.katex;
   }
 });
+
+test('code en ligne : échappé, sans maths, figure ni gras à l\'intérieur', () => {
+  assert.equal(renderRich('a `x < 1` b'), 'a <code>x &lt; 1</code> b');
+  assert.equal(renderRich('`$x$` et `{{fig:pivot}}`', figures), '<code>$x$</code> et <code>{{fig:pivot}}</code>');
+  assert.equal(renderRich('`**pas gras**` **gras**'), '<code>**pas gras**</code> <strong>gras</strong>');
+});
+
+test('leçon : bloc de code ``` échappé, lignes non fusionnées, entre paragraphes et listes', () => {
+  const md = 'Avant\n\n```python\nSI a > 1 ALORS\n    x = $y$ {{fig:pivot}}\n\nFIN SI\n```\n\n- item\n\nAprès';
+  const html = renderLesson(md, figures);
+  assert.equal(html, '<p>Avant</p>\n<pre class="code"><code>SI a &gt; 1 ALORS\n    x = $y$ {{fig:pivot}}\n\nFIN SI</code></pre>\n<ul><li>item</li></ul>\n<p>Après</p>');
+  assert.ok(!html.includes('<br>') && !html.includes('class="math"') && !html.includes('fig-inline'));
+  // bloc non refermé : affiché quand même
+  assert.equal(renderLesson('```\nDEBUT\nFIN'), '<pre class="code"><code>DEBUT\nFIN</code></pre>');
+});

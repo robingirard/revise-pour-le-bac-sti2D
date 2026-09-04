@@ -1,0 +1,38 @@
+%% Bilan des forces sur un livre posé sur une table (leçon pc-forces).
+%% Deux forces seulement : le poids P (vers le bas) et la réaction R de la table
+%% (vers le haut). Elles sont tracées de MÊME LONGUEUR et sur la même verticale :
+%% c'est la traduction graphique de l'équilibre R = P.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  vect/.style={-{Stealth[length=6pt]}, line width=1.2pt}]
+
+%% ------------------- la table -----------------------------------------
+\filldraw[fill=black!15, draw=black!55, line width=0.7pt]
+      (-3,-0.35) rectangle (3,0);
+\node[font=\small, anchor=north west] at (-3,-0.42) {Table};
+
+%% ------------------- le livre -----------------------------------------
+\filldraw[fill=solideD!30, draw=solideD, line width=1pt]
+      (-0.8,0) rectangle (0.8,0.7);
+\node[font=\small, text=solideD!75!black, anchor=west] at (0.1,0.35) {Livre};
+
+%% ------------------- centre de masse ----------------------------------
+\coordinate (G) at (0,0.35);
+
+%% ------------------- les deux forces ----------------------------------
+% réaction de la table : verticale, vers le haut, longueur 1,6 cm
+\draw[vect, solideE] (G) -- ++(0,1.6)
+      node[anchor=west, inner sep=3pt, font=\small, text=solideE] {$\vec{R}$};
+% poids : verticale, vers le bas, MÊME longueur 1,6 cm
+\draw[vect, black] (G) -- ++(0,-1.6)
+      node[anchor=west, inner sep=3pt, font=\small] {$\vec{P}$};
+\fill[black] (G) circle (1.6pt);
+\node[font=\small, anchor=east, inner sep=4pt] at (G) {$G$};
+
+%% ------------------- cartouche ----------------------------------------
+\node[font=\footnotesize, anchor=north] at (0,-2.05)
+     {Système : le livre \quad---\quad Référentiel : terrestre};
+\end{tikzpicture}
+\end{document}

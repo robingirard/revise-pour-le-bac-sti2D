@@ -1,0 +1,40 @@
+%% Grandeurs caractéristiques d'un signal sinusoïdal :
+%% période T, amplitude, amplitude crête-à-crête et valeur efficace.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  grad/.style={font=\scriptsize},
+  cote/.style={{Stealth[length=4.5pt]}-{Stealth[length=4.5pt]}, line width=1pt},
+  guide/.style={black!45, dash pattern=on 2pt off 2pt, line width=0.6pt}]
+
+%% ================== repère et sinusoïde ===============================
+\draw[axe] (-0.35,0) -- (6.7,0) node[anchor=north east, inner sep=3pt, font=\small] {$t$};
+\draw[axe] (0,-1.75) -- (0,1.95) node[anchor=south east, inner sep=3pt, font=\small] {$U$};
+\draw[solideA, line width=1.4pt] plot[domain=0:5, samples=120, smooth] (\x,{1.2*sin(180*\x)});
+
+%% ================== repères horizontaux ===============================
+\draw[guide] (0,1.2) -- (6.3,1.2);
+\draw[guide] (0,-1.2) -- (6.3,-1.2);
+\node[grad, anchor=east, inner sep=2pt] at (-0.08,1.25) {$U_{\max}$};
+
+%% valeur efficace : Ueff = Umax/racine(2) = 0,849
+\draw[solideD, line width=1pt, dash pattern=on 3pt off 2pt] (0,0.849) -- (5.9,0.849);
+\node[grad, text=solideD, anchor=east, align=right, text width=1.7cm, inner sep=3pt]
+      at (-0.08,0.72) {Valeur efficace (rms)};
+
+%% ================== période ===========================================
+\draw[guide] (0.5,1.2) -- (0.5,1.62);
+\draw[guide] (2.5,1.2) -- (2.5,1.62);
+\draw[cote, solideB] (0.5,1.5) -- (2.5,1.5);
+\node[grad, text=solideB, anchor=south] at (1.5,1.56) {Période $T$};
+
+%% ================== amplitudes ========================================
+\draw[cote, solideE] (5.45,0) -- (5.45,1.2);
+\node[grad, text=solideE, anchor=south] at (5.45,1.28) {Amplitude};
+\draw[cote, solideE] (6.15,-1.2) -- (6.15,1.2);
+\node[grad, text=solideE, anchor=north, align=center, text width=1.8cm] at (6.15,-1.3)
+      {Amplitude crête-à-crête};
+\end{tikzpicture}
+\end{document}
