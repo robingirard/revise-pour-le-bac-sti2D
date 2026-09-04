@@ -1,0 +1,56 @@
+%% mathstc-exp-base-a — faisceau des fonctions x -> a^x pour a = 2 ; 1,5 ; 1 ; 0,8 ; 0,5.
+%% Toutes valent 1 en 0 et restent strictement positives ; a > 1 donne une fonction
+%% croissante, 0 < a < 1 une fonction décroissante, a = 1 la fonction constante.
+%% Échelles : 1 unité d'abscisse -> 1,45 cm ; 1 unité d'ordonnée -> 1,05 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1.45cm,y=1.05cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={line width=1.3pt, line join=round},
+  tirets/.style={dash pattern=on 4pt off 2.5pt},
+  grille/.style={line width=0.3pt, black!15},
+  grad/.style={font=\scriptsize, inner sep=2.5pt},
+  note/.style={font=\scriptsize, text=black!60, inner sep=1.5pt, fill=white}]
+
+%% ================= quadrillage horizontal =================================
+\foreach \v in {1,2,3,4} { \draw[grille] (-2.2,\v) -- (2.2,\v); }
+
+%% ================= axes et graduations ====================================
+\draw[axe] (-2.35,0) -- (2.45,0) node[anchor=north east, inner sep=3pt, font=\small] {$x$};
+\draw[axe] (0,-0.15) -- (0,4.5) node[anchor=east, inner sep=3pt, font=\small] {$y$};
+\node[grad, anchor=north east] at (-0.04,-0.04) {$O$};
+\foreach \xv in {-2,-1,1,2} {
+  \draw[line width=0.5pt] (\xv,0.06) -- (\xv,-0.06);
+  \node[grad, anchor=north] at (\xv,-0.06) {$\xv$}; }
+\foreach \yv in {1,2,3,4} {
+  \draw[line width=0.5pt] (0.03,\yv) -- (-0.03,\yv);
+  \node[grad, anchor=east, xshift=-1pt] at (0,\yv) {$\yv$}; }
+
+%% ================= les cinq courbes =======================================
+\draw[courbe, solideA]           plot[domain=-2:2, samples=80, smooth] (\x,{pow(2,\x)});
+\draw[courbe, solideA, tirets]   plot[domain=-2:2, samples=80, smooth] (\x,{pow(1.5,\x)});
+\draw[courbe, black!45]          plot[domain=-2:2, samples=20, smooth] (\x,{1});
+\draw[courbe, solideB, tirets]   plot[domain=-2:2, samples=80, smooth] (\x,{pow(0.8,\x)});
+\draw[courbe, solideB]           plot[domain=-2:2, samples=80, smooth] (\x,{pow(0.5,\x)});
+
+%% ================= étiquettes, à droite de chaque courbe ==================
+\node[grad, text=solideA,  anchor=west] at (2.03,4)    {$a=2$};
+\node[grad, text=solideA,  anchor=west] at (2.03,2.25) {$a=1{,}5$};
+\node[grad, text=black!55, anchor=west] at (2.03,1)    {$a=1$};
+\node[grad, text=solideB,  anchor=west] at (2.03,0.64) {$a=0{,}8$};
+\node[grad, text=solideB,  anchor=west] at (2.03,0.25) {$a=0{,}5$};
+
+%% ================= le point commun ========================================
+\fill (0,1) circle (2.2pt);
+\node[font=\scriptsize, anchor=north east, inner sep=3pt, fill=white] at (-0.05,0.95) {$(0\,;1)$};
+
+%% ================= sens de variation ======================================
+\node[note, anchor=north west, align=left] at (-2.4,5.05) {$0<a<1$ : décroissante};
+\node[note, anchor=north east, align=right] at (2.35,5.05) {$a>1$ : croissante};
+
+%% ================= positivité, sous le repère =============================
+\node[font=\scriptsize, text=black!60, anchor=north] at (0,-0.55)
+     {toutes ces courbes restent \emph{au-dessus} de l'axe des abscisses};
+\end{tikzpicture}
+\end{document}

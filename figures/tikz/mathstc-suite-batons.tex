@@ -1,0 +1,50 @@
+%% mathstc-suite-batons — diagramme en bâtons de la suite géométrique u_n = 5 x 1,2^n.
+%% D'un bâton au suivant, on MULTIPLIE par la raison 1,2 : l'écart entre deux bâtons
+%% voisins grandit, c'est la signature d'une croissance exponentielle.
+%% Échelles : 1 rang -> 0,62 cm ; 1 unité -> 0,15 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=0.62cm,y=0.15cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  baton/.style={solideA, line width=2.4pt},
+  grille/.style={line width=0.3pt, black!15},
+  grad/.style={font=\scriptsize, inner sep=2.5pt},
+  note/.style={font=\scriptsize, text=black!60, inner sep=1.5pt}]
+
+%% ================= quadrillage horizontal =================================
+\foreach \v in {5,10,...,30} { \draw[grille] (0,\v) -- (10.6,\v); }
+
+%% ================= axes et graduations ====================================
+\draw[axe] (-0.35,0) -- (11.2,0) node[anchor=north east, inner sep=4pt, font=\small] {$n$};
+\draw[axe] (0,-1.2) -- (0,35.5) node[anchor=south west, inner sep=3pt, font=\small] {$u_{n}$};
+\node[grad, anchor=north east] at (-0.06,-0.4) {$O$};
+\foreach \n in {0,1,...,10} {
+  \draw[line width=0.5pt] (\n,0) -- (\n,-0.9);
+  \node[grad, anchor=north] at (\n,-0.9) {\n}; }
+\foreach \v in {5,10,15,20,25,30} {
+  \draw[line width=0.5pt] (0,\v) -- (-0.09,\v);
+  \node[grad, anchor=east] at (-0.09,\v) {\v}; }
+
+%% ================= les onze bâtons ========================================
+\foreach \n/\u in {0/5, 1/6, 2/7.2, 3/8.64, 4/10.37, 5/12.44,
+                   6/14.93, 7/17.92, 8/21.50, 9/25.80, 10/30.96} {
+  \draw[baton] (\n,0) -- (\n,\u);
+  \fill[solideA] (\n,\u) circle (1.7pt); }
+
+%% ================= trois valeurs seulement ================================
+\node[grad, anchor=south] at (0,5.9) {$5$};
+\node[grad, anchor=south] at (4,11.3) {$10{,}37$};
+\node[grad, anchor=south] at (10,31.9) {$30{,}96$};
+
+%% ================= le passage d'un terme au suivant =======================
+\draw[-{Stealth[length=4.5pt]}, black!55, line width=0.7pt]
+     (3.12,9.3) to[bend left=25] (3.9,10.9);
+\node[note, anchor=south east] at (3.0,11.6) {$\times1{,}2$};
+
+%% ================= expression de la suite =================================
+\node[draw=black!45, line width=0.5pt, rounded corners=2pt, fill=white,
+      inner sep=3.5pt, font=\small, anchor=north west] at (0.35,33.5)
+     {$u_{n}=5\times1{,}2^{\,n}$};
+\end{tikzpicture}
+\end{document}

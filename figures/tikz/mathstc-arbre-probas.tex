@@ -1,0 +1,57 @@
+%% mathstc-arbre-probas — arbre pondéré à deux niveaux (deux fournisseurs A et B, pièce
+%% défectueuse D). Sur les branches du second niveau on lit des probabilités
+%% CONDITIONNELLES : P_A(D) = 0,03. La probabilité d'un chemin est le PRODUIT de ses
+%% branches ; P(D) s'obtient en ajoutant les chemins qui aboutissent à D.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  noeud/.style={rounded corners=3pt, draw=black!45, line width=0.7pt, fill=black!8,
+                minimum width=0.85cm, minimum height=0.65cm, inner sep=3pt, font=\small},
+  branche/.style={line width=0.6pt},
+  chemin/.style={solideA, line width=1.8pt},
+  poids/.style={font=\scriptsize, inner sep=2pt, fill=white},
+  note/.style={font=\scriptsize, text=black!60, inner sep=1.5pt},
+  gris/.style={black!55, line width=0.6pt}]
+
+%% ================= les nœuds ==============================================
+\fill (0,0) circle (2pt);
+\node[noeud] (A)  at (1.55, 1.4) {$A$};
+\node[noeud] (B)  at (1.55,-1.4) {$B$};
+\node[noeud] (AD) at (3.45, 2.2) {$D$};
+\node[noeud] (AN) at (3.45, 0.7) {$\overline{D}$};
+\node[noeud] (BD) at (3.45,-0.7) {$D$};
+\node[noeud] (BN) at (3.45,-2.2) {$\overline{D}$};
+
+%% ================= premier niveau =========================================
+\draw[chemin]  (0.1,0.06) -- (A.west);
+\draw[branche] (0.1,-0.06) -- (B.west);
+\node[poids, text=solideA] at (0.72,0.95) {$0{,}60$};
+\node[poids] at (0.72,-0.95) {$0{,}40$};
+
+%% ================= second niveau ==========================================
+\draw[chemin]  (A) -- (AD);
+\draw[branche] (A) -- (AN);
+\draw[branche] (B) -- (BD);
+\draw[branche] (B) -- (BN);
+\node[poids, text=solideA] at (2.5,2.05) {$0{,}03$};
+\node[poids] at (2.5,0.85) {$0{,}97$};
+\node[poids] at (2.5,-0.85) {$0{,}05$};
+\node[poids] at (2.5,-2.05) {$0{,}95$};
+
+%% ================= probabilité de chaque chemin ===========================
+\node[font=\scriptsize, text=solideA, anchor=west] at (4.0, 2.2) {$0{,}018$};
+\node[font=\scriptsize, anchor=west] at (4.0, 0.7) {$0{,}582$};
+\node[font=\scriptsize, anchor=west] at (4.0,-0.7) {$0{,}020$};
+\node[font=\scriptsize, anchor=west] at (4.0,-2.2) {$0{,}380$};
+
+%% ================= regroupement des deux chemins menant à D ===============
+\draw[gris] (4.78,2.2) -- (4.92,2.2) -- (4.92,-0.7) -- (4.78,-0.7);
+\draw[gris] (4.92,0.75) -- (5.06,0.75);
+\node[note, anchor=west, align=left, text width=2.6cm] at (5.08,0.75)
+     {$P(D)=0{,}018+0{,}020$\\$\phantom{P(D)}=0{,}038$};
+
+%% ================= somme des chemins ======================================
+\node[note, anchor=north] at (2.3,-2.85) {somme des quatre chemins $=1$};
+\end{tikzpicture}
+\end{document}

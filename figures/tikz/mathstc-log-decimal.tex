@@ -1,0 +1,67 @@
+%% mathstc-log-decimal — courbe du logarithme décimal et lecture de log(350).
+%% log(x) est l'exposant à donner à 10 pour obtenir x : log(10) = 1, log(100) = 2.
+%% La croissance est très lente : entre 100 et 500, log ne gagne que 0,7.
+%% Échelles : 100 en abscisse -> 1,3 cm ; 1 unité d'ordonnée -> 1,4 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={solideA, line width=1.3pt, line join=round},
+  lecture/.style={solideE, line width=1.1pt, dash pattern=on 4pt off 2.5pt},
+  rappel/.style={line width=0.7pt, black!55, dash pattern=on 3pt off 2pt},
+  grille/.style={line width=0.3pt, black!15},
+  grad/.style={font=\scriptsize, inner sep=2.5pt},
+  note/.style={font=\scriptsize, text=black!60, inner sep=1.5pt}]
+
+\newcommand\xv[1]{{(#1)*0.013}}       % abscisse d'une valeur x
+\newcommand\yv[1]{{(#1)*1.4}}         % ordonnée d'une valeur y
+\newcommand\lgd[1]{{ln(#1)/ln(10)}}    % logarithme décimal
+
+%% ================= quadrillage ============================================
+\foreach \t in {100,200,300,400,500} { \draw[grille] (\xv{\t},\yv{-0.6}) -- (\xv{\t},\yv{3}); }
+\foreach \u in {1,2,3} { \draw[grille] (0,\yv{\u}) -- (\xv{520},\yv{\u}); }
+
+%% ================= axes et graduations ====================================
+\draw[axe] (-0.12,0) -- (\xv{560},0) node[anchor=north east, inner sep=3pt, font=\small] {$x$};
+\draw[axe] (0,\yv{-0.72}) -- (0,\yv{3.25}) node[anchor=south west, inner sep=3pt, font=\small] {$y$};
+\node[grad, anchor=north east] at (-0.02,-0.02) {$O$};
+\foreach \t in {100,200,300,400,500} {
+  \draw[line width=0.5pt] (\xv{\t},0) -- (\xv{\t},-0.08);
+  \node[grad, anchor=north] at (\xv{\t},-0.08) {\t}; }
+\foreach \u in {1,2,3} {
+  \draw[line width=0.5pt] (0,\yv{\u}) -- (-0.08,\yv{\u});
+  \node[grad, anchor=east] at (-0.08,\yv{\u}) {$\u$}; }
+
+%% ================= la courbe y = log(x) ===================================
+%% deux morceaux : échantillonnage serré là où la courbe est raide
+\draw[courbe] plot[domain=3:40, samples=60, smooth] (\xv{\x},\yv{\lgd{\x}});
+\draw[courbe] plot[domain=40:500, samples=80, smooth] (\xv{\x},\yv{\lgd{\x}});
+\node[font=\small, text=solideA, anchor=south east, inner sep=3pt, fill=white]
+     at (\xv{510},\yv{2.78}) {$y=\log(x)$};
+
+%% ================= deux points repères ====================================
+\fill (\xv{10},\yv{1}) circle (1.8pt);
+\node[grad, anchor=south east, inner sep=3pt] at (\xv{10},\yv{1}) {$(10\,;1)$};
+\fill (\xv{100},\yv{2}) circle (1.8pt);
+\node[grad, anchor=north west, inner sep=4pt] at (\xv{100},\yv{2}) {$(100\,;2)$};
+
+%% ================= lecture de log(350) ====================================
+\draw[rappel] (\xv{350},0) -- (\xv{350},\yv{2.544});
+\draw[lecture] (\xv{350},\yv{2.544}) -- (0,\yv{2.544});
+\fill (\xv{350},\yv{2.544}) circle (2.2pt);
+\node[grad, anchor=north] at (\xv{350},-0.08) {$350$};
+\node[grad, text=solideE, anchor=east] at (-0.08,\yv{2.544}) {$\log(350)\approx2{,}54$};
+
+%% ================= comportement près de zéro ==============================
+\draw[-{Stealth[length=4.5pt]}, black!55, line width=0.7pt]
+     (\xv{14},\yv{0.55}) -- (\xv{14},\yv{-0.35});
+\node[note, anchor=north west, align=left, text width=3.4cm] at (\xv{45},\yv{0.95})
+     {la courbe plonge vers le bas\\quand $x$ se rapproche de $0$};
+
+%% ================= définition, encadrée ===================================
+\node[draw=black!45, line width=0.5pt, rounded corners=2pt, fill=white, inner sep=3.5pt,
+      font=\small, anchor=north east] at (\xv{520},\yv{-0.5})
+     {$\log(b)$ est la solution de $10^{x}=b$};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,64 @@
+%% mathstc-cout-moyen — coût moyen C_M(q) = 0,5q + 40 + 800/q : une courbe en U.
+%% À gauche, les frais fixes (800 €) sont répartis sur peu de pièces, le coût moyen
+%% s'envole ; à droite, le terme 0,5q l'emporte et le coût moyen remonte. Entre les
+%% deux, un minimum en q = 40 pièces.
+%% Échelles : 1 pièce -> 0,062 cm ; 1 € -> 0,04 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={solideA, line width=1.3pt, line join=round},
+  rappel/.style={line width=0.7pt, black!55, dash pattern=on 3pt off 2pt},
+  grille/.style={line width=0.3pt, black!15},
+  grad/.style={font=\scriptsize, inner sep=2.5pt},
+  note/.style={font=\scriptsize, text=black!60, inner sep=1.5pt}]
+
+\newcommand\xq[1]{{(#1)*0.062}}       % abscisse d'une quantité
+\newcommand\yc[1]{{(#1)*0.04}}        % ordonnée d'un coût moyen (€/pièce)
+\newcommand\cm[1]{{0.5*(#1)+40+800/(#1)}}
+
+%% ================= quadrillage ============================================
+\foreach \q in {20,40,60,80,100} { \draw[grille] (\xq{\q},0) -- (\xq{\q},\yc{130}); }
+\foreach \c in {40,80,120} { \draw[grille] (0,\yc{\c}) -- (\xq{105},\yc{\c}); }
+
+%% ================= axes et graduations ====================================
+\draw[axe] (-0.12,0) -- (\xq{113},0);
+\node[grad, anchor=south east] at (\xq{113},0.05) {quantité $q$};
+\draw[axe] (0,-0.12) -- (0,\yc{143});
+\node[grad, anchor=south west, xshift=2pt] at (0.02,\yc{144}) {coût moyen (€ par pièce)};
+\node[grad, anchor=north east] at (-0.02,-0.02) {$O$};
+\foreach \q in {20,60,80,100} {
+  \draw[line width=0.5pt] (\xq{\q},0) -- (\xq{\q},-0.08);
+  \node[grad, anchor=north] at (\xq{\q},-0.08) {\q}; }
+\draw[line width=0.5pt] (\xq{40},0) -- (\xq{40},-0.08);
+\foreach \c in {40,120} {
+  \draw[line width=0.5pt] (0,\yc{\c}) -- (-0.08,\yc{\c});
+  \node[grad, anchor=east] at (-0.08,\yc{\c}) {\c}; }
+\draw[line width=0.5pt] (0,\yc{80}) -- (-0.08,\yc{80});
+
+%% ================= la courbe en U =========================================
+\draw[courbe] plot[domain=10:100, samples=90, smooth] (\xq{\x},\yc{\cm{\x}});
+
+%% ================= le minimum =============================================
+\draw[rappel] (\xq{40},0) -- (\xq{40},\yc{80}) -- (0,\yc{80});
+\fill (\xq{40},\yc{80}) circle (2.2pt);
+\node[grad, anchor=north] at (\xq{40},-0.08) {$40$};
+\node[grad, anchor=east] at (-0.08,\yc{80}) {$80$};
+
+%% ================= les deux effets en présence ============================
+\draw[-{Stealth[length=4.5pt]}, black!55, line width=0.7pt]
+     (\xq{22},\yc{104}) -- (\xq{13.5},\yc{116});
+\node[note, anchor=west, align=left, text width=2.7cm] at (\xq{24},\yc{100})
+     {frais fixes répartis\\sur peu de pièces};
+\draw[-{Stealth[length=4.5pt]}, black!55, line width=0.7pt]
+     (\xq{86},\yc{74}) -- (\xq{96},\yc{92});
+\node[note, anchor=north, align=center, text width=2.4cm] at (\xq{80},\yc{70})
+     {le terme $0{,}5q$\\l'emporte};
+
+%% ================= l'expression, encadrée =================================
+\node[draw=black!45, line width=0.5pt, rounded corners=2pt, fill=white, inner sep=3.5pt,
+      font=\small, anchor=north east] at (\xq{104},\yc{130})
+     {$C_{M}(q)=0{,}5q+40+\dfrac{800}{q}$};
+\end{tikzpicture}
+\end{document}

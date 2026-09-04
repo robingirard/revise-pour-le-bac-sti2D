@@ -1,0 +1,64 @@
+%% mathstc-suites-lin-vs-geo — croissance linéaire (arithmétique, +60 par an) contre
+%% croissance exponentielle (géométrique, x 1,12 par an). Le modèle exponentiel part
+%% moins vite, puis rattrape et dépasse le modèle linéaire entre n = 4 et n = 5.
+%% Échelles : 1 année -> 0,78 cm ; 100 unités de production -> 0,45 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  serieA/.style={solideA, line width=0.7pt},
+  serieB/.style={solideB, line width=0.7pt},
+  grille/.style={line width=0.3pt, black!15},
+  grad/.style={font=\scriptsize, inner sep=2.5pt},
+  note/.style={font=\scriptsize, text=black!60, inner sep=1.5pt}]
+
+\newcommand\xn[1]{{(#1)*0.78}}        % abscisse d'une année
+\newcommand\yp[1]{{(#1)*0.0045}}      % ordonnée d'une production
+
+%% ================= bande de croisement ====================================
+\fill[black!60, opacity=0.15] (\xn{4},0) rectangle (\xn{5},\yp{1040});
+
+%% ================= quadrillage horizontal =================================
+\foreach \v in {200,400,...,1000} { \draw[grille] (0,\yp{\v}) -- (\xn{8.4},\yp{\v}); }
+
+%% ================= axes et graduations ====================================
+\draw[axe] (-0.12,0) -- (\xn{9},0);
+\node[grad, anchor=south east] at (\xn{9},0.05) {année $n$};
+\draw[axe] (0,-0.12) -- (0,\yp{1140});
+\node[grad, anchor=north west, xshift=2pt] at (0.02,\yp{1140}) {production};
+\node[grad, anchor=north east] at (-0.02,-0.02) {$O$};
+\foreach \n in {0,1,...,8} {
+  \draw[line width=0.5pt] (\xn{\n},0) -- (\xn{\n},-0.08);
+  \node[grad, anchor=north] at (\xn{\n},-0.08) {\n}; }
+\foreach \v in {200,400,600,800,1000} {
+  \draw[line width=0.5pt] (0,\yp{\v}) -- (-0.08,\yp{\v});
+  \node[grad, anchor=east] at (-0.08,\yp{\v}) {\v}; }
+
+%% ================= série linéaire : 400 + 60n (carrés bleus) ==============
+\draw[serieB] (\xn{0},\yp{400}) \foreach \n/\v in {1/460, 2/520, 3/580, 4/640,
+                       5/700, 6/760, 7/820, 8/880} { -- (\xn{\n},\yp{\v}) };
+\foreach \n/\v in {0/400, 1/460, 2/520, 3/580, 4/640, 5/700, 6/760, 7/820, 8/880} {
+  \fill[solideB] ($(\xn{\n},\yp{\v})+(-1.5pt,-1.5pt)$) rectangle ++(3pt,3pt); }
+\node[font=\scriptsize, text=solideB, anchor=west, inner sep=4pt]
+     at (\xn{8},\yp{880}) {$400+60n$};
+
+%% ================= série géométrique : 400 x 1,12^n (disques rouges) ======
+\draw[serieA] (\xn{0},\yp{400}) \foreach \n/\v in {1/448, 2/501.8, 3/562.0, 4/629.4,
+                       5/704.9, 6/789.5, 7/884.3, 8/990.4} { -- (\xn{\n},\yp{\v}) };
+\foreach \n/\v in {0/400, 1/448, 2/501.8, 3/562.0, 4/629.4, 5/704.9, 6/789.5, 7/884.3, 8/990.4} {
+  \fill[solideA] (\xn{\n},\yp{\v}) circle (1.8pt); }
+\node[font=\scriptsize, text=solideA, anchor=west, inner sep=4pt]
+     at (\xn{8},\yp{990.4}) {$400\times1{,}12^{\,n}$};
+
+%% ================= les deux valeurs de part et d'autre du croisement ======
+\node[grad, text=solideB, fill=white, inner sep=1pt] at ($(\xn{3.9},\yp{640})+(0,0.36cm)$) {$640$};
+\node[grad, text=solideA, fill=white, inner sep=1pt] at ($(\xn{3.9},\yp{629.4})+(0,-0.36cm)$) {$629{,}4$};
+\node[grad, text=solideA, fill=white, inner sep=1pt] at ($(\xn{5.15},\yp{704.9})+(0,0.36cm)$) {$704{,}9$};
+\node[grad, text=solideB, fill=white, inner sep=1pt] at ($(\xn{5.15},\yp{700})+(0,-0.36cm)$) {$700$};
+
+%% ================= légende de la bande ====================================
+\node[note, anchor=north, align=center] at (\xn{4.5},-0.34)
+     {le modèle exponentiel passe devant};
+\end{tikzpicture}
+\end{document}

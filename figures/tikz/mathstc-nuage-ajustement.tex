@@ -1,0 +1,50 @@
+%% mathstc-nuage-ajustement — nuage de quatre points, droite d'ajustement y = 2,1x + 1
+%% et résidus. Le résidu d'un point est l'écart VERTICAL entre son ordonnée observée et
+%% l'ordonnée prédite par la droite ; la méthode des moindres carrés choisit la droite
+%% qui rend la somme des carrés de ces écarts la plus petite possible.
+%% Échelles : 1 unité d'abscisse -> 1,3 cm ; 1 unité d'ordonnée -> 0,5 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1.3cm,y=0.5cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  droite/.style={solideE, line width=1.3pt},
+  residu/.style={solideA, line width=2.2pt},
+  grille/.style={line width=0.3pt, black!15},
+  grad/.style={font=\scriptsize, inner sep=2.5pt},
+  note/.style={font=\scriptsize, text=black!60, inner sep=1.5pt}]
+
+%% ================= quadrillage ============================================
+\foreach \xv in {1,2,3,4} { \draw[grille] (\xv,0) -- (\xv,10.6); }
+\foreach \yv in {2,4,6,8,10} { \draw[grille] (0,\yv) -- (4.75,\yv); }
+
+%% ================= axes et graduations ====================================
+\draw[axe] (-0.12,0) -- (5,0) node[anchor=north east, inner sep=3pt, font=\small] {$x$};
+\draw[axe] (0,-0.5) -- (0,11.6) node[anchor=south west, inner sep=3pt, font=\small] {$y$};
+\node[grad, anchor=north east] at (-0.03,-0.15) {$O$};
+\foreach \xv in {1,2,3,4} {
+  \draw[line width=0.5pt] (\xv,0.2) -- (\xv,-0.2);
+  \node[grad, anchor=north] at (\xv,-0.25) {$\xv$}; }
+\foreach \yv in {2,4,6,8,10} {
+  \draw[line width=0.5pt] (0.04,\yv) -- (-0.04,\yv);
+  \node[grad, anchor=east, xshift=-1pt] at (0,\yv) {$\yv$}; }
+
+%% ================= droite d'ajustement ====================================
+\draw[droite] (0,1) -- (4.6,10.66);
+\node[font=\small, text=solideE, anchor=south east, inner sep=3pt] at (4.72,10.75)
+     {$y=2{,}1x+1$};
+
+%% ================= résidus (segments verticaux) ===========================
+\foreach \xv/\yobs/\ypre in {1/3/3.1, 2/5/5.2, 3/8/7.3, 4/9/9.4} {
+  \draw[residu] (\xv,\yobs) -- (\xv,\ypre); }
+\node[grad, text=solideA, anchor=east, inner sep=3pt] at (2.94,7.65) {$0{,}7$};
+
+%% ================= le nuage ===============================================
+\foreach \xv/\yv in {1/3, 2/5, 3/8, 4/9} { \fill (\xv,\yv) circle (2.4pt); }
+
+%% ================= critère des moindres carrés ============================
+\node[font=\scriptsize, anchor=north] at (2.4,-0.95)
+     {la droite des moindres carrés minimise
+      $\displaystyle\sum_{i}\left(y_{i}-\left(ax_{i}+b\right)\right)^{2}=0{,}70$};
+\end{tikzpicture}
+\end{document}

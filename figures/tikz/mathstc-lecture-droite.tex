@@ -1,0 +1,58 @@
+%% mathstc-lecture-droite — lire un seuil sur une droite : coût C = 5n + 60 en fonction
+%% du nombre n de pièces. On part de C = 260 € sur l'axe des ordonnées, on rejoint la
+%% droite, on redescend : n = 40 pièces.
+%% Échelles : 1 pièce -> 0,125 cm ; 1 € -> 0,0155 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  droite/.style={solideA, line width=1.3pt, line cap=round},
+  lecture/.style={solideE, line width=1.1pt, dash pattern=on 4pt off 2.5pt},
+  rappel/.style={line width=0.7pt, black!55, dash pattern=on 3pt off 2pt},
+  grille/.style={line width=0.3pt, black!15},
+  grad/.style={font=\scriptsize, inner sep=2.5pt},
+  note/.style={font=\scriptsize, text=black!60, inner sep=1.5pt}]
+
+\newcommand\xn[1]{{(#1)*0.125}}       % abscisse d'un nombre de pièces
+\newcommand\yc[1]{{(#1)*0.0155}}      % ordonnée d'un coût en euros
+
+%% ================= quadrillage léger ======================================
+\foreach \n in {10,20,...,60} { \draw[grille] (\xn{\n},0) -- (\xn{\n},\yc{360}); }
+\foreach \c in {50,100,...,350} { \draw[grille] (0,\yc{\c}) -- (\xn{62},\yc{\c}); }
+
+%% ================= axes et graduations ====================================
+\draw[axe] (-0.12,0) -- (\xn{68},0);
+\node[grad, anchor=south east] at (\xn{68},0.05) {nombre de pièces};
+\draw[axe] (0,-0.12) -- (0,\yc{392});
+\node[grad, anchor=north west, xshift=2pt] at (0.02,\yc{392}) {coût (€)};
+\node[grad, anchor=north east] at (-0.02,-0.02) {$O$};
+\foreach \n in {10,20,30,50,60} {
+  \draw[line width=0.5pt] (\xn{\n},0) -- (\xn{\n},-0.08);
+  \node[grad, anchor=north] at (\xn{\n},-0.08) {\n}; }
+\foreach \c in {50,100,150,200,250,300,350} {
+  \draw[line width=0.5pt] (0,\yc{\c}) -- (-0.08,\yc{\c}); }
+\foreach \c in {100,150,200,300,350} {
+  \node[grad, anchor=east] at (-0.08,\yc{\c}) {\c}; }
+
+%% ================= la droite C = 5n + 60 ==================================
+\draw[droite] (\xn{0},\yc{60}) -- (\xn{60},\yc{360});
+\node[font=\small, text=solideA, anchor=south east, inner sep=3pt]
+     at (\xn{60},\yc{360}) {$\mathcal{D}$};
+\fill (\xn{0},\yc{60}) circle (1.8pt);
+\node[grad, anchor=east] at (-0.08,\yc{60}) {$60$};
+
+%% ================= lecture du seuil C = 260 € =============================
+\draw[lecture] (0,\yc{260}) -- (\xn{40},\yc{260});
+\node[grad, text=solideE, anchor=east] at (-0.08,\yc{260}) {$260$};
+\draw[rappel] (\xn{40},\yc{260}) -- (\xn{40},0);
+\node[grad, anchor=north, font=\scriptsize\bfseries] at (\xn{40},-0.08) {40};
+\fill (\xn{40},\yc{260}) circle (2.2pt);
+
+%% ================= au-delà du seuil =======================================
+\draw[-{Stealth[length=5pt]}, black!55, line width=0.7pt]
+     (\xn{44},\yc{292}) -- (\xn{56},\yc{352});
+\node[note, anchor=north west, align=left, text width=2.6cm]
+     at (\xn{30},\yc{300}) {au-delà, le coût\\dépasse $260$ €};
+\end{tikzpicture}
+\end{document}

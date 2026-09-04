@@ -1,0 +1,69 @@
+%% mathstc-changement-variable — linéariser une croissance exponentielle par z = log(N).
+%% À gauche, le nuage (t ; N) s'incurve fortement : aucun ajustement affine possible.
+%% À droite, le nuage (t ; z) avec z = log(N) est aligné : on ajuste par une droite,
+%% puis on revient aux variables initiales avec N = 10^z.
+%% Échelles : 1 h -> 0,8 cm ; à gauche 1000 individus -> 0,3 cm ; à droite 1 unité -> 2,5 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  fine/.style={solideA, line width=0.7pt},
+  ajust/.style={solideE, line width=1.2pt},
+  grille/.style={line width=0.3pt, black!15},
+  grad/.style={font=\scriptsize, inner sep=2.5pt},
+  titre/.style={font=\small, inner sep=2pt},
+  note/.style={font=\scriptsize, text=black!60, inner sep=1.5pt}]
+
+\newcommand\xt[1]{{(#1)*0.7}}             % abscisse d'une durée en h (les deux panneaux)
+\newcommand\yn[1]{{(#1)*0.3}}             % ordonnée d'un effectif, EN MILLIERS (gauche)
+\newcommand\yz[1]{{((#1)-2.5)*2.5}}       % ordonnée d'un z, panneau de droite (origine à 2,5)
+
+%% ================= panneau de gauche : (t ; N) ============================
+\begin{scope}
+  \foreach \v in {5,10,15} { \draw[grille] (0,\yn{\v}) -- (\xt{4.3},\yn{\v}); }
+  \draw[axe] (-0.1,0) -- (\xt{4.9},0) node[anchor=south east, inner sep=3pt, font=\small] {$t$ (h)};
+  \draw[axe] (0,-0.1) -- (0,\yn{16.8}) node[anchor=south west, inner sep=2pt, font=\small] {$N$};
+  \node[grad, anchor=north east] at (-0.02,-0.02) {$O$};
+  \foreach \t in {1,2,3,4} {
+    \draw[line width=0.5pt] (\xt{\t},0) -- (\xt{\t},-0.07);
+    \node[grad, anchor=north] at (\xt{\t},-0.07) {\t}; }
+  \foreach \v/\lab in {5/{5\,000}, 10/{10\,000}, 15/{15\,000}} {
+    \draw[line width=0.5pt] (0,\yn{\v}) -- (-0.07,\yn{\v});
+    \node[grad, anchor=east] at (-0.07,\yn{\v}) {$\lab$}; }
+  \draw[fine] (\xt{0},\yn{0.5}) \foreach \t/\n in {1/1.15, 2/2.7, 3/6.2, 4/14.3}
+       { -- (\xt{\t},\yn{\n}) };
+  \foreach \t/\n in {0/0.5, 1/1.15, 2/2.7, 3/6.2, 4/14.3} {
+    \fill[solideA] (\xt{\t},\yn{\n}) circle (1.8pt); }
+  \node[note, anchor=north west] at (\xt{0.35},\yn{13.5}) {pas d'alignement};
+  \node[titre, anchor=south] at (\xt{2.2},\yn{18}) {$(t\,;N)$};
+\end{scope}
+
+%% ================= filet de séparation ====================================
+\draw[black!35, line width=0.4pt] (\xt{5.4},-0.55) -- (\xt{5.4},\yn{18.6});
+
+%% ================= panneau de droite : (t ; z) avec z = log(N) ============
+\begin{scope}[shift={(\xt{6.2},0)}]
+  \foreach \v in {3,3.5,4} { \draw[grille] (0,\yz{\v}) -- (\xt{4.3},\yz{\v}); }
+  \draw[axe] (-0.1,0) -- (\xt{4.9},0)
+       node[anchor=south east, inner sep=3pt, font=\small] {$t$ (h)};
+  \draw[axe] (0,\yz{2.48}) -- (0,\yz{4.42}) node[anchor=south west, inner sep=2pt, font=\small] {$z$};
+  \foreach \t in {1,2,3,4} {
+    \draw[line width=0.5pt] (\xt{\t},0) -- (\xt{\t},-0.07);
+    \node[grad, anchor=north] at (\xt{\t},-0.07) {\t}; }
+  \foreach \v/\lab in {3/{3}, 3.5/{3{,}5}, 4/{4}} {
+    \draw[line width=0.5pt] (0,\yz{\v}) -- (-0.07,\yz{\v});
+    \node[grad, anchor=east] at (-0.07,\yz{\v}) {$\lab$}; }
+  \draw[ajust] (\xt{-0.35},\yz{2.5716}) -- (\xt{4.3},\yz{4.2642});
+  \foreach \t/\z in {0/2.699, 1/3.061, 2/3.431, 3/3.792, 4/4.155} {
+    \fill[solideA] (\xt{\t},\yz{\z}) circle (1.8pt); }
+  \node[grad, text=solideE, anchor=north west, fill=white] at (\xt{0.45},\yz{3.95})
+       {$z=0{,}364\,t+2{,}699$};
+  \node[titre, anchor=south] at (\xt{2.2},\yn{18}) {$(t\,;z)$ avec $z=\log(N)$};
+\end{scope}
+
+%% ================= retour aux variables initiales =========================
+\node[font=\small, anchor=north] at (\xt{5.4},-0.62)
+     {retour aux variables initiales : $N\approx500\times2{,}31^{\,t}$};
+\end{tikzpicture}
+\end{document}

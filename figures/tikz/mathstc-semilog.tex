@@ -1,0 +1,67 @@
+%% mathstc-semilog — même suite géométrique u_n = 5 x 1,2^n vue dans deux repères.
+%% À gauche (repère ordinaire) les points s'incurvent vers le haut ; à droite, en portant
+%% log(u_n) en ordonnée, ils s'alignent : log(u_n) = log(5) + n log(1,2) est affine en n.
+%% Échelles : 1 rang -> 0,33 cm ; à gauche 1 unité -> 0,13 cm ; à droite 1 unité -> 3,5 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  fine/.style={solideA, line width=0.7pt},
+  ajust/.style={solideE, line width=1.2pt},
+  grille/.style={line width=0.3pt, black!15},
+  grad/.style={font=\scriptsize, inner sep=2.5pt},
+  titre/.style={font=\small, inner sep=2pt}]
+
+\newcommand\xn[1]{{(#1)*0.30}}            % abscisse d'un rang (les deux panneaux)
+\newcommand\yg[1]{{(#1)*0.13}}            % ordonnée, panneau de gauche
+\newcommand\yd[1]{{((#1)-0.6)*3.5}}       % ordonnée, panneau de droite (origine à 0,6)
+
+%% ================= panneau de gauche : repère ordinaire ===================
+\begin{scope}
+  \foreach \v in {10,20,30} { \draw[grille] (0,\yg{\v}) -- (\xn{11},\yg{\v}); }
+  \draw[axe] (-0.1,0) -- (\xn{11.6},0) node[anchor=south east, inner sep=3pt, font=\small] {$n$};
+  \draw[axe] (0,-0.1) -- (0,\yg{36}) node[anchor=south west, inner sep=2pt, font=\small] {$u_{n}$};
+  \node[grad, anchor=north east] at (-0.02,-0.02) {$O$};
+  \foreach \n in {2,4,6,8,10} {
+    \draw[line width=0.5pt] (\xn{\n},0) -- (\xn{\n},-0.07);
+    \node[grad, anchor=north] at (\xn{\n},-0.07) {\n}; }
+  \foreach \v in {10,20,30} {
+    \draw[line width=0.5pt] (0,\yg{\v}) -- (-0.07,\yg{\v});
+    \node[grad, anchor=east] at (-0.07,\yg{\v}) {\v}; }
+  %% la ligne brisée s'incurve nettement vers le haut
+  \draw[fine] (\xn{0},\yg{5}) \foreach \n/\u in {2/7.2, 4/10.37, 6/14.93, 8/21.5, 10/30.96}
+       { -- (\xn{\n},\yg{\u}) };
+  \foreach \n/\u in {0/5, 2/7.2, 4/10.37, 6/14.93, 8/21.5, 10/30.96} {
+    \fill[solideA] (\xn{\n},\yg{\u}) circle (1.8pt); }
+  \node[titre, anchor=south] at (\xn{5.5},\yg{38.5}) {repère ordinaire};
+\end{scope}
+
+%% ================= filet de séparation ====================================
+\draw[black!35, line width=0.4pt] (\xn{12.6},-0.55) -- (\xn{12.6},\yg{40});
+
+%% ================= panneau de droite : repère semi-logarithmique ==========
+\begin{scope}[shift={(\xn{14.2},0)}]
+  \foreach \v in {0.8,1.0,1.2,1.4} { \draw[grille] (0,\yd{\v}) -- (\xn{11},\yd{\v}); }
+  \draw[axe] (-0.1,0) -- (\xn{11.6},0)
+       node[anchor=south east, inner sep=3pt, font=\small] {$n$};
+  \draw[axe] (0,\yd{0.58}) -- (0,\yd{1.66})
+       node[anchor=south west, inner sep=2pt, font=\small] {$\log\left(u_{n}\right)$};
+  \foreach \n in {2,4,6,8,10} {
+    \draw[line width=0.5pt] (\xn{\n},0) -- (\xn{\n},-0.07);
+    \node[grad, anchor=north] at (\xn{\n},-0.07) {\n}; }
+  \foreach \v/\lab in {0.8/{0{,}8}, 1.0/{1{,}0}, 1.2/{1{,}2}, 1.4/{1{,}4}} {
+    \draw[line width=0.5pt] (0,\yd{\v}) -- (-0.07,\yd{\v});
+    \node[grad, anchor=east] at (-0.07,\yd{\v}) {$\lab$}; }
+  %% droite d'ajustement, prolongée sur toute la largeur du panneau
+  \draw[ajust] (\xn{-0.5},\yd{0.6596}) -- (\xn{11},\yd{1.5697});
+  \foreach \n/\z in {0/0.699, 2/0.857, 4/1.016, 6/1.174, 8/1.333, 10/1.491} {
+    \fill[solideA] (\xn{\n},\yd{\z}) circle (1.8pt); }
+  \node[titre, anchor=south] at (\xn{5.5},\yg{38.5}) {repère semi-logarithmique};
+\end{scope}
+
+%% ================= conclusion, sous les deux panneaux =====================
+\node[font=\small, anchor=north] at (\xn{12.6},-0.62)
+     {$\log\left(u_{n}\right)=\log(5)+n\log(1{,}2)$ : une expression \textbf{affine} en $n$};
+\end{tikzpicture}
+\end{document}

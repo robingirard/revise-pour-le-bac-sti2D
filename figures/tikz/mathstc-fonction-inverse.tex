@@ -1,0 +1,55 @@
+%% mathstc-fonction-inverse — hyperbole y = 1/x (deux branches, définie sur R privé de 0)
+%% et sa tangente au point d'abscisse 2, d'équation y = -x/4 + 1 (car f'(x) = -1/x²,
+%% donc f'(2) = -1/4). Le mot « asymptote » est hors programme : on décrit le
+%% comportement avec des mots.
+%% Repère orthonormé, unité 0,72 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=0.72cm,y=0.72cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={solideA, line width=1.3pt, line join=round},
+  tangente/.style={solideE, line width=1.2pt},
+  fleche/.style={-{Stealth[length=4.5pt]}, black!55, line width=0.7pt,
+                 dash pattern=on 3pt off 2pt},
+  grille/.style={line width=0.3pt, black!15},
+  grad/.style={font=\scriptsize, inner sep=2.5pt},
+  note/.style={font=\scriptsize, text=black!60, inner sep=1.5pt, align=center}]
+
+%% ================= quadrillage ============================================
+\foreach \v in {-4,-2,2,4} {
+  \draw[grille] (\v,-4.2) -- (\v,4.2);
+  \draw[grille] (-4.2,\v) -- (4.2,\v); }
+
+%% ================= axes et graduations ====================================
+\draw[axe] (-4.4,0) -- (4.7,0) node[anchor=north east, inner sep=3pt, font=\small] {$x$};
+\draw[axe] (0,-4.4) -- (0,4.6) node[anchor=south west, inner sep=3pt, font=\small] {$y$};
+\node[grad, anchor=north east] at (-0.05,-0.05) {$O$};
+\foreach \v in {-4,-2,2,4} {
+  \draw[line width=0.5pt] (\v,0.09) -- (\v,-0.09);
+  \node[grad, anchor=north, fill=white, inner sep=1.5pt] at (\v,-0.12) {$\v$};
+  \draw[line width=0.5pt] (0.09,\v) -- (-0.09,\v);
+  \node[grad, anchor=east, fill=white, inner sep=1.5pt] at (-0.12,\v) {$\v$}; }
+
+%% ================= les deux branches de l'hyperbole =======================
+\draw[courbe] plot[domain=0.25:4, samples=80, smooth] (\x,{1/\x});
+\draw[courbe] plot[domain=-4:-0.25, samples=80, smooth] (\x,{1/\x});
+\node[font=\small, text=solideA, anchor=west, inner sep=2pt] at (-4.1,-2.6)
+     {$y=\dfrac{1}{x}$};
+
+%% ================= tangente au point d'abscisse 2 =========================
+\draw[tangente] (0,1) -- (4.2,-0.05);
+\fill (2,0.5) circle (2.2pt);
+\node[font=\scriptsize, anchor=south west, inner sep=3pt, fill=white]
+     at (2.05,0.58) {$\left(2\,;\dfrac{1}{2}\right)$};
+\node[grad, text=solideE, anchor=south west] at (0.95,1.6) {$y=-\dfrac{1}{4}x+1$};
+
+%% ================= comportement aux deux « bouts » ========================
+\draw[fleche] (-1.0,2.85) to[bend left=25] (0.33,3.0);
+\node[note, anchor=north east, text width=2.8cm] at (-0.15,4.45)
+     {$x$ proche de $0$ :\\$\dfrac{1}{x}$ devient très grand};
+\draw[fleche] (2.4,-1.15) to[bend left=25] (3.55,0.2);
+\node[note, anchor=north, text width=3cm] at (2.3,-1.35)
+     {$x$ très grand :\\$\dfrac{1}{x}$ se rapproche de $0$};
+\end{tikzpicture}
+\end{document}
