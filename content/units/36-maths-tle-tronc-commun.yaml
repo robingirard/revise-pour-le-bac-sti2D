@@ -770,4 +770,1422 @@ units:
         - Rien dans le modèle ne le prévoit ; c'est la réalité physique qui impose une limite, pas les mathématiques.
         - Une raison est une constante, elle ne change pas au fil des rangs.
         explanation: 'Le modèle est mathématiquement valable pour tout $n$, mais il décrit une production multipliée par $7{,}7$ en trois ans. Machines, locaux et personnel imposent un plafond : un modèle exponentiel n''est valable que sur un horizon limité.'
-# FIN
+  - id: mathstc-exp-log
+    title: Exponentielles de base $a$ et logarithme décimal
+    icon: 📈
+    description: Les fonctions $x\mapsto a^{x}$ comme modèle continu d'évolution relative constante, taux moyen, logarithme décimal et résolution d'équations.
+    prerequisites:
+    - mathstc-automatismes
+    lesson: lessons/maths-tle-commun-exp-log.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Comment la fonction $x\mapsto a^{x}$ (avec $a>0$) est-elle introduite en terminale technologique ?
+      choices:
+      - comme le prolongement à toutes les valeurs de $x$ de la suite géométrique $\left(a^{n}\right)$
+      - comme la fonction réciproque de $x\mapsto x^{a}$
+      - comme la dérivée de la suite géométrique de raison $a$
+      - comme la somme des termes d'une suite géométrique de raison $a$
+      answer: 0
+      feedback:
+      - null
+      - La réciproque de $x\mapsto a^{x}$ est le logarithme de base $a$, pas une fonction puissance.
+      - On ne dérive pas une suite, qui n'est définie que pour des rangs entiers.
+      - Une somme de termes est un nombre, pas une fonction de $x$.
+      explanation: 'On part de la suite géométrique $a^{0}$, $a^{1}$, $a^{2}$, ... définie pour $n$ entier, et on la prolonge aux valeurs non entières positives, puis à $\mathbb{R}$ en posant $a^{-x}=\dfrac{1}{a^{x}}$. C''est le passage du **discret au continu**.
+
+
+        {{fig:mathstc-exp-base-a}}'
+    - type: mcq
+      level: 1
+      prompt: Comment varie la fonction $x\mapsto a^{x}$ selon la valeur de $a$ ?
+      choices:
+      - croissante si $a>1$, décroissante si $0<a<1$
+      - croissante si $0<a<1$, décroissante si $a>1$
+      - toujours croissante
+      - croissante si $a>0$, décroissante si $a<0$
+      answer: 0
+      feedback:
+      - null
+      - Les deux cas sont inversés ; $0{,}5^{x}$ vaut $0{,}5$ en $x=1$ et $0{,}25$ en $x=2$, elle décroît.
+      - $0{,}9^{x}$ décroît, c'est le modèle d'une perte de $10\ \%$ par unité de temps.
+      - La base $a$ est toujours strictement positive, le cas $a<0$ n'existe pas.
+      explanation: 'Même règle que pour les suites géométriques de raison $q$ à termes positifs : $q>1$ donne une croissance, $0<q<1$ une décroissance. Pour $a=1$ la fonction est constante égale à $1$.'
+    - type: grid
+      level: 2
+      prompt: Pour chaque fonction, cocher son sens de variation sur $\mathbb{R}$.
+      rows:
+      - id: f1
+        label: $x\mapsto2^{x}$
+      - id: f2
+        label: $x\mapsto0{,}5^{x}$
+      - id: f3
+        label: $x\mapsto-3\times1{,}4^{x}$
+      - id: f4
+        label: $x\mapsto3\times0{,}9^{x}$
+      - id: f5
+        label: $x\mapsto5\times1{,}2^{x}$
+      cols:
+      - id: C
+        label: Croissante
+      - id: D
+        label: Décroissante
+      answer:
+      - Cf1
+      - Df2
+      - Df3
+      - Df4
+      - Cf5
+      cellFeedback:
+        Df1: la base $2$ est supérieure à $1$ et le coefficient est positif
+        Cf2: la base $0{,}5$ est inférieure à $1$
+        Cf3: la base $1{,}4$ ferait croître, mais le coefficient $k=-3$ est **négatif** et retourne le sens de variation
+        Cf4: le coefficient $k=3$ est positif, c'est la base $0{,}9$ qui impose la décroissance
+        Df5: base supérieure à $1$ et coefficient positif, la fonction croît
+      explanation: 'Pour $x\mapsto k\,a^{x}$, deux informations comptent : le **signe de $k$** et la position de $a$ par rapport à $1$. Si $k>0$, la fonction varie comme $a^{x}$ ; si $k<0$, elle varie en sens contraire.'
+    - type: mcq
+      level: 2
+      prompt: Simplifier $\dfrac{3^{2x}\times3^{-x}}{3^{x-4}}$.
+      choices:
+      - $81$
+      - $3^{4x}$
+      - $3^{-4}$
+      - $3^{2x}$
+      answer: 0
+      feedback:
+      - null
+      - Les exposants s'additionnent au numérateur et se **retranchent** au passage du dénominateur.
+      - Erreur de signe ; retrancher $x-4$ revient à ajouter $-x+4$.
+      - Il faut aussi tenir compte du dénominateur, qui fait disparaître le dernier $x$.
+      explanation: 'Exposant final : $2x+(-x)-(x-4)=2x-x-x+4=4$. Donc l''expression vaut $3^{4}=81$, indépendamment de $x$.'
+    - type: input
+      level: 2
+      prompt: Simplifier $\left(2^{x}\right)^{3}\times2^{-3x}$ et donner le résultat numérique.
+      answer: '1'
+      numeric: true
+      tolerance: 0.001
+      explanation: '$\left(2^{x}\right)^{3}=2^{3x}$, donc le produit vaut $2^{3x-3x}=2^{0}=1$.'
+    - type: input
+      level: 2
+      prompt: Simplifier $\dfrac{5^{x+2}}{5^{x}}$ et donner le résultat numérique.
+      answer: '25'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$\dfrac{a^{x+y}}{a^{x}}=a^{y}$, donc le quotient vaut $5^{2}=25$ pour tout réel $x$.'
+    - type: mcq
+      level: 2
+      prompt: Pour $a>0$, à quoi est égal $a^{-x}$ ?
+      choices:
+      - $\dfrac{1}{a^{x}}$
+      - $-a^{x}$
+      - $(-a)^{x}$
+      - $a^{x}-1$
+      answer: 0
+      feedback:
+      - null
+      - L'exposant négatif donne un inverse, jamais un opposé ; $a^{-x}$ reste strictement positif.
+      - On ne change pas le signe de la base, seulement celui de l'exposant.
+      - Un exposant ne se transforme pas en soustraction.
+      explanation: 'C''est la définition retenue pour étendre $x\mapsto a^{x}$ à $\mathbb{R}$ : $a^{-x}=\dfrac{1}{a^{x}}$. Ainsi $2^{-3}=\dfrac{1}{8}$.'
+    - type: input
+      level: 2
+      prompt: Calculer $1{,}44^{1/2}$.
+      answer: '1.2'
+      numeric: true
+      tolerance: 0.005
+      explanation: 'L''exposant $\dfrac{1}{2}$ est la racine carrée : $1{,}44^{1/2}=\sqrt{1{,}44}=1{,}2$. C''est aussi la **moyenne géométrique** de $1{,}44^{0}=1$ et $1{,}44^{1}=1{,}44$, puisque $1{,}2^{2}=1\times1{,}44$.'
+    - type: input
+      level: 3
+      prompt: Le chiffre d'affaires d'une entreprise passe de $3{,}2$ M€ à $4{,}7$ M€ en $6$ ans. Quel est le taux d'évolution annuel moyen, en pour cent, arrondi à $0{,}1$ ?
+      answer: '6.6'
+      numeric: true
+      tolerance: 0.15
+      unit: '%'
+      explanation: 'Coefficient global $\dfrac{4{,}7}{3{,}2}=1{,}468\,75$. Le coefficient moyen annuel est $1{,}468\,75^{1/6}\approx1{,}066\,2$, soit environ $+6{,}6\ \%$ par an. On ne divise **pas** le taux global par $6$.'
+    - type: input
+      level: 3
+      prompt: Quel est le taux mensuel équivalent à une hausse annuelle de $9\ \%$, en pour cent, arrondi à $0{,}01$ ?
+      answer: '0.72'
+      numeric: true
+      tolerance: 0.02
+      unit: '%'
+      explanation: '$1{,}09^{1/12}\approx1{,}007\,21$, soit environ $+0{,}72\ \%$ par mois. La réponse naïve $\dfrac{9}{12}=0{,}75\ \%$ est trop grande, car les hausses mensuelles se composent.'
+    - type: mcq
+      level: 1
+      prompt: Pour $b>0$, comment le logarithme décimal $\log(b)$ est-il défini ?
+      choices:
+      - comme l'unique solution de l'équation $10^{x}=b$
+      - comme l'unique solution de l'équation $x^{10}=b$
+      - comme le nombre de chiffres de $b$
+      - comme le quotient $\dfrac{b}{10}$
+      answer: 0
+      feedback:
+      - null
+      - L'inconnue est en **exposant**, pas en base.
+      - Le nombre de chiffres se déduit de $\log(b)$, mais ce n'est pas sa définition, et $\log$ n'est pas entier en général.
+      - $\log$ n'est pas une division par $10$ ; $\log(100)=2$, pas $10$.
+      explanation: 'Pour tout $b>0$, l''équation $10^{x}=b$ a une unique solution, notée $\log(b)$. On a donc $10^{\log(b)}=b$ et $\log\left(10^{x}\right)=x$.
+
+
+        {{fig:mathstc-log-decimal}}'
+    - type: input
+      level: 1
+      prompt: Calculer $\log(1\,000)$.
+      answer: '3'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$1\,000=10^{3}$, donc $\log(1\,000)=3$. De même $\log(10)=1$, $\log(1)=0$ et $\log(0{,}01)=-2$.'
+    - type: input
+      level: 2
+      prompt: Résoudre $10^{x}=350$ et donner la solution arrondie à $0{,}001$.
+      answer: '2.544'
+      numeric: true
+      tolerance: 0.005
+      explanation: 'Par définition $x=\log(350)\approx2{,}544$. Contrôle de vraisemblance : $350$ est compris entre $10^{2}=100$ et $10^{3}=1\,000$, donc $x$ est compris entre $2$ et $3$.'
+    - type: input
+      level: 2
+      prompt: Résoudre $10^{x}=0{,}004$ et donner la solution arrondie à $0{,}001$.
+      answer: '-2.398'
+      numeric: true
+      tolerance: 0.005
+      explanation: '$x=\log(0{,}004)=\log(4)-3\approx0{,}602-3\approx-2{,}398$. Le logarithme d''un nombre inférieur à $1$ est négatif.'
+    - type: mcq
+      level: 2
+      prompt: Parmi ces égalités, laquelle est **fausse** pour tous les réels $a>0$ et $b>0$ ?
+      choices:
+      - $\log(a+b)=\log(a)+\log(b)$
+      - $\log(ab)=\log(a)+\log(b)$
+      - $\log\left(a^{3}\right)=3\log(a)$
+      - $\log\left(\dfrac{b}{a}\right)=\log(b)-\log(a)$
+      answer: 0
+      feedback:
+      - null
+      - C'est la propriété fondamentale du logarithme, elle est vraie.
+      - Elle est vraie, c'est la propriété de la puissance appliquée trois fois.
+      - Elle est vraie, c'est la propriété du quotient.
+      explanation: 'Le logarithme transforme les **produits** en sommes, jamais les sommes. Contre-exemple : $\log(1+1)=\log(2)\approx0{,}30$ alors que $\log(1)+\log(1)=0$.'
+    - type: match
+      level: 2
+      prompt: Associer chaque expression à sa forme développée (pour $a>0$ et $b>0$).
+      pairs:
+      - left: $\log(ab)$
+        right: $\log(a)+\log(b)$
+      - left: $\log\left(\dfrac{b}{a}\right)$
+        right: $\log(b)-\log(a)$
+      - left: $\log\left(a^{5}\right)$
+        right: $5\log(a)$
+      - left: $\log\left(\dfrac{1}{b}\right)$
+        right: $-\log(b)$
+      - left: $\log\left(10^{n}\right)$
+        right: $n$
+    - type: input
+      level: 3
+      prompt: Résoudre $1{,}05^{x}=2$ et donner la solution arrondie à $0{,}01$.
+      answer: '14.21'
+      numeric: true
+      tolerance: 0.05
+      explanation: 'On applique $\log$ aux deux membres : $x\log(1{,}05)=\log(2)$, donc $x=\dfrac{\log(2)}{\log(1{,}05)}\approx\dfrac{0{,}301\,03}{0{,}021\,19}\approx14{,}21$. Un capital placé à $5\ \%$ double en un peu plus de $14$ ans.'
+    - type: mcq
+      level: 3
+      prompt: Résoudre l'inéquation $0{,}97^{n}<0{,}5$, d'inconnue $n$ entier naturel.
+      choices:
+      - $n\geqslant23$
+      - $n\geqslant22$
+      - $n\leqslant23$
+      - $n\geqslant17$
+      answer: 0
+      feedback:
+      - null
+      - $0{,}97^{22}\approx0{,}512$, encore supérieur à $0{,}5$ ; il faut un rang de plus.
+      - 'Sens de l''inégalité inversé : $\log(0{,}97)$ est **négatif**, la division retourne l''inégalité.'
+      - Recalcule le quotient $\dfrac{\log(0{,}5)}{\log(0{,}97)}$, il vaut environ $22{,}76$.
+      explanation: '$n\log(0{,}97)<\log(0{,}5)$ ; en divisant par $\log(0{,}97)<0$ on retourne l''inégalité : $n>\dfrac{\log(0{,}5)}{\log(0{,}97)}\approx22{,}76$. Le plus petit entier convenable est $23$.'
+    - type: input
+      level: 3
+      prompt: Résoudre $x^{3}=200$ dans $\left]0\,;+\infty\right[$ et donner la solution arrondie à $0{,}001$.
+      answer: '5.848'
+      numeric: true
+      tolerance: 0.005
+      explanation: '$3\log(x)=\log(200)$, donc $\log(x)=\dfrac{2{,}301\,03}{3}\approx0{,}767\,01$ et $x=10^{0{,}767\,01}\approx5{,}848$. Vérification : $5{,}848^{3}\approx200{,}0$.'
+    - type: input
+      level: 2
+      prompt: Combien de chiffres compte l'écriture décimale de $2^{100}$ ?
+      answer: '31'
+      numeric: true
+      tolerance: 0.5
+      explanation: '$\log\left(2^{100}\right)=100\log(2)\approx30{,}103$. Un entier dont le logarithme est compris entre $30$ et $31$ s''écrit avec $31$ chiffres, car il est compris entre $10^{30}$ et $10^{31}$.'
+    - type: mcq
+      level: 2
+      prompt: Le nombre d'Avogadro vaut environ $6{,}02\times10^{23}$ et $\log\left(6{,}02\times10^{23}\right)\approx23{,}78$. Combien de chiffres compte son écriture décimale ?
+      choices:
+      - $24$
+      - $23$
+      - $25$
+      - $78$
+      answer: 0
+      feedback:
+      - null
+      - $23$ serait le nombre de chiffres d'un nombre juste inférieur à $10^{23}$.
+      - Il faudrait un logarithme compris entre $24$ et $25$.
+      - $78$ est la partie décimale du logarithme, elle ne compte pas les chiffres.
+      explanation: 'La partie entière du logarithme vaut $23$, donc le nombre est compris entre $10^{23}$ (qui a $24$ chiffres) et $10^{24}$. Il s''écrit avec $24$ chiffres. Règle : nombre de chiffres $=$ partie entière de $\log$ $+\,1$.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre les étapes de la résolution de l'équation $a^{x}=b$, avec $a>0$, $a\neq1$ et $b>0$.
+      steps:
+      - Vérifier que $b>0$, sans quoi l'équation n'a pas de solution
+      - Appliquer le logarithme décimal aux deux membres
+      - Utiliser $\log\left(a^{x}\right)=x\log(a)$ pour faire descendre l'exposant
+      - Diviser par $\log(a)$ pour isoler $x$
+      - Donner la valeur exacte $x=\dfrac{\log(b)}{\log(a)}$, puis sa valeur approchée
+      explanation: 'La propriété $\log\left(a^{x}\right)=x\log(a)$ est l''outil central : elle transforme une inconnue en exposant en une inconnue ordinaire. Pour une **inéquation**, penser à retourner le sens si $\log(a)<0$, c''est-à-dire si $a<1$.'
+    - type: mcq
+      level: 2
+      prompt: 'Dans un repère semi-logarithmique, comment se présentent les points d''une suite géométrique $u_{n}=k\,q^{n}$ ?'
+      choices:
+      - ils sont alignés
+      - ils sont sur une parabole
+      - ils sont sur une hyperbole
+      - ils sont dispersés sans forme particulière
+      answer: 0
+      feedback:
+      - null
+      - C'est le cas d'une suite du type $u_{n}=n^{2}$ dans un repère ordinaire.
+      - C'est l'allure de la fonction inverse, sans rapport avec l'échelle logarithmique.
+      - L'échelle logarithmique met justement en évidence une régularité très nette.
+      explanation: '$\log(u_{n})=\log(k)+n\log(q)$ est une expression **affine** en $n$ : en portant $\log(u_{n})$ en ordonnée, les points s''alignent. C''est l''intérêt du repère semi-logarithmique, très utilisé en STI2D (niveau sonore, diagrammes de gain).
+
+
+        {{fig:mathstc-semilog}}'
+    - type: guided
+      level: 3
+      title: La décroissance d'une source radioactive
+      prompt: 'Exercice complet : modèle continu d''évolution relative constante en base $a$, demi-vie, taux équivalents et résolution d''une inéquation par le logarithme décimal.'
+      intro: 'Une source utilisée en contrôle non destructif a une activité initiale $A_{0}=8{,}0\times10^{6}$ Bq. Cette activité **perd $12\ \%$ par jour**.
+
+
+        On note $A(t)$ l''activité au bout de $t$ jours, $t$ étant un réel positif quelconque (le modèle est continu).'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelle expression modélise $A(t)$ ?'
+        choices:
+        - $A(t)=8{,}0\times10^{6}\times0{,}88^{t}$
+        - $A(t)=8{,}0\times10^{6}\times1{,}12^{t}$
+        - $A(t)=8{,}0\times10^{6}\times0{,}12^{t}$
+        - $A(t)=8{,}0\times10^{6}-0{,}12t$
+        answer:
+        - 0
+        feedback:
+        - null
+        - $1{,}12$ est le coefficient d'une **hausse** de $12\ \%$.
+        - 'Confusion entre le taux et le coefficient : le coefficient est $1-0{,}12=0{,}88$.'
+        - Une perte relative constante est **multiplicative**, pas additive.
+        explanation: 'Une évolution relative constante de $-12\ \%$ par jour donne le coefficient $0{,}88$ par jour, prolongé aux durées non entières par la fonction $t\mapsto0{,}88^{t}$.'
+      - kind: input
+        prompt: '**Étape 2.** Quelle est l''activité au bout de $5$ jours, en millions de becquerels, arrondie à $0{,}01$ ?'
+        answer: '4.22'
+        numeric: true
+        tolerance: 0.03
+        explanation: '$0{,}88^{5}\approx0{,}527\,73$, donc $A(5)\approx8{,}0\times0{,}527\,73\approx4{,}22$ millions de Bq.'
+      - kind: input
+        prompt: '**Étape 3.** Au bout de combien de jours l''activité est-elle divisée par deux ? (arrondir à $0{,}01$ jour)'
+        answer: '5.42'
+        numeric: true
+        tolerance: 0.05
+        unit: j
+        explanation: 'On résout $0{,}88^{t}=0{,}5$, soit $t=\dfrac{\log(0{,}5)}{\log(0{,}88)}\approx\dfrac{-0{,}301\,03}{-0{,}055\,52}\approx5{,}42$ jours. La demi-vie ne dépend pas de $A_{0}$, qui se simplifie.'
+      - kind: input
+        prompt: '**Étape 4.** Quel est le taux d''évolution de l''activité sur une semaine complète, en pour cent, arrondi à $0{,}1$ ? (donner un nombre négatif)'
+        answer: '-59.1'
+        numeric: true
+        tolerance: 0.2
+        unit: '%'
+        explanation: '$0{,}88^{7}\approx0{,}408\,68$, donc le taux vaut $0{,}408\,68-1\approx-0{,}591$, soit environ $-59{,}1\ \%$. Ce n''est pas $7\times(-12)=-84\ \%$.'
+      - kind: input
+        prompt: '**Étape 5.** Quel est le taux d''évolution **horaire** équivalent, en pour cent, arrondi à $0{,}01$ ? (donner un nombre négatif)'
+        answer: '-0.53'
+        numeric: true
+        tolerance: 0.02
+        unit: '%'
+        explanation: 'Il y a $24$ heures dans une journée, donc le coefficient horaire est $0{,}88^{1/24}\approx0{,}994\,69$, soit environ $-0{,}53\ \%$ par heure. L''exposant $\dfrac{1}{n}$ est l''outil du taux moyen équivalent.'
+      - kind: input
+        prompt: '**Étape 6.** Au bout de combien de jours **entiers** l''activité est-elle passée sous $1\ \%$ de sa valeur initiale ?'
+        answer: '37'
+        numeric: true
+        tolerance: 0.5
+        unit: j
+        explanation: 'On résout $0{,}88^{t}<0{,}01$, soit $t>\dfrac{\log(0{,}01)}{\log(0{,}88)}=\dfrac{-2}{-0{,}055\,52}\approx36{,}02$. Le premier jour entier convenable est $37$.'
+      - kind: mcq
+        prompt: '**Étape 7.** Que représente $0{,}88^{0{,}5}\approx0{,}938$ dans ce contexte ?'
+        choices:
+        - le coefficient d'évolution sur une demi-journée, dont le carré redonne $0{,}88$
+        - la moitié du coefficient journalier
+        - le coefficient d'évolution sur deux jours
+        - la moitié de l'activité initiale
+        answer:
+        - 0
+        feedback:
+        - null
+        - La moitié de $0{,}88$ vaut $0{,}44$ ; un exposant ne se lit pas comme une division.
+        - Le coefficient sur deux jours est $0{,}88^{2}=0{,}774\,4$, obtenu avec l'exposant $2$.
+        - Un coefficient multiplicateur n'est pas une activité, il n'a pas d'unité.
+        explanation: 'C''est la **moyenne géométrique** de $0{,}88^{0}=1$ et $0{,}88^{1}=0{,}88$ : $0{,}938^{2}\approx0{,}88$. Voilà comment on intercale une valeur entre deux termes de la suite géométrique, ce qui fonde le passage du discret au continu.'
+  - id: mathstc-inverse-derivation
+    title: Fonction inverse et lecture de courbes
+    icon: ➗
+    description: Dérivée et comportement de la fonction inverse, combinaisons linéaires avec des polynômes, tangentes, coûts moyens et prix unitaires.
+    prerequisites:
+    - mathstc-exp-log
+    lesson: lessons/maths-tle-commun-inverse-derivation.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Quel est l'ensemble de définition de la fonction inverse $x\mapsto\dfrac{1}{x}$ ?
+      choices:
+      - $\left]-\infty\,;0\right[\cup\left]0\,;+\infty\right[$
+      - $\left]0\,;+\infty\right[$
+      - $\mathbb{R}$
+      - $\left[0\,;+\infty\right[$
+      answer: 0
+      feedback:
+      - null
+      - La fonction est aussi définie pour les valeurs négatives ; sa courbe a deux branches.
+      - La valeur $0$ doit être exclue, on ne divise pas par zéro.
+      - La valeur $0$ est exclue et les négatifs sont admis.
+      explanation: 'La fonction inverse est définie sur $\mathbb{R}$ privé de $0$. Sa courbe, une hyperbole, comporte **deux** branches séparées.
+
+
+        {{fig:mathstc-fonction-inverse}}'
+    - type: mcq
+      level: 1
+      prompt: Quelle est la dérivée de $x\mapsto\dfrac{1}{x}$ ?
+      choices:
+      - $x\mapsto-\dfrac{1}{x^{2}}$
+      - $x\mapsto\dfrac{1}{x^{2}}$
+      - $x\mapsto-\dfrac{1}{2x}$
+      - $x\mapsto\ln(x)$
+      answer: 0
+      feedback:
+      - null
+      - 'Il manque le signe moins : la fonction inverse est décroissante sur chacune de ses branches.'
+      - L'exposant du dénominateur passe de $1$ à $2$, il ne s'agit pas d'une multiplication par $2$.
+      - $\ln$ est une **primitive** de $\dfrac{1}{x}$, pas sa dérivée, et n'est pas au programme du tronc commun.
+      explanation: 'Pour tout $x\neq0$, $\left(\dfrac{1}{x}\right)''=-\dfrac{1}{x^{2}}$. Cette dérivée est **toujours strictement négative**, donc la fonction inverse est décroissante sur $\left]-\infty\,;0\right[$ et sur $\left]0\,;+\infty\right[$ — mais pas sur la réunion des deux.'
+    - type: order
+      level: 3
+      prompt: Remettre dans l'ordre le calcul du taux de variation qui permet de retrouver la dérivée de la fonction inverse en $x\neq0$.
+      steps:
+      - Écrire le taux de variation $\dfrac{\frac{1}{x+h}-\frac{1}{x}}{h}$
+      - Mettre les deux fractions du numérateur au même dénominateur $x(x+h)$
+      - Obtenir $\dfrac{x-(x+h)}{x(x+h)}=\dfrac{-h}{x(x+h)}$ au numérateur
+      - Simplifier par $h$ pour obtenir $\dfrac{-1}{x(x+h)}$
+      - Faire tendre $h$ vers $0$ et conclure $-\dfrac{1}{x^{2}}$
+      explanation: 'C''est la démarche demandée par le programme : réinvestir la définition du nombre dérivé comme limite du taux de variation. La simplification par $h$ est possible parce que $h\neq0$.'
+    - type: mcq
+      level: 2
+      prompt: Soit $f(x)=2x+\dfrac{8}{x}$ sur $\left]0\,;+\infty\right[$. Quelle est sa dérivée ?
+      choices:
+      - $f'(x)=2-\dfrac{8}{x^{2}}$
+      - $f'(x)=2+\dfrac{8}{x^{2}}$
+      - $f'(x)=2-\dfrac{1}{x^{2}}$
+      - $f'(x)=2-\dfrac{8}{x}$
+      answer: 0
+      feedback:
+      - null
+      - 'Erreur de signe : la dérivée de $\dfrac{1}{x}$ est **négative**, donc celle de $\dfrac{8}{x}$ aussi.'
+      - Le facteur $8$ se conserve en dérivant.
+      - L'exposant du dénominateur passe de $1$ à $2$.
+      explanation: '$\dfrac{8}{x}=8\times\dfrac{1}{x}$, dont la dérivée est $8\times\left(-\dfrac{1}{x^{2}}\right)=-\dfrac{8}{x^{2}}$. En ajoutant la dérivée de $2x$ : $f''(x)=2-\dfrac{8}{x^{2}}$.'
+    - type: input
+      level: 2
+      prompt: Pour $f(x)=2x+\dfrac{8}{x}$ sur $\left]0\,;+\infty\right[$, en quelle valeur de $x$ la fonction atteint-elle son minimum ?
+      answer: '2'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$f''(x)=2-\dfrac{8}{x^{2}}$ s''annule quand $x^{2}=4$, soit $x=2$ (la solution $-2$ est hors de l''intervalle). $f''$ est négative avant $2$ et positive après, il s''agit bien d''un minimum.'
+    - type: input
+      level: 2
+      prompt: Toujours pour $f(x)=2x+\dfrac{8}{x}$, calculer la valeur du minimum $f(2)$.
+      answer: '8'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$f(2)=2\times2+\dfrac{8}{2}=4+4=8$.'
+    - type: mcq
+      level: 2
+      prompt: Soit $g(x)=x^{2}-\dfrac{1}{x}$ sur $\left]0\,;+\infty\right[$. Quel est le sens de variation de $g$ ?
+      choices:
+      - strictement croissante, car $g'(x)=2x+\dfrac{1}{x^{2}}>0$
+      - strictement décroissante, car $g'(x)=2x-\dfrac{1}{x^{2}}<0$
+      - croissante puis décroissante
+      - constante
+      answer: 0
+      feedback:
+      - null
+      - 'Double erreur de signe : la dérivée de $-\dfrac{1}{x}$ est $+\dfrac{1}{x^{2}}$.'
+      - La dérivée est somme de deux termes strictement positifs, elle ne change jamais de signe.
+      - Une dérivée non nulle interdit une fonction constante.
+      explanation: 'Dériver $-\dfrac{1}{x}$ donne $-\left(-\dfrac{1}{x^{2}}\right)=+\dfrac{1}{x^{2}}$. Ainsi $g''(x)=2x+\dfrac{1}{x^{2}}$, somme de deux quantités strictement positives sur $\left]0\,;+\infty\right[$.'
+    - type: match
+      level: 2
+      prompt: Associer chaque fonction à sa dérivée sur $\left]0\,;+\infty\right[$.
+      pairs:
+      - left: $x\mapsto\dfrac{1}{x}$
+        right: $x\mapsto-\dfrac{1}{x^{2}}$
+      - left: $x\mapsto\dfrac{3}{x}$
+        right: $x\mapsto-\dfrac{3}{x^{2}}$
+      - left: $x\mapsto2x+\dfrac{8}{x}$
+        right: $x\mapsto2-\dfrac{8}{x^{2}}$
+      - left: $x\mapsto x^{2}-\dfrac{1}{x}$
+        right: $x\mapsto2x+\dfrac{1}{x^{2}}$
+      - left: $x\mapsto x^{3}-4x$
+        right: $x\mapsto3x^{2}-4$
+    - type: input
+      level: 2
+      prompt: Soit $h(x)=x^{3}-2x^{2}+5$. Calculer le coefficient directeur de la tangente à sa courbe au point d'abscisse $3$.
+      answer: '15'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$h''(x)=3x^{2}-4x$, donc $h''(3)=27-12=15$. Le coefficient directeur de la tangente en $a$ est toujours $h''(a)$.'
+    - type: mcq
+      level: 3
+      prompt: Quelle est l'équation réduite de la tangente à la courbe de $x\mapsto\dfrac{1}{x}$ au point d'abscisse $2$ ?
+      choices:
+      - $y=-\dfrac{1}{4}x+1$
+      - $y=-\dfrac{1}{4}x+\dfrac{1}{2}$
+      - $y=\dfrac{1}{4}x$
+      - $y=-4x+8{,}5$
+      answer: 0
+      feedback:
+      - null
+      - L'ordonnée à l'origine n'est pas $f(2)$ ; il faut résoudre $\dfrac{1}{2}=-\dfrac{1}{4}\times2+b$.
+      - 'Erreur de signe : la dérivée de la fonction inverse est négative.'
+      - $-4$ est l'inverse du coefficient directeur, pas le coefficient directeur.
+      explanation: 'La tangente en $a$ a pour équation $y=f''(a)(x-a)+f(a)$. Ici $f(2)=0{,}5$ et $f''(2)=-\dfrac{1}{4}$, d''où $y=-\dfrac{1}{4}(x-2)+\dfrac{1}{2}=-\dfrac{1}{4}x+1$.'
+    - type: mcq
+      level: 2
+      prompt: Que devient $\dfrac{1}{x}$ lorsque $x$ prend les valeurs $0{,}01$ puis $0{,}0001$ ?
+      choices:
+      - elle vaut $100$ puis $10\,000$ ; elle devient aussi grande que l'on veut
+      - elle vaut $0{,}01$ puis $0{,}0001$ ; elle tend vers $0$
+      - elle vaut $-100$ puis $-10\,000$
+      - elle reste comprise entre $0$ et $1$
+      answer: 0
+      feedback:
+      - null
+      - C'est le comportement de $\dfrac{1}{x}$ pour les **grandes** valeurs de $x$, pas pour les petites.
+      - Les valeurs proposées de $x$ sont positives, donc leurs inverses aussi.
+      - L'inverse d'un nombre compris entre $0$ et $1$ est supérieur à $1$.
+      explanation: 'Plus $x$ se rapproche de $0$ par valeurs positives, plus $\dfrac{1}{x}$ devient grand. Inversement, pour $x=10^{6}$, $\dfrac{1}{x}=10^{-6}$ est très proche de $0$. La courbe se rapproche des deux axes sans jamais les toucher.'
+    - type: grid
+      level: 2
+      prompt: Pour chaque fonction, cocher son sens de variation sur $\left]0\,;+\infty\right[$.
+      rows:
+      - id: g1
+        label: $x\mapsto\dfrac{1}{x}$
+      - id: g2
+        label: $x\mapsto-\dfrac{1}{x}$
+      - id: g3
+        label: $x\mapsto x^{2}-\dfrac{1}{x}$
+      - id: g4
+        label: $x\mapsto\dfrac{5}{x}+2$
+      - id: g5
+        label: $x\mapsto2x-\dfrac{3}{x}$
+      cols:
+      - id: C
+        label: Croissante
+      - id: D
+        label: Décroissante
+      answer:
+      - Dg1
+      - Cg2
+      - Cg3
+      - Dg4
+      - Cg5
+      cellFeedback:
+        Cg1: sa dérivée $-\dfrac{1}{x^{2}}$ est strictement négative
+        Dg2: sa dérivée est $+\dfrac{1}{x^{2}}$, strictement positive
+        Dg3: sa dérivée $2x+\dfrac{1}{x^{2}}$ est somme de deux termes positifs
+        Cg4: ajouter la constante $2$ ne change pas le sens de variation, et $\dfrac{5}{x}$ décroît
+        Dg5: sa dérivée $2+\dfrac{3}{x^{2}}$ est strictement positive
+      explanation: 'Réflexe : dériver, puis regarder le signe. Sur $\left]0\,;+\infty\right[$, les termes $\dfrac{k}{x^{2}}$ ont le signe de $k$, ce qui suffit presque toujours à conclure.'
+    - type: input
+      level: 3
+      prompt: Le coût total de production de $q$ pièces est $C(q)=0{,}5q^{2}+40q+800$ euros. Pour quelle quantité $q$ le coût moyen par pièce est-il minimal ?
+      answer: '40'
+      numeric: true
+      tolerance: 0.5
+      explanation: 'Le coût moyen est $C_{M}(q)=\dfrac{C(q)}{q}=0{,}5q+40+\dfrac{800}{q}$. Sa dérivée $0{,}5-\dfrac{800}{q^{2}}$ s''annule pour $q^{2}=1\,600$, soit $q=40$ pièces.
+
+
+        {{fig:mathstc-cout-moyen}}'
+    - type: input
+      level: 3
+      prompt: Avec $C(q)=0{,}5q^{2}+40q+800$, quelle est la valeur du coût moyen minimal par pièce ?
+      answer: '80'
+      numeric: true
+      tolerance: 0.5
+      unit: €
+      explanation: '$C_{M}(40)=0{,}5\times40+40+\dfrac{800}{40}=20+40+20=80$ €. Contrôle : $C(40)=800+1\,600+800=3\,200$ € et $\dfrac{3\,200}{40}=80$ €.'
+    - type: input
+      level: 2
+      prompt: Un lot de $n$ pièces coûte $240$ € de frais fixes plus $3$ € par pièce. À partir de combien de pièces le prix unitaire passe-t-il sous $5$ € ?
+      answer: '121'
+      numeric: true
+      tolerance: 0.5
+      explanation: 'Le prix unitaire est $p(n)=3+\dfrac{240}{n}$. L''inéquation $3+\dfrac{240}{n}<5$ donne $\dfrac{240}{n}<2$, soit $n>120$. Le premier entier convenable est $121$.'
+    - type: mcq
+      level: 2
+      prompt: Pourquoi la fonction inverse n'admet-elle pas de minimum sur $\left]0\,;+\infty\right[$ ?
+      choices:
+      - parce qu'elle est strictement décroissante et se rapproche de $0$ sans jamais l'atteindre
+      - parce qu'elle n'est pas dérivable
+      - parce qu'elle change de signe
+      - parce que son minimum vaut $0$ et est atteint en $x=0$
+      answer: 0
+      feedback:
+      - null
+      - Elle est dérivable en tout point de son ensemble de définition.
+      - Sur $\left]0\,;+\infty\right[$ elle est strictement positive, elle ne change pas de signe.
+      - La valeur $0$ n'est jamais atteinte, et $x=0$ est exclu de l'ensemble de définition.
+      explanation: 'Ses valeurs décroissent vers $0$ mais restent strictement positives : aucune valeur n''est la plus petite. Le programme demande une approche **intuitive** de ce comportement, aucune définition d''asymptote n''est exigée.'
+    - type: mcq
+      level: 2
+      prompt: Soit $k(x)=5x^{3}-2x^{2}+7x-1$. Quelle est sa dérivée ?
+      choices:
+      - $k'(x)=15x^{2}-4x+7$
+      - $k'(x)=15x^{2}-4x+7x$
+      - $k'(x)=15x^{2}-2x+7$
+      - $k'(x)=5x^{2}-4x+7$
+      answer: 0
+      feedback:
+      - null
+      - La dérivée de $7x$ est $7$, sans $x$.
+      - La dérivée de $-2x^{2}$ est $-4x$, il faut multiplier par l'exposant.
+      - La dérivée de $5x^{3}$ est $3\times5x^{2}=15x^{2}$.
+      explanation: 'On dérive terme à terme ; la constante $-1$ disparaît. Le programme limite cet automatisme aux polynômes de degré inférieur ou égal à $3$.'
+    - type: mcq
+      level: 3
+      prompt: Une fonction $f$ est dérivable sur $\left]0\,;10\right]$ et son tableau de variations indique qu'elle décroît sur $\left]0\,;4\right]$ puis croît sur $\left[4\,;10\right]$. Que peut-on dire de $f'$ ?
+      choices:
+      - $f'$ est négative sur $\left]0\,;4\right[$, s'annule en $4$, puis est positive
+      - $f'$ est décroissante puis croissante
+      - $f'$ est négative sur tout l'intervalle
+      - $f'$ est constante
+      answer: 0
+      feedback:
+      - null
+      - 'Confusion entre $f$ et $f''$ : ce sont les **variations** de $f$ qui sont décrites, donc le **signe** de $f''$.'
+      - Si $f'$ restait négative, $f$ décroîtrait sur tout l'intervalle.
+      - Une dérivée constante correspondrait à une fonction affine, donc monotone.
+      explanation: 'Un minimum en $x=4$ se traduit par un changement de signe de $f''$, du négatif vers le positif. C''est exactement le comportement de $x\mapsto2x+\dfrac{8}{x}$ en $x=2$.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre les étapes de l'étude d'une fonction du type $f(x)=ax+\dfrac{b}{x}$ sur $\left]0\,;+\infty\right[$.
+      steps:
+      - Vérifier que la fonction est bien définie et dérivable sur l'intervalle
+      - Calculer $f'(x)$ en dérivant chaque terme
+      - Mettre $f'(x)$ au même dénominateur pour étudier son signe
+      - Résoudre $f'(x)=0$ et déterminer le signe de $f'$
+      - Dresser le tableau de variations et calculer l'extremum
+      explanation: 'La mise au même dénominateur est l''étape décisive : $2-\dfrac{8}{x^{2}}=\dfrac{2x^{2}-8}{x^{2}}$, dont le dénominateur est positif, si bien que le signe est celui du numérateur $2x^{2}-8$.'
+    - type: guided
+      level: 3
+      title: Le coût moyen d'un atelier de découpe laser
+      prompt: 'Exercice complet : coût total, coût moyen faisant intervenir la fonction inverse, dérivation, minimum et interprétation économique.'
+      intro: 'Un atelier de découpe laser produit $q$ plaques par jour, avec $0<q\leqslant200$. Son coût total de production, en euros, est modélisé par
+
+
+        $$C(q)=0{,}2q^{2}+15q+1\,620.$$
+
+
+        Le terme $1\,620$ représente les frais fixes journaliers (location de la machine, énergie de veille). Chaque plaque est ensuite revendue $60$ €.'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Quel est le coût total d''une journée à $60$ plaques ?'
+        answer: '3240'
+        numeric: true
+        tolerance: 1
+        unit: €
+        explanation: '$C(60)=0{,}2\times3\,600+15\times60+1\,620=720+900+1\,620=3\,240$ €.'
+      - kind: mcq
+        prompt: '**Étape 2.** Quelle est l''expression du coût moyen $C_{M}(q)$ par plaque ?'
+        choices:
+        - $C_{M}(q)=0{,}2q+15+\dfrac{1\,620}{q}$
+        - $C_{M}(q)=0{,}2q^{2}+15+\dfrac{1\,620}{q}$
+        - $C_{M}(q)=\dfrac{0{,}2q^{2}+15q}{q}+1\,620$
+        - $C_{M}(q)=0{,}2q+15q+1\,620$
+        answer:
+        - 0
+        feedback:
+        - null
+        - Le terme $0{,}2q^{2}$ divisé par $q$ donne $0{,}2q$, l'exposant diminue de $1$.
+        - Il faut diviser **tous** les termes par $q$, y compris les frais fixes.
+        - Diviser par $q$ n'est pas laisser l'expression inchangée.
+        explanation: 'On divise chaque terme par $q$ : $\dfrac{0{,}2q^{2}}{q}=0{,}2q$, $\dfrac{15q}{q}=15$ et $\dfrac{1\,620}{q}$. C''est là qu''apparaît la fonction inverse.'
+      - kind: input
+        prompt: '**Étape 3.** Quel est le coût moyen par plaque pour $q=60$ ?'
+        answer: '54'
+        numeric: true
+        tolerance: 0.5
+        unit: €
+        explanation: '$C_{M}(60)=12+15+27=54$ €, ce qui correspond bien à $\dfrac{3\,240}{60}$.'
+      - kind: mcq
+        prompt: '**Étape 4.** Quelle est la dérivée $C_{M}''(q)$ ?'
+        choices:
+        - $C_{M}'(q)=0{,}2-\dfrac{1\,620}{q^{2}}$
+        - $C_{M}'(q)=0{,}2+\dfrac{1\,620}{q^{2}}$
+        - $C_{M}'(q)=0{,}2-\dfrac{1\,620}{q}$
+        - $C_{M}'(q)=0{,}4q-\dfrac{1\,620}{q^{2}}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Erreur de signe : la dérivée de $\dfrac{1}{q}$ vaut $-\dfrac{1}{q^{2}}$.'
+        - L'exposant du dénominateur passe de $1$ à $2$.
+        - C'est la dérivée de $C(q)$ et non celle de $C_{M}(q)$, dans laquelle le terme carré a déjà été simplifié.
+        explanation: 'La constante $15$ disparaît, $0{,}2q$ donne $0{,}2$ et $\dfrac{1\,620}{q}$ donne $-\dfrac{1\,620}{q^{2}}$.'
+      - kind: input
+        prompt: '**Étape 5.** Pour quelle production journalière le coût moyen est-il minimal ?'
+        answer: '90'
+        numeric: true
+        tolerance: 0.5
+        explanation: '$C_{M}''(q)=0$ donne $0{,}2=\dfrac{1\,620}{q^{2}}$, soit $q^{2}=8\,100$ et $q=90$ (valeur positive). La dérivée est négative avant $90$ et positive après, c''est bien un minimum.'
+      - kind: input
+        prompt: '**Étape 6.** Quel est le coût moyen minimal par plaque ?'
+        answer: '51'
+        numeric: true
+        tolerance: 0.5
+        unit: €
+        explanation: '$C_{M}(90)=0{,}2\times90+15+\dfrac{1\,620}{90}=18+15+18=51$ €.'
+      - kind: input
+        prompt: '**Étape 7.** À cette production optimale, quel est le bénéfice journalier, sachant que chaque plaque est revendue $60$ € ?'
+        answer: '810'
+        numeric: true
+        tolerance: 2
+        unit: €
+        explanation: 'La marge par plaque est $60-51=9$ €, donc le bénéfice vaut $9\times90=810$ € par jour.'
+      - kind: mcq
+        prompt: '**Étape 8.** Pourquoi le coût moyen est-il très élevé pour les petites productions ?'
+        choices:
+        - Parce que les frais fixes de $1\,620$ € sont répartis sur très peu de plaques, ce que traduit le terme $\dfrac{1\,620}{q}$
+        - Parce que le terme $0{,}2q$ devient très grand
+        - Parce que le coût total augmente quand $q$ diminue
+        - Parce que la dérivée est nulle
+        answer:
+        - 0
+        feedback:
+        - null
+        - Au contraire, $0{,}2q$ tend vers $0$ quand $q$ diminue ; c'est ce terme qui fait remonter le coût moyen pour les **grandes** productions.
+        - Le coût **total** diminue quand $q$ diminue ; c'est le coût **par plaque** qui augmente.
+        - La dérivée ne s'annule qu'en $q=90$.
+        explanation: 'Pour $q=10$, $\dfrac{1\,620}{10}=162$ € de frais fixes par plaque. Le comportement de la fonction inverse près de $0$ explique directement cette réalité industrielle.'
+  - id: mathstc-stats-deux-variables
+    title: Statistiques à deux variables
+    icon: 📊
+    description: Nuage de points, ajustement affine, interpolation et extrapolation, moindres carrés et changements de variable.
+    prerequisites:
+    - mathstc-automatismes
+    lesson: lessons/maths-tle-commun-stats-deux-variables.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Qu'appelle-t-on nuage de points d'une série statistique à deux variables ?
+      choices:
+      - l'ensemble des points de coordonnées $\left(x_{i}\,;y_{i}\right)$ formés par les couples de valeurs observées
+      - la courbe qui relie toutes les valeurs mesurées
+      - le graphique des fréquences de chaque valeur
+      - la droite qui passe au plus près des mesures
+      answer: 0
+      feedback:
+      - null
+      - On ne relie pas les points d'un nuage ; chaque point représente un individu observé.
+      - C'est un diagramme en barres ou un histogramme, pour une seule variable.
+      - C'est la droite d'ajustement, qui vient **après** le tracé du nuage.
+      explanation: 'Chaque individu observé fournit un couple $\left(x_{i}\,;y_{i}\right)$ que l''on place dans un repère. Le nuage permet de conjecturer, ou non, une relation entre les deux variables.
+
+
+        {{fig:mathstc-nuage-ajustement}}'
+    - type: mcq
+      level: 1
+      prompt: Quelle est la différence entre interpoler et extrapoler avec un ajustement affine ?
+      choices:
+      - interpoler estime une valeur à l'intérieur de la plage des données, extrapoler à l'extérieur
+      - interpoler estime une valeur à l'extérieur de la plage des données, extrapoler à l'intérieur
+      - interpoler utilise la droite, extrapoler utilise le nuage
+      - il n'y a aucune différence
+      answer: 0
+      feedback:
+      - null
+      - Les deux définitions sont inversées.
+      - Les deux opérations utilisent la droite d'ajustement.
+      - La distinction est essentielle, car l'extrapolation est beaucoup plus risquée.
+      explanation: 'Interpoler reste dans le domaine observé, donc dans le domaine où le modèle a été validé. Extrapoler sort de ce domaine, sans garantie que la relation reste valable.'
+    - type: input
+      level: 2
+      prompt: La consommation de gaz $y$, en $\mathrm{m}^{3}$ par jour, d'un bâtiment est ajustée par $y=-2{,}4x+58$, où $x$ est la température moyenne en °C. Estimer la consommation pour $x=9{,}5$ °C.
+      answer: '35.2'
+      numeric: true
+      tolerance: 0.1
+      explanation: '$y=-2{,}4\times9{,}5+58=-22{,}8+58=35{,}2\ \mathrm{m}^{3}$ par jour. La température $9{,}5$ °C étant dans la plage des mesures, il s''agit d''une **interpolation**.'
+    - type: input
+      level: 2
+      prompt: Toujours avec l'ajustement $y=-2{,}4x+58$, quelle consommation le modèle prévoit-il pour $x=-5$ °C ?
+      answer: '70'
+      numeric: true
+      tolerance: 0.1
+      explanation: '$y=-2{,}4\times(-5)+58=12+58=70\ \mathrm{m}^{3}$ par jour. Attention au signe : multiplier deux nombres négatifs donne un résultat positif. C''est une **extrapolation**, à considérer avec prudence.'
+    - type: mcq
+      level: 2
+      prompt: Toujours avec l'ajustement $y=-2{,}4x+58$ de la consommation de gaz, comment interpréter le coefficient directeur $-2{,}4$ ?
+      choices:
+      - chaque degré de plus fait baisser la consommation d'environ $2{,}4\ \mathrm{m}^{3}$ par jour
+      - la consommation vaut $-2{,}4\ \mathrm{m}^{3}$ par jour
+      - la consommation baisse de $2{,}4\ \%$ par degré
+      - la température baisse de $2{,}4$ °C par $\mathrm{m}^{3}$
+      answer: 0
+      feedback:
+      - null
+      - Une consommation ne peut pas être négative ; $-2{,}4$ est une **variation**, pas une valeur.
+      - Le coefficient directeur donne une variation absolue, en $\mathrm{m}^{3}$, pas un pourcentage.
+      - Les rôles des deux variables sont échangés.
+      explanation: 'Le coefficient directeur s''exprime dans l''unité de $y$ divisée par celle de $x$, ici des $\mathrm{m}^{3}$ par jour et par °C. Son signe négatif traduit une relation décroissante.'
+    - type: input
+      level: 3
+      prompt: Toujours avec $y=-2{,}4x+58$, à partir de quelle température, en °C arrondie à $0{,}1$, le modèle prévoit-il une consommation nulle ?
+      answer: '24.2'
+      numeric: true
+      tolerance: 0.15
+      unit: °C
+      explanation: 'On résout $-2{,}4x+58=0$, soit $x=\dfrac{58}{2{,}4}\approx24{,}2$ °C. Le modèle prédirait ensuite une consommation **négative**, ce qui n''a aucun sens physique.'
+    - type: mcq
+      level: 3
+      prompt: Le modèle précédent prévoit une consommation négative au-delà de $24{,}2$ °C. Quelle conclusion en tirer ?
+      choices:
+      - un ajustement affine n'est valable que sur la plage des données, l'extrapolation lointaine n'a pas de sens ici
+      - il faut changer le signe du coefficient directeur
+      - le calcul de l'ajustement est nécessairement faux
+      - la consommation devient effectivement négative
+      answer: 0
+      feedback:
+      - null
+      - Le coefficient est correct, il traduit bien la baisse de consommation quand il fait plus chaud.
+      - L'ajustement peut être excellent sur la plage observée et devenir absurde en dehors.
+      - Une consommation est toujours positive ou nulle ; c'est le modèle qui sort de son domaine de validité.
+      explanation: 'Le programme demande explicitement d''exercer un esprit critique sur les **limites des extrapolations**. Au-delà d''une certaine température, le chauffage est simplement à l''arrêt et la consommation stagne près de zéro.'
+    - type: mcq
+      level: 2
+      prompt: Qu'appelle-t-on résidu d'un point $\left(x_{i}\,;y_{i}\right)$ pour une droite d'équation $y=ax+b$ ?
+      choices:
+      - l'écart vertical $y_{i}-\left(ax_{i}+b\right)$ entre la valeur observée et la valeur prédite
+      - la distance du point à l'origine du repère
+      - l'écart horizontal entre le point et la droite
+      - la valeur prédite $ax_{i}+b$
+      answer: 0
+      feedback:
+      - null
+      - La position par rapport à l'origine n'intervient pas.
+      - La méthode des moindres carrés utilise les écarts **verticaux**, mesurés sur la variable expliquée.
+      - C'est la valeur prédite, pas l'écart entre l'observation et cette prédiction.
+      explanation: 'La méthode des moindres carrés cherche le couple $(a\,;b)$ qui rend la somme $\displaystyle\sum_{i}\left(y_{i}-\left(ax_{i}+b\right)\right)^{2}$ minimale. Aucune formule théorique n''est exigible, mais le principe doit être compris.'
+    - type: input
+      level: 3
+      prompt: Pour le nuage de quatre points $(1\,;3)$, $(2\,;5)$, $(3\,;8)$, $(4\,;9)$, calculer $\displaystyle\sum_{i}\left(y_{i}-\left(2x_{i}+1\right)\right)^{2}$.
+      answer: '1'
+      numeric: true
+      tolerance: 0.01
+      explanation: 'Valeurs prédites par $y=2x+1$ : $3$ ; $5$ ; $7$ ; $9$. Résidus : $0$ ; $0$ ; $1$ ; $0$. Somme des carrés : $0+0+1+0=1$.'
+    - type: input
+      level: 3
+      prompt: Pour le même nuage $(1\,;3)$, $(2\,;5)$, $(3\,;8)$, $(4\,;9)$, calculer $\displaystyle\sum_{i}\left(y_{i}-\left(2{,}1x_{i}+1\right)\right)^{2}$, arrondi à $0{,}01$.
+      answer: '0.70'
+      numeric: true
+      tolerance: 0.01
+      explanation: 'Valeurs prédites : $3{,}1$ ; $5{,}2$ ; $7{,}3$ ; $9{,}4$. Résidus : $-0{,}1$ ; $-0{,}2$ ; $0{,}7$ ; $-0{,}4$. Somme des carrés : $0{,}01+0{,}04+0{,}49+0{,}16=0{,}70$.'
+    - type: mcq
+      level: 3
+      prompt: Pour le nuage $(1\,;3)$, $(2\,;5)$, $(3\,;8)$, $(4\,;9)$, on hésite entre trois droites. Laquelle ajuste le mieux le nuage au sens des moindres carrés ?
+      choices:
+      - $y=2{,}1x+1$, dont la somme des carrés des résidus vaut $0{,}70$
+      - $y=2x+1$, dont la somme des carrés des résidus vaut $1$
+      - $y=2{,}1x+0{,}5$, dont la somme des carrés des résidus vaut $1{,}70$
+      - les trois se valent, car elles passent toutes par le nuage
+      answer: 0
+      feedback:
+      - null
+      - Elle passe exactement par trois des quatre points, mais rate le quatrième de $1$ ; la somme des carrés y est plus grande.
+      - C'est la moins bonne des trois, avec la plus grande somme des carrés.
+      - Comparer les sommes des carrés permet justement de les départager.
+      explanation: 'La meilleure droite au sens des moindres carrés est celle qui **minimise** $\sum\left(y_{i}-\left(ax_{i}+b\right)\right)^{2}$. Ici $0{,}70<1<1{,}70$, donc $y=2{,}1x+1$ l''emporte. C''est bien la droite donnée par la calculatrice.'
+    - type: match
+      level: 2
+      prompt: Associer chaque relation supposée entre deux grandeurs au changement de variable qui la rend affine.
+      pairs:
+      - left: $N=k\,a^{t}$ (croissance exponentielle)
+        right: poser $z=\log(N)$
+      - left: $d=k\,v^{2}$ (distance de freinage)
+        right: poser $u=v^{2}$
+      - left: $p=\dfrac{k}{t}$ (prix unitaire)
+        right: poser $u=\dfrac{1}{t}$
+      - left: $y=k\sqrt{x}$
+        right: poser $u=\sqrt{x}$
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre les étapes d'un ajustement obtenu par changement de variable.
+      steps:
+      - Représenter le nuage initial et constater qu'il n'est pas aligné
+      - Choisir le changement de variable adapté à la forme observée
+      - Calculer la nouvelle série et représenter le nouveau nuage
+      - Vérifier que les points sont maintenant sensiblement alignés
+      - Déterminer l'ajustement affine sur les nouvelles variables
+      - Revenir aux variables initiales pour exprimer la relation cherchée
+      explanation: 'Le changement de variable ne se devine pas au hasard : la forme du nuage initial (croissance de plus en plus rapide, décroissance en $\dfrac{1}{t}$...) oriente le choix.
+
+
+        {{fig:mathstc-changement-variable}}'
+    - type: input
+      level: 3
+      prompt: Une culture de bactéries compte $N=2\,700$ individus à l'instant $t=2$ h. Calculer $z=\log(N)$, arrondi à $0{,}01$.
+      answer: '3.43'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$\log(2\,700)=\log(2{,}7)+3\approx0{,}431+3\approx3{,}43$. Sur les cinq mesures $500$, $1\,150$, $2\,700$, $6\,200$, $14\,300$ (pour $t=0$ à $4$ h), les valeurs de $z$ sont $2{,}70$ ; $3{,}06$ ; $3{,}43$ ; $3{,}79$ ; $4{,}16$, presque en progression arithmétique : le nuage $(t\,;z)$ est aligné.'
+    - type: mcq
+      level: 3
+      prompt: L'ajustement affine du nuage $(t\,;z)$ précédent donne $z=0{,}364t+2{,}699$. Quelle relation en déduit-on entre $N$ et $t$ ?
+      choices:
+      - $N\approx500\times2{,}31^{t}$
+      - $N\approx500+2{,}31t$
+      - $N\approx0{,}364\times10^{t}$
+      - $N\approx2{,}699\times0{,}364^{t}$
+      answer: 0
+      feedback:
+      - null
+      - Le retour aux variables initiales passe par la fonction $10^{x}$, il ne donne pas une relation affine.
+      - Le coefficient $0{,}364$ est l'exposant, pas le facteur multiplicatif.
+      - 'Les deux nombres sont échangés : $10^{2{,}699}\approx500$ et $10^{0{,}364}\approx2{,}31$.'
+      explanation: '$z=\log(N)$ donne $N=10^{z}=10^{0{,}364t+2{,}699}=10^{2{,}699}\times\left(10^{0{,}364}\right)^{t}\approx500\times2{,}31^{t}$. Le nombre de bactéries est multiplié par environ $2{,}31$ chaque heure.'
+    - type: input
+      level: 3
+      prompt: Avec le modèle $N\approx500\times2{,}31^{t}$, quel est le taux de croissance horaire de la population, en pour cent, arrondi à l'unité ?
+      answer: '131'
+      numeric: true
+      tolerance: 2
+      unit: '%'
+      explanation: 'Le coefficient multiplicateur horaire est $2{,}31$, donc le taux vaut $2{,}31-1=1{,}31$, soit environ $+131\ \%$ par heure. La population est multipliée par $2{,}31$, elle ne « augmente pas de $231\ \%$ ».'
+    - type: mcq
+      level: 3
+      prompt: Le modèle $N\approx500\times2{,}31^{t}$ prévoit environ $10^{11}$ bactéries au bout de $24$ heures. Pourquoi cette prévision n'est-elle pas crédible ?
+      choices:
+      - parce que le milieu de culture sature ; le modèle exponentiel n'est valable que sur la plage mesurée
+      - parce que le logarithme décimal n'est pas défini au-delà de $10$ heures
+      - parce que le coefficient $2{,}31$ devient négatif
+      - parce que le calcul est faux
+      answer: 0
+      feedback:
+      - null
+      - $\log$ est défini pour tout nombre strictement positif, sans limite de temps.
+      - Un coefficient multiplicateur constant ne change pas de signe.
+      - Le calcul est correct ; c'est le modèle qui sort de son domaine de validité.
+      explanation: 'L''ajustement a été construit sur $4$ heures d''observation. Nutriments limités, place disponible et déchets stoppent la croissance bien avant. Extrapoler six fois plus loin que la plage mesurée est toujours risqué.'
+    - type: input
+      level: 2
+      prompt: La distance de freinage $d$, en mètres, d'un véhicule est ajustée par $d=0{,}0068u$ où $u=v^{2}$ et $v$ est la vitesse en km/h. Quelle distance de freinage le modèle prévoit-il à $130$ km/h, arrondie à $0{,}1$ m ?
+      answer: '114.9'
+      numeric: true
+      tolerance: 0.5
+      unit: m
+      explanation: '$u=130^{2}=16\,900$, donc $d=0{,}0068\times16\,900\approx114{,}9$ m. Le changement de variable $u=v^{2}$ transforme une relation quadratique en relation affine, ici même en relation de proportionnalité.'
+    - type: input
+      level: 2
+      prompt: Une droite d'étalonnage relie l'absorbance $A$ d'une solution à sa concentration $c$, en mg/L, par $A=0{,}124c$. Quelle concentration correspond à une absorbance mesurée $A=0{,}62$ ?
+      answer: '5'
+      numeric: true
+      tolerance: 0.05
+      unit: mg/L
+      explanation: '$c=\dfrac{0{,}62}{0{,}124}=5{,}00$ mg/L. La droite d''étalonnage est l''exemple d''ajustement affine explicitement cité par le programme pour les séries STI2D et STL.'
+    - type: grid
+      level: 2
+      prompt: Pour chaque situation, cocher si un ajustement affine direct est pertinent ou non.
+      rows:
+      - id: s1
+        label: les points du nuage sont sensiblement alignés
+      - id: s2
+        label: les points forment une courbe nettement incurvée
+      - id: s3
+        label: les points sont dispersés sans aucune tendance
+      - id: s4
+        label: on veut prédire une valeur très éloignée de la plage mesurée
+      - id: s5
+        label: on veut prédire une valeur située entre deux mesures existantes
+      cols:
+      - id: P
+        label: Pertinent
+      - id: N
+        label: Non pertinent
+      answer:
+      - Ps1
+      - Ns2
+      - Ns3
+      - Ns4
+      - Ps5
+      cellFeedback:
+        Ns1: c'est justement le cas favorable, celui où la droite résume bien le nuage
+        Ps2: une courbure nette appelle un **changement de variable**, pas une droite
+        Ps3: sans tendance, aucune droite ne résume le nuage
+        Ps4: c'est une extrapolation lointaine, hors du domaine de validité du modèle
+        Ns5: c'est une interpolation, l'usage le plus sûr d'un ajustement
+      explanation: 'Deux questions à se poser systématiquement : le nuage est-il aligné, et la valeur cherchée est-elle dans la plage des mesures ? Si non à la première, on change de variable ; si non à la seconde, on reste prudent.'
+    - type: guided
+      level: 3
+      title: L'étalonnage d'un capteur de température
+      prompt: 'Exercice complet : nuage de points, ajustement affine, interpolation, lecture inverse, somme des carrés des résidus et limites de l''extrapolation.'
+      intro: |-
+        Un capteur de température délivre une tension $U$, en millivolts, croissante avec la température $\theta$, en degrés Celsius. Le service qualité relève six mesures.
+
+        | $\theta$ (°C) | $0$ | $20$ | $40$ | $60$ | $80$ | $100$ |
+        |---|---|---|---|---|---|---|
+        | $U$ (mV) | $5$ | $21$ | $36$ | $53$ | $68$ | $84$ |
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelle variable place-t-on en abscisse pour tracer le nuage ?'
+        choices:
+        - la température $\theta$, car c'est elle que l'on fait varier et dont dépend la tension
+        - la tension $U$, car c'est la grandeur mesurée par le capteur
+        - l'une ou l'autre, cela ne change rien
+        - le numéro de la mesure
+        answer:
+        - 0
+        feedback:
+        - null
+        - La tension est la grandeur **expliquée**, elle se place en ordonnée.
+        - Le choix change l'équation obtenue ; l'ajustement de $U$ en $\theta$ n'est pas celui de $\theta$ en $U$.
+        - Le numéro de mesure n'est pas une grandeur physique du problème.
+        explanation: 'On place en abscisse la variable explicative (ici la température imposée) et en ordonnée la variable expliquée (la tension délivrée).'
+      - kind: input
+        prompt: '**Étape 2.** En utilisant les deux points extrêmes $(0\,;5)$ et $(100\,;84)$, calculer le coefficient directeur de la droite, arrondi à $0{,}01$.'
+        answer: '0.79'
+        numeric: true
+        tolerance: 0.005
+        explanation: '$a=\dfrac{84-5}{100-0}=\dfrac{79}{100}=0{,}79$ mV par °C.'
+      - kind: mcq
+        prompt: '**Étape 3.** Quelle est l''équation réduite de cette droite d''ajustement ?'
+        choices:
+        - $U=0{,}79\theta+5$
+        - $U=0{,}79\theta$
+        - $U=0{,}79\theta+84$
+        - $U=5\theta+0{,}79$
+        answer:
+        - 0
+        feedback:
+        - null
+        - La droite ne passe pas par l'origine ; à $0$ °C le capteur délivre déjà $5$ mV.
+        - $84$ est l'ordonnée du dernier point, pas l'ordonnée à l'origine.
+        - 'Le coefficient directeur et l''ordonnée à l''origine sont échangés : $5\theta$ donnerait $500$ mV à $100$ °C.'
+        explanation: 'L''ordonnée à l''origine se lit directement sur le point $(0\,;5)$. Cette droite coïncide d''ailleurs avec celle des moindres carrés donnée par la calculatrice.'
+      - kind: input
+        prompt: '**Étape 4.** Quelle tension le modèle prévoit-il à $70$ °C, en mV arrondie à $0{,}1$ ?'
+        answer: '60.3'
+        numeric: true
+        tolerance: 0.1
+        unit: mV
+        explanation: '$U=0{,}79\times70+5=55{,}3+5=60{,}3$ mV. La valeur $70$ °C est dans la plage étalonnée, c''est une interpolation.'
+      - kind: input
+        prompt: '**Étape 5.** Le capteur affiche $45$ mV. Quelle température cela correspond-il, en °C arrondie à $0{,}1$ ?'
+        answer: '50.6'
+        numeric: true
+        tolerance: 0.2
+        unit: °C
+        explanation: 'On résout $0{,}79\theta+5=45$, soit $\theta=\dfrac{40}{0{,}79}\approx50{,}6$ °C. C''est l''usage courant d''une droite d''étalonnage : remonter de la mesure à la grandeur physique.'
+      - kind: input
+        prompt: '**Étape 6.** Calculer la somme des carrés des résidus des six mesures pour la droite $U=0{,}79\theta+5$, arrondie à $0{,}01$.'
+        answer: '0.80'
+        numeric: true
+        tolerance: 0.02
+        explanation: 'Valeurs prédites : $5$ ; $20{,}8$ ; $36{,}6$ ; $52{,}4$ ; $68{,}2$ ; $84$. Résidus : $0$ ; $0{,}2$ ; $-0{,}6$ ; $0{,}6$ ; $-0{,}2$ ; $0$. Somme des carrés : $0{,}04+0{,}36+0{,}36+0{,}04=0{,}80$, ce qui est très faible pour six mesures : l''ajustement est excellent.'
+      - kind: mcq
+        prompt: '**Étape 7.** Que vaut la sensibilité du capteur, et dans quelle unité ?'
+        choices:
+        - $0{,}79$ mV par °C
+        - $0{,}79$ °C par mV
+        - $5$ mV par °C
+        - $0{,}79$ mV
+        answer:
+        - 0
+        feedback:
+        - null
+        - C'est l'inverse de la sensibilité, utile pour convertir une tension en température ($1{,}27$ °C par mV environ).
+        - $5$ mV est l'offset du capteur, la tension délivrée à $0$ °C.
+        - Une sensibilité est un rapport, elle a une unité composée.
+        explanation: 'La sensibilité est le coefficient directeur de la droite d''étalonnage : elle indique de combien la tension varie quand la température augmente de $1$ °C.'
+      - kind: mcq
+        prompt: '**Étape 8.** Peut-on utiliser cette droite pour estimer la tension à $400$ °C ?'
+        choices:
+        - Non, car $400$ °C est très en dehors de la plage étalonnée et rien ne garantit que la relation reste affine
+        - Oui, car la droite est définie pour toute valeur de $\theta$
+        - Oui, car la somme des carrés des résidus est très faible
+        - Non, car le calcul donnerait une tension négative
+        answer:
+        - 0
+        feedback:
+        - null
+        - La droite mathématique est définie partout, mais le **capteur**, lui, a été caractérisé de $0$ à $100$ °C seulement.
+        - Une bonne qualité d'ajustement sur la plage mesurée ne dit rien du comportement en dehors.
+        - Le calcul donnerait $321$ mV, une valeur positive ; le problème n'est pas là.
+        explanation: 'La droite prédirait $0{,}79\times400+5=321$ mV, mais le capteur peut saturer, se dégrader ou devenir non linéaire bien avant. Le programme insiste sur les **limites des extrapolations**.'
+  - id: mathstc-probas
+    title: Probabilités et loi binomiale
+    icon: 🎲
+    description: Arbres pondérés, probabilités conditionnelles et totales, indépendance, espérance, coefficients binomiaux et loi binomiale.
+    prerequisites:
+    - mathstc-stats-deux-variables
+    lesson: lessons/maths-tle-commun-probas.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Que désigne la notation $P_{A}(B)$ ?
+      choices:
+      - la probabilité que $B$ se réalise **sachant que** $A$ est réalisé
+      - la probabilité que $A$ et $B$ se réalisent tous les deux
+      - la probabilité que $A$ se réalise sachant que $B$ est réalisé
+      - le produit $P(A)\times P(B)$
+      answer: 0
+      feedback:
+      - null
+      - C'est $P(A\cap B)$, qui vaut $P(A)\times P_{A}(B)$.
+      - 'Les rôles sont échangés : c''est $P_{B}(A)$, dont la valeur est en général différente.'
+      - Cette égalité n'est vraie que si les deux événements sont indépendants.
+      explanation: '$P_{A}(B)=\dfrac{P(A\cap B)}{P(A)}$ pour $P(A)\neq0$. Sur un arbre pondéré, $P_{A}(B)$ est le poids porté par la branche qui part de $A$ et mène à $B$.
+
+
+        {{fig:mathstc-arbre-probas}}'
+    - type: mcq
+      level: 1
+      prompt: Sur un arbre pondéré, que vaut la somme des probabilités portées par les branches issues d'un même nœud ?
+      choices:
+      - $1$
+      - $0$
+      - la probabilité du nœud
+      - cela dépend du nombre de branches
+      answer: 0
+      feedback:
+      - null
+      - Une somme de probabilités nulle exigerait que tous les événements soient impossibles.
+      - La probabilité du nœud se lit sur la branche qui y **mène**, pas sur celles qui en partent.
+      - 'La règle est toujours vraie : les branches issues d''un nœud décrivent tous les cas possibles à ce stade.'
+      explanation: 'Les branches issues d''un nœud forment une partition des cas possibles, leur somme vaut donc $1$. C''est le premier contrôle à faire sur un arbre.'
+    - type: mcq
+      level: 2
+      prompt: Une usine a deux lignes de production. La ligne A fournit $60\ \%$ des pièces et en produit $3\ \%$ de défectueuses ; la ligne B fournit les $40\ \%$ restants et en produit $5\ \%$ de défectueuses. On note $D$ l'événement « la pièce est défectueuse ». Que vaut $P(A\cap D)$ ?
+      choices:
+      - $0{,}018$
+      - $0{,}03$
+      - $0{,}63$
+      - $0{,}038$
+      answer: 0
+      feedback:
+      - null
+      - $0{,}03$ est la probabilité **conditionnelle** $P_{A}(D)$, portée par la deuxième branche seulement.
+      - On multiplie les probabilités le long d'un chemin, on ne les additionne pas.
+      - $0{,}038$ est la probabilité totale $P(D)$, qui additionne les deux chemins menant à $D$.
+      explanation: 'La probabilité d''un chemin est le **produit** des poids de ses branches : $P(A\cap D)=P(A)\times P_{A}(D)=0{,}60\times0{,}03=0{,}018$.'
+    - type: input
+      level: 2
+      prompt: Avec la même usine (ligne A - $60\ \%$ de la production et $3\ \%$ de défauts ; ligne B - $40\ \%$ et $5\ \%$ de défauts), calculer la probabilité $P(D)$ qu'une pièce prélevée au hasard soit défectueuse.
+      answer: '0.038'
+      numeric: true
+      tolerance: 0.001
+      explanation: 'Formule des probabilités totales sur la partition $\{A\,;B\}$ : $P(D)=P(A\cap D)+P(B\cap D)=0{,}60\times0{,}03+0{,}40\times0{,}05=0{,}018+0{,}020=0{,}038$, soit $3{,}8\ \%$.'
+    - type: input
+      level: 3
+      prompt: Toujours pour cette usine, une pièce prélevée est défectueuse. Quelle est la probabilité qu'elle provienne de la ligne A ? (arrondir à $0{,}001$)
+      answer: '0.474'
+      numeric: true
+      tolerance: 0.002
+      explanation: '$P_{D}(A)=\dfrac{P(A\cap D)}{P(D)}=\dfrac{0{,}018}{0{,}038}\approx0{,}474$. Remarquer que $P_{D}(A)\approx0{,}474$ est très différent de $P_{A}(D)=0{,}03$ : inverser le conditionnement change complètement le résultat.'
+    - type: mcq
+      level: 2
+      prompt: Toujours pour cette usine, les événements A (« la pièce vient de la ligne A ») et D (« la pièce est défectueuse ») sont-ils indépendants ?
+      choices:
+      - non, car $P_{A}(D)=0{,}03$ alors que $P(D)=0{,}038$
+      - oui, car les deux lignes fonctionnent séparément
+      - oui, car $P(A)+P(D)\neq1$
+      - on ne peut pas le savoir
+      answer: 0
+      feedback:
+      - null
+      - L'indépendance est une propriété **numérique** des probabilités, pas une description du dispositif matériel.
+      - La somme des probabilités de deux événements quelconques n'a pas de raison de valoir $1$.
+      - Les données suffisent, il suffit de comparer $P_{A}(D)$ et $P(D)$.
+      explanation: 'Deux événements de probabilités non nulles sont indépendants lorsque $P_{A}(D)=P(D)$, ce qui équivaut à $P(A\cap D)=P(A)\times P(D)$. Ici $0{,}018\neq0{,}60\times0{,}038=0{,}022\,8$ : savoir que la pièce vient de A change bien la probabilité qu''elle soit défectueuse.'
+    - type: grid
+      level: 2
+      prompt: Toujours pour cette usine, associer chaque événement à sa probabilité en cochant la bonne case.
+      rows:
+      - id: e1
+        label: $A\cap D$
+      - id: e2
+        label: $B\cap D$
+      - id: e3
+        label: $D$
+      - id: e4
+        label: $A$
+      cols:
+      - id: c1
+        label: $0{,}018$
+      - id: c2
+        label: $0{,}020$
+      - id: c3
+        label: $0{,}038$
+      - id: c4
+        label: $0{,}600$
+      answer:
+      - c1e1
+      - c2e2
+      - c3e3
+      - c4e4
+      cellFeedback:
+        c3e1: $0{,}038$ est la probabilité totale, elle regroupe les deux chemins
+        c1e2: $0{,}018$ correspond au chemin passant par A
+        c1e3: la probabilité totale additionne $0{,}018$ et $0{,}020$
+        c3e4: $P(A)=0{,}60$ se lit directement sur la première branche
+      explanation: 'Un tableau à double entrée et un arbre pondéré portent exactement la même information. Le tableau met en évidence les probabilités **totales** en marge, l''arbre met en évidence les probabilités **conditionnelles** sur les branches.'
+    - type: input
+      level: 2
+      prompt: Une variable aléatoire $X$ prend les valeurs $-2$ ; $0$ ; $5$ ; $20$ avec les probabilités respectives $0{,}45$ ; $0{,}30$ ; $0{,}20$ ; $0{,}05$. Calculer son espérance $E(X)$.
+      answer: '1.1'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$E(X)=\sum_{i}x_{i}p_{i}=(-2)\times0{,}45+0\times0{,}30+5\times0{,}20+20\times0{,}05=-0{,}9+0+1+1=1{,}1$. Vérifier au préalable que la somme des probabilités vaut bien $1$.'
+    - type: mcq
+      level: 2
+      prompt: Dans un jeu où le gain $X$ a pour espérance $E(X)=1{,}1$ €, comment interpréter ce nombre ?
+      choices:
+      - sur un très grand nombre de parties, le gain moyen par partie est proche de $1{,}10$ €
+      - le joueur gagne $1{,}10$ € à chaque partie
+      - le gain le plus probable est $1{,}10$ €
+      - le gain maximal est $1{,}10$ €
+      answer: 0
+      feedback:
+      - null
+      - L'espérance est une moyenne théorique, elle n'est presque jamais atteinte à une partie donnée.
+      - La valeur la plus probable est celle de plus grande probabilité, ici $-2$ €.
+      - Le gain maximal est $20$ €, il n'a rien à voir avec l'espérance.
+      explanation: 'L''espérance est la moyenne des valeurs pondérées par leurs probabilités. Elle décrit un comportement **à long terme**, sur un grand nombre de répétitions.'
+    - type: input
+      level: 2
+      prompt: À l'aide du triangle de Pascal, donner la valeur du coefficient binomial $\binom{5}{2}$.
+      answer: '10'
+      numeric: true
+      tolerance: 0.5
+      explanation: 'La ligne $5$ du triangle de Pascal est $1$ ; $5$ ; $10$ ; $10$ ; $5$ ; $1$. Le terme de rang $2$ (en comptant à partir de $0$) vaut $10$. C''est le nombre de chemins comportant $2$ succès sur $5$ épreuves.'
+    - type: input
+      level: 2
+      prompt: À l'aide du triangle de Pascal, donner la valeur du coefficient binomial $\binom{6}{3}$.
+      answer: '20'
+      numeric: true
+      tolerance: 0.5
+      explanation: 'La ligne $6$ est $1$ ; $6$ ; $15$ ; $20$ ; $15$ ; $6$ ; $1$. Le terme de rang $3$ vaut $20$.'
+    - type: mcq
+      level: 2
+      prompt: Que dit la formule de Pascal $\binom{n}{k}=\binom{n-1}{k-1}+\binom{n-1}{k}$ ?
+      choices:
+      - chaque coefficient du triangle est la somme des deux coefficients situés juste au-dessus de lui
+      - chaque coefficient est le double du précédent
+      - chaque ligne du triangle a pour somme $n$
+      - chaque coefficient est le produit des deux coefficients situés au-dessus
+      answer: 0
+      feedback:
+      - null
+      - Les coefficients d'une ligne ne se déduisent pas par doublement ; la ligne $4$ est $1$ ; $4$ ; $6$ ; $4$ ; $1$.
+      - La somme de la ligne $n$ vaut $2^{n}$, mais ce n'est pas ce qu'exprime la formule de Pascal.
+      - C'est une somme, pas un produit.
+      explanation: 'Vérification sur la ligne $6$ : $\binom{6}{3}=\binom{5}{2}+\binom{5}{3}=10+10=20$. Cette formule se démontre en comptant les chemins d''un arbre selon le résultat de la dernière épreuve.'
+    - type: mcq
+      level: 2
+      prompt: Dans laquelle de ces situations la variable aléatoire comptée ne suit-elle **pas** une loi binomiale ?
+      choices:
+      - on tire $5$ cartes **sans remise** dans un jeu de $32$ et on compte les cœurs
+      - on lance $10$ fois un dé équilibré et on compte les $6$ obtenus
+      - on prélève $50$ pièces avec remise dans une production à $2\ \%$ de défauts et on compte les défectueuses
+      - on lance $8$ fois une pièce équilibrée et on compte les piles
+      answer: 0
+      feedback:
+      - null
+      - Les lancers de dé sont indépendants et de même probabilité, la loi est bien $\mathcal{B}\left(10\,;\dfrac{1}{6}\right)$.
+      - Le tirage avec remise garantit l'indépendance et la constance de $p$.
+      - Les lancers d'une pièce sont indépendants, la loi est $\mathcal{B}(8\,;0{,}5)$.
+      explanation: 'Sans remise, la composition du jeu change à chaque tirage : les épreuves ne sont ni indépendantes ni de même probabilité. La loi binomiale exige la **répétition d''épreuves indépendantes et identiques**.'
+    - type: match
+      level: 2
+      prompt: Associer chaque situation au couple de paramètres de la loi binomiale correspondante.
+      pairs:
+      - left: on lance $10$ fois un dé équilibré et on compte les $6$
+        right: $\mathcal{B}\left(10\,;\dfrac{1}{6}\right)$
+      - left: on prélève $50$ pièces avec remise dans une production à $2\ \%$ de défauts
+        right: $\mathcal{B}(50\,;0{,}02)$
+      - left: on lance $8$ fois une pièce équilibrée et on compte les piles
+        right: $\mathcal{B}(8\,;0{,}5)$
+      - left: on interroge $200$ personnes au hasard dans une population dont $45\ \%$ approuvent
+        right: $\mathcal{B}(200\,;0{,}45)$
+    - type: input
+      level: 2
+      prompt: Soit $X$ une variable aléatoire suivant la loi binomiale $\mathcal{B}(20\,;0{,}1)$. Calculer $P(X=0)$, arrondi à $0{,}001$.
+      answer: '0.122'
+      numeric: true
+      tolerance: 0.002
+      explanation: 'L''événement $\{X=0\}$ correspond à un seul chemin, celui des $20$ échecs consécutifs : $P(X=0)=0{,}9^{20}\approx0{,}1216$, soit environ $0{,}122$.'
+    - type: input
+      level: 3
+      prompt: Toujours pour $X$ suivant $\mathcal{B}(20\,;0{,}1)$, calculer $P(X=1)$, arrondi à $0{,}001$.
+      answer: '0.270'
+      numeric: true
+      tolerance: 0.002
+      explanation: 'Il y a $\binom{20}{1}=20$ chemins comportant exactement un succès, chacun de probabilité $0{,}1\times0{,}9^{19}$. D''où $P(X=1)=20\times0{,}1\times0{,}9^{19}\approx0{,}270$.'
+    - type: input
+      level: 3
+      prompt: Toujours pour $X$ suivant $\mathcal{B}(20\,;0{,}1)$, calculer $P(X\geqslant2)$, arrondi à $0{,}001$.
+      answer: '0.608'
+      numeric: true
+      tolerance: 0.003
+      explanation: 'On passe par l''événement contraire : $P(X\geqslant2)=1-P(X=0)-P(X=1)\approx1-0{,}122-0{,}270\approx0{,}608$. C''est l''usage des réunions d''événements demandé par le programme.'
+    - type: input
+      level: 3
+      prompt: Toujours pour $X$ suivant $\mathcal{B}(20\,;0{,}1)$, calculer $P(X=3)$ à l'aide des coefficients binomiaux, arrondi à $0{,}001$.
+      answer: '0.190'
+      numeric: true
+      tolerance: 0.002
+      explanation: '$P(X=3)=\binom{20}{3}\times0{,}1^{3}\times0{,}9^{17}=1\,140\times0{,}001\times0{,}166\,77\approx0{,}190$. Le coefficient $\binom{20}{3}=1\,140$ compte les chemins de l''arbre qui portent exactement trois succès.'
+    - type: input
+      level: 2
+      prompt: Toujours pour $X$ suivant $\mathcal{B}(20\,;0{,}1)$, calculer l'espérance $E(X)$.
+      answer: '2'
+      numeric: true
+      tolerance: 0.01
+      explanation: 'Pour une loi binomiale, l''espérance est **admise** égale à $E(X)=np=20\times0{,}1=2$. Sur un grand nombre de prélèvements de $20$ pièces, on observe en moyenne $2$ succès.'
+    - type: mcq
+      level: 2
+      prompt: 'Le diagramme en bâtons de la loi $\mathcal{B}(20\,;0{,}1)$ figure dans la leçon. Quelle est la valeur de $k$ dont la probabilité est la plus grande ?'
+      choices:
+      - $k=2$, avec $P(X=2)\approx0{,}285$
+      - $k=0$, avec $P(X=0)\approx0{,}122$
+      - $k=10$, car c'est le milieu de l'intervalle des valeurs possibles
+      - $k=20$, car c'est la valeur maximale
+      answer: 0
+      feedback:
+      - null
+      - $P(X=0)\approx0{,}122$ est plus petite que $P(X=1)\approx0{,}270$ et que $P(X=2)$.
+      - La loi n'est symétrique que si $p=0{,}5$ ; ici elle est très déséquilibrée vers la gauche.
+      - $P(X=20)=0{,}1^{20}$ est de l'ordre de $10^{-20}$, une valeur pratiquement nulle.
+      explanation: 'Le bâton le plus haut est en $k=2$, avec $P(X=2)=\binom{20}{2}\times0{,}1^{2}\times0{,}9^{18}\approx0{,}285$. Il se trouve ici au voisinage de l''espérance $E(X)=2$.
+
+
+        {{fig:mathstc-binomiale-batons}}'
+    - type: mcq
+      level: 3
+      prompt: Pour une variable aléatoire $X$ suivant $\mathcal{B}(n\,;p)$, que vaut $P(X=n)$ ?
+      choices:
+      - $p^{n}$
+      - $n\,p$
+      - $(1-p)^{n}$
+      - $\binom{n}{n}p^{n}(1-p)^{n}$
+      answer: 0
+      feedback:
+      - null
+      - $np$ est l'espérance, pas une probabilité.
+      - C'est $P(X=0)$, la probabilité de n'obtenir aucun succès.
+      - Il ne reste aucune épreuve en échec, donc aucun facteur $(1-p)$.
+      explanation: 'L''événement $\{X=n\}$ correspond à l''unique chemin où les $n$ épreuves sont des succès, d''où $P(X=n)=p^{n}$. De même $P(X=n-1)=n\,p^{n-1}(1-p)$.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre les étapes d'un programme qui simule une réalisation d'une loi binomiale de paramètres $n$ et $p$.
+      steps:
+      - Importer le générateur de nombres aléatoires entre $0$ et $1$
+      - Initialiser un compteur de succès à $0$
+      - Répéter $n$ fois le tirage d'un nombre aléatoire
+      - Ajouter $1$ au compteur lorsque le nombre tiré est inférieur à $p$
+      - Renvoyer la valeur finale du compteur
+      explanation: 'Chaque tirage simule une épreuve de Bernoulli de paramètre $p$, car la probabilité qu''un nombre tiré au hasard entre $0$ et $1$ soit inférieur à $p$ vaut exactement $p$. Le compteur réalise l''accumulation des succès.'
+    - type: guided
+      level: 3
+      title: Le contrôle qualité d'un lot de cartes électroniques
+      prompt: 'Exercice complet : reconnaître une loi binomiale, calculer $P(X=0)$, $P(X=1)$, une probabilité cumulée et l''espérance, puis critiquer la règle de décision.'
+      intro: 'Un atelier produit en très grande série des cartes électroniques. Une carte est défectueuse avec la probabilité $0{,}04$, indépendamment des autres.
+
+
+        Le contrôle qualité prélève au hasard $15$ cartes dans la production et note $X$ le nombre de cartes défectueuses parmi ces $15$. Le lot est **refusé** dès que $X\geqslant2$.'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelle est la loi de la variable aléatoire $X$ ?'
+        choices:
+        - $X$ suit la loi binomiale $\mathcal{B}(15\,;0{,}04)$
+        - $X$ suit la loi binomiale $\mathcal{B}(0{,}04\,;15)$
+        - $X$ suit une loi de Bernoulli de paramètre $0{,}04$
+        - $X$ ne suit aucune loi connue, car le prélèvement se fait sans remise
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Les paramètres sont écrits dans le mauvais ordre : le premier est le nombre d''épreuves $n$, le second la probabilité de succès $p$.'
+        - Une loi de Bernoulli ne décrit qu'**une seule** épreuve, pas une répétition de $15$.
+        - La production étant en très grande série, prélever $15$ cartes ne modifie pas sensiblement la proportion de défauts.
+        explanation: 'On répète $15$ fois, de façon indépendante, la même épreuve à deux issues (défectueuse ou non) de probabilité de succès $p=0{,}04$. C''est exactement un schéma de Bernoulli de taille $15$.'
+      - kind: input
+        prompt: '**Étape 2.** Calculer l''espérance $E(X)$.'
+        answer: '0.6'
+        numeric: true
+        tolerance: 0.01
+        explanation: '$E(X)=np=15\times0{,}04=0{,}6$ carte défectueuse en moyenne par prélèvement de $15$ cartes.'
+      - kind: input
+        prompt: '**Étape 3.** Calculer $P(X=0)$, arrondi à $0{,}001$.'
+        answer: '0.542'
+        numeric: true
+        tolerance: 0.002
+        explanation: '$P(X=0)=0{,}96^{15}\approx0{,}542$. Un seul chemin de l''arbre convient, celui des $15$ cartes conformes.'
+      - kind: input
+        prompt: '**Étape 4.** Calculer $P(X=1)$, arrondi à $0{,}001$.'
+        answer: '0.339'
+        numeric: true
+        tolerance: 0.002
+        explanation: '$P(X=1)=\binom{15}{1}\times0{,}04\times0{,}96^{14}=15\times0{,}04\times0{,}564\,67\approx0{,}339$. Les $15$ chemins correspondent aux $15$ positions possibles de la carte défectueuse.'
+      - kind: input
+        prompt: '**Étape 5.** Calculer $P(X\leqslant1)$, arrondi à $0{,}001$.'
+        answer: '0.881'
+        numeric: true
+        tolerance: 0.003
+        explanation: '$\{X\leqslant1\}$ est la réunion des événements incompatibles $\{X=0\}$ et $\{X=1\}$, donc $P(X\leqslant1)\approx0{,}542+0{,}339\approx0{,}881$.'
+      - kind: input
+        prompt: '**Étape 6.** Quelle est la probabilité que le lot soit refusé, arrondie à $0{,}001$ ?'
+        answer: '0.119'
+        numeric: true
+        tolerance: 0.003
+        explanation: 'Le lot est refusé si $X\geqslant2$, événement contraire de $\{X\leqslant1\}$ : $P(X\geqslant2)=1-0{,}881=0{,}119$, soit environ $12\ \%$.'
+      - kind: mcq
+        prompt: '**Étape 7.** Comment interpréter ce résultat pour l''atelier ?'
+        choices:
+        - Environ $12\ \%$ des lots conformes au taux annoncé de $4\ \%$ seront tout de même refusés
+        - Environ $12\ \%$ des cartes produites sont défectueuses
+        - La règle garantit que $88\ \%$ des cartes vendues sont conformes
+        - Le taux de défauts réel est de $12\ \%$
+        answer:
+        - 0
+        feedback:
+        - null
+        - Le taux de défauts est $4\ \%$ ; $12\ \%$ est la probabilité d'un événement portant sur un échantillon de $15$ cartes.
+        - La règle porte sur l'acceptation des lots, elle ne modifie pas la qualité des cartes elles-mêmes.
+        - Le taux réel est bien celui de l'énoncé, $4\ \%$.
+        explanation: 'Même avec une production parfaitement conforme à $4\ \%$ de défauts, le hasard du prélèvement fait rejeter environ un lot sur huit. C''est le coût inévitable d''un contrôle par échantillon.'
+      - kind: mcq
+        prompt: '**Étape 8.** Le contrôle prélève maintenant $15$ cartes dans un carton qui n''en contient que $20$. Le modèle binomial reste-t-il valable ?'
+        choices:
+        - Non, car le prélèvement sans remise dans un si petit lot rend les épreuves dépendantes
+        - Oui, car $n$ et $p$ sont inchangés
+        - Oui, car $15$ est inférieur à $20$
+        - Non, car $15$ cartes est un échantillon trop petit
+        answer:
+        - 0
+        feedback:
+        - null
+        - Les valeurs des paramètres ne suffisent pas ; encore faut-il que les épreuves soient indépendantes et identiques.
+        - Le fait de pouvoir prélever n'assure pas l'indépendance des tirages.
+        - La taille de l'échantillon n'est pas en cause, c'est le mode de prélèvement qui l'est.
+        explanation: 'Prélever $15$ cartes sur $20$ modifie fortement la composition restante : la probabilité de tirer une carte défectueuse change à chaque prélèvement. Dans une production en très grande série, ce changement est négligeable, d''où la validité du modèle à l''étape 1.'
