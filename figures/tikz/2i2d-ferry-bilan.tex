@@ -1,0 +1,53 @@
+%% 2i2d-ferry-bilan — production photovoltaïque quotidienne du ferry-boat (barres solideE)
+%% et besoin journalier en mode écoconduite (ligne en escalier solideA), mois par mois.
+%% Échelle : 1 kWh -> 0,062 cm ; un mois -> 0,56 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.7pt},
+  grille/.style={black!15, line width=0.35pt},
+  grad/.style={font=\scriptsize, inner sep=2pt},
+  note/.style={font=\scriptsize, inner sep=1.5pt}]
+
+\newcommand\xm[1]{0.4+0.56*((#1)-1)}     % abscisse du mois n° #1
+\newcommand\ye[1]{0.062*(#1)}            % ordonnée : énergie en kWh
+
+%% ---------- quadrillage, axes, graduations -------------------------------
+\foreach \e in {5,10,...,55} { \draw[grille] (0,{\ye{\e}}) -- (6.95,{\ye{\e}}); }
+\draw[axe] (0,-0.08) -- (0,{\ye{55}+0.30});
+\draw[axe] (-0.08,0) -- (7.10,0);
+\foreach \e in {0,5,...,55} { \draw[line width=0.5pt] (0,{\ye{\e}}) -- (-0.08,{\ye{\e}});
+  \node[grad, anchor=east] at (-0.08,{\ye{\e}}) {\e};}
+\node[font=\scriptsize, anchor=south west, inner sep=2pt] at (0.05,{\ye{55}+0.31})
+  {Énergie par jour (kWh)};
+
+%% ---------- production photovoltaïque (barres) ---------------------------
+\foreach \m/\e/\lbl in {1/4.3/Jan, 2/7/Fév, 3/11/Mar, 4/14.3/Avr, 5/16.3/Mai, 6/18.3/Jun,
+                        7/17.9/Jui, 8/15/Aoû, 9/12.5/Sep, 10/8.8/Oct, 11/6/Nov, 12/4.6/Déc} {
+  \draw[solideE, line width=0.6pt, fill=solideE!35]
+    ({\xm{\m}-0.17},0) rectangle ({\xm{\m}+0.17},{\ye{\e}});
+  \node[font=\tiny, anchor=north, inner sep=2pt] at ({\xm{\m}},-0.05) {\lbl};}
+
+%% ---------- besoin journalier en écoconduite (escalier) ------------------
+\draw[solideA, line width=1.6pt, line join=round]
+  (0.12,{\ye{22.75}}) -- (1.24,{\ye{22.75}}) -- (1.24,{\ye{28.44}}) -- (2.36,{\ye{28.44}})
+  -- (2.36,{\ye{51.19}}) -- (4.60,{\ye{51.19}}) -- (4.60,{\ye{28.44}}) -- (5.72,{\ye{28.44}})
+  -- (5.72,{\ye{22.75}}) -- (6.84,{\ye{22.75}});
+\node[note, text=solideA, anchor=south] at (3.48,{\ye{51.19}+0.05}) {Besoin (écoconduite)};
+
+%% ---------- annotations ---------------------------------------------------
+\draw[-{Stealth[length=4pt]}, line width=0.6pt, black!70] (0.85,2.32) -- (0.44,0.36);
+\node[note, anchor=west] at (0.10,2.50) {janvier : 19 \% du besoin};
+\draw[-{Stealth[length=4pt]}, line width=0.6pt, black!70] (3.62,2.28) -- (3.30,1.24);
+\node[note, anchor=west] at (3.55,2.46) {juin : $\approx$ 36 \% du besoin};
+
+%% ---------- légende -------------------------------------------------------
+\draw[solideE, line width=0.6pt, fill=solideE!35] (0.05,-0.62) rectangle (0.35,-0.42);
+\node[note, anchor=west] at (0.42,-0.52) {production photovoltaïque simulée};
+\draw[solideA, line width=1.6pt] (0.05,-0.87) -- (0.35,-0.87);
+\node[note, anchor=west] at (0.42,-0.87) {besoin journalier en mode écoconduite};
+\node[note, anchor=west, text=black!65] at (0.05,-1.20)
+  {sans écoconduite : 32,5 / 40,6 / 73,0 kWh par jour (hors échelle)};
+\end{tikzpicture}
+\end{document}

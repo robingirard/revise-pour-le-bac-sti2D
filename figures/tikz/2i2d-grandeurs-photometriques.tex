@@ -26,37 +26,37 @@
   \end{scope}}
 
 %% ================= 1. flux lumineux =========================================
-\draw[cadre] (0,0) rectangle (2.30,\hv);
+\draw[cadre] (0,0) rectangle (2.45,\hv);
 \foreach \a in {0,45,...,315} {
   \draw[-{Stealth[length=4pt]}, line width=0.9pt, solideD]
-    ([shift={(\a:0.36)}]1.15,1.15) -- ([shift={(\a:0.80)}]1.15,1.15); }
-\ampoule{1.15}{1.15}
-\node[txt, anchor=north] at (1.15,-0.10) {\textbf{Flux lumineux} $\varphi$\\ lumen (lm)};
+    ([shift={(\a:0.36)}]1.225,1.15) -- ([shift={(\a:0.80)}]1.225,1.15); }
+\ampoule{1.225}{1.15}
+\node[txt, anchor=north] at (1.225,-0.10) {\textbf{Flux lumineux}\\ $\varphi$ — lumen (lm)};
 
 %% ================= 2. intensité lumineuse ===================================
-\draw[cadre] (2.55,0) rectangle (4.85,\hv);
+\draw[cadre] (2.60,0) rectangle (5.05,\hv);
 \foreach \a in {0,45,90,135,180,225,315} {
   \draw[-{Stealth[length=3pt]}, line width=0.5pt, black!22]
-    ([shift={(\a:0.36)}]3.70,1.30) -- ([shift={(\a:0.68)}]3.70,1.30); }
-\draw[-{Stealth[length=7pt, width=6pt]}, line width=2.4pt, solideD] (3.70,0.92) -- (3.70,0.32);
-\ampoule{3.70}{1.30}
-\node[txt, text=solideD, anchor=west, font=\tiny] at (3.82,0.55) {une seule\\ direction};
-\node[txt, anchor=north] at (3.70,-0.10) {\textbf{Intensité lumineuse} $I$\\ candela (cd)};
+    ([shift={(\a:0.36)}]3.825,1.30) -- ([shift={(\a:0.68)}]3.825,1.30); }
+\draw[-{Stealth[length=7pt, width=6pt]}, line width=2.4pt, solideD] (3.825,0.92) -- (3.825,0.32);
+\ampoule{3.825}{1.30}
+\node[txt, text=solideD, anchor=west, font=\tiny] at (3.945,0.55) {une seule\\ direction};
+\node[txt, anchor=north] at (3.825,-0.10) {\textbf{Intensité lumineuse}\\ $I$ — candela (cd)};
 
 %% ================= 3. éclairement ===========================================
-\draw[cadre] (5.10,0) rectangle (7.40,\hv);
-\ampoule{6.25}{1.66}
-\fill[solideD!25] (6.13,1.36) -- (5.50,0.62) -- (7.00,0.62) -- (6.37,1.36) -- cycle;
-\fill[black!18] (5.42,0.46) rectangle (7.08,0.62);
-\draw[line width=0.6pt, black!70] (5.42,0.46) rectangle (7.08,0.62);
-\draw[cote] (5.42,0.32) -- (7.08,0.32);
-\node[font=\scriptsize, anchor=north, inner sep=2pt] at (6.25,0.30) {surface $S$};
-\node[txt, anchor=north] at (6.25,-0.10) {\textbf{Éclairement} $E$\\ lux (lx)};
+\draw[cadre] (5.20,0) rectangle (7.65,\hv);
+\ampoule{6.425}{1.66}
+\fill[solideD!25] (6.305,1.36) -- (5.675,0.62) -- (7.175,0.62) -- (6.545,1.36) -- cycle;
+\fill[black!18] (5.595,0.46) rectangle (7.255,0.62);
+\draw[line width=0.6pt, black!70] (5.595,0.46) rectangle (7.255,0.62);
+\draw[cote] (5.595,0.32) -- (7.255,0.32);
+\node[font=\scriptsize, anchor=north, inner sep=2pt] at (6.425,0.30) {surface $S$};
+\node[txt, anchor=north] at (6.425,-0.10) {\textbf{Éclairement}\\ $E$ — lux (lx)};
 
 %% ================= égalité et bandeau =======================================
 \node[draw=black!70, line width=0.7pt, rounded corners=2pt, fill=black!3, font=\small,
-      inner sep=3.5pt, anchor=north] at (6.25,-0.86) {1 lx = 1 lm/m$^2$};
-\node[font=\scriptsize, anchor=north, align=center] at (3.20,-0.90)
+      inner sep=3.5pt, anchor=north] at (6.425,-0.92) {1 lx = 1 lm/m$^2$};
+\node[font=\scriptsize, anchor=north, align=center] at (2.90,-0.94)
   {$\varphi$ et $I$ décrivent la \textbf{source},\\ $E$ décrit la \textbf{surface éclairée}};
 \end{tikzpicture}
 \end{document}

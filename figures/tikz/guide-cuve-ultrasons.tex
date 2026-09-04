@@ -1,0 +1,80 @@
+%% guide-cuve-ultrasons — mesure sans contact du niveau d'une cuve par écho ultrasonore.
+%% À gauche : la cuve en coupe (capteur É/R, salve émise, écho, cote de 1,00 m, hauteur h).
+%% À droite : l'oscillogramme (salve émise puis salve reçue, décalées de 8 divisions).
+%% RÈGLE : ni la durée Delta t en secondes, ni la distance parcourue, ni h ne sont chiffrées.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  paroi/.style={line width=1pt, line join=round},
+  onde/.style={-{Stealth[length=5pt]}, line width=1.1pt},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.8pt, draw=solideD},
+  attache/.style={line width=0.4pt, draw=black!50},
+  pet/.style={font=\scriptsize, inner sep=1.5pt}]
+
+%% ======================= partie gauche : la cuve en coupe =================
+\fill[solideE!25] (1.0,0) rectangle (2.6,0.80);
+\draw[line width=1.1pt, draw=solideE] (1.0,0.80) -- (2.6,0.80);
+\draw[paroi] (1.0,2.40) -- (1.0,0) -- (2.6,0) -- (2.6,2.40);
+
+%% capteur É / R
+\fill[black!12] (1.35,2.60) rectangle (2.25,3.05);
+\draw[paroi] (1.35,2.60) rectangle (2.25,3.05);
+\foreach \x/\lb in {1.55/{É}, 2.05/{R}} {
+  \draw[line width=0.6pt, fill=white] (\x,2.80) circle (0.15);
+  \node[font=\tiny] at (\x,2.80) {\lb}; }
+\node[pet, anchor=south] at (1.80,3.10) {capteur};
+
+%% salve émise et écho
+\draw[onde, draw=solideA] (1.55,2.55) -- (1.55,0.92);
+\draw[onde, draw=solideB] (2.05,0.92) -- (2.05,2.55);
+\node[pet, text=solideA, rotate=90] at (1.36,1.75) {salve émise};
+\node[pet, text=solideB, rotate=-90] at (2.24,1.75) {écho};
+\node[font=\tiny, text=black!60] at (1.80,2.30) {air};
+\node[font=\tiny, text=black!60] at (1.80,0.42) {produit};
+
+%% cotes
+\draw[attache] (0.55,0) -- (0.98,0);
+\draw[attache] (0.55,2.60) -- (1.33,2.60);
+\draw[cote] (0.62,0) -- (0.62,2.60);
+\node[pet, text=solideD, rotate=90] at (0.44,1.30) {1,00 m};
+\draw[attache] (2.62,0) -- (3.05,0);
+\draw[attache] (2.62,0.80) -- (3.05,0.80);
+\draw[cote] (2.98,0) -- (2.98,0.80);
+\node[font=\small, text=solideD, anchor=west, inner sep=2pt] at (3.02,0.40) {$h$};
+
+%% ======================= partie droite : l'oscillogramme ==================
+\def\X{4.20}\def\Y{0.35}\def\D{0.38}
+\newcommand\px[1]{\X+(#1)*\D}
+\newcommand\py[1]{\Y+(#1)*\D}
+
+\fill[black!88] (\X,\Y) rectangle ({\px{10}},{\py{6}});
+\foreach \k in {1,2,...,9} { \draw[line width=0.3pt, white!35] ({\px{\k}},\Y) -- ({\px{\k}},{\py{6}}); }
+\foreach \k in {1,2,...,5} { \draw[line width=0.3pt, white!35] (\X,{\py{\k}}) -- ({\px{10}},{\py{\k}}); }
+\draw[line width=0.7pt, black] (\X,\Y) rectangle ({\px{10}},{\py{6}});
+
+%% trace du haut : la salve émise
+\draw[line width=0.9pt, draw=solideA] ({\px{0}},{\py{4.2}}) -- ({\px{0.5}},{\py{4.2}});
+\draw[line width=0.9pt, draw=solideA]
+  plot[domain=0.5:1.5, samples=90] ({\px{\x}},{\py{4.2}+0.26*sin(2880*(\x-0.5))});
+\draw[line width=0.9pt, draw=solideA] ({\px{1.5}},{\py{4.2}}) -- ({\px{10}},{\py{4.2}});
+\node[font=\tiny, text=solideA!45!white, anchor=west] at ({\px{2.2}},{\py{5.2}}) {Émetteur};
+
+%% trace du bas : l'écho reçu, 8 divisions plus tard
+\draw[line width=0.9pt, draw=solideB!55!white] ({\px{0}},{\py{1.8}}) -- ({\px{8.5}},{\py{1.8}});
+\draw[line width=0.9pt, draw=solideB!55!white]
+  plot[domain=8.5:9.5, samples=90] ({\px{\x}},{\py{1.8}+0.26*sin(2880*(\x-8.5))});
+\draw[line width=0.9pt, draw=solideB!55!white] ({\px{9.5}},{\py{1.8}}) -- ({\px{10}},{\py{1.8}});
+\node[font=\tiny, text=solideB!35!white, anchor=west] at ({\px{2.2}},{\py{0.7}}) {Récepteur};
+
+%% durée séparant les deux débuts de salve
+\draw[line width=0.4pt, dash pattern=on 1.5pt off 1.5pt, white!45]
+  ({\px{0.5}},{\py{1.8}}) -- ({\px{0.5}},{\py{4.2}})  ({\px{8.5}},{\py{1.8}}) -- ({\px{8.5}},{\py{3.2}});
+\draw[cote] ({\px{0.5}},{\py{3.0}}) -- ({\px{8.5}},{\py{3.0}});
+\node[font=\small, text=solideD, fill=black!88, inner sep=1.5pt]
+  at ({\px{4.5}},{\py{3.0}}) {$\Delta t$};
+
+\node[pet, anchor=north, align=center] at ({\px{5}},{\Y-0.08})
+  {base de temps : \textbf{250 $\mu$s} par division};
+\end{tikzpicture}
+\end{document}

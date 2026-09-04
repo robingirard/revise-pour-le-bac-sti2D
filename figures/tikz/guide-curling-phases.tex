@@ -1,0 +1,58 @@
+%% guide-curling-phases — les quatre phases du lancer d'une pierre de curling.
+%% Quatre vignettes identiques : la même pierre sur la glace, avec le seul élément
+%% caractéristique de la phase.
+%% RÈGLE : aucun vecteur poids ni réaction normale (c'est le bilan demandé par l'exercice),
+%% aucune valeur numérique.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  glace/.style={line width=1.2pt, draw=solideB!40},
+  sep/.style={line width=0.4pt, draw=black!25},
+  vect/.style={-{Stealth[length=6pt]}, line width=1.2pt},
+  leg/.style={font=\scriptsize, align=center, inner sep=1.5pt},
+  phase/.style={font=\small\bfseries, anchor=north, inner sep=3pt}]
+
+%% ---------- la pierre de curling, centrée en (#1,#2) ----------------------
+\newcommand\pierre[2]{%
+  \draw[glace] ({#1-0.85},{#2}) -- ({#1+0.85},{#2});
+  \draw[line width=0.7pt, fill=black!30] ({#1-0.36},{#2+0.02}) rectangle ({#1+0.36},{#2+0.30});
+  \draw[line width=0.7pt, fill=black!15] ({#1-0.30},{#2+0.30}) rectangle ({#1+0.30},{#2+0.44});
+  \draw[line width=0.9pt] ({#1},{#2+0.44}) -- ({#1},{#2+0.58});
+  \draw[line width=0.9pt] ({#1-0.12},{#2+0.58}) -- ({#1+0.12},{#2+0.58});}
+
+\def\yg{0.40}   % niveau de la glace
+
+%% ================= les quatre vignettes ===================================
+\foreach \k/\lab/\leg in {0/A/{pierre posée}, 1/B/{poussée par le lanceur},
+                          2/C/{glissement libre}, 3/D/{balayage} } {
+  \pgfmathsetmacro\cx{2*\k+1}
+  \pierre{\cx}{\yg}
+  \node[phase] at (\cx,0.10) {\lab};
+  \node[leg, anchor=south] at (\cx,1.92) {\leg}; }
+\foreach \k in {1,2,3} { \draw[sep] (2*\k,-0.35) -- (2*\k,2.20); }
+
+%% ================= A : la pierre est immobile =============================
+\node[draw=black!55, line width=0.6pt, rounded corners=2pt, fill=white,
+      font=\small, inner sep=2.5pt] at (1.00,1.35) {$\vec{v} = \vec{0}$};
+
+%% ================= B : le lanceur pousse ==================================
+\draw[line width=2.2pt, draw=black!45, line cap=round] (2.28,1.80) -- (2.62,1.12);
+\draw[line width=0.7pt, draw=black!45, fill=black!20] (2.68,1.02) circle (0.10);
+\draw[vect, draw=solideA] (3.02,0.98) -- (3.70,0.98);
+\node[font=\small, text=solideA, anchor=south, inner sep=1.5pt] at (3.36,1.02) {$\vec{F}$};
+
+%% ================= C : glissement libre ===================================
+\draw[vect, draw=solideD] (4.60,1.30) -- (5.50,1.30);
+\node[font=\small, text=solideD, anchor=south, inner sep=1.5pt] at (5.05,1.34) {$\vec{v}$};
+\node[leg, text=black!65] at (5.00,0.98) {la vitesse diminue};
+
+%% ================= D : balayage ===========================================
+\foreach \bx in {7.44,7.72} {
+  \draw[line width=0.9pt, draw=black!60] ({\bx+0.09},0.98) -- ({\bx+0.09},0.60);
+  \hachures[draw=black!40]{({\bx-0.02},0.42) rectangle ({\bx+0.20},0.60)} }
+\draw[vect, draw=solideD] (6.60,1.30) -- (7.40,1.30);
+\node[font=\small, text=solideD, anchor=south, inner sep=1.5pt] at (7.00,1.34) {$\vec{v}$};
+\node[leg, text=black!65] at (7.00,0.98) {vitesse constante};
+\end{tikzpicture}
+\end{document}

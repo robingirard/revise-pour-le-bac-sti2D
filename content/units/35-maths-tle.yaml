@@ -1,0 +1,802 @@
+# Mathématiques Tle STI2D — partie mathématiques de la spécialité « physique-chimie et mathématiques ».
+# Programme : arrêté du 19 juillet 2019, annexe 3 (BO spécial n° 8 du 25 juillet 2019), applicable
+# à la session 2027. Source de travail : docs/notes/maths-tle-programme.md (§ 2 pour le programme
+# chapitre par chapitre, § 6 pour les annales, § 7 pour le découpage M1-M6 suivi ici).
+# Hors programme de la spécialité, volontairement absents : probabilités, statistiques, loi normale,
+# intervalles de confiance, y'' + omega^2 y = 0, « automatismes » (cf. § 0 de la note).
+# Tous les énoncés sont originaux ; les valeurs numériques ont été recalculées.
+units:
+- id: maths-tle
+  matiere: maths
+  title: Mathématiques Tle STI2D
+  description: Exponentielle et logarithme, dérivation des composées, intégrale et valeur moyenne, équations différentielles, nombres complexes sous forme exponentielle et méthodes numériques en Python — le programme de mathématiques de la spécialité de terminale.
+  skills:
+  - id: mathstle-exp-ln
+    title: Exponentielle et logarithme
+    icon: 📈
+    description: Le nombre e, propriétés algébriques, équations et inéquations, demi-vie, pH et niveau sonore.
+    prerequisites: []
+    lesson: lessons/maths-tle-exp-ln.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Comment le programme introduit-il le nombre $\mathrm{e}$ ?'
+      choices:
+      - Comme l'unique réel $a>0$ tel que la tangente à la courbe de $x\mapsto a^{x}$ au point d'abscisse $0$ ait pour coefficient directeur $1$
+      - Comme l'unique réel $a>0$ tel que $a^{1}=1$
+      - Comme la limite de $x\mapsto\ln(x)$ en $+\infty$
+      - Comme le rapport de la circonférence d'un cercle à son diamètre
+      answer: 0
+      feedback:
+      - null
+      - 'Tout réel $a$ vérifie $a^{1}=a$ : cette égalité ne caractérise rien.'
+      - La limite de $\ln$ en $+\infty$ est $+\infty$, ce n'est pas un nombre.
+      - C'est la définition de $\pi\approx3{,}14$, pas celle de $\mathrm{e}\approx2{,}72$.
+      explanation: 'On part des fonctions $x\mapsto a^{x}$ du tronc commun et on cherche celle dont la tangente en $0$ a pour pente $1$. Cette valeur de $a$ existe, elle est unique, on la note $\mathrm{e}\approx2{,}718$. La fonction $x\mapsto\mathrm{e}^{x}$ est alors sa propre dérivée.'
+    - type: input
+      level: 1
+      prompt: Donner une valeur approchée du nombre $\mathrm{e}$ arrondie à $0{,}001$.
+      answer: '2.718'
+      numeric: true
+      tolerance: 0.01
+      explanation: $\mathrm{e}=2{,}718\,281\,828\ldots$, donc $\mathrm{e}\approx2{,}718$.
+    - type: mcq
+      level: 1
+      prompt: Que vaut $\mathrm{e}^{a}\times\mathrm{e}^{b}$ ?
+      choices:
+      - $\mathrm{e}^{a+b}$
+      - $\mathrm{e}^{ab}$
+      - $\mathrm{e}^{a}+\mathrm{e}^{b}$
+      - $2\,\mathrm{e}^{a+b}$
+      answer: 0
+      feedback:
+      - null
+      - $\mathrm{e}^{ab}$ correspond à $\left(\mathrm{e}^{a}\right)^{b}$, pas à un produit.
+      - Un produit d'exponentielles n'est pas une somme d'exponentielles.
+      - Il n'apparaît aucun facteur $2$ dans la formule.
+      explanation: 'L''exponentielle transforme les sommes en produits : $\mathrm{e}^{a+b}=\mathrm{e}^{a}\times\mathrm{e}^{b}$, $\mathrm{e}^{-a}=\dfrac{1}{\mathrm{e}^{a}}$ et $\left(\mathrm{e}^{a}\right)^{n}=\mathrm{e}^{an}$.'
+    - type: mcq
+      level: 2
+      prompt: Simplifier $\dfrac{\left(\mathrm{e}^{-3x}\right)^{2}\times\left(\mathrm{e}^{2x}\right)^{-3}}{\mathrm{e}^{5x}\times\mathrm{e}^{6x}}$.
+      choices:
+      - $\mathrm{e}^{-23x}$
+      - $\mathrm{e}^{-x}$
+      - $\mathrm{e}^{-1}$
+      - $\mathrm{e}^{11x}$
+      answer: 0
+      feedback:
+      - null
+      - Les exposants ne se compensent pas ainsi ; il faut d'abord multiplier les exposants dans chaque puissance.
+      - Un exposant $-1$ apparaîtrait seulement si tous les $x$ disparaissaient, ce qui n'est pas le cas ici.
+      - C'est le dénominateur seul ; il faut retrancher son exposant, pas l'écrire tel quel.
+      explanation: 'Numérateur : $\mathrm{e}^{-6x}\times\mathrm{e}^{-6x}=\mathrm{e}^{-12x}$. Dénominateur : $\mathrm{e}^{5x+6x}=\mathrm{e}^{11x}$. Quotient : $\mathrm{e}^{-12x-11x}=\mathrm{e}^{-23x}$.'
+    - type: mcq
+      level: 1
+      prompt: 'Pour $a>0$, le nombre $\ln(a)$ est défini comme :'
+      choices:
+      - l'unique solution de l'équation $\mathrm{e}^{x}=a$
+      - l'unique solution de l'équation $x^{\mathrm{e}}=a$
+      - l'opposé de $\mathrm{e}^{a}$
+      - l'inverse de $\mathrm{e}^{a}$
+      answer: 0
+      feedback:
+      - null
+      - L'inconnue est en exposant, pas en base.
+      - $\ln$ n'est pas l'opposé mais la fonction **réciproque** de l'exponentielle.
+      - L'inverse de $\mathrm{e}^{a}$ est $\mathrm{e}^{-a}$, ce n'est pas $\ln(a)$.
+      explanation: 'Pour tout $a>0$, l''équation $\mathrm{e}^{x}=a$ admet une unique solution, notée $\ln(a)$. On en déduit $\mathrm{e}^{\ln(a)}=a$ pour $a>0$ et $\ln\left(\mathrm{e}^{x}\right)=x$ pour tout réel $x$.'
+    - type: input
+      level: 1
+      prompt: Donner une valeur approchée de $\ln(2)$ arrondie à $0{,}001$.
+      answer: '0.693'
+      numeric: true
+      tolerance: 0.005
+      explanation: $\ln(2)=0{,}693\,147\ldots\approx0{,}693$. C'est la valeur qui revient dans tous les calculs de demi-vie.
+    - type: match
+      level: 2
+      prompt: Associer chaque expression à sa forme simplifiée (pour $a>0$ et $b>0$).
+      pairs:
+      - left: $\ln(ab)$
+        right: $\ln(a)+\ln(b)$
+      - left: $\ln\left(\dfrac{a}{b}\right)$
+        right: $\ln(a)-\ln(b)$
+      - left: $\ln\left(a^{5}\right)$
+        right: $5\ln(a)$
+      - left: $\ln\left(\sqrt{a}\right)$
+        right: $\dfrac{1}{2}\ln(a)$
+      - left: $\ln\left(\dfrac{1}{a}\right)$
+        right: $-\ln(a)$
+    - type: mcq
+      level: 2
+      prompt: Parmi ces égalités, laquelle est **fausse** pour tous les réels $a>0$ et $b>0$ ?
+      choices:
+      - $\ln(a+b)=\ln(a)+\ln(b)$
+      - $\ln(ab)=\ln(a)+\ln(b)$
+      - $\ln\left(a^{3}\right)=3\ln(a)$
+      - $\ln\left(\dfrac{a}{b}\right)=\ln(a)-\ln(b)$
+      answer: 0
+      feedback:
+      - null
+      - Cette égalité est la propriété fondamentale du logarithme, elle est vraie.
+      - Cette égalité est vraie, c'est la propriété de la puissance.
+      - Cette égalité est vraie, c'est la propriété du quotient.
+      explanation: 'Le logarithme transforme les **produits** en sommes, pas les sommes. Contre-exemple : $\ln(1+1)=\ln(2)\approx0{,}69$ alors que $\ln(1)+\ln(1)=0$.'
+    - type: mcq
+      level: 3
+      prompt: Pour tout $x>0$, que vaut $\ln\left(\dfrac{x^{4}}{9}\right)-3\ln(x)+\ln\left(\dfrac{9}{x}\right)$ ?
+      choices:
+      - $0$
+      - $\ln(x)$
+      - $2\ln(9)$
+      - $\ln\left(\dfrac{x^{3}}{9}\right)$
+      answer: 0
+      feedback:
+      - null
+      - Les termes en $\ln(x)$ se compensent exactement ; recompte-les.
+      - Les deux termes en $\ln(9)$ sont de signes opposés, ils s'annulent.
+      - Il faut aussi développer le troisième terme, qui contient $-\ln(x)$.
+      explanation: '$\ln\left(\dfrac{x^{4}}{9}\right)=4\ln(x)-\ln(9)$ et $\ln\left(\dfrac{9}{x}\right)=\ln(9)-\ln(x)$. La somme vaut $4\ln(x)-\ln(9)-3\ln(x)+\ln(9)-\ln(x)=0$.'
+    - type: mcq
+      level: 2
+      prompt: Quel est le lien entre le logarithme décimal $\log$ (vu en tronc commun) et le logarithme népérien $\ln$ ?
+      choices:
+      - $\log(x)=\dfrac{\ln(x)}{\ln(10)}$
+      - $\log(x)=\ln(x)\times\ln(10)$
+      - $\log(x)=\ln(x)-\ln(10)$
+      - $\log(x)=10\ln(x)$
+      answer: 0
+      feedback:
+      - null
+      - 'On divise par $\ln(10)$, on ne multiplie pas : $\log(10)$ doit valoir $1$.'
+      - 'Avec cette formule $\log(10)$ vaudrait $0$ : c''est faux, $\log(10)=1$.'
+      - 'Avec cette formule $\log(10)=23{,}0$ : c''est faux.'
+      explanation: '$\log(x)=\dfrac{\ln(x)}{\ln(10)}$ avec $\ln(10)\approx2{,}303$. Vérification : $\log(10)=\dfrac{\ln(10)}{\ln(10)}=1$. C''est le logarithme utilisé pour le pH et les décibels.'
+    - type: mcq
+      level: 2
+      prompt: Résoudre dans $\mathbb{R}$ l'équation $\mathrm{e}^{0{,}5x}=3$.
+      choices:
+      - $x=2\ln(3)$
+      - $x=\dfrac{\ln(3)}{2}$
+      - $x=\ln(1{,}5)$
+      - $x=0{,}5\ln(3)$
+      answer: 0
+      feedback:
+      - null
+      - 'On divise par $0{,}5$, c''est-à-dire qu''on **multiplie** par $2$.'
+      - On ne divise pas le nombre $3$ par $2$, on divise l'exposant.
+      - 'Multiplier par $0{,}5$ revient à diviser par $2$ : c''est l''inverse de ce qu''il faut faire.'
+      explanation: '$\mathrm{e}^{0{,}5x}=3$ équivaut à $0{,}5x=\ln(3)$, donc $x=\dfrac{\ln(3)}{0{,}5}=2\ln(3)\approx2{,}197$.'
+    - type: mcq
+      level: 2
+      prompt: Résoudre dans $\left]0\,;+\infty\right[$ l'inéquation $\ln(x)\leqslant2{,}5$.
+      choices:
+      - $0<x\leqslant\mathrm{e}^{2{,}5}$
+      - $x\geqslant\mathrm{e}^{2{,}5}$
+      - $0<x\leqslant\dfrac{2{,}5}{\mathrm{e}}$
+      - $x\leqslant\ln(2{,}5)$
+      answer: 0
+      feedback:
+      - null
+      - 'La fonction $\ln$ est **croissante** : elle conserve le sens de l''inégalité.'
+      - On applique l'exponentielle aux deux membres, on ne divise pas par $\mathrm{e}$.
+      - 'On applique $\exp$, pas $\ln$ : c''est déjà $\ln(x)$ qui est encadré.'
+      explanation: '$\ln$ est strictement croissante sur $\left]0\,;+\infty\right[$, donc $\ln(x)\leqslant2{,}5$ équivaut à $x\leqslant\mathrm{e}^{2{,}5}\approx12{,}18$, avec la contrainte $x>0$.'
+    - type: input
+      level: 3
+      prompt: Résoudre $\mathrm{e}^{-0{,}016x}-2=0$ et donner la solution arrondie à $0{,}01$.
+      answer: '-43.32'
+      numeric: true
+      tolerance: 0.05
+      explanation: '$\mathrm{e}^{-0{,}016x}=2$ donne $-0{,}016x=\ln(2)$, soit $x=-\dfrac{\ln(2)}{0{,}016}\approx-43{,}32$. La solution est **négative** : si $x$ représente une distance ou une durée, l''équation n''a pas de solution acceptable.'
+    - type: mcq
+      level: 3
+      prompt: Résoudre sur $\left]0\,;+\infty\right[$ l'équation $\dfrac{2}{3\ln(10)}\ln(x)-2{,}88=4$.
+      choices:
+      - $x=10^{10{,}32}$
+      - $x=\mathrm{e}^{10{,}32}$
+      - $x=10^{6{,}88}$
+      - $x=\mathrm{e}^{6{,}88}$
+      answer: 0
+      feedback:
+      - null
+      - Il reste un facteur $\ln(10)$ dans l'exposant, qui transforme l'exponentielle en puissance de $10$.
+      - 'On a oublié de multiplier par $\dfrac{3}{2}$ : $6{,}88\times1{,}5=10{,}32$.'
+      - 'Deux erreurs cumulées : le facteur $\dfrac{3}{2}$ et le passage à la base $10$.'
+      explanation: 'L''équation donne $\ln(x)=6{,}88\times\dfrac{3\ln(10)}{2}=10{,}32\ln(10)=\ln\left(10^{10{,}32}\right)$, donc $x=10^{10{,}32}\approx2{,}1\times10^{10}$.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre la méthode de résolution de l'équation $\mathrm{e}^{ax}=b$ (avec $a\neq0$).
+      steps:
+      - Vérifier que $b>0$, sinon l'équation n'a pas de solution
+      - Appliquer le logarithme népérien aux deux membres
+      - Utiliser $\ln\left(\mathrm{e}^{ax}\right)=ax$ pour obtenir $ax=\ln(b)$
+      - Diviser par $a$ pour isoler $x$
+      - Donner la valeur exacte $x=\dfrac{\ln(b)}{a}$, puis sa valeur approchée
+      explanation: 'L''exponentielle est à valeurs strictement positives : $\mathrm{e}^{ax}=b$ n''a de solution que si $b>0$. C''est le premier réflexe à avoir.'
+    - type: mcq
+      level: 2
+      prompt: Quelles sont les limites de la fonction exponentielle aux bornes de $\mathbb{R}$ ?
+      choices:
+      - $\lim\limits_{x\to-\infty}\mathrm{e}^{x}=0$ et $\lim\limits_{x\to+\infty}\mathrm{e}^{x}=+\infty$
+      - $\lim\limits_{x\to-\infty}\mathrm{e}^{x}=-\infty$ et $\lim\limits_{x\to+\infty}\mathrm{e}^{x}=+\infty$
+      - $\lim\limits_{x\to-\infty}\mathrm{e}^{x}=0$ et $\lim\limits_{x\to+\infty}\mathrm{e}^{x}=1$
+      - $\lim\limits_{x\to-\infty}\mathrm{e}^{x}=1$ et $\lim\limits_{x\to+\infty}\mathrm{e}^{x}=+\infty$
+      answer: 0
+      feedback:
+      - null
+      - 'L''exponentielle est toujours strictement positive : elle ne peut pas tendre vers $-\infty$.'
+      - L'exponentielle n'est pas majorée ; elle vaut déjà $\mathrm{e}\approx2{,}72$ en $x=1$.
+      - $\mathrm{e}^{x}$ vaut $1$ en $x=0$, mais tend vers $0$ quand $x$ tend vers $-\infty$.
+      explanation: 'La courbe de $x\mapsto\mathrm{e}^{x}$ admet l''axe des abscisses pour asymptote horizontale en $-\infty$ et croît sans borne en $+\infty$.
+
+
+        {{fig:mathstle-exp-ln-courbes}}'
+    - type: mcq
+      level: 2
+      prompt: Quelles sont les limites de la fonction $\ln$ aux bornes de son ensemble de définition ?
+      choices:
+      - $\lim\limits_{x\to0^{+}}\ln(x)=-\infty$ et $\lim\limits_{x\to+\infty}\ln(x)=+\infty$
+      - $\lim\limits_{x\to0^{+}}\ln(x)=0$ et $\lim\limits_{x\to+\infty}\ln(x)=+\infty$
+      - $\lim\limits_{x\to0^{+}}\ln(x)=-\infty$ et $\lim\limits_{x\to+\infty}\ln(x)=1$
+      - $\lim\limits_{x\to0^{+}}\ln(x)=+\infty$ et $\lim\limits_{x\to+\infty}\ln(x)=0$
+      answer: 0
+      feedback:
+      - null
+      - '$\ln(1)=0$, mais en $0^{+}$ le logarithme plonge vers $-\infty$ : l''axe des ordonnées est asymptote verticale.'
+      - Le logarithme n'est pas majoré ; il croît indéfiniment, seulement très lentement.
+      - Les deux limites sont inversées.
+      explanation: 'La courbe de $\ln$ est la symétrique de celle de $\exp$ par rapport à la droite d''équation $y=x$ : l''asymptote horizontale de $\exp$ devient une asymptote **verticale** pour $\ln$.'
+    - type: input
+      level: 3
+      prompt: 'Le carbone 14 se désintègre selon $N(t)=N_{0}\,\mathrm{e}^{-\lambda t}$ avec $\lambda=1{,}21\times10^{-4}\ \mathrm{an}^{-1}$. Calculer sa demi-vie $t_{1/2}$, arrondie à l''année.'
+      answer: '5728'
+      numeric: true
+      tolerance: 5
+      unit: an
+      explanation: 'La demi-vie vérifie $N\left(t_{1/2}\right)=\dfrac{N_{0}}{2}$, soit $\mathrm{e}^{-\lambda t_{1/2}}=0{,}5$, donc $t_{1/2}=\dfrac{\ln(2)}{\lambda}=\dfrac{0{,}693\,147}{1{,}21\times10^{-4}}\approx5\,728$ ans. Le $N_{0}$ disparaît du calcul.'
+    - type: input
+      level: 3
+      prompt: Une solution a une concentration en ions oxonium $\left[\mathrm{H}_{3}\mathrm{O}^{+}\right]=2{,}5\times10^{-5}$ mol/L. Calculer son pH, arrondi à $0{,}01$.
+      answer: '4.60'
+      numeric: true
+      tolerance: 0.02
+      explanation: '$\mathrm{pH}=-\log\left(\left[\mathrm{H}_{3}\mathrm{O}^{+}\right]\right)=-\log\left(2{,}5\times10^{-5}\right)=5-\log(2{,}5)\approx5-0{,}398=4{,}60$. La solution est acide.'
+    - type: input
+      level: 3
+      prompt: 'Le niveau sonore est $L=10\log\dfrac{I}{I_{0}}$ avec $I_{0}=10^{-12}\ \mathrm{W}\cdot\mathrm{m}^{-2}$. De combien de décibels le niveau augmente-t-il si l''intensité sonore **double** ? (arrondir à $0{,}1$)'
+      answer: '3.0'
+      numeric: true
+      tolerance: 0.1
+      unit: dB
+      explanation: 'Si $I$ devient $2I$, alors $L$ devient $10\log\dfrac{2I}{I_{0}}=10\log(2)+10\log\dfrac{I}{I_{0}}=L+10\log(2)$. Or $10\log(2)\approx3{,}0$ : doubler la puissance sonore ne fait gagner que $3$ dB, quelle que soit l''intensité de départ.'
+    - type: grid
+      level: 3
+      prompt: Pour chaque égalité, cocher si elle est vraie ou fausse pour tout réel $x$ (et tout $a>0$).
+      rows:
+      - id: expln
+        label: $\mathrm{e}^{\ln(a)}=a$
+      - id: lnexp
+        label: $\ln\left(\mathrm{e}^{x}\right)=x$
+      - id: somme
+        label: $\ln(a+1)=\ln(a)+1$
+      - id: carre
+        label: $\left(\mathrm{e}^{x}\right)^{2}=\mathrm{e}^{2x}$
+      - id: neg
+        label: $\mathrm{e}^{x}$ peut être négatif
+      cols:
+      - id: V
+        label: Vrai
+      - id: F
+        label: Faux
+      answer:
+      - Vexpln
+      - Vlnexp
+      - Fsomme
+      - Vcarre
+      - Fneg
+      cellFeedback:
+        Fexpln: 'pour $a>0$, $\ln(a)$ est justement l''exposant qui redonne $a$ : l''égalité est vraie'
+        Flnexp: le logarithme est la fonction réciproque de l'exponentielle sur $\mathbb{R}$
+        Vsomme: 'le logarithme transforme les produits en sommes, pas les sommes en sommes : $\ln(a+1)\neq\ln(a)+1$'
+        Fcarre: '$\left(\mathrm{e}^{x}\right)^{n}=\mathrm{e}^{nx}$ : l''égalité est vraie'
+        Vneg: l'exponentielle est strictement positive sur $\mathbb{R}$
+      explanation: 'Les deux identités $\mathrm{e}^{\ln(a)}=a$ ($a>0$) et $\ln\left(\mathrm{e}^{x}\right)=x$ ($x$ réel) sont les outils de base pour résoudre les équations. Le piège classique reste $\ln(a+b)$, qui ne se simplifie pas.'
+    - type: guided
+      level: 3
+      title: La datation au carbone 14
+      prompt: 'Exercice complet : décroissance exponentielle, demi-vie, résolution d''une équation logarithmique et critique du modèle.'
+      intro: 'Tout organisme vivant contient une proportion constante de carbone 14. À sa mort, ce carbone 14 se désintègre sans être renouvelé. Si $N_{0}$ est le nombre de noyaux présents à la mort de l''organisme, le nombre restant après $t$ années est
+
+
+        $$N(t)=N_{0}\,\mathrm{e}^{-\lambda t}\qquad\text{avec}\qquad\lambda=1{,}21\times10^{-4}\ \mathrm{an}^{-1}.$$
+
+
+        Un laboratoire mesure le rapport $\dfrac{N(t)}{N_{0}}$ dans un échantillon de bois et en déduit son âge.'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Calculer la demi-vie $t_{1/2}$ du carbone 14, arrondie à l''année.'
+        answer: '5728'
+        numeric: true
+        tolerance: 5
+        unit: an
+        explanation: '$\mathrm{e}^{-\lambda t_{1/2}}=0{,}5$ donne $-\lambda t_{1/2}=\ln(0{,}5)=-\ln(2)$, donc $t_{1/2}=\dfrac{\ln(2)}{\lambda}\approx\dfrac{0{,}693\,147}{1{,}21\times10^{-4}}\approx5\,728$ ans.'
+      - kind: mcq
+        prompt: '**Étape 2.** On note $p=\dfrac{N(t)}{N_{0}}$ la proportion de carbone 14 restant. Exprimer l''âge $t$ en fonction de $p$.'
+        choices:
+        - $t=-\dfrac{\ln(p)}{\lambda}$
+        - $t=\dfrac{\ln(p)}{\lambda}$
+        - $t=\dfrac{\lambda}{\ln(p)}$
+        - $t=-\lambda\ln(p)$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Comme $0<p<1$, $\ln(p)$ est négatif : sans le signe moins, on obtiendrait un âge négatif.'
+        - On divise $\ln(p)$ par $\lambda$, on ne divise pas $\lambda$ par $\ln(p)$.
+        - 'On divise par $\lambda$, on ne multiplie pas : les unités ne seraient pas des années.'
+        explanation: '$p=\mathrm{e}^{-\lambda t}$ donne $\ln(p)=-\lambda t$, donc $t=-\dfrac{\ln(p)}{\lambda}$. Comme $p<1$, $\ln(p)<0$ et $t>0$.'
+      - kind: input
+        prompt: '**Étape 3.** L''échantillon contient encore $25\ \%$ du carbone 14 initial. Quel est son âge, arrondi à l''année ?'
+        answer: '11457'
+        numeric: true
+        tolerance: 20
+        unit: an
+        explanation: '$t=-\dfrac{\ln(0{,}25)}{1{,}21\times10^{-4}}=\dfrac{1{,}386\,29}{1{,}21\times10^{-4}}\approx11\,457$ ans. On retrouve exactement deux demi-vies, ce qui est cohérent avec $0{,}25=0{,}5^{2}$.'
+      - kind: input
+        prompt: '**Étape 4.** Un second échantillon contient $60\ \%$ du carbone 14 initial. Quel est son âge, arrondi à l''année ?'
+        answer: '4222'
+        numeric: true
+        tolerance: 20
+        unit: an
+        explanation: '$t=-\dfrac{\ln(0{,}60)}{1{,}21\times10^{-4}}=\dfrac{0{,}510\,83}{1{,}21\times10^{-4}}\approx4\,222$ ans.'
+      - kind: input
+        prompt: '**Étape 5.** Quelle proportion de carbone 14, en pourcentage, reste-t-il après $20\,000$ ans ? (arrondir à $0{,}1\ \%$)'
+        answer: '8.9'
+        numeric: true
+        tolerance: 0.2
+        unit: '%'
+        explanation: '$p=\mathrm{e}^{-1{,}21\times10^{-4}\times20\,000}=\mathrm{e}^{-2{,}42}\approx0{,}0889$, soit environ $8{,}9\ \%$.'
+      - kind: mcq
+        prompt: '**Étape 6.** Le rapport $\dfrac{N(t)}{N_{0}}$ peut-il devenir nul au bout d''un temps fini ?'
+        choices:
+        - 'Non : $\mathrm{e}^{-\lambda t}>0$ pour tout $t$, la proportion tend vers $0$ sans jamais l''atteindre'
+        - 'Oui, au bout de $\dfrac{1}{\lambda}$ années'
+        - 'Oui, au bout de dix demi-vies'
+        - 'Non, car la proportion tend vers $1$'
+        answer:
+        - 0
+        feedback:
+        - null
+        - '$t=\dfrac{1}{\lambda}\approx8\,264$ ans donne $p=\mathrm{e}^{-1}\approx0{,}37$, ce n''est pas nul.'
+        - 'Au bout de dix demi-vies il reste $0{,}5^{10}\approx0{,}001$, soit $0{,}1\ \%$ : c''est très petit, mais non nul.'
+        - 'La proportion **décroît** de $1$ vers $0$ : c''est la limite en $+\infty$ qui vaut $0$.'
+        explanation: 'L''exponentielle est strictement positive : $\lim\limits_{t\to+\infty}\mathrm{e}^{-\lambda t}=0$ mais $\mathrm{e}^{-\lambda t}$ ne s''annule jamais. C''est un modèle continu, alors que le nombre de noyaux est un entier.'
+      - kind: mcq
+        prompt: '**Étape 7.** En pratique, la méthode du carbone 14 n''est utilisable que jusqu''à environ $50\,000$ ans. Quelle est la raison la plus solide ?'
+        choices:
+        - Au-delà, il reste moins de $0{,}3\ \%$ du carbone 14 initial et la mesure devient trop imprécise
+        - Au-delà, la formule $N(t)=N_{0}\mathrm{e}^{-\lambda t}$ change de forme
+        - Au-delà, la constante $\lambda$ devient négative
+        - Au-delà, le logarithme n'est plus défini
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Le modèle exponentiel reste le même : c''est la **mesure** qui devient impossible, pas le modèle.'
+        - $\lambda$ est une constante physique caractéristique du noyau, elle ne varie pas.
+        - '$\ln(p)$ est défini pour tout $p>0$ : ce n''est pas une limite mathématique.'
+        explanation: '$p(50\,000)=\mathrm{e}^{-6{,}05}\approx0{,}0024$, soit $0{,}24\ \%$. Il faut alors compter si peu de noyaux que l''incertitude devient supérieure au résultat. La limite est **expérimentale**, pas mathématique.'
+  - id: mathstle-derivation
+    title: Dériver, varier, tendre vers
+    icon: 📐
+    description: Dérivée d'une composée, dérivées de $\mathrm{e}^{u}$, $\ln(u)$, $u^{n}$, tableaux de variations et croissances comparées.
+    prerequisites:
+    - mathstle-exp-ln
+    lesson: lessons/maths-tle-derivation.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Soit $u$ et $v$ deux fonctions dérivables. Quelle est la dérivée de la composée $v\circ u$ ?
+      choices:
+      - $\left(v\circ u\right)'=u'\times\left(v'\circ u\right)$
+      - $\left(v\circ u\right)'=v'\circ u'$
+      - $\left(v\circ u\right)'=u'\times v'$
+      - $\left(v\circ u\right)'=\left(v\circ u\right)\times u'$
+      answer: 0
+      feedback:
+      - null
+      - On ne compose pas les dérivées entre elles ; $v'$ se calcule **en** $u(x)$.
+      - Ce serait la dérivée d'un produit de fonctions, pas d'une composée.
+      - Cette formule n'est vraie que dans le cas particulier de l'exponentielle.
+      explanation: 'On dérive « de l''extérieur vers l''intérieur » : $\left(v\left(u(x)\right)\right)''=u''(x)\times v''\left(u(x)\right)$. C''est la règle qui engendre toutes les autres.
+
+
+        {{fig:mathstle-composee-arbre}}'
+    - type: mcq
+      level: 1
+      prompt: Quelle est la dérivée de $x\mapsto\mathrm{e}^{kx}$, où $k$ est un réel ?
+      choices:
+      - $x\mapsto k\,\mathrm{e}^{kx}$
+      - $x\mapsto\mathrm{e}^{kx}$
+      - $x\mapsto kx\,\mathrm{e}^{kx}$
+      - $x\mapsto\dfrac{\mathrm{e}^{kx}}{k}$
+      answer: 0
+      feedback:
+      - null
+      - 'Seule $x\mapsto\mathrm{e}^{x}$ est sa propre dérivée : dès que $k\neq1$, un facteur apparaît.'
+      - Le facteur qui sort est la dérivée de l'exposant, c'est-à-dire $k$, et non $kx$.
+      - 'Diviser par $k$ correspond à la **primitive**, pas à la dérivée.'
+      explanation: 'Avec $u(x)=kx$ et $u''(x)=k$ : $\left(\mathrm{e}^{u}\right)''=u''\mathrm{e}^{u}=k\,\mathrm{e}^{kx}$.'
+    - type: match
+      level: 2
+      prompt: Associer chaque fonction composée à sa dérivée.
+      pairs:
+      - left: $\mathrm{e}^{u(x)}$
+        right: $u'(x)\,\mathrm{e}^{u(x)}$
+      - left: $\ln\left(u(x)\right)$
+        right: $\dfrac{u'(x)}{u(x)}$
+      - left: $\left(u(x)\right)^{n}$
+        right: $n\,u'(x)\left(u(x)\right)^{n-1}$
+      - left: $\cos\left(u(x)\right)$
+        right: $-u'(x)\sin\left(u(x)\right)$
+      - left: $\sin\left(u(x)\right)$
+        right: $u'(x)\cos\left(u(x)\right)$
+    - type: mcq
+      level: 2
+      prompt: Quelle est la dérivée de $f(x)=\ln(4x-7)$ sur $\left]\dfrac{7}{4}\,;+\infty\right[$ ?
+      choices:
+      - $f'(x)=\dfrac{4}{4x-7}$
+      - $f'(x)=\dfrac{1}{4x-7}$
+      - $f'(x)=\dfrac{1}{4}$
+      - $f'(x)=\dfrac{4x-7}{4}$
+      answer: 0
+      feedback:
+      - null
+      - 'Il manque la dérivée intérieure : $u''(x)=4$ doit apparaître au numérateur.'
+      - C'est la dérivée de $x\mapsto\ln(x)$ prise en $4$, ce qui n'a pas de sens ici.
+      - La dérivée d'un logarithme est un quotient dont le dénominateur est $u(x)$.
+      explanation: 'Avec $u(x)=4x-7$ et $u''(x)=4$ : $\left(\ln u\right)''=\dfrac{u''}{u}=\dfrac{4}{4x-7}$.'
+    - type: mcq
+      level: 2
+      prompt: Quelle est la dérivée de $f(x)=(2x+5)^{-3}$ sur $\left]-\dfrac{5}{2}\,;+\infty\right[$ ?
+      choices:
+      - $f'(x)=-6(2x+5)^{-4}$
+      - $f'(x)=-3(2x+5)^{-4}$
+      - $f'(x)=-6(2x+5)^{-2}$
+      - $f'(x)=6(2x+5)^{-4}$
+      answer: 0
+      feedback:
+      - null
+      - 'Il manque le facteur $u''(x)=2$ : $-3\times2=-6$.'
+      - 'On **retire** $1$ à l''exposant : $-3-1=-4$, et non $-3+1$.'
+      - 'Erreur de signe : le facteur $n=-3$ est négatif.'
+      explanation: 'Avec $u(x)=2x+5$, $u''(x)=2$ et $n=-3$ : $\left(u^{n}\right)''=n\,u''\,u^{n-1}=-3\times2\times(2x+5)^{-4}=-6(2x+5)^{-4}$.'
+    - type: mcq
+      level: 2
+      prompt: Quelle est la dérivée de $f(x)=\sin\left(3x^{2}+1\right)$ ?
+      choices:
+      - $f'(x)=6x\cos\left(3x^{2}+1\right)$
+      - $f'(x)=\cos\left(3x^{2}+1\right)$
+      - $f'(x)=6x\sin\left(3x^{2}+1\right)$
+      - $f'(x)=-6x\cos\left(3x^{2}+1\right)$
+      answer: 0
+      feedback:
+      - null
+      - 'Il manque le facteur $u''(x)=6x$.'
+      - La dérivée du sinus est le cosinus, pas le sinus.
+      - 'Le signe moins concerne la dérivée du **cosinus** : $\left(\cos u\right)''=-u''\sin u$.'
+      explanation: 'Avec $u(x)=3x^{2}+1$ et $u''(x)=6x$ : $\left(\sin u\right)''=u''\cos u=6x\cos\left(3x^{2}+1\right)$.'
+    - type: mcq
+      level: 2
+      prompt: 'La température d''une pièce est modélisée par $T(t)=11{,}5\,\mathrm{e}^{-0{,}006t}+11{,}5$. Quelle est sa dérivée ?'
+      choices:
+      - $T'(t)=-0{,}069\,\mathrm{e}^{-0{,}006t}$
+      - $T'(t)=-0{,}006\,\mathrm{e}^{-0{,}006t}$
+      - $T'(t)=11{,}5\,\mathrm{e}^{-0{,}006t}$
+      - $T'(t)=-0{,}069\,\mathrm{e}^{-0{,}006t}+11{,}5$
+      answer: 0
+      feedback:
+      - null
+      - 'On a oublié le facteur $11{,}5$ qui multiplie l''exponentielle.'
+      - 'On a oublié le facteur $-0{,}006$ venant de la dérivée de l''exposant.'
+      - 'La constante $11{,}5$ ajoutée a une dérivée nulle : elle disparaît.'
+      explanation: '$T''(t)=11{,}5\times(-0{,}006)\,\mathrm{e}^{-0{,}006t}+0=-0{,}069\,\mathrm{e}^{-0{,}006t}$. Elle est strictement négative : la pièce refroidit.'
+    - type: mcq
+      level: 3
+      prompt: Soit $f(x)=\mathrm{e}^{2x}(-3x+1)$. Montrer que $f'(x)$ s'écrit sous la forme $\mathrm{e}^{2x}\times P(x)$ avec $P$ un polynôme. Que vaut $P$ ?
+      choices:
+      - $P(x)=-6x-1$
+      - $P(x)=-6x+1$
+      - $P(x)=-3x-2$
+      - $P(x)=-6x-3$
+      answer: 0
+      feedback:
+      - null
+      - 'On a oublié de retrancher le $-3$ venant de la dérivée du second facteur : $2-3=-1$.'
+      - Le facteur $2$ de la dérivée de $\mathrm{e}^{2x}$ multiplie tout le polynôme $-3x+1$.
+      - 'Recompte le terme constant : $2\times1+(-3)=-1$.'
+      explanation: 'Produit $uv$ avec $u(x)=\mathrm{e}^{2x}$, $u''(x)=2\mathrm{e}^{2x}$, $v(x)=-3x+1$, $v''(x)=-3$. Alors $f''(x)=2\mathrm{e}^{2x}(-3x+1)+\mathrm{e}^{2x}\times(-3)=\mathrm{e}^{2x}(-6x+2-3)=\mathrm{e}^{2x}(-6x-1)$.'
+    - type: input
+      level: 3
+      prompt: Avec $f(x)=\mathrm{e}^{2x}(-3x+1)$, calculer le nombre dérivé $f'(0)$.
+      answer: '-1'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$f''(x)=\mathrm{e}^{2x}(-6x-1)$, donc $f''(0)=\mathrm{e}^{0}\times(-1)=-1$. La tangente en $0$ a pour coefficient directeur $-1$.'
+    - type: mcq
+      level: 3
+      prompt: Soit $g(x)=2x+1+4\ln(x)$ sur $\left]0\,;+\infty\right[$. Quelle est l'expression de $g'(x)$ mise au même dénominateur ?
+      choices:
+      - $g'(x)=\dfrac{2x+4}{x}$
+      - $g'(x)=\dfrac{2x+1}{x}$
+      - $g'(x)=\dfrac{4}{x}$
+      - $g'(x)=\dfrac{2x^{2}+4}{x}$
+      answer: 0
+      feedback:
+      - null
+      - 'La constante $1$ a une dérivée nulle : elle ne se retrouve pas dans $g''$.'
+      - 'On a oublié la dérivée de $2x$, qui vaut $2$.'
+      - 'Erreur de mise au même dénominateur : $2=\dfrac{2x}{x}$, pas $\dfrac{2x^{2}}{x}$.'
+      explanation: '$g''(x)=2+\dfrac{4}{x}=\dfrac{2x}{x}+\dfrac{4}{x}=\dfrac{2x+4}{x}$. Sur $\left]0\,;+\infty\right[$, numérateur et dénominateur sont positifs, donc $g$ est strictement croissante.'
+    - type: mcq
+      level: 3
+      prompt: Quelle est la dérivée de $h(x)=\dfrac{\mathrm{e}^{3x}}{x^{2}}$ sur $\left]0\,;+\infty\right[$ ?
+      choices:
+      - $h'(x)=\dfrac{\mathrm{e}^{3x}(3x-2)}{x^{3}}$
+      - $h'(x)=\dfrac{3\,\mathrm{e}^{3x}}{2x}$
+      - $h'(x)=\dfrac{\mathrm{e}^{3x}(3x-2)}{x^{4}}$
+      - $h'(x)=\dfrac{\mathrm{e}^{3x}(3x+2)}{x^{3}}$
+      answer: 0
+      feedback:
+      - null
+      - On ne dérive pas un quotient en dérivant séparément le numérateur et le dénominateur.
+      - Il reste une simplification par $x$ à faire entre le numérateur et $x^{4}$.
+      - 'Erreur de signe : la formule du quotient donne $u''v-uv''$, donc $-2x\,\mathrm{e}^{3x}$.'
+      explanation: 'Avec $u=\mathrm{e}^{3x}$ et $v=x^{2}$ : $h''=\dfrac{3\mathrm{e}^{3x}x^{2}-\mathrm{e}^{3x}\times2x}{x^{4}}=\dfrac{x\,\mathrm{e}^{3x}(3x-2)}{x^{4}}=\dfrac{\mathrm{e}^{3x}(3x-2)}{x^{3}}$.'
+    - type: mcq
+      level: 2
+      prompt: 'Le niveau sonore en fonction de la distance est modélisé par $f(x)=125-10\ln(x)$ pour $x>0$. Que vaut $f''(x)$, et qu''en déduit-on ?'
+      choices:
+      - $f'(x)=-\dfrac{10}{x}<0$, donc $f$ est strictement décroissante
+      - $f'(x)=\dfrac{10}{x}>0$, donc $f$ est strictement croissante
+      - $f'(x)=125-\dfrac{10}{x}$, de signe variable
+      - $f'(x)=-10\ln(x)$, négative pour $x>1$
+      answer: 0
+      feedback:
+      - null
+      - 'Le coefficient $-10$ garde son signe en dérivant : $f''$ est négative.'
+      - 'La constante $125$ a une dérivée nulle : elle disparaît.'
+      - Dériver $\ln(x)$ donne $\dfrac{1}{x}$, pas $\ln(x)$.
+      explanation: '$f''(x)=0-10\times\dfrac{1}{x}=-\dfrac{10}{x}$, strictement négative sur $\left]0\,;+\infty\right[$. Le niveau sonore décroît quand on s''éloigne de la source, mais de plus en plus lentement.'
+    - type: mcq
+      level: 2
+      prompt: Que vaut $\lim\limits_{x\to+\infty}\dfrac{\mathrm{e}^{x}}{x^{3}}$ ?
+      choices:
+      - $+\infty$
+      - $0$
+      - $1$
+      - $3$
+      answer: 0
+      feedback:
+      - null
+      - 'C''est la limite de $\dfrac{x^{3}}{\mathrm{e}^{x}}$ : le quotient est inversé.'
+      - 'Erreur classique : une forme indéterminée $\dfrac{\infty}{\infty}$ ne vaut pas $1$.'
+      - L'exposant $3$ n'intervient pas dans la valeur de la limite.
+      explanation: 'Croissances comparées : l''exponentielle l''emporte sur toute puissance de $x$. Pour tout entier $n\geqslant1$, $\lim\limits_{x\to+\infty}\dfrac{\mathrm{e}^{x}}{x^{n}}=+\infty$.
+
+
+        {{fig:mathstle-croissances-comparees}}'
+    - type: mcq
+      level: 2
+      prompt: Que vaut $\lim\limits_{x\to+\infty}x^{2}\mathrm{e}^{-x}$ ?
+      choices:
+      - $0$
+      - $+\infty$
+      - $1$
+      - $2$
+      answer: 0
+      feedback:
+      - null
+      - 'C''est $x^{2}$ qui tend vers $+\infty$, mais $\mathrm{e}^{-x}$ tend vers $0$ **plus vite** : le produit tend vers $0$.'
+      - Une forme indéterminée $\infty\times0$ ne vaut pas $1$.
+      - L'exposant $2$ n'est pas la valeur de la limite.
+      explanation: '$x^{2}\mathrm{e}^{-x}=\dfrac{x^{2}}{\mathrm{e}^{x}}$ et l''exponentielle l''emporte : $\lim\limits_{x\to+\infty}x^{n}\mathrm{e}^{-x}=0$ pour tout entier $n\geqslant1$.'
+    - type: mcq
+      level: 3
+      prompt: Que vaut $\lim\limits_{x\to+\infty}\dfrac{\mathrm{e}^{0{,}5x}}{x}$ ?
+      choices:
+      - $+\infty$
+      - $0$
+      - $0{,}5$
+      - $1$
+      answer: 0
+      feedback:
+      - null
+      - Le numérateur croît exponentiellement, le dénominateur seulement linéairement.
+      - Le coefficient $0{,}5$ ralentit la croissance mais ne la change pas de nature.
+      - 'Une forme $\dfrac{\infty}{\infty}$ ne vaut pas $1$ : il faut comparer les vitesses de croissance.'
+      explanation: 'On étend « sans formalisme » le résultat des croissances comparées : pour $k>0$ et $n\geqslant1$, $\lim\limits_{x\to+\infty}\dfrac{\mathrm{e}^{kx}}{x^{n}}=+\infty$. Ici $k=0{,}5$ et $n=1$.'
+    - type: input
+      level: 3
+      prompt: 'Soit $f(x)=(8x+1)\mathrm{e}^{-x}$ sur $\left[0\,;+\infty\right[$. En quelle valeur de $x$ la fonction $f$ atteint-elle son maximum ? (arrondir à $0{,}001$)'
+      answer: '0.875'
+      numeric: true
+      tolerance: 0.005
+      explanation: '$f''(x)=8\mathrm{e}^{-x}-(8x+1)\mathrm{e}^{-x}=\mathrm{e}^{-x}(7-8x)$. Comme $\mathrm{e}^{-x}>0$, $f''$ est du signe de $7-8x$ : positive avant $x=\dfrac{7}{8}=0{,}875$, négative après. Le maximum est atteint en $x=0{,}875$.
+
+
+        {{fig:mathstle-courbe-8x1expmx}}'
+    - type: input
+      level: 3
+      prompt: 'Toujours pour $f(x)=(8x+1)\mathrm{e}^{-x}$, calculer la valeur du maximum $f\left(\dfrac{7}{8}\right)$, arrondie à $0{,}01$.'
+      answer: '3.33'
+      numeric: true
+      tolerance: 0.02
+      explanation: '$f\left(\dfrac{7}{8}\right)=\left(8\times0{,}875+1\right)\mathrm{e}^{-0{,}875}=8\,\mathrm{e}^{-0{,}875}\approx8\times0{,}4169\approx3{,}33$.'
+    - type: mcq
+      level: 3
+      prompt: 'Toujours pour $f(x)=(8x+1)\mathrm{e}^{-x}$, que vaut $\lim\limits_{x\to+\infty}f(x)$ ?'
+      choices:
+      - $0$
+      - $+\infty$
+      - $8$
+      - $1$
+      answer: 0
+      feedback:
+      - null
+      - 'Le facteur $\mathrm{e}^{-x}$ écrase le facteur affine : c''est le résultat des croissances comparées.'
+      - $8$ est le coefficient directeur du facteur affine, ce n'est pas une limite.
+      - $f(0)=1$, mais la limite en $+\infty$ est une autre question.
+      explanation: '$f(x)=8x\,\mathrm{e}^{-x}+\mathrm{e}^{-x}$. Or $\lim\limits_{x\to+\infty}x\,\mathrm{e}^{-x}=0$ et $\lim\limits_{x\to+\infty}\mathrm{e}^{-x}=0$, donc $\lim\limits_{x\to+\infty}f(x)=0$ : la courbe admet l''axe des abscisses pour asymptote horizontale.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre les étapes d'une étude de variations sur un intervalle $I$.
+      steps:
+      - Déterminer l'ensemble de définition et vérifier que $f$ est dérivable sur $I$
+      - Calculer $f'(x)$ en identifiant la forme (produit, quotient, composée)
+      - Factoriser $f'(x)$ pour faire apparaître un facteur de signe connu
+      - Étudier le signe de $f'(x)$ sur $I$
+      - Dresser le tableau de variations
+      - Calculer les valeurs remarquables (extremums, limites aux bornes)
+      explanation: 'La factorisation est l''étape clé : dès qu''un facteur $\mathrm{e}^{u(x)}$ apparaît, il est strictement positif et le signe de $f''$ est celui du facteur restant.'
+    - type: grid
+      level: 3
+      prompt: Pour chaque fonction, cocher son sens de variation sur $\left]0\,;+\infty\right[$.
+      rows:
+      - id: lnx
+        label: $x\mapsto\ln(x)$
+      - id: expmx
+        label: $x\mapsto\mathrm{e}^{-x}$
+      - id: exp2x
+        label: $x\mapsto\mathrm{e}^{2x}$
+      - id: mlnx
+        label: $x\mapsto125-10\ln(x)$
+      - id: g
+        label: $x\mapsto2x+1+4\ln(x)$
+      cols:
+      - id: C
+        label: Croissante
+      - id: D
+        label: Décroissante
+      answer:
+      - Clnx
+      - Dexpmx
+      - Cexp2x
+      - Dmlnx
+      - Cg
+      cellFeedback:
+        Dlnx: la dérivée $\dfrac{1}{x}$ est positive sur $\left]0\,;+\infty\right[$
+        Cexpmx: la dérivée $-\mathrm{e}^{-x}$ est strictement négative
+        Dexp2x: la dérivée $2\mathrm{e}^{2x}$ est strictement positive
+        Cmlnx: le coefficient $-10$ inverse le sens de variation du logarithme
+        Dg: la dérivée $\dfrac{2x+4}{x}$ est positive sur $\left]0\,;+\infty\right[$
+      explanation: 'Réflexe : le signe de la dérivée décide de tout. Un facteur exponentiel étant toujours strictement positif, seuls comptent les autres facteurs.'
+    - type: mcq
+      level: 2
+      prompt: 'Une fonction $f$ est dérivable sur $\left[0\,;5\right]$ et son tableau de variations indique : $f$ croissante sur $\left[0\,;2\right]$ puis décroissante sur $\left[2\,;5\right]$. Que peut-on dire de $f''$ ?'
+      choices:
+      - $f'$ est positive sur $\left[0\,;2\right]$, s'annule en $2$ et est négative sur $\left[2\,;5\right]$
+      - $f'$ est croissante puis décroissante
+      - $f'$ est positive sur tout $\left[0\,;5\right]$
+      - $f'$ est constante
+      answer: 0
+      feedback:
+      - null
+      - 'Confusion entre $f$ et $f''$ : ce sont les **variations de $f$** qui sont décrites, donc le **signe de $f''$**.'
+      - Si $f'$ restait positive, $f$ serait croissante sur tout l'intervalle.
+      - Une dérivée constante correspondrait à une fonction affine, donc monotone.
+      explanation: 'Le sens de variation de $f$ traduit le **signe** de $f''$, jamais ses variations. Un maximum en $x=2$ correspond à un changement de signe de $f''$, du positif vers le négatif.'
+    - type: guided
+      level: 3
+      title: L'amortissement d'une impulsion électrique
+      prompt: 'Exercice complet : dérivée d''un produit, variations, maximum et limite en $+\infty$.'
+      intro: 'Après un choc, la tension mesurée aux bornes d''un capteur, en volts, est modélisée pour $t\geqslant0$ ($t$ en millisecondes) par
+
+
+        $$u(t)=5t\,\mathrm{e}^{-0{,}5t}\qquad(u\text{ en V}).$$
+
+
+        On veut connaître la tension maximale atteinte, l''instant où elle se produit, et le temps nécessaire pour que le capteur revienne au repos.'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Quelle est la tension à l''instant $t=0$ ?'
+        answer: '0'
+        numeric: true
+        tolerance: 0.01
+        unit: V
+        explanation: '$u(0)=5\times0\times\mathrm{e}^{0}=0$ V. Le facteur $5t$ s''annule en $0$, alors que l''exponentielle y vaut $1$.'
+      - kind: mcq
+        prompt: '**Étape 2.** Quelle est l''expression factorisée de $u''(t)$ ?'
+        choices:
+        - $u'(t)=2{,}5\,\mathrm{e}^{-0{,}5t}(2-t)$
+        - $u'(t)=5\,\mathrm{e}^{-0{,}5t}$
+        - $u'(t)=-2{,}5\,\mathrm{e}^{-0{,}5t}$
+        - $u'(t)=2{,}5\,\mathrm{e}^{-0{,}5t}(t-2)$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'On a oublié de dériver le second facteur : c''est un **produit**.'
+        - 'On a oublié de dériver le premier facteur $5t$.'
+        - 'Erreur de signe dans la factorisation : $5-2{,}5t=2{,}5(2-t)$, et non $2{,}5(t-2)$.'
+        explanation: 'Produit $uv$ avec $u(t)=5t$, $u''(t)=5$, $v(t)=\mathrm{e}^{-0{,}5t}$, $v''(t)=-0{,}5\,\mathrm{e}^{-0{,}5t}$. Donc $u''(t)=5\mathrm{e}^{-0{,}5t}-2{,}5t\,\mathrm{e}^{-0{,}5t}=\mathrm{e}^{-0{,}5t}(5-2{,}5t)=2{,}5\,\mathrm{e}^{-0{,}5t}(2-t)$.'
+      - kind: mcq
+        prompt: '**Étape 3.** Quel est le signe de $u''(t)$ sur $\left[0\,;+\infty\right[$ ?'
+        choices:
+        - Positive sur $\left[0\,;2\right]$, nulle en $2$, négative sur $\left[2\,;+\infty\right[$
+        - Toujours positive
+        - Toujours négative
+        - Négative puis positive, avec un changement en $t=2$
+        answer:
+        - 0
+        feedback:
+        - null
+        - Le facteur $2-t$ change de signe en $t=2$.
+        - Le facteur exponentiel est positif, il ne peut pas rendre $u'$ négative à lui seul.
+        - 'Le facteur $2-t$ est positif **avant** $2$ : la tension monte d''abord.'
+        explanation: '$2{,}5\,\mathrm{e}^{-0{,}5t}>0$ toujours, donc $u''$ est du signe de $2-t$. La tension croît sur $\left[0\,;2\right]$ puis décroît.'
+      - kind: input
+        prompt: '**Étape 4.** À quel instant la tension est-elle maximale ?'
+        answer: '2'
+        numeric: true
+        tolerance: 0.02
+        unit: ms
+        explanation: 'Le maximum est atteint là où $u''$ change de signe, soit à $t=2$ ms.'
+      - kind: input
+        prompt: '**Étape 5.** Quelle est la tension maximale ? (arrondir à $0{,}01$)'
+        answer: '3.68'
+        numeric: true
+        tolerance: 0.02
+        unit: V
+        explanation: '$u(2)=5\times2\times\mathrm{e}^{-1}=10\,\mathrm{e}^{-1}\approx10\times0{,}3679\approx3{,}68$ V.'
+      - kind: input
+        prompt: '**Étape 6.** Quelle est la tension à $t=6$ ms ? (arrondir à $0{,}01$)'
+        answer: '1.49'
+        numeric: true
+        tolerance: 0.02
+        unit: V
+        explanation: '$u(6)=30\,\mathrm{e}^{-3}\approx30\times0{,}049\,787\approx1{,}49$ V, soit moins de la moitié du maximum.'
+      - kind: input
+        prompt: '**Étape 7.** Quelle est la tension à $t=10$ ms ? (arrondir à $0{,}01$)'
+        answer: '0.34'
+        numeric: true
+        tolerance: 0.02
+        unit: V
+        explanation: '$u(10)=50\,\mathrm{e}^{-5}\approx50\times0{,}006\,738\approx0{,}34$ V.'
+      - kind: mcq
+        prompt: '**Étape 8.** Que vaut $\lim\limits_{t\to+\infty}u(t)$, et comment le justifier ?'
+        choices:
+        - $0$, par croissances comparées, car $\mathrm{e}^{-0{,}5t}$ tend vers $0$ plus vite que $5t$ ne croît
+        - $+\infty$, car le facteur $5t$ tend vers $+\infty$
+        - $5$, car c'est le coefficient devant $t$
+        - La limite n'existe pas, car c'est une forme indéterminée
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'C''est bien une forme indéterminée $\infty\times0$, mais l''exponentielle l''emporte toujours.'
+        - Un coefficient de l'expression n'est pas une limite.
+        - Une forme indéterminée signifie qu'il faut lever l'indétermination, pas que la limite n'existe pas.
+        explanation: '$u(t)=\dfrac{5t}{\mathrm{e}^{0{,}5t}}$ et $\lim\limits_{t\to+\infty}\dfrac{\mathrm{e}^{0{,}5t}}{t}=+\infty$, donc $\lim\limits_{t\to+\infty}u(t)=0$. Le capteur revient au repos, sans jamais y être exactement.'
+# --- SUITE ---
+

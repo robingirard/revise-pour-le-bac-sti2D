@@ -28,38 +28,38 @@
   \draw[lien] (#1,2.72) -- (#1,#2) -- (#3,#2) -- (#3,2.1);}
 
 %% ================== cadre à onglet ====================================
-\draw[cadre] (0,-1.05) rectangle (11.9,6.9);
+\draw[cadre] (0,-1.05) rectangle (12.4,6.9);
 \draw[cadre] (0,6.45) -- (4.5,6.45) -- (4.75,6.68) -- (4.75,6.9);
 \node[font=\scriptsize, anchor=west, inner sep=3pt] at (0.1,6.67)
      {\texttt{bdd} [Paquet] Blocks [BDD Ferry Boat]};
 
 %% ================== niveau 1 : le système =============================
-\bloc{sys}{5.8}{6.25}{4cm}{«system»}{Ferry Boat}
-     {Longueur = 13 m ; Largeur = 4,70 m ; Vitesse = 7 nœuds}
+\bloc{sys}{6.2}{6.25}{4cm}{«system»}{Ferry Boat}
+     {Longueur = 13~m ; Largeur = 4,70~m ; Vitesse = 7~nœuds}
 
 %% ================== niveau 2 : le sous-système ========================
-\node[tete, text width=3cm, anchor=north] (sub) at (5.8,3.95)
+\node[tete, text width=3cm, anchor=north] (sub) at (6.2,3.95)
      {\textit{«subsystem»}\\[1pt] \textbf{Alimentation électrique}};
-\losangeplein{5.8}{4.47}
-\draw[lien] (5.8,4.15) -- (5.8,3.95);
+\losangeplein{6.2}{4.47}
+\draw[lien] (6.2,4.15) -- (6.2,3.95);
 
 %% ================== niveau 3 : les blocs ==============================
-\bloc{pv1}{1.45}{2.1}{2.4cm}{«block»}{Panneaux photovoltaïques Propulsion}
-     {Modèle = CENIT 220\\ Puissance crête = 220 Wc\\ Rendement = 13,8 \%}
-\bloc{pv2}{4.35}{2.1}{2.4cm}{«block»}{Panneaux photovoltaïques Service}
-     {Modèle = CENIT 150\\ Puissance crête = 150 Wc\\ Rendement = 11,8 \%}
-\bloc{bat}{7.25}{2.1}{2.4cm}{«block»}{Parc 1 Batteries Propulsion}
-     {Technologie = Ni-Cd\\ Tension = 384 V}
-\bloc{ven}{10.15}{2.1}{2.4cm}{«block»}{Ventilateurs batteries}
+\bloc{pv1}{1.55}{2.1}{2.6cm}{«block»}{Panneaux photovoltaïques Propulsion}
+     {Modèle = CENIT~220\\ Puissance crête = 220~Wc\\ Rendement = 13,8~\%}
+\bloc{pv2}{4.65}{2.1}{2.6cm}{«block»}{Panneaux photovoltaïques Service}
+     {Modèle = CENIT~150\\ Puissance crête = 150~Wc\\ Rendement = 11,8~\%}
+\bloc{bat}{7.75}{2.1}{2.6cm}{«block»}{Parc 1 Batteries Propulsion}
+     {Technologie = Ni-Cd\\ Tension = 384~V}
+\bloc{ven}{10.85}{2.1}{2.6cm}{«block»}{Ventilateurs batteries}
      {Modèle = JABSCO DC150CFM}
 
 %% ================== liens de composition ==============================
-\losangeplein{4.6}{3.04} \lienbloc{4.6}{2.55}{1.45}
-\losangeplein{5.4}{3.04} \lienbloc{5.4}{2.40}{4.35}
-\losangeplein{6.2}{3.04} \lienbloc{6.2}{2.40}{7.25}
-\losangevide{7.0}{3.04}  \lienbloc{7.0}{2.55}{10.15}
-\node[mult, anchor=south west] at (1.5,2.12) {16};
-\node[mult, anchor=south west] at (4.4,2.12) {8};
+\losangeplein{5.0}{3.04} \lienbloc{5.0}{2.55}{1.55}
+\losangeplein{5.8}{3.04} \lienbloc{5.8}{2.40}{4.65}
+\losangeplein{6.6}{3.04} \lienbloc{6.6}{2.40}{7.75}
+\losangevide{7.4}{3.04}  \lienbloc{7.4}{2.55}{10.85}
+\node[mult, anchor=south west] at (1.6,2.12) {16};
+\node[mult, anchor=south west] at (4.7,2.12) {8};
 
 %% ================== légende ===========================================
 \losangeplein{0.35}{-1.2}

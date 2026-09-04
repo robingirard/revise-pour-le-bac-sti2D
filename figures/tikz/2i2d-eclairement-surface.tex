@@ -1,0 +1,60 @@
+%% 2i2d-eclairement-surface — de la puissance électrique à l'éclairement du plan de travail.
+%% Haut : chaîne de conversion P (W) -> luminaire (efficacité eta) -> phi (lm) -> local (S)
+%% -> E (lx). Bas : coupe du local, quatre luminaires dont les cônes se recouvrent, et
+%% l'échelle des éclairements (installation actuelle contre cahier des charges).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  txt/.style={font=\scriptsize, align=center},
+  bloc/.style={draw=black!70, line width=0.7pt, rounded corners=2pt, fill=black!4,
+               align=center, font=\scriptsize, inner sep=3.5pt},
+  fleche/.style={-{Stealth[length=5pt]}, line width=1.1pt, solideD},
+  cote/.style={{Stealth[length=3.5pt]}-{Stealth[length=3.5pt]}, line width=0.5pt, black!75}]
+
+%% ================= partie haute : chaîne de conversion ======================
+\node[txt, anchor=center] at (0.70,0) {$P = 20$ W\\ puissance\\ électrique};
+\draw[fleche] (1.42,0) -- (1.86,0);
+\node[bloc, anchor=west] at (1.90,0) {Luminaire LED\\ $\eta = 100$ lm/W};
+\draw[fleche] (3.88,0) -- (4.32,0);
+\node[bloc, anchor=west] at (4.36,0) {Local\\ $S = 200$ m$^2$};
+\draw[fleche] (5.94,0) -- (6.38,0);
+\node[txt, anchor=west] at (6.42,0) {$E = 120$ lx\\ éclairement};
+\node[txt, text=solideD, anchor=south, font=\tiny] at (4.10,0.34) {$\varphi = 2\,000$ lm};
+\node[txt, anchor=north, font=\scriptsize] at (2.88,-0.52) {$\varphi = \eta \times P$};
+\node[txt, anchor=north, font=\scriptsize] at (5.14,-0.52) {$E = \varphi \,/\, S$};
+
+%% ================= partie basse : coupe du local ============================
+\def\yp{-1.42}   % sous-face du plafond
+\def\yt{-3.05}   % dessus du plan de travail
+\fill[black!14] (0.20,\yp) rectangle (4.90,\yp+0.15);
+\draw[line width=0.6pt, black!70] (0.20,\yp) rectangle (4.90,\yp+0.15);
+%% quatre luminaires et leurs cônes
+\foreach \x in {0.80,1.95,3.10,4.25} {
+  \fill[solideD!25] (\x-0.22,\yp-0.12) -- (\x-0.62,\yt) -- (\x+0.62,\yt) -- (\x+0.22,\yp-0.12) -- cycle;
+  \fill[black!35] (\x-0.22,\yp-0.12) rectangle (\x+0.22,\yp);
+  \draw[line width=0.5pt, black!70] (\x-0.22,\yp-0.12) rectangle (\x+0.22,\yp); }
+%% plan de travail
+\fill[black!16] (0.20,\yt-0.15) rectangle (4.90,\yt);
+\draw[line width=0.6pt, black!70] (0.20,\yt-0.15) rectangle (4.90,\yt);
+\node[txt, anchor=south, fill=white, inner sep=1.5pt] at (2.55,\yt+0.06)
+  {$E = \varphi_{\text{total}} / S$};
+\draw[cote] (0.20,\yt-0.30) -- (4.90,\yt-0.30);
+\node[txt, anchor=north, inner sep=2pt] at (2.55,\yt-0.30) {plan de travail, surface $S$};
+
+%% ================= échelle des éclairements =================================
+%% 0 lx -> \yt ; 400 lx -> \yp  (soit 1 lx -> 0,00408 cm)
+\def\ech{0.00408}
+\draw[-{Stealth[length=4pt]}, line width=0.6pt] (5.45,\yt) -- (5.45,\yp+0.22);
+\node[txt, anchor=south, font=\tiny, rotate=90] at (5.30,{\yt+0.35}) {éclairement (lx)};
+\foreach \e in {0,100,200,300,400} {
+  \draw[line width=0.4pt, black!55] (5.45,{\yt+\ech*\e}) -- (5.37,{\yt+\ech*\e}); }
+%% niveau actuel et niveau exigé
+\draw[solideA, line width=1.4pt] (5.30,{\yt+\ech*120}) -- (5.75,{\yt+\ech*120});
+\node[txt, text=solideA, anchor=west, font=\tiny, align=left] at (5.80,{\yt+\ech*120})
+  {\textbf{120 lx}\\ installation actuelle};
+\draw[solideE, line width=1.4pt] (5.30,{\yt+\ech*300}) -- (5.75,{\yt+\ech*300});
+\node[txt, text=solideE!60!black, anchor=west, font=\tiny, align=left] at (5.80,{\yt+\ech*300})
+  {\textbf{300 lx}\\ cahier des charges};
+\end{tikzpicture}
+\end{document}

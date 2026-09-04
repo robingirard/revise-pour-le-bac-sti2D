@@ -42,27 +42,26 @@
 \draw[piece] (4.93,1.90) -- (5.43,2.20);                       % guidon
 %% silhouette de l'usager
 \draw[line width=2.2pt, black!45, line cap=round, line join=round]
-  (3.35,0.66) -- (3.52,1.55) -- (3.75,0.72)                    % jambes
-  (3.52,1.55) -- (3.44,2.62)                                   % tronc
-  (3.44,2.55) -- (4.30,2.30) -- (5.05,2.00);                   % bras vers le guidon
-\draw[line width=1.2pt, black!45, fill=black!12] (3.40,2.83) circle (0.20);
+  (3.05,0.63) -- (3.22,1.55) -- (3.45,0.72)                    % jambes
+  (3.22,1.55) -- (3.14,2.62)                                   % tronc
+  (3.14,2.55) -- (4.30,2.30) -- (5.05,2.00);                   % bras vers le guidon
+\draw[line width=1.2pt, black!45, fill=black!12] (3.10,2.83) circle (0.20);
 
 %% ---------------- poids et projections ------------------------------------
 \fill (G) circle (2pt);
 \node[font=\small, anchor=east, inner sep=3pt] at (3.52,2.34) {$G$};
-\draw[vect] (G) -- ++(0,-1.6) node[anchor=west, inner sep=3pt, font=\small, text=solideA] {$\vec{P}$};
+\draw[vect] (G) -- ++(0,-1.6);
+\node[font=\small, text=solideA, anchor=west, inner sep=2pt] at (3.68,0.95) {$\vec{P}$};
 \draw[proj] (G) -- ++(\al+180:0.222);
-\draw[proj] (G) -- ++(\al-90:1.584);
-\draw[line width=0.4pt, black!45, dash pattern=on 2pt off 2pt]
-  ($(G)+(\al+180:0.222)$) -- ++(\al-90:1.584);
-\node[font=\scriptsize, text=solideA, anchor=east, inner sep=2pt] at (3.30,2.42)
-     {$-mg\sin\alpha\,\vec{u}$};
-\node[font=\scriptsize, text=solideA, anchor=west, inner sep=3pt] at (4.02,1.55)
-     {$-mg\cos\alpha\,\vec{v}$};
+\draw[proj] (G) -- ++(\al-90:1.05);
+%% légende des deux projections du poids (hors silhouette, à gauche)
+\draw[line width=0.5pt, solideA!70] (2.45,1.78) -- (3.35,2.26);
+\node[font=\scriptsize, text=solideA, anchor=north west, align=left, inner sep=1pt] at (0.02,2.45)
+     {projections de $\vec{P}$ :\\$-mg\sin\alpha\,\vec{u}$ (suivant la pente)\\$-mg\cos\alpha\,\vec{v}$ (normale)};
 
 %% ---------------- actions du sol -------------------------------------------
 \draw[vect] (A) -- ++(\al:1.15)
-     node[anchor=north west, inner sep=1pt, font=\small, text=solideA] {$\vec{F}_{\text{tract}}$};
+     node[anchor=south west, inner sep=1pt, font=\small, text=solideA] {$\vec{F}_{\text{tract}}$};
 \draw[vect] (A) -- ++(\al+90:1.05)
      node[anchor=south west, inner sep=1pt, font=\small, text=solideA] {$\vec{R}_{\text{av}}$};
 \draw[vect] (B) -- ++(\al+90:0.95)
@@ -82,7 +81,7 @@
      {$\vec{V}_{G,t/\text{sol}}$ constante};
 
 %% ---------------- cote du diamètre de roue ----------------------------------
-\draw[line width=0.5pt, solideD] (4.78,0.68) -- (5.55,0.30);
-\node[font=\scriptsize, text=solideD, anchor=west, inner sep=1pt] at (5.55,0.28) {diamètre 216 mm};
+\draw[line width=0.5pt, solideD] (2.36,0.70) -- (1.62,0.92);
+\node[font=\scriptsize, text=solideD, anchor=east, inner sep=1pt] at (1.60,0.92) {diamètre 216 mm};
 \end{tikzpicture}
 \end{document}

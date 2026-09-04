@@ -1,0 +1,76 @@
+%% guide-cable-coaxial — mesure de la célérité d'une onde dans un câble coaxial de 100 m.
+%% Haut : le montage (générateur, dérivation en T, oscilloscope, câble à extrémité libre).
+%% Bas  : les deux oscillogrammes, sans puis avec le câble ; le palier réfléchi apparaît
+%%        4 divisions après le front descendant.
+%% RÈGLE : ni Delta t en secondes, ni la distance parcourue, ni la célérité v.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  bloc/.style={draw, line width=0.8pt, rounded corners=2pt, fill=white,
+               font=\scriptsize, align=center, inner sep=3pt},
+  lien/.style={line width=1.4pt, line cap=round},
+  cable/.style={line width=1.2pt, line cap=round, line join=round, draw=black!75},
+  onde/.style={-{Stealth[length=5pt]}, line width=1.1pt},
+  sig/.style={draw=solideA, line width=1.1pt, line join=round, line cap=round},
+  grille/.style={line width=0.3pt, black!18},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.8pt, draw=solideD},
+  pet/.style={font=\scriptsize, inner sep=1.5pt}]
+
+%% ======================= partie haute : le montage ========================
+\node[bloc, minimum height=0.7cm] (gen) at (1.20,4.75) {Générateur\\d'impulsions};
+\node[bloc, minimum height=0.7cm] (osc) at (5.60,4.75) {Oscilloscope};
+\draw[lien] (gen.east) -- (osc.west);
+\draw[lien] (3.50,4.75) -- (3.50,4.35);
+\fill (3.50,4.75) rectangle ++(0.09,-0.09);
+\fill (3.50,4.75) rectangle ++(-0.09,-0.09);
+\node[pet, anchor=south, inner sep=3pt] at (3.50,4.86) {T};
+
+%% le câble enroulé, terminé par une extrémité libre
+\draw[cable] (3.50,4.35)
+  .. controls (2.70,4.14) and (2.70,3.92) .. (3.50,3.92)
+  .. controls (4.30,3.92) and (4.30,3.70) .. (3.50,3.70)
+  .. controls (2.80,3.70) and (2.80,3.48) .. (3.50,3.48);
+\draw[cable] (3.50,3.48) -- (3.34,3.38) (3.34,3.38) -- (3.34,3.20);
+\draw[cable] (3.50,3.48) -- (3.66,3.38) (3.66,3.38) -- (3.66,3.20);
+\node[pet, anchor=east] at (2.55,3.62) {câble coaxial --- \textbf{100 m}};
+\node[pet, anchor=north] at (3.50,3.10) {extrémité \textbf{libre}};
+
+%% aller et retour de l'onde le long du câble
+\draw[onde, draw=solideA] (4.35,4.28) -- (4.35,3.52);
+\draw[onde, draw=solideB] (4.70,3.52) -- (4.70,4.28);
+\node[pet, align=left, anchor=west] at (4.88,3.90)
+  {\textcolor{solideA}{onde émise}\\\textcolor{solideB}{onde réfléchie}};
+
+%% ======================= partie basse : les oscillogrammes ================
+\def\D{0.45}
+\newcommand\dx[1]{\D*(#1)}
+
+%% quadrillage commun
+\foreach \k in {0,1,...,16} { \draw[grille] ({\dx{\k}},0.02) -- ({\dx{\k}},2.30); }
+\draw[grille] (0,1.55) -- ({\dx{16}},1.55);
+\draw[grille] (0,0.15) -- ({\dx{16}},0.15);
+
+%% courbe (1) : le créneau seul
+\draw[sig] (0,1.55) -- ({\dx{1}},1.55) -- ({\dx{1}},2.15) -- ({\dx{3}},2.15)
+        -- ({\dx{3}},1.55) -- ({\dx{9}},1.55) -- ({\dx{9}},2.15) -- ({\dx{11}},2.15)
+        -- ({\dx{11}},1.55) -- ({\dx{16}},1.55);
+\node[pet, anchor=west] at (0.05,2.48) {courbe (1) --- sans le câble};
+
+%% courbe (2) : le même créneau, avec le palier de l'onde réfléchie
+\draw[sig] (0,0.15) -- ({\dx{1}},0.15) -- ({\dx{1}},0.85) -- ({\dx{3}},0.85)
+        -- ({\dx{3}},0.15) -- ({\dx{7}},0.15);
+\draw[draw=solideB, line width=1.4pt, line join=round]
+        ({\dx{7}},0.15) -- ({\dx{7}},0.55) -- ({\dx{8.5}},0.55) -- ({\dx{8.5}},0.15);
+\draw[sig] ({\dx{8.5}},0.15) -- ({\dx{9}},0.15) -- ({\dx{9}},0.85) -- ({\dx{11}},0.85)
+        -- ({\dx{11}},0.15) -- ({\dx{16}},0.15);
+\node[pet, anchor=west] at (0.05,1.12) {courbe (2) --- câble branché};
+
+%% durée séparant le front descendant du début du palier
+\draw[cote] ({\dx{3}},0.33) -- ({\dx{7}},0.33);
+\node[font=\small, text=solideD, fill=white, inner sep=1.5pt] at ({\dx{5}},0.33) {$\Delta t$};
+
+\node[pet, anchor=north] at ({\dx{8}},-0.12)
+  {base de temps : \textbf{0,25 $\mu$s} par division};
+\end{tikzpicture}
+\end{document}

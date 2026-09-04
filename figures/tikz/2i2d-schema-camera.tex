@@ -12,19 +12,19 @@
   amorce/.style={black!55, dash pattern=on 2pt off 2pt, line width=0.5pt},
   legd/.style={font=\scriptsize, anchor=west, align=left, text width=3.0cm, inner sep=2pt,
                execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
-  legg/.style={font=\scriptsize, anchor=east, align=right, text width=2.3cm, inner sep=2pt,
+  legg/.style={font=\scriptsize, anchor=east, align=right, text width=2.75cm, inner sep=2pt,
                execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
   mixte/.style={-{Stealth[length=5pt]}, line width=0.6pt,
                 dash pattern=on 6pt off 2pt on 1pt off 2pt}]
 
 %% ================== bâti 0 ============================================
-\hachures[draw=solideA]{(2.1,5.95) rectangle (4.1,6.15)}
-\draw[solideA, line width=0.9pt] (2.1,5.95) rectangle (4.1,6.15);
+\draw[solideA, line width=1pt] (2.1,6.05) -- (4.1,6.05);
+\foreach \i in {2.24,2.4,...,4.09} { \draw[solideA, line width=0.6pt] (\i,6.05) -- (\i-0.14,5.9); }
 \draw[amorce] (4.1,6.05) -- (4.95,6.05);
 \node[legd] at (4.95,6.05) {\textbf{Bâti 0} : plateau 3 + tiges 2 + platine 1};
 
 %% ================== liaison pivot d'axe (O,z) =========================
-\draw[solideA, line width=1.1pt] (2.35,5.95) -- (2.35,4.75) -- (2.75,4.75);
+\draw[solideA, line width=1.1pt] (2.35,6.05) -- (2.35,4.75) -- (2.75,4.75);
 \pic[rotate=90, s1=solideB, s2=solideA, liens=false] at (3.0,4.75) {pivot face};
 \node[font=\small, anchor=south east, inner sep=1pt] at (2.94,4.8) {$O$};
 \draw[amorce] (3.3,4.75) -- (4.95,4.75);
@@ -44,7 +44,7 @@
 \pic[s1=solideE, s2=solideB, liens=false] at (4.0,2.9) {pivot face};
 \node[font=\small, anchor=south west, inner sep=1pt] at (4.06,2.95) {$A$};
 \draw[amorce] (3.5,2.9) -- (2.6,2.9);
-\node[legg] at (2.55,2.9)
+\node[legg] at (2.55,3.05)
      {liaison \textbf{pivot} $(A,\vec{y})$ --- roulements 9 : rotation \textbf{verticale} (site)};
 %% flèche de rotation autour de l'axe horizontal
 \draw[rot] (3.15,2.45) arc (-90:190:0.13 and 0.45);
@@ -54,17 +54,17 @@
 \draw[cl2, fill=solideE!12] (4.1,1.55) rectangle (5.5,2.45);
 \draw[cl2, fill=solideE!12] (3.8,1.85) rectangle (4.1,2.15);
 \draw[cl2, fill=white] (3.8,2.0) ellipse (0.09 and 0.15);
-\node[font=\scriptsize, anchor=north] at (4.8,1.42)
+\node[font=\scriptsize, anchor=north, align=center, text width=3.4cm] at (4.8,1.45)
      {\textbf{2} : module caméra 27 + chape 10 + roue 13};
 
 %% ================== repère (x, y, z) ==================================
-\draw[mixte] (1.2,1.45) -- (1.2,2.25) node[anchor=south, inner sep=1pt, font=\small] {$\vec{z}$};
-\draw[mixte] (1.2,1.45) -- (2.0,1.35) node[anchor=west, inner sep=1pt, font=\small] {$\vec{y}$};
-\draw[mixte] (1.2,1.45) -- (0.6,0.95) node[anchor=north east, inner sep=1pt, font=\small] {$\vec{x}$};
+\draw[mixte] (1.0,1.4) -- (1.0,1.95) node[anchor=south, inner sep=1pt, font=\small] {$\vec{z}$};
+\draw[mixte] (1.0,1.4) -- (1.6,1.31) node[anchor=west, inner sep=1pt, font=\small] {$\vec{y}$};
+\draw[mixte] (1.0,1.4) -- (0.58,1.05) node[anchor=north east, inner sep=0pt, font=\small] {$\vec{x}$};
 
 %% ================== encadré de conclusion =============================
 \node[draw=solideA, line width=0.9pt, fill=solideA!7, rounded corners=3pt, inner sep=4pt,
-      font=\scriptsize, anchor=north, text width=7.2cm, align=center] at (4.2,0.85)
+      font=\scriptsize, anchor=north, text width=7.2cm, align=center] at (4.2,0.7)
      {la rotation dite \textbf{horizontale} se fait autour de l'axe \textbf{vertical} $\vec{z}$ ;
       la rotation dite \textbf{verticale} se fait autour de l'axe \textbf{horizontal} $\vec{y}$};
 \end{tikzpicture}

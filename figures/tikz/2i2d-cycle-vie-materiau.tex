@@ -1,62 +1,58 @@
-%% 2i2d-cycle-vie-materiau — les cinq étapes du cycle de vie d'un matériau et
-%% leurs impacts ; en fin de vie, trois voies de valorisation, dont deux
-%% referment la boucle (réutilisation vers la fabrication, recyclage vers
-%% l'extraction). La station « Fin de vie » est placée à droite pour que les
-%% trois voies partent vers l'extérieur sans traverser le cycle.
+%% 2i2d-cycle-vie-materiau — les cinq étapes du cycle de vie d'un matériau, avec
+%% l'impact environnemental de chacune ; en fin de vie, trois voies de valorisation,
+%% dont deux referment la boucle (réutilisation → fabrication, recyclage → extraction).
+%% La station « Fin de vie » est placée à droite du cercle pour que les trois voies
+%% partent vers l'extérieur sans traverser le cycle.
 \documentclass[tikz,border=4pt]{standalone}
 \usepackage{liaisons}
 \begin{document}
 \begin{tikzpicture}[x=1cm,y=1cm,
-  station/.style={draw=solideB, fill=solideB!10, line width=0.9pt, rounded corners=3pt,
-                  minimum width=1.5cm, minimum height=0.6cm, inner sep=1.5pt,
-                  font=\scriptsize\bfseries, text=solideB, align=center},
-  impact/.style={font=\scriptsize, text=black!55, align=center, inner sep=1pt},
+  station/.style={draw=solideB, fill=solideB!8, line width=0.9pt, rounded corners=3pt,
+                  text width=1.68cm, align=center, inner sep=2.5pt},
   boucle/.style={-{Stealth[length=5pt]}, line width=1pt, solideD},
   voie/.style={-{Stealth[length=5pt]}, line width=0.9pt, solideE},
   retour/.style={-{Stealth[length=5pt]}, line width=0.8pt, solideE,
                  dash pattern=on 3pt off 2pt},
   sortie/.style={draw=solideE, fill=solideE!8, line width=0.8pt, rounded corners=2.5pt,
-                 inner sep=3pt, font=\scriptsize, align=left, text=black!80},
-  petit/.style={font=\scriptsize, inner sep=1.5pt}]
+                 inner sep=3pt, align=left},
+  petit/.style={font=\scriptsize, inner sep=1.5pt},
+  retlab/.style={font=\scriptsize, text=solideE, fill=white, inner sep=1.5pt}]
+
+%% --- gabarit d'une station : nom en gras, impact en petit gris ------------------
+\newcommand\etape[2]{{\scriptsize\bfseries\color{solideB} #1}\\[1pt]{\tiny\color{black!55} #2}}
 
 %% --- les cinq stations, sur un cercle parcouru dans le sens horaire -------------
-\def\cx{2.5} \def\cy{2.4} \def\rr{1.8}
+\def\cx{2.3} \def\cy{2.5} \def\rr{1.75}
 \newcommand\pos[1]{({\cx+\rr*cos(288-72*#1)},{\cy+\rr*sin(288-72*#1)})}
-\node[station] (S1) at \pos{0} {Extraction};
-\node[station] (S2) at \pos{1} {Transport};
-\node[station] (S3) at \pos{2} {Fabrication};
-\node[station] (S4) at \pos{3} {Utilisation};
-\node[station] (S5) at \pos{4} {Fin de vie};
-
-%% --- les impacts associés ------------------------------------------------------
-\node[impact, anchor=north, text width=2.4cm] at ([yshift=-4pt]S1.south)
-     {déforestation, carrières,\\plateformes pétrolières};
-\node[impact, anchor=north, text width=1.8cm] at ([yshift=-4pt]S2.south) {gaz à effet\\de serre};
-\node[impact, anchor=south, text width=1.8cm] at ([yshift=4pt]S3.north)  {gaz à effet\\de serre};
-\node[impact, anchor=south, text width=1.8cm] at ([yshift=4pt]S4.north)  {gaz à effet\\de serre};
-\node[impact, anchor=north, text width=2.1cm] at ([yshift=-4pt]S5.south)
-     {pollution de l'eau\\et de l'air, déchets};
+\node[station] (S1) at \pos{0} {\etape{Extraction}{carrières, forages}};
+\node[station] (S2) at \pos{1} {\etape{Transport}{GES}};
+\node[station] (S3) at \pos{2} {\etape{Fabrication}{GES}};
+\node[station] (S4) at \pos{3} {\etape{Utilisation}{GES}};
+\node[station] (S5) at \pos{4} {\etape{Fin de vie}{déchets, pollution}};
 
 %% --- le cycle, sens horaire ------------------------------------------------------
-\draw[boucle] (S1) to[bend right=16] (S2);
-\draw[boucle] (S2) to[bend right=16] (S3);
-\draw[boucle] (S3) to[bend right=16] (S4);
-\draw[boucle] (S4) to[bend right=16] (S5);
-\draw[boucle] (S5) to[bend right=16] (S1);
-\node[petit, text=solideD, anchor=north] at (\cx,{\cy-0.25}) {sens du cycle};
+\foreach \a/\b in {S1/S2, S2/S3, S3/S4, S4/S5, S5/S1} { \draw[boucle] (\a) to[bend right=14] (\b); }
+\node[petit, text=solideD, align=center] at (\cx,\cy) {sens\\du cycle};
 
 %% --- les trois voies de valorisation, à droite ------------------------------------
-\node[sortie, anchor=west] (V1) at (5.45,4.15) {\textbf{Réutilisation}\\l'objet ressert};
-\node[sortie, anchor=west] (V2) at (5.45,2.60) {\textbf{Recyclage}\\la matière ressert};
-\node[sortie, anchor=west] (V3) at (5.45,0.95) {\textbf{Valorisation énergétique}\\la chaleur de combustion\\est récupérée};
-\draw[voie] (S5.north east) to[out=30,in=180] (V1.west);
-\draw[voie] (S5.east)       to[out=0,in=180]  (V2.west);
-\draw[voie] (S5.south east) to[out=-30,in=180] (V3.west);
+\node[sortie, anchor=west] (V1) at (5.20,4.05)
+     {{\scriptsize\bfseries Réutilisation}\\[1pt]{\scriptsize l'objet ressert}};
+\node[sortie, anchor=west] (V2) at (5.20,2.50)
+     {{\scriptsize\bfseries Recyclage}\\[1pt]{\scriptsize la matière ressert}};
+\node[sortie, anchor=west] (V3) at (5.20,0.95)
+     {{\scriptsize\bfseries Valorisation énergétique}\\[1pt]{\scriptsize la chaleur est récupérée}};
+\draw[voie] (S5.north east) to[out=55,in=180]  (V1.west);
+\draw[voie] (S5.east)       to[out=0,in=180]   (V2.west);
+\draw[voie] (S5.south east) to[out=-55,in=180] (V3.west);
 
 %% --- les deux retours qui referment la boucle ---------------------------------------
-\draw[retour] (V1.north) to[out=90,in=75,looseness=1.5] (S3.north east);
-\node[petit, text=solideE, anchor=south] at (3.4,5.28) {retour vers la fabrication};
-\draw[retour] (V2.south) to[out=-90,in=-20,looseness=1.1] (S1.south east);
-\node[petit, text=solideE, anchor=north] at (5.05,0.16) {retour vers l'extraction};
+\draw[retour] (V1.north) to[out=90,in=75,looseness=1.25]
+      node[retlab, pos=0.55] {retour vers la fabrication} (S3.north east);
+\draw[retour] (V2.south west) to[out=-125,in=20,looseness=0.9]
+      node[retlab, pos=0.4, anchor=south] {retour vers l'extraction} (S1.east);
+
+%% --- note de lecture ------------------------------------------------------------------
+\node[petit, anchor=north west, text=black!55, font=\scriptsize\itshape] at (0.0,0.20)
+     {GES : gaz à effet de serre};
 \end{tikzpicture}
 \end{document}

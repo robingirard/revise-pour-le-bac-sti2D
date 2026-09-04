@@ -1,0 +1,70 @@
+%% 2i2d-pv-orientation — irradiance, surface, inclinaison et orientation d'un panneau.
+%% Vue de profil : le faisceau solaire (solideD) arrive sur un panneau incliné de bêta ;
+%% l'angle d'incidence i est mesuré entre le rayon et la normale au panneau.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  trait/.style={line width=0.8pt, line cap=round, line join=round},
+  rayon/.style={-{Stealth[length=4.5pt]}, line width=1pt, draw=solideD},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.6pt},
+  txt/.style={font=\scriptsize, inner sep=1.5pt}]
+
+%% ---------- sol ----------------------------------------------------------
+\draw[trait] (0.55,0) -- (4.55,0);
+\foreach \k in {0.65,0.85,...,4.45} { \draw[line width=0.4pt] (\k,0) -- (\k-0.14,-0.14); }
+
+%% ---------- panneau incliné de bêta = 30° --------------------------------
+\begin{scope}[shift={(2.4,0.95)}, rotate=30]
+  \draw[solideB, line width=0.8pt, fill=solideB!25] (-1.05,-0.06) rectangle (1.05,0.06);
+\end{scope}
+\draw[trait] (1.491,0) -- (1.491,0.425)  (3.309,0) -- (3.309,1.475);   % supports
+
+%% ---------- angle d'inclinaison bêta -------------------------------------
+\draw[line width=0.5pt, dash pattern=on 2pt off 1.6pt] (1.491,0.425) -- (2.65,0.425);
+\draw[solideD, line width=0.9pt] (1.491,0.425) ++(0:0.46) arc (0:30:0.46);
+\node[txt, text=solideD, fill=white, inner sep=0.8pt] at (2.03,0.545) {$\beta$};
+
+%% ---------- Soleil et faisceau -------------------------------------------
+\fill[solideD] (0.65,2.55) circle (0.19);
+\foreach \a in {0,45,...,315} { \draw[solideD, line width=0.7pt]
+  (0.65,2.55) ++(\a:0.25) -- ++(\a:0.11); }
+\draw[rayon] (1.008,1.041) -- (1.643,0.597);
+\draw[rayon] (1.408,1.272) -- (2.043,0.828);
+\draw[rayon] (1.808,1.503) -- (2.443,1.059);
+\draw[rayon] (2.208,1.734) -- (2.843,1.290);
+\node[txt, text=solideD, anchor=west] at (2.55,2.42)
+  {$E_{\mathrm{irr}} = 1\,000$ W$\cdot$m$^{-2}$};
+
+%% ---------- normale au panneau et angle d'incidence i --------------------
+\draw[line width=0.6pt, dash pattern=on 2pt off 1.6pt] (2.508,1.013) -- (2.033,1.836);
+\node[txt, anchor=south east, inner sep=1pt] at (2.06,1.86) {normale};
+\draw[line width=0.6pt] (2.508,1.013) ++(120:0.46) arc (120:145:0.46);
+\node[txt, fill=white, inner sep=0.8pt] at (2.116,1.441) {$i$};
+
+%% ---------- cote de la surface S -----------------------------------------
+\draw[cote] (1.631,0.183) -- (3.449,1.233);
+\node[txt, fill=white, inner sep=1pt] at (2.54,0.708) {$S$};
+
+%% ---------- puissance électrique produite --------------------------------
+\draw[-{Stealth[length=7pt,width=6pt]}, line width=2pt, draw=solideE] (3.45,1.62) -- (4.45,1.62);
+\node[txt, text=solideE, anchor=west] at (4.52,1.72)
+  {$P_{\mathrm{crête}} = \eta \times E_{\mathrm{irr}} \times S$};
+\node[txt, text=solideE, anchor=west] at (4.52,1.40) {courant continu ($=$)};
+
+
+%% ---------- rose des vents ------------------------------------------------
+\draw[trait] (5.95,0.42) circle (0.34);
+\foreach \a/\l/\anc in {90/{N $0^\circ$}/south, 0/{E $90^\circ$}/west,
+                        270/{S $180^\circ$}/north, 180/{O}/east} {
+  \draw[line width=0.6pt] (5.95,0.42) ++(\a:0.34) -- ++(\a:0.1);
+  \node[font=\tiny, anchor=\anc, inner sep=1.5pt] at ($(5.95,0.42)+(\a:0.46)$) {\l};}
+\fill (5.95,0.42) circle (1pt);
+
+%% ---------- note ----------------------------------------------------------
+\node[txt, anchor=north, text=black!65] at (3.0,-0.40)
+  {production maximale quand $i = 0$};
+\node[txt, anchor=north, text=black!65] at (3.0,-0.74)
+  {si $\beta = 0$ (panneau à plat), l'orientation n'a aucun effet};
+\end{tikzpicture}
+\end{document}
