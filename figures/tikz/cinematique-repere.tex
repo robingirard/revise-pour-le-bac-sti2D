@@ -1,0 +1,29 @@
+%% Repère cartésien orthonormé (O ; x, y, z) en perspective cavalière.
+%% z vertical, y vers la droite, x en fuite vers le bas-gauche.
+%% Les trois vecteurs unitaires i, j, k sont en rouge (solideA).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm, scale=1.12,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  unitaire/.style={-{Stealth[length=5.5pt]}, line width=1.6pt, solideA}]
+
+% --- les trois axes -------------------------------------------------
+\coordinate (O) at (0,0);
+\draw[axe] (O) -- (0,2.5)    node[above=1pt, font=\small] {$z$};
+\draw[axe] (O) -- (2.9,0)    node[right=1pt, font=\small] {$y$};
+\draw[axe] (O) -- (215:2.3)  node[below left=-1pt, font=\small] {$x$};
+
+% --- les vecteurs unitaires ----------------------------------------
+\draw[unitaire] (O) -- (0,0.95)
+  node[midway, left=2pt, font=\small, text=solideA] {$\vec{k}$};
+\draw[unitaire] (O) -- (0.95,0)
+  node[midway, above=2pt, font=\small, text=solideA] {$\vec{\jmath}$};
+\draw[unitaire] (O) -- (215:0.95)
+  node[midway, above left=-2pt, font=\small, text=solideA] {$\vec{\imath}$};
+
+% --- origine --------------------------------------------------------
+\fill (O) circle (1.5pt);
+\node[font=\small] at (0.3,-0.32) {$O$};
+\end{tikzpicture}
+\end{document}

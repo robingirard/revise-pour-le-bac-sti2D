@@ -1,0 +1,34 @@
+%% Trajectoire d'un point M : courbe décrite par M dans un repère donné.
+%% Ici la trajectoire de l'avion par rapport au sol.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+% --- cadre -------------------------------------------------------------
+\draw[black!35, line width=0.6pt, rounded corners=2pt] (0,0) rectangle (7.2,3.4);
+
+% --- la trajectoire ----------------------------------------------------
+\draw[solideD, line width=1.4pt, line cap=round]
+      (0.35,0.85) to[out=25,in=205]  (2.3,2.15)
+                  to[out=25,in=170]  (4.3,1.05)
+                  to[out=-10,in=218] (6.35,2.35);
+
+% --- le point M et l'avion --------------------------------------------
+\coordinate (M) at (6.35,2.35);
+\begin{scope}[shift={(M)}, rotate=38, scale=1.45, line join=round]
+  \fill[black!75] (0.42,0) -- (-0.05,0.09) -- (-0.34,0.07) -- (-0.34,-0.07) -- (-0.05,-0.09) -- cycle;
+  \fill[black!75] (0.07,0.02) -- (-0.28,0.34) -- (-0.12,0.34) -- (0.15,0.02) -- cycle;
+  \fill[black!75] (0.07,-0.02) -- (-0.28,-0.34) -- (-0.12,-0.34) -- (0.15,-0.02) -- cycle;
+  \fill[black!75] (-0.27,0.02) -- (-0.42,0.19) -- (-0.32,0.19) -- (-0.20,0.02) -- cycle;
+  \fill[black!75] (-0.27,-0.02) -- (-0.42,-0.19) -- (-0.32,-0.19) -- (-0.20,-0.02) -- cycle;
+\end{scope}
+\fill[solideA] (M) circle (2pt);
+\node[font=\small, below right=1pt] at (M) {$M$};
+
+% --- nom de la trajectoire --------------------------------------------
+\node[font=\small, text=solideD, anchor=west] at (2.55,2.95)
+     {$T_{M,\;\mathrm{avion/sol}}$};
+\draw[solideD, line width=0.5pt] (2.5,2.9) -- (2.15,2.3);
+\end{tikzpicture}
+\end{document}

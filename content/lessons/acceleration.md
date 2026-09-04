@@ -19,10 +19,14 @@ Le vecteur accélération a deux composantes : **a t** (tangentielle, = dV/dt) e
 
 ## Les équations du mouvement
 
-| | Translation rectiligne | Rotation autour d'un axe fixe |
-|---|---|---|
-| **Uniforme** | a = 0 ; v = v0 ; x(t) = v0 × t + x0 | θ'' = 0 ; θ' = θ'0 ; θ(t) = θ'0 × t + θ0 |
-| **Uniformément varié** | a = a0 ; v(t) = a0 × t + v0 ; x(t) = ½ a0 t² + v0 t + x0 | θ'' = θ''0 ; θ'(t) = θ''0 t + θ'0 ; θ(t) = ½ θ''0 t² + θ'0 t + θ0 |
+**Translation rectiligne** (x en m, v en m/s, a en m/s²) :
+
+| Mouvement | Accélération | Vitesse | Position |
+|---|---|---|---|
+| Uniforme | $a = 0$ | $v = v_0$ | $x(t) = v_0\,t + x_0$ |
+| Uniformément varié | $a = a_0$ | $v(t) = a_0\,t + v_0$ | $x(t) = \tfrac{1}{2} a_0 t^2 + v_0 t + x_0$ |
+
+**Rotation autour d'un axe fixe** (θ en rad, θ' en rad/s, θ'' en rad/s²) : mêmes équations en remplaçant x par θ, v par θ' et a par θ''.
 
 ## Reconnaître un mouvement sur les courbes
 

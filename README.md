@@ -7,10 +7,11 @@ compétences** (arbre à la Duolingo : niveaux, XP, série de jours).
 Tout est reproductible : le contenu pédagogique est écrit en YAML/Markdown, les figures sont des
 sources TikZ compilées en SVG, et `make` reconstruit l'application complète dans `dist/`.
 
-Première unité couverte : **le schéma cinématique** (manuel I2D 1re, chapitre 2, p. 30-33) —
-les 10 liaisons normalisées, leurs symboles, degrés de liberté, surfaces de contact, efforts
-transmissibles, puis classes d'équivalence, graphe des liaisons et lecture/tracé du schéma
-(serre-joint, bielle-manivelle, étau).
+Unités couvertes (manuel I2D 1re, chapitre 2 « Mécanismes ») : **les liaisons mécaniques**, **le schéma
+cinématique** (serre-joint, bielle-manivelle, étau), **transmettre et transformer le mouvement** (engrenages,
+poulies, roue et vis sans fin, pignon-crémaillère, vis-écrou, couple et rendement) et **mouvements et
+cinématique** (trajectoires, vitesses, accélération, équations du mouvement). Les formules sont rendues
+avec KaTeX (embarqué, hors ligne).
 
 ## Utilisation
 
@@ -50,7 +51,8 @@ permet d'**exporter** et d'**importer** la progression complète, de saisir un p
 - Poppler (`pdftocairo`) : `brew install poppler` ;
 - Python 3 avec `pyyaml` ;
 - Node ≥ 18 (uniquement pour les tests de l'application) ; Google Chrome (uniquement pour les
-  captures d'écran automatiques `app/dev/shots.mjs`).
+  captures d'écran automatiques `app/dev/shots.mjs` et `app/dev/tour.mjs`).
+- KaTeX est embarqué dans `app/vendor/katex/` (version et origine dans `VERSION.txt`).
 
 ## Organisation
 
@@ -100,9 +102,9 @@ make test       # tests unitaires de l'application (planificateur, progression, 
 
 ## Feuille de route
 
-1. ✅ Liaisons, classes d'équivalence, graphe, lecture de schéma (serre-joint, bielle-manivelle, étau).
-2. Mécanismes supplémentaires de complexité croissante (pompe, vérin/levier, pince, cric, essuie-glace…),
-   symboles 3D, exercice de construction guidée du schéma.
-3. Chapitres suivants du manuel (mouvements et cinématique, chaîne d'information, matériaux et
-   structures), puis physique-chimie et maths (rendu des formules avec KaTeX).
-4. Tableau de bord parent (progression exportée) et publication automatique sur GitHub Pages.
+1. ✅ Liaisons, schéma cinématique (3 mécanismes), transmission/transformation, cinématique ; exercices
+   complets de fin de chapitre ; annales officielles ; bilan parent ; KaTeX.
+2. En cours : statique et RDM, chaîne d'information et numérique (à partir des notes du manuel),
+   puis physique-chimie et mathématiques (notes en cours de transcription).
+3. Mécanismes supplémentaires de complexité croissante, symboles 3D, adaptation d'exercices d'annales
+   en exercices guidés.

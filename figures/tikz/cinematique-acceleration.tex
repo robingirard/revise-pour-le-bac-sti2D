@@ -1,0 +1,37 @@
+%% Accélération sur une trajectoire circulaire.
+%% Mouvement uniforme : seule subsiste l'accélération normale a_n (vers le centre).
+%% Mouvement uniformément varié : s'y ajoute une accélération tangentielle a_t.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  vect/.style={-{Stealth[length=5.5pt]}, line width=1.4pt}]
+
+%% ------------------------- un schéma ---------------------------------
+%% #1 : décalage horizontal, #2 : titre, #3 : 1 si accélération tangentielle
+\newcommand\schema[3]{%
+\begin{scope}[shift={(#1,0)}]
+  \node[font=\small, align=center] at (0,2.15) {#2};
+  \draw[solideD, line width=1.2pt] (0,0) circle (1.25);
+  \fill (0,0) circle (1.6pt);
+  \node[font=\small, below left=0pt] at (0,0) {$O$};
+  \coordinate (M) at (55:1.25);
+  \fill (M) circle (2pt);
+  \node[font=\small, anchor=west, inner sep=4pt] at (M) {$M$};
+  % vitesse : tangente à la trajectoire
+  \draw[vect, solideB] (M) -- ++(145:1.10)
+       node[anchor=south east, inner sep=1pt, font=\small, text=solideB] {$\vec{v}$};
+  % accélération normale : dirigée vers le centre O
+  \draw[vect, solideA] (M) -- ++(235:0.85)
+       node[pos=0.55, anchor=west, inner sep=3pt, font=\small, text=solideA] {$\vec{a_n}$};
+  % accélération tangentielle (mouvement varié seulement), colinéaire à v
+  \ifnum#3=1
+    \draw[vect, black!55] ($(M)+(55:0.22)$) -- ++(145:0.68)
+         node[anchor=south west, inner sep=1pt, font=\small, text=black!55] {$\vec{a_t}$};
+  \fi
+\end{scope}}
+
+\schema{0}{Uniforme}{0}
+\schema{4.2}{Uniformément varié}{1}
+\end{tikzpicture}
+\end{document}

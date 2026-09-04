@@ -1,0 +1,49 @@
+%% Système vis-écrou : transformation d'une rotation en translation.
+%% La vis 1 (rouge) est en liaison pivot avec le bâti 0 : elle tourne (couple C, vitesse omega)
+%% sans se déplacer.  L'écrou 2 (bleu) est en liaison hélicoïdale avec la vis et bloqué en
+%% rotation par une glissière au bâti : il avance donc en translation (effort F, vitesse V).
+%% Un tour de vis fait avancer l'écrou d'un pas p.  Le filet est figuré par une sinusoïde
+%% de période p = 1 cm, en phase avec celle du symbole de liaison hélicoïdale.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+    trait/.style={line width=1.1pt, line cap=round},
+    fleche/.style={-{Stealth[length=5pt]}, line width=0.9pt},
+    cote/.style={line width=0.6pt, {Stealth[length=4pt]}-{Stealth[length=4pt]}},
+    attache/.style={line width=0.4pt, draw=black!45}]
+% --- Macro locale : ligne de bâti horizontale hachurée ---
+\newcommand\batihoriz[4]{% #1 = x début, #2 = x fin, #3 = y, #4 = nombre de hachures
+  \draw[line width=0.8pt] (#1,#3) -- (#2,#3);
+  \foreach \i in {1,...,#4} {\pgfmathsetmacro\xx{#1+(#2-#1)*\i/#4}%
+    \draw[line width=0.5pt] (\xx,#3) -- (\xx-0.14,#3-0.14);}}
+% --- Bâti 0 ---
+\batihoriz{-0.3}{5.1}{0}{26}
+\node[font=\small, anchor=north] at (2.1,-0.15) {\textbf{0} bâti};
+% --- Liaison pivot vis / bâti (à gauche) et liaison hélicoïdale vis / écrou 2 ---
+\pic[s1=solideA, s2=black, liens=false] at (1.05,1.6) {pivot face};
+\draw[trait] (1.05,1.35) -- (1.05,0.06);
+\pic[s1=solideA, s2=solideB, liens=false] at (3.0,1.6) {helicoidale face};
+% --- Vis 1 : filet (sinusoïde de pas p = 1 cm) de part et d'autre de l'écrou ---
+\draw[trait, solideA] (-0.45,1.6) -- (0.1,1.6);
+\draw[trait, solideA] plot[domain=2.0:2.5, samples=30, smooth] (\x, {1.6-0.13*sin(360*(\x-3.0))});
+\draw[trait, solideA] plot[domain=3.5:4.9, samples=60, smooth] (\x, {1.6-0.13*sin(360*(\x-3.0))});
+% --- Liaison glissière écrou / bâti : bloque la rotation de l'écrou ---
+\pic[s1=solideB, s2=black, liens=false] at (4.25,0.75) {glissiere face};
+\draw[trait, solideB] (3.5,1.35) -- (3.5,0.75);
+\draw[trait] (4.25,0.5) -- (4.25,0.06);
+% --- Entrée : rotation de la vis (couple C, vitesse omega) ---
+\draw[fleche, solideA] (-0.25,1.15) arc (-90:200:0.16 and 0.45);
+\node[font=\small, text=solideA, anchor=south] at (-0.25,2.15) {$\vec{C}$, $\omega$};
+% --- Sortie : translation de l'écrou (effort F, vitesse V) ---
+\draw[fleche, solideB] (2.2,2.5) -- (3.6,2.5);
+\node[font=\small, text=solideB, anchor=south] at (2.9,2.55) {$\vec{F}$, $V$};
+% --- Cote du pas p entre deux crêtes successives du filet ---
+\draw[attache] (3.75,1.73) -- (3.75,2.2) (4.75,1.73) -- (4.75,2.2);
+\draw[cote] (3.75,2.08) -- (4.75,2.08);
+\node[font=\small, anchor=south] at (4.25,2.12) {pas $p$};
+% --- Étiquettes ---
+\node[font=\small, text=solideA, anchor=north] at (2.0,1.28) {\textbf{1} vis};
+\node[font=\small, text=solideB, anchor=south] at (3.0,1.9) {\textbf{2} écrou};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,71 @@
+%% Chronogrammes d'un déplacement à profil de vitesse trapézoïdal :
+%%   phase 1 (0-20 s)  : a = +1 m/s^2, v croît de 0 à 20 m/s ;
+%%   phase 2 (20-60 s) : a = 0,  v = 20 m/s ;
+%%   phase 3 (60-80 s) : a = -1 m/s^2, v décroît jusqu'à 0.
+%% Distance totale parcourue : s(80 s) = 1200 m.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={solideD, line width=1.4pt, line join=round, line cap=round},
+  grad/.style={font=\scriptsize},
+  repere/.style={line width=0.5pt}]
+
+%% échelle des temps : 1 s -> 0.072 cm  (0 à 80 s -> 5.76 cm)
+\def\ux{0.072cm}
+
+%% ================== 3. position s(t) (en haut) =======================
+\begin{scope}[shift={(0,5.2)}, x=\ux, y=0.0015cm]
+  \draw[axe] (-4,0) -- (88,0);
+  \draw[axe] (0,-90) -- (0,1420);
+  \node[anchor=south east, inner sep=2pt, font=\small] at (-1,1400) {$s$ (m)};
+  \foreach \s in {400,800,1200} {
+    \draw[repere] (0,\s) -- (-2.5,\s) node[grad, anchor=east, inner sep=2pt] {\s};
+    \draw[black!25, line width=0.4pt, dotted] (0,\s) -- (80,\s); }
+  \node[grad, anchor=east, inner sep=2pt] at (-2.5,0) {0};
+  \foreach \t in {20,40,60,80} { \draw[repere] (\t,0) -- (\t,-70); }
+  % parabole (phase 1), droite (phase 2), parabole (phase 3)
+  \draw[courbe] plot[domain=0:20, samples=25, smooth] (\x,{0.5*\x*\x})
+             -- plot[domain=20:60, samples=2] (\x,{200+20*(\x-20)})
+             -- plot[domain=60:80, samples=25, smooth]
+                    (\x,{1000+20*(\x-60)-0.5*(\x-60)*(\x-60)});
+  \fill[solideD] (80,1200) circle (2pt);
+\end{scope}
+
+%% ================== 2. vitesse v(t) (au milieu) ======================
+\begin{scope}[shift={(0,2.4)}, x=\ux, y=0.09cm]
+  \draw[axe] (-4,0) -- (88,0);
+  \draw[axe] (0,-1.5) -- (0,23.5);
+  \node[anchor=south east, inner sep=2pt, font=\small] at (-1,23) {$v$ (m/s)};
+  \foreach \v in {10,20} {
+    \draw[repere] (0,\v) -- (-2.5,\v) node[grad, anchor=east, inner sep=2pt] {\v};
+    \draw[black!25, line width=0.4pt, dotted] (0,\v) -- (80,\v); }
+  \node[grad, anchor=east, inner sep=2pt] at (-2.5,0) {0};
+  \foreach \t in {20,40,60,80} { \draw[repere] (\t,0) -- (\t,-1.2); }
+  \draw[courbe] (0,0) -- (20,20) -- (60,20) -- (80,0);
+\end{scope}
+
+%% ================== 1. accélération a(t) (en bas) ====================
+\begin{scope}[shift={(0,0)}, x=\ux, y=0.55cm]
+  \draw[axe] (-4,0) -- (88,0)
+        node[anchor=south east, inner sep=4pt, font=\small] {$t$ (s)};
+  \draw[axe] (0,-1.45) -- (0,1.55);
+  \node[anchor=south east, inner sep=2pt, font=\small] at (-1,1.5) {$a$ (m/s$^2$)};
+  \foreach \a in {-1,1} {
+    \draw[repere] (0,\a) -- (-2.5,\a) node[grad, anchor=east, inner sep=2pt] {$\a$}; }
+  \node[grad, anchor=east, inner sep=2pt] at (-2.5,0) {0};
+  \foreach \t in {20,40,60,80} {
+    \draw[repere] (\t,0) -- (\t,-0.16) node[grad, anchor=north, inner sep=2pt] {\t}; }
+  \draw[courbe] (0,1) -- (20,1) -- (20,0) -- (60,0) -- (60,-1) -- (80,-1);
+\end{scope}
+
+%% ================== repères de phases ================================
+\foreach \t in {20,60} {
+  \draw[solideB, dashed, dash pattern=on 2.5pt off 2pt, line width=0.6pt]
+       ({\t*0.072},-0.72) -- ({\t*0.072},7.36); }
+\foreach \x/\txt in {0.72/{phase 1\\accélération}, 2.88/{phase 2\\vitesse constante},
+                     5.04/{phase 3\\freinage}} {
+  \node[align=center, font=\scriptsize, anchor=south, text=solideB] at (\x,7.42) {\txt}; }
+\end{tikzpicture}
+\end{document}

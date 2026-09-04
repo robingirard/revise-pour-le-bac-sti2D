@@ -1,0 +1,33 @@
+%% Champ des vecteurs vitesse d'un solide en TRANSLATION.
+%% Tous les points du solide ont, au même instant, le même vecteur vitesse.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+% --- sol ---------------------------------------------------------------
+\draw[black!55, line width=0.7pt] (-0.3,0) -- (5.9,0);
+
+% --- silhouette de la voiture ------------------------------------------
+\filldraw[fill=solideA!15, draw=solideA, line width=1.1pt, line join=round, rounded corners=2pt]
+   (0.10,0.30) -- (0.14,0.86) -- (1.15,0.90) -- (1.62,1.42) -- (2.95,1.45)
+   -- (3.42,0.90) -- (4.42,0.86) -- (4.50,0.30) -- cycle;
+\draw[solideA, line width=0.8pt] (1.72,1.36) -- (2.22,0.92) (2.90,1.38) -- (2.90,0.92);
+\foreach \x in {1.15,3.45} {
+  \filldraw[fill=black!70, draw=black!80, line width=0.8pt] (\x,0.30) circle (0.38);
+  \filldraw[fill=black!25, draw=black!60, line width=0.6pt] (\x,0.30) circle (0.15);
+}
+
+% --- cinq vecteurs vitesse identiques ----------------------------------
+%% (un liseré blanc sous chaque flèche pour la détacher de la carrosserie)
+\foreach \p in {(2.95,1.45), (4.20,0.58), (0.55,0.60), (1.15,0.30), (3.45,0.30)} {
+  \draw[white, line width=3.2pt] \p -- ++(0.95,0);
+  \draw[-{Stealth[length=5pt]}, line width=1.3pt, solideA] \p -- ++(0.95,0);
+  \fill[solideA] \p circle (1.7pt);
+}
+\node[font=\small, text=solideA, anchor=south] at (3.45,1.55) {$\vec{V}$};
+
+% --- légende ------------------------------------------------------------
+\node[font=\small, anchor=north] at (2.8,-0.25) {Tous les vecteurs vitesse sont identiques.};
+\end{tikzpicture}
+\end{document}

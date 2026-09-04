@@ -1,0 +1,55 @@
+%% Système bielle-manivelle : transformation d'une rotation continue en translation alternative.
+%% Manivelle 1 (vert) : rotation autour de O (pivot au bâti 0) — le point A décrit un cercle
+%% de rayon OA (trajectoire en pointillés), repéré par l'angle theta depuis l'axe (O,x).
+%% Bielle 2 (rouge) : mouvement plan.  Piston 3 (bleu) : translation alternative dans son guidage.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{backgrounds}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+    solide/.style={line width=1.4pt, line cap=round, line join=round},
+    axe/.style={line width=0.5pt, dash pattern=on 6pt off 2pt on 1pt off 2pt},
+    fleche/.style={-{Stealth[length=5pt]}, line width=0.8pt}]
+\colorlet{S0}{black}\colorlet{S1}{solideE}\colorlet{S2}{solideA}\colorlet{S3}{solideB}
+% --- Géométrie : OA = 1,2 ; theta = 55° ; AB = 2,9 ---
+\coordinate (O) at (0,0);
+\coordinate (A) at (55:1.2);
+\coordinate (B) at (3.42,0);
+% --- Trajectoire du point A (cercle) et angle theta ---
+\draw[line width=0.6pt, dashed, draw=S1!70] (O) circle (1.2);
+\draw[axe] (-1.6,0) -- (5.6,0);
+\draw[line width=0.7pt, draw=S1] (0.62,0) arc (0:55:0.62);
+\node[font=\small, text=S1, anchor=west, inner sep=1.5pt] at (27:0.72) {$\theta$};
+% --- Guidage du piston (bâti) : deux traits hachurés ---
+\foreach \x in {2.85,3.05,...,5.05} {\draw[line width=0.5pt] (\x,0.5) -- (\x-0.14,0.64)
+   (\x,-0.5) -- (\x-0.14,-0.64);}
+\draw[line width=0.8pt] (2.7,0.5) -- (5.05,0.5) (2.7,-0.5) -- (5.05,-0.5);
+% --- Symboles de liaison ---
+\pic[s1=S1, s2=S0, liens=false] at (O) {pivot bout};
+\pic[s1=S2, s2=S1, liens=false] at (A) {pivot bout};
+\pic[s1=S2, s2=S3, liens=false] at (B) {pivot bout};
+\pic at (0,-1.7) {bati};
+% --- Solides ---
+\begin{scope}[on background layer]
+  \draw[solide, S0] (O) -- (0,-1.7);                                  % liaison au bâti 0
+  \draw[solide, S1] (O) -- (A);                                       % manivelle 1
+  \draw[solide, S2] (A) -- (B);                                       % bielle 2
+  \draw[solide, S3, fill=white] (2.82,-0.42) rectangle (4.02,0.42);   % piston 3
+\end{scope}
+% --- Mouvements ---
+\draw[fleche, S1] ([shift=(60:0.81)]O) arc (60:142:0.81);
+\node[font=\small, text=S1, anchor=east, inner sep=2pt] at (-0.7,0.42) {$\omega$};
+\draw[{Stealth[length=5pt]}-{Stealth[length=5pt]}, line width=0.8pt, S3] (3.0,-0.95) -- (4.6,-0.95);
+\node[font=\small, text=S3, anchor=north] at (3.8,-1.05) {translation alternative};
+% --- Points et repères des solides ---
+\node[font=\small, anchor=north east, inner sep=3pt] at (O) {O};
+\node[font=\small, anchor=south east, inner sep=3pt] at (A) {A};
+\node[font=\small, anchor=south, inner sep=4pt] at (B) {B};
+\node[font=\small\bfseries, text=S0, anchor=west] at (0.28,-1.62) {0};
+\node[font=\small, text=S1, anchor=east] at (-0.42,-1.45) {\textbf{1} manivelle};
+\node[font=\small, text=S2, anchor=south] at (2.15,0.6) {\textbf{2} bielle};
+\node[font=\small, text=S3, anchor=south] at (4.05,0.78) {\textbf{3} piston};
+\node[font=\small, text=S1!70, anchor=east, align=right] at (-0.78,1.02) {trajectoire\\de A};
+\repere{(1.35,-1.75)}{x}{y}{1}
+\end{tikzpicture}
+\end{document}

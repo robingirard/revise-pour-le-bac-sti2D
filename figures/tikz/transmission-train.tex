@@ -1,0 +1,58 @@
+%% Train d'engrenages à quatre roues (deux étages de réduction).
+%% Vue « de face » : les trois axes de rotation sont verticaux (arbres = traits verticaux),
+%% chaque roue est vue par la tranche (barre horizontale de longueur = diamètre primitif).
+%% Roue 1 (rouge) sur l'arbre moteur ; roues 2 et 3 solidaires (bleu) sur l'arbre
+%% intermédiaire ; roue 4 (vert) sur l'arbre de sortie.  R = w4/w1 = (Z1 x Z3)/(Z2 x Z4).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{backgrounds}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+    arbre/.style={line width=1.3pt, line cap=round},
+    fleche/.style={-{Stealth[length=5pt]}, line width=0.8pt}]
+% --- Macro locale : ligne de bâti horizontale hachurée ---
+\newcommand\batihoriz[4]{% #1 = x début, #2 = x fin, #3 = y, #4 = nombre de hachures
+  \draw[line width=0.8pt] (#1,#3) -- (#2,#3);
+  \foreach \i in {1,...,#4} {\pgfmathsetmacro\xx{#1+(#2-#1)*\i/#4}%
+    \draw[line width=0.5pt] (\xx,#3) -- (\xx-0.14,#3-0.14);}}
+% --- Macro locale : roue vue par la tranche (barre pleine + amorces de denture) ---
+\newcommand\roue[5][]{% [couleur] {x centre} {y} {rayon} {sens de la denture : 1 droite, -1 gauche}
+  \pgfmathsetmacro\xg{#2-#4}\pgfmathsetmacro\xd{#2+#4}%
+  \pgfmathsetmacro\xa{#2+#5*#4}\pgfmathsetmacro\xb{#2+#5*(#4+0.13)}%
+  \pgfmathsetmacro\yb{#3-0.11}\pgfmathsetmacro\yh{#3+0.11}%
+  \draw[line width=1.1pt, draw=#1, fill=white] (\xg,\yb) rectangle (\xd,\yh);
+  \foreach \d in {-0.06,0,0.06} {\pgfmathsetmacro\yy{#3+\d}%
+     \draw[line width=0.7pt, draw=#1] (\xa,\yy) -- (\xb,\yy);}}
+% --- Arbres verticaux (I : moteur, II : intermédiaire, III : sortie) ---
+\begin{scope}[on background layer]
+  \draw[arbre, solideA] (0,-0.05)    -- (0,3.48);
+  \draw[arbre, solideB] (2.2,-0.05)  -- (2.2,3.0);
+  \draw[arbre, solideE] (4.25,-0.05) -- (4.25,3.3);
+\end{scope}
+% --- Roues : 1 engrène avec 2 (y = 2,6) ; 3 engrène avec 4 (y = 1,3) ---
+\roue[solideA]{0}{2.6}{0.5}{1}
+\roue[solideB]{2.2}{2.6}{1.7}{-1}
+\roue[solideB]{2.2}{1.3}{0.45}{1}
+\roue[solideE]{4.25}{1.3}{1.6}{-1}
+% --- Liaisons pivot au bâti (axe vertical) ---
+\foreach \x/\c in {0/solideA, 2.2/solideB, 4.25/solideE} {
+  \pic[s1=\c, s2=black, liens=false, rotate=-90] at (\x,0.45) {pivot face};
+  \draw[line width=1pt] (\x-0.25,0.45) -- (\x-0.9,0.45) -- (\x-0.9,-0.38);}
+\batihoriz{-1.25}{4.0}{-0.4}{26}
+\node[font=\small, anchor=north] at (1.4,-0.55) {\textbf{0} bâti};
+% --- Moteur ---
+\draw[line width=1.1pt, fill=white] (-0.55,3.48) rectangle (0.55,4.05);
+\node[font=\small\bfseries] at (0,3.77) {M};
+% --- Entrée et sortie (rotations autour d'axes verticaux) ---
+\draw[fleche, solideA] (-0.42,3.2) arc (180:-30:0.42 and 0.15);
+\node[font=\small, text=solideA, anchor=east, align=right] at (-0.52,3.2) {$\omega_1$\\entrée};
+\draw[fleche, solideE] (3.83,3.05) arc (180:-30:0.42 and 0.15);
+\node[font=\small, text=solideE, anchor=west, align=left] at (4.72,3.05) {$\omega_4$\\sortie};
+% --- Repères des roues ---
+\node[font=\small\bfseries, text=solideA, anchor=east] at (-0.62,2.6) {1};
+\node[font=\small\bfseries, text=solideB, anchor=south] at (3.35,2.78) {2};
+\node[font=\small\bfseries, text=solideB, anchor=east] at (1.62,1.3) {3};
+\node[font=\small\bfseries, text=solideE, anchor=south] at (5.3,1.48) {4};
+\node[font=\small, text=solideB, anchor=west] at (2.35,1.95) {2 et 3 solidaires};
+\end{tikzpicture}
+\end{document}

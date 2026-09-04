@@ -1,0 +1,46 @@
+%% Système pignon-crémaillère : transformation d'une rotation en translation (réversible).
+%% Le pignon (rouge, Z dents) roule sans glisser sur la crémaillère (bleue) :
+%% le cercle primitif de rayon r est tangent à la ligne primitive de la crémaillère.
+%% d = r x theta (theta en radians) et V = r x omega ; le sens de omega (trigonométrique)
+%% correspond bien à une crémaillère qui se déplace vers la droite.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+    dent/.style={line width=1.1pt, line join=round, fill=white},
+    primitif/.style={line width=0.5pt, dash pattern=on 3pt off 2pt, draw=black!60},
+    renvoi/.style={line width=0.4pt, draw=black!60},
+    fleche/.style={-{Stealth[length=5pt]}, line width=0.9pt}]
+\def\rp{1.0}                      % rayon primitif du pignon
+\def\pas{0.5236}                  % pas = 2*pi*r/12 (12 dents)
+\coordinate (O) at (0,1.2);       % centre du pignon
+% --- Crémaillère : corps + dents (une entredent centrée sur le point de contact) ---
+\draw[dent, draw=solideB] (-2.5,-0.5) rectangle (2.5,0.05);
+\foreach \k in {-4,-3,...,4} {\pgfmathsetmacro\xc{(\k+0.5)*\pas}
+  \draw[dent, draw=solideB] (\xc-0.19,0.04) -- (\xc-0.13,0.38) -- (\xc+0.13,0.38) -- (\xc+0.19,0.04);}
+\draw[primitif] (-2.6,0.2) -- (2.6,0.2);
+\node[font=\small, text=black!60, anchor=west] at (2.66,0.2) {ligne primitive};
+% --- Pignon : cercle de pied + 12 dents, une dent pointant vers le contact ---
+\draw[dent, draw=solideA] (O) circle (\rp-0.15);
+\foreach \k in {0,...,11} {\pgfmathsetmacro\a{-90+30*\k}
+  \draw[dent, draw=solideA] ([shift=(\a-9:\rp-0.16)]O) -- ([shift=(\a-6.5:\rp+0.18)]O)
+     -- ([shift=(\a+6.5:\rp+0.18)]O) -- ([shift=(\a+9:\rp-0.16)]O);}
+\draw[primitif] (O) circle (\rp);
+\draw[renvoi] ([shift=(45:\rp)]O) -- (1.35,1.78);
+\node[font=\small, text=black!60, anchor=west] at (1.35,1.78) {cercle primitif};
+% --- Cote du rayon primitif ---
+\draw[fleche, black!70, line width=0.6pt] (O) -- ([shift=(-35:\rp)]O);
+\node[font=\small, anchor=north west, inner sep=1pt] at ([shift=(-35:0.55*\rp)]O) {$r$};
+\fill (O) circle (1.4pt);
+\fill (0,0.2) circle (1.4pt);
+\node[font=\small, anchor=north east, inner sep=2pt] at (0,0.2) {I};
+% --- Mouvements : rotation du pignon (sens trigonométrique) et translation vers la droite ---
+\draw[fleche, solideA] ([shift=(128:1.52)]O) arc (128:190:1.52);
+\node[font=\small, text=solideA, anchor=east, inner sep=3pt] at ([shift=(160:1.52)]O) {$\theta$, $\omega$};
+\draw[fleche, solideB] (0.35,-0.85) -- (2.1,-0.85);
+\node[font=\small, text=solideB, anchor=north] at (1.25,-0.92) {$d$, $V$};
+% --- Étiquettes ---
+\node[font=\small, text=solideA, anchor=south] at (0,2.5) {\textbf{1} pignon ($Z$ dents)};
+\node[font=\small, text=solideB, anchor=north west] at (-2.5,-0.62) {\textbf{2} crémaillère};
+\end{tikzpicture}
+\end{document}

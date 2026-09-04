@@ -13,6 +13,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="./vendor/katex/katex.min.css">
   <link rel="stylesheet" href="./css/app.css">
 </head>
 <body>
@@ -21,6 +22,8 @@
 
   <!-- content.js : généré par tools/build_content.py (window.CONTENT = {...}) -->
   <script src="./content.js"></script>
+  <!-- KaTeX (formules mathématiques), embarqué dans vendor/ pour fonctionner hors connexion -->
+  <script src="./vendor/katex/katex.min.js"></script>
   <script type="module" src="./js/main.js"></script>
   <script>
     // Service worker uniquement en http(s) : rend l'appli utilisable hors-ligne une fois installée.

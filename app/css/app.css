@@ -368,3 +368,10 @@ th { font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-
 .chip { font-size: 0.78rem; background: var(--bg); border: 1px solid var(--border); border-radius: 999px; padding: 2px 8px; color: var(--muted); }
 .annale-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
 .annale-locked { margin: 6px 0 0; }
+
+/* ---- formules (KaTeX) ---- */
+.katex { font-size: 1.05em; }
+.math-display { margin: 8px 0; text-align: center; overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+.math-display .katex-display { margin: 0.3em 0; }
+.choice .math-display, .match-btn .math-display { margin: 2px 0; }
+.math { font-style: italic; font-family: "Times New Roman", Times, serif; }

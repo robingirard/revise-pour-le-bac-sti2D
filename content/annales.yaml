@@ -1,4 +1,65 @@
 # Sujets d'examen officiels (annales) accessibles depuis l'accueil, verrouillés par niveau.
-# Champs : id, titre, session, epreuve (2I2D | physique-chimie et mathématiques), partie, url (PDF du sujet),
-# corrige (URL ou vide), themes (liste), prerequis (liste de {skill, level}), guided (id d'exercice guidé adapté, ou vide).
-annales: []
+# Source : éduscol STI (sujets et corrigés officiels), URL relevées et vérifiées le 4 sept. 2026 (docs/biblio.md).
+# Champs : id, titre, session, epreuve, partie, url (PDF du sujet), corrige (URL ou vide), themes,
+# prerequis (liste de {skill, level}), guided (id d'exercice guidé adapté, ou vide).
+annales:
+  - id: 2i2d-2026-itec-helilock
+    titre: "Bac 2026 — hélistation du centre hospitalier de Sens (système Hélilock)"
+    session: 2026
+    epreuve: "2I2D, spécialité ITEC"
+    partie: "Partie spécifique (1 h, 6 pts) : modélisation cinématique du dispositif d'immobilisation d'un hélicoptère"
+    url: "https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/19313/19313-sujet-bac-sti2d-2026-itec-centre-hospitalier-sens-metropole-reunion-mayotte.pdf"
+    corrige: ""
+    themes: ["schéma cinématique", "liaisons", "analyse de système"]
+    prerequis: [{skill: schema-2d, level: 2}]
+    guided: ""
+  - id: 2i2d-2025-itec-eolienne
+    titre: "Bac 2025 — ferme éolienne de 12 MW (ITEC)"
+    session: 2025
+    epreuve: "2I2D, spécialité ITEC"
+    partie: "Partie spécifique : vitesse en bout de pale (A), système de calage des pales (B), résistance de la liaison moyeu-pale (C)"
+    url: "https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/18209/18209-25-2d2iditecme1.pdf"
+    corrige: "https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/18209/18209-cor-me1-sujet-itec-sti2d-2i2d-correction.pdf"
+    themes: ["cinématique", "vitesse de rotation", "statique", "RDM"]
+    prerequis: [{skill: vitesses, level: 2}]
+    guided: ""
+  - id: 2i2d-2025-ee-eolienne
+    titre: "Bac 2025 — ferme éolienne de 12 MW (EE)"
+    session: 2025
+    epreuve: "2I2D, spécialité EE"
+    partie: "Partie spécifique (1 h 30, 8 pts) : optimiser la production, adapter l'énergie pour l'injection au réseau"
+    url: "https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/18208/18208-25-2d2ideeme1.pdf"
+    corrige: "https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/18208/18208-cor-me1-sujet-ee-sti2d-2i2d-correction.pdf"
+    themes: ["chaîne d'énergie", "rendement", "puissance"]
+    prerequis: [{skill: couple, level: 2}]
+    guided: ""
+  - id: 2i2d-2024-itec-pv-flottant
+    titre: "Bac 2024 (remplacement) — parc photovoltaïque flottant (ITEC)"
+    session: 2024
+    epreuve: "2I2D, spécialité ITEC"
+    partie: "Partie spécifique : fixation des panneaux, matériau du flotteur, liaison du flotteur d'accès (houle)"
+    url: "https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/17412/17412-sujet-bac-sti2d-itec-2024-parc-photovoltaique-flottant.pdf"
+    corrige: "https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/17412/17412-corrige-bac-sti2d-itec-2024-parc-photovoltaique-flottant.pdf"
+    themes: ["liaisons", "degrés de liberté", "matériaux"]
+    prerequis: [{skill: ddl, level: 2}, {skill: contacts, level: 2}]
+    guided: ""
+  - id: 2i2d-2023-itec-velodrome
+    titre: "Bac 2023 — vélodrome Raymond Poulidor (ITEC)"
+    session: 2023
+    epreuve: "2I2D, spécialité ITEC"
+    partie: "Partie spécifique : dévers des virages (A), soutien de la couverture (B), monte-personne (C)"
+    url: "https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/16818/16818-baccalaur-at-technologique-2023-sti2d-innovation-technologique-et-co-conception-133982.pdf"
+    corrige: ""
+    themes: ["cinématique", "accélération", "statique", "RDM"]
+    prerequis: [{skill: acceleration, level: 2}]
+    guided: ""
+  - id: 2i2d-2023-sin-trambus
+    titre: "Bac 2023 (Réunion) — Trambus (SIN)"
+    session: 2023
+    epreuve: "2I2D, spécialité SIN"
+    partie: "Partie spécifique : défaillance de batterie, transmission aux calculateurs, gestion de la charge"
+    url: "https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/16848/16848-baccalaur-at-technologique-2023-s-rie-sti2d-ing-nierie-innovation-et-veloppement-durable-syst.pdf"
+    corrige: "https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/16848/16848-corrige-sti2d-2023-reunion-sin-trambus.pdf"
+    themes: ["chaîne d'information", "capteurs", "transmission"]
+    prerequis: [{skill: mobilites, level: 1}]
+    guided: ""

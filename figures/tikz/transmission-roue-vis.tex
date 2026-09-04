@@ -1,0 +1,48 @@
+%% Système roue et vis sans fin : schéma cinématique en deux vues orthogonales.
+%% (a) vue de face  : la vis (rouge) est vue de profil — rectangle barré d'une croix —
+%%     son axe est horizontal ; la roue (bleue) est vue selon son axe — cercle.
+%% (b) vue de côté  : la vis est vue selon son axe — cercle barré d'une croix ;
+%%     la roue est vue de profil — rectangle.
+%% Les deux axes de rotation sont perpendiculaires. R = w2/w1 = Z1/Z2 (Z1 = nombre de filets).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+    piece/.style={line width=1.4pt, line join=round, line cap=round},
+    axe/.style={line width=0.5pt, dash pattern=on 6pt off 2pt on 1pt off 2pt},
+    fleche/.style={-{Stealth[length=5pt]}, line width=0.8pt}]
+%% ======================= (a) vue de face =======================
+% vis 1 : rectangle barré d'une croix, axe horizontal
+\draw[axe] (-1.75,1.35) -- (1.75,1.35);
+\draw[piece, solideA, fill=white] (-0.65,1.0) rectangle (0.65,1.7);
+\draw[piece, solideA] (-0.65,1.0) -- (0.65,1.7) (-0.65,1.7) -- (0.65,1.0);
+% roue 2 : cercle primitif tangent à la vis, croix centrale (axe perpendiculaire au plan)
+\draw[piece, solideB] (0,0) circle (1.0);
+\draw[piece, solideB] (-0.28,0) -- (0.28,0) (0,-0.28) -- (0,0.28);
+% amorces de denture au contact
+\foreach \a in {74,82,...,106} {\draw[line width=0.7pt, solideB] ([shift=(\a:0.93)]0,0) -- ([shift=(\a:1.07)]0,0);}
+% rotation de la vis (autour de l'axe horizontal) et de la roue (dans le plan)
+\draw[fleche, solideA] (-1.45,0.95) arc (-90:200:0.15 and 0.4);
+\node[font=\small, text=solideA, anchor=north] at (-1.45,0.88) {$\omega_1$};
+\draw[fleche, solideB] ([shift=(-70:1.3)]0,0) arc (-70:-20:1.3)
+  node[pos=1, anchor=west, inner sep=2pt, font=\small, text=solideB] {$\omega_2$};
+\node[font=\small, text=solideA, anchor=south] at (0,1.85) {\textbf{1} vis ($Z_1$ filets)};
+\node[font=\small, text=solideB, anchor=north] at (0,-1.15) {\textbf{2} roue ($Z_2$ dents)};
+\node[font=\small, anchor=north] at (0,-1.75) {(a) vue de face};
+%% ======================= (b) vue de côté =======================
+\begin{scope}[xshift=4.2cm]
+  % roue 2 vue de profil : rectangle, axe horizontal
+  \draw[axe] (-1.3,0) -- (1.3,0);
+  \draw[piece, solideB, fill=white] (-0.35,-1.0) rectangle (0.35,1.0);
+  % vis 1 vue selon son axe : cercle barré d'une croix, tangent à la roue
+  \draw[piece, solideA, fill=white] (0,1.35) circle (0.35);
+  \draw[piece, solideA] (-0.25,1.1) -- (0.25,1.6) (-0.25,1.6) -- (0.25,1.1);
+  \foreach \d in {-0.12,0,0.12} {\draw[line width=0.7pt, solideB] (\d,0.93) -- (\d,1.07);}
+  \node[font=\small\bfseries, text=solideA, anchor=west] at (0.5,1.5) {1};
+  \node[font=\small\bfseries, text=solideB, anchor=west] at (0.5,-0.55) {2};
+  \node[font=\small, anchor=north] at (0,-1.75) {(b) vue de côté};
+\end{scope}
+%% ======================= mention commune =======================
+\node[font=\small, anchor=north] at (2.1,-2.35) {les deux axes de rotation sont \textbf{perpendiculaires}};
+\end{tikzpicture}
+\end{document}

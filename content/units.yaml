@@ -426,3 +426,903 @@ units:
       - 'Non : le schéma doit permettre d''étudier les mouvements, il respecte les positions réelles.'
       - 'Non : les symboles se placent aux centres réels des liaisons.'
       - 'Non : la taille des pièces ne compte pas, la position des liaisons si.'
+- id: transmission-mvt
+  title: Transmettre et transformer le mouvement
+  description: Engrenages, poulies, roue et vis sans fin, pignon-crémaillère, vis-écrou, bielle-manivelle ; couple et rendement.
+  skills:
+  - id: transmission
+    title: Transmettre la rotation
+    icon: ⚙️
+    description: 'Engrenages, trains, roue et vis sans fin, poulies-courroie : rapport, sens, réversibilité.'
+    prerequisites:
+    - mobilites
+    lesson: lessons/transmission.md
+    generators:
+    - gen: engrenage_rapport
+    - gen: train_rapport
+    - gen: roue_vis_rapport
+    - gen: poulies_rapport
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Quel mécanisme de transmission est représenté ?
+
+        {{fig:transmission-engrenage}}'
+      choices:
+      - Un engrenage (deux roues dentées)
+      - Un système poulies-courroie
+      - Une roue et vis sans fin
+      - Un pignon-crémaillère
+      answer: 0
+      feedback:
+      - null
+      - 'Non : des poulies seraient reliées par une courroie (deux segments tangents), pas en contact direct.'
+      - 'Non : la vis sans fin est un cylindre fileté dont l''axe est perpendiculaire à celui de la roue.'
+      - 'Non : une crémaillère est une tige droite dentée, ici les deux pièces sont des roues.'
+      explanation: 'Deux roues dentées en contact direct : un engrenage. Elles tournent en sens opposés.'
+    - type: mcq
+      level: 1
+      prompt: 'Quel mécanisme est représenté ?
+
+        {{fig:transmission-poulies}}'
+      choices:
+      - Un système poulies-courroie
+      - Un engrenage
+      - Un train d'engrenages
+      - Une roue et vis sans fin
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les deux roues ne se touchent pas, elles sont reliées par une courroie.'
+      - 'Non : il n''y a que deux roues et pas de dents en contact.'
+      - 'Non : les deux axes sont parallèles, il n''y a pas de vis.'
+      explanation: 'Deux poulies reliées par une courroie : elles tournent dans le même sens.'
+    - type: mcq
+      level: 1
+      prompt: 'Quel mécanisme est représenté ?
+
+        {{fig:transmission-roue-vis}}'
+      choices:
+      - Une roue et vis sans fin
+      - Un engrenage
+      - Un système vis-écrou
+      - Un système poulies-courroie
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les axes sont perpendiculaires et l''une des pièces est une vis, pas une roue dentée.'
+      - 'Non : le vis-écrou transforme la rotation en translation ; ici la roue tourne.'
+      - 'Non : il n''y a ni courroie ni poulies.'
+      explanation: 'Une vis sans fin entraîne une roue dentée dont l''axe est perpendiculaire : roue et vis sans fin.'
+    - type: mcq
+      level: 1
+      prompt: 'Dans un engrenage à deux roues, les deux roues tournent :'
+      choices:
+      - En sens opposés
+      - Dans le même sens
+      - Cela dépend du nombre de dents
+      - À la même vitesse
+      answer: 0
+      feedback:
+      - null
+      - 'Non : au point de contact, les dents de la roue menante poussent celles de la roue menée dans l''autre sens.'
+      - 'Non : le nombre de dents change la vitesse, pas le sens.'
+      - 'Non : elles n''ont la même vitesse que si elles ont le même nombre de dents.'
+      explanation: Deux roues dentées en contact tournent en sens contraires (pour tourner dans le même sens, il faut une roue intermédiaire).
+    - type: mcq
+      level: 1
+      prompt: 'Dans un système poulies-courroie (courroie droite), les deux poulies tournent :'
+      choices:
+      - Dans le même sens
+      - En sens opposés
+      - Cela dépend du diamètre
+      - L'une tourne, l'autre translate
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la courroie entraîne les deux poulies dans le même sens (sauf si elle est croisée).'
+      - 'Non : le diamètre change la vitesse, pas le sens.'
+      - 'Non : les deux poulies sont en rotation.'
+      explanation: La courroie transmet le mouvement sans inverser le sens de rotation.
+    - type: mcq
+      level: 1
+      prompt: Quel mécanisme est, en général, **irréversible** (la sortie ne peut pas entraîner l'entrée) ?
+      choices:
+      - La roue et vis sans fin
+      - L'engrenage
+      - Le système poulies-courroie
+      - Le train d'engrenages
+      answer: 0
+      feedback:
+      - null
+      - 'Non : un engrenage est réversible, chaque roue peut entraîner l''autre.'
+      - 'Non : les poulies sont réversibles.'
+      - 'Non : un train d''engrenages est réversible.'
+      explanation: 'Avec une vis sans fin, la roue ne peut pas entraîner la vis : le mécanisme se bloque (utile pour un treuil ou un portail).'
+    - type: mcq
+      level: 2
+      prompt: Quel mécanisme permet d'obtenir un **très grand rapport de réduction** dans un faible encombrement, avec des axes perpendiculaires ?
+      choices:
+      - La roue et vis sans fin
+      - Le système poulies-courroie
+      - L'engrenage à deux roues
+      - Le pignon-crémaillère
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les poulies gardent des axes parallèles et un rapport modéré.'
+      - 'Non : un engrenage simple donne un rapport limité par les diamètres.'
+      - 'Non : le pignon-crémaillère transforme la rotation en translation.'
+      explanation: 'Un filet de vis = une dent avancée par tour : R = Z₁ ÷ Z₂ est très petit (1/40, 1/60…).'
+    - type: mcq
+      level: 2
+      prompt: 'Une courroie **crantée** (dentée) par rapport à une courroie lisse :'
+      choices:
+      - Transmet le mouvement sans glissement
+      - Permet un glissement de sécurité
+      - Inverse le sens de rotation
+      - Augmente le rapport de transmission
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la courroie lisse (plate ou trapézoïdale) qui peut glisser, ce qui sert de sécurité.'
+      - 'Non : le sens ne dépend pas du type de courroie.'
+      - 'Non : le rapport ne dépend que des diamètres des poulies.'
+      explanation: 'Les crans empêchent le glissement : la vitesse de la courroie et des deux poulies sont liées exactement.'
+    - type: mcq
+      level: 2
+      prompt: 'Un rapport de transmission R = 0,2 signifie que :'
+      choices:
+      - La sortie tourne 5 fois moins vite que l'entrée
+      - La sortie tourne 5 fois plus vite que l'entrée
+      - La sortie tourne 0,2 fois moins vite
+      - Le couple de sortie est 5 fois plus petit
+      answer: 0
+      feedback:
+      - null
+      - 'Non : R = ω sortie ÷ ω entrée = 0,2 < 1 : la sortie est plus lente.'
+      - 'Non : « 5 fois moins vite » est la bonne formulation (1 ÷ 0,2 = 5).'
+      - 'Non : un réducteur augmente le couple (5 fois, aux pertes près).'
+      explanation: 'R < 1 : réducteur. ω sortie = 0,2 × ω entrée, et le couple est multiplié par 1 ÷ R = 5 (× η).'
+  - id: couple
+    title: Couple, puissance, rendement
+    icon: 🔋
+    description: P = C × ω, conversion tr/min → rad/s, couple de sortie d'un réducteur, rendement global.
+    prerequisites:
+    - transmission
+    lesson: lessons/couple.md
+    generators:
+    - gen: conversion_trmin
+    - gen: puissance_rotation
+    - gen: couple_sortie
+    - gen: rendement_global
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'La puissance mécanique d''un moteur en rotation vaut :'
+      choices:
+      - P = C × ω (couple × vitesse angulaire)
+      - P = C ÷ ω
+      - P = C × N avec N en tr/min
+      - P = F × d
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la puissance est un produit couple × vitesse.'
+      - 'Non : la vitesse doit être en rad/s pour obtenir des watts.'
+      - 'Non : F × d est un travail (ou un moment), pas une puissance.'
+      explanation: P (W) = C (N·m) × ω (rad/s).
+    - type: mcq
+      level: 1
+      prompt: Un élève écrit C s = η × C e × R pour un réducteur (R = 0,05). Où est l'erreur ?
+      choices:
+      - 'Il faut diviser par R : un réducteur augmente le couple'
+      - Il faut enlever η
+      - Il faut mettre R au carré
+      - Il n'y a pas d'erreur
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le rendement est bien un facteur multiplicatif < 1.'
+      - 'Non : R intervient à la puissance 1.'
+      - 'Non : avec R = 0,05 sa formule donnerait un couple 20 fois trop petit au lieu de 20 fois plus grand.'
+      explanation: 'C s = η × C e ÷ R : la puissance se conserve (aux pertes près) et ω s = R × ω e, donc le couple est multiplié par 1 ÷ R.'
+    - type: mcq
+      level: 2
+      prompt: 'Un réducteur reçoit 100 W et en restitue 80 W. Son rendement vaut :'
+      choices:
+      - 0,8 (80 %)
+      - 1,25
+      - 20 W
+      - 0,2
+      answer: 0
+      feedback:
+      - null
+      - 'Non : η = P sortie ÷ P entrée, toujours ≤ 1.'
+      - 'Non : 20 W sont les pertes, pas le rendement (sans unité).'
+      - 'Non : 0,2 est la part perdue ; le rendement est la part restituée.'
+      explanation: η = 80 ÷ 100 = 0,8.
+    - type: mcq
+      level: 2
+      prompt: 'À couple constant, si la vitesse de rotation double, la puissance :'
+      choices:
+      - Double
+      - Est divisée par deux
+      - Ne change pas
+      - Est multipliée par quatre
+      answer: 0
+      feedback:
+      - null
+      - 'Non : P = C × ω est proportionnelle à ω.'
+      - 'Non : la puissance dépend de la vitesse.'
+      - 'Non : P est proportionnelle à ω, pas à ω².'
+      explanation: 'P = C × ω : doubler ω double P.'
+  - id: transformation
+    title: Transformer le mouvement
+    icon: 🔁
+    description: 'Pignon-crémaillère, vis-écrou, bielle-manivelle : lois entrée/sortie et réversibilité.'
+    prerequisites:
+    - transmission
+    lesson: lessons/transformation.md
+    generators:
+    - gen: pignon_cremaillere
+    - gen: vis_ecrou
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Quel mécanisme est représenté ?
+
+        {{fig:transformation-pignon-cremaillere}}'
+      choices:
+      - Un pignon-crémaillère
+      - Un engrenage
+      - Un système vis-écrou
+      - Une roue et vis sans fin
+      answer: 0
+      feedback:
+      - null
+      - 'Non : une des deux pièces est une tige droite dentée (crémaillère), pas une roue.'
+      - 'Non : le vis-écrou n''a pas de dents, il a un filetage hélicoïdal.'
+      - 'Non : la roue et vis sans fin a deux pièces en rotation.'
+      explanation: 'Une roue dentée (pignon) et une tige dentée (crémaillère) : rotation ↔ translation.'
+    - type: mcq
+      level: 1
+      prompt: 'Quel mécanisme est représenté ?
+
+        {{fig:transformation-vis-ecrou}}'
+      choices:
+      - Un système vis-écrou
+      - Un pignon-crémaillère
+      - Une roue et vis sans fin
+      - Un bielle-manivelle
+      answer: 0
+      feedback:
+      - null
+      - 'Non : il n''y a pas de dents mais un filetage.'
+      - 'Non : ici la deuxième pièce (l''écrou) translate, elle ne tourne pas.'
+      - 'Non : pas de bielle articulée.'
+      explanation: 'La vis tourne, l''écrou (bloqué en rotation) avance : liaison hélicoïdale.'
+    - type: mcq
+      level: 1
+      prompt: 'Quel mécanisme est représenté ?
+
+        {{fig:transformation-bielle-manivelle}}'
+      choices:
+      - Un bielle-manivelle
+      - Un pignon-crémaillère
+      - Un système vis-écrou
+      - Un système poulies-courroie
+      answer: 0
+      feedback:
+      - null
+      - 'Non : il n''y a pas de dents.'
+      - 'Non : pas de filetage ; la transformation se fait par une bielle articulée.'
+      - 'Non : pas de courroie.'
+      explanation: Manivelle en rotation, bielle à deux articulations, piston en translation alternative.
+    - type: mcq
+      level: 1
+      prompt: Quel mécanisme est un mécanisme de **transformation** de mouvement (et non de transmission) ?
+      choices:
+      - Le pignon-crémaillère
+      - L'engrenage
+      - Le train d'engrenages
+      - Le système poulies-courroie
+      answer: 0
+      feedback:
+      - null
+      - 'Non : rotation en entrée, rotation en sortie : c''est une transmission.'
+      - 'Non : transmission (rotation → rotation).'
+      - 'Non : transmission (rotation → rotation).'
+      explanation: Transformation = changement de nature du mouvement (rotation ↔ translation).
+    - type: mcq
+      level: 2
+      prompt: 'Le système vis-écrou est en général :'
+      choices:
+      - 'Irréversible : l''écrou ne peut pas faire tourner la vis'
+      - Réversible
+      - 'Irréversible : la vis ne peut pas faire avancer l''écrou'
+      - Sans loi entrée/sortie
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le frottement du filetage empêche en général l''écrou d''entraîner la vis.'
+      - 'Non : c''est bien la vis qui entraîne l''écrou ; c''est l''inverse qui est impossible.'
+      - 'Non : d = p × n est sa loi entrée/sortie.'
+      explanation: 'Irréversibilité utile : un serre-joint ou un cric ne se desserrent pas tout seuls.'
+    - type: mcq
+      level: 2
+      prompt: 'Une manivelle de rayon 40 mm entraîne un piston par une bielle. La **course** du piston vaut :'
+      choices:
+      - 80 mm
+      - 40 mm
+      - 20 mm
+      - 251 mm
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le piston va d''un extrême à l''autre : de +r à −r, soit 2 r.'
+      - 'Non : la course est le déplacement total, 2 × 40 mm.'
+      - 'Non : 2π r est la circonférence du cercle de la manivelle, pas la course.'
+      explanation: Course = 2 × rayon de la manivelle = 80 mm.
+    - type: mcq
+      level: 3
+      prompt: Un pignon-crémaillère et un système vis-écrou déplacent tous deux une charge. Lequel garde la charge en place moteur arrêté, sans frein ?
+      choices:
+      - Le vis-écrou (irréversible)
+      - Le pignon-crémaillère (irréversible)
+      - Les deux
+      - Aucun des deux
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le pignon-crémaillère est réversible : la charge peut faire tourner le pignon.'
+      - 'Non : seul le vis-écrou est irréversible en général.'
+      - 'Non : le vis-écrou bloque la charge.'
+      explanation: L'irréversibilité du vis-écrou évite un frein (cric, vérin à vis).
+    - type: guided
+      level: 3
+      title: 'Motorisation d''un portail coulissant (1) : la chaîne de transmission'
+      intro: 'Un portail coulissant de 4,00 m est entraîné par : un **moteur** (N m = 3 000 tr/min, C m = 0,50 N·m) → un **réducteur roue et vis sans fin** (Z₁ = 1 filet, Z₂ = 40 dents, η₁ = 0,75) → un **engrenage** (roue menante Z₃ = 20, roue menée Z₄ = 25, η₂ = 0,96) → un **pignon-crémaillère** (rayon primitif r = 25 mm), la crémaillère étant fixée sur le portail.
+
+        {{fig:transmission-roue-vis}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Parmi les trois mécanismes de la chaîne, lequel est un mécanisme de **transformation** de mouvement ?'
+        choices:
+        - Le pignon-crémaillère
+        - La roue et vis sans fin
+        - L'engrenage
+        - Aucun
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la roue et vis sans fin reçoit et fournit une rotation : transmission.'
+        - 'Non : rotation → rotation : transmission.'
+        - 'Non : le pignon-crémaillère transforme la rotation du pignon en translation du portail.'
+        explanation: Roue-vis et engrenage transmettent la rotation ; le pignon-crémaillère la transforme en translation.
+      - kind: mcq
+        prompt: '**Étape 2.** Quel maillon rend la chaîne **irréversible** (on ne peut pas ouvrir le portail à la main en faisant tourner le moteur) ?'
+        choices:
+        - La roue et vis sans fin
+        - L'engrenage
+        - Le pignon-crémaillère
+        - Le moteur
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : un engrenage est réversible.'
+        - 'Non : le pignon-crémaillère est réversible.'
+        - 'Non : ce n''est pas un mécanisme de transmission.'
+        explanation: 'La roue ne peut pas entraîner la vis : sécurité anti-effraction gratuite.'
+      - kind: input
+        prompt: '**Étape 3.** Convertir la vitesse du moteur N m = 3 000 tr/min en rad/s (arrondir à l''unité).'
+        answer: '314'
+        numeric: true
+        tolerance: 2
+        unit: rad/s
+        explanation: ω m = 3 000 × 2π ÷ 60 = 100π ≈ 314 rad/s.
+      - kind: mcq
+        prompt: '**Étape 4.** Rapport de la roue et vis sans fin R₁ = Z₁ ÷ Z₂, puis de l''engrenage R₂ = Z₃ ÷ Z₄. Le rapport global R = R₁ × R₂ vaut :'
+        choices:
+        - 0,020
+        - 0,05
+        - '50'
+        - 0,825
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : R₁ = 1/40 = 0,025 et R₂ = 20/25 = 0,8 ; leur produit vaut 0,020.'
+        - 'Non : 50 est l''inverse (1 ÷ 0,020) : la sortie tourne 50 fois moins vite.'
+        - 'Non : les rapports se multiplient, ils ne s''additionnent pas.'
+        explanation: 'R = (1 ÷ 40) × (20 ÷ 25) = 0,025 × 0,80 = 0,020 = 1/50 : réducteur.'
+      - kind: input
+        prompt: '**Étape 5.** Vitesse de rotation du pignon : ω pignon = R × ω m (en rad/s, 2 décimales).'
+        answer: '6.28'
+        numeric: true
+        tolerance: 0.1
+        unit: rad/s
+        explanation: ω pignon = 0,020 × 314 ≈ 6,28 rad/s, soit 1 tr/s = 60 tr/min.
+      - kind: input
+        prompt: '**Étape 6.** Vitesse du portail : V = r × ω pignon avec r = 0,025 m (en m/s, 3 décimales).'
+        answer: '0.157'
+        numeric: true
+        tolerance: 0.005
+        unit: m/s
+        explanation: V = 0,025 × 6,28 ≈ 0,157 m/s (environ 16 cm/s).
+      - kind: mcq
+        prompt: '**Étape 7.** Rendement global de la transmission η = η₁ × η₂, puis couple sur l''arbre du pignon C s = η × C m ÷ R :'
+        choices:
+        - η = 0,72 et C s = 18 N·m
+        - η = 0,72 et C s = 0,0072 N·m
+        - η = 0,855 et C s = 21 N·m
+        - η = 0,72 et C s = 25 N·m
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : tu as multiplié par R au lieu de diviser : le réducteur **augmente** le couple.'
+        - 'Non : η = 0,75 × 0,96 = 0,72 (produit, pas moyenne).'
+        - 'Non : 25 N·m serait le couple sans pertes (0,50 ÷ 0,020) ; il faut multiplier par η = 0,72.'
+        explanation: η = 0,75 × 0,96 = 0,72 ; C s = 0,72 × 0,50 ÷ 0,020 = 18 N·m.
+      - kind: input
+        prompt: '**Étape 8.** Effort exercé par le pignon sur la crémaillère : F = C s ÷ r (en N).'
+        answer: '720'
+        numeric: true
+        tolerance: 10
+        unit: N
+        explanation: 'F = 18 ÷ 0,025 = 720 N. Vérification : P m = 0,5 × 314 = 157 W ; P s = F × V = 720 × 0,157 = 113 W ; 113 ÷ 157 = 0,72 = η.'
+- id: cinematique
+  title: Mouvements et cinématique
+  description: Trajectoires, translation et rotation, vitesses, accélération, équations du mouvement.
+  skills:
+  - id: mouvements
+    title: Décrire un mouvement
+    icon: 🛤️
+    description: Référentiel, trajectoires, translation, rotation, mouvement plan.
+    prerequisites:
+    - mobilites
+    lesson: lessons/mouvements.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Les trajectoires de tous les points de la pièce sont des segments parallèles. Le mouvement est :
+
+        {{fig:cinematique-translations}}'
+      choices:
+      - Une translation rectiligne
+      - Une rotation
+      - Une translation circulaire
+      - Un mouvement plan
+      answer: 0
+      feedback:
+      - null
+      - 'Non : en rotation les points décrivent des cercles concentriques.'
+      - 'Non : en translation circulaire, les trajectoires sont des arcs de cercle.'
+      - 'Non : un mouvement plan combine translation et rotation ; ici la pièce garde son orientation.'
+      explanation: Translation = tous les points ont la même trajectoire ; rectiligne = des segments de droite.
+    - type: mcq
+      level: 1
+      prompt: 'Une nacelle de grande roue reste toujours horizontale pendant que la roue tourne. Par rapport au sol, la nacelle est en :'
+      choices:
+      - Translation circulaire
+      - Rotation
+      - Translation rectiligne
+      - Mouvement plan
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la nacelle ne tourne pas sur elle-même, elle garde son orientation : ce n''est pas une rotation.'
+      - 'Non : ses points décrivent des cercles, pas des droites.'
+      - 'Non : sans rotation propre, c''est une translation (circulaire).'
+      explanation: 'Tous les points de la nacelle décrivent des cercles identiques mais non concentriques : translation circulaire.'
+    - type: mcq
+      level: 1
+      prompt: 'Un solide est en **rotation** par rapport à un solide de référence si :
+
+        {{fig:cinematique-rotation}}'
+      choices:
+      - Tous ses points décrivent des cercles concentriques centrés sur l'axe
+      - Tous ses points ont la même trajectoire
+      - Un seul de ses points tourne
+      - Ses points décrivent des segments de droite
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la définition d''une translation.'
+      - 'Non : tous les points tournent autour de l''axe (sauf ceux de l''axe).'
+      - 'Non : ce serait une translation rectiligne.'
+      explanation: 'Rotation : cercles concentriques, vitesse V = ω × R croissante avec la distance à l''axe.'
+    - type: mcq
+      level: 1
+      prompt: 'La notation T(M, avion/sol) désigne :
+
+        {{fig:cinematique-trajectoire}}'
+      choices:
+      - La trajectoire du point M de l'avion par rapport au sol
+      - La vitesse du point M
+      - La trajectoire du sol vue de l'avion
+      - Le temps de vol
+      answer: 0
+      feedback:
+      - null
+      - 'Non : T signifie trajectoire ; la vitesse se note V.'
+      - 'Non : l''ordre est M appartenant à l''avion, dans le mouvement de l''avion par rapport au sol.'
+      - 'Non : c''est une courbe, pas une durée.'
+      explanation: 'T(M, S/S0) : trajectoire du point M de S dans le mouvement de S par rapport à S0.'
+    - type: mcq
+      level: 2
+      prompt: 'Une trajectoire dépend :'
+      choices:
+      - Du référentiel choisi
+      - Uniquement du point étudié
+      - De la vitesse du mobile
+      - 'De rien : elle est absolue'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le même point a des trajectoires différentes selon le solide de référence.'
+      - 'Non : la vitesse ne change pas la forme de la trajectoire.'
+      - 'Non : la valve d''une roue de vélo décrit un cercle par rapport au cadre et une cycloïde par rapport au sol.'
+      explanation: Toujours préciser par rapport à quoi on décrit le mouvement.
+    - type: mcq
+      level: 2
+      prompt: 'Dans un bielle-manivelle (bâti 0, manivelle 1, bielle 2, piston 3), quel est le mouvement de la **bielle 2** par rapport au bâti ?
+
+        {{fig:mecanisme-bielle-manivelle-schema}}'
+      choices:
+      - Un mouvement plan (translation + rotation)
+      - Une rotation autour de (O, z)
+      - Une translation rectiligne
+      - Une translation circulaire
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la manivelle qui est en rotation pure.'
+      - 'Non : c''est le piston qui est en translation rectiligne.'
+      - 'Non : la bielle change d''orientation, ce n''est pas une translation.'
+      explanation: 'Un bout de la bielle tourne avec A, l''autre translate avec B : mouvement plan.'
+    - type: mcq
+      level: 2
+      prompt: 'Une télécabine se déplace le long d''un câble qui décrit une courbe, en restant toujours verticale. Son mouvement est une :'
+      choices:
+      - Translation curviligne
+      - Rotation
+      - Translation rectiligne
+      - Translation circulaire
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la cabine garde son orientation, elle ne tourne pas.'
+      - 'Non : la trajectoire n''est pas une droite.'
+      - 'Non : la trajectoire n''est pas un cercle.'
+      explanation: 'Trajectoires identiques (courbes quelconques) : translation curviligne.'
+    - type: mcq
+      level: 3
+      prompt: 'Un point d''une hélice est situé deux fois plus loin de l''axe qu''un autre. Sa vitesse est :'
+      choices:
+      - Deux fois plus grande
+      - La même
+      - Deux fois plus petite
+      - Quatre fois plus grande
+      answer: 0
+      feedback:
+      - null
+      - 'Non : V = ω × R : à même ω, la vitesse est proportionnelle au rayon.'
+      - 'Non : plus on s''éloigne de l''axe, plus on va vite.'
+      - 'Non : la vitesse est proportionnelle à R, pas à R².'
+      explanation: 'V = ω × R : rayon double, vitesse double (même vitesse angulaire pour tous les points).'
+  - id: vitesses
+    title: Les vitesses
+    icon: ⏱️
+    description: Vitesse linéaire et angulaire, conversions, champ des vitesses, composition.
+    prerequisites:
+    - mouvements
+    lesson: lessons/vitesses.md
+    generators:
+    - gen: vitesse_moyenne
+    - gen: vitesse_point
+    - gen: composition_vitesses
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Pour un solide en **translation**, les vecteurs vitesse de ses différents points sont :
+
+        {{fig:cinematique-champ-translation}}'
+      choices:
+      - Tous identiques (même direction, même sens, même valeur)
+      - Proportionnels à la distance à un axe
+      - Tangents à un cercle
+      - Nuls
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est le cas de la rotation (V = ω R).'
+      - 'Non : en translation rectiligne ils sont tous parallèles à la trajectoire.'
+      - 'Non : le solide bouge.'
+      explanation: En translation, tous les points ont la même trajectoire, donc le même vecteur vitesse.
+    - type: mcq
+      level: 1
+      prompt: 'Pour un solide en **rotation**, la vitesse d''un point :
+
+        {{fig:cinematique-champ-rotation}}'
+      choices:
+      - 'Est proportionnelle à sa distance à l''axe : V = ω × R'
+      - Est la même pour tous les points
+      - Est proportionnelle au carré de R
+      - Ne dépend pas de ω
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les points de l''axe sont immobiles, ceux du bord vont vite.'
+      - 'Non : V est proportionnelle à R, pas à R².'
+      - 'Non : V = ω × R dépend de ω.'
+      explanation: 'Le champ des vitesses est triangulaire : nul sur l''axe, maximal à la périphérie.'
+    - type: mcq
+      level: 1
+      prompt: 'Le vecteur vitesse d''un point est toujours :'
+      choices:
+      - Tangent à sa trajectoire
+      - Perpendiculaire à sa trajectoire
+      - Dirigé vers le centre
+      - Horizontal
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la vitesse suit la trajectoire ; c''est l''accélération normale qui est perpendiculaire.'
+      - 'Non : c''est l''accélération normale qui pointe vers le centre.'
+      - 'Non : la direction dépend de la trajectoire.'
+      explanation: 'Le vecteur vitesse est la dérivée du vecteur position : il est tangent à la trajectoire.'
+    - type: mcq
+      level: 2
+      prompt: 'La vitesse **instantanée** est :'
+      choices:
+      - La dérivée de la position par rapport au temps
+      - La distance totale divisée par la durée totale
+      - Toujours égale à la vitesse moyenne
+      - La position divisée par le temps
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la vitesse moyenne.'
+      - 'Non : elles ne coïncident que pour un mouvement uniforme.'
+      - 'Non : il faut dériver, pas diviser.'
+      explanation: Vitesse instantanée = valeur du compteur à un instant donné = dérivée de x(t).
+    - type: mcq
+      level: 2
+      prompt: 'Un point a pour composantes de vitesse x'' = 3 m/s et y'' = 4 m/s. La norme de sa vitesse vaut :'
+      choices:
+      - 5 m/s
+      - 7 m/s
+      - 12 m/s
+      - 3,5 m/s
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les composantes ne s''additionnent pas ; on utilise le théorème de Pythagore.'
+      - 'Non : ce serait le produit des composantes.'
+      - 'Non : ce serait la moyenne.'
+      explanation: ‖v‖ = √(3² + 4²) = √25 = 5 m/s.
+  - id: acceleration
+    title: Accélération et équations
+    icon: 📈
+    description: Mouvements uniformes et uniformément variés, accélération normale, lecture des courbes.
+    prerequisites:
+    - vitesses
+    lesson: lessons/acceleration.md
+    generators:
+    - gen: mruv
+    - gen: acceleration_normale
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Sur un graphique, la vitesse v(t) est une droite **décroissante** qui coupe l''axe des temps. Le mouvement est :
+
+        {{fig:cinematique-allures-freine}}'
+      choices:
+      - Uniformément freiné (décéléré)
+      - Uniforme
+      - Uniformément accéléré
+      - Arrêté
+      answer: 0
+      feedback:
+      - null
+      - 'Non : en mouvement uniforme, v(t) serait une droite horizontale.'
+      - 'Non : accéléré, v(t) serait croissante.'
+      - 'Non : le mobile ne s''arrête qu''au moment où v(t) coupe l''axe.'
+      explanation: 'Vitesse qui diminue linéairement : accélération constante négative, mouvement uniformément freiné.'
+    - type: mcq
+      level: 1
+      prompt: 'Quelle allure de courbes correspond à un mouvement **uniforme** ?
+
+        {{fig:cinematique-allures-uniforme}}'
+      choices:
+      - 'Position : droite croissante ; vitesse : constante ; accélération nulle'
+      - 'Position : parabole ; vitesse : droite croissante'
+      - Vitesse nulle
+      - Accélération constante non nulle
+      answer: 0
+      feedback:
+      - null
+      - 'Non : une parabole de position correspond à un mouvement uniformément varié.'
+      - 'Non : uniforme ne veut pas dire immobile : la vitesse est constante, pas nulle.'
+      - 'Non : une accélération non nulle change la vitesse.'
+      explanation: 'Uniforme : a = 0, v = v₀, x(t) = v₀ t + x₀ (droite).'
+    - type: mcq
+      level: 1
+      prompt: 'Un mouvement dont l''accélération est **constante et non nulle** est dit :'
+      choices:
+      - Uniformément varié
+      - Uniforme
+      - Circulaire
+      - Curviligne
+      answer: 0
+      feedback:
+      - null
+      - 'Non : uniforme = accélération nulle.'
+      - 'Non : circulaire décrit la trajectoire, pas la variation de vitesse.'
+      - 'Non : curviligne décrit la forme de la trajectoire.'
+      explanation: 'Accéléré ou freiné, mais toujours avec la même accélération : uniformément varié.'
+    - type: mcq
+      level: 2
+      prompt: 'Un point tourne à vitesse **constante** sur un cercle. Son vecteur accélération :
+
+        {{fig:cinematique-acceleration}}'
+      choices:
+      - Est dirigé vers le centre (a n = v² ÷ r), sans composante tangentielle
+      - Est nul car la vitesse est constante
+      - Est tangent à la trajectoire
+      - Est dirigé vers l'extérieur
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la **direction** de la vitesse change en permanence, il y a une accélération normale.'
+      - 'Non : la composante tangentielle a t = dV/dt est nulle ; il reste a n.'
+      - 'Non : l''accélération normale est centripète (vers le centre).'
+      explanation: 'Vitesse constante en norme : a t = 0 mais a n = v²/r vers le centre.'
+    - type: mcq
+      level: 2
+      prompt: 'Sur le chronogramme, pendant la phase 2 (de 20 s à 60 s), le mouvement est :
+
+        {{fig:cinematique-chronogrammes}}'
+      choices:
+      - Uniforme (vitesse constante, accélération nulle)
+      - Uniformément accéléré
+      - Uniformément freiné
+      - À l'arrêt
+      answer: 0
+      feedback:
+      - null
+      - 'Non : v(t) est horizontale, a = 0.'
+      - 'Non : a = 0 entre 20 et 60 s.'
+      - 'Non : la vitesse vaut 20 m/s, le mobile avance.'
+      explanation: Palier de vitesse = accélération nulle = mouvement uniforme.
+    - type: mcq
+      level: 3
+      prompt: 'Sur le chronogramme, quelle distance est parcourue pendant la phase 1 (0 à 20 s, a = 1 m/s², départ arrêté) ?
+
+        {{fig:cinematique-chronogrammes}}'
+      choices:
+      - 200 m
+      - 400 m
+      - 20 m
+      - 40 m
+      answer: 0
+      feedback:
+      - null
+      - 'Non : tu as oublié le ½ : x = ½ a t² = 0,5 × 1 × 20² = 200 m.'
+      - 'Non : 20 m/s est la vitesse atteinte, pas la distance.'
+      - 'Non : x = ½ × 1 × 400 = 200 m.'
+      explanation: x = ½ a t² = 0,5 × 1 × 20² = 200 m (aire du triangle sous v(t)).
+    - type: mcq
+      level: 3
+      prompt: 'Un mobile freine de 20 m/s à 0 en 4 s avec une décélération constante. Son accélération vaut :'
+      choices:
+      - −5 m/s²
+      - 5 m/s²
+      - −80 m/s²
+      - −0,2 m/s²
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la vitesse diminue, l''accélération est négative (freinage).'
+      - 'Non : a = Δv ÷ Δt = −20 ÷ 4, pas −20 × 4.'
+      - 'Non : a = −20 ÷ 4 = −5 m/s².'
+      explanation: a = (v − v₀) ÷ t = (0 − 20) ÷ 4 = −5 m/s².
+    - type: guided
+      level: 3
+      title: 'Motorisation d''un portail coulissant (2) : le mouvement du portail'
+      intro: 'Suite de l''étude du portail coulissant : la chaîne de transmission donne au portail une vitesse nominale **V = 0,157 m/s**. Le cycle d''ouverture comporte une phase d''**accélération** de 1,0 s (départ arrêté, accélération constante), une phase à **vitesse constante**, puis une phase de **freinage** de 1,0 s, symétrique. La course totale est de **4,00 m**.
+
+        {{fig:cinematique-chronogrammes}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Pendant la phase d''accélération (0 à 1,0 s), le mouvement du portail est :'
+        choices:
+        - Uniformément accéléré (a constante > 0)
+        - Uniforme
+        - Uniformément freiné
+        - Circulaire
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la vitesse passe de 0 à 0,157 m/s, elle change.'
+        - 'Non : la vitesse augmente.'
+        - 'Non : le portail coulisse en ligne droite.'
+        explanation: 'Vitesse croissante avec accélération constante : uniformément accéléré.'
+      - kind: input
+        prompt: '**Étape 2.** Accélération a₀ = V ÷ t₁ avec V = 0,157 m/s et t₁ = 1,0 s (en m/s², 3 décimales).'
+        answer: '0.157'
+        numeric: true
+        tolerance: 0.005
+        unit: m/s²
+        explanation: a₀ = 0,157 ÷ 1,0 = 0,157 m/s².
+      - kind: mcq
+        prompt: '**Étape 3.** Distance parcourue pendant cette phase : x(t₁) = ½ a₀ t₁² ='
+        choices:
+        - 0,079 m (≈ 8 cm)
+        - 0,157 m
+        - 0,314 m
+        - 0,0785 m²
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : tu as oublié le ½ : 0,5 × 0,157 × 1² = 0,0785 m.'
+        - 'Non : c''est le double ; il y a un facteur ½.'
+        - 'Non : une distance est en mètres, pas en m².'
+        explanation: x = 0,5 × 0,157 × 1,0² = 0,0785 m ≈ 7,9 cm.
+      - kind: input
+        prompt: '**Étape 4.** Les phases d''accélération et de freinage sont symétriques. Quelle distance reste-t-il à parcourir à vitesse constante ? (4,00 m − 2 × 0,0785 m, en m, 2 décimales)'
+        answer: '3.84'
+        numeric: true
+        tolerance: 0.02
+        unit: m
+        explanation: 4,00 − 0,157 = 3,843 m.
+      - kind: input
+        prompt: '**Étape 5.** Durée de la phase à vitesse constante : 3,84 m ÷ 0,157 m/s (en s, 1 décimale).'
+        answer: '24.5'
+        numeric: true
+        tolerance: 0.3
+        unit: s
+        explanation: 3,843 ÷ 0,157 ≈ 24,5 s.
+      - kind: mcq
+        prompt: '**Étape 6.** Durée totale d''ouverture du portail :'
+        choices:
+        - 26,5 s
+        - 24,5 s
+        - 25,5 s
+        - 28,5 s
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : il faut ajouter les deux phases transitoires de 1,0 s chacune.'
+        - 'Non : 25,5 s serait la durée d''un mouvement uniforme sur toute la course (4 ÷ 0,157), sans les phases transitoires.'
+        - 'Non : 1,0 + 24,5 + 1,0 = 26,5 s.'
+        explanation: 1,0 + 24,5 + 1,0 = 26,5 s.
+      - kind: mcq
+        prompt: '**Étape 7.** Quelle est l''allure de v(t) sur le cycle complet ?'
+        choices:
+        - 'Un trapèze : montée linéaire, palier, descente linéaire'
+        - Une parabole
+        - Une droite horizontale
+        - Un créneau (saut brusque à 0,157 m/s)
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la parabole est l''allure de x(t) pendant les phases variées.'
+        - 'Non : la vitesse n''est constante que pendant la phase 2.'
+        - 'Non : la vitesse ne peut pas sauter : elle augmente linéairement pendant 1,0 s.'
+        explanation: a(t) en créneaux (+0,157 ; 0 ; −0,157), v(t) trapézoïdale, x(t) parabole puis droite puis parabole qui s'aplatit.
+      - kind: input
+        prompt: '**Étape 8.** Loi entrée/sortie : x = r × R × θ m avec r = 0,025 m et R = 0,020. Combien de tours fait le moteur pour ouvrir le portail de 4,00 m ? (θ m = 4,00 ÷ (0,025 × 0,020) rad, puis ÷ 2π ; arrondir à la dizaine)'
+        answer: '1270'
+        numeric: true
+        tolerance: 15
+        unit: tours
+        explanation: θ m = 4,00 ÷ 0,0005 = 8 000 rad ≈ 1 273 tours.

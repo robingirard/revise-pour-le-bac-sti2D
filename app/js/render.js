@@ -1,8 +1,13 @@
 // render.js — texte riche et Markdown restreint → HTML (voir docs/SPEC.md §4-§5)
-// Tout le texte est échappé ; seules les figures SVG (de confiance, générées par le build) sont insérées telles quelles.
+// Tout le texte est échappé ; seules les figures SVG (de confiance, générées par le build) et le HTML produit par KaTeX
+// (qui échappe lui-même la source) sont insérés tels quels.
 
 const FIG_RE = /\{\{fig:([\w.-]+)\}\}/g;
 const FIG_ONLY_RE = /^\s*\{\{fig:([\w.-]+)\}\}\s*$/;
+// Jetons traités avant l'échappement : figure, maths affichées ($$…$$ ou \[…\]), maths en ligne ($…$ ou \(…\)).
+// Un « $ » isolé (sans fermeture sur la même ligne) reste un simple caractère.
+const TOKEN_RE = /(\{\{fig:[\w.-]+\}\})|(\$\$[\s\S]+?\$\$)|(\\\[[\s\S]+?\\\])|(\$[^$\n]+?\$)|(\\\([^\n]+?\\\))/g;
+const MATH_ONLY_RE = /^\s*(\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\])\s*$/;
 const EMOJI_RE = /\{\{emoji:([^{}<>&]{1,16})\}\}/g;          // appliqué sur le texte déjà échappé
 const EMOJI_ONLY_RE = /^\s*\{\{emoji:[^{}<>&]{1,16}\}\}\s*$/;
 
@@ -24,21 +29,45 @@ function inline(escaped, { emojiBlock = false } = {}) {
     .replace(EMOJI_RE, `<span class="${emojiClass}">$1</span>`)
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/(^|[^*\w])\*(\S(?:[^*\n]*?\S)?)\*(?!\w)/g, '$1<em>$2</em>')
-    .replace(/\$([^$\n]+?)\$/g, '<span class="math">$1</span>')
     .replace(/\n/g, '<br>');
 }
 
-/** Texte riche : **gras**, *italique*, \n, {{fig:ID}}, {{emoji:🚪}}, $math$. */
+/** Formule LaTeX → HTML KaTeX (si la bibliothèque est chargée), sinon texte en italique. Jamais d'HTML brut. */
+export function mathHtml(src, { display = false } = {}) {
+  const katex = globalThis.katex;
+  let html;
+  if (katex && typeof katex.renderToString === 'function') {
+    try {
+      html = katex.renderToString(src, { throwOnError: false, displayMode: display, output: 'html', strict: 'ignore' });
+    } catch (err) {
+      html = `<span class="math">${escapeHtml(src)}</span>`;
+    }
+  } else {
+    html = `<span class="math">${escapeHtml(src)}</span>`;
+  }
+  return display ? `<div class="math-display">${html}</div>` : html;
+}
+
+/** Texte riche : **gras**, *italique*, \n, {{fig:ID}}, {{emoji:🚪}}, $math$, $$maths affichées$$. */
 export function renderRich(text, figures = {}) {
   if (text == null) return '';
   const str = String(text);
   const block = FIG_ONLY_RE.test(str);
   const emojiBlock = EMOJI_ONLY_RE.test(str); // un pictogramme seul : affiché en grand, centré
-  const parts = str.split(FIG_RE); // [texte, id, texte, id, …]
   let out = '';
-  for (let i = 0; i < parts.length; i++) {
-    out += i % 2 === 0 ? inline(escapeHtml(parts[i]), { emojiBlock }) : figureHtml(parts[i], figures, { block });
+  let last = 0;
+  TOKEN_RE.lastIndex = 0;
+  for (let m; (m = TOKEN_RE.exec(str));) {
+    out += inline(escapeHtml(str.slice(last, m.index)), { emojiBlock });
+    const [tok, fig, dd, bracket, d, paren] = m;
+    if (fig) out += figureHtml(tok.slice(6, -2), figures, { block });
+    else if (dd) out += mathHtml(dd.slice(2, -2), { display: true });
+    else if (bracket) out += mathHtml(bracket.slice(2, -2), { display: true });
+    else if (d) out += mathHtml(d.slice(1, -1));
+    else if (paren) out += mathHtml(paren.slice(2, -2));
+    last = m.index + tok.length;
   }
+  out += inline(escapeHtml(str.slice(last)), { emojiBlock });
   return out;
 }
 
@@ -81,6 +110,7 @@ export function renderLesson(md, figures = {}) {
     }
     const fig = FIG_ONLY_RE.exec(t);
     if (fig) { flushAll(); out.push(figureHtml(fig[1], figures, { block: true })); continue; }
+    if (MATH_ONLY_RE.test(t)) { flushAll(); out.push(renderRich(t, figures)); continue; }
     if (/^[-*]\s+/.test(t)) {
       flushPara(); flushTable();
       if (olist) flushList();

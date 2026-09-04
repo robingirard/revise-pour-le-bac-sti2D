@@ -56,3 +56,64 @@ test('pictogramme {{emoji:…}} : en ligne, ou en bloc s\'il est seul', () => {
   assert.equal(renderRich('{{emoji:🚪}}'), '<span class="emoji-big emoji-block">🚪</span>');
   assert.equal(renderRich('{{emoji:<b>}}'), '{{emoji:&lt;b&gt;}}'); // pas de HTML : non substitué, échappé
 });
+
+// ---- formules mathématiques (KaTeX embarqué dans vendor/, chargé ici dans un bac à sable) ----
+import { readFileSync } from 'node:fs';
+import vm from 'node:vm';
+import { mathHtml } from '../js/render.js';
+
+function loadKatex() {
+  const code = readFileSync(new URL('../vendor/katex/katex.min.js', import.meta.url), 'utf8');
+  const sandbox = { self: {} };
+  vm.runInNewContext(code, sandbox); // UMD : sans `module`/`exports`, KaTeX s'accroche à `self.katex`
+  return sandbox.self.katex;
+}
+
+test('maths sans KaTeX : repli en italique, échappé', () => {
+  delete globalThis.katex;
+  assert.equal(renderRich('a $x<1$ b'), 'a <span class="math">x&lt;1</span> b');
+  assert.equal(renderRich('$$E = m c^2$$'), '<div class="math-display"><span class="math">E = m c^2</span></div>');
+});
+
+test('maths avec KaTeX : en ligne, affichée, \\( \\), \\[ \\]', () => {
+  globalThis.katex = loadKatex();
+  try {
+    const inline = renderRich('R = $\\frac{Z_1}{Z_2}$ ok');
+    assert.match(inline, /^R = <span class="katex">.*<\/span> ok$/s);
+    assert.doesNotMatch(inline, /katex-display/);
+    const display = renderRich('$$x(t) = \\tfrac12 a t^2 + v_0 t$$');
+    assert.match(display, /^<div class="math-display"><span class="katex-display">/);
+    assert.match(renderRich('\\(a^2\\) et \\[b^2\\]'), /katex".*katex-display/s);
+    assert.match(renderRich('Voir $\\omega = 2\\pi f$ sur {{fig:pivot}}', figures), /class="katex".*fig-inline/s);
+    assert.match(renderRich('**gras** et $x$'), /<strong>gras<\/strong> et <span class="katex">/);
+  } finally {
+    delete globalThis.katex;
+  }
+});
+
+test('maths : un dollar isolé reste un dollar, HTML non exécuté dans une formule', () => {
+  globalThis.katex = loadKatex();
+  try {
+    assert.equal(renderRich('prix : 5 $ la pièce'), 'prix : 5 $ la pièce');
+    const bad = renderRich('$<img src=x onerror=alert(1)>$');
+    assert.doesNotMatch(bad, /<img/);
+    assert.match(bad, /&lt;img|class="katex/);
+    const err = mathHtml('\\frac{'); // erreur de syntaxe : throwOnError:false → rendu d'erreur, pas d'exception
+    assert.match(err, /katex-error|class="math"/);
+  } finally {
+    delete globalThis.katex;
+  }
+});
+
+test('leçon : maths dans une cellule de tableau, une liste et une ligne $$…$$ seule', () => {
+  globalThis.katex = loadKatex();
+  try {
+    const html = renderLesson('| Grandeur | Formule |\n|---|---|\n| Puissance | $P = C \\omega$ |\n\n- vitesse $v = R\\omega$\n\n$$\\eta = \\frac{P_s}{P_e}$$', figures);
+    assert.match(html, /<td><span class="katex">/);
+    assert.match(html, /<li>vitesse <span class="katex">/);
+    assert.match(html, /<div class="math-display"><span class="katex-display">/);
+    assert.doesNotMatch(html, /<p><div/); // la formule seule n'est pas dans un paragraphe
+  } finally {
+    delete globalThis.katex;
+  }
+});

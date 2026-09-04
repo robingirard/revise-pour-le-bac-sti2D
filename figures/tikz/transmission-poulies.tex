@@ -1,0 +1,65 @@
+%% Système poulies-courroie : schéma cinématique.
+%% Poulie 1 motrice (petite, rouge, diamètre d1) à gauche, poulie 2 réceptrice
+%% (grande, bleue, diamètre d2) à droite ; courroie (orange) tangente aux deux poulies.
+%% Les deux poulies tournent dans le MÊME sens.  R = w2/w1 = d1/d2.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{backgrounds}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+    poulie/.style={line width=1.4pt, line cap=round},
+    arbre/.style={line width=1.1pt, line cap=round},
+    axe/.style={line width=0.5pt, dash pattern=on 6pt off 2pt on 1pt off 2pt},
+    fleche/.style={-{Stealth[length=5pt]}, line width=0.8pt},
+    cote/.style={line width=0.6pt, {Stealth[length=4pt]}-{Stealth[length=4pt]}},
+    attache/.style={line width=0.4pt, draw=black!40}]
+% --- Macro locale : ligne de bâti horizontale hachurée ---
+\newcommand\batihoriz[4]{% #1 = x début, #2 = x fin, #3 = y, #4 = nombre de hachures
+  \draw[line width=0.8pt] (#1,#3) -- (#2,#3);
+  \foreach \i in {1,...,#4} {\pgfmathsetmacro\xx{#1+(#2-#1)*\i/#4}%
+    \draw[line width=0.5pt] (\xx,#3) -- (\xx-0.14,#3-0.14);}}
+% --- Géométrie ---
+\def\ra{0.65}\def\rb{1.25}\def\ea{3.4}
+\coordinate (O1) at (0,0);
+\coordinate (O2) at (\ea,0);
+\pgfmathsetmacro\al{asin((\rb-\ra)/\ea)}      % inclinaison des brins de courroie
+\pgfmathsetmacro\ah{90+\al}\pgfmathsetmacro\ab{-90-\al}
+% --- Courroie : deux brins tangents + enroulement sur chaque poulie ---
+\draw[line width=1.6pt, solideD, line join=round]
+  ([shift=(\ah:\ra)]O1) -- ([shift=(\ah:\rb)]O2)
+  arc (\ah:\ab:\rb) -- ([shift=(\ab:\ra)]O1) arc (\ab:\ah-360:\ra);
+% --- Axe des arbres et liaisons au bâti ---
+\draw[axe] (-1.9,0) -- (5.5,0);
+\begin{scope}[on background layer]
+  \draw[arbre] (O1) -- (0,-2.15);
+  \draw[arbre] (O2) -- (\ea,-2.15);
+\end{scope}
+\batihoriz{-0.75}{4.2}{-2.15}{25}
+\node[font=\small, anchor=north] at (1.7,-2.35) {\textbf{0} bâti};
+% --- Poulies (diamètres primitifs) ---
+\draw[poulie, solideA] (O1) circle (\ra);
+\draw[poulie, solideB] (O2) circle (\rb);
+\pic[s1=solideA, s2=black, liens=false] at (O1) {pivot bout};
+\pic[s1=solideB, s2=black, liens=false] at (O2) {pivot bout};
+% --- Cotes des diamètres ---
+\draw[attache] (0,\ra) -- (-1.15,\ra) (0,-\ra) -- (-1.15,-\ra);
+\draw[cote] (-1.0,-\ra) -- (-1.0,\ra);
+\node[font=\small, anchor=east, inner sep=2pt] at (-1.05,0) {$d_1$};
+\draw[attache] (\ea,\rb) -- (5.7,\rb) (\ea,-\rb) -- (5.7,-\rb);
+\draw[cote] (5.55,-\rb) -- (5.55,\rb);
+\node[font=\small, anchor=west, inner sep=2pt] at (5.6,0) {$d_2$};
+% --- Vitesse de la courroie (brin supérieur) ---
+\draw[fleche, solideD] (0.6,1.05) -- (2.4,1.35);
+\node[font=\small, text=solideD, anchor=south east] at (2.4,1.35) {$V$ courroie};
+% --- Sens de rotation : identiques ---
+\draw[fleche, solideA] ([shift=(-175:0.95)]O1) arc (-175:-105:0.95);
+\node[font=\small, text=solideA, anchor=north east] at (-0.55,-0.95) {$\omega_1$};
+\draw[fleche, solideB] ([shift=(-85:1.55)]O2) arc (-85:-25:1.55);
+\node[font=\small, text=solideB, anchor=west] at (4.9,-0.74) {$\omega_2$};
+% --- Repères ---
+\node[font=\small\bfseries, text=solideA, anchor=south] at (0,0.78) {1};
+\node[font=\small\bfseries, text=solideB, anchor=south] at (\ea,1.38) {2};
+\node[font=\small, text=solideA, anchor=south] at (0,1.55) {motrice};
+\node[font=\small, text=solideB, anchor=south] at (\ea,1.9) {réceptrice};
+\end{tikzpicture}
+\end{document}

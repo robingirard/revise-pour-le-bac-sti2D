@@ -14,7 +14,17 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]          # dossier STI2D/
-OUT = ROOT / "scans" / "pages"
+OUT = ROOT / "scans" / "pages"                      # manuel I2D / 2I2D
+OUT_PCM = ROOT / "scans" / "pages-pcm"              # manuel physique-chimie et mathématiques
+JOBS_PCM = [
+    ("scan_physique_maths/scan_rgirard_2026-09-04-13-56-27.pdf", [(i, 12 + 2 * (i - 1)) for i in range(1, 16)]),
+    ("scan_physique_maths/scan_rgirard_2026-09-04-14-00-59.pdf", [(i, 42 + 2 * (i - 1)) for i in range(1, 8)]),
+    ("scan_physique_maths/scan_rgirard_2026-09-04-14-02-22.pdf", [(i, 56 + 2 * (i - 1)) for i in range(1, 17)]),
+    ("scan_physique_maths/scan_rgirard_2026-09-04-14-05-06.pdf", [(i, 94 + 2 * (i - 1)) for i in range(1, 17)]),
+    ("scan_physique_maths/scan_rgirard_2026-09-04-14-07-28.pdf", [(i, 128 + 2 * (i - 1)) for i in range(1, 17)]),
+    ("scan_physique_maths/scan_rgirard_2026-09-04-14-09-55.pdf", [(i, 158 + 2 * (i - 1)) for i in range(1, 12)]),
+    ("scan_physique_maths/scan_rgirard_2026-09-04-14-11-48.pdf", [(i, 180 + 2 * (i - 1)) for i in range(1, 13)]),
+]
 JOBS = [
     ("scan_rgirard_2026-09-04-08-46-36.pdf", [(1, 24)]),
     ("scan_rgirard_2026-09-04-08-48-06.pdf", [(i, 26 + 2 * (i - 1)) for i in range(1, 7)]
@@ -28,11 +38,11 @@ JOBS = [
 ]
 
 
-def main(dpi=120):
-    OUT.mkdir(parents=True, exist_ok=True)
+def render(jobs, out, dpi=120):
+    out.mkdir(parents=True, exist_ok=True)
     tmp = tempfile.mkdtemp()
     n = 0
-    for pdf, pages in JOBS:
+    for pdf, pages in jobs:
         src = ROOT / pdf
         if not src.exists():
             print("absent :", pdf, file=sys.stderr)
@@ -43,12 +53,16 @@ def main(dpi=120):
             im = Image.open(files[idx - 1]).rotate(-90, expand=True)   # scan tourné d'un quart de tour
             w, h = im.size
             for k, num in ((0, left), (1, left + 1)):
-                im.crop((k * w // 2, 0, (k + 1) * w // 2, h)).save(OUT / f"p{num:03d}.png", optimize=True)
+                im.crop((k * w // 2, 0, (k + 1) * w // 2, h)).save(out / f"p{num:03d}.png", optimize=True)
                 n += 1
         for f in files:
             os.remove(f)
-    print(n, "pages →", OUT)
+    print(n, "pages →", out)
 
 
 if __name__ == "__main__":
-    main()
+    which = sys.argv[1] if len(sys.argv) > 1 else "all"
+    if which in ("all", "i2d"):
+        render(JOBS, OUT)
+    if which in ("all", "pcm"):
+        render(JOBS_PCM, OUT_PCM)

@@ -1,0 +1,35 @@
+%% Allures des courbes du MOUVEMENT UNIFORMÉMENT FREINÉ (décéléré) :
+%% position qui s'aplatit, vitesse affine décroissante, accélération constante négative.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm, scale=0.92,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={solideA, line width=1.3pt, line cap=round}]
+
+%% \petitrepere{décalage}{grandeur en ordonnée}{bas de l'axe}{tracé}
+\newcommand\petitrepere[4]{%
+\begin{scope}[shift={(#1,0)}]
+  \draw[axe] (-0.18,0) -- (2.15,0) node[anchor=north east, inner sep=3pt, font=\small] {$t$};
+  \draw[axe] (0,#3) -- (0,1.62);
+  \node[anchor=south west, inner sep=1pt, font=\small] at (-0.1,1.62) {#2};
+  #4
+\end{scope}}
+
+\node[font=\small\bfseries] at (3.6,2.35) {Uniform\'ement frein\'e};
+
+% (1) position : croissante, concavité vers le bas, qui s'aplatit
+\petitrepere{0}{$x$ ou $\theta$}{-0.18}{%
+  \draw[courbe] plot[domain=0:1.95, samples=40, smooth] (\x,{1.42*\x-0.364*\x*\x});}
+
+% (2) vitesse : droite décroissante qui coupe l'axe des temps
+\petitrepere{2.7}{$v$ ou $\theta'$}{-0.95}{%
+  \draw[courbe] (0,1.30) -- (1.95,-0.55);
+  \fill[solideA] (1.37,0) circle (1.6pt);}
+
+% (3) accélération : constante négative (droite sous l'axe des temps)
+\petitrepere{5.4}{$a$ ou $\theta''$}{-0.95}{%
+  \draw[courbe] (0,-0.62) -- (1.95,-0.62);
+  \node[font=\small, text=solideA, anchor=north] at (1.0,-0.72) {$a < 0$};}
+\end{tikzpicture}
+\end{document}

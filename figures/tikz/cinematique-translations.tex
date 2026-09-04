@@ -1,0 +1,67 @@
+%% Les trois mouvements de translation : rectiligne, circulaire, curviligne.
+%% Dans chaque case, la même pièce en « L » (percée d'un trou) est dessinée
+%% en position de départ (trait plein) et d'arrivée (pointillé) ; quatre points
+%% de la pièce laissent quatre trajectoires colorées superposables.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm, scale=0.78,
+  traj/.style={line width=0.9pt, line cap=round},
+  pt/.style={circle, inner sep=0pt, minimum size=3.2pt, fill}]
+
+% --- la pièce en « L » (contour + trou, règle even odd) ---------------
+\newcommand\piece[1]{%
+  \path[even odd rule, line join=round, #1]
+    (0,0) -- (1.15,0) -- (1.15,0.39) -- (0.39,0.39) -- (0.39,1.15) -- (0,1.15) -- cycle
+    (0.20,0.20) circle (0.13);}
+\tikzset{
+  depart/.style={draw=black!65, fill=black!12, line width=0.8pt},
+  arrivee/.style={draw=black!55, dashed, line width=0.7pt}}
+
+% --- les quatre points suivis ----------------------------------------
+\newcommand\pts{%
+  \coordinate (Pa) at (0.20,1.13);
+  \coordinate (Pb) at (1.12,0.20);
+  \coordinate (Pc) at (0.03,0.03);
+  \coordinate (Pd) at (0.72,0.36);}
+
+%% ====================== 1. Translation rectiligne ===================
+\begin{scope}[shift={(0,0)}]
+  \node[align=center, font=\small] at (1.42,2.70) {Translation\\rectiligne};
+  \pts
+  \foreach \p/\c in {Pa/solideE, Pb/solideA, Pc/solideB, Pd/solideD}
+    { \draw[traj, \c] (\p) -- ++(1.55,0.85); }
+  \piece{arrivee, shift={(1.55,0.85)}}
+  \piece{depart}
+  \foreach \p/\c in {Pa/solideE, Pb/solideA, Pc/solideB, Pd/solideD}
+    { \node[pt, \c] at (\p) {}; \node[pt, \c] at ($(\p)+(1.55,0.85)$) {}; }
+\end{scope}
+
+%% ====================== 2. Translation circulaire ===================
+%% arcs de même rayon R, centres différents : parallèles, non concentriques
+\begin{scope}[shift={(3.35,0)}]
+  \node[align=center, font=\small] at (1.42,2.70) {Translation\\circulaire};
+  \pts
+  \def\R{2.2}
+  \foreach \p/\c in {Pa/solideE, Pb/solideA, Pc/solideB, Pd/solideD}
+    { \draw[traj, \c] (\p) arc (-90:-40:\R); }
+  \piece{arrivee, shift={(1.686,0.786)}}
+  \piece{depart}
+  \foreach \p/\c in {Pa/solideE, Pb/solideA, Pc/solideB, Pd/solideD}
+    { \node[pt, \c] at (\p) {}; \node[pt, \c] at ($(\p)+(1.686,0.786)$) {}; }
+\end{scope}
+
+%% ====================== 3. Translation curviligne ===================
+\begin{scope}[shift={(6.70,0)}]
+  \node[align=center, font=\small] at (1.42,2.70) {Translation\\curviligne};
+  \pts
+  \foreach \p/\c in {Pa/solideE, Pb/solideA, Pc/solideB, Pd/solideD}
+    { \draw[traj, \c, shift={(\p)}]
+        plot[domain=0:1.5, samples=45, smooth] (\x,{0.5*sin(\x*120)+0.33*\x}); }
+  \piece{arrivee, shift={(1.5,0.495)}}
+  \piece{depart}
+  \foreach \p/\c in {Pa/solideE, Pb/solideA, Pc/solideB, Pd/solideD}
+    { \node[pt, \c] at (\p) {}; \node[pt, \c] at ($(\p)+(1.5,0.495)$) {}; }
+\end{scope}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,48 @@
+%% Mouvement de rotation autour d'un axe fixe : hélice bipale tournant autour de O.
+%% Chaque point de la pale décrit un cercle centré sur l'axe ; la norme du vecteur
+%% vitesse croît proportionnellement au rayon (V = omega x R).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm, scale=1.22]
+\def\ang{10}   % inclinaison de la pale
+
+% --- cercles décrits par les points B, C, D, E ------------------------
+\foreach \r in {0.7,1.2,1.7,2.2}
+  { \draw[solideA, dashed, dash pattern=on 2pt off 2pt, line width=0.5pt] (0,0) circle (\r); }
+
+% --- l'hélice (deux pales) -------------------------------------------
+\begin{scope}[rotate=\ang]
+  \filldraw[fill=black!12, draw=black!60, line width=0.8pt]
+     (2.45,0) to[out=100,in=8]   (0,0.30)
+              to[out=188,in=80]  (-2.45,0)
+              to[out=-80,in=-172](0,-0.30)
+              to[out=-8,in=-100] cycle;
+\end{scope}
+\filldraw[fill=black!45, draw=black!70, line width=0.7pt] (0,0) circle (0.15);
+\node[font=\small, below left=0pt] at (0,0) {$O$};
+
+% --- points de la pale et vecteurs vitesse tangents -------------------
+\foreach \r/\n in {0.7/B, 1.2/C, 1.7/D, 2.2/E} {
+  \fill[solideA] (\ang:\r) circle (1.6pt);
+  \draw[-{Stealth[length=5pt]}, line width=1.2pt, solideA]
+       (\ang:\r) -- ++({\ang+90}:{0.34*\r});
+  \node[font=\small, anchor=north, inner sep=2.5pt] at (\ang:\r) {$\n$};
+}
+\node[font=\small, text=solideA, anchor=west] at (2.15,1.18) {$\vec{V}$};
+
+% --- vitesse de rotation ----------------------------------------------
+\draw[-{Stealth[length=5pt]}, line width=1pt, solideE]
+     (125:0.62) arc (125:55:0.62);
+\node[font=\small, text=solideE] at (0,0.86) {$\omega$};
+
+% --- cote du rayon R (dans le repère de la pale) ----------------------
+\begin{scope}[rotate=\ang]
+  \draw[|<->|, line width=0.5pt, black!70] (0,-0.80) -- (2.2,-0.80);
+  \node[font=\small] at (1.1,-1.10) {$R$};
+\end{scope}
+
+% --- relation ---------------------------------------------------------
+\node[font=\small, anchor=west] at (-2.6,-1.85) {$V = \omega \times R$};
+\end{tikzpicture}
+\end{document}

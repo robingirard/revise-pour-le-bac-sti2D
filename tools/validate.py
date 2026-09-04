@@ -222,7 +222,10 @@ def main():
     ids = check_liaisons(liaisons)
     mecanismes = [load(p) for p in sorted((CONTENT / "mecanismes").glob("*.yaml"))]
     check_mecanismes(mecanismes, ids)
-    check_units(load(CONTENT / "units.yaml"))
+    units = load(CONTENT / "units.yaml")
+    for extra in sorted((CONTENT / "units").glob("*.yaml")) if (CONTENT / "units").exists() else []:
+        units["units"].extend((load(extra) or {}).get("units", []))
+    check_units(units)
     check_dist()
     for w in warnings:
         print("avertissement :", w)

@@ -28,6 +28,11 @@
     { id: 'mob-fc-3', skill: 'liaisons-mobilites', type: 'flashcard', level: 2, tags: ['ddl'], payload: {
       front: 'Qu\'est-ce qu\'un **degré de liberté** (ddl) ?',
       back: 'Un mouvement relatif indépendant possible entre deux pièces : une translation le long d\'un axe ou une rotation autour d\'un axe.' } },
+    { id: 'mob-math-1', skill: 'liaisons-mobilites', type: 'mcq', level: 1, tags: ['maths'], payload: {
+      prompt: 'Un engrenage : roue menante $Z_1 = 20$, roue menée $Z_2 = 60$. Le rapport $R = \\dfrac{\\omega_2}{\\omega_1}$ vaut :',
+      choices: ['$R = \\frac{Z_1}{Z_2} = \\frac{1}{3}$', '$R = \\frac{Z_2}{Z_1} = 3$', '$R = Z_1 + Z_2$', '$R = 1$'], answer: [0], multiple: false, layout: 'list',
+      feedback: [null, "Non : c'est l'inverse, $R = \\frac{Z_{\\text{menante}}}{Z_{\\text{menée}}}$.", 'Non : on divise, on n\'additionne pas.', 'Non : les roues n\'ont pas le même nombre de dents.'],
+      explanation: 'Position en mouvement uniformément varié : $$x(t) = \\tfrac12 a t^2 + v_0 t + x_0$$ (formule affichée pour tester).' } },
     { id: 'mob-mcq-1', skill: 'liaisons-mobilites', type: 'mcq', level: 1, tags: ['notation'], payload: {
       prompt: 'Une rotation autour de l\'axe $\\vec{z}$ se note :', choices: ['Rz', 'Tz', 'Rx', 'Ty'], answer: [0],
       feedback: [null, 'Non : **T** désigne une translation (déplacement en ligne droite), pas une rotation.', 'Non : l\'axe est **z**, pas x.', 'Non : **T** désigne une translation, et l\'axe est z.'],
@@ -179,6 +184,20 @@ Deux solides **sans aucun contact** peuvent bouger l'un par rapport à l'autre d
 - en **rotation** autour de chacun des 3 axes : Rx, Ry, Rz.
 
 Ces mouvements sont les **degrés de liberté** (ddl). Chaque contact entre deux pièces *supprime* des ddl : ce qui reste définit la **liaison**.
+
+## Formules utiles (test KaTeX)
+
+| Grandeur | Formule | Unité |
+|---|---|---|
+| Vitesse d'un point en rotation | $v = R \\omega$ | m/s |
+| Puissance | $P = C \\times \\omega$ | W |
+| Rapport de transmission | $R = \\dfrac{Z_{\\text{menante}}}{Z_{\\text{menée}}}$ | sans unité |
+
+Position en mouvement uniformément varié :
+
+$$x(t) = \\tfrac{1}{2} a t^2 + v_0 t + x_0$$
+
+- conversion : $\\omega = N \\times \\dfrac{2\\pi}{60}$ (N en tr/min)
 
 | Mouvement | Notation |
 |---|---|

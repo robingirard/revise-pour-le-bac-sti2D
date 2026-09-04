@@ -1,6 +1,6 @@
 // sw.js — service worker : cache-first pour l'enveloppe de l'appli et le contenu.
 // Incrémenter VERSION à chaque mise en ligne pour forcer la mise à jour chez les utilisateurs.
-const VERSION = '2026-09-04.5';
+const VERSION = '2026-09-04.6';
 const CACHE = `revise-sti2d-${VERSION}`;
 const ASSETS = [
   './', './index.html', './manifest.webmanifest', './content.js', './css/app.css',
@@ -10,6 +10,8 @@ const ASSETS = [
   './js/exercises/mcq.js', './js/exercises/match.js', './js/exercises/grid.js',
   './js/exercises/order.js', './js/exercises/input.js', './js/exercises/guided.js',
   './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png',
+  './vendor/katex/katex.min.js', './vendor/katex/katex.min.css',
+  './vendor/katex/fonts/KaTeX_AMS-Regular.woff2', './vendor/katex/fonts/KaTeX_Caligraphic-Bold.woff2', './vendor/katex/fonts/KaTeX_Caligraphic-Regular.woff2', './vendor/katex/fonts/KaTeX_Fraktur-Bold.woff2', './vendor/katex/fonts/KaTeX_Fraktur-Regular.woff2', './vendor/katex/fonts/KaTeX_Main-Bold.woff2', './vendor/katex/fonts/KaTeX_Main-BoldItalic.woff2', './vendor/katex/fonts/KaTeX_Main-Italic.woff2', './vendor/katex/fonts/KaTeX_Main-Regular.woff2', './vendor/katex/fonts/KaTeX_Math-BoldItalic.woff2', './vendor/katex/fonts/KaTeX_Math-Italic.woff2', './vendor/katex/fonts/KaTeX_SansSerif-Bold.woff2', './vendor/katex/fonts/KaTeX_SansSerif-Italic.woff2', './vendor/katex/fonts/KaTeX_SansSerif-Regular.woff2', './vendor/katex/fonts/KaTeX_Script-Regular.woff2', './vendor/katex/fonts/KaTeX_Size1-Regular.woff2', './vendor/katex/fonts/KaTeX_Size2-Regular.woff2', './vendor/katex/fonts/KaTeX_Size3-Regular.woff2', './vendor/katex/fonts/KaTeX_Size4-Regular.woff2', './vendor/katex/fonts/KaTeX_Typewriter-Regular.woff2',
 ];
 
 self.addEventListener('install', (event) => {

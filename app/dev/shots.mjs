@@ -100,6 +100,12 @@ try {
   await shot('63-guided-end');
   await click('.btn-continue'); await sleep(200); await shot('64-guided-summary');
   await goto('#/'); await evaluate('document.querySelector(".annales").scrollIntoView()'); await sleep(150); await shot('70-home-annales');
+  // Formules KaTeX : QCM avec maths dans l'invite/les choix, leçon avec tableau et formule affichée
+  await goto('#/session/liaisons-mobilites?item=mob-math-1&seed=1'); await shot('80-math-mcq');
+  await click('.choice', 1); await click('.btn-verify'); await shot('80b-math-feedback');
+  await goto('#/skill/liaisons-mobilites');
+  await evaluate('(() => { const d = document.querySelector("details.lesson"); if (d) d.open = true; const h = [...document.querySelectorAll(".lesson-body h2")].find((e) => /KaTeX/.test(e.textContent)); if (h) h.scrollIntoView(); })()');
+  await sleep(200); await shot('81-math-lesson', true);
   const errors = await evaluate('document.querySelectorAll(".error").length');
   console.log('OK — captures dans', OUT, '; éléments .error visibles :', errors);
 } finally {

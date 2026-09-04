@@ -99,6 +99,14 @@ def du(m):
     return ("de l'" + n) if n[:1] in "aeiouyéèêh" else ("du " + n)
 
 
+def fr(x, nd=2):
+    """Nombre en écriture française : 1 234,5 (zéros inutiles supprimés)."""
+    s = f"{x:,.{nd}f}".replace(",", "\u202f").replace(".", ",")
+    if "," in s:
+        s = s.rstrip("0").rstrip(",")
+    return s
+
+
 def ex_text(ex):
     return ex["texte"] if isinstance(ex, dict) else str(ex)
 
@@ -821,6 +829,276 @@ class Builder:
                         steps, tags=[m["id"]])
 
 
+    # --- QCM numériques -----------------------------------------------------------
+    def num_mcq(self, iid, skill, level, prompt, value, unit, distractors, explanation, nd=2, tags=()):
+        """QCM à réponse numérique : `distractors` = liste de (valeur, feedback) ; les doublons sont écartés."""
+        correct = f"{fr(value, nd)} {unit}".strip()
+        distr = []
+        for v, fb in distractors:
+            txt = f"{fr(v, nd)} {unit}".strip()
+            if txt != correct and txt not in [d[0] for d in distr]:
+                distr.append((txt, fb))
+        return self.mcq(iid, skill, level, prompt, correct, distr, explanation, tags=tags)
+
+    # --- transmission de mouvement -------------------------------------------------
+    def gen_engrenage_rapport(self, skill):
+        for z1, z2 in [(20, 60), (15, 45), (30, 20), (12, 48), (25, 50), (40, 10)]:
+            R = z1 / z2
+            iid = f"{skill}.engrenage_rapport.{z1}-{z2}"
+            nature = "réducteur : la roue menée tourne moins vite" if R < 1 else "multiplicateur : la roue menée tourne plus vite"
+            self.num_mcq(iid, skill, 1,
+                         f"Un engrenage : roue menante Z₁ = {z1} dents, roue menée Z₂ = {z2} dents. "
+                         f"Quel est le rapport de transmission R = ω₂ ÷ ω₁ ?\n{fig('transmission-engrenage')}",
+                         R, "", [(z2 / z1, "Non : tu as inversé le rapport. R = Z menante ÷ Z menée (= ω sortie ÷ ω entrée)."),
+                                 (z1 / (z1 + z2), "Non : on divise par le nombre de dents de la roue menée, pas par le total des dents."),
+                                 (1, "Non : les roues n'ont pas le même nombre de dents, elles ne tournent pas à la même vitesse.")],
+                         f"R = Z₁ ÷ Z₂ = {z1} ÷ {z2} = {fr(R, 3)} ({nature}).", nd=3, tags=["engrenage"])
+            n1 = 1500
+            n2 = R * n1
+            self.num_mcq(iid + ".vitesse", skill, 2,
+                         f"Le même engrenage (Z₁ = {z1}, Z₂ = {z2}) : la roue menante tourne à {fr(n1, 0)} tr/min. "
+                         f"À quelle vitesse tourne la roue menée ?", n2, "tr/min",
+                         [(n1 / R, "Non : tu as multiplié par l'inverse du rapport ; ω₂ = R × ω₁ avec R = Z₁ ÷ Z₂."),
+                          (n1, "Non : les nombres de dents sont différents, la vitesse change."),
+                          (n2 * 2 * 3.14159, "Non : la question est en tr/min, il n'y a pas de conversion en rad/s à faire.")],
+                         f"ω₂ = R × ω₁ = ({z1} ÷ {z2}) × {fr(n1, 0)} = {fr(n2, 0)} tr/min.", nd=0, tags=["engrenage"])
+
+    def gen_train_rapport(self, skill):
+        for z in [(20, 60, 15, 45), (12, 36, 10, 40), (25, 50, 20, 60)]:
+            z1, z2, z3, z4 = z
+            R = z1 * z3 / (z2 * z4)
+            iid = f"{skill}.train_rapport.{'-'.join(map(str, z))}"
+            self.num_mcq(iid, skill, 2,
+                         f"Train d'engrenages : Z₁ = {z1} (menante), Z₂ = {z2} et Z₃ = {z3} (roues solidaires sur l'arbre intermédiaire), "
+                         f"Z₄ = {z4} (roue de sortie). Rapport R = ω₄ ÷ ω₁ ?\n{fig('transmission-train')}",
+                         R, "", [(z2 * z4 / (z1 * z3), "Non : c'est l'inverse. R = (produit des Z menantes) ÷ (produit des Z menées) = (Z₁ × Z₃) ÷ (Z₂ × Z₄)."),
+                                 (z1 / z4, "Non : les roues intermédiaires comptent ! Z₂ est menée par Z₁, et Z₃ (solidaire de Z₂) mène Z₄."),
+                                 (z1 / z2 + z3 / z4, "Non : les rapports des deux engrenages se **multiplient**, ils ne s'additionnent pas.")],
+                         f"R = (Z₁ × Z₃) ÷ (Z₂ × Z₄) = ({z1} × {z3}) ÷ ({z2} × {z4}) = {fr(R, 4)}.", nd=4, tags=["engrenage"])
+
+    def gen_roue_vis_rapport(self, skill):
+        for z1, z2 in [(1, 40), (2, 50), (1, 60)]:
+            R = z1 / z2
+            iid = f"{skill}.roue_vis.{z1}-{z2}"
+            self.num_mcq(iid, skill, 1,
+                         f"Roue et vis sans fin : vis à Z₁ = {z1} filet(s), roue à Z₂ = {z2} dents. Rapport R = ω roue ÷ ω vis ?\n{fig('transmission-roue-vis')}",
+                         R, "", [(z2 / z1, "Non : c'est l'inverse ; la roue tourne beaucoup **moins** vite que la vis."),
+                                 (z1 / (2 * z2), "Non : il n'y a pas de facteur 2 ; R = nombre de filets ÷ nombre de dents."),
+                                 (1, "Non : un tour de vis ne fait avancer la roue que d'une dent (par filet).")],
+                         f"R = Z₁ ÷ Z₂ = {z1} ÷ {z2} = {fr(R, 4)} : grand rapport de réduction, et en général irréversible.", nd=4, tags=["roue-vis"])
+            n1 = 3000
+            self.num_mcq(iid + ".vitesse", skill, 2,
+                         f"La vis sans fin ({z1} filet(s)) tourne à {fr(n1, 0)} tr/min ; la roue a {z2} dents. Vitesse de la roue ?",
+                         n1 * R, "tr/min", [(n1 * z2 / z1, "Non : la roue tourne moins vite que la vis, pas plus vite."),
+                                             (n1 / z2 / 2, "Non : il n'y a pas de facteur 2 supplémentaire."),
+                                             (n1, "Non : un réducteur change la vitesse.")],
+                         f"ω roue = R × ω vis = ({z1} ÷ {z2}) × {fr(n1, 0)} = {fr(n1 * R, 0)} tr/min.", nd=0, tags=["roue-vis"])
+
+    def gen_poulies_rapport(self, skill):
+        for d1, d2 in [(80, 240), (100, 250), (150, 100), (60, 180)]:
+            R = d1 / d2
+            iid = f"{skill}.poulies.{d1}-{d2}"
+            self.num_mcq(iid, skill, 1,
+                         f"Poulies-courroie : poulie motrice d₁ = {d1} mm, poulie réceptrice d₂ = {d2} mm. Rapport R = ω₂ ÷ ω₁ ?\n{fig('transmission-poulies')}",
+                         R, "", [(d2 / d1, "Non : c'est l'inverse. R = d₁ ÷ d₂ : une grande poulie réceptrice tourne moins vite."),
+                                 (d1 / (d1 + d2), "Non : on divise par le diamètre de la poulie réceptrice, pas par la somme."),
+                                 (1, "Non : les diamètres sont différents, les vitesses aussi (seule la courroie a une vitesse unique).")],
+                         f"R = d₁ ÷ d₂ = {d1} ÷ {d2} = {fr(R, 3)}.", nd=3, tags=["poulies"])
+            w1 = 50
+            V = w1 * (d1 / 1000) / 2
+            self.num_mcq(iid + ".courroie", skill, 2,
+                         f"La poulie motrice (d₁ = {d1} mm) tourne à ω₁ = {w1} rad/s. Vitesse de la courroie ?",
+                         V, "m/s", [(w1 * d1 / 1000, "Non : V = ω × rayon, et le rayon vaut d₁ ÷ 2."),
+                                    (w1 * d1 / 2, "Non : attention aux unités, le diamètre est en mm ; il faut le convertir en m."),
+                                    (w1 * (d2 / 1000) / 2, "Non : la courroie va à la vitesse de la poulie **motrice** (mais aussi de la réceptrice : les deux donnent la même valeur si tu utilises ω₂).")],
+                         f"V = ω₁ × d₁ ÷ 2 = {w1} × {fr(d1 / 1000, 3)} ÷ 2 = {fr(V, 2)} m/s.", nd=2, tags=["poulies"])
+
+    # --- couple, puissance, rendement ----------------------------------------------
+    def gen_couple_sortie(self, skill):
+        for ce, R, eta in [(2, 0.1, 0.9), (0.5, 0.05, 0.8), (3, 0.25, 0.95), (1.2, 0.02, 0.7)]:
+            cs = eta * ce / R
+            iid = f"{skill}.couple_sortie.{ce}-{R}-{eta}"
+            self.num_mcq(iid, skill, 2,
+                         f"Un réducteur de rapport R = {fr(R, 2)} et de rendement η = {fr(eta, 2)} reçoit un couple C e = {fr(ce, 1)} N·m. Couple de sortie C s ?",
+                         cs, "N·m", [(eta * ce * R, "Non : tu as **multiplié** par R. Un réducteur (R < 1) augmente le couple : C s = η × C e ÷ R."),
+                                     (ce / R, "Non : tu as oublié le rendement η, qui diminue le couple disponible."),
+                                     (eta * ce, "Non : tu as oublié le rapport de réduction, qui multiplie le couple par 1 ÷ R.")],
+                         f"C s = η × C e ÷ R = {fr(eta, 2)} × {fr(ce, 1)} ÷ {fr(R, 2)} = {fr(cs, 1)} N·m.", nd=1, tags=["couple"])
+
+    def gen_conversion_trmin(self, skill):
+        for n in [1500, 3000, 750, 120, 60, 12000]:
+            w = n * 2 * 3.14159265 / 60
+            iid = f"{skill}.conversion_trmin.{n}"
+            self.num_mcq(iid, skill, 1,
+                         f"Convertir N = {fr(n, 0)} tr/min en rad/s.",
+                         w, "rad/s", [(n / 60, "Non : tu as converti les minutes en secondes mais oublié qu'un tour vaut 2π rad."),
+                                      (n * 2 * 3.14159265, "Non : tu as oublié de passer des minutes aux secondes (÷ 60)."),
+                                      (n * 60 / (2 * 3.14159265), "Non : la conversion est ω = N × 2π ÷ 60, pas l'inverse.")],
+                         f"ω = N × 2π ÷ 60 = {fr(n, 0)} × 2π ÷ 60 ≈ {fr(w, 1)} rad/s.", nd=1, tags=["conversion"])
+
+    def gen_puissance_rotation(self, skill):
+        for c, n in [(2, 3000), (10, 1500), (0.5, 12000), (40, 750)]:
+            w = n * 2 * 3.14159265 / 60
+            P = c * w
+            iid = f"{skill}.puissance.{c}-{n}"
+            self.num_mcq(iid, skill, 2,
+                         f"Un moteur fournit un couple C = {fr(c, 1)} N·m à N = {fr(n, 0)} tr/min. Quelle puissance mécanique délivre-t-il ?",
+                         P, "W", [(c * n, "Non : P = C × ω avec ω en **rad/s** ; il faut convertir les tr/min (× 2π ÷ 60)."),
+                                  (c * n / 60, "Non : tu as divisé par 60 mais oublié le facteur 2π."),
+                                  (c / w, "Non : la puissance est le **produit** du couple par la vitesse angulaire.")],
+                         f"ω = {fr(n, 0)} × 2π ÷ 60 = {fr(w, 1)} rad/s ; P = C × ω = {fr(c, 1)} × {fr(w, 1)} ≈ {fr(P, 0)} W.", nd=0, tags=["puissance"])
+
+    def gen_rendement_global(self, skill):
+        for etas in [(0.9, 0.99), (0.9, 0.8), (0.75, 0.96), (0.8, 0.8, 0.8)]:
+            prod = 1
+            for e in etas:
+                prod *= e
+            txt = " puis ".join(f"η = {fr(e, 2)}" for e in etas)
+            iid = f"{skill}.rendement_global.{'-'.join(str(e) for e in etas)}"
+            self.num_mcq(iid, skill, 2,
+                         f"Une chaîne de {len(etas)} éléments a pour rendements : {txt}. Rendement global ?",
+                         prod, "", [(sum(etas) / len(etas), "Non : le rendement global n'est pas la moyenne ; chaque élément perd une part de ce qu'il reçoit, les rendements se **multiplient**."),
+                                    (min(etas), "Non : le maillon le plus faible ne suffit pas, chaque élément ajoute ses pertes."),
+                                    (max(etas), "Non : les pertes s'accumulent, le rendement global est plus faible que chacun des rendements.")],
+                         f"η global = {' × '.join(fr(e, 2) for e in etas)} = {fr(prod, 3)}, soit {fr(prod * 100, 1)} %.", nd=3, tags=["rendement"])
+
+    # --- transformation de mouvement ---------------------------------------------
+    def gen_pignon_cremaillere(self, skill):
+        for r, th in [(50, 2), (40, 3), (25, 4)]:
+            d = r * th
+            iid = f"{skill}.pignon_cremaillere.{r}-{th}"
+            self.num_mcq(iid, skill, 1,
+                         f"Pignon-crémaillère : rayon primitif r = {r} mm, le pignon tourne de θ = {th} rad. Déplacement d de la crémaillère ?\n{fig('transformation-pignon-cremaillere')}",
+                         d, "mm", [(r * th * 2 * 3.14159265, "Non : l'angle est déjà en radians, il n'y a pas de facteur 2π à ajouter."),
+                                   (r / th, "Non : d = r × θ (produit), pas un quotient."),
+                                   (2 * r * th, "Non : la formule utilise le **rayon** r, pas le diamètre.")],
+                         f"d = r × θ = {r} × {th} = {fr(d, 0)} mm (θ en rad).", nd=0, tags=["pignon-cremaillere"])
+        for r, tours in [(20, 2), (30, 1.5)]:
+            d = r * tours * 2 * 3.14159265
+            iid = f"{skill}.pignon_cremaillere_tours.{r}-{tours}"
+            self.num_mcq(iid, skill, 2,
+                         f"Un pignon de rayon primitif r = {r} mm fait {fr(tours, 1)} tour(s). De combien avance la crémaillère ?",
+                         d, "mm", [(r * tours, "Non : dans d = r × θ, l'angle doit être en **radians** : 1 tour = 2π rad."),
+                                   (r * tours * 360, "Non : pas en degrés ; 1 tour = 2π rad ≈ 6,28 rad."),
+                                   (d / 2, "Non : tu as utilisé r ÷ 2 ; c'est bien le rayon qui intervient.")],
+                         f"θ = {fr(tours, 1)} × 2π = {fr(tours * 2 * 3.14159265, 2)} rad ; d = r × θ = {r} × {fr(tours * 2 * 3.14159265, 2)} ≈ {fr(d, 0)} mm.", nd=0, tags=["pignon-cremaillere"])
+        for r, w in [(0.05, 10), (0.02, 25)]:
+            V = r * w
+            iid = f"{skill}.pignon_vitesse.{r}-{w}"
+            self.num_mcq(iid, skill, 2,
+                         f"Pignon de rayon primitif r = {fr(r * 1000, 0)} mm tournant à ω = {w} rad/s. Vitesse V de la crémaillère ?",
+                         V, "m/s", [(r * 1000 * w, "Non : avec r en mm tu obtiens des mm/s ; convertis r en m pour avoir des m/s."),
+                                    (w / r, "Non : V = r × ω (produit)."),
+                                    (2 * r * w, "Non : c'est le rayon qui intervient, pas le diamètre.")],
+                         f"V = r × ω = {fr(r, 3)} × {w} = {fr(V, 2)} m/s.", nd=2, tags=["pignon-cremaillere"])
+
+    def gen_vis_ecrou(self, skill):
+        for p, n in [(2, 10), (1.5, 6), (5, 2.5), (1.25, 8)]:
+            d = p * n
+            iid = f"{skill}.vis_ecrou.{p}-{n}"
+            self.num_mcq(iid, skill, 1,
+                         f"Vis-écrou : pas p = {fr(p, 2)} mm, la vis fait {fr(n, 1)} tour(s). De combien avance l'écrou ?\n{fig('transformation-vis-ecrou')}",
+                         d, "mm", [(p / n, "Non : d = p × n (produit) : chaque tour fait avancer d'un pas."),
+                                   (n / p, "Non : d = p × n, pas n ÷ p."),
+                                   (p * n * 2 * 3.14159265, "Non : ici l'angle est compté en **tours**, pas en radians : pas de 2π.")],
+                         f"d = p × n = {fr(p, 2)} × {fr(n, 1)} = {fr(d, 2)} mm.", nd=2, tags=["vis-ecrou"])
+        for p, d in [(2, 30), (1.5, 12)]:
+            n = d / p
+            iid = f"{skill}.vis_ecrou_tours.{p}-{d}"
+            self.num_mcq(iid, skill, 2,
+                         f"Vis de pas p = {fr(p, 2)} mm. Combien de tours pour faire avancer l'écrou de {fr(d, 0)} mm ?",
+                         n, "tours", [(d * p, "Non : n = d ÷ p ; plus le pas est grand, moins il faut de tours."),
+                                      (n / 2, "Non : pas de facteur 2."),
+                                      (d - p, "Non : c'est un quotient, pas une différence.")],
+                         f"n = d ÷ p = {fr(d, 0)} ÷ {fr(p, 2)} = {fr(n, 1)} tours.", nd=1, tags=["vis-ecrou"])
+
+    # --- cinématique ----------------------------------------------------------------
+    def gen_vitesse_moyenne(self, skill):
+        for d, tsec, txt in [(150, 30, "150 m en 30 s"), (100, 8, "100 m en 8 s"), (12000, 1200, "12 km en 20 min")]:
+            v = d / tsec
+            iid = f"{skill}.vitesse_moyenne.{d}-{tsec}"
+            self.num_mcq(iid, skill, 1,
+                         f"Un mobile parcourt {txt}. Vitesse moyenne ?",
+                         v, "m/s", [(tsec / d, "Non : V = d ÷ t (distance divisée par le temps)."),
+                                    (v * 3.6, "Non : ce serait la valeur en km/h ; en m/s, divise la distance en m par le temps en s."),
+                                    (d * tsec, "Non : c'est un quotient, pas un produit.")],
+                         f"V = d ÷ t = {fr(d, 0)} ÷ {fr(tsec, 0)} = {fr(v, 2)} m/s.", nd=2, tags=["vitesse"])
+        for kmh in [36, 90, 54, 108]:
+            ms = kmh / 3.6
+            iid = f"{skill}.kmh.{kmh}"
+            self.num_mcq(iid, skill, 1,
+                         f"Convertir {kmh} km/h en m/s.",
+                         ms, "m/s", [(kmh * 3.6, "Non : de km/h vers m/s on **divise** par 3,6 (1 km = 1 000 m, 1 h = 3 600 s)."),
+                                     (kmh / 60, "Non : il faut diviser par 3,6, pas par 60."),
+                                     (kmh, "Non : ce ne sont pas les mêmes unités.")],
+                         f"{kmh} km/h = {kmh} × 1 000 ÷ 3 600 = {fr(ms, 1)} m/s.", nd=1, tags=["vitesse"])
+
+    def gen_vitesse_point(self, skill):
+        for R, w in [(0.3, 20), (0.5, 4), (0.15, 100)]:
+            v = R * w
+            iid = f"{skill}.vitesse_point.{R}-{w}"
+            self.num_mcq(iid, skill, 1,
+                         f"Un solide tourne à ω = {w} rad/s. Vitesse d'un point situé à R = {fr(R, 2)} m de l'axe ?\n{fig('cinematique-champ-rotation')}",
+                         v, "m/s", [(w / R, "Non : V = R × ω (produit) : plus on est loin de l'axe, plus on va vite."),
+                                    (R / w, "Non : V = R × ω, pas R ÷ ω."),
+                                    (R + w, "Non : on ne peut pas additionner un rayon et une vitesse angulaire.")],
+                         f"V = R × ω = {fr(R, 2)} × {w} = {fr(v, 2)} m/s.", nd=2, tags=["vitesse"])
+        for R, n in [(0.2, 300), (0.35, 120)]:
+            w = n * 2 * 3.14159265 / 60
+            v = R * w
+            iid = f"{skill}.vitesse_point_trmin.{R}-{n}"
+            self.num_mcq(iid, skill, 2,
+                         f"Une roue de rayon R = {fr(R, 2)} m tourne à N = {n} tr/min. Vitesse d'un point de sa périphérie ?",
+                         v, "m/s", [(R * n, "Non : convertis d'abord N en rad/s (× 2π ÷ 60) avant d'appliquer V = R × ω."),
+                                    (R * n / 60, "Non : tu as divisé par 60 mais oublié le facteur 2π."),
+                                    (R * n * 2 * 3.14159265, "Non : tu as oublié de diviser par 60 (minutes → secondes).")],
+                         f"ω = {n} × 2π ÷ 60 = {fr(w, 2)} rad/s ; V = R × ω = {fr(R, 2)} × {fr(w, 2)} = {fr(v, 2)} m/s.", nd=2, tags=["vitesse"])
+
+    def gen_composition_vitesses(self, skill):
+        for v1, v2, meme in [(20, 4, True), (15, 4, False), (25, 3, True)]:
+            v = v1 + v2 if meme else v1 - v2
+            sens = "dans le même sens que le camion" if meme else "dans le sens opposé au camion"
+            iid = f"{skill}.composition.{v1}-{v2}-{int(meme)}"
+            self.num_mcq(iid, skill, 2,
+                         f"Un camion (1) roule à {v1} m/s par rapport au sol (0). Sur son plateau, un cascadeur (2) court à {v2} m/s {sens}. "
+                         f"Vitesse du cascadeur par rapport au sol ?\n{fig('cinematique-composition')}",
+                         v, "m/s", [(v1 - v2 if meme else v1 + v2, "Non : regarde les sens ! Même sens → les vitesses s'ajoutent ; sens opposés → elles se retranchent."),
+                                    (v1, "Non : le cascadeur bouge par rapport au camion, sa vitesse par rapport au sol n'est pas celle du camion."),
+                                    (v2, "Non : c'est sa vitesse par rapport au **camion** ; par rapport au sol il faut ajouter celle du camion.")],
+                         f"V(2/0) = V(2/1) + V(1/0) = {'+' if meme else '−'}{v2} + {v1} = {v} m/s (vecteurs de même direction).", nd=0, tags=["vitesse"])
+
+    def gen_mruv(self, skill):
+        for a, v0, tt in [(2, 0, 5), (-1.5, 12, 4), (0.8, 2, 10)]:
+            v = a * tt + v0
+            iid = f"{skill}.mruv_vitesse.{a}-{v0}-{tt}"
+            self.num_mcq(iid, skill, 2,
+                         f"Mouvement uniformément varié : v₀ = {fr(v0, 0)} m/s, a = {fr(a, 1)} m/s². Vitesse après t = {tt} s ?",
+                         v, "m/s", [(a * tt * tt + v0, "Non : v(t) = a × t + v₀ ; le t² n'apparaît que dans la **position**."),
+                                    (v0, "Non : l'accélération n'est pas nulle, la vitesse change."),
+                                    (a * tt / 2 + v0, "Non : pas de ½ dans la vitesse ; le ½ est dans la position x(t) = ½ a t² + v₀ t.")],
+                         f"v = a × t + v₀ = {fr(a, 1)} × {tt} + {fr(v0, 0)} = {fr(v, 1)} m/s.", nd=1, tags=["acceleration"])
+        for a, v0, tt in [(2, 0, 5), (0.5, 0, 8), (1, 5, 4)]:
+            x = 0.5 * a * tt * tt + v0 * tt
+            iid = f"{skill}.mruv_position.{a}-{v0}-{tt}"
+            self.num_mcq(iid, skill, 3,
+                         f"Départ en x₀ = 0 avec v₀ = {fr(v0, 0)} m/s et a = {fr(a, 1)} m/s² constante. Distance parcourue après t = {tt} s ?",
+                         x, "m", [(a * tt * tt + v0 * tt, "Non : tu as oublié le ½ devant a t²."),
+                                  (v0 * tt, "Non : tu as oublié le terme d'accélération ½ a t²." if v0 else "Non : la distance n'est pas nulle, le mobile accélère : x = ½ a t²."),
+                                  (0.5 * a * tt + v0 * tt, "Non : c'est t² (le temps au carré) dans le terme ½ a t².")],
+                         f"x = ½ a t² + v₀ t = 0,5 × {fr(a, 1)} × {tt}² + {fr(v0, 0)} × {tt} = {fr(x, 1)} m.", nd=1, tags=["acceleration"])
+
+    def gen_acceleration_normale(self, skill):
+        for v, r in [(10, 50), (2, 0.5), (30, 100)]:
+            an = v * v / r
+            iid = f"{skill}.an.{v}-{r}"
+            self.num_mcq(iid, skill, 2,
+                         f"Un point décrit un cercle de rayon r = {fr(r, 1)} m à la vitesse constante v = {v} m/s. Accélération normale ?\n{fig('cinematique-acceleration')}",
+                         an, "m/s²", [(v / r, "Non : a n = v² ÷ r : la vitesse est au **carré**."),
+                                      (v * v * r, "Non : on divise par le rayon, on ne multiplie pas."),
+                                      (0, "Non : même à vitesse constante, la **direction** de la vitesse change : l'accélération normale n'est pas nulle.")],
+                         f"a n = v² ÷ r = {v}² ÷ {fr(r, 1)} = {fr(an, 2)} m/s², dirigée vers le centre.", nd=2, tags=["acceleration"])
+
+
 GENERATORS = {name[4:]: name for name in dir(Builder) if name.startswith("gen_")}
 
 
@@ -857,6 +1135,9 @@ def build():
     liaisons = load_yaml(CONTENT / "liaisons.yaml")["liaisons"]
     mecanismes = [load_yaml(p) for p in sorted((CONTENT / "mecanismes").glob("*.yaml"))]
     units_src = load_yaml(CONTENT / "units.yaml")
+    for extra in sorted((CONTENT / "units").glob("*.yaml")) if (CONTENT / "units").exists() else []:
+        more = load_yaml(extra) or {}
+        units_src["units"].extend(more.get("units", []))
     annales_src = load_yaml(CONTENT / "annales.yaml") if (CONTENT / "annales.yaml").exists() else {"annales": []}
     figures = load_figures()
     tables = lesson_tables(liaisons)

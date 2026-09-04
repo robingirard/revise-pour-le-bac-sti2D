@@ -1,0 +1,45 @@
+%% Champ des vecteurs vitesse d'un solide en ROTATION autour d'un axe fixe.
+%% Barre articulée en O sur le bâti : les vecteurs vitesse sont perpendiculaires
+%% à la barre et leur norme croît linéairement avec le rayon (enveloppe triangulaire).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm, scale=1.28]
+\coordinate (O) at (0,0);
+
+% --- bâti hachuré + liaison pivot -------------------------------------
+\hachures{(-0.85,-1.05) rectangle (0.85,-0.62)}
+\draw[line width=1.1pt] (0,-0.25) -- (0,-0.62);
+
+% --- la barre (solide en rotation) ------------------------------------
+\begin{scope}[rotate=45]
+  \filldraw[fill=black!12, draw=black!60, line width=0.8pt, rounded corners=3pt]
+        (-0.30,-0.19) rectangle (3.85,0.19);
+\end{scope}
+\pic[s1=solideA, s2=black, liens=false] at (O) {pivot bout};
+\node[font=\small, below right=1pt] at (O) {$O$};
+
+% --- champ des vecteurs vitesse ---------------------------------------
+\begin{scope}[rotate=45]
+  % enveloppe triangulaire
+  \draw[dashed, line width=0.5pt, black!55] (0,0) -- (3.6,1.26);
+  \foreach \s in {0.6,1.2,1.8,2.4,3.0,3.6}
+    { \draw[-{Stealth[length=5pt]}, line width=1.2pt, solideA]
+           (\s,0) -- (\s,{0.35*\s}); }
+  % cote du rayon R jusqu'au point M
+  \draw[|<->|, line width=0.5pt, black!70] (0,-0.62) -- (3.0,-0.62);
+  \fill[black] (3.0,0) circle (1.6pt);
+\end{scope}
+\node[font=\small] at (1.65,0.55) {$R$};
+\node[font=\small] at (2.44,1.90) {$M$};
+\node[font=\small, text=solideA] at (1.20,3.05) {$\vec{V}$};
+
+% --- vitesse de rotation ----------------------------------------------
+\draw[-{Stealth[length=5pt]}, line width=1pt, solideE]
+     (0.95,-0.15) arc (-9:45:1.0);
+\node[font=\small, text=solideE] at (1.30,0.06) {$\omega$};
+
+% --- relation ----------------------------------------------------------
+\node[font=\small, anchor=west] at (-1.5,3.15) {$v = R \times \omega$};
+\end{tikzpicture}
+\end{document}
