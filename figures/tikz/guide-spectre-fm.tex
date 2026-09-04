@@ -1,0 +1,49 @@
+%% guide-spectre-fm — spectre d'amplitude d'un signal modulé en fréquence.
+%% Sept raies régulièrement espacées : la plus haute à l'aplomb de 500 kHz, la dernière à
+%% droite exactement sur la graduation 515 kHz (soit trois intervalles entre les deux repères).
+%% RÈGLE : seules les graduations 500 et 515 sont portées ; ni l'écart entre raies (étape 3),
+%% ni la largeur de bande en kHz (étape 4) ne figurent sur le dessin.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.7pt},
+  grille/.style={line width=0.3pt, black!15},
+  raie/.style={line width=2.2pt, draw=solideA, line cap=round},
+  cote/.style={{Stealth[length=4.5pt]}-{Stealth[length=4.5pt]}, line width=0.9pt, draw=solideD},
+  grad/.style={font=\scriptsize, inner sep=2.5pt}]
+
+\useasboundingbox (-0.30,-0.85) rectangle (7.60,3.95);
+\def\yh{3.05}   % hauteur utile du repère
+
+%% ---- quadrillage léger -------------------------------------------------------
+\foreach \k in {0,1,...,6} {\draw[grille] ({0.60+0.92*\k},0) -- ({0.60+0.92*\k},\yh);}
+\foreach \y in {0.5,1.0,...,3.01} {\draw[grille] (0.15,\y) -- (6.60,\y);}
+
+%% ---- axes ----------------------------------------------------------------------
+\draw[axe] (0.15,0) -- (7.40,0);
+\node[grad, anchor=north east] at (7.55,-0.06) {$f$ (kHz)};
+\draw[axe] (0.15,-0.22) -- (0.15,3.40);
+\node[grad, anchor=south west] at (0.20,3.05) {amplitude $u$ (V)};
+
+%% ---- les sept raies (pas régulier ; la plus haute au centre) ---------------------
+\foreach \k/\h in {0/0.40, 1/0.78, 2/1.30, 3/2.40, 4/1.30, 5/0.78, 6/0.40} {
+  \draw[raie] ({0.60+0.92*\k},0) -- ({0.60+0.92*\k},\h);
+  \fill[solideA] ({0.60+0.92*\k},\h) circle (0.055);}
+
+%% ---- les deux seules graduations de l'axe des fréquences --------------------------
+\foreach \x/\lab in {3.36/500, 6.12/515} {
+  \draw[line width=0.7pt] (\x,-0.14) -- (\x,0.14);
+  \node[grad, anchor=north] at (\x,-0.16) {\lab};}
+\node[grad, anchor=north east] at (0.12,-0.04) {0};
+
+%% ---- largeur de bande (sans valeur : c'est la question posée) ---------------------
+\draw[cote] (0.60,2.72) -- (6.12,2.72);
+\node[font=\scriptsize, text=solideD, fill=white, inner sep=2.5pt] at (3.36,2.72)
+  {largeur de bande};
+
+%% ---- titre --------------------------------------------------------------------------
+\node[font=\small, anchor=south] at (3.36,3.52)
+  {Spectre d'amplitude après modulation de fréquence};
+\end{tikzpicture}
+\end{document}

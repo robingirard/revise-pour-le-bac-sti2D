@@ -1,0 +1,91 @@
+%% guide-savon-cinematique — distributeur de savon : chaîne cinématique de principe.
+%% Moteur -> vis sans fin 1 (1 filet) -> roue 2 (Z21) ; pignon 2' (Z22) -> roue excentrique 3 (Z3)
+%% -> maneton + bielle -> piston 4 guidé en glissière : un tour de 3 = un aller-retour = une dose.
+%% Échelle des cercles primitifs : 0,030 cm par dent (r2 = 0,96 ; r2' = 0,24 ; r3 = 1,44),
+%% entraxe 2'/3 = 0,24 + 1,44 = 1,68 cm : les cercles sont réellement tangents.
+%% RÈGLE : ni rapport de réduction, ni vitesse de sortie, ni rendement — seulement les données Z.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{backgrounds}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  roue/.style={line width=1.3pt, line cap=round, line join=round},
+  bras/.style={line width=1pt, line cap=round, draw=solideE},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.8pt, draw=solideD},
+  fleche/.style={-{Stealth[length=5pt]}, line width=1pt},
+  lab/.style={font=\small, inner sep=1.5pt},
+  pet/.style={font=\scriptsize, inner sep=1.5pt}]
+
+\useasboundingbox (-0.15,-2.85) rectangle (8.05,2.35);
+
+%% ---- macro locale : ligne de bâti horizontale hachurée ----------------------
+\newcommand\batihoriz[3]{% #1 = x début, #2 = x fin, #3 = y
+  \draw[line width=0.8pt] (#1,#3) -- (#2,#3);
+  \foreach \i in {1,...,14} {\pgfmathsetmacro\xx{#1+(#2-#1)*\i/14}%
+    \draw[line width=0.5pt] (\xx,#3) -- (\xx-0.14,#3-0.14);}}
+
+\coordinate (O2) at (3.15,0.14);    % axe de la roue 2 et du pignon 2'
+\coordinate (O3) at (4.83,0.14);    % axe de la roue excentrique 3
+\coordinate (M)  at (5.26,0.754);   % maneton (excentricité)
+\coordinate (P)  at (6.05,0.14);    % attache bielle / piston
+
+%% ---- liaisons pivot au bâti (arbres verticaux) -------------------------------
+\begin{scope}[on background layer]
+  \draw[bras] (O2) -- (3.15,-2.00);
+  \draw[bras] (O3) -- (4.83,-2.00);
+\end{scope}
+\batihoriz{2.55}{5.05}{-2.00}
+\node[lab, anchor=west] at (5.20,-2.02) {\textbf{0} bâti};
+
+%% ---- moteur et vis sans fin 1 -------------------------------------------------
+\pic[s1=solideA, s2=solideE, rotate=180] at (1.85,1.35) {pivot face};
+\pic[rotate=180] at (1.85,2.05) {bati};
+\draw[roue, solideA, fill=white] (0.10,0.95) rectangle (1.10,1.75);
+\node[lab, text=solideA] at (0.60,1.35) {M};
+\draw[roue, solideA, fill=white] (2.45,1.10) rectangle (3.85,1.60);
+\foreach \x in {2.60,2.90,3.20,3.50} {\draw[line width=0.8pt, solideA] (\x,1.10) -- (\x+0.25,1.60);}
+\node[pet, anchor=north west, align=left] at (0.02,0.85) {moteur\\$N$ = 3\,517 tr/min};
+\node[lab, text=solideA, anchor=west] at (3.95,1.68) {\textbf{1} Z1 = 1 filet};
+
+%% ---- roue 2 et pignon 2' ------------------------------------------------------
+\draw[roue, solideB] (O2) circle (0.96);
+\draw[line width=0.9pt, solideB] (O2) circle (0.24);
+\foreach \a in {74,82,...,106} {\draw[line width=0.6pt, solideB]
+  ([shift=(\a:0.87)]O2) -- ([shift=(\a:1.05)]O2);}
+\foreach \a in {-16,0,16} {\draw[line width=0.6pt, solideB]
+  ([shift=(\a:0.15)]O2) -- ([shift=(\a:0.33)]O2);}
+\node[lab, text=solideB, anchor=north east] at (3.02,-1.02) {\textbf{2} Z21 = 32};
+\node[lab, text=solideB, anchor=north east] at (3.02,-1.37) {\textbf{2}$'$ Z22 = 8};
+
+%% ---- roue excentrique 3, maneton et bielle ------------------------------------
+\draw[roue, solideB!70!black] (O3) circle (1.44);
+\foreach \a in {164,172,...,196} {\draw[line width=0.6pt, solideB!70!black]
+  ([shift=(\a:1.35)]O3) -- ([shift=(\a:1.53)]O3);}
+\draw[line width=0.5pt, dash pattern=on 2pt off 1.6pt, black!60] (O3) -- (M);
+\node[pet, anchor=north west, fill=white, inner sep=1pt] at (4.86,-0.02) {excentricité};
+\node[lab, text=solideB!70!black, anchor=north west] at (5.15,-1.55) {\textbf{3} Z3 = 48};
+\draw[line width=0.9pt, black!75] (M) -- (P);
+\node[pet, anchor=south east, inner sep=3pt] at (5.90,0.30) {bielle};
+\foreach \p in {M,P} {\fill (\p) circle (1.7pt);}
+
+%% ---- piston 4 guidé en glissière ------------------------------------------------
+\pic[s1=solideD, s2=solideE, liens=true] at (7.00,0.14) {glissiere face};
+\draw[bras] (7.00,-0.56) -- (7.00,-0.62);
+\pic at (7.00,-0.62) {bati};
+\draw[line width=1.6pt, solideD, line cap=round] (P) -- (7.95,0.14);
+\draw[roue, solideD, fill=white] (7.55,-0.14) rectangle (7.95,0.42);
+\draw[cote] (6.25,0.62) -- (7.85,0.62);
+\node[lab, text=solideD, anchor=south west, align=left] at (6.25,0.78)
+  {\textbf{4} piston\\aller-retour\\= 1 dose};
+
+%% ---- sortie du savon --------------------------------------------------------------
+\draw[line width=1.1pt, solideD] (7.65,-0.14) -- (7.65,-0.42) (7.85,-0.14) -- (7.85,-0.42);
+\draw[fleche, solideA] (7.75,-0.52) -- (7.75,-1.05);
+\node[lab, text=solideA, anchor=north east] at (7.62,-0.95) {savon};
+
+%% ---- légende et trièdre -------------------------------------------------------------
+\node[pet, anchor=north west] at (0.02,-2.30)
+  {\textbf{1} vis sans fin \quad \textbf{2} roue + pignon \quad \textbf{3} roue excentrique \quad \textbf{4} piston};
+\repere{(0.20,-1.82)}{x}{y}{1}
+\end{tikzpicture}
+\end{document}

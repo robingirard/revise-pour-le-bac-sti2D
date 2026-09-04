@@ -1196,6 +1196,1177 @@ units:
         tolerance: 0.03
         unit: Wh
         explanation: '$1$ Wh $=3\,600$ J, donc $E=\dfrac{13\,963}{3\,600}\approx3{,}88$ Wh. Le démarrage coûte donc à peine $0{,}004$ kWh.'
-# --- SUITE ---
+  - id: mathstle-equadiff
+    title: Équations différentielles
+    icon: 📉
+    description: 'Résoudre $y''=ay$ et $y''=ay+b$, condition initiale, limite en $+\infty$, et les modèles associés : condensateur, refroidissement, chute avec frottement.'
+    prerequisites:
+    - mathstle-exp-ln
+    lesson: lessons/maths-tle-equadiff.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Qu'est-ce qu'une **équation différentielle** ?
+      choices:
+      - Une équation dont l'inconnue est une fonction et qui relie cette fonction à ses dérivées
+      - Une équation dont l'inconnue est un nombre réel et qui contient une différence
+      - Une équation qui relie deux nombres dérivés en un même point
+      - Une équation dont les solutions sont toujours des fonctions affines
+      answer: 0
+      feedback:
+      - null
+      - Le mot « différentielle » renvoie à la **dérivation**, pas à la soustraction.
+      - Une équation différentielle porte sur une fonction tout entière, pas sur un seul point.
+      - Les solutions de $y'=ay$ sont des exponentielles, pas des fonctions affines.
+      explanation: 'L''inconnue est une **fonction** $y$, et l''équation la relie à sa dérivée $y''$. Les sciences physiques écrivent la même chose $\dfrac{\mathrm{d}v}{\mathrm{d}t}=-6{,}8v+7{,}5$ : la notation change, pas la nature de l''équation.'
+    - type: mcq
+      level: 1
+      prompt: 'Quelles sont les solutions sur $\mathbb{R}$ de l''équation différentielle $y''=ay$, où $a$ est un réel ?'
+      choices:
+      - les fonctions $x\mapsto k\,\mathrm{e}^{ax}$, avec $k$ réel quelconque
+      - les fonctions $x\mapsto k\,\mathrm{e}^{x/a}$, avec $k$ réel quelconque
+      - les fonctions $x\mapsto a\,\mathrm{e}^{kx}$, avec $k$ réel quelconque
+      - la seule fonction $x\mapsto\mathrm{e}^{ax}$
+      answer: 0
+      feedback:
+      - null
+      - 'Le coefficient $a$ multiplie $x$ dans l''exposant : il n''y est pas en dénominateur.'
+      - 'Les rôles sont échangés : $a$ vient de l''équation, $k$ est la constante libre.'
+      - 'Il y a une **infinité** de solutions : toutes les fonctions $k\,\mathrm{e}^{ax}$ conviennent.'
+      explanation: 'C''est le résultat de base du chapitre. On le vérifie en dérivant : $\left(k\,\mathrm{e}^{ax}\right)''=ka\,\mathrm{e}^{ax}=a\times\left(k\,\mathrm{e}^{ax}\right)$. Le cas $k=0$ donne la fonction nulle, qui est bien solution.'
+    - type: mcq
+      level: 2
+      prompt: 'La fonction constante $g$ définie par $g(t)=2$ est-elle solution de $y''=-5y+10$ ?'
+      choices:
+      - 'Oui : $g''(t)=0$ et $-5\times2+10=0$, les deux membres sont égaux'
+      - 'Non : une fonction constante ne peut pas être solution d''une équation différentielle'
+      - Oui, mais uniquement à l'instant $t=0$
+      - 'Non : il faudrait $g(t)=-2$'
+      answer: 0
+      feedback:
+      - null
+      - 'Au contraire : dès que $b\neq0$ il existe une solution constante, c''est le **régime permanent**.'
+      - Une solution doit vérifier l'équation pour **tout** $t$, ce qui est le cas ici.
+      - '$-5\times(-2)+10=20\neq0$ : la fonction constante $-2$ n''est pas solution.'
+      explanation: 'Méthode : on calcule **séparément** les deux membres. Ici $g''(t)=0$ et $-5g(t)+10=0$ : ils coïncident pour tout $t$. La solution constante s''obtient en résolvant $0=ay+b$, soit $y=-\dfrac{b}{a}=\dfrac{10}{5}=2$.'
+    - type: input
+      level: 2
+      prompt: 'Soit $y$ la solution de $y''=0{,}5y$ vérifiant $y(0)=4$. Calculer $y(2)$, arrondi à $0{,}01$.'
+      answer: '10.87'
+      numeric: true
+      tolerance: 0.05
+      explanation: 'Les solutions sont $y(x)=k\,\mathrm{e}^{0{,}5x}$ ; la condition $y(0)=k=4$ donne $y(x)=4\,\mathrm{e}^{0{,}5x}$, donc $y(2)=4\,\mathrm{e}\approx4\times2{,}718\approx10{,}87$.'
+    - type: mcq
+      level: 2
+      prompt: 'Quelles sont les solutions de $y''=ay+b$, avec $a\neq0$ ?'
+      choices:
+      - les fonctions $x\mapsto k\,\mathrm{e}^{ax}-\dfrac{b}{a}$, avec $k$ réel
+      - les fonctions $x\mapsto k\,\mathrm{e}^{ax}+\dfrac{b}{a}$, avec $k$ réel
+      - les fonctions $x\mapsto k\,\mathrm{e}^{ax}+b$, avec $k$ réel
+      - les fonctions $x\mapsto k\,\mathrm{e}^{(a+b)x}$, avec $k$ réel
+      answer: 0
+      feedback:
+      - null
+      - 'Erreur de signe : la solution constante vérifie $0=ay+b$, donc $y=-\dfrac{b}{a}$.'
+      - Le terme constant n'est pas $b$ mais $-\dfrac{b}{a}$.
+      - Le nombre $b$ n'intervient pas dans l'exposant.
+      explanation: 'On ajoute à la solution générale de $y''=ay$ la solution **constante** de $y''=ay+b$, qui vérifie $0=ay+b$. D''où $y(x)=k\,\mathrm{e}^{ax}-\dfrac{b}{a}$. En pratique, on cherche toujours la solution constante en premier.'
+    - type: mcq
+      level: 2
+      prompt: 'Quelles sont les solutions de $(E)\ y''=-4y+80$ ?'
+      choices:
+      - $f(t)=k\,\mathrm{e}^{-4t}+20$
+      - $f(t)=k\,\mathrm{e}^{-4t}+80$
+      - $f(t)=k\,\mathrm{e}^{4t}+20$
+      - $f(t)=k\,\mathrm{e}^{-4t}-20$
+      answer: 0
+      feedback:
+      - null
+      - 'Le terme constant est $-\dfrac{b}{a}=-\dfrac{80}{-4}=20$, et non $80$.'
+      - 'Le coefficient $a=-4$ est négatif : il se recopie tel quel dans l''exposant.'
+      - 'Erreur de signe : $-\dfrac{80}{-4}=+20$.'
+      explanation: 'Ici $a=-4$ et $b=80$. La solution constante vérifie $0=-4y+80$, soit $y=20$. Les solutions sont donc $f(t)=k\,\mathrm{e}^{-4t}+20$, $k$ réel.'
+    - type: input
+      level: 2
+      prompt: 'Toujours pour $(E)\ y''=-4y+80$, on cherche la solution $f$ telle que $f(0)=100$. Que vaut la constante $k$ ?'
+      answer: '80'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$f(t)=k\,\mathrm{e}^{-4t}+20$ donne $f(0)=k\times1+20=100$, donc $k=80$ et $f(t)=80\,\mathrm{e}^{-4t}+20$.'
+    - type: mcq
+      level: 2
+      prompt: 'Que vaut $\lim\limits_{t\to+\infty}f(t)$ pour $f(t)=80\,\mathrm{e}^{-4t}+20$ ?'
+      choices:
+      - $20$
+      - $100$
+      - $0$
+      - $+\infty$
+      answer: 0
+      feedback:
+      - null
+      - '$100$ est la valeur **initiale** $f(0)$, pas la limite.'
+      - Seul le terme exponentiel tend vers $0$ ; le terme constant $20$ subsiste.
+      - 'L''exposant est négatif : l''exponentielle décroît vers $0$.'
+      explanation: 'Quand $a<0$, $\mathrm{e}^{at}\to0$ et la solution tend vers la valeur constante $-\dfrac{b}{a}$ : c''est le **régime permanent**, lu directement sur l''équation, sans calcul.
+
+
+        {{fig:mathstle-eqdiff-asymptote}}'
+    - type: input
+      level: 3
+      prompt: 'Soit $(E)\ y''=2y-0{,}5$. On cherche la solution $f$ telle que $f''(0)=-3$ — attention, la condition porte sur la **dérivée**. Que vaut la constante $k$ ?'
+      answer: '-1.5'
+      numeric: true
+      tolerance: 0.01
+      explanation: 'Les solutions sont $f(x)=k\,\mathrm{e}^{2x}+0{,}25$ car $-\dfrac{-0{,}5}{2}=0{,}25$. Alors $f''(x)=2k\,\mathrm{e}^{2x}$, donc $f''(0)=2k=-3$ et $k=-1{,}5$. La solution cherchée est $f(x)=-1{,}5\,\mathrm{e}^{2x}+0{,}25$.'
+    - type: mcq
+      level: 2
+      prompt: 'On donne $(E)\ y''+0{,}006y=0{,}069$. Sous la forme $y''=ay+b$, que valent $a$ et $b$ ?'
+      choices:
+      - $a=-0{,}006$ et $b=0{,}069$
+      - $a=0{,}006$ et $b=0{,}069$
+      - $a=-0{,}069$ et $b=0{,}006$
+      - $a=0{,}006$ et $b=-0{,}069$
+      answer: 0
+      feedback:
+      - null
+      - 'On fait passer $0{,}006y$ dans l''autre membre : son signe change.'
+      - Les deux coefficients ont été échangés.
+      - 'C''est $a$ qui change de signe en passant de l''autre côté, pas $b$.'
+      explanation: 'Réflexe : **réécrire** l''équation sous la forme du cours avant toute chose. $y''+0{,}006y=0{,}069$ équivaut à $y''=-0{,}006y+0{,}069$, et la solution constante vaut $-\dfrac{b}{a}=\dfrac{0{,}069}{0{,}006}=11{,}5$.'
+    - type: mcq
+      level: 3
+      prompt: 'Comment montrer que $T_{1}(t)=11{,}5\,\mathrm{e}^{-0{,}006t}+11{,}5$ est **la** solution de $(E)\ y''=-0{,}006y+0{,}069$ vérifiant $T_{1}(0)=23$ ?'
+      choices:
+      - En vérifiant que $T_{1}$ est de la forme $k\,\mathrm{e}^{-0{,}006t}+11{,}5$, puis que $T_{1}(0)=23$
+      - En vérifiant seulement que $T_{1}(0)=23$
+      - En vérifiant seulement que $T_{1}$ est décroissante
+      - En calculant $\displaystyle\int_{0}^{1}T_{1}(t)\,\mathrm{d}t$
+      answer: 0
+      feedback:
+      - null
+      - 'La condition initiale ne suffit pas : il faut aussi que la fonction soit solution de $(E)$.'
+      - Le sens de variation ne prouve pas qu'une fonction est solution.
+      - Une intégrale ne teste pas une équation différentielle.
+      explanation: '$T_{1}$ a bien la forme voulue, avec $k=11{,}5$, et $T_{1}(0)=11{,}5+11{,}5=23$. L''**unicité** de la solution vérifiant une condition initiale est admise par le programme : c''est elle qui permet de dire « la » solution.'
+    - type: input
+      level: 3
+      prompt: 'Une boisson refroidit selon $T_{1}(t)=11{,}5\,\mathrm{e}^{-0{,}006t}+11{,}5$ ($T$ en °C, $t$ en secondes). Estimer sa température au bout de $3$ heures, arrondie à $0{,}1$.'
+      answer: '11.5'
+      numeric: true
+      tolerance: 0.1
+      unit: °C
+      explanation: '$3$ h $=10\,800$ s, et $\mathrm{e}^{-0{,}006\times10\,800}=\mathrm{e}^{-64{,}8}$ vaut environ $10^{-29}$ : c''est totalement négligeable. Donc $T_{1}(10\,800)\approx11{,}5$ °C, c''est-à-dire la limite du modèle.'
+    - type: mcq
+      level: 3
+      prompt: 'La pièce est à $23{,}0$ °C. Le modèle $T_{1}(t)=11{,}5\,\mathrm{e}^{-0{,}006t}+11{,}5$ est-il encore utilisable au bout de $3$ heures ?'
+      choices:
+      - 'Non : au bout de quelques heures la boisson doit remonter vers $23$ °C, alors que le modèle prévoit $11{,}5$ °C'
+      - 'Oui : le modèle est valable pour tout $t\geqslant0$'
+      - 'Non : la fonction $T_{1}$ n''est pas définie en $t=10\,800$'
+      - 'Oui : la limite $11{,}5$ °C est bien la température de la pièce'
+      answer: 0
+      feedback:
+      - null
+      - Un modèle n'est valable que sur le domaine où il a été établi, ici les premières minutes.
+      - '$T_{1}$ est définie sur $\left[0\,;+\infty\right[$ tout entier : l''objection serait mathématique, pas physique.'
+      - 'La limite du modèle vaut $11{,}5$ °C et non $23$ °C : c''est justement la contradiction.'
+      explanation: 'Le modèle décrit le refroidissement dû au glaçon ; une fois celui-ci fondu, la boisson se réchauffe vers la température de la pièce. Savoir dire **jusqu''où** un modèle est valable est un attendu explicite de l''épreuve.'
+    - type: mcq
+      level: 2
+      prompt: 'Une bille tombe dans de l''huile ; sa vitesse vérifie $\dfrac{\mathrm{d}v}{\mathrm{d}t}=-6{,}8v+7{,}5$. De quel type est cette équation ?'
+      choices:
+      - 'Du type $y''=ay+b$, avec $a=-6{,}8$ et $b=7{,}5$'
+      - 'Du type $y''=ay$, avec $a=-6{,}8$'
+      - 'Du type $y''=ay+b$, avec $a=7{,}5$ et $b=-6{,}8$'
+      - Ce n'est pas une équation différentielle, car la variable est nommée $t$
+      answer: 0
+      feedback:
+      - null
+      - 'Le terme constant $7{,}5$ ne peut pas être ignoré : sans lui la vitesse limite serait nulle.'
+      - Les rôles des deux coefficients sont inversés.
+      - '$\dfrac{\mathrm{d}v}{\mathrm{d}t}$ est une autre notation de $v''$ : c''est bien une équation différentielle.'
+      explanation: 'La notation $\dfrac{\mathrm{d}v}{\mathrm{d}t}$ est celle des sciences physiques ; elle nomme la variable et rappelle qu''une dérivée est un rapport de variations. L''inconnue reste la fonction $v$.'
+    - type: input
+      level: 3
+      prompt: 'Toujours pour $\dfrac{\mathrm{d}v}{\mathrm{d}t}=-6{,}8v+7{,}5$ avec $v(0)=0$, calculer la vitesse limite $v_{\lim}$, arrondie à $0{,}01$.'
+      answer: '1.10'
+      numeric: true
+      tolerance: 0.02
+      unit: m/s
+      explanation: 'La solution est $v(t)=-\dfrac{75}{68}\mathrm{e}^{-6{,}8t}+\dfrac{75}{68}$ et, comme $-6{,}8<0$, $\lim\limits_{t\to+\infty}v(t)=-\dfrac{b}{a}=\dfrac{7{,}5}{6{,}8}=\dfrac{75}{68}\approx1{,}10\ \mathrm{m}\cdot\mathrm{s}^{-1}$. La vitesse limite se lit donc **directement** sur l''équation.'
+    - type: mcq
+      level: 2
+      prompt: 'Un condensateur de capacité $C$ se charge à travers une résistance $R$ sous une tension constante $E$. La tension $u$ à ses bornes vérifie $RC\,u''+u=E$. Sous la forme $y''=ay+b$, cette équation s''écrit'
+      choices:
+      - $u'=-\dfrac{1}{RC}u+\dfrac{E}{RC}$
+      - $u'=\dfrac{1}{RC}u-\dfrac{E}{RC}$
+      - $u'=-RC\,u+E$
+      - $u'=-\dfrac{1}{RC}u+E$
+      answer: 0
+      feedback:
+      - null
+      - 'Erreur de signe : $u$ passe dans l''autre membre, $E$ y est déjà.'
+      - 'On **divise** par $RC$, on ne multiplie pas.'
+      - Le second membre doit être divisé par $RC$ lui aussi.
+      explanation: 'On divise tout par $RC$ : $u''+\dfrac{u}{RC}=\dfrac{E}{RC}$, puis on isole $u''$. La solution constante vaut $-\dfrac{b}{a}=E$ : le condensateur se charge jusqu''à la tension du générateur.'
+    - type: input
+      level: 2
+      prompt: 'Calculer la constante de temps $\tau=RC$ d''un circuit avec $R=10\ \mathrm{k\Omega}$ et $C=22\ \mu\mathrm{F}$, arrondie à $0{,}01$.'
+      answer: '0.22'
+      numeric: true
+      tolerance: 0.005
+      unit: s
+      explanation: '$\tau=10\times10^{3}\times22\times10^{-6}=0{,}22$ s. Attention aux préfixes : $1\ \mathrm{k\Omega}=10^{3}\ \Omega$ et $1\ \mu\mathrm{F}=10^{-6}$ F. La constante de temps est bien homogène à une durée.'
+    - type: input
+      level: 3
+      prompt: 'Le condensateur précédent ($\tau=0{,}22$ s) se charge sous $E=5{,}0$ V à partir de $u(0)=0$, donc $u(t)=5{,}0\left(1-\mathrm{e}^{-t/\tau}\right)$. Calculer $u(\tau)$, arrondi à $0{,}01$.'
+      answer: '3.16'
+      numeric: true
+      tolerance: 0.02
+      unit: V
+      explanation: '$u(\tau)=5{,}0\left(1-\mathrm{e}^{-1}\right)=5{,}0\times0{,}632\approx3{,}16$ V. Au bout d''une constante de temps, le condensateur est chargé à $63\ \%$ : c''est un repère à connaître.'
+    - type: input
+      level: 3
+      prompt: 'Au bout de combien de temps la tension $u(t)=5{,}0\left(1-\mathrm{e}^{-t/0{,}22}\right)$ atteint-elle $99\ \%$ de $E=5{,}0$ V ? (arrondir à $0{,}01$)'
+      answer: '1.01'
+      numeric: true
+      tolerance: 0.02
+      unit: s
+      explanation: '$1-\mathrm{e}^{-t/\tau}=0{,}99$ donne $\mathrm{e}^{-t/\tau}=0{,}01$, puis $t=\tau\ln(100)=0{,}22\times4{,}605\approx1{,}01$ s. C''est un peu moins que la règle usuelle des $5\tau=1{,}1$ s.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre la méthode de résolution d'une équation différentielle avec condition initiale.
+      steps:
+      - Réécrire l'équation sous la forme du cours $y'=ay+b$, en isolant $y'$
+      - Identifier les coefficients $a$ et $b$
+      - Chercher la solution constante en résolvant $0=ay+b$, soit $y=-\dfrac{b}{a}$
+      - Écrire l'ensemble des solutions $y(x)=k\,\mathrm{e}^{ax}-\dfrac{b}{a}$
+      - Utiliser la condition initiale pour calculer $k$
+      - Vérifier en dérivant, puis donner la limite en $+\infty$ si elle est demandée
+      explanation: 'La première étape est celle qu''on oublie : tant que l''équation est écrite $y''+ay=b$ ou $RC\,u''+u=E$, les coefficients lus sont faux. Isoler $y''$ d''abord, identifier ensuite.'
+    - type: grid
+      level: 3
+      prompt: Pour chaque affirmation sur les équations différentielles, cocher vrai ou faux.
+      rows:
+      - id: cst
+        label: la fonction constante $y=-\dfrac{b}{a}$ est solution de $y'=ay+b$
+      - id: init
+        label: une condition initiale sélectionne une seule solution
+      - id: lim
+        label: si $a<0$, toute solution de $y'=ay+b$ tend vers $-\dfrac{b}{a}$ en $+\infty$
+      - id: unique
+        label: l'équation $y'=ay$ n'a qu'une seule solution
+      - id: croiss
+        label: si $a<0$, la solution de $y'=ay+b$ est toujours croissante
+      cols:
+      - id: V
+        label: Vrai
+      - id: F
+        label: Faux
+      answer:
+      - Vcst
+      - Vinit
+      - Vlim
+      - Funique
+      - Fcroiss
+      cellFeedback:
+        Fcst: 'sa dérivée est nulle et $a\times\left(-\dfrac{b}{a}\right)+b=0$ : elle est bien solution'
+        Finit: c'est l'unicité admise par le programme
+        Flim: '$\mathrm{e}^{at}\to0$ quand $a<0$, il ne reste que le terme constant'
+        Vunique: 'il y en a une infinité, une par valeur de $k$'
+        Vcroiss: 'elle est décroissante si $k>0$ et croissante si $k<0$ : cela dépend de la condition initiale'
+      explanation: 'Le signe de $a$ décide de la **convergence** ; le signe de $k$, fixé par la condition initiale, décide du **sens de variation**. Ce sont deux questions différentes.'
+    - type: guided
+      level: 3
+      title: Le parachutiste
+      prompt: 'Exercice complet : équation différentielle $y''=ay+b$, condition initiale, vitesse limite et distance parcourue par intégration.'
+      intro: 'À l''ouverture de son parachute, un parachutiste a une vitesse de $50\ \mathrm{m}\cdot\mathrm{s}^{-1}$. Sa vitesse $v$ (en $\mathrm{m}\cdot\mathrm{s}^{-1}$, $t$ en secondes) vérifie alors
+
+
+        $$(E)\qquad y''=-5y+10\qquad\text{avec}\qquad v(0)=50.$$
+
+
+        On veut déterminer $v(t)$, la vitesse limite, puis la distance parcourue pendant les $10$ premières secondes.'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** La fonction constante $g$ définie par $g(t)=2$ est-elle solution de $(E)$ ?'
+        choices:
+        - 'Oui : $g''(t)=0$ et $-5\times2+10=0$'
+        - 'Non : $g''(t)=2$ et $-5\times2+10=0$'
+        - 'Oui, mais seulement si $t\geqslant2$'
+        - 'Non : une constante n''est pas dérivable'
+        answer:
+        - 0
+        feedback:
+        - null
+        - La dérivée d'une fonction constante est **nulle**, pas égale à la constante.
+        - Une solution vérifie l'équation pour toutes les valeurs de $t$.
+        - Une fonction constante est dérivable, de dérivée nulle.
+        explanation: 'Les deux membres valent $0$ pour tout $t$ : $g$ est solution. C''est la solution constante $-\dfrac{b}{a}=\dfrac{10}{5}=2$, qui décrit le **régime permanent**.'
+      - kind: mcq
+        prompt: '**Étape 2.** Quel est l''ensemble des solutions de $(E)$ ?'
+        choices:
+        - $f(t)=k\,\mathrm{e}^{-5t}+2$, avec $k$ réel
+        - $f(t)=k\,\mathrm{e}^{-5t}+10$, avec $k$ réel
+        - $f(t)=k\,\mathrm{e}^{5t}+2$, avec $k$ réel
+        - $f(t)=k\,\mathrm{e}^{-5t}-2$, avec $k$ réel
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Le terme constant est $-\dfrac{b}{a}=2$, pas $b=10$.'
+        - 'Le coefficient $a=-5$ se recopie tel quel : l''exposant est négatif.'
+        - 'Erreur de signe : $-\dfrac{10}{-5}=+2$.'
+        explanation: 'Solutions de $y''=ay+b$ : $k\,\mathrm{e}^{at}-\dfrac{b}{a}$ avec ici $a=-5$ et $b=10$, soit $f(t)=k\,\mathrm{e}^{-5t}+2$.'
+      - kind: input
+        prompt: '**Étape 3.** La vitesse à l''ouverture est $v(0)=50$. Que vaut la constante $k$ ?'
+        answer: '48'
+        numeric: true
+        tolerance: 0.01
+        explanation: '$v(0)=k+2=50$ donne $k=48$, donc $v(t)=48\,\mathrm{e}^{-5t}+2$.'
+      - kind: input
+        prompt: '**Étape 4.** Calculer la vitesse $1$ seconde après l''ouverture, arrondie à $0{,}01$.'
+        answer: '2.32'
+        numeric: true
+        tolerance: 0.02
+        unit: m/s
+        explanation: '$v(1)=48\,\mathrm{e}^{-5}+2\approx48\times0{,}006\,738+2\approx0{,}32+2\approx2{,}32\ \mathrm{m}\cdot\mathrm{s}^{-1}$. Le freinage est donc très brutal.'
+      - kind: input
+        prompt: '**Étape 5.** Au bout de combien de temps la vitesse descend-elle à $2{,}5\ \mathrm{m}\cdot\mathrm{s}^{-1}$ ? (arrondir à $0{,}01$)'
+        answer: '0.91'
+        numeric: true
+        tolerance: 0.02
+        unit: s
+        explanation: '$48\,\mathrm{e}^{-5t}+2=2{,}5$ donne $\mathrm{e}^{-5t}=\dfrac{0{,}5}{48}=\dfrac{1}{96}$, donc $-5t=-\ln(96)$ et $t=\dfrac{\ln(96)}{5}\approx\dfrac{4{,}564}{5}\approx0{,}91$ s.'
+      - kind: mcq
+        prompt: '**Étape 6.** Que vaut $\lim\limits_{t\to+\infty}v(t)$, et que représente cette valeur ?'
+        choices:
+        - $2\ \mathrm{m}\cdot\mathrm{s}^{-1}$, la vitesse limite du parachutiste
+        - $50\ \mathrm{m}\cdot\mathrm{s}^{-1}$, la vitesse d'ouverture
+        - $0\ \mathrm{m}\cdot\mathrm{s}^{-1}$, car l'exponentielle tend vers $0$
+        - $48\ \mathrm{m}\cdot\mathrm{s}^{-1}$, le coefficient de l'exponentielle
+        answer:
+        - 0
+        feedback:
+        - null
+        - C'est la vitesse **initiale**, celle du début du mouvement.
+        - Seul le terme $48\,\mathrm{e}^{-5t}$ tend vers $0$ ; le terme constant $2$ subsiste.
+        - $48$ est le coefficient du terme qui disparaît, pas la limite.
+        explanation: 'La vitesse tend vers $-\dfrac{b}{a}=2\ \mathrm{m}\cdot\mathrm{s}^{-1}$ : c''est la vitesse limite, celle avec laquelle le parachutiste touche le sol. Elle ne dépend pas de la vitesse d''ouverture.'
+      - kind: input
+        prompt: '**Étape 7.** Calculer $\displaystyle\int_{0}^{10}\left(48\,\mathrm{e}^{-5t}+2\right)\mathrm{d}t$, arrondi à $0{,}1$, qui donne la distance parcourue en $10$ s.'
+        answer: '29.6'
+        numeric: true
+        tolerance: 0.2
+        unit: m
+        explanation: 'Une primitive est $V(t)=-\dfrac{48}{5}\mathrm{e}^{-5t}+2t=-9{,}6\,\mathrm{e}^{-5t}+2t$. Alors $V(10)-V(0)=\left(20-9{,}6\,\mathrm{e}^{-50}\right)-\left(-9{,}6\right)\approx29{,}6$ m, car $\mathrm{e}^{-50}$ est négligeable.'
+      - kind: mcq
+        prompt: '**Étape 8.** Si le parachutiste ouvrait son parachute à $70\ \mathrm{m}\cdot\mathrm{s}^{-1}$ au lieu de $50$, que changerait-il ?'
+        choices:
+        - Seule la constante $k$ change ($k=68$) ; la vitesse limite reste $2\ \mathrm{m}\cdot\mathrm{s}^{-1}$
+        - La vitesse limite deviendrait $2{,}8\ \mathrm{m}\cdot\mathrm{s}^{-1}$
+        - L'équation différentielle changerait de coefficients
+        - Rien ne changerait, car la solution est unique
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'La limite vaut $-\dfrac{b}{a}$ : elle ne dépend que de l''équation, pas de la condition initiale.'
+        - Les coefficients $a$ et $b$ viennent du bilan des forces et de la voilure, pas de la vitesse d'ouverture.
+        - 'La solution est unique **pour une condition initiale donnée** : en changer donne une autre solution.'
+        explanation: 'La condition initiale ne fixe que $k$ : ici $k=70-2=68$, soit $v(t)=68\,\mathrm{e}^{-5t}+2$. La vitesse limite $2\ \mathrm{m}\cdot\mathrm{s}^{-1}$, elle, est une propriété de l''équation.'
+  - id: mathstle-complexes-exp
+    title: Complexes sous forme exponentielle
+    icon: 🧭
+    description: Forme exponentielle $r\mathrm{e}^{i\theta}$, module et argument, produit, quotient, puissances, formule de Moivre et impédance complexe.
+    prerequisites:
+    - mathstle-exp-ln
+    lesson: lessons/maths-tle-complexes-exp.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Par définition, que vaut $\mathrm{e}^{i\theta}$ pour un réel $\theta$ ?
+      choices:
+      - $\cos(\theta)+i\sin(\theta)$
+      - $\sin(\theta)+i\cos(\theta)$
+      - $\cos(\theta)-i\sin(\theta)$
+      - $\theta\left(\cos(\theta)+i\sin(\theta)\right)$
+      answer: 0
+      feedback:
+      - null
+      - 'Le cosinus donne la partie **réelle**, le sinus la partie imaginaire : ils sont échangés.'
+      - 'C''est $\mathrm{e}^{-i\theta}$, le conjugué.'
+      - 'Il n''y a pas de facteur $\theta$ : le module de $\mathrm{e}^{i\theta}$ vaut $1$.'
+      explanation: 'Le programme **pose** $\mathrm{e}^{i\theta}=\cos(\theta)+i\sin(\theta)$ et admet que cette exponentielle a les mêmes propriétés algébriques que l''exponentielle réelle. Toutes les formules de trigonométrie en découlent.'
+    - type: mcq
+      level: 1
+      prompt: Que vaut le module $\left|\mathrm{e}^{i\theta}\right|$ ?
+      choices:
+      - $1$, quel que soit $\theta$
+      - $\theta$
+      - $\mathrm{e}^{\theta}$
+      - $\cos(\theta)+\sin(\theta)$
+      answer: 0
+      feedback:
+      - null
+      - $\theta$ est l'argument, pas le module.
+      - 'L''exposant est **imaginaire** : $\mathrm{e}^{i\theta}$ n''a rien d''un nombre qui grandit.'
+      - Le module est une racine carrée de somme de carrés, pas une somme.
+      explanation: '$\left|\mathrm{e}^{i\theta}\right|=\sqrt{\cos^{2}(\theta)+\sin^{2}(\theta)}=1$. Les points d''affixe $\mathrm{e}^{i\theta}$ décrivent donc exactement le **cercle trigonométrique**.'
+    - type: mcq
+      level: 1
+      prompt: 'Dans l''écriture $z=r\,\mathrm{e}^{i\theta}$ d''un complexe non nul, que représentent $r$ et $\theta$ ?'
+      choices:
+      - $r=\left|z\right|>0$ est le module et $\theta=\arg(z)$ est l'argument, en radians
+      - $r$ est la partie réelle et $\theta$ la partie imaginaire
+      - $r$ est l'argument et $\theta$ le module
+      - $r$ et $\theta$ sont les deux coordonnées du point image
+      answer: 0
+      feedback:
+      - null
+      - Partie réelle et partie imaginaire sont les coordonnées de la **forme algébrique**.
+      - Les deux rôles sont inversés.
+      - 'Les coordonnées cartésiennes sont $a$ et $b$ ; $r$ et $\theta$ sont des coordonnées **polaires**.'
+      explanation: '$r$ est la distance $OM$ et $\theta$ l''angle orienté $\left(\overrightarrow{OI},\overrightarrow{OM}\right)$, défini modulo $2\pi$. Le module est toujours strictement positif pour $z\neq0$.
+
+
+        {{fig:maths-plan-complexe}}'
+    - type: input
+      level: 2
+      prompt: Calculer le module du nombre complexe $z=\sqrt{3}+i$.
+      answer: '2'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$\left|z\right|=\sqrt{\left(\sqrt{3}\right)^{2}+1^{2}}=\sqrt{3+1}=\sqrt{4}=2$. Le module se calcule **toujours** avant l''argument.'
+    - type: mcq
+      level: 2
+      prompt: Quelle est la forme exponentielle de $z=\sqrt{3}+i$ ?
+      choices:
+      - $2\,\mathrm{e}^{i\frac{\pi}{6}}$
+      - $2\,\mathrm{e}^{i\frac{\pi}{3}}$
+      - $2\,\mathrm{e}^{-i\frac{\pi}{6}}$
+      - $4\,\mathrm{e}^{i\frac{\pi}{6}}$
+      answer: 0
+      feedback:
+      - null
+      - '$\cos\left(\dfrac{\pi}{3}\right)=\dfrac{1}{2}$ : ce n''est pas la valeur trouvée pour $\dfrac{a}{r}$.'
+      - 'La partie imaginaire est **positive** : le point est au-dessus de l''axe réel, l''argument est positif.'
+      - 'Le module est $\sqrt{4}=2$, pas $4$ : il ne faut pas oublier la racine.'
+      explanation: '$r=2$, puis $\cos(\theta)=\dfrac{\sqrt{3}}{2}$ et $\sin(\theta)=\dfrac{1}{2}$, ce qui donne $\theta=\dfrac{\pi}{6}$. Donc $z=2\,\mathrm{e}^{i\frac{\pi}{6}}$.
+
+
+        {{fig:maths-cercle-angles}}'
+    - type: mcq
+      level: 2
+      prompt: Quelle est la forme exponentielle de $z_{1}=\sqrt{3}-i$ ?
+      choices:
+      - $2\,\mathrm{e}^{-i\frac{\pi}{6}}$
+      - $2\,\mathrm{e}^{i\frac{\pi}{6}}$
+      - $2\,\mathrm{e}^{-i\frac{\pi}{3}}$
+      - $-2\,\mathrm{e}^{i\frac{\pi}{6}}$
+      answer: 0
+      feedback:
+      - null
+      - 'La partie imaginaire est négative : le point est **sous** l''axe réel, l''argument est négatif.'
+      - '$\sin(\theta)=-\dfrac{1}{2}$ correspond à $-\dfrac{\pi}{6}$, alors que $-\dfrac{\pi}{3}$ donnerait $-\dfrac{\sqrt{3}}{2}$.'
+      - 'Un module est toujours **positif** : on n''écrit jamais $-2\,\mathrm{e}^{i\theta}$ comme forme exponentielle.'
+      explanation: '$z_{1}$ est le conjugué de $\sqrt{3}+i$ : même module $2$, argument opposé. Règle générale : $\overline{r\,\mathrm{e}^{i\theta}}=r\,\mathrm{e}^{-i\theta}$.'
+    - type: mcq
+      level: 3
+      prompt: Quelle est la forme exponentielle de $z=-2\sqrt{3}+2i$ ?
+      choices:
+      - $4\,\mathrm{e}^{i\frac{5\pi}{6}}$
+      - $4\,\mathrm{e}^{i\frac{\pi}{6}}$
+      - $4\,\mathrm{e}^{-i\frac{5\pi}{6}}$
+      - $2\,\mathrm{e}^{i\frac{5\pi}{6}}$
+      answer: 0
+      feedback:
+      - null
+      - 'La partie réelle est **négative** : le point est à gauche de l''axe des ordonnées, l''argument ne peut pas être $\dfrac{\pi}{6}$.'
+      - 'La partie imaginaire est positive : l''argument est dans $\left]0\,;\pi\right[$.'
+      - '$\left|z\right|=\sqrt{12+4}=4$, et non $2$.'
+      explanation: '$r=\sqrt{\left(2\sqrt{3}\right)^{2}+2^{2}}=\sqrt{12+4}=4$. Puis $\cos(\theta)=-\dfrac{\sqrt{3}}{2}$ et $\sin(\theta)=\dfrac{1}{2}$ : le point est dans le **deuxième quadrant**, donc $\theta=\dfrac{5\pi}{6}$. Le réflexe qui évite l''erreur est de repérer le quadrant avant de conclure.'
+    - type: mcq
+      level: 2
+      prompt: 'Sur la figure, le plan complexe est muni de cinq cercles concentriques de rayons $1$ à $5$. Quelle est l''affixe du point $M$ ?
+
+
+        {{fig:mathstle-plan-complexe-cercles}}'
+      choices:
+      - $5\,\mathrm{e}^{-i\frac{\pi}{4}}$
+      - $4\,\mathrm{e}^{-i\frac{\pi}{4}}$
+      - $5\,\mathrm{e}^{i\frac{\pi}{4}}$
+      - $-5\,\mathrm{e}^{-i\frac{\pi}{4}}$
+      answer: 0
+      feedback:
+      - null
+      - Il faut compter les cercles jusqu'à $M$ ; le point est sur le **cinquième**.
+      - 'Le point est **sous** l''axe réel : son argument est négatif.'
+      - Un module est toujours positif, il n'y a jamais de signe moins devant.
+      explanation: 'On lit le module sur les cercles ($r=5$) et l''argument sur l''angle avec l''axe réel ($-\dfrac{\pi}{4}$, car $M$ est dans le quatrième quadrant). D''où $z_{M}=5\,\mathrm{e}^{-i\frac{\pi}{4}}$. Sa forme algébrique est $\dfrac{5\sqrt{2}}{2}-\dfrac{5\sqrt{2}}{2}i$.'
+    - type: match
+      level: 2
+      prompt: Associer chaque complexe à sa forme exponentielle.
+      pairs:
+      - left: $1$
+        right: $\mathrm{e}^{i0}$
+      - left: $i$
+        right: $\mathrm{e}^{i\frac{\pi}{2}}$
+      - left: $-1$
+        right: $\mathrm{e}^{i\pi}$
+      - left: $-i$
+        right: $\mathrm{e}^{-i\frac{\pi}{2}}$
+      - left: $1+i$
+        right: $\sqrt{2}\,\mathrm{e}^{i\frac{\pi}{4}}$
+    - type: mcq
+      level: 2
+      prompt: Que vaut le produit $r\,\mathrm{e}^{i\alpha}\times r'\,\mathrm{e}^{i\beta}$ ?
+      choices:
+      - $rr'\,\mathrm{e}^{i(\alpha+\beta)}$
+      - $rr'\,\mathrm{e}^{i\alpha\beta}$
+      - $(r+r')\,\mathrm{e}^{i(\alpha+\beta)}$
+      - $rr'\,\mathrm{e}^{i(\alpha-\beta)}$
+      answer: 0
+      feedback:
+      - null
+      - Les exposants s'**ajoutent** quand on multiplie des exponentielles.
+      - Les modules se multiplient, ils ne s'ajoutent pas.
+      - La soustraction des arguments correspond au quotient.
+      explanation: '**Les modules se multiplient, les arguments s''ajoutent.** C''est tout l''intérêt de la forme exponentielle : elle transforme les produits de complexes en calculs de niveau seconde.'
+    - type: mcq
+      level: 2
+      prompt: Que vaut le quotient $\dfrac{r\,\mathrm{e}^{i\alpha}}{r'\,\mathrm{e}^{i\beta}}$ (avec $r'\neq0$) ?
+      choices:
+      - $\dfrac{r}{r'}\,\mathrm{e}^{i(\alpha-\beta)}$
+      - $\dfrac{r}{r'}\,\mathrm{e}^{i(\alpha+\beta)}$
+      - $\dfrac{r}{r'}\,\mathrm{e}^{i\frac{\alpha}{\beta}}$
+      - $rr'\,\mathrm{e}^{i(\alpha-\beta)}$
+      answer: 0
+      feedback:
+      - null
+      - L'addition des arguments correspond au produit, pas au quotient.
+      - Les arguments se soustraient, ils ne se divisent pas.
+      - Les modules se divisent, comme les arguments se soustraient.
+      explanation: 'Les modules se divisent, les arguments se soustraient. En particulier $\dfrac{1}{r\,\mathrm{e}^{i\theta}}=\dfrac{1}{r}\mathrm{e}^{-i\theta}$.'
+    - type: mcq
+      level: 2
+      prompt: 'Que donne la formule de Moivre, pour $n$ entier ?'
+      choices:
+      - $\left(r\,\mathrm{e}^{i\theta}\right)^{n}=r^{n}\,\mathrm{e}^{in\theta}$
+      - $\left(r\,\mathrm{e}^{i\theta}\right)^{n}=r\,\mathrm{e}^{in\theta}$
+      - $\left(r\,\mathrm{e}^{i\theta}\right)^{n}=r^{n}\,\mathrm{e}^{i\theta}$
+      - $\left(r\,\mathrm{e}^{i\theta}\right)^{n}=nr\,\mathrm{e}^{i\theta n}$
+      answer: 0
+      feedback:
+      - null
+      - Le module aussi est élevé à la puissance $n$.
+      - L'argument aussi est multiplié par $n$.
+      - Le module est élevé à la puissance $n$, il n'est pas multiplié par $n$.
+      explanation: 'On élève le module à la puissance $n$ et on multiplie l''argument par $n$. Avec $r=1$, on obtient la forme classique $\left(\cos\theta+i\sin\theta\right)^{n}=\cos(n\theta)+i\sin(n\theta)$.'
+    - type: input
+      level: 3
+      prompt: 'Soit $z_{1}=1-i\sqrt{3}$ et $z_{2}=\sqrt{2}\,\mathrm{e}^{i\frac{\pi}{4}}$. Calculer le module de $Z=z_{1}^{3}\times z_{2}^{2}$.'
+      answer: '16'
+      numeric: true
+      tolerance: 0.1
+      explanation: '$\left|z_{1}\right|=\sqrt{1+3}=2$ et $\left|z_{2}\right|=\sqrt{2}$, donc $\left|Z\right|=2^{3}\times\left(\sqrt{2}\right)^{2}=8\times2=16$. Les modules se multiplient, y compris pour les puissances.'
+    - type: mcq
+      level: 3
+      prompt: 'Toujours avec $z_{1}=1-i\sqrt{3}$ et $z_{2}=\sqrt{2}\,\mathrm{e}^{i\frac{\pi}{4}}$, quelle est la nature du nombre $Z=z_{1}^{3}\times z_{2}^{2}$ ?'
+      choices:
+      - Un imaginaire pur, $Z=-16i$
+      - Un réel, $Z=16$
+      - Un réel, $Z=-16$
+      - Un complexe de partie réelle et de partie imaginaire non nulles
+      answer: 0
+      feedback:
+      - null
+      - 'Un argument de $0$ donnerait un réel positif ; ici l''argument total vaut $-\dfrac{\pi}{2}$.'
+      - 'Un argument de $\pi$ donnerait un réel négatif ; recompte $3\times\left(-\dfrac{\pi}{3}\right)+2\times\dfrac{\pi}{4}$.'
+      - 'L''argument total est un multiple de $\dfrac{\pi}{2}$ : le point image est sur un axe.'
+      explanation: '$z_{1}=2\,\mathrm{e}^{-i\frac{\pi}{3}}$ car $\cos\theta=\dfrac{1}{2}$ et $\sin\theta=-\dfrac{\sqrt{3}}{2}$. Alors $z_{1}^{3}=8\,\mathrm{e}^{-i\pi}=-8$ et $z_{2}^{2}=2\,\mathrm{e}^{i\frac{\pi}{2}}=2i$, donc $Z=-16i$ : un **imaginaire pur**. On ne calcule jamais $z_{1}^{3}$ sous forme algébrique.'
+    - type: mcq
+      level: 2
+      prompt: Quelle est la forme algébrique de $4\,\mathrm{e}^{i\frac{2\pi}{3}}$ ?
+      choices:
+      - $-2+2i\sqrt{3}$
+      - $2+2i\sqrt{3}$
+      - $-2\sqrt{3}+2i$
+      - $-2-2i\sqrt{3}$
+      answer: 0
+      feedback:
+      - null
+      - '$\cos\left(\dfrac{2\pi}{3}\right)=-\dfrac{1}{2}$ : la partie réelle est négative.'
+      - Les valeurs du cosinus et du sinus ont été échangées.
+      - '$\sin\left(\dfrac{2\pi}{3}\right)=+\dfrac{\sqrt{3}}{2}$ : la partie imaginaire est positive.'
+      explanation: '$4\,\mathrm{e}^{i\frac{2\pi}{3}}=4\left(\cos\dfrac{2\pi}{3}+i\sin\dfrac{2\pi}{3}\right)=4\left(-\dfrac{1}{2}+i\dfrac{\sqrt{3}}{2}\right)=-2+2i\sqrt{3}$.'
+    - type: input
+      level: 3
+      prompt: Donner la partie réelle de $z=6\,\mathrm{e}^{-i\frac{\pi}{3}}$.
+      answer: '3'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$z=6\left(\cos\left(-\dfrac{\pi}{3}\right)+i\sin\left(-\dfrac{\pi}{3}\right)\right)=6\left(\dfrac{1}{2}-i\dfrac{\sqrt{3}}{2}\right)=3-3i\sqrt{3}$. La partie réelle vaut donc $3$.'
+    - type: mcq
+      level: 2
+      prompt: 'En électricité, on note $\mathrm{j}$ le nombre imaginaire (pour éviter la confusion avec l''intensité $i$). L''impédance complexe d''une bobine idéale d''inductance $L$ en régime sinusoïdal de pulsation $\omega$ vaut $\underline{Z}=\mathrm{j}L\omega$. Quel est son argument ?'
+      choices:
+      - $\dfrac{\pi}{2}$
+      - $0$
+      - $-\dfrac{\pi}{2}$
+      - $\pi$
+      answer: 0
+      feedback:
+      - null
+      - 'Un argument nul correspond à un réel positif : c''est le cas d''un résistor, pas d''une bobine.'
+      - '$-\dfrac{\pi}{2}$ est l''argument de $\dfrac{1}{\mathrm{j}C\omega}$, l''impédance d''un condensateur.'
+      - Un argument de $\pi$ correspondrait à un réel négatif.
+      explanation: '$\mathrm{j}L\omega=L\omega\,\mathrm{e}^{\mathrm{j}\frac{\pi}{2}}$ avec $L\omega>0$ : l''argument vaut $\dfrac{\pi}{2}$. Physiquement, la tension aux bornes d''une bobine est en **avance** d''un quart de période sur le courant.'
+    - type: input
+      level: 3
+      prompt: 'Un résistor $R=30\ \Omega$ et une bobine telle que $L\omega=40\ \Omega$ sont en série : l''impédance complexe vaut $\underline{Z}=30+40\mathrm{j}$. Calculer son module $\left|\underline{Z}\right|$.'
+      answer: '50'
+      numeric: true
+      tolerance: 0.5
+      unit: Ω
+      explanation: '$\left|\underline{Z}\right|=\sqrt{30^{2}+40^{2}}=\sqrt{900+1\,600}=\sqrt{2\,500}=50\ \Omega$. C''est le triangle $(3\,;4\,;5)$, très fréquent dans les exercices d''électricité.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre la méthode pour écrire $z=a+ib$ sous forme exponentielle.
+      steps:
+      - Vérifier que $z$ est non nul
+      - Calculer le module $r=\sqrt{a^{2}+b^{2}}$
+      - Placer mentalement le point image pour repérer son quadrant
+      - Calculer $\cos(\theta)=\dfrac{a}{r}$ et $\sin(\theta)=\dfrac{b}{r}$
+      - Trouver l'angle remarquable $\theta$ qui vérifie **les deux** égalités
+      - Écrire $z=r\,\mathrm{e}^{i\theta}$ et vérifier en développant
+      explanation: 'L''erreur la plus fréquente est de ne calculer que le cosinus : deux angles opposés ont le même cosinus. Il faut **les deux** conditions, ou bien le quadrant.'
+    - type: grid
+      level: 3
+      prompt: Pour chaque affirmation sur la forme exponentielle, cocher vrai ou faux.
+      rows:
+      - id: mod
+        label: le module $r$ d'un complexe non nul est toujours strictement positif
+      - id: conj
+        label: $\overline{r\,\mathrm{e}^{i\theta}}=r\,\mathrm{e}^{-i\theta}$
+      - id: prod
+        label: le module d'un produit est le produit des modules
+      - id: som
+        label: l'argument d'une somme est la somme des arguments
+      - id: uniq
+        label: l'argument d'un complexe non nul est un nombre unique
+      cols:
+      - id: V
+        label: Vrai
+      - id: F
+        label: Faux
+      answer:
+      - Vmod
+      - Vconj
+      - Vprod
+      - Fsom
+      - Funiq
+      cellFeedback:
+        Fmod: c'est une distance $OM$, nulle seulement si $z=0$
+        Fconj: conjuguer revient à changer le signe de l'argument
+        Fprod: 'c''est la règle « les modules se multiplient »'
+        Vsom: 'rien de tel pour la somme : la forme exponentielle sert au produit, la forme algébrique à la somme'
+        Vuniq: 'il est défini **modulo** $2\pi$ : $\dfrac{\pi}{4}$ et $\dfrac{9\pi}{4}$ conviennent aussi bien'
+      explanation: 'À retenir : **somme et différence en forme algébrique, produit et quotient en forme exponentielle.** Choisir la bonne écriture, c''est déjà la moitié de l''exercice.'
+    - type: guided
+      level: 3
+      title: L'impédance complexe d'un circuit RL
+      prompt: 'Exercice complet : impédance complexe, module et argument, forme exponentielle et interprétation du déphasage.'
+      intro: 'Un résistor de résistance $R=30\ \Omega$ et une bobine d''inductance $L=0{,}10$ H sont branchés **en série** sur une source sinusoïdale de pulsation $\omega=400\ \mathrm{rad}\cdot\mathrm{s}^{-1}$. En régime sinusoïdal, on associe au dipôle son **impédance complexe**
+
+
+        $$\underline{Z}=R+\mathrm{j}L\omega,$$
+
+
+        où $\mathrm{j}$ désigne le nombre imaginaire. Le module $\left|\underline{Z}\right|$ est l''impédance en ohms, et son argument $\varphi$ est le déphasage de la tension par rapport au courant.'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Calculer la réactance $L\omega$, en ohms.'
+        answer: '40'
+        numeric: true
+        tolerance: 0.5
+        unit: Ω
+        explanation: '$L\omega=0{,}10\times400=40\ \Omega$. Une inductance en henrys multipliée par une pulsation en $\mathrm{rad}\cdot\mathrm{s}^{-1}$ donne bien des ohms.'
+      - kind: mcq
+        prompt: '**Étape 2.** Quelle est la forme algébrique de $\underline{Z}$ ?'
+        choices:
+        - $\underline{Z}=30+40\mathrm{j}$
+        - $\underline{Z}=40+30\mathrm{j}$
+        - $\underline{Z}=30-40\mathrm{j}$
+        - $\underline{Z}=70$
+        answer:
+        - 0
+        feedback:
+        - null
+        - La partie réelle est la résistance, la partie imaginaire la réactance.
+        - 'Le signe moins correspondrait à un condensateur : pour une bobine, la réactance est positive.'
+        - 'Les impédances complexes s''ajoutent en série, mais $30$ et $40\mathrm{j}$ ne s''additionnent pas comme deux réels.'
+        explanation: 'En série les impédances complexes s''ajoutent : $\underline{Z}=\underline{Z_{R}}+\underline{Z_{L}}=30+40\mathrm{j}$.'
+      - kind: input
+        prompt: '**Étape 3.** Calculer l''impédance $\left|\underline{Z}\right|$ du circuit, en ohms.'
+        answer: '50'
+        numeric: true
+        tolerance: 0.5
+        unit: Ω
+        explanation: '$\left|\underline{Z}\right|=\sqrt{30^{2}+40^{2}}=\sqrt{2\,500}=50\ \Omega$. Noter que $50\neq30+40$ : les impédances **ne s''ajoutent pas** en valeur, seules les impédances complexes s''ajoutent.'
+      - kind: input
+        prompt: '**Étape 4.** Calculer le déphasage $\varphi=\arg\left(\underline{Z}\right)$, en degrés, arrondi à $0{,}1$.'
+        answer: '53.1'
+        numeric: true
+        tolerance: 0.3
+        unit: °
+        explanation: '$\cos(\varphi)=\dfrac{30}{50}=0{,}6$ et $\sin(\varphi)=\dfrac{40}{50}=0{,}8$, donc $\varphi=\arctan\left(\dfrac{40}{30}\right)\approx53{,}1^{\circ}$, soit environ $0{,}927$ rad. L''argument est positif car les deux parties le sont.'
+      - kind: mcq
+        prompt: '**Étape 5.** Quelle est la forme exponentielle de $\underline{Z}$ ?'
+        choices:
+        - $\underline{Z}=50\,\mathrm{e}^{0{,}927\mathrm{j}}$
+        - $\underline{Z}=50\,\mathrm{e}^{-0{,}927\mathrm{j}}$
+        - $\underline{Z}=70\,\mathrm{e}^{0{,}927\mathrm{j}}$
+        - $\underline{Z}=50\,\mathrm{e}^{53{,}1\mathrm{j}}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - L'argument est **positif** ici, car les deux parties de $\underline{Z}$ sont positives.
+        - 'Le module vaut $50\ \Omega$ : c''est une racine carrée, pas une somme.'
+        - 'L''argument s''écrit en **radians** dans une forme exponentielle : $53{,}1^{\circ}=0{,}927$ rad.'
+        explanation: '$\underline{Z}=50\,\mathrm{e}^{0{,}927\mathrm{j}}\ \Omega$. Cette écriture contient toute l''information du dipôle : $50$ donne le rapport des amplitudes, $0{,}927$ rad le décalage temporel entre tension et courant.'
+      - kind: input
+        prompt: '**Étape 6.** L''intensité efficace vaut $I=2{,}0$ A. Calculer la tension efficace $U=\left|\underline{Z}\right|\times I$ aux bornes du dipôle.'
+        answer: '100'
+        numeric: true
+        tolerance: 1
+        unit: V
+        explanation: '$U=50\times2{,}0=100$ V. On n''utilise que le **module** pour les valeurs efficaces ; l''argument sert au déphasage.'
+      - kind: mcq
+        prompt: '**Étape 7.** Comment interpréter le signe de $\varphi$ ?'
+        choices:
+        - La tension est en avance de $53{,}1^{\circ}$ sur le courant, comportement inductif
+        - Le courant est en avance de $53{,}1^{\circ}$ sur la tension, comportement capacitif
+        - Tension et courant sont en phase
+        - Le signe de $\varphi$ n'a pas de sens physique
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'C''est le comportement d''un condensateur, pour lequel $\varphi<0$.'
+        - 'Ils ne seraient en phase que si $L\omega=0$, c''est-à-dire sans bobine.'
+        - 'C''est justement l''intérêt de l''impédance complexe : l''argument porte le déphasage.'
+        explanation: '$\varphi=\arg\left(\underline{Z}\right)>0$ signifie que la tension est en avance sur le courant : c''est la signature d''un circuit **inductif**. Le facteur de puissance vaut ici $\cos(\varphi)=0{,}6$.'
+      - kind: input
+        prompt: '**Étape 8.** On double la pulsation : $\omega=800\ \mathrm{rad}\cdot\mathrm{s}^{-1}$. Calculer la nouvelle impédance $\left|\underline{Z}\right|$, arrondie à $0{,}1$.'
+        answer: '85.4'
+        numeric: true
+        tolerance: 0.3
+        unit: Ω
+        explanation: 'La réactance devient $L\omega=0{,}10\times800=80\ \Omega$, donc $\left|\underline{Z}\right|=\sqrt{30^{2}+80^{2}}=\sqrt{7\,300}\approx85{,}4\ \Omega$. L''impédance a moins que doublé, car la partie résistive, elle, ne change pas.'
+  - id: mathstle-python
+    title: Python et méthodes numériques
+    icon: 🐍
+    description: Méthode des rectangles, méthode d'Euler, dichotomie, lecture et complétion de scripts Python courts.
+    prerequisites:
+    - mathstle-integrale
+    lesson: lessons/maths-tle-python.md
+    items:
+    # Les scripts des énoncés sont écrits ligne par ligne en code en ligne `…` : le texte riche des
+    # exercices ne gère pas les blocs ``` (seules les leçons les acceptent, cf. app/js/render.js).
+    # Le rendu HTML d'un <code> en ligne écrase les espaces de début de ligne : l'indentation est donc
+    # matérialisée par des points médians, « ···· » = 4 espaces = un niveau, comme dans un éditeur qui
+    # affiche les blancs. Les leçons, elles, utilisent de vrais blocs ```python.
+    - type: mcq
+      level: 1
+      prompt: 'Que parcourt la boucle `for i in range(4):` ?'
+      choices:
+      - les valeurs $0$, $1$, $2$, $3$
+      - les valeurs $1$, $2$, $3$, $4$
+      - les valeurs $0$, $1$, $2$, $3$, $4$
+      - la seule valeur $4$
+      answer: 0
+      feedback:
+      - null
+      - 'En Python, la numérotation commence à $0$.'
+      - '`range(4)` s''arrête **avant** $4$ : il y a exactement $4$ valeurs.'
+      - '`range(4)` produit une suite de $4$ valeurs, pas une seule.'
+      explanation: '`range(n)` engendre les entiers de $0$ à $n-1$, soit $n$ valeurs. C''est la source d''erreur numéro un dans les programmes de sommation.'
+    - type: mcq
+      level: 1
+      prompt: En Python, à quoi sert l'indentation (le décalage vers la droite) ?
+      choices:
+      - Elle délimite les blocs, par exemple le corps d'une boucle ou d'une fonction
+      - Elle sert uniquement à rendre le programme plus lisible
+      - Elle indique le nombre de tours de la boucle
+      - Elle remplace les parenthèses dans les calculs
+      answer: 0
+      feedback:
+      - null
+      - 'Elle rend le programme lisible, mais surtout elle est **obligatoire** : elle a un sens.'
+      - Le nombre de tours est fixé par `range`, pas par l'indentation.
+      - L'indentation n'a rien à voir avec les priorités de calcul.
+      explanation: 'Ce qui est indenté sous un `for` est répété ; ce qui est revenu à gauche est exécuté une seule fois, après la boucle. Déplacer un `return` d''un cran change complètement le résultat.'
+    - type: mcq
+      level: 1
+      prompt: Sur quel principe repose la **méthode des rectangles** pour approcher une intégrale ?
+      choices:
+      - On découpe $\left[a\,;b\right]$ en $n$ morceaux de largeur $\Delta x$ et on somme les aires $f(x_{i})\Delta x$
+      - On calcule une primitive de $f$ puis on évalue la différence $F(b)-F(a)$
+      - On tire des points au hasard et on compte ceux qui tombent sous la courbe
+      - On remplace la courbe par sa tangente au point d'abscisse $a$
+      answer: 0
+      feedback:
+      - null
+      - C'est la méthode exacte ; la méthode des rectangles sert justement quand on ne connaît pas de primitive.
+      - C'est la méthode de **Monte-Carlo**, une autre situation algorithmique du programme.
+      - C'est l'idée de la méthode d'**Euler**, qui approche une solution d'équation différentielle.
+      explanation: 'On approche $\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x$ par $\sum_{i=0}^{n-1}f(x_{i})\,\Delta x$ avec $\Delta x=\dfrac{b-a}{n}$. Plus $n$ est grand, meilleure est l''approximation.
+
+
+        {{fig:mathstle-rectangles}}'
+    - type: mcq
+      level: 2
+      prompt: |-
+        On donne la fonction Python suivante (les points « · » matérialisent les espaces d'indentation).
+
+        `def aire(f, a, b, n):`
+        `····pas = (b - a) / n`
+        `····s = 0`
+        `····for i in range(n):`
+        `········s = s + f(a + i * pas)`
+        `····return s * pas`
+
+        Que renvoie l'appel `aire(f, a, b, n)` ?
+      choices:
+      - Une valeur approchée de $\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x$ par les rectangles à gauche
+      - La valeur exacte de $\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x$
+      - La somme des $f(x_{i})$, sans multiplication par la largeur
+      - La valeur moyenne de $f$ sur $\left[a\,;b\right]$
+      answer: 0
+      feedback:
+      - null
+      - 'C''est une **approximation** : elle ne devient exacte qu''à la limite quand $n$ tend vers $+\infty$.'
+      - 'La multiplication par `pas` est bien faite, à la dernière ligne : `return s * pas`.'
+      - 'Il faudrait diviser par $b-a$ pour obtenir la valeur moyenne : ce n''est pas le cas ici.'
+      explanation: 'Les points utilisés sont $a$, $a+\Delta x$, …, $a+(n-1)\Delta x$ : ce sont les bornes **gauches** des sous-intervalles. La somme accumulée dans `s` est multipliée une seule fois par `pas` à la fin, ce qui revient à factoriser $\Delta x$.'
+    - type: input
+      level: 2
+      prompt: 'Appliquer la méthode des rectangles à gauche à $f(x)=x$ sur $\left[0\,;1\right]$ avec $n=4$. Quelle valeur obtient-on ?'
+      answer: '0.375'
+      numeric: true
+      tolerance: 0.005
+      explanation: '$\Delta x=0{,}25$ et les points sont $0$ ; $0{,}25$ ; $0{,}5$ ; $0{,}75$. La somme des images vaut $1{,}5$, donc l''approximation est $1{,}5\times0{,}25=0{,}375$. La valeur exacte est $\displaystyle\int_{0}^{1}x\,\mathrm{d}x=0{,}5$ : les rectangles à gauche **sous-estiment** ici, car $f$ est croissante.'
+    - type: mcq
+      level: 3
+      prompt: |-
+        Dans la fonction `aire` précédente, un élève écrit la dernière ligne
+
+        `····return s`
+
+        au lieu de `····return s * pas`. Que renvoie alors la fonction ?
+      choices:
+      - La somme des $f(x_{i})$, qui n'est pas homogène à une aire
+      - La même chose, car `pas` vaut $1$
+      - Une erreur, car `s` n'est pas défini
+      - L'aire, mais avec le signe opposé
+      answer: 0
+      feedback:
+      - null
+      - '`pas` ne vaut $1$ que dans le cas très particulier où $b-a=n$.'
+      - '`s` est bien défini : il est initialisé à $0$ puis incrémenté dans la boucle.'
+      - Oublier un facteur ne change pas le signe du résultat.
+      explanation: 'Oublier `* pas` est l''erreur classique : le programme renvoie $\sum f(x_{i})$ au lieu de $\sum f(x_{i})\,\Delta x$, donc un résultat $n$ fois trop grand quand $b-a=1$. Test de bon sens : sur $\left[0\,;1\right]$ avec $f(x)=x$ et $n=4$, il renverrait $1{,}5$ au lieu de $0{,}375$.'
+    - type: mcq
+      level: 3
+      prompt: 'Pour $f(x)=\mathrm{e}^{-x}$ sur $\left[0\,;1\right]$ avec $n=100$, le programme renvoie $0{,}6353$, alors que la valeur exacte de l''intégrale est $0{,}6321$. Pourquoi cette surestimation ?'
+      choices:
+      - Parce que $f$ est **décroissante** : sur chaque morceau, la borne gauche donne la plus grande valeur de $f$
+      - Parce que $n$ est trop petit pour que la méthode fonctionne
+      - Parce que l'ordinateur arrondit à chaque addition
+      - Parce que la fonction exponentielle n'admet pas de primitive
+      answer: 0
+      feedback:
+      - null
+      - '$n=100$ donne déjà une erreur inférieure à $0{,}004$ : le problème est le **sens** de l''erreur, pas sa taille.'
+      - Les arrondis machine sont de l'ordre de $10^{-15}$, bien trop petits pour expliquer un écart de $0{,}003$.
+      - '$x\mapsto-\mathrm{e}^{-x}$ est une primitive de $\mathrm{e}^{-x}$ : c''est justement ce qui donne la valeur exacte $1-\mathrm{e}^{-1}$.'
+      explanation: 'Chaque rectangle à gauche « dépasse » la courbe quand $f$ décroît, donc la somme majore l''intégrale. Pour une fonction croissante, c''est l''inverse. Doubler $n$ divise l''écart par environ $2$.'
+    - type: input
+      level: 2
+      prompt: Calculer la valeur exacte de $\displaystyle\int_{0}^{1}\mathrm{e}^{-x}\,\mathrm{d}x$, arrondie à $0{,}001$.
+      answer: '0.632'
+      numeric: true
+      tolerance: 0.003
+      explanation: 'Une primitive de $x\mapsto\mathrm{e}^{-x}$ est $x\mapsto-\mathrm{e}^{-x}$, donc l''intégrale vaut $\left(-\mathrm{e}^{-1}\right)-\left(-1\right)=1-\mathrm{e}^{-1}\approx0{,}632$. C''est la valeur de référence à laquelle on compare le résultat du programme.'
+    - type: mcq
+      level: 1
+      prompt: 'Sur quelle formule repose la **méthode d''Euler** pour approcher la solution de $y''=f(x,y)$ ?'
+      choices:
+      - $y_{k+1}=y_{k}+h\times y'_{k}$
+      - $y_{k+1}=y_{k}\times h$
+      - $y_{k+1}=y_{k}+y'_{k}$
+      - $y_{k+1}=\dfrac{y_{k}}{h}$
+      answer: 0
+      feedback:
+      - null
+      - 'On **ajoute** un accroissement, on ne multiplie pas la valeur précédente.'
+      - 'Il manque le pas $h$ : sans lui, l''accroissement ne dépendrait plus de la finesse du découpage.'
+      - 'Le pas $h$ multiplie la dérivée, il ne divise pas la valeur.'
+      explanation: 'On remplace la courbe par sa **tangente** sur un petit intervalle de longueur $h$ : $y(x+h)\approx y(x)+h\,y''(x)$. En enchaînant les pas, on construit une ligne brisée qui approche la courbe.
+
+
+        {{fig:mathstle-euler}}'
+    - type: mcq
+      level: 2
+      prompt: 'Pour l''équation $y''=y$, que devient la relation d''Euler ?'
+      choices:
+      - $y_{k+1}=(1+h)\,y_{k}$
+      - $y_{k+1}=h\,y_{k}$
+      - $y_{k+1}=y_{k}+h$
+      - $y_{k+1}=\mathrm{e}^{h}y_{k}$
+      answer: 0
+      feedback:
+      - null
+      - 'Le terme $y_{k}$ initial ne disparaît pas : on lui **ajoute** $h\,y_{k}$.'
+      - 'Ici $y''_{k}=y_{k}$, donc l''accroissement est $h\,y_{k}$ et non $h$.'
+      - '$\mathrm{e}^{h}$ est le facteur **exact** ; la méthode d''Euler le remplace par son approximation affine $1+h$.'
+      explanation: '$y''=y$ donne $y_{k+1}=y_{k}+h\,y_{k}=(1+h)y_{k}$. La suite obtenue est **géométrique** de raison $1+h$, ce qui permet de calculer directement $y_{n}=(1+h)^{n}y_{0}$.'
+    - type: input
+      level: 2
+      prompt: 'Appliquer la méthode d''Euler à $y''=y$ avec $y(0)=1$, un pas $h=0{,}1$ et $10$ étapes. Quelle valeur obtient-on pour $y(1)$ ? (arrondir à $0{,}001$)'
+      answer: '2.594'
+      numeric: true
+      tolerance: 0.003
+      explanation: '$y_{10}=(1+0{,}1)^{10}=1{,}1^{10}\approx2{,}594$, à comparer à la valeur exacte $\mathrm{e}\approx2{,}718$. C''est exactement la situation algorithmique demandée par le programme.'
+    - type: input
+      level: 3
+      prompt: 'Même question avec un pas $h=0{,}01$ et $100$ étapes. (arrondir à $0{,}001$)'
+      answer: '2.705'
+      numeric: true
+      tolerance: 0.003
+      explanation: '$y_{100}=1{,}01^{100}\approx2{,}705$. Diviser le pas par $10$ divise l''écart à $\mathrm{e}$ par environ $10$ : il passe de $0{,}125$ à $0{,}013$.'
+    - type: mcq
+      level: 3
+      prompt: 'Pourquoi la méthode d''Euler appliquée à $y''=y$ donne-t-elle toujours une valeur **inférieure** à $\mathrm{e}^{x}$ ?'
+      choices:
+      - Parce que la courbe de l'exponentielle est au-dessus de chacune de ses tangentes
+      - Parce que l'ordinateur arrondit toujours par défaut
+      - Parce que le pas $h$ est trop grand
+      - Parce que la méthode oublie la condition initiale
+      answer: 0
+      feedback:
+      - null
+      - Les arrondis machine sont négligeables devant l'écart observé.
+      - 'Réduire $h$ diminue l''écart, mais le résultat reste inférieur : le sens de l''erreur ne change pas.'
+      - 'La condition initiale $y_{0}=1$ est bien utilisée : c''est le point de départ.'
+      explanation: 'La fonction exponentielle est **convexe** : sa courbe reste au-dessus de ses tangentes. Comme chaque pas d''Euler suit une tangente, la ligne brisée passe systématiquement sous la courbe.'
+    - type: mcq
+      level: 1
+      prompt: En quoi consiste la méthode de **dichotomie** pour approcher une solution de $f(x)=0$ ?
+      choices:
+      - On part d'un intervalle où $f$ change de signe et on le coupe en deux à chaque étape, en gardant la moitié qui contient la solution
+      - On teste toutes les valeurs de l'intervalle avec un pas fixe
+      - On calcule la dérivée et on cherche où elle s'annule
+      - On tire des points au hasard jusqu'à tomber sur la solution
+      answer: 0
+      feedback:
+      - null
+      - 'C''est le **balayage** : plus simple, mais beaucoup plus lent.'
+      - Chercher où la dérivée s'annule donne les extremums, pas les racines.
+      - Le hasard sert à Monte-Carlo, pas à la recherche d'une solution.
+      explanation: 'À chaque étape, l''amplitude de l''intervalle est **divisée par deux** : la précision progresse très vite. Dix étapes divisent l''amplitude par $1\,024$.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre les étapes d'une itération de dichotomie sur $\left[a\,;b\right]$.
+      steps:
+      - Vérifier que $f(a)$ et $f(b)$ sont de signes contraires
+      - Calculer le milieu $m=\dfrac{a+b}{2}$
+      - Calculer $f(m)$
+      - Comparer le signe de $f(m)$ à celui de $f(a)$
+      - Remplacer $b$ par $m$ si les signes sont contraires, sinon remplacer $a$ par $m$
+      - Recommencer tant que l'amplitude $b-a$ dépasse la précision voulue
+      explanation: 'Le test initial de changement de signe est indispensable : sans lui, rien ne garantit qu''il existe une solution dans l''intervalle, et l''algorithme renvoie n''importe quoi.'
+    - type: mcq
+      level: 2
+      prompt: |-
+        Quelle ligne complète correctement la boucle de dichotomie ci-dessous (les points « · » matérialisent l'indentation) ?
+
+        `while b - a > 0.001:`
+        `····m = (a + b) / 2`
+        `····if f(a) * f(m) <= 0:`
+        `········...`
+        `····else:`
+        `········a = m`
+      choices:
+      - '`b = m`'
+      - '`a = m`'
+      - '`b = a`'
+      - '`m = b`'
+      answer: 0
+      feedback:
+      - null
+      - 'C''est déjà ce que fait le `else` : les deux branches feraient la même chose et l''intervalle ne rétrécirait pas.'
+      - Cette instruction réduirait l'intervalle à un point et fausserait tout.
+      - Modifier `m` ne change pas l'intervalle de travail.
+      explanation: 'Si `f(a) * f(m) <= 0`, alors $f$ change de signe entre $a$ et $m$ : la solution est dans $\left[a\,;m\right]$, donc la nouvelle borne droite est $m$. Sinon la solution est dans $\left[m\,;b\right]$ et on remplace $a$.'
+    - type: input
+      level: 3
+      prompt: 'On applique la dichotomie sur $\left[1\,;2\right]$. Combien d''étapes faut-il pour que l''amplitude de l''intervalle devienne inférieure à $0{,}01$ ?'
+      answer: '7'
+      numeric: true
+      tolerance: 0
+      explanation: 'Après $n$ étapes, l''amplitude vaut $\dfrac{1}{2^{n}}$. Il faut $2^{n}>100$, donc $n=7$ car $2^{6}=64$ et $2^{7}=128$ : l''amplitude vaut alors $\dfrac{1}{128}\approx0{,}0078<0{,}01$.'
+    - type: input
+      level: 2
+      prompt: 'On cherche la solution de $\mathrm{e}^{x}=3$ par dichotomie sur $\left[1\,;2\right]$. Quelle est la valeur exacte de cette solution, arrondie à $0{,}001$ ?'
+      answer: '1.099'
+      numeric: true
+      tolerance: 0.003
+      explanation: '$\mathrm{e}^{x}=3$ équivaut à $x=\ln(3)\approx1{,}0986$. Un algorithme n''est utile que quand on ne sait **pas** résoudre à la main : ici il sert surtout à vérifier le programme sur un cas connu.'
+    - type: mcq
+      level: 2
+      prompt: 'Quelle est la différence entre une boucle `for` et une boucle `while` ?'
+      choices:
+      - '`for` répète un nombre de tours connu à l''avance, `while` répète tant qu''une condition est vraie'
+      - Il n'y en a aucune, les deux sont interchangeables
+      - '`for` s''utilise pour les nombres, `while` pour les chaînes de caractères'
+      - '`while` teste la condition à la fin de chaque tour'
+      answer: 0
+      feedback:
+      - null
+      - 'Toute boucle `for` peut s''écrire avec `while`, mais l''inverse est faux : le nombre de tours d''un `while` peut être inconnu.'
+      - Le type des données n'a rien à voir avec le choix de la boucle.
+      - '`while` teste la condition **avant** chaque tour ; si elle est fausse dès le départ, le corps n''est jamais exécuté.'
+      explanation: 'Les rectangles et la méthode d''Euler utilisent un `for` (le nombre de pas est fixé) ; la dichotomie utilise un `while` (on s''arrête quand la précision est atteinte).'
+    - type: grid
+      level: 3
+      prompt: Pour chaque affirmation sur ces programmes, cocher vrai ou faux.
+      rows:
+      - id: rg
+        label: '`range(n)` produit $n$ valeurs'
+      - id: acc
+        label: un accumulateur doit être initialisé avant la boucle
+      - id: ega
+        label: '`=` compare deux valeurs en Python'
+      - id: dicho
+        label: la dichotomie divise l'amplitude par deux à chaque étape
+      - id: euler
+        label: la méthode d'Euler donne la valeur exacte de la solution
+      cols:
+      - id: V
+        label: Vrai
+      - id: F
+        label: Faux
+      answer:
+      - Vrg
+      - Vacc
+      - Fega
+      - Vdicho
+      - Feuler
+      cellFeedback:
+        Frg: 'de $0$ à $n-1$, cela fait bien $n$ valeurs'
+        Facc: 'sinon la première instruction `s = s + …` échoue : `s` n''existe pas encore'
+        Vega: '`=` **affecte** une valeur ; c''est `==` qui compare'
+        Fdicho: c'est la définition même de la méthode
+        Veuler: 'c''est une **approximation** par une ligne brisée : elle n''est exacte qu''au point de départ'
+      explanation: 'Trois réflexes de relecture : l''initialisation de l''accumulateur, la borne du `range`, et le `*` du pas dans les sommes de rectangles.'
+    - type: guided
+      level: 3
+      title: La méthode d'Euler pour approcher le nombre e
+      prompt: 'Exercice complet : compléter un script d''Euler, dérouler les premières étapes, comparer à la solution exacte et évaluer l''erreur.'
+      intro: |-
+        La **méthode d'Euler** approche la courbe d'une solution d'équation différentielle par une ligne brisée : partant de la condition initiale, on avance à chaque étape le long de la tangente, sur un pas $h$ :
+
+        $$y_{k+1}=y_{k}+h\times y'_{k}.$$
+
+        On l'applique ici à $y'=y$ avec $y(0)=1$ sur $\left[0\,;1\right]$, dont la solution exacte est $y(x)=\mathrm{e}^{x}$. Le script suivant est à compléter (les points « · » matérialisent les espaces d'indentation).
+
+        `def euler(h, n):`
+        `····x, y = 0, 1`
+        `····for k in range(n):`
+        `········y = y + h * ...`
+        `········x = x + h`
+        `····return y`
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Par quoi remplacer les points de suspension dans `y = y + h * ...` ?'
+        choices:
+        - '`y`'
+        - '`x`'
+        - '`h`'
+        - '`k`'
+        answer:
+        - 0
+        feedback:
+        - null
+        - '`x` est l''abscisse courante ; elle n''intervient pas dans $y''=y$.'
+        - '`h` est déjà en facteur : l''écrire deux fois donnerait $h^{2}$.'
+        - '`k` est le compteur de la boucle, il n''a pas de sens dans l''équation.'
+        explanation: 'L''équation $y''=y$ dit que la dérivée vaut $y$ lui-même. La ligne devient donc `y = y + h * y`, ce qui revient à multiplier $y$ par $1+h$ à chaque tour.'
+      - kind: input
+        prompt: '**Étape 2.** On veut parcourir $\left[0\,;1\right]$ en $n=10$ étapes. Que vaut le pas $h$ ?'
+        answer: '0.1'
+        numeric: true
+        tolerance: 0.001
+        explanation: '$h=\dfrac{1-0}{10}=0{,}1$. Le pas est toujours la longueur de l''intervalle divisée par le nombre d''étapes.'
+      - kind: input
+        prompt: '**Étape 3.** Quelle est la valeur de `y` après le premier tour de boucle ?'
+        answer: '1.1'
+        numeric: true
+        tolerance: 0.001
+        explanation: '$y_{1}=y_{0}+h\,y_{0}=1+0{,}1\times1=1{,}1$. La valeur exacte est $\mathrm{e}^{0{,}1}\approx1{,}105$ : l''écart est déjà visible.'
+      - kind: input
+        prompt: '**Étape 4.** Et après le deuxième tour ? (arrondir à $0{,}01$)'
+        answer: '1.21'
+        numeric: true
+        tolerance: 0.005
+        explanation: '$y_{2}=1{,}1\times1{,}1=1{,}21$. On reconnaît une suite **géométrique** de raison $1+h=1{,}1$, donc $y_{k}=1{,}1^{k}$.'
+      - kind: input
+        prompt: '**Étape 5.** Que renvoie l''appel `euler(0.1, 10)` ? (arrondir à $0{,}001$)'
+        answer: '2.594'
+        numeric: true
+        tolerance: 0.003
+        explanation: '$y_{10}=1{,}1^{10}\approx2{,}594$. Le programme approche donc $\mathrm{e}^{1}=\mathrm{e}$.'
+      - kind: input
+        prompt: '**Étape 6.** Calculer l''écart $\mathrm{e}-y_{10}$, arrondi à $0{,}001$.'
+        answer: '0.125'
+        numeric: true
+        tolerance: 0.003
+        explanation: '$2{,}718\,282-2{,}593\,742\approx0{,}125$, soit une erreur relative d''environ $4{,}6\ \%$. C''est beaucoup pour un pas de $0{,}1$.'
+      - kind: mcq
+        prompt: '**Étape 7.** Que renvoie `euler(0.01, 100)`, et qu''en conclure ?'
+        choices:
+        - Environ $2{,}705$ ; diviser le pas par $10$ divise l'erreur par environ $10$
+        - Environ $2{,}594$ ; le résultat ne dépend pas du pas
+        - Environ $2{,}718$ ; le résultat devient exact
+        - Environ $1{,}01$ ; le résultat s'effondre quand le pas diminue
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Le nombre d''étapes change aussi : $1{,}01^{100}\neq1{,}1^{10}$.'
+        - 'La méthode ne devient jamais exacte pour $h$ fini : l''écart vaut encore $0{,}013$.'
+        - '$1{,}01$ est la **raison** de la suite, pas son centième terme.'
+        explanation: '$1{,}01^{100}\approx2{,}705$, donc l''écart à $\mathrm{e}$ tombe à $0{,}013$ contre $0{,}125$ : l''erreur de la méthode d''Euler est approximativement **proportionnelle au pas** $h$.'
+      - kind: mcq
+        prompt: '**Étape 8.** Pourquoi le résultat est-il toujours inférieur à $\mathrm{e}$ ?'
+        choices:
+        - Parce que la courbe de l'exponentielle est au-dessus de chacune de ses tangentes
+        - Parce que Python arrondit systématiquement par défaut
+        - Parce qu'il manque une étape dans la boucle
+        - Parce que la condition initiale est mal choisie
+        answer:
+        - 0
+        feedback:
+        - null
+        - Les arrondis machine valent environ $10^{-15}$, sans commune mesure avec l'écart observé.
+        - '`range(10)` effectue bien $10$ tours : le compte est bon.'
+        - '$y(0)=1$ est la condition imposée par l''énoncé, elle est exacte.'
+        explanation: 'L''exponentielle est convexe : chaque segment de tangente passe **sous** la courbe. La ligne brisée d''Euler prend donc du retard à chaque pas, et l''écart s''accumule.
+
+
+          {{fig:mathstle-euler}}'
 
 

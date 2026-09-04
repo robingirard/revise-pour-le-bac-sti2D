@@ -1,0 +1,98 @@
+%% guide-diffuseur-schema — diffuseur de parfum : schéma cinématique plan.
+%% Pignon moteur 1 -> pignon double 2 -> pignon double 3 -> came 4 -> tête d'aérosol 5.
+%% Engrenages représentés par leurs cercles primitifs (échelle 0,032 cm par dent) :
+%%   d(A,B) = r1 + r2, d(B,C) = r2' + r3, d(C,D) = r3' + r_came : les contacts sont tangents.
+%% Arbres 1, 2, 3 et came 4 : liaisons pivot avec le bâti 0 (symboles au centre, bras vert).
+%% Tête 5 : glissière verticale avec le bâti ; contact ponctuel en E avec le bossage de la came.
+%% RÈGLE : aucun rapport de transmission, aucune valeur d'effort — seulement les données Z.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{backgrounds}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  primitif/.style={line width=0.8pt, dash pattern=on 5pt off 2pt on 1pt off 2pt},
+  roue/.style={line width=1.3pt, line cap=round, line join=round},
+  bras/.style={line width=1pt, line cap=round, draw=solideE},
+  fleche/.style={-{Stealth[length=5pt]}, line width=1pt},
+  lab/.style={font=\small, inner sep=1.5pt},
+  pet/.style={font=\scriptsize, inner sep=1.5pt}]
+
+\useasboundingbox (-0.2,-3.05) rectangle (7.75,2.80);
+
+%% ---- macro locale : montant de bâti vertical, hachures à gauche -------------
+\newcommand\bativert[3]{% #1 = x, #2 = y haut, #3 = y bas
+  \draw[line width=0.8pt] (#1,#2) -- (#1,#3);
+  \foreach \i in {0,1,...,11} {\pgfmathsetmacro\yy{#3+(#2-#3)*\i/11}%
+    \draw[line width=0.5pt] (#1,\yy) -- (#1-0.13,\yy+0.11);}}
+
+%% ---- géométrie (tangences exactes) -----------------------------------------
+\coordinate (A) at (5.632,1.503);   % pignon moteur 1
+\coordinate (B) at (4.22,0.40);     % pignon double 2
+\coordinate (C) at (2.30,0.40);     % pignon double 3
+\coordinate (D) at (2.127,-0.416);  % came 4
+\def\xb{1.43}                       % montant de bâti de la came et de la tête
+\def\ye{-0.98}                      % point de contact E
+
+%% ---- bras de bâti des pignons 1, 2, 3 (vers le haut) ------------------------
+\begin{scope}[on background layer]
+  \foreach \p in {A,B,C} {\draw[bras] (\p) -- (\p |- 0,2.55);}
+  \draw[bras] (D) -- (\xb,-0.416);
+  \draw[bras] (1.88,-1.85) -- (\xb,-1.85);
+\end{scope}
+\foreach \p in {A,B,C} {\pic[rotate=180] at (\p |- 0,2.55) {bati};}
+\bativert{\xb}{-0.28}{-2.00}
+\node[lab, text=black, anchor=east] at (1.28,-1.14) {\textbf{0}};
+\node[lab, anchor=west] at (6.05,2.55) {\textbf{0} bâti};
+
+%% ---- cercles primitifs (interrompus autour de la tête d'aérosol) ------------
+\begin{scope}[even odd rule]
+  \clip (-0.3,-3.1) rectangle (7.9,2.9) (1.60,-0.60) rectangle (2.66,-2.60);
+  \draw[primitif, solideB!70!black] (C) circle (1.60);   % Z3 = 50
+  \draw[primitif, solideB] (B) circle (1.472);           % Z2 = 46
+\end{scope}
+\draw[roue, solideB!70!black] (C) circle (0.384);        % Z3' = 12
+\draw[roue, solideB] (B) circle (0.32);                  % Z2' = 10
+\draw[roue, solideA] (A) circle (0.32);                  % Z1 = 10
+%% amorces de denture aux trois engrènements
+\foreach \c/\r/\a/\co in {A/0.32/218/solideA, B/1.472/38/solideB, B/0.32/180/solideB,
+                          C/1.60/0/solideB!70!black, C/0.384/258/solideB!70!black, D/0.45/78/solideA} {
+  \foreach \d in {-16,0,16} {\pgfmathsetmacro\aa{\a+\d}%
+    \draw[line width=0.6pt, \co] ([shift=(\aa:\r-0.09)]\c) -- ([shift=(\aa:\r+0.09)]\c);}}
+
+%% ---- came 4 et son bossage ---------------------------------------------------
+\draw[roue, solideA] (D) circle (0.45);
+\draw[line width=3pt, solideA, line cap=round] ([shift=(246:0.52)]D) arc (246:294:0.52);
+
+%% ---- liaisons pivot au bâti ---------------------------------------------------
+\foreach \p/\c in {A/solideA, B/solideB, C/solideB!70!black, D/solideA} {
+  \pic[s1=\c, s2=solideE, liens=false] at (\p) {pivot bout};}
+
+%% ---- tête d'aérosol 5 -----------------------------------------------------------
+\pic[s1=solideD, s2=solideE, liens=false, rotate=-90] at (2.127,-1.85) {glissiere face};
+\draw[line width=1.6pt, solideD] (2.127,{\ye-0.28}) -- (2.127,-2.30);
+\draw[roue, solideD, fill=white] (1.887,{\ye-0.28}) rectangle (2.367,\ye);
+\draw[roue, solideD, fill=white] (2.017,-2.46) rectangle (2.237,-2.30);
+\fill (2.127,\ye) circle (1.6pt);
+\node[lab, anchor=east] at (1.85,\ye) {$E$};
+
+%% ---- mouvement de la tête ------------------------------------------------------
+\draw[fleche, solideA] (2.127,-2.58) -- (2.127,-2.96);
+\node[pet, text=solideA, anchor=west] at (2.30,-2.80) {translation de \textbf{5} suivant $\vec{y}$};
+
+%% ---- étiquettes ------------------------------------------------------------------
+\node[lab, text=solideA, anchor=west] at (6.05,1.50) {\textbf{1} Z1 = 10};
+\node[lab, text=solideB, anchor=west, fill=white] at (5.05,0.95) {\textbf{2} Z2 = 46};
+\node[lab, text=solideB, anchor=west, fill=white] at (5.05,0.60) {Z2$'$ = 10};
+\node[lab, text=solideB!70!black, anchor=west] at (0.15,2.25) {\textbf{3} Z3 = 50};
+\node[lab, text=solideB!70!black, anchor=west] at (0.15,1.90) {Z3$'$ = 12};
+\node[lab, text=solideA, anchor=west, fill=white] at (2.72,-0.42) {\textbf{4} came};
+\node[lab, text=solideD, anchor=west] at (2.62,-1.62) {\textbf{5} tête d'aérosol};
+\node[pet, anchor=west] at (2.62,-2.05) {\textbf{E} : contact ponctuel came \textbf{4} / tête \textbf{5}};
+
+%% ---- trièdre ---------------------------------------------------------------------
+\repere{(6.40,-1.45)}{x}{y}{1}
+\draw[line width=0.6pt] (6.40,-1.45) circle (0.11);
+\fill (6.40,-1.45) circle (1.1pt);
+\node[pet, anchor=north east] at (6.34,-1.54) {$\vec{z}$};
+\end{tikzpicture}
+\end{document}
