@@ -40,21 +40,20 @@
 \hachures[draw=black!30]{(0,0) rectangle (\Lm,\Hm)}
 
 %% ---------- Cotes de la face (S) et de l'épaisseur (e) ----------------------------
-\draw[cote] (0.18,0.26) -- (\Lm-0.18,0.26);
-\draw[cote] (0.26,0.18) -- (0.26,\Hm-0.18);
-\node[font=\small, fill=white, inner sep=2pt] at (1.30,0.72)
-  {surface $S$};
+\draw[cote] (0.18,0.30) -- (\Lm-0.18,0.30)
+      node[midway, fill=white, inner sep=2pt, font=\small] {surface $S$};
+\draw[cote] (0.30,0.18) -- (0.30,\Hm-0.18);
 \draw[cote] (1.35,\Hm+0.16) -- (1.35+\fx,\Hm+0.16+\fy);
 \node[font=\small, anchor=south east, inner sep=1pt] at (1.62,\Hm+0.30) {$e$};
 \node[draw=black!70, line width=0.6pt, fill=white, inner sep=2.5pt, font=\small]
-  at (1.30,1.95) {$R_{\text{th}}$};
+  at (1.30,1.72) {$R_{\text{th}}$};
 
 %% ---------- Le flux thermique -----------------------------------------------------
-\draw[fin] (-0.55,2.00) -- (3.70,2.00);
-\draw[fin] (-0.55,0.55) -- (3.70,0.55);
+\draw[fin] (-0.55,2.06) -- (3.70,2.06);
+\draw[fin] (-0.55,0.78) -- (3.70,0.78);
 \draw[-{Stealth[length=9pt, width=8pt]}, line width=3.4pt, solideD]
      (-1.30,1.32) -- (4.15,1.32);
-\node[font=\small\bfseries, text=solideD, anchor=south, inner sep=3pt] at (3.55,1.45) {$\Phi$};
+\node[font=\small\bfseries, text=solideD, anchor=south, inner sep=3pt] at (2.55,1.45) {$\Phi$};
 
 %% ---------- Relation et unités ----------------------------------------------------
 \node[draw=black!70, line width=0.7pt, rounded corners=3pt, fill=black!3,

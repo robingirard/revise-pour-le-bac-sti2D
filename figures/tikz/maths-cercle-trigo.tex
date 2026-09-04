@@ -39,12 +39,15 @@
 \draw[rayon] (0,0) -- (57.2958:1);
 \draw[solideA, line width=1.8pt] (0,0) ++(0:1) arc (0:57.2958:1);
 \fill[solideA] (57.2958:1) circle (1.7pt);
-\node[font=\small, anchor=south east, inner sep=2pt] at (57.2958:1) {$M$};
+\node[font=\small, anchor=south west, inner sep=1pt] at (57.2958:1.03) {$M$};
+%% l'enroulement : la graduation 1 de l'axe réel vient sur M
+\draw[-{Stealth[length=5pt]}, black!55, line width=0.6pt, dash pattern=on 2.5pt off 2pt]
+     (0.96,1) to[bend right=25] (61:1.06);
 
 %% ---------------- sens direct et sens indirect ------------------------
-\draw[sens] (40:1.28) arc (40:128:1.28);
-\node[font=\small, anchor=east, inner sep=2pt] at (-0.88,1.24) {$+$ sens direct};
-\draw[sens, dash pattern=on 3pt off 2pt] (-40:1.28) arc (-40:-128:1.28);
-\node[font=\small, anchor=east, inner sep=2pt] at (-0.88,-1.24) {sens indirect};
+\draw[sens] (75:1.35) arc (75:130:1.35);
+\node[font=\small, anchor=east, inner sep=2pt] at (-0.9,1.28) {$+$ sens direct};
+\draw[sens, dash pattern=on 3pt off 2pt] (-75:1.35) arc (-75:-130:1.35);
+\node[font=\small, anchor=east, inner sep=2pt] at (-0.9,-1.28) {sens indirect};
 \end{tikzpicture}
 \end{document}

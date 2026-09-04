@@ -6,16 +6,17 @@
 \begin{document}
 \begin{tikzpicture}[x=1cm,y=1cm,
   bloc/.style={draw=solideB, line width=1.2pt, rounded corners=4pt, fill=white,
-               minimum width=2.4cm, minimum height=1.9cm, inner sep=3pt,
-               align=center, font=\scriptsize},
+               minimum width=2cm, minimum height=2.15cm, inner sep=3pt,
+               text width=1.75cm, align=center, font=\scriptsize,
+               execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
   fleche/.style={-{Stealth[length=6pt,width=5pt]}, line width=1.8pt, draw=solideB},
-  bord/.style={font=\scriptsize, text width=1.75cm, inner sep=1pt,
+  bord/.style={font=\scriptsize, text width=1.35cm, inner sep=1pt,
                execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}}]
 
-%% ---- les trois blocs (même largeur imposée) --------------------------
-\node[bloc] (acq) at (0,0)    {\textbf{ACQUÉRIR}\\[3pt] capteurs\\ boutons,\\ clavier};
-\node[bloc] (tra) at (2.8,0) {\textbf{TRAITER}\\[3pt] carte\\ Arduino\\ automate};
-\node[bloc] (com) at (5.6,0)  {\textbf{COMMUNIQUER}\\[3pt] voyants, écran\\ relais,\\ transistors\\ réseau};
+%% ---- les trois blocs (même gabarit imposé) ---------------------------
+\node[bloc] (acq) at (0,0)    {\textbf{ACQUÉRIR}\\[3pt] capteurs\\ boutons, clavier};
+\node[bloc] (tra) at (2.35,0) {\textbf{TRAITER}\\[3pt] carte Arduino\\ automate};
+\node[bloc] (com) at (4.7,0)  {\textbf{COMMUNIQUER}\\[3pt] voyants, écran\\ relais, transistors\\ réseau};
 
 %% ---- cadre englobant -------------------------------------------------
 \node[draw=solideB!45, line width=0.8pt, rounded corners=7pt, dash pattern=on 3pt off 2pt,
@@ -28,9 +29,9 @@
 \draw[fleche] (tra) -- (com);
 
 %% ---- entrée et sortie ------------------------------------------------
-\draw[fleche] (-2.7,0) -- (acq.west);
-\node[bord, align=right, anchor=south east] at (-1.62,0.12) {Grandeurs physiques, consignes};
-\draw[fleche] (com.east) -- (8.4,0);
-\node[bord, align=left, anchor=south west] at (7.22,0.12) {Informations (ordres, messages)};
+\draw[fleche] (-2.55,0) -- (acq.west);
+\node[bord, align=right, anchor=south east] at (-1.45,0.12) {Grandeurs physiques, consignes};
+\draw[fleche] (com.east) -- (7.15,0);
+\node[bord, align=left, anchor=south west] at (6.1,0.12) {Informations (ordres, messages)};
 \end{tikzpicture}
 \end{document}

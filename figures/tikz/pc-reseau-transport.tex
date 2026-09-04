@@ -1,0 +1,105 @@
+%% Les chemins de l'électricité : production (20 kV), transport (400 kV puis
+%% 225/90/63 kV, poste source 20 kV) et distribution (400 V / 230 V).
+%% Les six niveaux de tension doivent rester lisibles isolément.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  trait/.style={line width=0.7pt, line cap=round, line join=round},
+  boite/.style={draw=black!60, fill=white, line width=0.6pt, align=center,
+                font=\tiny, inner sep=2pt, rounded corners=1pt},
+  tension/.style={font=\scriptsize\bfseries},
+  titre/.style={font=\footnotesize\bfseries},
+  conv/.style={-{Stealth[length=6pt]}, line width=1.4pt},
+  petitefleche/.style={-{Stealth[length=3.5pt]}, line width=0.5pt, draw=black!55}]
+
+%% ================== pictogrammes ==========================================
+\tikzset{
+  %% barrage hydraulique
+  pics/barrage/.style={code={
+    \fill[black!45] (-0.1,-0.35) -- (0.12,-0.35) -- (0.02,0.3) -- (-0.06,0.3) -- cycle;
+    \draw[trait, draw=solideB] (-0.5,0.18) -- (-0.09,0.18);
+    \draw[trait, draw=solideB] (-0.5,0.02) -- (-0.05,0.02);
+    \draw[trait, draw=solideB] (-0.5,-0.14) -- (-0.02,-0.14);
+    \draw[trait, draw=black!55] (-0.5,-0.35) -- (0.5,-0.35);
+  }},
+  %% éolienne
+  pics/eolienne/.style={code={
+    \draw[trait, draw=black!55] (-0.4,-0.35) -- (0.4,-0.35);
+    \draw[trait] (0,-0.35) -- (0,0.1);
+    \foreach \a in {90,210,330} { \draw[trait] (0,0.1) -- ++(\a:0.28); }
+    \fill (0,0.1) circle (0.03);
+  }},
+  %% centrale thermique : deux cheminées
+  pics/thermique/.style={code={
+    \draw[trait, draw=black!55] (-0.45,-0.35) -- (0.45,-0.35);
+    \draw[trait, fill=black!12] (-0.35,-0.35) rectangle (0.35,-0.05);
+    \draw[trait, fill=black!25] (-0.22,-0.05) rectangle (-0.06,0.28);
+    \draw[trait, fill=black!25] (0.08,-0.05) rectangle (0.24,0.28);
+  }},
+  %% centrale nucléaire : tour de refroidissement
+  pics/nucleaire/.style={code={
+    \draw[trait, draw=black!55] (-0.45,-0.35) -- (0.45,-0.35);
+    \draw[trait, fill=black!12] (-0.26,-0.35) .. controls (-0.12,-0.05) .. (-0.16,0.28)
+       -- (0.16,0.28) .. controls (0.12,-0.05) .. (0.26,-0.35) -- cycle;
+  }},
+  %% pylône de ligne très haute tension
+  pics/pylone/.style={code={
+    \draw[trait] (-0.22,-0.6) -- (0,0.5) -- (0.22,-0.6);
+    \draw[trait] (-0.14,-0.2) -- (0.14,-0.2)  (-0.08,0.1) -- (0.08,0.1);
+    \draw[trait] (-0.28,0.2) -- (0.28,0.2)  (-0.2,0.42) -- (0.2,0.42);
+  }},
+  %% maison
+  pics/maison/.style={code={
+    \draw[trait, fill=black!8] (-0.22,-0.25) rectangle (0.22,0.08);
+    \draw[trait, fill=black!25] (-0.3,0.08) -- (0,0.32) -- (0.3,0.08) -- cycle;
+  }},
+  %% transformateur de quartier sur poteau
+  pics/poteau/.style={code={
+    \draw[trait] (0,-0.45) -- (0,0.3);
+    \draw[trait, fill=black!15] (-0.16,0.3) rectangle (0.16,0.55);
+    \draw[trait] (-0.24,0.18) -- (0.24,0.18);
+  }},
+}
+
+%% ================== fonds et titres des trois zones =======================
+\fill[solideB!8]  (0,0)    rectangle (2.5,4.25);
+\fill[solideE!10] (2.8,0)  rectangle (5.65,4.25);
+\fill[solideF!10] (5.95,0) rectangle (7.95,4.25);
+\node[titre, text=solideD] at (1.25,3.95) {PRODUCTION};
+\node[titre, text=solideE] at (4.22,3.95) {TRANSPORT};
+\node[titre, text=solideF] at (6.95,3.95) {DISTRIBUTION};
+\draw[conv, draw=solideE] (2.52,2.1) -- (2.78,2.1);
+\draw[conv, draw=solideF] (5.67,2.1) -- (5.93,2.1);
+
+%% ================== zone production =======================================
+\pic at (0.62,3.05) {barrage};
+\pic at (1.88,3.05) {eolienne};
+\pic at (0.62,2.15) {thermique};
+\pic at (1.88,2.15) {nucleaire};
+\foreach \sx/\sy in {0.62/1.72, 1.88/1.72, 0.35/2.6, 2.15/2.6} {
+  \draw[petitefleche] (\sx,\sy) -- (1.25,1.28); }
+\node[boite] (pc) at (1.25,1.05) {Poste de\\la centrale};
+\node[tension, text=solideD] at (1.25,0.45) {20 kV};
+
+%% ================== zone transport ========================================
+\pic at (3.35,2.85) {pylone};
+\pic at (5.1,2.85) {pylone};
+\foreach \dy in {0.2,0.42} {
+  \draw[trait, draw=black!70] plot[domain=3.35:5.1, samples=20]
+       (\x,{2.85+\dy-0.09*sin(deg((\x-3.35)/1.75*pi))}); }
+\node[tension, text=solideE] at (4.22,3.5) {400 kV};
+\node[boite] (pt) at (4.22,1.85) {Poste de transformation};
+\node[tension, text=solideE, font=\scriptsize] at (4.22,1.35) {225 kV -- 90 kV -- 63 kV};
+\node[boite] (ps) at (4.22,0.85) {Poste source};
+\node[tension, text=solideE] at (4.22,0.4) {20 kV};
+
+%% ================== zone distribution =====================================
+\pic at (6.4,2.6) {poteau};
+\node[boite, font=\tiny, inner sep=1.5pt] at (7.25,2.75) {Transformateur\\de quartier};
+\pic at (6.55,1.35) {maison};
+\pic at (7.4,1.35) {maison};
+\node[tension, text=solideF] at (6.95,2.0) {400 V};
+\node[tension, text=solideF] at (6.95,0.75) {230 V};
+\end{tikzpicture}
+\end{document}

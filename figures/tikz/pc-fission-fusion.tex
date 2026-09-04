@@ -1,0 +1,94 @@
+%% Fission (à gauche) et fusion (à droite), séparées par un filet vertical.
+%% Convention des amas : pastille orange (solideD) = proton, bleue (solideB) = neutron ;
+%% un neutron LIBRE est un petit cercle blanc cerclé de noir.
+%% Le halo orange (opacité 0,25) marque l'énergie libérée par la réaction.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  fl/.style={-{Stealth[length=5pt]}, line width=0.9pt},
+  titre/.style={font=\small\bfseries},
+  eti/.style={font=\scriptsize, inner sep=2pt, align=center},
+  noy/.style={font=\small, inner sep=2pt, align=center}]
+
+%% ---------- Amas de nucléons (disques de 1,6 mm, réseau en quinconce) ----------
+\newcommand\amasgen[2]{%
+  \begin{scope}[shift={#1}, x=0.16cm, y=0.1386cm]
+    \foreach \cx/\cy/\cc in {#2} {
+      \fill[\cc] (\cx,\cy) circle[radius=0.08cm];
+      \draw[black!55, line width=0.25pt] (\cx,\cy) circle[radius=0.08cm];}
+  \end{scope}}
+\newcommand\amasgros[1]{\amasgen{#1}{-1/2/solideD, 0/2/solideB, 1/2/solideD,
+  -1.5/1/solideB, -0.5/1/solideD, 0.5/1/solideB, 1.5/1/solideD,
+  -2/0/solideB, -1/0/solideD, 0/0/solideB, 1/0/solideD, 2/0/solideB,
+  -1.5/-1/solideD, -0.5/-1/solideB, 0.5/-1/solideD, 1.5/-1/solideB,
+  -1/-2/solideD, 0/-2/solideB, 1/-2/solideD}}
+\newcommand\amasdix[1]{\amasgen{#1}{-1/1/solideD, 0/1/solideB, 1/1/solideD,
+  -1.5/0/solideB, -0.5/0/solideD, 0.5/0/solideB, 1.5/0/solideD,
+  -1/-1/solideB, 0/-1/solideD, 1/-1/solideB}}
+\newcommand\amassept[1]{\amasgen{#1}{-0.5/1/solideD, 0.5/1/solideB,
+  -1/0/solideB, 0/0/solideD, 1/0/solideB, -0.5/-1/solideD, 0.5/-1/solideB}}
+\newcommand\amasdeux[1]{\amasgen{#1}{-0.5/0/solideD, 0.5/0/solideB}}
+\newcommand\amastrois[1]{\amasgen{#1}{-0.5/0/solideD, 0.5/0/solideB, 0/1/solideB}}
+\newcommand\amasquatre[1]{\amasgen{#1}{0/1/solideB, -0.5/0/solideD, 0.5/0/solideB, 0/-1/solideD}}
+%% neutron libre : petit cercle blanc
+\newcommand\neutronlibre[1]{\draw[fill=white, line width=0.6pt, black!75] #1 circle (0.14);}
+
+%% ================= Panneau gauche : FISSION ===================================
+\node[titre] at (2.4,2.35) {Fission};
+\neutronlibre{(0,0)}
+\node[eti, anchor=north] at (0,-0.22) {neutron};
+\draw[fl] (0.22,0) -- (0.85,0);
+\amasgros{(1.3,0)}
+\node[noy, anchor=north] at (1.3,-0.5) {$^{235}_{92}\mathrm{U}$};
+\draw[fl] (1.78,0) -- (2.25,0);
+%% halo d'énergie et noyaux fils
+\fill[solideD, opacity=0.25] (3.25,0) circle (1.02);
+\amassept{(2.95,0.55)}
+\node[noy, anchor=west, inner sep=3pt] at (3.28,0.55) {$^{94}_{38}\mathrm{Sr}$};
+\amasdix{(2.95,-0.55)}
+\node[noy, anchor=west, inner sep=3pt] at (3.32,-0.55) {$^{140}_{54}\mathrm{Xe}$};
+\node[font=\scriptsize\bfseries, text=solideD] at (3.25,0.02) {ÉNERGIE};
+%% neutrons émis
+\draw[fl] (4.20,0.30) -- (4.75,0.58);
+\draw[fl] (4.20,-0.30) -- (4.75,-0.58);
+\neutronlibre{(4.95,0.68)} \node[eti, anchor=south] at (4.95,0.85) {neutron};
+\neutronlibre{(4.95,-0.68)} \node[eti, anchor=north] at (4.95,-0.85) {neutron};
+\node[font=\small, anchor=north] at (2.4,-1.85)
+  {$^{1}_{0}\mathrm{n} + {}^{235}_{92}\mathrm{U} \rightarrow {}^{94}_{38}\mathrm{Sr}
+    + {}^{140}_{54}\mathrm{Xe} + 2\,^{1}_{0}\mathrm{n}$};
+
+%% ================= Filet de séparation ========================================
+\draw[black!30, line width=0.6pt] (6.05,-1.6) rectangle (6.05,2.5);
+
+%% ================= Panneau droit : FUSION =====================================
+\begin{scope}[shift={(6.6,0)}]
+  \node[titre] at (1.95,2.35) {Fusion};
+  \amasdeux{(0.35,0.85)}
+  \node[eti, anchor=south] at (0.35,1.05) {deutérium};
+  \amastrois{(0.35,-0.85)}
+  \node[eti, anchor=north] at (0.35,-1.05) {tritium};
+  \draw[fl] (0.75,0.68) -- (1.30,0.32);
+  \draw[fl] (0.75,-0.68) -- (1.30,-0.32);
+  \fill[solideD, opacity=0.25] (1.95,0) circle (0.85);
+  \amasquatre{(1.95,0.30)}
+  \node[eti, anchor=north] at (1.95,0.08) {hélium};
+  \node[font=\scriptsize\bfseries, text=solideD] at (1.95,-0.48) {ÉNERGIE};
+  \draw[fl] (2.90,0) -- (3.45,0);
+  \neutronlibre{(3.65,0)}
+  \node[eti, anchor=north] at (3.62,-0.22) {neutron\\libre};
+  \node[font=\small, anchor=north, align=center] at (1.95,-1.85)
+    {deutérium + tritium\\$\rightarrow$ hélium + neutron + énergie};
+\end{scope}
+
+%% ================= Légende ======================================================
+\fill[solideD] (2.0,-3.05) circle (0.09);
+\draw[black!55, line width=0.25pt] (2.0,-3.05) circle (0.09);
+\node[eti, anchor=west] at (2.1,-3.05) {proton};
+\fill[solideB] (3.6,-3.05) circle (0.09);
+\draw[black!55, line width=0.25pt] (3.6,-3.05) circle (0.09);
+\node[eti, anchor=west] at (3.7,-3.05) {neutron (dans un noyau)};
+\neutronlibre{(6.8,-3.05)}
+\node[eti, anchor=west] at (6.95,-3.05) {neutron libre};
+\end{tikzpicture}
+\end{document}

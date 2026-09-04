@@ -34,21 +34,21 @@
 %% ---------------- les deux courbes --------------------------------------
 \draw[ccos] plot[domain=-4:4, samples=201, smooth] (\x,{cos(\x r)});
 \draw[csin] plot[domain=-4:4, samples=201, smooth] (\x,{sin(\x r)});
-\node[font=\small, text=solideA, anchor=south west, inner sep=2pt] at (0.18,1.02) {$\mathcal{C}_{\cos}$};
-\node[font=\small, text=solideB, anchor=north east, inner sep=2pt] at (-1.75,-1.02) {$\mathcal{C}_{\sin}$};
+\node[font=\small, text=solideA, anchor=south west, inner sep=2pt] at (0.2,1.12) {$\mathcal{C}_{\cos}$};
+\node[font=\small, text=solideB, anchor=south east, inner sep=2pt] at (3.2,0.28) {$\mathcal{C}_{\sin}$};
 
 %% ---------------- repères de symétrie -----------------------------------
 \draw[solideA, line width=0.8pt, dotted] (0,-1.6) -- (0,1.75);   % axe de symétrie du cosinus
 \fill[solideB] (0,0) circle (2pt);                               % centre de symétrie du sinus
 
 %% ---------------- légende ------------------------------------------------
-\begin{scope}[shift={(1.15,1.15)}]
+\begin{scope}[shift={(1.05,1.02)}]
   \draw[fill=white, draw=black!35, line width=0.5pt, rounded corners=2pt]
-       (0,0) rectangle (2.75,0.72);
-  \draw[ccos] (0.12,0.5) -- (0.6,0.5);
-  \node[font=\scriptsize, anchor=west, inner sep=2pt] at (0.66,0.5) {$\mathcal{C}_{\cos}$ : paire};
-  \draw[csin] (0.12,0.22) -- (0.6,0.22);
-  \node[font=\scriptsize, anchor=west, inner sep=2pt] at (0.66,0.22) {$\mathcal{C}_{\sin}$ : impaire};
+       (0,0) rectangle (3.35,0.86);
+  \draw[ccos] (0.14,0.6) -- (0.7,0.6);
+  \node[font=\small, anchor=west, inner sep=2pt] at (0.78,0.6) {$\mathcal{C}_{\cos}$ : paire};
+  \draw[csin] (0.14,0.25) -- (0.7,0.25);
+  \node[font=\small, anchor=west, inner sep=2pt] at (0.78,0.25) {$\mathcal{C}_{\sin}$ : impaire};
 \end{scope}
 \end{tikzpicture}
 \end{document}

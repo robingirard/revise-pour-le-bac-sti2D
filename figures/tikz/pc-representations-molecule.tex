@@ -1,0 +1,74 @@
+%% pc-representations-molecule — les quatre conventions d'écriture d'une molécule,
+%% toutes appliquées à l'acide méthanoïque, de la plus complète à la plus condensée.
+%% Nota : la forme semi-développée est celle imprimée par le manuel (HC(=O)-OH) ;
+%% l'écriture usuelle est HCOOH.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{shapes.geometric, positioning}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  atome/.style={inner sep=1.2pt, font=\small},
+  lien/.style={line width=0.9pt, line cap=round},
+  colonne/.style={font=\scriptsize\bfseries, align=center, anchor=north,
+                  text width=1.95cm, inner sep=1pt, text=solideB},
+  filet/.style={line width=0.4pt, draw=black!25}]
+
+%% doublet non liant (tiret perpendiculaire à la direction #2, à la distance #3)
+\newcommand\dnl[3]{\begin{scope}[shift={#1}, rotate=#2]
+  \draw[line width=1.1pt, line cap=round] (#3,-0.13) -- (#3,0.13); \end{scope}}
+%% squelette H-C-O-H avec le C=O vertical : \squelette{avec doublets ? (0/1)}
+\newcommand\squelette[1]{%
+  \node[atome] (Hg) at (-0.93,0) {$\mathrm{H}$};
+  \node[atome] (C)  at (-0.31,0) {$\mathrm{C}$};
+  \node[atome] (Od) at ( 0.31,0) {$\mathrm{O}$};
+  \node[atome] (Hd) at ( 0.93,0) {$\mathrm{H}$};
+  \node[atome] (Oh) at (-0.31,0.66) {$\mathrm{O}$};
+  \draw[lien] (Hg) -- (C);  \draw[lien] (C) -- (Od);  \draw[lien] (Od) -- (Hd);
+  \draw[lien, transform canvas={xshift=1.7pt}]  (C) -- (Oh);
+  \draw[lien, transform canvas={xshift=-1.7pt}] (C) -- (Oh);
+  \ifnum#1=1
+    \dnl{(-0.31,0.66)}{0}{0.34}   \dnl{(-0.31,0.66)}{180}{0.34}
+    \dnl{(0.31,0)}{90}{0.34}      \dnl{(0.31,0)}{270}{0.34}
+  \fi}
+
+%% ================= 1. schéma de Lewis (doublets liants ET non liants) =====
+\begin{scope}[shift={(0,0)}]
+  \node[colonne] at (0,1.75) {Schéma\\de Lewis};
+  \squelette{1}
+\end{scope}
+\draw[filet] (1.20,1.72) -- (1.20,-0.55);
+
+%% ================= 2. formule développée (doublets liants seuls) ==========
+\begin{scope}[shift={(2.40,0)}]
+  \node[colonne] at (0,1.75) {Formule\\développée};
+  \squelette{0}
+\end{scope}
+\draw[filet] (3.60,1.72) -- (3.60,-0.55);
+
+%% ================= 3. formule semi-développée =============================
+%% les liaisons C--H et O--H ne sont plus tracées : « HC » et « OH » sont accolés
+\begin{scope}[shift={(4.70,0)}]
+  \node[colonne] at (0,1.75) {Formule\\semi-développée};
+  \node[atome] (sHC) at (-0.30,0) {$\mathrm{HC}$};
+  \node[atome] (sOH) at ( 0.44,0) {$\mathrm{OH}$};
+  \node[atome] (sO)  at (-0.18,0.66) {$\mathrm{O}$};
+  \draw[lien] (sHC) -- (sOH);
+  \draw[lien, transform canvas={xshift=1.7pt}]  (-0.18,0.12) -- (sO.south);
+  \draw[lien, transform canvas={xshift=-1.7pt}] (-0.18,0.12) -- (sO.south);
+\end{scope}
+\draw[filet] (5.75,1.72) -- (5.75,-0.55);
+
+%% ================= 4. formule brute =======================================
+\begin{scope}[shift={(6.75,0)}]
+  \node[colonne] at (0,1.75) {Formule\\brute};
+  \node[atome] at (0,0.15) {$\mathrm{CH_2O_2}$};
+\end{scope}
+
+%% ================= sens de lecture ========================================
+\draw[-{Stealth[length=7pt]}, line width=1.1pt, solideD] (-0.95,-0.85) -- (7.55,-0.85);
+\node[font=\scriptsize, text=solideD, anchor=north] at (3.3,-0.98)
+  {de la plus complète à la plus condensée};
+\node[font=\scriptsize, text=black!70, anchor=north] at (3.3,-1.48)
+  {exemple : l'acide méthanoïque};
+\end{tikzpicture}
+\end{document}

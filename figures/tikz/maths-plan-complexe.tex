@@ -14,7 +14,7 @@
 %% ---------------- repère ---------------------------------------------------
 \draw[axe] (-0.9,0) -- (3.3,0);
 \draw[axe] (0,-2.3) -- (0,2.5);
-\node[font=\small, anchor=south east, inner sep=3pt] at (3.3,0.05) {axe réel};
+\node[font=\small, anchor=south east, inner sep=3pt] at (3.35,0.12) {axe réel};
 \node[font=\small, anchor=east, align=right, inner sep=3pt] at (-0.12,2.0)
      {axe des\\imaginaires purs};
 \node[font=\small, anchor=north east, inner sep=2pt] at (-0.04,-0.04) {$O$};
@@ -33,10 +33,10 @@
 \draw[-{Stealth[length=7pt]}, solideA, line width=1.4pt] (0,0) -- (\av,\bv)
      node[midway, sloped, above, font=\small, text=solideA, inner sep=3pt]
      {$r=\left|z\right|$};
-\draw[solideA, line width=1pt] (0.75,0) arc (0:36.87:0.75);
-\node[font=\small, text=solideA, anchor=west, inner sep=2pt] at (18:0.85) {$\theta=\arg(z)$};
-\draw[black!55, line width=0.9pt] (0.52,0) arc (0:-36.87:0.52);
-\node[font=\small, text=black!55, anchor=west, inner sep=2pt] at (-19:0.6) {$-\theta$};
+\draw[solideA, line width=1pt] (0.62,0) arc (0:36.87:0.62);
+\node[font=\small, text=solideA, anchor=west, inner sep=1pt] at (0.66,0.26) {$\theta=\arg(z)$};
+\draw[black!55, line width=0.9pt] (0.45,0) arc (0:-36.87:0.45);
+\node[font=\small, text=black!55, anchor=west, inner sep=2pt] at (-19:0.52) {$-\theta$};
 
 %% ---------------- les deux points image --------------------------------------
 \fill[solideA] (\av,\bv) circle (2pt);

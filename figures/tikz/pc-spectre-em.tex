@@ -1,0 +1,83 @@
+%% pc-spectre-em — spectre des ondes électromagnétiques.
+%% La fréquence croît vers la gauche, la longueur d'onde vers la droite ; largeurs des bandes
+%% non proportionnelles (schéma), le domaine visible est agrandi en bas.
+%% Le dégradé arc-en-ciel est obtenu par une suite de fines tranches colorées (pas de `shading` :
+%% le SVG resterait léger, et le rendu est identique à l'écran).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+%% --- palette de l'arc-en-ciel (violet 400 nm -> rouge 800 nm) ---------------
+\definecolor{arcA}{RGB}{110,30,175}
+\definecolor{arcB}{RGB}{35,60,220}
+\definecolor{arcC}{RGB}{0,175,200}
+\definecolor{arcD}{RGB}{25,165,60}
+\definecolor{arcE}{RGB}{240,225,0}
+\definecolor{arcF}{RGB}{245,140,0}
+\definecolor{arcG}{RGB}{215,25,25}
+%% \arcenciel{x gauche}{x droite}{y bas}{y haut}
+\newcommand\arcenciel[4]{%
+  \foreach \k/\ca/\cb in {0/arcA/arcB,1/arcB/arcC,2/arcC/arcD,3/arcD/arcE,4/arcE/arcF,5/arcF/arcG} {
+    \foreach \j in {0,1,...,5} {
+      \pgfmathsetmacro\ta{(\k*6+\j)/36}
+      \pgfmathsetmacro\tb{(\k*6+\j+1)/36}
+      \pgfmathsetmacro\pp{100-100*\j/6}
+      \fill[\ca!\pp!\cb] ({#1+(#2-#1)*\ta},#3) rectangle ({#1+(#2-#1)*\tb+0.01},#4); }}}
+
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=6pt]}, line width=0.8pt},
+  bande/.style={draw=black!60, line width=0.4pt},
+  nom/.style={font=\scriptsize, text=white, align=center},
+  grad/.style={font=\scriptsize},
+  zoom/.style={solideF, line width=0.6pt, dash pattern=on 1.6pt off 1.6pt}]
+
+\def\hb{1.70}   % hauteur de la barre
+
+%% ---------------- les bandes du spectre -----------------------------------
+\foreach \xa/\xb/\co in {0/1.0/{solideF!70!black}, 1.0/2.1/{solideF},
+                         2.1/3.2/{solideB!80!solideF}, 4.3/5.5/{solideA!80!black},
+                         5.5/7.6/{solideD}} {
+  \fill[\co] (\xa,0) rectangle (\xb,\hb); }
+\arcenciel{3.2}{4.3}{0}{\hb}
+\draw[bande] (0,0) rectangle (7.6,\hb);
+\foreach \xa in {1.0,2.1,3.2,4.3,5.5} { \draw[bande] (\xa,0) -- (\xa,\hb); }
+
+%% noms des domaines (dans les bandes)
+\node[nom, rotate=90] at (0.50,{0.5*\hb}) {Rayons gamma};
+\node[nom, rotate=90] at (1.55,{0.5*\hb}) {Rayons X};
+\node[nom, rotate=90] at (2.65,{0.5*\hb}) {UV};
+\node[nom, rotate=90] at (4.90,{0.5*\hb}) {IR};
+\node[font=\scriptsize\bfseries, text=black] at (3.75,{0.5*\hb}) {Visible};
+\node[nom] at (6.55,{0.5*\hb}) {Ondes\\radiofréquences};
+
+%% ---------------- axe des fréquences (vers la gauche) ----------------------
+\foreach \xa/\lb in {1.0/{$3{,}0\times10^{19}$ Hz}, 5.5/{300 GHz}, 7.6/{30 kHz}} {
+  \draw[line width=0.5pt] (\xa,\hb) -- (\xa,\hb+0.14);
+  \node[grad, anchor=south, inner sep=2pt] at (\xa,\hb+0.14) {\lb}; }
+\draw[axe, solideA] (7.6,\hb+0.78) -- (0,\hb+0.78);
+\node[grad, anchor=south, text=solideA] at (3.8,\hb+0.82)
+  {\textbf{Fréquence $\nu$ croissante}};
+
+%% ---------------- graduations en longueur d'onde ---------------------------
+\foreach \xa in {0,1.0,2.1,3.2,4.3,5.5,7.6} { \draw[line width=0.5pt] (\xa,0) -- (\xa,-0.14); }
+\foreach \xa/\lb in {0/{1 fm}, 1.0/{10 pm}, 2.1/{10 nm}, 5.5/{1 mm}, 7.6/{10 km}} {
+  \node[grad, anchor=north, inner sep=2pt] at (\xa,-0.14) {\lb}; }
+%% bornes du visible : décalées vers l'extérieur pour laisser passer le zoom
+\node[grad, anchor=north] at (2.55,-0.50) {0,4 µm};
+\node[grad, anchor=north] at (4.95,-0.50) {0,8 µm};
+\draw[line width=0.4pt] (3.2,-0.16) -- (2.85,-0.50);
+\draw[line width=0.4pt] (4.3,-0.16) -- (4.65,-0.50);
+
+%% ---------------- zoom sur le domaine visible ------------------------------
+\draw[zoom] (3.2,0) -- (3.2,-0.90) -- (2.20,-1.78);
+\draw[zoom] (4.3,0) -- (4.3,-0.90) -- (5.60,-1.78);
+\arcenciel{2.20}{5.60}{-2.36}{-1.78}
+\draw[bande] (2.20,-2.36) rectangle (5.60,-1.78);
+\node[grad, anchor=east] at (2.12,-2.07) {\textbf{400 nm}};
+\node[grad, anchor=west] at (5.68,-2.07) {\textbf{800 nm}};
+\node[grad, anchor=north, text=solideF] at (3.90,-2.42) {\textbf{VISIBLE}};
+
+%% ---------------- axe des longueurs d'onde (vers la droite) ----------------
+\draw[axe] (0,-2.92) -- (7.6,-2.92);
+\node[grad, anchor=north] at (3.8,-2.98) {\textbf{Longueur d'onde $\lambda$ croissante}};
+\end{tikzpicture}
+\end{document}
