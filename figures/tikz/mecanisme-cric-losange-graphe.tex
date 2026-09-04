@@ -1,0 +1,38 @@
+%% Cric losange — graphe des liaisons (9 classes, 11 liaisons).
+%% Le graphe est symétrique : la moitié gauche (E1, E6, E3) et la moitié droite (E2, E7, E4)
+%% se referment en haut sur le plateau E5 et en bas sur le socle E0 ; la vis E8 relie les deux
+%% écrous. La glissière E0–E5 (trait de gauche) ferme la chaîne : c'est bien une chaîne fermée.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=0.90cm,y=0.85cm,
+  classe/.style={circle, minimum size=9mm, text=white, font=\small\bfseries, inner sep=0pt},
+  lien/.style={line width=0.8pt}, etiquette/.style={font=\small, fill=white, inner sep=1.5pt}]
+% --- les 9 classes, disposées comme le mécanisme (socle en bas, plateau en haut)
+\node[classe, fill=black]   (E0) at ( 0.0, 0.0) {E0};
+\node[classe, fill=solideE] (E1) at (-1.7, 1.6) {E1};
+\node[classe, fill=solideF] (E2) at ( 1.7, 1.6) {E2};
+\node[classe, fill=solideC] (E6) at (-3.5, 3.3) {E6};
+\node[classe, fill=solideA] (E8) at ( 0.0, 3.3) {E8};
+\node[classe, fill=solideD] (E7) at ( 3.5, 3.3) {E7};
+\node[classe, fill=solideB] (E3) at (-1.7, 5.0) {E3};
+\node[classe, fill=solideG] (E4) at ( 1.7, 5.0) {E4};
+\node[classe, fill=solideH] (E5) at ( 0.0, 6.6) {E5};
+% --- côté gauche
+\draw[lien] (E0) -- node[etiquette, pos=0.55, above left=-1pt] {Pivot (O, $\vec{z}$)} (E1);
+\draw[lien] (E1) -- node[etiquette, pos=0.5, below right=-1pt] {Pivot (L, $\vec{z}$)} (E6);
+\draw[lien] (E6) -- node[etiquette, pos=0.5, above right=-1pt] {Pivot (L, $\vec{z}$)} (E3);
+\draw[lien] (E3) -- node[etiquette, pos=0.55, above left=-1pt] {Pivot (T, $\vec{z}$)} (E5);
+% --- côté droit (symétrique)
+\draw[lien] (E0) -- node[etiquette, pos=0.55, above right=-1pt] {Pivot (O, $\vec{z}$)} (E2);
+\draw[lien] (E2) -- node[etiquette, pos=0.5, below left=-1pt] {Pivot (R, $\vec{z}$)} (E7);
+\draw[lien] (E7) -- node[etiquette, pos=0.5, above left=-1pt] {Pivot (R, $\vec{z}$)} (E4);
+\draw[lien] (E4) -- node[etiquette, pos=0.55, above right=-1pt] {Pivot (T, $\vec{z}$)} (E5);
+% --- la vis, entre les deux écrous : deux hélicoïdales de filets inversés
+\draw[lien] (E6) -- node[etiquette, above=3pt] {Hélicoïdale (L, $\vec{x}$)} (E8);
+\draw[lien] (E8) -- node[etiquette, above=3pt] {Hélicoïdale (R, $\vec{x}$)} (E7);
+% --- la glissière plateau / socle, qui ferme la chaîne par la gauche
+\draw[lien] (E0) -- (-4.45,0.0) -- node[etiquette, rotate=90] {Glissière (T, $\vec{y}$)} (-4.45,6.6) -- (E5);
+\node[font=\small, black!70, align=center] at (0,-1.05) {9 classes, 11 liaisons : chaîne fermée\\ à une seule mobilité (la rotation de la vis)};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,77 @@
+%% Cric losange — schéma cinématique dans le plan (x, y). Figure animée : voir le bloc
+%% « animation » de content/mecanismes/cric-losange.yaml (la boîte \useasboundingbox ci-dessous
+%% est exactement le champ bbox, et chaque tracé est regroupé au build d'après SA COULEUR).
+%% Règles à respecter si on modifie la figure :
+%%   - une couleur de classe (E0…E8) = une pièce mobile : ne jamais l'utiliser pour une annotation ;
+%%   - flèches et repères d'aide en solideA!60 (teinte volontairement différente) ;
+%%   - les étiquettes sont des nœuds de texte (glyphes) : elles ne sont jamais animées.
+%% Géométrie (θ = 35°, barres de 1,6) : O = (0 ; 0) ; L = (−1,311 ; 0,918) ; R = (1,311 ; 0,918) ;
+%% T = (0 ; 1,836). Dépliage jusqu'à θ = 60° : L = (−0,8 ; 1,386) et T = (0 ; 2,771).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{backgrounds}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm, solide/.style={line width=1.4pt, line cap=round, line join=round}]
+\useasboundingbox (-4.0,-1.2) rectangle (3.05,3.6);   % boîte fixe : sert à l'animation (cm -> SVG)
+\colorlet{E0}{black}\colorlet{E1}{solideE}\colorlet{E2}{solideF}\colorlet{E3}{solideB}
+% E4 = solideG (0, 150, 160) : le build reconnaît désormais les composantes nulles (« rgb(0%, … ) »).
+\colorlet{E4}{solideG}
+\colorlet{E5}{solideH}\colorlet{E6}{solideC}\colorlet{E7}{solideD}\colorlet{E8}{solideA}
+\coordinate (O) at (0,0);            % sommet bas du losange : deux pivots coaxiaux avec le socle
+\coordinate (L) at (-1.311,0.918);   % écrou gauche
+\coordinate (R) at (1.311,0.918);    % écrou droit
+\coordinate (T) at (0,1.836);        % sommet haut : deux pivots coaxiaux avec le plateau
+% ------------------------------------------------------------------ pièces (sous les symboles)
+\begin{scope}[on background layer]
+  \draw[solide, E0] (-1.55,0) -- (1.55,0)                      % socle posé au sol
+                    (-3.15,1.00) -- (-3.4,1.00) -- (-3.4,0);   % potence du guidage du plateau
+  \draw[solide, E1] (O) -- (L);                                % barre inférieure gauche
+  \draw[solide, E2] (O) -- (R);                                % barre inférieure droite
+  \draw[solide, E3] (L) -- (T);                                % barre supérieure gauche
+  \draw[solide, E4] (R) -- (T);                                % barre supérieure droite
+  \draw[solide, E5] (-2.9,-0.70) -- (-2.9,1.836) -- (1.05,1.836)   % plateau : tige de guidage + bras
+                    (-0.95,1.836) -- (-0.95,2.0) (0.95,1.836) -- (0.95,2.0);   % rebords du plateau
+  \draw[solide, E8] (-2.25,0.918) -- (2.30,0.918)              % vis
+                    (2.30,0.918) -- (2.30,1.62) -- (2.60,1.62);   % manivelle coudée, à droite de R
+\end{scope}
+% ------------------------------------------------------------------ symboles normalisés
+\pic at (-1.05,0) {bati};  \pic at (1.05,0) {bati};  \pic at (-3.4,0) {bati};
+% pivots : le disque blanc est tracé dans la couleur de la classe qui « porte » le symbole
+\pic[s1=E1, s2=E0, liens=false] at (O) {pivot bout};   % E0-E1 et E0-E2 : deux pivots coaxiaux en O
+\pic[s1=E3, s2=E1, liens=false] at (L) {pivot bout};   % E1-E6 et E3-E6 : deux pivots coaxiaux en L
+\pic[s1=E4, s2=E2, liens=false] at (R) {pivot bout};   % E2-E7 et E4-E7 : deux pivots coaxiaux en R
+\pic[s1=E3, s2=E5, liens=false] at (T) {pivot bout};   % E3-E5 et E4-E5 : deux pivots coaxiaux en T
+% Symboles sans fond blanc : le fond ne serait pas animé (il n'a pas de couleur de classe) et
+% resterait sur place pendant que l'écrou ou la tige, eux, se déplacent.
+\begin{scope}[liaison/fond/.style={fill=none}]
+  % glissière du plateau : le fourreau (noir) est fixe, la tige (brune) le traverse et coulisse
+  \pic[s1=E5, s2=E0, liens=false, rotate=-90] at (-2.9,1.00) {glissiere face};
+  % hélicoïdales : le rectangle est l'écrou, le trait ondulé le filet de la vis ; le symbole de
+  % droite est retourné (xscale=-1) pour rappeler que son filet est inversé.
+  \pic[s1=E8, s2=E6, liens=false] at (L) {helicoidale face};
+  \pic[s1=E8, s2=E7, liens=false, xscale=-1] at (R) {helicoidale face};
+\end{scope}
+% ------------------------------------------------------------------ annotations (teinte neutre)
+\draw[-{Stealth[length=5pt]}, line width=0.7pt, solideA!60] (-1.88,0.25) -- (-1.38,0.25);
+\draw[-{Stealth[length=5pt]}, line width=0.7pt, solideA!60] (1.88,0.25) -- (1.38,0.25);
+\draw[-{Stealth[length=5pt]}, line width=0.7pt, solideA!60] (1.45,2.05) -- (1.45,2.80);
+\draw[-{Stealth[length=5pt]}, line width=0.7pt, solideA!60] ([shift=(205:0.32)]2.36,2.80) arc (205:-25:0.32);
+\node[solideA!60, font=\small] at (2.36,2.80) {$\omega$};
+\node[solideA!60, font=\small, rotate=90] at (1.70,2.42) {montée};
+% ------------------------------------------------------------------ étiquettes (jamais animées)
+\node[E0, font=\small\bfseries] at (-1.45,-0.30) {E0};
+\node[E1, font=\small\bfseries] at (-0.95,0.30) {E1};
+\node[E2, font=\small\bfseries] at (0.95,0.30) {E2};
+\node[E3, font=\small\bfseries] at (-1.45,1.72) {E3};
+\node[E4, font=\small\bfseries] at (1.45,1.72) {E4};
+\node[E5, font=\small\bfseries] at (-1.95,2.02) {E5};
+\node[E6, font=\small\bfseries] at (-2.05,0.52) {E6};
+\node[E7, font=\small\bfseries] at (2.05,0.52) {E7};
+\node[E8, font=\small\bfseries] at (0,0.68) {E8};
+\node[font=\small] at (0.26,-0.28) {O};
+\node[font=\small] at (-1.45,0.60) {L};
+\node[font=\small] at (1.45,0.60) {R};
+\node[font=\small] at (0.30,2.02) {T};
+\repere{(1.70,-1.05)}{x}{y}{1}
+\end{tikzpicture}
+\end{document}

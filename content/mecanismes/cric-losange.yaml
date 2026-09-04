@@ -1,0 +1,525 @@
+# Mécanisme : le cric losange (cric de voiture à vis).
+# Le plus riche de la collection : 9 classes, 11 liaisons, deux boucles symétriques refermées par la
+# vis, deux liaisons hélicoïdales de filets inversés et un plateau guidé en translation verticale.
+# Géométrie du dessin et du schéma (cm), θ = 35° (angle des barres inférieures avec l'horizontale) :
+# O = (0 ; 0) ; L = (−1,311 ; 0,918) ; R = (1,311 ; 0,918) ; T = (0 ; 1,836). Barres de 1,6 entre axes.
+# Dépliage animé jusqu'à θ = 60° : L = (−0,8 ; 1,386) et T = (0 ; 2,771).
+id: cric-losange
+nom: Cric losange
+titre: Le cric losange (cric de voiture à vis)
+description: >
+  Quatre barres de même longueur forment un losange articulé, posé au sol par un socle et surmonté
+  d'un plateau glissé sous le bas de caisse. Une vis horizontale traverse les deux écrous placés aux
+  sommets latéraux du losange : ses deux filets sont inversés, si bien qu'en tournant la manivelle on
+  rapproche les écrous. Le losange se déplie alors, le plateau monte et soulève la voiture.
+repere: >-
+  x : horizontal, selon l'axe de la vis ; y : vertical, vers le haut ; z : axe des pivots, vers
+  l'observateur
+figures:
+  dessin: mecanisme-cric-losange-dessin
+  classes: mecanisme-cric-losange-classes
+  graphe: mecanisme-cric-losange-graphe
+  schema: mecanisme-cric-losange-schema
+pieces:
+- num: 0
+  nom: socle posé au sol
+- num: 1
+  nom: barre inférieure gauche
+- num: 2
+  nom: barre inférieure droite
+- num: 3
+  nom: barre supérieure gauche
+- num: 4
+  nom: barre supérieure droite
+- num: 5
+  nom: plateau d'appui sous le bas de caisse
+- num: 6
+  nom: écrou gauche (filet à gauche)
+- num: 7
+  nom: écrou droit (filet à droite)
+- num: 8
+  nom: vis
+- num: 9
+  nom: manivelle
+classes:
+- id: E0
+  nom: socle
+  pieces:
+  - 0
+  couleur: black
+  bati: true
+  pourquoi: >-
+    La voiture est à l'arrêt, frein serré : le socle posé au sol est le solide de référence. C'est par
+    rapport à lui qu'on décrit tous les autres mouvements.
+- id: E1
+  nom: barre inférieure gauche
+  pieces:
+  - 1
+  couleur: solideE
+  pourquoi: >-
+    Cette barre tourne autour de l'axe (O, z) du socle : elle bouge par rapport au socle comme par
+    rapport à l'écrou gauche, elle forme donc une classe à elle seule.
+- id: E2
+  nom: barre inférieure droite
+  pieces:
+  - 2
+  couleur: solideF
+  pourquoi: >-
+    Symétrique de la barre 1 : elle tourne aussi autour de (O, z), mais dans l'autre sens. Deux
+    pièces qui tournent en sens contraires ne peuvent pas être dans la même classe.
+- id: E3
+  nom: barre supérieure gauche
+  pieces:
+  - 3
+  couleur: solideB
+  pourquoi: >-
+    Elle est articulée en L sur l'écrou gauche et en T sur le plateau : ses deux extrémités bougent,
+    elle a un mouvement plan et forme sa propre classe.
+- id: E4
+  nom: barre supérieure droite
+  pieces:
+  - 4
+  couleur: solideG
+  pourquoi: >-
+    Symétrique de la barre 3, articulée en R et en T : elle a elle aussi un mouvement plan, distinct
+    de celui de toutes les autres pièces.
+- id: E5
+  nom: plateau
+  pieces:
+  - 5
+  couleur: solideH
+  pourquoi: >-
+    Le plateau reçoit le bas de caisse ; il monte tout droit pendant que les barres pivotent. Son
+    mouvement (translation verticale) n'est celui d'aucune autre pièce.
+- id: E6
+  nom: écrou gauche
+  pieces:
+  - 6
+  couleur: solideC
+  pourquoi: >-
+    L'écrou gauche est vissé sur le filet à gauche de la vis et articulé sur les barres 1 et 3 : il
+    se déplace le long de la vis, donc il bouge par rapport à elle comme par rapport aux barres.
+- id: E7
+  nom: écrou droit
+  pieces:
+  - 7
+  couleur: solideD
+  pourquoi: >-
+    L'écrou droit est vissé sur le filet à droite : quand la vis tourne, il part dans l'autre sens
+    que l'écrou gauche. C'est bien une classe distincte.
+- id: E8
+  nom: vis + manivelle
+  pieces:
+  - 8
+  - 9
+  couleur: solideA
+  pourquoi: >-
+    La manivelle 9 est goupillée au bout de la vis 8 : elle ne peut ni tourner ni glisser par rapport
+    à elle. Aucun mouvement relatif, donc une seule classe d'équivalence : E8 = {8, 9}.
+liaisons:
+- entre:
+  - E0
+  - E1
+  contact: cylindre-cylindre avec arrêt en translation (axe inférieur)
+  surfaces: l'extrémité percée de la barre 1 tourne autour de l'axe monté dans la chape du socle
+  liaison: pivot
+  point: O
+  axe: z
+  explication: >-
+    La barre inférieure gauche ne peut que tourner autour de l'axe bas du cric : pivot d'axe (O, z).
+    Son extrémité L décrit donc un arc de cercle de centre O et de rayon 1,6.
+- entre:
+  - E0
+  - E2
+  contact: cylindre-cylindre avec arrêt en translation (même axe inférieur)
+  surfaces: l'extrémité percée de la barre 2 tourne autour du même axe, à côté de la barre 1
+  liaison: pivot
+  point: O
+  axe: z
+  explication: >-
+    La barre inférieure droite est articulée sur le même axe que la barre 1 : pivot d'axe (O, z).
+    Les deux pivots sont coaxiaux, c'est pourquoi on ne voit qu'un seul cercle en O sur le schéma.
+- entre:
+  - E1
+  - E6
+  contact: cylindre-cylindre avec arrêt en translation (tourillon de l'écrou gauche)
+  surfaces: l'extrémité haute de la barre 1 tourne autour du tourillon porté par l'écrou gauche
+  liaison: pivot
+  point: L
+  axe: z
+  explication: >-
+    L'angle entre la barre 1 et la vis change pendant la montée : il faut une articulation.
+    Pivot d'axe (L, z).
+- entre:
+  - E3
+  - E6
+  contact: cylindre-cylindre avec arrêt en translation (même tourillon)
+  surfaces: l'extrémité basse de la barre 3 tourne autour du même tourillon que la barre 1
+  liaison: pivot
+  point: L
+  axe: z
+  explication: >-
+    La barre supérieure gauche est articulée sur le même tourillon que la barre 1 : pivot d'axe
+    (L, z). L'écrou gauche est le point de rencontre des deux barres de gauche et de la vis.
+- entre:
+  - E2
+  - E7
+  contact: cylindre-cylindre avec arrêt en translation (tourillon de l'écrou droit)
+  surfaces: l'extrémité haute de la barre 2 tourne autour du tourillon porté par l'écrou droit
+  liaison: pivot
+  point: R
+  axe: z
+  explication: >-
+    Symétrique du pivot en L : pivot d'axe (R, z) entre la barre inférieure droite et l'écrou droit.
+- entre:
+  - E4
+  - E7
+  contact: cylindre-cylindre avec arrêt en translation (même tourillon)
+  surfaces: l'extrémité basse de la barre 4 tourne autour du même tourillon que la barre 2
+  liaison: pivot
+  point: R
+  axe: z
+  explication: >-
+    La barre supérieure droite est articulée sur le tourillon de l'écrou droit : pivot d'axe (R, z).
+- entre:
+  - E3
+  - E5
+  contact: cylindre-cylindre avec arrêt en translation (axe supérieur)
+  surfaces: l'extrémité haute de la barre 3 tourne autour de l'axe monté dans la chape du plateau
+  liaison: pivot
+  point: T
+  axe: z
+  explication: >-
+    Le sommet du losange est articulé sous le plateau : pivot d'axe (T, z). Sans lui, le losange ne
+    pourrait pas se déformer.
+- entre:
+  - E4
+  - E5
+  contact: cylindre-cylindre avec arrêt en translation (même axe supérieur)
+  surfaces: l'extrémité haute de la barre 4 tourne autour du même axe que la barre 3
+  liaison: pivot
+  point: T
+  axe: z
+  explication: >-
+    Les deux barres supérieures sont articulées sur le même axe sous le plateau : pivot d'axe (T, z).
+    Comme en O, les deux pivots sont coaxiaux et ne donnent qu'un seul cercle sur le schéma.
+- entre:
+  - E5
+  - E0
+  contact: prismatique (tige du plateau guidée dans son fourreau)
+  surfaces: la tige du plateau coulisse verticalement dans le fourreau solidaire du socle
+  liaison: glissiere
+  point: T
+  axe: y
+  explication: >-
+    Le plateau ne peut que monter et descendre : glissière d'axe (T, y). Sur un vrai cric, ce guidage
+    n'existe pas : c'est la symétrie du losange et le poids de la voiture qui maintiennent le plateau
+    à l'aplomb de O. On l'ajoute au modèle pour traduire ce mouvement de translation verticale.
+- entre:
+  - E8
+  - E6
+  contact: hélicoïdal (filetage à gauche)
+  surfaces: le filet à gauche de la vis est vissé dans le taraudage de l'écrou gauche
+  liaison: helicoidale
+  point: L
+  axe: x
+  explication: >-
+    Rotation et translation sont liées par le pas du filetage : hélicoïdale d'axe (L, x). Un tour de
+    manivelle fait avancer l'écrou gauche d'un pas.
+- entre:
+  - E8
+  - E7
+  contact: hélicoïdal (filetage à droite)
+  surfaces: le filet à droite de la vis est vissé dans le taraudage de l'écrou droit
+  liaison: helicoidale
+  point: R
+  axe: x
+  explication: >-
+    Hélicoïdale d'axe (R, x), mais de filet inversé par rapport à celui de l'écrou gauche : pour un
+    même sens de rotation de la vis, les deux écrous se déplacent en sens contraires et se
+    rapprochent (ou s'écartent) en même temps.
+questions:
+- level: 2
+  type: mcq
+  skill: classes
+  prompt: |-
+    Combien de **classes d'équivalence** compte le cric losange ?
+    {{fig:mecanisme-cric-losange-classes}}
+  choices:
+  - '9'
+  - '5'
+  - '10'
+  - '4'
+  answer: 0
+  explanation: >-
+    E0 = {0} socle, E1 = {1}, E2 = {2}, E3 = {3}, E4 = {4}, E5 = {5}, E6 = {6}, E7 = {7} et
+    E8 = {8, 9}. Neuf classes pour dix pièces : seules la vis et la manivelle sont solidaires.
+  feedback:
+  - null
+  - 'Non : ne compte pas seulement les grosses pièces. Chacune des quatre barres bouge par rapport
+    aux trois autres : elles forment quatre classes différentes.'
+  - 'Non : il y a bien dix pièces, mais la manivelle 9 est goupillée sur la vis 8 : elles ne forment
+    qu''une seule classe, E8.'
+  - 'Non : c''est le nombre de barres du losange ; il faut aussi compter le socle, le plateau, les
+    deux écrous et l''ensemble vis + manivelle.'
+- level: 2
+  type: mcq
+  skill: classes
+  prompt: |-
+    Pourquoi la **manivelle (9)** est-elle dans la **même classe** que la **vis (8)** ?
+    {{fig:mecanisme-cric-losange-classes}}
+  choices:
+  - Parce qu'elle est goupillée sur la vis : aucun mouvement relatif entre elles
+  - Parce qu'elle est la pièce d'entrée du mécanisme
+  - Parce qu'elle tourne plus vite que la vis
+  - Parce qu'elles sont toutes les deux en acier
+  answer: 0
+  explanation: >-
+    Deux pièces sont dans la même classe d'équivalence s'il n'y a **aucun** mouvement relatif entre
+    elles. La manivelle est goupillée au bout de la vis : quand elle fait un tour, la vis fait
+    exactement un tour. E8 = {8, 9}.
+  feedback:
+  - null
+  - 'Non : être la pièce d''entrée ne dit rien sur les classes. Ce qui compte, c''est qu''il n''y ait
+    aucun mouvement relatif entre la manivelle et la vis.'
+  - 'Non : si elle tournait plus vite que la vis, il y aurait un mouvement relatif et elles seraient
+    dans deux classes différentes (comme dans un réducteur).'
+  - 'Non : le matériau ne compte pas ; seule l''absence de mouvement relatif regroupe deux pièces.'
+- level: 3
+  type: mcq
+  prompt: |-
+    La vis porte un **filet à gauche** côté écrou 6 et un **filet à droite** côté écrou 7. À quoi cela sert-il ?
+    {{fig:mecanisme-cric-losange-schema}}
+  choices:
+  - À faire se rapprocher (ou s'écarter) les deux écrous en même temps quand la vis tourne
+  - À empêcher la vis de tourner sous le poids de la voiture
+  - À faire tourner les deux écrous en sens contraires
+  - À rattraper le jeu entre la vis et les écrous
+  answer: 0
+  explanation: >-
+    Avec deux filets de même sens, les deux écrous partiraient du même côté et le losange se
+    déplacerait sans se déplier. Avec des filets inversés, un même tour de vis les fait avancer l'un
+    vers l'autre : la largeur du losange diminue, sa hauteur augmente, le plateau monte.
+  feedback:
+  - null
+  - 'Non : c''est l''irréversibilité du système vis-écrou (le faible angle d''hélice) qui empêche le
+    cric de redescendre tout seul, pas le sens des filets.'
+  - 'Non : les écrous ne tournent pas, ils sont retenus par les barres ; ils **translatent** le long
+    de la vis, en sens contraires l''un de l''autre.'
+  - 'Non : le rattrapage de jeu se fait autrement (contre-écrou) ; ici les filets inversés servent au
+    mouvement lui-même.'
+- level: 2
+  type: mcq
+  prompt: |-
+    Quel est le mouvement du **plateau (E5)** par rapport au **socle (E0)** ?
+    {{fig:mecanisme-cric-losange-schema}}
+  choices:
+  - Une translation rectiligne verticale
+  - Une rotation autour de l'axe (T, z)
+  - Une translation horizontale, le long de la vis
+  - Un mouvement plan (translation + rotation)
+  answer: 0
+  explanation: >-
+    Le plateau est en liaison glissière d'axe (T, y) avec le socle : il monte et descend tout droit,
+    sans tourner, en restant à l'aplomb de O. C'est le mouvement de sortie du cric.
+  feedback:
+  - null
+  - 'Non : en T, le pivot relie le plateau **aux barres** 3 et 4, pas au socle. Par rapport au socle,
+    le plateau ne tourne pas : il reste horizontal pendant toute la montée.'
+  - 'Non : c''est le mouvement des écrous qui se fait le long de la vis ; le plateau, lui, monte.'
+  - 'Non : le mouvement plan est celui des barres supérieures 3 et 4, dont les deux extrémités
+    bougent ; le plateau, lui, garde toujours la même orientation.'
+- level: 3
+  type: mcq
+  prompt: |-
+    Quel est le mouvement de l'**écrou gauche (E6)** par rapport au **socle (E0)** ?
+    {{fig:mecanisme-cric-losange-schema}}
+  choices:
+  - Une translation circulaire : le point L décrit un arc de cercle de centre O
+  - Une translation rectiligne horizontale, le long de la vis
+  - Une rotation autour de l'axe (O, z)
+  - L'écrou est immobile : c'est la vis qui bouge
+  answer: 0
+  explanation: >-
+    L'écrou est articulé en L à la barre 1, elle-même en pivot en O : L reste donc à 1,6 de O et
+    décrit un **arc de cercle** de centre O. Mais l'écrou reste enfilé sur la vis, toujours parallèle
+    à elle : il ne tourne pas. Un solide qui ne tourne pas et dont les points décrivent des cercles
+    est en **translation circulaire**.
+  feedback:
+  - null
+  - 'Non : l''écrou avance le long de la vis, mais la vis elle-même monte avec le losange. Par
+    rapport au socle, L monte donc aussi : sa trajectoire est un arc de cercle, pas une droite.'
+  - 'Non : ce serait le cas s''il tournait autour de O ; or l''écrou garde toujours la même
+    orientation (il reste enfilé sur la vis). Il se déplace en cercle sans tourner.'
+  - 'Non : c''est justement le déplacement des écrous le long de la vis qui déplie le losange.'
+- level: 3
+  type: mcq
+  skill: graphe
+  prompt: |-
+    Le graphe des liaisons du cric n'est pas une simple ligne : il est **bouclé**. Qu'en déduit-on ?
+    {{fig:mecanisme-cric-losange-graphe}}
+  choices:
+  - 'C''est une chaîne fermée : la seule rotation de la vis fixe la position de toutes les pièces'
+  - Le mécanisme possède autant de mouvements indépendants que de liaisons
+  - Il y a une erreur de tracé : un graphe des liaisons ne doit jamais boucler
+  - Le plateau peut monter même si la vis ne tourne pas
+  answer: 0
+  explanation: >-
+    Le graphe se referme en haut sur le plateau E5, en bas sur le socle E0, et la vis E8 relie les
+    deux écrous : chaque boucle ajoute des contraintes. Il ne reste qu'**une seule mobilité** : la
+    hauteur du cric est entièrement fixée par le nombre de tours donnés à la manivelle.
+  feedback:
+  - null
+  - 'Non : c''est le contraire. Chaque boucle **enlève** des mouvements possibles ; ici il n''en
+    reste qu''un seul, commandé par la manivelle.'
+  - 'Non : une boucle est normale, elle signale une chaîne fermée — comme dans l''essuie-glace, la
+    benne ou l''étau.'
+  - 'Non : justement, les boucles l''interdisent. Tant que la vis ne tourne pas, les écrous restent
+    en place et le losange est bloqué : c''est ce qui permet de laisser la voiture en l''air.'
+- level: 2
+  type: mcq
+  prompt: |-
+    Quelle liaison modélise le contact entre la **vis (E8)** et l'**écrou droit (E7)** ?
+    {{fig:mecanisme-cric-losange-schema}}
+  choices:
+  - Hélicoïdale d'axe (R, x)
+  - Glissière d'axe (R, x)
+  - Pivot glissant d'axe (R, x)
+  - Pivot d'axe (R, x)
+  answer: 0
+  explanation: >-
+    Dans un système vis-écrou, la rotation et la translation ne sont pas indépendantes : elles sont
+    liées par le pas du filetage. Un seul degré de liberté, mais qui mélange rotation et
+    translation : c'est la liaison **hélicoïdale**.
+  feedback:
+  - null
+  - 'Non : une glissière n''autorise que la translation. Ici, l''écrou n''avance que **parce que** la
+    vis tourne : les deux mouvements sont liés par le pas.'
+  - 'Non : dans un pivot glissant, rotation et translation sont **indépendantes** (2 degrés de
+    liberté) ; le filetage, lui, les lie l''une à l''autre (1 seul degré de liberté).'
+  - 'Non : un pivot interdit toute translation ; or c''est bien le déplacement de l''écrou le long de
+    la vis qui déplie le losange.'
+- level: 3
+  type: mcq
+  prompt: |-
+    Pourquoi le plateau monte-t-il **à la verticale**, sans partir sur le côté ?
+    {{fig:mecanisme-cric-losange-schema}}
+  choices:
+  - 'Parce que le mécanisme est symétrique : quatre barres égales et deux écrous qui se déplacent
+    autant l''un que l''autre'
+  - Parce que le plateau est très lourd
+  - Parce que les barres supérieures 3 et 4 sont plus longues que les barres inférieures
+  - Parce que la vis est encastrée dans le socle
+  answer: 0
+  explanation: >-
+    Les quatre barres ont la même longueur et les filets inversés déplacent les deux écrous
+    symétriquement : le sommet T reste toujours sur l'axe de symétrie, à l'aplomb de O. Sur le
+    schéma, on traduit ce résultat par une glissière (T, y) entre le plateau et le socle.
+  feedback:
+  - null
+  - 'Non : la masse n''y change rien. C''est la géométrie — quatre barres égales et deux écrous
+    symétriques — qui garde T sur l''axe vertical.'
+  - 'Non : les quatre barres ont exactement la même longueur (1,6 sur le schéma) ; c''est justement
+    ce qui fait du quadrilatère un **losange**.'
+  - 'Non : la vis n''est reliée qu''aux deux écrous ; elle monte d''ailleurs avec eux pendant le
+    dépliage.'
+- level: 3
+  type: mcq
+  prompt: |-
+    Sur le schéma, une **glissière (T, y)** relie le plateau au socle. Pourtant, sur un vrai cric,
+    aucune pièce ne guide le plateau. Pourquoi la dessine-t-on ?
+    {{fig:mecanisme-cric-losange-schema}}
+  choices:
+  - Pour traduire dans le modèle le mouvement réel du plateau : une translation verticale
+  - Parce que sans elle le graphe des liaisons ne serait pas connexe
+  - Parce que le plateau frotte réellement sur un rail vertical du socle
+  - Pour empêcher le plateau de tourner autour de la vis
+  answer: 0
+  explanation: >-
+    Un schéma cinématique décrit les **mouvements**, pas les pièces. Sur un vrai cric, c'est la
+    symétrie du losange et le poids de la voiture qui maintiennent le plateau à l'aplomb de O ; la
+    glissière (T, y) est la façon la plus simple d'écrire ce résultat dans le modèle.
+  feedback:
+  - null
+  - 'Non : le graphe resterait connexe sans elle (on passe du plateau au socle par les barres). Cette
+    glissière traduit un mouvement, elle ne sert pas à relier le graphe.'
+  - 'Non : regarde un vrai cric, il n''y a aucun rail vertical. C''est une liaison de modélisation.'
+  - 'Non : le plateau ne risque pas de tourner autour de la vis ; ce qu''on modélise, c''est sa
+    montée bien verticale.'
+animation:
+  bbox:
+  - -4.0
+  - -1.2
+  - 3.05
+  - 3.6
+  border: 4
+  duration: 5
+  legende: >-
+    La vis rapproche les deux écrous : le losange se déplie et le plateau monte ; chaque écrou décrit
+    un arc de cercle autour de O.
+  classes:
+    E0:
+      motion: fixed
+    E1:                       # barre inférieure gauche : de 145° à 120° (θ de 35° à 60°)
+      motion: rotate
+      center:
+      - 0
+      - 0
+      offset: -12.5
+      amplitude: -12.5
+      phase: 0.75
+    E2:                       # barre inférieure droite : de 35° à 60°, symétrique
+      motion: rotate
+      center:
+      - 0
+      - 0
+      offset: 12.5
+      amplitude: 12.5
+      phase: 0.75
+    E6:                       # écrou gauche : il suit le point L sans tourner (translation circulaire)
+      motion: attach
+      of: E1
+      point:
+      - -1.311
+      - 0.918
+    E7:                       # écrou droit : il suit le point R
+      motion: attach
+      of: E2
+      point:
+      - 1.311
+      - 0.918
+    E8:                       # vis + manivelle : elle reste horizontale et monte avec les écrous
+      motion: track
+      of: E1
+      point:
+      - -1.311
+      - 0.918
+      dir:
+      - 0
+      - 1
+    E3:                       # barre supérieure gauche : de L (porté par l'écrou) à T (sur le plateau)
+      motion: coupler
+      crank: E6
+      a:
+      - -1.311
+      - 0.918
+      slider: E5
+      b:
+      - 0
+      - 1.836
+    E4:                       # barre supérieure droite : de R à T
+      motion: coupler
+      crank: E7
+      a:
+      - 1.311
+      - 0.918
+      slider: E5
+      b:
+      - 0
+      - 1.836
+    E5:                       # plateau : translation verticale imposée par la barre 3
+      motion: slider
+      dir:
+      - 0
+      - 1
+      coupler: E3

@@ -108,7 +108,7 @@ def color_regex(rgb):
     parts = []
     for c in rgb:
         pct = c * 100 / 255
-        parts.append(re.escape(f"{pct:.6f}"[:4]) + r"\d*%")
+        parts.append(r"0(?:\.0*)?%" if c == 0 else re.escape(f"{pct:.6f}"[:4]) + r"\d*%")   # pdftocairo écrit « 0% » pour une composante nulle
     return re.compile(r"rgb\(" + r",\s*".join(parts) + r"\)")
 
 
