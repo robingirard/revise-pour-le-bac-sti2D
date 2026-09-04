@@ -1,0 +1,23 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\input{_mecanisme-serre-joint-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  p1/.style={fill=solideB!45, draw=solideB}, p2/.style={fill=solideB!45, draw=solideB}, p3/.style={fill=solideB!45, draw=solideB},
+  p4/.style={fill=solideA!45, draw=solideA},
+  p5/.style={fill=solideE!45, draw=solideE}, p6/.style={fill=solideE!45, draw=solideE},
+  p7/.style={fill=solideD!55, draw=solideD}]
+\newcommand\sjlabels{%
+  \node[fill=solideB, text=white, font=\small\bfseries, inner sep=2pt, rounded corners=1pt] at (2.5,4.3) {E1 = \{1, 2, 3\}};
+  \draw[solideB, line width=0.5pt] (2.5,4.1) -- (2.5,3.5);
+  \node[fill=solideA, text=white, font=\small\bfseries, inner sep=2pt, rounded corners=1pt] at (7.6,2.3) {E2 = \{4\}};
+  \draw[solideA, line width=0.5pt] (6.9,2.3) -- (6.0,2.3);
+  \node[fill=solideE, text=white, font=\small\bfseries, inner sep=2pt, rounded corners=1pt] at (4.2,0.0) {E3 = \{5, 6\}};
+  \draw[solideE, line width=0.5pt] (4.2,0.25) -- (4.2,1.04);
+  \node[fill=solideD, text=white, font=\small\bfseries, inner sep=2pt, rounded corners=1pt] at (1.2,-0.1) {E4 = \{7\}};
+  \draw[solideD, line width=0.5pt] (1.2,0.15) -- (1.2,0.6);
+}
+\serrejoint
+\repere{(-0.6,-0.6)}{x}{y}{1}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,81 @@
+# Mécanisme : le système bielle-manivelle (manuel p. 31, « le mouvement plan »).
+id: bielle-manivelle
+nom: Bielle-manivelle
+titre: Le système bielle-manivelle
+description: >
+  Mécanisme de transformation de mouvement : la rotation continue de la manivelle (vilebrequin)
+  est transformée en translation alternative du piston, ou inversement (moteur thermique, pompe).
+repere: "x : axe du cylindre (horizontal) ; y : vertical ; z : axe des pivots, vers l'observateur"
+figures:
+  dessin: mecanisme-bielle-manivelle-dessin
+  classes: mecanisme-bielle-manivelle-dessin
+  graphe: mecanisme-bielle-manivelle-graphe
+  schema: mecanisme-bielle-manivelle-schema
+pieces:
+  - {num: 0, nom: "bâti (carter + cylindre)"}
+  - {num: 1, nom: "manivelle (vilebrequin)"}
+  - {num: 2, nom: "bielle"}
+  - {num: 3, nom: "piston"}
+classes:
+  - {id: E0, nom: "bâti", pieces: [0], couleur: black, bati: true,
+     pourquoi: "Le carter et le cylindre sont fixes : c'est le solide de référence."}
+  - {id: E1, nom: "manivelle", pieces: [1], couleur: solideE,
+     pourquoi: "La manivelle tourne autour de l'axe (O, z) fixe du bâti."}
+  - {id: E2, nom: "bielle", pieces: [2], couleur: solideA,
+     pourquoi: "La bielle relie la manivelle au piston : elle a un mouvement plan (rotation + translation)."}
+  - {id: E3, nom: "piston", pieces: [3], couleur: solideB,
+     pourquoi: "Le piston est guidé dans le cylindre : il translate selon x."}
+liaisons:
+  - entre: [E0, E1]
+    contact: "cylindre-cylindre avec arrêt en translation (palier)"
+    surfaces: "le tourillon du vilebrequin tourne dans le palier du carter"
+    liaison: pivot
+    point: O
+    axe: z
+    explication: "La manivelle ne peut que tourner autour de l'axe (O, z) du bâti : pivot d'axe (O, z)."
+  - entre: [E1, E2]
+    contact: "cylindre-cylindre avec arrêt en translation (maneton)"
+    surfaces: "la tête de bielle tourne autour du maneton de la manivelle"
+    liaison: pivot
+    point: A
+    axe: z
+    explication: "Articulation manivelle/bielle : pivot d'axe (A, z)."
+  - entre: [E2, E3]
+    contact: "cylindre-cylindre avec arrêt en translation (axe de piston)"
+    surfaces: "le pied de bielle tourne autour de l'axe du piston"
+    liaison: pivot
+    point: B
+    axe: z
+    explication: "Articulation bielle/piston : pivot d'axe (B, z)."
+  - entre: [E3, E0]
+    contact: "cylindre-cylindre long (piston dans le cylindre), rotation bloquée par la bielle"
+    surfaces: "le piston coulisse dans le cylindre"
+    liaison: glissiere
+    point: B
+    axe: x
+    explication: "Dans le plan du schéma, le piston ne fait que translater selon x : on le modélise par une glissière d'axe (B, x). (Vu en 3D, le contact cylindre-cylindre seul serait un pivot glissant ; c'est la bielle qui empêche la rotation.)"
+questions:
+  - level: 2
+    type: mcq
+    prompt: "Sur le schéma cinématique du bielle-manivelle, combien de liaisons **pivot** voit-on ?\n{{fig:mecanisme-bielle-manivelle-schema}}"
+    choices: ["3", "2", "4", "1"]
+    answer: 0
+    explanation: "Trois pivots d'axe z : en O (bâti/manivelle), en A (manivelle/bielle) et en B (bielle/piston)."
+  - level: 2
+    type: mcq
+    prompt: "Quel est le mouvement du **piston (3)** par rapport au **bâti (0)** ?\n{{fig:mecanisme-bielle-manivelle-schema}}"
+    choices: ["Translation rectiligne alternative selon x", "Rotation autour de (O, z)", "Mouvement plan (translation + rotation)", "Translation circulaire"]
+    answer: 0
+    explanation: "La glissière d'axe (B, x) n'autorise qu'une translation selon x ; le piston fait des allers-retours."
+  - level: 3
+    type: mcq
+    prompt: "Quel solide du bielle-manivelle a un **mouvement plan** (ni translation pure, ni rotation pure) par rapport au bâti ?"
+    choices: ["La bielle (2)", "La manivelle (1)", "Le piston (3)", "Le bâti (0)"]
+    answer: 0
+    explanation: "La bielle tourne ET se déplace : son mouvement est la somme d'une translation et d'une rotation (manuel p. 31)."
+  - level: 3
+    type: mcq
+    prompt: "La manivelle tourne à vitesse constante. Quelle est la trajectoire du point **A** (articulation manivelle/bielle) dans le repère du bâti ?"
+    choices: ["Un cercle de centre O", "Un segment de droite", "Une ellipse", "Un point fixe"]
+    answer: 0
+    explanation: "A appartient à la manivelle, en liaison pivot d'axe (O, z) avec le bâti : il décrit un cercle de centre O."

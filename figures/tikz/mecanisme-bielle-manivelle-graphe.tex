@@ -1,0 +1,16 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  classe/.style={circle, minimum size=9mm, text=white, font=\small\bfseries, inner sep=0pt},
+  lien/.style={line width=0.8pt}, etiquette/.style={font=\small, fill=white, inner sep=1.5pt}]
+\node[classe, fill=black]   (E0) at (0,0)     {0};
+\node[classe, fill=solideE] (E1) at (0,3)     {1};
+\node[classe, fill=solideA] (E2) at (4.5,3)   {2};
+\node[classe, fill=solideB] (E3) at (4.5,0)   {3};
+\draw[lien] (E0) -- node[etiquette, left] {Pivot (O, $\vec{z}$)} (E1);
+\draw[lien] (E1) -- node[etiquette, above] {Pivot (A, $\vec{z}$)} (E2);
+\draw[lien] (E2) -- node[etiquette, right] {Pivot (B, $\vec{z}$)} (E3);
+\draw[lien] (E3) -- node[etiquette, below] {Glissière (B, $\vec{x}$)} (E0);
+\end{tikzpicture}
+\end{document}

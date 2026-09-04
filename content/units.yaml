@@ -1,0 +1,219 @@
+# Arbre de compétences (progression type Duolingo).
+# Chaque compétence a des prérequis, une leçon (Markdown) et des générateurs d'exercices
+# (interprétés par tools/build_content.py) ou des exercices écrits à la main (items).
+title: Révise STI2D
+units:
+  - id: liaisons
+    title: Les liaisons mécaniques
+    description: Les 10 liaisons normalisées — symboles, mobilités, contacts, efforts.
+    skills:
+      - id: mobilites
+        title: Les 6 mobilités
+        icon: "🧭"
+        description: Translations, rotations et degrés de liberté.
+        prerequisites: []
+        lesson: lessons/mobilites.md
+        items:
+          - type: flashcard
+            level: 1
+            front: "Combien de mouvements indépendants sont possibles entre deux solides **sans aucun contact** ?"
+            back: "**6** : 3 translations (Tx, Ty, Tz) et 3 rotations (Rx, Ry, Rz)."
+          - type: flashcard
+            level: 1
+            front: "Que signifie **Tx** ?"
+            back: "Une **translation** suivant l'axe **x** (déplacement en ligne droite le long de x)."
+          - type: flashcard
+            level: 1
+            front: "Que signifie **Ry** ?"
+            back: "Une **rotation** autour de l'axe **y**."
+          - type: flashcard
+            level: 1
+            front: "Qu'appelle-t-on les **degrés de liberté** (ddl) d'une liaison ?"
+            back: "Les mouvements relatifs **indépendants** encore possibles entre les deux pièces liées (parmi Tx, Ty, Tz, Rx, Ry, Rz)."
+          - type: flashcard
+            level: 2
+            front: "À quoi sert une **liaison mécanique** ?"
+            back: "À **limiter les mobilités** entre deux pièces grâce aux surfaces de contact : chaque contact supprime des degrés de liberté."
+          - type: mcq
+            level: 1
+            prompt: "Un solide libre dans l'espace peut se déplacer suivant :"
+            choices: ["3 translations et 3 rotations", "3 translations seulement", "2 translations et 1 rotation", "6 translations"]
+            answer: 0
+            explanation: "Une translation et une rotation pour chacun des 3 axes : 6 mobilités."
+          - type: mcq
+            level: 1
+            prompt: "Une porte tourne sur ses gonds (axe vertical z). Quel est son **seul** degré de liberté par rapport au mur ?"
+            choices: ["Rz", "Tz", "Rx", "Ty"]
+            answer: 0
+            explanation: "La porte ne peut que tourner autour de l'axe vertical : rotation Rz."
+          - type: mcq
+            level: 1
+            prompt: "Un tiroir coulisse dans un meuble le long de l'axe x. Quel est son degré de liberté ?"
+            choices: ["Tx", "Rx", "Ty", "Tz"]
+            answer: 0
+            explanation: "Le tiroir se déplace en ligne droite le long de x : translation Tx."
+          - type: grid
+            level: 2
+            prompt: "Un solide **libre** (sans contact) : cochez toutes ses mobilités."
+            rows: [x, y, z]
+            cols: [T, R]
+            answer: [Tx, Ty, Tz, Rx, Ry, Rz]
+            explanation: "Sans contact, rien n'est bloqué : les 6 mobilités sont possibles."
+          - type: grid
+            level: 2
+            prompt: "Une **porte** sur ses gonds (axe z) : cochez ses mobilités par rapport au mur."
+            rows: [x, y, z]
+            cols: [T, R]
+            answer: [Rz]
+            explanation: "Seule la rotation autour de l'axe des gonds (z) est possible."
+          - type: mcq
+            level: 2
+            prompt: "Plus une liaison a de **surfaces de contact** qui bloquent des mouvements, …"
+            choices: ["moins elle a de degrés de liberté", "plus elle a de degrés de liberté", "plus elle transmet de mouvements", "cela ne change rien"]
+            answer: 0
+            explanation: "Chaque contact supprime des mobilités : les ddl diminuent."
+          - type: input
+            level: 3
+            prompt: "Une liaison bloque 4 mobilités. Combien lui reste-t-il de degrés de liberté ?"
+            answer: "2"
+            accept: ["deux"]
+            numeric: true
+            explanation: "6 mobilités au total − 4 bloquées = 2 ddl."
+
+      - id: symboles
+        title: Reconnaître les symboles
+        icon: "🔩"
+        description: Associer chaque symbole normalisé à sa liaison, dans les deux vues.
+        prerequisites: [mobilites]
+        lesson: lessons/symboles.md
+        generators:
+          - gen: symbole_vers_nom      # QCM : figure → nom (vue « bout » niveau 1, vue « face » niveau 2)
+          - gen: symbole_flashcards    # flashcard : figure → nom + désignation
+          - gen: nom_vers_symbole      # QCM en grille : nom → 4 figures (niveau 2)
+          - gen: match_symboles        # associer 4 noms ↔ 4 symboles (niveau 3)
+
+      - id: ddl
+        title: Degrés de liberté
+        icon: "🎚️"
+        description: Les mobilités de chaque liaison.
+        prerequisites: [symboles]
+        lesson: lessons/ddl.md
+        generators:
+          - gen: nb_ddl_mcq            # « Combien de ddl ? » (niveau 1)
+          - gen: ddl_grid              # grille T/R à cocher (niveau 2)
+          - gen: ddl_vers_nom          # mobilités → nom (niveau 2)
+          - gen: ddl_flashcards        # flashcard nom → ddl (niveau 1)
+
+      - id: contacts
+        title: Surfaces de contact
+        icon: "🤝"
+        description: Reconnaître une liaison à partir des surfaces en contact et d'objets réels.
+        prerequisites: [symboles]
+        lesson: lessons/contacts.md
+        generators:
+          - gen: contact_vers_nom      # description du contact → nom (niveau 1)
+          - gen: exemple_vers_nom      # objet du quotidien → nom (niveau 2)
+          - gen: nom_vers_contact      # nom → description du contact (niveau 2)
+
+      - id: efforts
+        title: Efforts transmissibles
+        icon: "💪"
+        description: Ce qu'une liaison transmet (forces et moments) — le complément des mobilités.
+        prerequisites: [ddl]
+        lesson: lessons/efforts.md
+        generators:
+          - gen: efforts_grid          # grille X Y Z / L M N (niveau 2)
+          - gen: nb_efforts_mcq        # « Combien de composantes transmissibles ? » (niveau 1)
+        items:
+          - type: mcq
+            level: 1
+            prompt: "Une liaison **autorise** la translation Tx. Peut-elle transmettre une force X selon x ?"
+            choices: ["Non : si le mouvement est libre, aucun effort n'est transmis dans cette direction", "Oui, toujours", "Oui, mais seulement la moitié", "Cela dépend de la couleur des pièces"]
+            answer: 0
+            explanation: "Mobilité et effort transmissible sont **complémentaires** : là où le mouvement est libre (sans frottement), l'effort est nul."
+          - type: input
+            level: 2
+            prompt: "Une liaison possède 2 degrés de liberté. Combien de composantes d'effort indépendantes transmet-elle ?"
+            answer: "4"
+            accept: ["quatre"]
+            numeric: true
+            explanation: "ddl + composantes transmissibles = 6, donc 6 − 2 = 4."
+
+  - id: schema
+    title: Le schéma cinématique
+    description: Du mécanisme réel au schéma — classes d'équivalence, graphe des liaisons, tracé.
+    skills:
+      - id: classes
+        title: Classes d'équivalence
+        icon: "🎨"
+        description: Regrouper les pièces qui bougent ensemble.
+        prerequisites: [contacts]
+        lesson: lessons/classes.md
+        generators:
+          - gen: classes_mecanisme     # questions générées depuis content/mecanismes/*.yaml
+        items:
+          - type: flashcard
+            level: 1
+            front: "Qu'est-ce qu'une **classe d'équivalence cinématique** ?"
+            back: "Un groupe de pièces **sans mouvement relatif** entre elles (elles bougent comme un seul solide). On les colorie d'une même couleur."
+          - type: mcq
+            level: 1
+            prompt: "Quelles pièces sont **exclues** des classes d'équivalence ?"
+            choices: ["Les pièces déformables (ressorts, joints, courroies)", "Les pièces en métal", "Les pièces fixes", "Les pièces les plus petites"]
+            answer: 0
+            explanation: "Une pièce déformable n'a pas un mouvement de solide : on l'exclut (manuel p. 33, étape 2)."
+          - type: mcq
+            level: 1
+            prompt: "Deux pièces **vissées l'une sur l'autre** (encastrement) appartiennent :"
+            choices: ["À la même classe d'équivalence", "À deux classes différentes", "À aucune classe", "Cela dépend de leur taille"]
+            answer: 0
+            explanation: "Un encastrement n'autorise aucun mouvement relatif : les deux pièces forment un seul solide."
+
+      - id: graphe
+        title: Graphe des liaisons
+        icon: "🕸️"
+        description: Identifier la liaison entre deux classes et tracer le graphe.
+        prerequisites: [classes, ddl]
+        lesson: lessons/graphe.md
+        generators:
+          - gen: liaison_entre_classes # contact entre deux classes → liaison (depuis les mécanismes)
+          - gen: lecture_graphe        # questions sur le graphe des liaisons
+        items:
+          - type: order
+            level: 1
+            prompt: "Remettez dans l'ordre les **5 étapes** de la démarche pour réaliser un schéma cinématique (manuel p. 33)."
+            steps:
+              - "Étudier le dessin d'ensemble pour comprendre le fonctionnement"
+              - "Identifier les classes d'équivalence (une couleur par classe)"
+              - "Identifier la nature des contacts et en déduire les liaisons"
+              - "Tracer le graphe des liaisons"
+              - "Tracer le schéma cinématique (2D ou 3D)"
+          - type: mcq
+            level: 1
+            prompt: "Dans un graphe des liaisons, que représentent les **cercles** et les **traits** ?"
+            choices: ["Cercles = classes d'équivalence, traits = liaisons", "Cercles = liaisons, traits = classes", "Cercles = pièces, traits = contacts", "Cercles = points, traits = axes"]
+            answer: 0
+            explanation: "Chaque sommet est une classe d'équivalence ; chaque arête est une liaison, avec son nom, son centre et son axe."
+
+      - id: schema-2d
+        title: Tracer le schéma
+        icon: "✏️"
+        description: Choisir le bon symbole selon la vue et lire un schéma cinématique.
+        prerequisites: [graphe]
+        lesson: lessons/schema.md
+        generators:
+          - gen: choix_symbole_vue     # liaison + plan de la vue → bon symbole parmi 4
+          - gen: lecture_schema        # questions écrites dans les mécanismes
+        items:
+          - type: mcq
+            level: 1
+            prompt: "Sur un schéma cinématique, comment distingue-t-on les classes d'équivalence ?"
+            choices: ["Par des couleurs différentes, les mêmes qu'à l'étape des classes", "Par des épaisseurs de trait", "Par des numéros de pièces", "On ne les distingue pas"]
+            answer: 0
+            explanation: "On respecte les couleurs choisies pour les classes d'équivalence (manuel p. 33, étape 5)."
+          - type: mcq
+            level: 2
+            prompt: "Où place-t-on le symbole d'une liaison sur le schéma ?"
+            choices: ["À la position réelle du centre de la liaison (point caractéristique)", "N'importe où, l'important est le symbole", "Toujours au centre de la feuille", "Au milieu de la pièce la plus grande"]
+            answer: 0
+            explanation: "Le schéma respecte la position des centres des liaisons : c'est ce qui permet ensuite d'étudier les mouvements (manuel p. 33, étape 5)."

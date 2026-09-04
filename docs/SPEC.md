@@ -1,0 +1,166 @@
+# Révise STI2D — spécification technique (v1)
+
+Outil d'entraînement pour le bac STI2D (2I2D, physique-chimie, maths) fondé sur
+la **répétition espacée** (planificateur type SM-2/Leitner) et une **progression
+par compétences** (arbre de compétences à la Duolingo).
+
+## 1. Choix de plateforme
+
+**Application web statique installable (PWA)** :
+
+- un seul code (HTML/CSS/JS sans framework, sans bundler) ;
+- fonctionne dans Safari/Chrome sur iPhone, iPad et MacBook ; « Ajouter à l'écran
+  d'accueil » l'installe comme une app (plein écran, hors-ligne grâce au service worker) ;
+- hébergeable sur GitHub Pages (ou n'importe quel serveur statique) ; ouvrable aussi
+  en local (double-clic sur `dist/index.html`) ;
+- la progression est stockée dans le navigateur (`localStorage`) avec export/import JSON.
+
+Une enveloppe native (SwiftUI + WKWebView, ou Capacitor) reste possible plus tard
+sans rien changer au contenu.
+
+## 2. Arborescence du dépôt
+
+```
+revise-sti2d/
+├── content/               # SOURCE de vérité pédagogique (YAML, Markdown)
+│   ├── liaisons.yaml      # base de connaissances : les 10 liaisons normalisées
+│   ├── mecanismes/*.yaml  # mécanismes étudiés (classes d'équivalence, liaisons, graphe)
+│   ├── units.yaml         # arbre de compétences : unités → compétences → générateurs
+│   └── lessons/*.md       # textes de leçon (Markdown, figures via {{fig:id}})
+├── figures/
+│   ├── tikz/liaisons.sty  # bibliothèque TikZ : symboles normalisés des liaisons (pics)
+│   ├── tikz/*.tex         # figures standalone (compilées en SVG par le build)
+│   └── build/             # PDF/SVG générés (non versionnés)
+├── tools/
+│   ├── build_figures.py   # .tex → PDF (lualatex) → SVG (pdftocairo)
+│   ├── build_content.py   # YAML + générateurs → dist/content.json (+ content.js)
+│   ├── validate.py        # invariants (ddl + efforts = 6, ids uniques, figures existantes…)
+│   └── serve.py           # serveur local de développement
+├── app/                   # code de l'application (copié tel quel dans dist/)
+│   ├── index.html, manifest.webmanifest, sw.js, icons/
+│   ├── css/app.css
+│   └── js/ (main.js, scheduler.js, session.js, store.js, render.js, exercises/*.js)
+├── dist/                  # SORTIE du build (app + content.json + content.js)
+├── Makefile               # make figures | content | app | check | serve | clean
+└── README.md
+```
+
+Règle : **tout ce qui est dans `dist/` et `figures/build/` est régénéré** par `make`.
+
+## 3. Format `content.json` (contrat entre le build et l'appli)
+
+```jsonc
+{
+  "version": 1,
+  "generatedAt": "2026-09-04T10:00:00Z",
+  "title": "Révise STI2D",
+  "figures": { "liaison-pivot-axe": "<svg …>…</svg>", "…": "…" },
+  "units": [
+    {
+      "id": "liaisons",
+      "title": "Les liaisons mécaniques",
+      "description": "…",
+      "skills": [
+        {
+          "id": "liaisons-symboles",
+          "title": "Reconnaître les symboles",
+          "icon": "🔩",                    // emoji ou id de figure
+          "description": "…",
+          "prerequisites": ["liaisons-mobilites"],   // ids de compétences
+          "lesson": "## …markdown…",       // leçon (Markdown restreint, voir §5)
+          "levels": 3,                     // nombre de niveaux (couronnes)
+          "items": ["liaisons-symboles-pivot-nom", "…"]  // ids d'exercices
+        }
+      ]
+    }
+  ],
+  "items": {
+    "liaisons-symboles-pivot-nom": {
+      "id": "liaisons-symboles-pivot-nom",
+      "skill": "liaisons-symboles",
+      "type": "mcq",                       // flashcard | mcq | match | grid | order | input
+      "level": 1,                          // niveau à partir duquel l'exercice apparaît (1..levels)
+      "tags": ["pivot"],
+      "payload": { … }                     // dépend du type, voir §4
+    }
+  }
+}
+```
+
+`dist/content.js` contient exactement le même objet, sous la forme
+`window.CONTENT = {...};` (permet l'ouverture en `file://`). L'appli charge
+`content.js` via `<script>` et n'a donc pas besoin de `fetch`.
+
+## 4. Types d'exercices (payloads)
+
+Un « texte riche » (`rich`) est une chaîne pouvant contenir :
+`**gras**`, `*italique*`, retours à la ligne `\n`, `{{fig:ID}}` (SVG inséré en ligne,
+depuis `figures`), `$…$` (math : affiché tel quel en italique pour l'instant,
+KaTeX plus tard).
+
+| type | payload | correction |
+|---|---|---|
+| `flashcard` | `{ "front": rich, "back": rich }` | auto-évaluation : *À revoir* / *Difficile* / *Facile* |
+| `mcq` | `{ "prompt": rich, "choices": [rich], "answer": [idx], "multiple": false, "layout": "list"\|"grid", "explanation": rich }` | ensemble d'indices sélectionnés == `answer` |
+| `match` | `{ "prompt": rich, "pairs": [{"left": rich, "right": rich}] }` (3 à 6 paires) | toutes les paires appariées ; une erreur = item raté |
+| `grid` | `{ "prompt": rich, "rows": [{"id":"x","label":"x"}…], "cols": [{"id":"T","label":"Translation"},{"id":"R","label":"Rotation"}], "answer": ["Tx","Rx"], "labels": {"Tx":"X"}, "hint": "…", "explanation": rich }` — id de case = `col.id + row.id` ; `labels` (facultatif) remplace le texte affiché dans une case (efforts : Fx → X, Mx → L) ; `hint` (facultatif) remplace la consigne | ensemble de cases cochées == `answer` |
+| `order` | `{ "prompt": rich, "steps": [rich] }` (dans le bon ordre ; l'appli mélange) | ordre reconstitué == `steps` |
+| `input` | `{ "prompt": rich, "answer": "3", "accept": ["trois"], "numeric": true, "tolerance": 0.01, "unit": "m", "explanation": rich }` | texte normalisé (minuscules, sans accents/espaces) ∈ {answer}∪accept, ou |x−answer| ≤ tolerance si numeric |
+
+Les choix de `mcq` en `layout:"grid"` sont typiquement des figures (2×2).
+
+## 5. Leçon (Markdown restreint)
+
+Titres `#`/`##`/`###`, paragraphes, `**gras**`, `*italique*`, listes `- `, tableaux
+simples `| a | b |`, `{{fig:ID}}` sur une ligne (figure centrée), `$…$`.
+Rendu par une fonction maison (pas de dépendance).
+
+## 6. Planificateur de répétition espacée (SM-2 simplifié)
+
+État par item : `{ "reps": 0, "ease": 2.5, "interval": 0, "due": null, "lapses": 0, "last": null }`
+(`interval` en jours, `due`/`last` en ISO date `YYYY-MM-DD`). Un item sans état est **nouveau**.
+
+Notes : `again | hard | good | easy` (les exercices auto-corrigés donnent `again`
+si faux, `good` si juste du premier coup ; les flashcards proposent les 3 boutons
+*À revoir* = again, *Difficile* = hard, *Facile* = easy… et *Bien* = good).
+
+```
+again : reps=0 ; interval=0 (dû aujourd'hui) ; ease=max(1.3, ease−0.2) ; lapses+1
+hard  : interval=max(1, round(interval×1.2)) ; ease=max(1.3, ease−0.15) ; reps+1
+good  : interval = reps==0 ? 1 : reps==1 ? 3 : round(interval×ease) ; reps+1
+easy  : interval = reps==0 ? 3 : round(interval×ease×1.3) ; ease+=0.15 ; reps+1
+due = aujourd'hui + interval
+```
+
+Un item est **dû** si `due ≤ aujourd'hui`. **Maîtrisé** si `interval ≥ 21`.
+
+## 7. Progression (Duolingo-like)
+
+- Une **compétence** est *verrouillée* tant que tous ses `prerequisites` n'ont pas
+  atteint le niveau ≥ 1. Elle a `levels` niveaux (défaut 3).
+- État : `{ "level": 0, "progress": 0, "sessions": 0, "xp": 0 }`.
+  Chaque **séance réussie** (≥ 80 % de bonnes réponses au premier essai) fait
+  `progress += 1/2` ; à `progress ≥ 1` → `level += 1`, `progress = 0`.
+  Une séance < 80 % ne fait pas progresser mais compte dans `sessions`.
+- **Séance de compétence** (≈ 10 exercices) : d'abord les items **dus** de la
+  compétence, puis les items **nouveaux** de niveau ≤ `level + 1`, puis (s'il en
+  manque) des items déjà vus, au hasard. Mélange final. Un item raté est **remis
+  en fin de file** jusqu'à réussite (il est noté `again` la première fois seulement).
+- **Séance de révision** (bouton « Réviser ») : tous les items dus des compétences
+  déverrouillées, 20 max, toutes compétences mélangées.
+- **XP** : 10 par séance terminée + 2 par bonne réponse au premier essai.
+  **Série** (streak) : jours consécutifs avec ≥ 1 séance terminée.
+  Objectif quotidien : 30 XP (réglable).
+
+## 8. Stockage et écrans
+
+- `localStorage["revise-sti2d.progress.v1"]` =
+  `{ "version":1, "items":{id:état}, "skills":{id:état}, "xp":0, "streak":{"count":0,"last":"YYYY-MM-DD"}, "history":[{"date","skill","correct","total","xp"}], "settings":{"dailyGoal":30} }`.
+- Écrans : **Accueil** (série, XP du jour, bouton Réviser avec nombre d'items dus,
+  arbre des unités/compétences avec niveau et verrouillage) → **Compétence**
+  (leçon repliable, stats, bouton *Commencer*) → **Séance** (barre de progression,
+  exercice, retour immédiat vert/rouge + explication, bouton *Continuer*) →
+  **Bilan** (score, XP, niveau) ; **Progrès** (tableau par compétence : dus, nouveaux,
+  maîtrisés) ; **Réglages** (objectif, export/import JSON de la progression, remise à zéro).
+- Interface **en français**, mobile d'abord, boutons larges, thème clair/sombre
+  automatique, accessibilité clavier.

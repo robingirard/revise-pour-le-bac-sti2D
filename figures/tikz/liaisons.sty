@@ -1,0 +1,203 @@
+%% liaisons.sty — symboles normalisés des liaisons mécaniques (schémas cinématiques 2D)
+%% Convention : chaque symbole est un « pic » TikZ centré sur le point caractéristique A,
+%% dessiné dans un repère local où
+%%   - l'axe de la liaison est l'axe local x (vues « face ») ;
+%%   - la normale au contact est l'axe local y (appui plan, ponctuelle, linéaire rectiligne) ;
+%%   - « bout » = vue selon l'axe (l'axe pointe vers l'observateur), « face » = axe dans le plan.
+%% Deux solides : s1 (rouge, pièce « intérieure » : arbre, sphère, coin) et
+%%                s2 (bleu,  pièce « extérieure » : alésage, plan, coupelle).
+%% Options (dans les crochets du \pic) : s1=<couleur>, s2=<couleur>, liens=true|false.
+%% Coordonnées nommées (avec name=P) : P-A (centre), P-s1, P-s1b (extrémités des traits
+%% du solide 1), P-s2 (extrémité du trait du solide 2).
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{liaisons}[2026/09/04 v0.1 Symboles de liaisons pour schemas cinematiques]
+\RequirePackage{tikz}
+\RequirePackage{amsmath}
+\usetikzlibrary{calc,arrows.meta,patterns}
+
+\definecolor{solideA}{RGB}{225,55,25}
+\definecolor{solideB}{RGB}{45,75,205}
+\definecolor{solideC}{RGB}{225,105,180}
+\definecolor{solideD}{RGB}{235,150,20}
+\definecolor{solideE}{RGB}{20,150,90}
+\definecolor{solideF}{RGB}{110,60,180}
+
+\newif\ifliaison@liens
+\tikzset{
+  s1/.code={\def\liaison@sA{#1}},
+  s2/.code={\def\liaison@sB{#1}},
+  liens/.is if=liaison@liens,
+  s1=solideA, s2=solideB, liens=true,
+  liaison/trait/.style={line width=1.1pt, line cap=round, line join=round},
+  liaison/sA/.style={liaison/trait, draw=\liaison@sA},
+  liaison/sB/.style={liaison/trait, draw=\liaison@sB},
+  liaison/fillA/.style={fill=\liaison@sA},
+  liaison/fillB/.style={fill=\liaison@sB},
+  liaison/fond/.style={fill=white},
+}
+
+% Dimensions (cm)
+\newcommand\liaison@r{0.25}    % rayon des cercles
+\newcommand\liaison@a{0.5}     % demi-longueur des rectangles (vue face)
+\newcommand\liaison@b{0.25}    % demi-hauteur des rectangles
+\newcommand\liaison@L{0.45}    % longueur des traits de liaison (liens)
+\newcommand\liaison@e{0.45}    % dépassement de l'arbre hors du rectangle
+\newcommand\liaison@p{0.6}     % demi-longueur des plans
+
+% Traits de liaison : s1 vers le haut depuis (0,#1), s2 vers le bas depuis (0,-#2)
+\newcommand\liaison@liensverticaux[2]{%
+  \coordinate (-s1) at (0,#1+\liaison@L);
+  \coordinate (-s2) at (0,-#2-\liaison@L);
+  \ifliaison@liens
+    \draw[liaison/sA] (0,#1) -- (-s1);
+    \draw[liaison/sB] (0,-#2) -- (-s2);
+  \fi}
+% Trait de liaison s2 seul (vers le bas depuis (0,-#1))
+\newcommand\liaison@liensbas[1]{%
+  \coordinate (-s2) at (0,-#1-\liaison@L);
+  \ifliaison@liens \draw[liaison/sB] (0,-#1) -- (-s2); \fi}
+
+\tikzset{
+  %% ---------- Encastrement (centre A) : même symbole dans toutes les vues
+  pics/encastrement/.style={code={
+    \coordinate (-A) at (0,0);
+    \coordinate (-s1) at (\liaison@p,0); \coordinate (-s1b) at (-\liaison@p,0);
+    \coordinate (-s2) at (0,\liaison@p);
+    \draw[liaison/sA] (-s1b) -- (-s1);
+    \draw[liaison/sB] (0,0) -- (-s2);
+    \fill[liaison/fillB] (0,0) -- (0,0.28) -- (0.28,0) -- cycle;
+  }},
+  %% ---------- Pivot d'axe (A,x)
+  pics/pivot bout/.style={code={
+    \coordinate (-A) at (0,0);
+    \draw[liaison/sB, liaison/fond] (0,0) circle (\liaison@r);
+    \liaison@liensverticaux{\liaison@r}{\liaison@r}
+  }},
+  pics/pivot face/.style={code={
+    \coordinate (-A) at (0,0);
+    \coordinate (-s1) at (\liaison@a+\liaison@e,0); \coordinate (-s1b) at (-\liaison@a-\liaison@e,0);
+    \draw[liaison/sB, liaison/fond] (-\liaison@a,-\liaison@b) rectangle (\liaison@a,\liaison@b);
+    \draw[liaison/sA] (-s1b) -- (-s1);
+    \draw[liaison/sA] (-\liaison@a-0.15,-0.3) -- (-\liaison@a-0.15,0.3)
+                      ( \liaison@a+0.15,-0.3) -- ( \liaison@a+0.15,0.3);
+    \liaison@liensbas{\liaison@b}
+  }},
+  %% ---------- Glissière d'axe (A,x)
+  pics/glissiere bout/.style={code={
+    \coordinate (-A) at (0,0);
+    \draw[liaison/sB, liaison/fond] (-\liaison@b,-\liaison@b) rectangle (\liaison@b,\liaison@b);
+    \draw[liaison/sA] (-\liaison@b,-\liaison@b) -- (\liaison@b,\liaison@b)
+                      (-\liaison@b,\liaison@b) -- (\liaison@b,-\liaison@b);
+    \liaison@liensverticaux{\liaison@b}{\liaison@b}
+  }},
+  pics/glissiere face/.style={code={
+    \coordinate (-A) at (0,0);
+    \coordinate (-s1) at (\liaison@a+\liaison@e,0); \coordinate (-s1b) at (-\liaison@a-\liaison@e,0);
+    \draw[liaison/sB, liaison/fond] (-\liaison@a,-\liaison@b) rectangle (\liaison@a,\liaison@b);
+    \draw[liaison/sA] (-s1b) -- (-\liaison@a,0) (\liaison@a,0) -- (-s1);
+    \liaison@liensbas{\liaison@b}
+  }},
+  %% ---------- Hélicoïdale d'axe (A,x)
+  pics/helicoidale bout/.style={code={
+    \coordinate (-A) at (0,0);
+    \draw[liaison/sB, liaison/fond] (0,0) circle (\liaison@r);
+    \draw[liaison/sA] (0,0.17) arc (90:-240:0.17);
+    \liaison@liensverticaux{\liaison@r}{\liaison@r}
+  }},
+  pics/helicoidale face/.style={code={
+    \coordinate (-A) at (0,0);
+    \coordinate (-s1) at (\liaison@a+\liaison@e,0); \coordinate (-s1b) at (-\liaison@a-\liaison@e,0);
+    \draw[liaison/sB, liaison/fond] (-\liaison@a,-\liaison@b) rectangle (\liaison@a,\liaison@b);
+    \draw[liaison/sA] (-s1b) -- (-\liaison@a,0)
+      plot[domain=-\liaison@a:\liaison@a, samples=41, smooth] (\x, {-0.13*sin(deg(\x*pi/\liaison@a))})
+      -- (-s1);
+    \liaison@liensbas{\liaison@b}
+  }},
+  %% ---------- Pivot glissant d'axe (A,x)
+  pics/pivot glissant bout/.style={code={
+    \coordinate (-A) at (0,0);
+    \draw[liaison/sB, liaison/fond] (0,0) circle (\liaison@r);
+    \fill[liaison/fillA] (0,0) circle (0.045);
+    \liaison@liensverticaux{\liaison@r}{\liaison@r}
+  }},
+  pics/pivot glissant face/.style={code={
+    \coordinate (-A) at (0,0);
+    \coordinate (-s1) at (\liaison@a+\liaison@e,0); \coordinate (-s1b) at (-\liaison@a-\liaison@e,0);
+    \draw[liaison/sB, liaison/fond] (-\liaison@a,-\liaison@b) rectangle (\liaison@a,\liaison@b);
+    \draw[liaison/sA] (-s1b) -- (-s1);
+    \liaison@liensbas{\liaison@b}
+  }},
+  %% ---------- Rotule de centre A : même symbole dans toutes les vues
+  pics/rotule/.style={code={
+    \coordinate (-A) at (0,0);
+    \draw[liaison/sB] (-170:0.32) arc (-170:-10:0.32);
+    \draw[liaison/sA, liaison/fond] (0,0) circle (\liaison@r);
+    \liaison@liensverticaux{\liaison@r}{0.32}
+  }},
+  %% ---------- Appui plan de normale (A,y) : même symbole dans les vues contenant y
+  pics/appui plan/.style={code={
+    \coordinate (-A) at (0,0);
+    \draw[liaison/sB] (-\liaison@p,-0.04) -- (\liaison@p,-0.04);
+    \draw[liaison/sA] (-0.4,0.04) -- (0.4,0.04);
+    \liaison@liensverticaux{0.04}{0.04}
+  }},
+  %% ---------- Linéaire rectiligne (cylindre-plan) de normale (A,y), d'axe (A,x)
+  pics/lineaire rectiligne bout/.style={code={   % vue selon l'axe x : coin
+    \coordinate (-A) at (0,0);
+    \draw[liaison/sB] (-\liaison@p,0) -- (\liaison@p,0);
+    \draw[liaison/sA, liaison/fond] (0,0) -- (-0.24,0.32) -- (0.24,0.32) -- cycle;
+    \liaison@liensverticaux{0.32}{0}
+  }},
+  pics/lineaire rectiligne face/.style={code={   % axe x dans le plan : trapèze
+    \coordinate (-A) at (0,0);
+    \draw[liaison/sB] (-\liaison@p,0) -- (\liaison@p,0);
+    \draw[liaison/sA, liaison/fond] (-0.36,0) -- (0.36,0) -- (0.46,0.32) -- (-0.46,0.32) -- cycle;
+    \liaison@liensverticaux{0.32}{0}
+  }},
+  %% ---------- Linéaire annulaire (sphère-cylindre) d'axe (A,x)
+  pics/lineaire annulaire face/.style={code={    % axe dans le plan : sphère dans un cylindre
+    \coordinate (-A) at (0,0);
+    \draw[liaison/sB, liaison/fond] (-\liaison@a,-\liaison@r) rectangle (\liaison@a,\liaison@r);
+    \draw[liaison/sA, liaison/fond] (0,0) circle (\liaison@r);
+    \liaison@liensverticaux{\liaison@r}{\liaison@r}
+  }},
+  pics/lineaire annulaire bout/.style={code={    % vue selon l'axe : sphère sur le cylindre
+    \coordinate (-A) at (0,0);
+    \draw[liaison/sB] (-\liaison@p,-0.31) -- (\liaison@p,-0.31);
+    \draw[liaison/sB] (-160:0.31) arc (-160:-20:0.31);
+    \draw[liaison/sA, liaison/fond] (0,0) circle (\liaison@r);
+    \liaison@liensverticaux{\liaison@r}{0.31}
+  }},
+  %% ---------- Ponctuelle (sphère-plan) de normale (A,y)
+  pics/ponctuelle bout/.style={code={            % vue selon la normale : cercles concentriques
+    \coordinate (-A) at (0,0);
+    \draw[liaison/sB, liaison/fond] (0,0) circle (0.42);
+    \draw[liaison/sA] (0,0) circle (0.2) (-0.2,0) -- (0.2,0) (0,-0.2) -- (0,0.2);
+    \coordinate (-s1) at (0,0.42); \coordinate (-s2) at (0,-0.42);
+  }},
+  pics/ponctuelle face/.style={code={            % normale dans le plan : sphère tangente au plan
+    \coordinate (-A) at (0,0);
+    \draw[liaison/sB] (-\liaison@p,0) -- (\liaison@p,0);
+    \draw[liaison/sA, liaison/fond] (0,\liaison@r) circle (\liaison@r);
+    \liaison@liensverticaux{2*\liaison@r}{0}
+  }},
+}
+
+%% Repère : \repere[options]{point}{label horizontal}{label vertical}{sens horizontal (1 ou -1)}
+\newcommand\repere[5][]{%
+  \begin{scope}[#1]
+    \draw[-{Stealth[length=5pt]}, line width=0.6pt] #2 -- ++(#5*0.95,0) node[pos=1, anchor=#5*90+90 , inner sep=1pt, font=\small] {$\vec{#3}$};
+    \draw[-{Stealth[length=5pt]}, line width=0.6pt] #2 -- ++(0,0.95) node[pos=1, anchor=south west, inner sep=1pt, font=\small] {$\vec{#4}$};
+  \end{scope}}
+
+%% Symbole de bâti (hachures) : \bati{point} — trait horizontal hachuré
+\tikzset{
+  pics/bati/.style={code={
+    \draw[line width=0.8pt] (-0.35,0) -- (0.35,0);
+    \foreach \i in {-0.3,-0.2,...,0.3} { \draw[line width=0.5pt] (\i,0) -- (\i-0.1,-0.12); }
+  }},
+  pics/bati vertical/.style={code={
+    \draw[line width=0.8pt] (0,-0.35) -- (0,0.35);
+    \foreach \i in {-0.3,-0.2,...,0.3} { \draw[line width=0.5pt] (0,\i) -- (0.12,\i-0.1); }
+  }},
+}

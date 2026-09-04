@@ -1,0 +1,11 @@
+{
+  "name": "revise-sti2d-app",
+  "private": true,
+  "type": "module",
+  "description": "Application web statique (PWA) d'entraînement au bac STI2D — sans dépendance ni bundler",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "for f in js/*.js js/exercises/*.js sw.js; do node --check \"$f\" || exit 1; done",
+    "serve": "python3 -m http.server 8765"
+  }
+}

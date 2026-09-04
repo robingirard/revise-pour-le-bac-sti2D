@@ -1,0 +1,33 @@
+%% Dessin d'ensemble simplifié du serre-joint (coupe). Inclus par mecanisme-serre-joint-dessin.tex
+%% et mecanisme-serre-joint-classes.tex, qui définissent les styles p1 … p7 (une par pièce) et \sjlabels.
+%% Repère : x horizontal (axe du rail et de la vis), y vertical. Cotes en cm.
+\newcommand\serrejoint{%
+  \begin{scope}[line width=0.6pt, line join=round]
+    % 3 : mâchoire fixe (bloc gauche, face de serrage à droite)
+    \draw[p3] (0,0.4) rectangle (0.7,3.9);
+    % 4 : coulisseau, bloc autour du rail + colonne descendant jusqu'à l'écrou
+    \draw[p4] (5.0,3.75) -- (6.4,3.75) -- (6.4,2.75) -- (6.0,2.75) -- (6.0,0.7) -- (5.4,0.7)
+              -- (5.4,2.75) -- (5.0,2.75) -- cycle;
+    % 2 : rail (non coupé), traverse la mâchoire fixe et le coulisseau
+    \draw[p2] (0.15,3.0) rectangle (8.0,3.5);
+    \draw[dash pattern=on 6pt off 2pt on 1pt off 2pt, line width=0.4pt] (-0.3,3.25) -- (8.4,3.25);
+    % 1 : rivet de butée dans la mâchoire fixe
+    \draw[p1] (0.35,3.25) circle (0.09);
+    \draw[line width=0.4pt] (0.35,2.85) -- (0.35,3.65);
+    % 7 : patin (disque + logement sphérique)
+    \draw[p7] (1.0,0.6) -- (1.4,0.6) -- (1.4,0.85) -- (1.85,0.85) -- (1.85,1.55) -- (1.4,1.55)
+              -- (1.4,1.8) -- (1.0,1.8) -- cycle;
+    % 6 : poignée (emmanchée en bout de vis)
+    \draw[p6] (7.3,0.85) rectangle (8.3,1.55);
+    % 5 : vis (non coupée) : sphère en bout + corps fileté
+    \draw[p5] (1.6,1.2) circle (0.24);
+    \draw[p5] (1.75,1.04) rectangle (7.9,1.36);
+    \foreach \x in {2.3,2.5,...,7.0} { \draw[line width=0.35pt] (\x,1.36) -- (\x+0.12,1.04); }
+    \draw[dash pattern=on 6pt off 2pt on 1pt off 2pt, line width=0.4pt] (0.9,1.2) -- (8.6,1.2);
+    % points caractéristiques
+    \foreach \p/\n/\pos in {A/{(5.7,3.25)}/{above left}, B/{(5.7,1.2)}/{above left}, C/{(1.6,1.2)}/{above left}} {
+      \draw[blue, line width=0.5pt] \n ++(-0.14,0) -- ++(0.28,0) \n ++(0,-0.14) -- ++(0,0.28);
+      \node[blue, font=\small, \pos, inner sep=1pt] at \n {\p};
+    }
+    \sjlabels
+  \end{scope}}

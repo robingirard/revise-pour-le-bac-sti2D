@@ -1,0 +1,16 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  classe/.style={circle, minimum size=9mm, text=white, font=\small\bfseries, inner sep=0pt},
+  lien/.style={line width=0.8pt},
+  etiquette/.style={font=\small, fill=white, inner sep=1.5pt}]
+\node[classe, fill=solideB] (E1) at (0,0) {E1};
+\node[classe, fill=solideA] (E2) at (2.8,1.5) {E2};
+\node[classe, fill=solideE] (E3) at (5.6,0) {E3};
+\node[classe, fill=solideD] (E4) at (8.4,1.5) {E4};
+\draw[lien] (E1) -- node[etiquette, above left=2pt] {Glissière (A, $\vec{x}$)} (E2);
+\draw[lien] (E2) -- node[etiquette, above right=2pt] {Hélicoïdale (B, $\vec{x}$)} (E3);
+\draw[lien] (E3) -- node[etiquette, below right=2pt] {Rotule (C)} (E4);
+\end{tikzpicture}
+\end{document}

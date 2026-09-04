@@ -1,0 +1,19 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\definecolor{trans}{RGB}{40,110,200}\definecolor{rot}{RGB}{60,160,60}
+% \axe{angle}{label}
+\newcommand\axe[2]{%
+  \begin{scope}[rotate=#1]
+    \draw[dashed, line width=0.5pt] (0,0) -- (2.5,0);
+    \draw[-{Stealth[length=6pt]}, line width=0.6pt] (2.5,0) -- (3.2,0) node[pos=1, anchor=180+#1, inner sep=2pt, font=\small] {$\vec{#2}$};
+    \draw[-{Stealth[length=6pt]}, line width=1.4pt, trans] (0.9,0.13) -- (1.7,0.13) node[pos=1, anchor=270+#1, inner sep=2pt, font=\small, text=trans] {T};
+    \draw[-{Stealth[length=6pt]}, line width=1.2pt, rot] (2.15,-0.42) arc (-90:190:0.14 and 0.42) node[pos=1, anchor=90+#1, inner sep=3pt, font=\small, text=rot] {R};
+  \end{scope}}
+\axe{90}{z}
+\axe{-150}{x}
+\axe{-30}{y}
+\fill (0,0) circle (1.2pt);
+\end{tikzpicture}
+\end{document}

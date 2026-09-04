@@ -1,0 +1,210 @@
+# Base de connaissances : les 10 liaisons normalisées (NF EN ISO 3952)
+# Source : manuel I2D 1re STI2D, chapitre 2 « Mécanismes », tableau p. 32.
+#
+# Conventions :
+#   ddl      : mobilités autorisées parmi Tx Ty Tz Rx Ry Rz (translation / rotation selon l'axe)
+#   ddl_lies : couples de mobilités liées (une seule est indépendante) — hélicoïdale
+#   efforts  : composantes transmissibles de la force (X Y Z) et du moment (L M N)
+#   efforts_lies : couples de composantes liées — hélicoïdale
+#   difficulte : 1 (à connaître d'abord) … 3 (liaisons plus rares)
+#   confusables : liaisons souvent confondues (servent de distracteurs dans les QCM)
+#   symboles : les vues planes du tableau ; « pic » est le nom du symbole dans figures/tikz/liaisons.sty,
+#              « plan » les deux axes du plan de la vue (le 1er horizontal, le 2e vertical),
+#              « sens » = -1 si le 1er axe pointe vers la gauche (vue (z,y) : x vers l'observateur).
+
+liaisons:
+  - id: encastrement
+    nom: Encastrement
+    designation: "Encastrement de centre A"
+    autres_noms: ["liaison complète", "liaison fixe"]
+    parametre: "centre A"
+    difficulte: 1
+    ddl: []
+    efforts: [X, Y, Z, L, M, N]
+    contact: "Aucun mouvement possible : les deux pièces sont solidaires (vissées, soudées, collées, rivetées, emmanchées)."
+    surfaces: "Contact quelconque + dispositif de maintien (vis, soudure, colle, rivet, goupille)."
+    exemples:
+      - "deux tubes soudés d'un cadre de vélo"
+      - "une roue boulonnée sur son moyeu"
+      - "un manche emmanché dans une tête de marteau"
+    confusables: [appui-plan, pivot]
+    symboles:
+      - {vue: bout, plan: [z, y], sens: -1, pic: encastrement}
+      - {vue: face, plan: [x, y], sens: 1, pic: encastrement}
+
+  - id: pivot
+    nom: Pivot
+    designation: "Pivot d'axe (A, x)"
+    autres_noms: ["articulation", "liaison rotoïde"]
+    parametre: "axe (A, x)"
+    difficulte: 1
+    ddl: [Rx]
+    efforts: [X, Y, Z, M, N]
+    contact: "Une seule rotation possible, autour de l'axe."
+    surfaces: "Cylindre-cylindre long (arbre dans un alésage) + arrêt en translation (épaulement, circlips)."
+    exemples:
+      - "la charnière d'une porte"
+      - "la roue d'un vélo sur son axe"
+      - "une pédale de vélo sur sa manivelle"
+      - "un roulement à billes"
+    confusables: [pivot-glissant, helicoidale, rotule]
+    symboles:
+      - {vue: bout, plan: [z, y], sens: -1, pic: pivot bout}
+      - {vue: face, plan: [x, y], sens: 1, pic: pivot face}
+
+  - id: glissiere
+    nom: Glissière
+    designation: "Glissière d'axe (A, x)"
+    autres_noms: ["liaison prismatique"]
+    parametre: "axe (A, x)"
+    difficulte: 1
+    ddl: [Tx]
+    efforts: [Y, Z, L, M, N]
+    contact: "Une seule translation possible, le long de l'axe."
+    surfaces: "Deux contacts plan-plan (section rectangulaire ou prismatique) ; ou cylindre-cylindre + clavette/anti-rotation."
+    exemples:
+      - "un tiroir dans son meuble"
+      - "le rail d'un siège de voiture"
+      - "le coulisseau d'un serre-joint sur son rail"
+      - "la coulisse d'une règle à dessin"
+    confusables: [pivot-glissant, appui-plan, helicoidale]
+    symboles:
+      - {vue: bout, plan: [z, y], sens: -1, pic: glissiere bout}
+      - {vue: face, plan: [x, y], sens: 1, pic: glissiere face}
+
+  - id: helicoidale
+    nom: Hélicoïdale
+    designation: "Hélicoïdale d'axe (A, x)"
+    autres_noms: ["liaison vis-écrou"]
+    parametre: "axe (A, x)"
+    difficulte: 1
+    ddl: [Tx, Rx]
+    ddl_lies: [[Tx, Rx]]
+    efforts: [X, Y, Z, L, M, N]
+    efforts_lies: [[X, L]]
+    contact: "Translation et rotation autour de l'axe, mais liées : un tour de vis = une avance d'un pas."
+    surfaces: "Filetage dans un taraudage (vis dans un écrou)."
+    exemples:
+      - "une vis dans un écrou"
+      - "la vis d'un serre-joint dans son coulisseau"
+      - "la vis d'un cric à vis"
+      - "la vis d'un étau dans le bâti"
+    confusables: [pivot-glissant, pivot, glissiere]
+    symboles:
+      - {vue: bout, plan: [z, y], sens: -1, pic: helicoidale bout}
+      - {vue: face, plan: [x, y], sens: 1, pic: helicoidale face}
+
+  - id: pivot-glissant
+    nom: Pivot glissant
+    designation: "Pivot glissant d'axe (A, x)"
+    autres_noms: ["liaison cylindrique"]
+    parametre: "axe (A, x)"
+    difficulte: 2
+    ddl: [Tx, Rx]
+    efforts: [Y, Z, M, N]
+    contact: "Translation le long de l'axe et rotation autour de l'axe, indépendantes."
+    surfaces: "Cylindre-cylindre long, sans arrêt en translation ni en rotation."
+    exemples:
+      - "la tige d'un vérin dans son corps"
+      - "un piston dans une pompe à vélo"
+      - "un axe lisse dans un alésage"
+    confusables: [pivot, glissiere, helicoidale]
+    symboles:
+      - {vue: bout, plan: [z, y], sens: -1, pic: pivot glissant bout}
+      - {vue: face, plan: [x, y], sens: 1, pic: pivot glissant face}
+
+  - id: rotule
+    nom: Rotule
+    designation: "Rotule de centre A"
+    autres_noms: ["liaison sphérique"]
+    parametre: "centre A"
+    difficulte: 1
+    ddl: [Rx, Ry, Rz]
+    efforts: [X, Y, Z]
+    contact: "Les trois rotations possibles autour du centre, aucune translation."
+    surfaces: "Sphère dans une sphère creuse (surfacique sphérique)."
+    exemples:
+      - "l'articulation de la hanche ou de l'épaule"
+      - "la rotule d'attelage d'une remorque"
+      - "le patin au bout de la vis d'un serre-joint"
+      - "un joystick sur son socle"
+    confusables: [lineaire-annulaire, ponctuelle, pivot]
+    symboles:
+      - {vue: bout, plan: [z, y], sens: -1, pic: rotule}
+      - {vue: face, plan: [x, y], sens: 1, pic: rotule}
+
+  - id: appui-plan
+    nom: Appui plan
+    designation: "Appui plan de normale (A, y)"
+    autres_noms: ["liaison plane"]
+    parametre: "normale (A, y)"
+    difficulte: 2
+    ddl: [Tx, Tz, Ry]
+    efforts: [Y, L, N]
+    contact: "Deux translations dans le plan et une rotation autour de la normale."
+    surfaces: "Plan sur plan (surfacique plane)."
+    exemples:
+      - "un livre posé sur une table"
+      - "une boîte qui glisse sur le sol"
+      - "un palet sur la glace"
+    confusables: [lineaire-rectiligne, glissiere, ponctuelle]
+    symboles:
+      - {vue: bout, plan: [z, y], sens: -1, pic: appui plan}
+      - {vue: face, plan: [x, y], sens: 1, pic: appui plan}
+
+  - id: lineaire-rectiligne
+    nom: Linéaire rectiligne
+    designation: "Linéaire rectiligne de normale (A, y) et d'axe (A, x)"
+    autres_noms: ["cylindre-plan"]
+    parametre: "normale (A, y), axe (A, x)"
+    difficulte: 3
+    ddl: [Tx, Tz, Rx, Ry]
+    efforts: [Y, N]
+    contact: "Contact suivant une ligne (droite) : deux translations dans le plan, rotation autour de la ligne et autour de la normale."
+    surfaces: "Cylindre sur plan (contact linéique rectiligne)."
+    exemples:
+      - "un crayon posé sur une table"
+      - "un rouleau à pâtisserie sur le plan de travail"
+      - "une bouteille couchée sur le sol"
+    confusables: [appui-plan, ponctuelle, lineaire-annulaire]
+    symboles:
+      - {vue: bout, plan: [z, y], sens: -1, pic: lineaire rectiligne bout}
+      - {vue: face, plan: [x, y], sens: 1, pic: lineaire rectiligne face}
+
+  - id: lineaire-annulaire
+    nom: Linéaire annulaire
+    designation: "Linéaire annulaire d'axe (A, z)"
+    autres_noms: ["sphère-cylindre"]
+    parametre: "axe (A, z)"
+    difficulte: 3
+    ddl: [Tz, Rx, Ry, Rz]
+    efforts: [X, Y]
+    contact: "Contact suivant un cercle : une translation le long de l'axe et les trois rotations."
+    surfaces: "Sphère dans un cylindre (contact linéique circulaire)."
+    exemples:
+      - "une bille dans un tube"
+      - "une tige à bout sphérique dans une bague"
+      - "un axe court dans un alésage long"
+    confusables: [rotule, pivot-glissant, ponctuelle]
+    symboles:
+      - {vue: face, plan: [z, y], sens: -1, pic: lineaire annulaire face}
+      - {vue: bout, plan: [x, y], sens: 1, pic: lineaire annulaire bout}
+
+  - id: ponctuelle
+    nom: Ponctuelle
+    designation: "Ponctuelle de normale (A, x)"
+    autres_noms: ["sphère-plan"]
+    parametre: "normale (A, x)"
+    difficulte: 3
+    ddl: [Ty, Tz, Rx, Ry, Rz]
+    efforts: [X]
+    contact: "Contact en un seul point : tout est possible sauf la translation selon la normale."
+    surfaces: "Sphère sur plan (contact ponctuel)."
+    exemples:
+      - "une bille posée sur une table"
+      - "la pointe d'un compas sur la feuille"
+      - "un pied de chaise sur le sol"
+    confusables: [lineaire-rectiligne, appui-plan, rotule]
+    symboles:
+      - {vue: bout, plan: [z, y], sens: -1, pic: ponctuelle bout}
+      - {vue: face, plan: [x, y], sens: 1, pic: ponctuelle face, rotate: -90}

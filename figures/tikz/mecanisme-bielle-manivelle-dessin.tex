@@ -1,0 +1,41 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{patterns}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm, line width=0.6pt, line join=round,
+  coupe/.style={pattern=north east lines, pattern color=black!70}]
+\coordinate (O) at (0,0); \coordinate (A) at (0.9,1.5); \coordinate (B) at (5,0);
+% 0 : bâti — palier de la manivelle et cylindre (coupés)
+\draw[coupe] (O) circle (0.75);
+\fill[white] (O) circle (0.45); \draw (O) circle (0.45);
+\draw[coupe] (3.4,0.8) rectangle (7.4,1.1);
+\draw[coupe] (3.4,-1.1) rectangle (7.4,-0.8);
+\draw[coupe] (7.4,-1.1) rectangle (7.7,1.1);
+% 1 : manivelle
+\draw[fill=solideE!40, draw=solideE!80!black, rounded corners=3pt]
+  ($(O)+(-0.27,-0.16)$) -- ($(A)+(-0.27,-0.16)$) -- ($(A)+(0.27,0.16)$) -- ($(O)+(0.27,0.16)$) -- cycle;
+\draw[fill=solideE!40, draw=solideE!80!black] (O) circle (0.45);
+\draw[fill=solideE!40, draw=solideE!80!black] (A) circle (0.34);
+% 2 : bielle
+\draw[fill=solideA!35, draw=solideA!80!black, rounded corners=2pt]
+  ($(A)+(0,0.18)$) -- ($(B)+(0,0.18)$) -- ($(B)+(0,-0.18)$) -- ($(A)+(0,-0.18)$) -- cycle;
+\draw[fill=solideA!35, draw=solideA!80!black] (A) circle (0.36);
+\draw[fill=solideA!35, draw=solideA!80!black] (B) circle (0.3);
+% 3 : piston
+\draw[fill=solideB!35, draw=solideB!80!black] (4.4,-0.78) rectangle (6.3,0.78);
+\draw[fill=solideA!35, draw=solideA!80!black] (B) circle (0.3);
+% axes
+\draw[fill=white] (O) circle (0.07); \draw[fill=white] (A) circle (0.07); \draw[fill=white] (B) circle (0.07);
+\draw[dash pattern=on 6pt off 2pt on 1pt off 2pt, line width=0.4pt] (-1.2,0) -- (8.2,0);
+% étiquettes
+\foreach \n/\pt/\lab in {0/{(0.55,-0.55)}/{(1.6,-1.6)}, 0/{(6.0,1.1)}/{(6.0,1.8)}, 1/{(0.3,0.9)}/{(-1.0,1.6)},
+                         2/{(3.0,0.75)}/{(3.0,1.6)}, 3/{(5.6,-0.78)}/{(5.6,-1.6)}} {
+  \draw[line width=0.4pt] \pt -- \lab;
+  \node[fill=white, inner sep=1.5pt, font=\small\bfseries] at \lab {\n};
+}
+\node[font=\small, below right=2pt] at (O) {O};
+\node[font=\small, above left=2pt] at (A) {A};
+\node[font=\small, above right=2pt] at (B) {B};
+\repere{(2.0,-2.2)}{x}{y}{1}
+\end{tikzpicture}
+\end{document}

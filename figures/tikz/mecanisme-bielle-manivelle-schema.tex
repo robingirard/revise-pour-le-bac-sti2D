@@ -1,0 +1,35 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{backgrounds}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm, solide/.style={line width=1.4pt, line cap=round, line join=round}]
+\colorlet{E0}{black}\colorlet{E1}{solideE}\colorlet{E2}{solideA}\colorlet{E3}{solideB}
+\coordinate (O) at (0,0); \coordinate (A) at (0.9,1.5); \coordinate (B) at (5,0);
+% Symboles
+\pic[s1=E1, s2=E0, liens=false, name=pO] at (O) {pivot bout};
+\pic[s1=E2, s2=E1, liens=false, name=pA] at (A) {pivot bout};
+\pic[s1=E2, s2=E3, liens=false, name=pB] at (B) {pivot bout};
+\pic[s1=E3, s2=E0, liens=false, name=gB] at (6.1,0) {glissiere face};
+\pic at (0,-0.7) {bati};
+\begin{scope}[on background layer]
+  \draw[solide, E0] (O) -- (0,-0.7);                       % bâti
+  \draw[solide, E1] (O) -- (A);                             % manivelle
+  \draw[solide, E2] (A) -- (B);                             % bielle
+  \draw[solide, E3] (B) -- (6.9,0);                         % piston
+\end{scope}
+% hachures du bâti sur le cylindre (glissière)
+\foreach \x in {5.7,5.9,...,6.5} { \draw[line width=0.5pt] (\x,0.25) -- (\x-0.12,0.4) (\x,-0.25) -- (\x-0.12,-0.4); }
+\draw[line width=0.8pt] (5.6,0.25) -- (6.6,0.25) (5.6,-0.25) -- (6.6,-0.25);
+% mouvement d'entrée
+\draw[-{Stealth[length=5pt]}, line width=0.7pt, E1] (-0.75,0.35) arc (155:60:0.8) node[pos=0.1, left, font=\small] {$\omega_{1/0}$};
+% Étiquettes
+\node[E0, font=\small\bfseries] at (-0.55,-0.6) {0};
+\node[E1, font=\small\bfseries] at (0.15,0.95) {1};
+\node[E2, font=\small\bfseries] at (3.0,1.05) {2};
+\node[E3, font=\small\bfseries] at (7.1,-0.35) {3};
+\node[font=\small, below right=1pt] at (O) {O};
+\node[font=\small, above left=1pt] at (A) {A};
+\node[font=\small, above=3pt] at (B) {B};
+\repere{(2.4,-1.0)}{x}{y}{1}
+\end{tikzpicture}
+\end{document}

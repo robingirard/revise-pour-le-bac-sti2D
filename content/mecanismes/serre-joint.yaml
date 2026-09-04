@@ -1,0 +1,80 @@
+# Mécanisme : le serre-joint (manuel p. 33).
+# La numérotation des pièces et la position des points A, B, C suivent notre dessin d'ensemble
+# simplifié (figures/tikz/serre-joint-*.tex), cohérent avec les étapes 2 à 5 du manuel.
+id: serre-joint
+nom: Serre-joint
+titre: Le serre-joint
+description: >
+  Outil qui maintient en position des pièces pendant le séchage de la colle. On tourne la
+  poignée : la vis avance dans le coulisseau et le patin vient serrer la pièce contre la
+  mâchoire fixe.
+repere: "x : axe du rail et de la vis (horizontal) ; y : vertical ; z : vers l'observateur"
+figures:
+  dessin: mecanisme-serre-joint-dessin
+  classes: mecanisme-serre-joint-classes
+  graphe: mecanisme-serre-joint-graphe
+  schema: mecanisme-serre-joint-schema
+pieces:
+  - {num: 1, nom: "rivet de butée"}
+  - {num: 2, nom: "rail"}
+  - {num: 3, nom: "mâchoire fixe"}
+  - {num: 4, nom: "coulisseau (mâchoire mobile)"}
+  - {num: 5, nom: "vis"}
+  - {num: 6, nom: "poignée"}
+  - {num: 7, nom: "patin"}
+classes:
+  - {id: E1, nom: "rail + mâchoire fixe", pieces: [1, 2, 3], couleur: solideB, bati: true,
+     pourquoi: "Le rail 2 est riveté (1) dans la mâchoire fixe 3 : ces pièces n'ont aucun mouvement relatif."}
+  - {id: E2, nom: "coulisseau", pieces: [4], couleur: solideA,
+     pourquoi: "Le coulisseau glisse le long du rail : il bouge par rapport à E1 et par rapport à la vis."}
+  - {id: E3, nom: "vis + poignée", pieces: [5, 6], couleur: solideE,
+     pourquoi: "La poignée 6 est emmanchée sur la vis 5 : elles tournent ensemble."}
+  - {id: E4, nom: "patin", pieces: [7], couleur: solideD,
+     pourquoi: "Le patin est monté sur la sphère en bout de vis : il ne tourne pas quand la vis tourne."}
+liaisons:
+  - entre: [E1, E2]
+    contact: "surfacique plan (×2)"
+    surfaces: "le rail de section rectangulaire glisse dans la fenêtre du coulisseau : deux contacts plan sur plan"
+    liaison: glissiere
+    point: A
+    axe: x
+    explication: "Deux plans de contact perpendiculaires ne laissent qu'une translation le long du rail : glissière d'axe (A, x)."
+  - entre: [E2, E3]
+    contact: "filetage / taraudage"
+    surfaces: "la vis est vissée dans le trou taraudé du coulisseau"
+    liaison: helicoidale
+    point: B
+    axe: x
+    explication: "Vis dans écrou : la rotation de la vis entraîne son avance, c'est une liaison hélicoïdale d'axe (B, x)."
+  - entre: [E3, E4]
+    contact: "surfacique sphérique"
+    surfaces: "la sphère en bout de vis est logée dans le patin"
+    liaison: rotule
+    point: C
+    explication: "Une sphère dans une sphère creuse autorise les trois rotations et aucune translation : rotule de centre C."
+questions:
+  - level: 2
+    type: mcq
+    prompt: "Sur le schéma cinématique du serre-joint, quelle est la liaison représentée au point **A** ?\n{{fig:mecanisme-serre-joint-schema}}"
+    choices: ["Glissière d'axe (A, x)", "Pivot d'axe (A, x)", "Pivot glissant d'axe (A, x)", "Appui plan de normale (A, y)"]
+    answer: 0
+    explanation: "Le rectangle traversé par le rail, sans arbre visible à l'intérieur, est le symbole de la glissière : E2 ne peut que translater le long du rail."
+  - level: 2
+    type: mcq
+    prompt: "Sur le schéma cinématique du serre-joint, que représente le symbole placé au point **B** ?\n{{fig:mecanisme-serre-joint-schema}}"
+    choices: ["Une liaison hélicoïdale entre le coulisseau et la vis", "Une liaison pivot entre le coulisseau et la vis", "Une liaison glissière entre le rail et la vis", "Une liaison rotule entre la vis et le patin"]
+    answer: 0
+    explanation: "La ligne ondulée dans le rectangle symbolise le filetage : c'est la liaison hélicoïdale vis/coulisseau."
+  - level: 3
+    type: mcq
+    prompt: "Quand on tourne la poignée du serre-joint, quel est le mouvement du **patin (E4)** par rapport au **coulisseau (E2)** ?"
+    choices: ["Une translation le long de l'axe x", "Une rotation autour de l'axe x", "Une translation et une rotation autour de x", "Aucun mouvement"]
+    answer: 0
+    explanation: "La vis tourne et avance (hélicoïdale), mais la rotule laisse le patin libre de ne pas tourner : le patin avance seulement en translation."
+  - level: 3
+    type: mcq
+    skill: classes
+    prompt: "Pourquoi le patin (7) n'est-il pas dans la même classe d'équivalence que la vis (5) ?"
+    choices: ["Parce qu'il peut tourner par rapport à la vis grâce à la rotule", "Parce qu'il est en contact avec la pièce à serrer", "Parce qu'il est en plastique", "Parce qu'il est plus petit"]
+    answer: 0
+    explanation: "Une classe d'équivalence regroupe les pièces sans mouvement relatif. La rotule autorise des rotations entre la vis et le patin : ils sont dans deux classes différentes."
