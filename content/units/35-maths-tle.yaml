@@ -853,7 +853,7 @@ units:
       - 'C''est $x$ qui varie : $F_{a}$ est une fonction de $x$.'
       - 'La lettre $t$ disparaît après le calcul : c''est elle, la variable muette.'
       - Elles ont des rôles bien distincts, c'est un point de vigilance du programme.
-      explanation: 'On peut remplacer $t$ par n''importe quelle autre lettre sans changer la valeur : $\displaystyle\int_{a}^{x}f(t)\,\mathrm{d}t=\int_{a}^{x}f(u)\,\mathrm{d}u$. En revanche $a$ fixe l''origine et $x$ est la variable de la fonction $F_{a}$. De plus $F_{a}'=f$.'
+      explanation: 'On peut remplacer $t$ par n''importe quelle autre lettre sans changer la valeur : $\displaystyle\int_{a}^{x}f(t)\,\mathrm{d}t=\int_{a}^{x}f(u)\,\mathrm{d}u$. En revanche $a$ fixe l''origine et $x$ est la variable de la fonction $F_{a}$. De plus $F_{a}''=f$.'
     - type: mcq
       level: 2
       prompt: Que vaut $\displaystyle\int_{b}^{a}f(x)\,\mathrm{d}x$ en fonction de $\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x$ ?

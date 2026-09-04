@@ -83,3 +83,55 @@ annales:
     themes: ["énergie", "thermique", "nombres complexes", "primitives"]
     prerequis: [{skill: pc-flux-isolation, level: 2}, {skill: maths-complexes, level: 2}]
     guided: ""
+  # Sujets « physique-chimie et mathématiques » (spécialité PCM), retypés par l'APMEP (exercices de maths et PCM ;
+  # les exercices de physique pure ne sont pas retypés). URL ouvertes et vérifiées le 4 sept. 2026 (docs/notes/maths-tle-programme.md § 6).
+  - id: pcm-2023-metropole
+    titre: "Bac 2023 — viscosimètre à chute de bille (équation différentielle) et questions de maths"
+    session: 2023
+    epreuve: "physique-chimie et mathématiques"
+    partie: "Exercice PCM (4 pts) : vitesse limite d'une bille dans l'huile, y' = ay + b ; exercice maths (4 pts) : exponentielle, dérivée d'un produit, forme exponentielle de √3 + i, équation avec ln"
+    url: "https://www.apmep.fr/IMG/pdf/STI2D_Metropole_DV_20_mars_2023.pdf"
+    corrige: "https://www.apmep.fr/IMG/pdf/Corrige_STI2D_Metropole_mars_2023_DV.pdf"
+    themes: ["équations différentielles", "exponentielle", "logarithme", "nombres complexes", "frottement fluide"]
+    prerequis: [{skill: mathstle-equadiff, level: 2}]
+    guided: ""
+  - id: pcm-2024-metropole
+    titre: "Bac 2024 — concert flottant (niveaux sonores) et parachutiste"
+    session: 2024
+    epreuve: "physique-chimie et mathématiques"
+    partie: "Exercice PCM (4 pts) : niveau sonore en dB, modèles 125 − 10 ln x ; exercice maths (4 pts) : y' = −5y + 10, condition initiale, intégrale de la vitesse"
+    url: "https://www.apmep.fr/IMG/pdf/STI2D_metropole_19_juin_2024__FH2-2.pdf"
+    corrige: "https://www.apmep.fr/IMG/pdf/Corrige_STI2D_metropole_19_juin_2024_FH-2.pdf"
+    themes: ["logarithme", "niveau sonore", "équations différentielles", "intégrale"]
+    prerequis: [{skill: mathstle-integrale, level: 2}]
+    guided: ""
+  - id: pcm-2025-metropole
+    titre: "Bac 2025 — pertes dans le réseau électrique (facteur de puissance) et questions de maths"
+    session: 2025
+    epreuve: "physique-chimie et mathématiques"
+    partie: "Exercice PCM (4 pts) : puissance instantanée sinusoïdale, primitive et énergie sur une minute ; exercice maths (4 pts) : affixe sur une figure, y' = 2y − 0,5, équation avec exponentielle, propriétés du ln"
+    url: "https://www.apmep.fr/IMG/pdf/2025_sti2d_metropole_juin_sg-2.pdf"
+    corrige: "https://www.apmep.fr/IMG/pdf/Corrige2025_sti2d_metropole_juin_sg-2.pdf"
+    themes: ["primitives", "intégrale", "régime sinusoïdal", "nombres complexes", "équations différentielles", "logarithme"]
+    prerequis: [{skill: mathstle-integrale, level: 2}]
+    guided: ""
+  - id: pcm-2025-polynesie
+    titre: "Bac 2025 Polynésie — accélération d'un véhicule électrique, complexes et équation différentielle"
+    session: 2025
+    epreuve: "physique-chimie et mathématiques"
+    partie: "Exercice PCM (4 pts) : lecture d'un graphe v(t), aire = distance, vitesse moyenne, PFD ; exercice maths (4 pts) : forme exponentielle, produit de complexes, y' = −4y + 80"
+    url: "https://www.apmep.fr/IMG/pdf/STI2D_Polynesie_juin_2025_JCS_2.pdf"
+    corrige: ""
+    themes: ["intégrale et aire", "valeur moyenne", "cinématique", "nombres complexes", "équations différentielles"]
+    prerequis: [{skill: mathstle-complexes-exp, level: 2}]
+    guided: ""
+  - id: pcm-2026-metropole
+    titre: "Bac 2026 — refroidir une boisson (équation différentielle) et questions de maths"
+    session: 2026
+    epreuve: "physique-chimie et mathématiques"
+    partie: "Exercice PCM (4 pts) : T(t) = 11,5 e^(−0,006 t) + 11,5, limite, validité du modèle ; exercice maths (4 pts) : aire sous (8x + 1)e^(−x), variations de 2x + 1 + 4 ln x, forme exponentielle de −2√3 + 2i"
+    url: "https://www.apmep.fr/IMG/pdf/BAC_technologique_STI2D_Sujet_2026-06-16_Metropole_SG-v2.pdf"
+    corrige: "https://www.apmep.fr/IMG/pdf/BAC_technologique_STI2D_Corrige_2026-06-16_Metropole_SG-v1.pdf"
+    themes: ["équations différentielles", "transferts thermiques", "intégrale", "logarithme", "nombres complexes"]
+    prerequis: [{skill: mathstle-equadiff, level: 2}]
+    guided: ""
