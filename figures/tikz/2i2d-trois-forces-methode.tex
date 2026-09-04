@@ -1,0 +1,66 @@
+%% 2i2d-trois-forces-methode — solide soumis à trois forces : construction du point
+%% de concours I. On connaît la direction de deux forces (le poids, vertical, et
+%% l'action en B, horizontale) : leur intersection I donne la direction manquante (AI).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  force/.style={-{Stealth[length=5pt]}, line width=1pt, solideA},
+  inconnue/.style={-{Stealth[length=5pt]}, line width=1pt, solideF},
+  construction/.style={line width=0.4pt, dash pattern=on 3pt off 2pt, solideD},
+  supportF/.style={line width=0.5pt, dash pattern=on 3pt off 2pt, solideF},
+  etiq/.style={font=\small, inner sep=2pt},
+  petit/.style={font=\scriptsize, inner sep=1.5pt}]
+
+%% --- macros locales : sol hachuré et triangle d'appui (pointe en haut) -------
+\newcommand\batihoriz[3]{%  #1 = x gauche, #2 = x droite, #3 = ordonnée du sol
+  \draw[line width=1pt, solideE] (#1,#3) -- (#2,#3);
+  \begin{scope}
+    \clip (#1,#3-0.26) rectangle (#2,#3);
+    \foreach \hx in {-16,-15.76,...,16} { \draw[line width=0.5pt, solideE!75] (\hx,#3) -- (\hx-0.3,#3-0.3); }
+  \end{scope}}
+\newcommand\appuitri[3]{% #1 = abscisse, #2 = ordonnée du sommet, #3 = ordonnée du sol
+  \draw[line width=1pt, draw=solideE, fill=solideE!12, line join=round]
+    (#1,#2) -- (#1-0.25,#3) -- (#1+0.25,#3) -- cycle;}
+
+%% --- points remarquables -----------------------------------------------------
+\coordinate (A) at (1.2,0.5);
+\coordinate (B) at (5.6,2.3);
+\coordinate (G) at (3.4,1.4);
+\coordinate (I) at (3.4,2.3);
+
+%% --- le sol et l'appui en A ---------------------------------------------------
+\batihoriz{0}{8}{0}
+\appuitri{1.2}{0.5}{0}
+\node[etiq, anchor=east] at (0.9,0.22) {$A$};
+
+%% --- constructions auxiliaires : les deux directions connues -------------------
+\draw[construction] (3.4,0.2) -- (3.4,3.6);      % verticale du poids
+\draw[construction] (1.0,2.3) -- (6.9,2.3);      % horizontale de l'action en B
+\draw[supportF] ($(A)!-0.28!(I)$) -- ($(A)!1.26!(I)$);   % la droite (AI) cherchée
+
+%% --- la barre isolée ------------------------------------------------------------
+\draw[line width=0.9pt, solideB, line cap=round] (A) -- (B);
+
+%% --- les forces ------------------------------------------------------------------
+\fill (G) circle (1.5pt);
+\node[etiq, anchor=south east] at (3.36,1.44) {$G$};
+\draw[force] (G) -- (3.4,0.3) node[etiq, anchor=west, text=solideA, pos=0.6] {$\vec{P}$};
+\draw[force] (B) -- (6.6,2.3) node[etiq, anchor=north, text=solideA, pos=0.6] {$\vec{B_{0\rightarrow S}}$};
+
+%% --- le point de concours ---------------------------------------------------------
+\draw[line width=0.9pt, draw=solideD, fill=white] (I) circle (0.08);
+\node[etiq, anchor=south west, text=solideD] at (3.5,2.42) {$I$ — point de concours};
+
+%% --- la direction trouvée en A ------------------------------------------------------
+\draw[inconnue] (A) -- ($(A)!0.55!(I)$);
+\node[etiq, anchor=south east, text=solideF, align=right] at (2.32,1.5)
+     {$\vec{R_A}$\\[-3pt]{\scriptsize direction trouvée}};
+
+%% --- cartouche méthode ---------------------------------------------------------------
+\node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=4pt, anchor=north east,
+      align=left, font=\scriptsize] at (7.95,-0.34)
+     {\textbf{1.} les 3 supports sont concourants en $I$\\
+      \textbf{2.} le dynamique se ferme};
+\end{tikzpicture}
+\end{document}

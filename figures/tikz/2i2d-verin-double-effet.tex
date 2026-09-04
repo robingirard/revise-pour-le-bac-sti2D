@@ -1,0 +1,92 @@
+%% Vérin double effet commandé par un distributeur (Tle, p. 253).
+%% En haut : le symbole normalisé (vérin, distributeur, pompe, réservoir).
+%% En bas : les grandeurs à connaître (section S, pression p, force F, vitesse V).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  trait/.style={line width=0.9pt, black, line join=round},
+  tuyau/.style={line width=0.8pt, black!85},
+  piston/.style={line width=2.4pt, solideE, line cap=round},
+  et/.style={font=\scriptsize, inner sep=2pt},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.8pt},
+  titre/.style={font=\scriptsize\bfseries, anchor=west, inner sep=1pt}]
+
+%% =========================================================================
+%% PARTIE HAUTE : le symbole normalisé
+%% =========================================================================
+\node[titre] at (1.0,6.6) {Symbole normalisé};
+%% ---- corps du vérin, piston et tige ---------------------------------
+\draw[trait] (2.6,5.3) rectangle (5.6,6.3);
+\draw[piston] (4.0,5.35) -- (4.0,6.25);
+\draw[trait] (4.0,5.85) -- (6.7,5.85);
+\draw[trait] (6.7,5.7) -- (6.7,6.0);
+\node[et, anchor=west] at (6.8,5.85) {tige};
+\node[et, anchor=south west] at (4.55,6.42) {vérin double effet};
+
+%% ---- distributeur : trois cases + pilotages électriques --------------
+\foreach \x in {3.0,3.7,4.4} { \draw[trait] (\x,4.1) rectangle (\x+0.7,4.8); }
+%% case gauche : flèches parallèles (P->A et B->T)
+\draw[-{Stealth[length=4pt]}, tuyau] (3.2,4.2) -- (3.2,4.7);
+\draw[-{Stealth[length=4pt]}, tuyau] (3.5,4.7) -- (3.5,4.2);
+%% case centrale : position fermée (quatre butées)
+\foreach \x in {3.9,4.2} {
+  \draw[tuyau] (\x,4.8) -- (\x,4.62) (\x-0.09,4.62) -- (\x+0.09,4.62);
+  \draw[tuyau] (\x,4.1) -- (\x,4.28) (\x-0.09,4.28) -- (\x+0.09,4.28); }
+%% case droite : croisement des flèches (P->B et A->T)
+\draw[-{Stealth[length=4pt]}, tuyau] (4.6,4.2) -- (4.9,4.7);
+\draw[-{Stealth[length=4pt]}, tuyau] (4.9,4.2) -- (4.6,4.7);
+%% pilotages électriques
+\draw[trait, draw=solideA, fill=solideA!15] (2.7,4.2) rectangle (3.0,4.7);
+\draw[trait, draw=solideA, fill=solideA!15] (5.1,4.2) rectangle (5.4,4.7);
+\node[et, anchor=east, text=solideA, align=right, text width=1.15cm] at (2.6,4.45) {pilotages électriques};
+\node[et, anchor=west] at (5.45,3.95) {distributeur};
+
+%% ---- liaisons distributeur <-> vérin (orifices A et B) ---------------
+\draw[tuyau] (3.9,4.8) -- (3.9,5.0) -- (2.85,5.0) -- (2.85,5.3);
+\draw[tuyau] (4.2,4.8) -- (4.2,5.15) -- (5.35,5.15) -- (5.35,5.3);
+
+%% ---- pompe (triangle plein) et réservoir (T inversé) -----------------
+\draw[tuyau] (3.9,4.1) -- (3.9,3.8) -- (3.3,3.8) -- (3.3,3.6);
+\draw[trait] (3.3,3.3) circle (0.3);
+\fill[black] (3.16,3.16) -- (3.44,3.16) -- (3.3,3.44) -- cycle;
+\node[et, anchor=east] at (2.95,3.3) {pompe};
+\draw[tuyau] (4.2,4.1) -- (4.2,3.6);
+\draw[trait] (4.0,3.6) -- (4.4,3.6);
+\draw[trait] (4.05,3.5) -- (4.35,3.5);
+\node[et, anchor=west] at (4.5,3.55) {réservoir};
+
+%% =========================================================================
+%% PARTIE BASSE : les grandeurs
+%% =========================================================================
+\node[titre] at (1.0,2.95) {Les grandeurs};
+\draw[trait] (2.6,1.75) rectangle (5.6,2.75);
+\draw[piston] (3.6,1.8) -- (3.6,2.7);
+\draw[trait] (3.6,2.3) -- (6.5,2.3);
+%% section S du piston
+\draw[cote, solideB] (3.35,1.8) -- (3.35,2.7);
+\node[et, text=solideB, anchor=east] at (3.28,2.25) {$S$};
+%% pression d'alimentation p
+\draw[-{Stealth[length=5pt]}, line width=1.2pt, solideD] (1.9,2.25) -- (2.55,2.25);
+\node[et, text=solideD, anchor=south] at (2.2,2.28) {$p$};
+%% force développée F
+\draw[-{Stealth[length=7pt,width=6pt]}, line width=2pt, solideA] (6.5,2.3) -- (7.4,2.3);
+\node[et, text=solideA, anchor=south] at (7.0,2.36) {$F$};
+%% vitesse de sortie de tige V
+\draw[-{Stealth[length=5pt]}, line width=1.2pt, solideE] (5.7,2.62) -- (6.4,2.62);
+\node[et, text=solideE, anchor=south] at (6.05,2.65) {$V$};
+%% course de la tige
+\draw[cote, dash pattern=on 2pt off 2pt, black!70] (3.6,1.5) -- (5.5,1.5);
+\node[et, anchor=north, inner sep=1pt] at (4.55,1.45) {course};
+
+%% =========================================================================
+%% RELATIONS
+%% =========================================================================
+\node[draw=solideA, line width=1pt, fill=solideA!7, rounded corners=3pt, inner sep=4pt,
+      font=\small, anchor=north] at (4.2,1.05)
+     {$F = p \times S$ \quad $Q = S \times V$ \quad $P = Q \times p = F \times V$};
+\node[et, anchor=north, align=center] at (4.2,0.35)
+     {$F$ en N ; $p$ en Pa ; $S$ en m$^2$ ; $Q$ en m$^3\cdot$s$^{-1}$ ;
+      $V$ en m$\cdot$s$^{-1}$ ; $P$ en W};
+\end{tikzpicture}
+\end{document}

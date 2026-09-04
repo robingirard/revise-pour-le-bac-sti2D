@@ -1,0 +1,66 @@
+%% 2i2d-basculement — la structure bascule autour de l'arête A si le moment
+%% renversant du vent dépasse le moment stabilisateur du poids.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  force/.style={-{Stealth[length=5pt]}, line width=1.1pt, solideA},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.6pt, solideD},
+  attache/.style={line width=0.4pt, dash pattern=on 2.5pt off 2pt, solideD!85},
+  etiq/.style={font=\small, inner sep=2pt},
+  petit/.style={font=\scriptsize, inner sep=1.5pt}]
+
+\newcommand\batihoriz[3]{%
+  \draw[line width=1pt, solideE] (#1,#3) -- (#2,#3);
+  \begin{scope}
+    \clip (#1,#3-0.26) rectangle (#2,#3);
+    \foreach \hx in {-16,-15.76,...,16} { \draw[line width=0.5pt, solideE!75] (\hx,#3) -- (\hx-0.3,#3-0.3); }
+  \end{scope}}
+
+%% --- le sol et la structure -------------------------------------------------
+\batihoriz{0.6}{7.4}{0}
+\draw[line width=0.9pt, draw=solideB, fill=solideB!12] (2.6,0) rectangle (4.2,3.8);
+
+%% --- l'appui B, dont l'action s'annule à la limite du basculement -------------
+\draw[line width=0.9pt, draw=solideE, fill=solideE!12, line join=round]
+  (2.6,-0.05) -- (2.35,-0.5) -- (2.85,-0.5) -- cycle;
+\draw[line width=0.9pt, solideA] (2.42,-0.44) -- (2.78,-0.11) (2.42,-0.11) -- (2.78,-0.44);
+\node[etiq, anchor=east] at (2.3,-0.05) {$B$};
+\node[petit, anchor=north east, text=solideA] at (2.5,-0.56) {action nulle};
+
+%% --- l'arête de basculement A ---------------------------------------------------
+\fill (4.2,0) circle (2pt);
+\node[etiq, anchor=north west] at (4.26,-0.02) {$A$};
+
+%% --- le poids et son bras de levier ------------------------------------------------
+\fill (3.4,1.9) circle (1.6pt);
+\node[etiq, anchor=east, fill=white, inner sep=1pt] at (3.32,1.92) {$G$};
+\draw[force] (3.4,1.9) -- (3.4,0.5);
+\node[etiq, anchor=west, text=solideA] at (3.48,1.15) {$\vec{P}$};
+
+\draw[attache] (3.4,0.5) -- (3.4,-0.62);
+\draw[cote] (3.4,-0.45) -- (4.2,-0.45);
+\node[petit, anchor=north, text=solideD] at (3.8,-0.5) {$d_P$};
+\draw[line width=0.5pt, solideD] (3.4,0.14) -- (3.54,0.14) -- (3.54,0);   % angle droit
+
+%% --- le vent et son bras de levier --------------------------------------------------
+\draw[force] (1.5,3.6) -- (2.56,3.6);
+\node[etiq, anchor=south, text=solideA] at (2.0,3.66) {$\vec{F}$};
+\draw[attache] (2.6,3.6) -- (5.15,3.6);
+\draw[attache] (4.25,0) -- (5.15,0);
+\draw[cote] (4.9,0) -- (4.9,3.6);
+\node[petit, anchor=west, text=solideD] at (4.96,1.8) {$h$};
+
+%% --- le mouvement de basculement -------------------------------------------------------
+\draw[line width=0.9pt, dash pattern=on 3pt off 2pt, solideD, -{Stealth[length=6pt]}]
+  (4.2,0) ++(125:1.15) arc (125:65:1.15);
+\node[petit, anchor=south, text=solideD] at (4.2,1.28) {basculement};
+
+%% --- cartouche ---------------------------------------------------------------------------
+\node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=4pt, anchor=north west,
+      align=left, font=\scriptsize] at (5.55,3.05)
+     {$M_{\text{stab}} = P \times d_P$\\[2pt]
+      $M_{\text{renv}} = F \times h$\\[2pt]
+      stable si $M_{\text{stab}} > M_{\text{renv}}$};
+\end{tikzpicture}
+\end{document}

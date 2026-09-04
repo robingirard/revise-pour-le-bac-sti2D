@@ -1,0 +1,78 @@
+%% 2i2d-deperditions-piece — bilan des déperditions d'un bureau (19 °C dedans, -1 °C dehors).
+%% Cinq flèches sortantes dont l'épaisseur est proportionnelle au flux, puis la même
+%% répartition sous forme de barre empilée (28 / 26 / 24 / 14 / 9 %) pour un total de 790 W.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  txt/.style={font=\scriptsize},
+  etq/.style={font=\scriptsize, align=center, inner sep=1.5pt},
+  mur/.style={line width=0.8pt, black!75}]
+
+%% flèche de déperdition : \dep{épaisseur pt}{départ}{arrivée}
+\newcommand\dep[3]{\draw[-{Stealth[length=#1*2.2pt+3pt, width=#1*1.9pt+3pt]},
+                          line width=#1 pt, solideD] #2 -- #3;}
+
+%% ================= partie haute : coupe du bureau ===========================
+\def\xg{1.2}\def\xd{4.4}\def\yh{2.1}
+
+%% sol et plancher
+\hachures[draw=black!30]{(0.95,-0.32) rectangle (4.65,0)}
+%% toiture à faible pente
+\fill[black!14] (0.95,\yh) -- (4.65,\yh+0.22) -- (4.65,\yh+0.40) -- (0.95,\yh+0.18) -- cycle;
+\draw[mur] (0.95,\yh) -- (4.65,\yh+0.22) -- (4.65,\yh+0.40) -- (0.95,\yh+0.18) -- cycle;
+%% volume intérieur
+\fill[solideA!8] (\xg,0) rectangle (\xd,\yh);
+\draw[mur] (\xg,0) -- (\xg,\yh) (\xd,0) -- (\xd,\yh) (\xg,0) -- (\xd,0);
+%% fenêtre sur la façade droite
+\fill[solideB!25] (\xd-0.07,0.72) rectangle (\xd+0.07,1.62);
+\draw[line width=0.6pt, solideB!70!black] (\xd-0.07,0.72) rectangle (\xd+0.07,1.62);
+\draw[line width=0.5pt, solideB!70!black] (\xd-0.07,1.17) -- (\xd+0.07,1.17);
+%% bouche de VMC en haut à gauche
+\fill[black!20] (\xg-0.09,1.72) rectangle (\xg+0.09,2.00);
+\draw[line width=0.5pt, black!70] (\xg-0.09,1.72) rectangle (\xg+0.09,2.00);
+\foreach \y in {1.79,1.86,1.93} { \draw[line width=0.4pt, black!70] (\xg-0.09,\y) -- (\xg+0.09,\y); }
+
+%% températures
+\node[txt, text=solideA] at (3.05,1.35) {$19\ ^\circ$C};
+\node[txt, text=solideB, anchor=west] at (5.15,2.45) {$-1\ ^\circ$C};
+\node[txt, anchor=west] at (5.15,2.12) {$\Delta T = 20$ K};
+
+%% ---------- les cinq déperditions -----------------------------------------
+%% fenêtre (224 W) : la plus épaisse
+\dep{3.2}{(\xd,1.17)}{(5.05,1.17)}
+\node[etq, anchor=west] at (5.15,1.17) {Fenêtre\\ \textbf{224 W}};
+%% renouvellement d'air (204 W)
+\dep{2.9}{(\xg-0.09,1.90)}{(0.68,2.58)}
+\node[etq, anchor=south east] at (0.62,2.62) {Air neuf\\ \textbf{204 W}};
+%% murs (186 W)
+\dep{2.65}{(\xg,1.05)}{(0.62,1.05)}
+\node[etq, anchor=east] at (0.54,1.05) {Murs\\ \textbf{186 W}};
+%% pont thermique (108 W) : jonction plancher / façade
+\dep{1.55}{(\xg,0.02)}{(0.72,-0.55)}
+\fill[solideA] (\xg,0) circle (0.075);
+\node[etq, anchor=north] at (0.52,-0.58) {Pont thermique\\ \textbf{108 W}};
+%% toiture (68 W)
+\dep{1.0}{(2.55,\yh+0.30)}{(2.55,3.00)}
+\node[etq, anchor=west] at (2.67,2.95) {Toiture — \textbf{68 W}};
+
+%% ================= partie basse : barre empilée =============================
+\def\yb{-1.62}\def\hb{0.34}\def\x0{-0.35}
+\def\ech{0.050}   % 1 % -> 0,050 cm  (100 % -> 5,0 cm)
+%% (positions cumulées calculées à la main : 0 ; 28 ; 54 ; 78 ; 92 %)
+\foreach \d/\p/\co/\nom in {0/28/solideD/{Fenêtre}, 28/26/{solideD!80}/{Air neuf},
+                            54/24/{solideD!62}/{Murs}, 78/14/{solideD!45}/{Pont th.},
+                            92/9/{solideD!28}/{}} {
+  \fill[\co] ({\x0+\ech*\d},\yb) rectangle ({\x0+\ech*(\d+\p)},\yb+\hb);
+  \draw[line width=0.5pt, black!60] ({\x0+\ech*\d},\yb) rectangle ({\x0+\ech*(\d+\p)},\yb+\hb);
+  \node[font=\tiny] at ({\x0+\ech*(\d+0.5*\p)},\yb+0.5*\hb) {\p~\%};
+  \node[font=\tiny, anchor=north] at ({\x0+\ech*(\d+0.5*\p)},\yb-0.04) {\nom}; }
+%% le dernier segment est trop étroit : son nom est décalé d'une ligne
+\draw[line width=0.4pt, black!60] ({\x0+\ech*96.5},\yb-0.05) -- ({\x0+\ech*96.5},\yb-0.32);
+\node[font=\tiny, anchor=north] at ({\x0+\ech*96.5},\yb-0.30) {Toiture};
+\node[draw=black!70, line width=0.7pt, rounded corners=2pt, fill=black!3, font=\small,
+      inner sep=3.5pt, anchor=west] at ({\x0+\ech*100+0.15},\yb+0.5*\hb) {\textbf{Total = 790 W}};
+\node[txt, anchor=north] at (3.30,-2.55)
+  {fenêtre et air neuf pèsent plus de la moitié du bilan};
+\end{tikzpicture}
+\end{document}

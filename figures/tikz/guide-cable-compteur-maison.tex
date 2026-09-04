@@ -1,0 +1,65 @@
+%% guide-cable-compteur-maison — liaison entre le coffret de comptage et l'habitation.
+%% Vue de principe : compteur (230 V, 9 kV.A), câble de longueur L = 50 m à deux
+%% conducteurs, arrachement montrant la section S, pertes par effet Joule.
+%% RÈGLE : ni la section S, ni R, ni I, ni P_J ne portent de valeur (réponses des étapes 1 à 4).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{decorations.pathmorphing}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  trait/.style={line width=0.8pt, line join=round},
+  cond/.style={line width=1.2pt, line cap=round},
+  courant/.style={-{Stealth[length=6pt]}, line width=1.1pt, draw=solideA},
+  cote/.style={{Stealth[length=4.5pt]}-{Stealth[length=4.5pt]}, line width=0.8pt, draw=solideD},
+  attache/.style={line width=0.4pt, draw=black!50},
+  joule/.style={-{Stealth[length=4.5pt]}, line width=0.8pt, draw=solideD,
+                decorate, decoration={snake, amplitude=0.6pt, segment length=4pt,
+                                      post length=3pt}},
+  leg/.style={font=\scriptsize, align=center, inner sep=1.5pt},
+  don/.style={font=\scriptsize, inner sep=1pt}]
+
+%% ================= coffret de comptage (à gauche) =========================
+\fill[black!10] (0,0.75) rectangle (1.1,2.55);
+\draw[trait] (0,0.75) rectangle (1.1,2.55);
+\draw[trait, fill=white] (0.15,1.95) rectangle (0.95,2.35);
+\node[font=\tiny, text=black!70] at (0.55,2.15) {kWh};
+\draw[trait, fill=black!25] (0.55,1.45) circle (0.12);
+\node[leg, anchor=north] at (0.55,0.66) {Compteur};
+\node[don, anchor=north] at (0.55,0.34) {230 V --- 9 kV$\cdot$A};
+
+%% ================= habitation (à droite) ==================================
+\draw[trait] (6.0,0.75) rectangle (7.6,1.85);
+\draw[trait] (5.85,1.85) -- (6.8,2.50) -- (7.75,1.85);
+\draw[trait] (6.55,0.75) rectangle (6.95,1.35);
+\node[leg, anchor=north] at (6.8,0.66) {Habitation};
+
+%% ================= le câble : deux conducteurs ============================
+\draw[cond] (1.1,1.75) -- (6.0,1.75);
+\draw[cond] (1.1,1.45) -- (6.0,1.45);
+\draw[courant] (2.95,1.75) -- (3.85,1.75);
+\node[font=\small, text=solideA, anchor=south, inner sep=2pt] at (3.40,1.80) {$I$};
+
+%% ================= cote de la longueur ====================================
+\draw[attache] (1.1,1.38) -- (1.1,0.85);
+\draw[attache] (6.0,1.38) -- (6.0,0.85);
+\draw[cote] (1.1,0.98) -- (6.0,0.98);
+\node[font=\small, text=solideD, fill=white, inner sep=1.5pt] at (3.55,0.98) {$L = 50$ m};
+
+%% ================= arrachement : la section du conducteur =================
+\draw[line width=0.4pt, dash pattern=on 1.5pt off 1.5pt, black!60] (2.50,1.78) -- (2.50,2.18);
+\draw[trait, fill=black!25] (2.50,2.35) circle (0.17);
+\node[font=\small, anchor=west, inner sep=2pt] at (2.70,2.35) {$S$};
+\node[don, anchor=west] at (0.10,2.90) {cuivre : $\rho = 1{,}7 \times 10^{-8}$ $\Omega\cdot$m};
+
+%% ================= pertes par effet Joule =================================
+\foreach \x in {4.30,4.80,5.30} { \draw[joule] (\x,1.88) -- (\x,2.45); }
+\node[leg, text=solideD, anchor=south] at (4.80,2.52) {pertes par effet Joule};
+
+%% ================= relations utiles =======================================
+\node[draw=black!70, line width=0.6pt, rounded corners=2pt, inner sep=4pt,
+      align=center, font=\scriptsize, anchor=north] at (3.80,-0.05)
+  {$R = \rho \times \dfrac{L}{S}$ \qquad $P_J = R \times I^{2}$\\[2pt]
+   $R$ en $\Omega$ ; $\rho$ en $\Omega\cdot$m ; $L$ en m ; $S$ en m$^{2}$ ;
+   $P_J$ en W ; $I$ en A};
+\end{tikzpicture}
+\end{document}

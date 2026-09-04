@@ -1,0 +1,45 @@
+%% Trame série asynchrone (UART) d'un caractère : repos à 1, bit de start à 0,
+%% 8 bits de donnée poids faible (D0) en tête, bit de parité, bit de stop, retour au repos.
+%% Motif tracé : D0..D7 = 1 0 1 0 1 1 0 0 (donnée 0011 0101 lue du msb au lsb).
+%% Largeur d'un intervalle : 0,58 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  sep/.style={black!40, dash pattern=on 1.6pt off 1.6pt, line width=0.5pt},
+  grad/.style={font=\scriptsize},
+  champ/.style={solideD, line width=0.9pt, line join=round}]
+
+%% ================== niveaux logiques ==================================
+\node[grad, anchor=east, inner sep=3pt] at (-0.55,0)    {0};
+\node[grad, anchor=east, inner sep=3pt] at (-0.55,0.75) {1};
+
+%% ================== séparateurs d'intervalles =========================
+\foreach \i in {0,1,...,11} { \draw[sep] ({\i*0.58},-0.30) -- ({\i*0.58},0.95); }
+
+%% ================== tracé de la trame =================================
+\draw[solideB, line width=1.4pt, line join=round]
+  (-0.50,0.75) -- (0,0.75) -- (0,0) -- (0.58,0) -- (0.58,0.75) -- (1.16,0.75) --
+  (1.16,0) -- (1.74,0) -- (1.74,0.75) -- (2.32,0.75) -- (2.32,0) -- (2.90,0) --
+  (2.90,0.75) -- (4.06,0.75) -- (4.06,0) -- (5.22,0) -- (5.22,0.75) -- (6.88,0.75);
+
+%% ================== états de repos ====================================
+\node[grad, text=black!60, anchor=south] at (-0.25,0.80) {Repos};
+\node[grad, text=black!60, anchor=south] at (6.63,0.80) {Repos};
+
+%% ================== noms des bits de donnée ===========================
+\foreach \k in {0,1,...,7} {
+  \node[grad, anchor=north, inner sep=2pt] at ({0.58*\k+0.87},-0.30) {D\k}; }
+
+%% ================== champs de la trame ================================
+%% chaque champ : un crochet ouvert vers le haut, sous l'axe des bits
+\foreach \a/\b in {0/0.58, 0.58/5.22, 5.22/5.80, 5.80/6.38} {
+  \draw[champ] (\a,-0.75) -- (\a,-0.85) -- (\b,-0.85) -- (\b,-0.75); }
+\node[grad, text=solideD, anchor=north, inner sep=3pt] at (0.29,-0.88) {start};
+\node[grad, text=solideD, anchor=north, inner sep=3pt] at (2.90,-0.88)
+      {8 bits de donnée (D0 en tête)};
+\node[grad, text=solideD, anchor=north, inner sep=3pt] at (5.51,-0.88) {parité};
+\draw[champ] (6.09,-0.85) -- (6.09,-1.22);
+\node[grad, text=solideD, anchor=north, inner sep=1pt] at (6.09,-1.22) {stop};
+\end{tikzpicture}
+\end{document}

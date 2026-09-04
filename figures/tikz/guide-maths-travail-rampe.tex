@@ -1,0 +1,63 @@
+%% Travail des forces sur un plan incliné à 30° : un chariot est tiré du bas (A) vers le haut (B)
+%% d'une rampe. Le déplacement AB (bleu), le poids P (rouge), la réaction normale R (gris) et
+%% la traction F (vert) sont représentés ; l'angle theta entre P et AB n'est pas coté (réponse attendue).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1.1cm,y=1.1cm,
+  vect/.style={-{Stealth[length=6pt]}, line width=1.2pt},
+  fin/.style={line width=0.6pt, black!60},
+  arc/.style={line width=0.7pt, black!55}]
+
+\def\al{30}                       % inclinaison de la rampe
+\coordinate (A) at (0,0);
+\coordinate (H) at (5.196,0);
+\coordinate (B) at (5.196,3);
+\coordinate (C) at (2.993,2.017);  % centre du chariot (sur la rampe, décalé de 0,25 vers le haut)
+
+\useasboundingbox (-0.55,-0.8) rectangle (6.3,3.65);
+
+%% ---------------- plan incliné ----------------------------------------
+\filldraw[fill=solideE!12, draw=black!55, line width=0.6pt, line join=round]
+   (A) -- (H) -- (B) -- cycle;
+\draw[line width=1.4pt, black] (A) -- (B);        % la rampe
+%% angle en A
+\draw[arc] (0.9,0) arc (0:\al:0.9);
+\node[font=\small] at (14:1.13) {$30^{\circ}$};
+%% sol : petites hachures sous [AH]
+\foreach \s in {0.35,0.75,...,5.1} {\draw[line width=0.45pt, black!55] (\s,0) -- (\s-0.16,-0.22);}
+
+%% ---------------- points A, B, H --------------------------------------
+\fill (A) circle (1.7pt); \node[font=\small, anchor=north east, inner sep=2pt] at (A) {$A$};
+\fill (B) circle (1.7pt); \node[font=\small, anchor=south west, inner sep=2pt] at (B) {$B$};
+\node[font=\small, anchor=north west, inner sep=2pt] at (H) {$H$};
+
+%% ---------------- vecteur déplacement AB (juste sous la rampe) ---------
+\draw[vect, solideB] (0.09,-0.156) -- (5.286,2.844);
+\node[font=\small, text=solideB, sloped, anchor=north, inner sep=4pt] at (2.10,0.657)
+     {$\overrightarrow{AB}$ \ ($AB=12$ m)};
+
+%% ---------------- le chariot ------------------------------------------
+\begin{scope}[rotate=\al]
+  \filldraw[fill=black!15, draw=black!60, line width=0.7pt] (3.15,0) rectangle (4.05,0.5);
+\end{scope}
+\fill (C) circle (1.6pt);
+\node[font=\small, anchor=east, inner sep=3pt] at (2.30,1.72) {$m=200$ kg};
+
+%% ---------------- les trois forces ------------------------------------
+\draw[vect, solideA] (C) -- ++(0,-1.9)
+     node[anchor=west, inner sep=3pt, font=\small, text=solideA] {$\vec{P}$};
+\draw[vect, black!65] (C) -- ++(\al+90:1.4)
+     node[anchor=south east, inner sep=1pt, font=\small] {$\vec{R}$};
+\draw[vect, solideE] (C) -- ++(\al:1.4)
+     node[anchor=north west, inner sep=1pt, font=\small, text=solideE] {$\vec{F}$};
+%% angle droit entre R et la rampe (F)
+\begin{scope}[rotate=\al, shift={(C)}]
+  \draw[line width=0.5pt, black!65] (0.26,0) -- (0.26,0.26) -- (0,0.26);
+\end{scope}
+
+%% ---------------- angle theta entre P et AB ---------------------------
+\draw[arc, -{Stealth[length=4pt]}] ([shift=(-90:0.72)]C) arc (-90:\al:0.72);
+\node[font=\small, text=black!55] at ([shift=(-35:0.90)]C) {$\theta$};
+\end{tikzpicture}
+\end{document}

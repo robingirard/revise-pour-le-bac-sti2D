@@ -1,0 +1,70 @@
+%% 2i2d-appuis-reactions — les inconnues de liaison en plan : une par mobilité
+%% bloquée. Appui glissant (1), articulation (2), encastrement (3).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  poutre/.style={line width=2.4pt, solideB, line cap=round},
+  inconnue/.style={-{Stealth[length=5pt]}, line width=1pt, solideF},
+  titre/.style={font=\small\bfseries, anchor=south, align=center, inner sep=2pt},
+  etiq/.style={font=\small, inner sep=2pt},
+  petit/.style={font=\scriptsize, inner sep=1.5pt}]
+
+\newcommand\batihoriz[3]{%
+  \draw[line width=1pt, solideE] (#1,#3) -- (#2,#3);
+  \begin{scope}
+    \clip (#1,#3-0.24) rectangle (#2,#3);
+    \foreach \hx in {-16,-15.76,...,16} { \draw[line width=0.5pt, solideE!75] (\hx,#3) -- (\hx-0.28,#3-0.28); }
+  \end{scope}}
+\newcommand\appuitri[3]{%
+  \draw[line width=1pt, draw=solideE, fill=solideE!12, line join=round]
+    (#1,#2) -- (#1-0.34,#3) -- (#1+0.34,#3) -- cycle;}
+
+%% ================= 1. appui simple glissant ==================================
+\begin{scope}[shift={(1.1,0)}]
+  \node[titre] at (0,1.5) {Appui glissant};
+  \draw[poutre] (-0.85,0) -- (0.85,0);
+  \appuitri{0}{-0.03}{-0.6}
+  \draw[line width=0.8pt, draw=solideE, fill=white] (-0.2,-0.72) circle (0.11);
+  \draw[line width=0.8pt, draw=solideE, fill=white] ( 0.2,-0.72) circle (0.11);
+  \batihoriz{-0.9}{0.9}{-0.83}
+  \draw[inconnue] (0,0.1) -- (0,0.9) node[etiq, anchor=south, text=solideF] {$R_y$};
+  \node[petit, anchor=north] at (0,-1.2) {\textbf{1 inconnue}};
+\end{scope}
+
+\draw[line width=0.4pt, black!35] (2.55,-1.5) -- (2.55,1.75);
+
+%% ================= 2. appui simple fixe (articulation) =======================
+\begin{scope}[shift={(4.0,0)}]
+  \node[titre, align=center] at (0,1.5) {Articulation\\[-2pt]{\scriptsize (appui simple fixe)}};
+  \draw[poutre] (-0.85,0) -- (0.85,0);
+  \appuitri{0}{-0.03}{-0.6}
+  \batihoriz{-0.9}{0.9}{-0.6}
+  \draw[inconnue] (0,0.1) -- (0,0.9) node[etiq, anchor=south, text=solideF] {$R_y$};
+  \draw[inconnue] (0,0.14) -- (0.8,0.14);
+  \node[etiq, anchor=south, text=solideF] at (0.55,0.16) {$R_x$};
+  \node[petit, anchor=north] at (0,-1.2) {\textbf{2 inconnues}};
+\end{scope}
+
+\draw[line width=0.4pt, black!35] (5.45,-1.5) -- (5.45,1.75);
+
+%% ================= 3. encastrement ===========================================
+\begin{scope}[shift={(6.55,0)}]
+  \node[titre] at (0.5,1.5) {Encastrement};
+  \draw[poutre] (-0.3,0) -- (1.25,0);
+  \hachures{(-0.56,-0.62) rectangle (-0.3,0.62)}
+  \draw[inconnue] (-0.12,0.1) -- (-0.12,0.9) node[etiq, anchor=south, text=solideF] {$R_y$};
+  \draw[inconnue] (-0.12,0.14) -- (0.68,0.14);
+  \node[etiq, anchor=south, text=solideF] at (0.42,0.16) {$R_x$};
+  \draw[inconnue] ([shift=(-40:0.32)]0.15,-0.48) arc (-40:220:0.32);
+  \node[etiq, anchor=west, text=solideF] at (0.55,-0.48) {$M$};
+  \node[petit, anchor=north] at (0.5,-1.2) {\textbf{3 inconnues}};
+\end{scope}
+
+%% ================= bandeau récapitulatif =====================================
+\node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=4pt, anchor=north,
+      align=center, font=\scriptsize, text width=7.1cm] at (4.0,-1.58)
+     {à chaque \textbf{mobilité bloquée} correspond une inconnue — translation $\rightarrow$ force,
+      rotation $\rightarrow$ moment ; en plan, le PFS donne \textbf{3 équations}};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,75 @@
+%% guide-circuit-trois-branches — circuit à trois branches horizontales entre deux montants.
+%% Branche du bas : générateur (12 V) + lampe (1 V), courant 0,20 A.
+%% Branches du haut et du milieu : en dérivation l'une de l'autre (accolade grise).
+%% Le courant sort de la borne + du générateur, parcourt la branche du bas vers la gauche,
+%% monte par le montant de gauche, puis se partage entre les deux branches en dérivation :
+%% les flèches I_1 et I_2 pointent donc vers la droite.
+%% RÈGLE : ni R, ni U_1, ni U_2, ni I_1, ni I_2 ne portent de valeur (réponses des étapes 2 à 6).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  fil/.style={line width=0.9pt, line cap=round, line join=round},
+  courant/.style={-{Stealth[length=6pt]}, line width=1.1pt, draw=solideA},
+  voltage/.style={{Stealth[length=4.5pt]}-{Stealth[length=4.5pt]}, line width=0.8pt, draw=solideB},
+  etiqI/.style={font=\small, text=solideA, inner sep=2pt},
+  etiqU/.style={font=\small, text=solideB, fill=white, inner sep=1.5pt},
+  comp/.style={fil, fill=white}]
+
+\def\xL{0}\def\xR{6.0}          % montants gauche et droit
+\def\yH{3.9}\def\yM{2.0}\def\yB{0}  % branches haute, milieu, basse
+
+%% ---------- lampe : cercle barré d'une croix ----------------------------
+\newcommand\lampe[2]{%
+  \draw[comp] (#1,#2) circle (0.28);
+  \draw[fil] ({#1-0.198},{#2-0.198}) -- ({#1+0.198},{#2+0.198})
+             ({#1-0.198},{#2+0.198}) -- ({#1+0.198},{#2-0.198});}
+
+%% ================= les fils ==============================================
+\draw[fil] (\xL,\yB) -- (\xL,\yH);                 % montant de gauche
+\draw[fil] (\xR,\yB) -- (\xR,\yH);                 % montant de droite
+\draw[fil] (\xL,\yH) -- (\xR,\yH);                 % branche du haut
+\draw[fil] (\xL,\yM) -- (\xR,\yM);                 % branche du milieu
+\draw[fil] (\xL,\yB) -- (1.90,\yB)  (2.18,\yB) -- (\xR,\yB);  % branche du bas
+
+%% ================= nœuds =================================================
+\fill (\xL,\yM) circle (1.8pt);
+\fill (\xR,\yM) circle (1.8pt);
+
+%% ================= branche du haut : R puis lampe ========================
+\draw[courant] (0.55,\yH) -- (1.45,\yH);
+\node[etiqI, anchor=south] at (1.00,\yH+0.06) {$I_2$};
+\draw[comp] (1.90,\yH-0.28) rectangle (2.90,\yH+0.28);
+\node[font=\small] at (2.40,\yH) {$R$};
+\draw[voltage] (1.90,3.35) -- (2.90,3.35);
+\node[etiqU] at (2.40,3.35) {2 V};
+\lampe{4.40}{\yH}
+\draw[voltage] (3.95,3.35) -- (4.85,3.35);
+\node[etiqU] at (4.40,3.35) {$U_2$};
+
+%% ================= branche du milieu : conducteur ohmique ================
+\draw[courant] (0.55,\yM) -- (1.45,\yM);
+\node[etiqI, anchor=south] at (1.00,\yM+0.06) {$I_1$};
+\draw[comp] (2.60,\yM-0.28) rectangle (3.60,\yM+0.28);
+\node[font=\scriptsize] at (3.10,\yM) {100 $\Omega$};
+\draw[voltage] (2.60,2.62) -- (3.60,2.62);
+\node[etiqU] at (3.10,2.62) {$U_1$};
+
+%% ================= branche du bas : générateur puis lampe ================
+\draw[fil] (1.90,-0.28) -- (1.90,0.28);                       % borne + (trait long)
+\draw[line width=2pt, line cap=round] (2.18,-0.15) -- (2.18,0.15);  % borne - (trait court)
+\draw[voltage] (1.60,-0.52) -- (2.48,-0.52);
+\node[etiqU] at (2.04,-0.52) {12 V};
+\draw[courant] (3.60,\yB) -- (2.75,\yB);
+\node[etiqI, anchor=south] at (3.18,\yB+0.06) {0,20 A};
+\lampe{4.60}{\yB}
+\draw[voltage] (4.15,-0.52) -- (5.05,-0.52);
+\node[etiqU] at (4.60,-0.52) {1 V};
+
+%% ================= accolade « en dérivation » ============================
+\draw[line width=0.7pt, draw=black!55, line join=round]
+  (-0.30,\yM) .. controls (-0.48,\yM) and (-0.48,2.85) .. (-0.62,2.95)
+              .. controls (-0.48,3.05) and (-0.48,\yH) .. (-0.30,\yH);
+\node[font=\scriptsize, text=black!60, rotate=90, anchor=south] at (-0.68,2.95) {en dérivation};
+\end{tikzpicture}
+\end{document}

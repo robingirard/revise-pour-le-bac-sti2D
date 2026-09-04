@@ -1,0 +1,53 @@
+%% Aire sous la courbe d'un débit q(t) = 0,5 t^2 - 4 t + 10 sur [0 ; 6].
+%% L'aire hachurée entre la courbe, l'axe des abscisses et les droites t = 0 et t = 6
+%% représente le volume écoulé (en litres) : c'est l'intégrale de q, calculée avec une primitive.
+%% La valeur de l'aire n'est PAS écrite : c'est le résultat demandé à l'élève.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1.02cm,y=0.45cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={solideA, line width=1.4pt, line join=round},
+  rappel/.style={solideB, line width=0.8pt, dash pattern=on 3pt off 2pt},
+  grad/.style={font=\scriptsize}]
+
+%% --- domaine hachuré : (0;0) -> (0;10) -> courbe -> (6;0) -> cycle ------------
+\def\zone{(0,0) -- (0,10)
+  -- plot[domain=0:6, samples=100, smooth] (\x,{0.5*\x*\x-4*\x+10}) -- (6,0) -- cycle}
+\newcommand\hachurezone{%
+  \begin{scope}
+    \path[clip] \zone;
+    \fill[solideA!12] \zone;
+    \foreach \hx in {-8,-7.55,...,7} {\draw[line width=0.4pt, solideA!45] (\hx,-1) -- (\hx+5,11);}
+  \end{scope}}
+
+%% --- quadrillage --------------------------------------------------------------
+\draw[solideE!25, line width=0.3pt, xstep=1, ystep=2] (0,0) grid (6.5,11);
+
+\hachurezone
+\draw[solideA!50, line width=0.7pt] \zone;
+
+%% --- axes ---------------------------------------------------------------------
+\draw[axe] (-0.25,0) -- (7,0) node[anchor=north east, inner sep=3pt, font=\small] {$t$ (s)};
+\draw[axe] (0,-0.6) -- (0,11.6);
+\node[font=\small, anchor=south west, inner sep=2pt] at (0.05,11.0) {$q$ ($\mathrm{L\cdot s^{-1}}$)};
+\node[font=\small, anchor=north east, inner sep=3pt] at (-0.05,-0.05) {$O$};
+\foreach \t in {1,2,3,4,5,6} {
+  \draw[line width=0.5pt] (\t,0) -- (\t,-0.35) node[grad, anchor=north, inner sep=2pt] {\t};}
+\foreach \q in {2,4,6,8,10} {
+  \draw[line width=0.5pt] (0,\q) -- (-0.09,\q) node[grad, anchor=east, inner sep=2pt] {\q};}
+
+%% --- bords du domaine ---------------------------------------------------------
+\draw[rappel] (0,0) -- (0,10);
+\draw[rappel] (6,0) -- (6,4);
+
+%% --- la courbe ----------------------------------------------------------------
+\draw[courbe] plot[domain=0:6, samples=100, smooth] (\x,{0.5*\x*\x-4*\x+10});
+\node[font=\small, text=solideA, anchor=west, inner sep=3pt] at (6.05,4.6) {$\mathcal{C}_q$};
+\fill[solideA] (4,2) circle (2pt);
+
+%% --- légende de l'aire ---------------------------------------------------------
+\node[font=\small, text=black!60, fill=white, fill opacity=0.85, text opacity=1,
+      inner sep=2pt] at (2.9,1.6) {aire = volume écoulé};
+\end{tikzpicture}
+\end{document}

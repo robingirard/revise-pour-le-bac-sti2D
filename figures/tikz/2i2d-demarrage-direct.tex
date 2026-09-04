@@ -1,0 +1,120 @@
+%% 2i2d-demarrage-direct — démarrage direct d'un moteur asynchrone triphasé.
+%% Colonne gauche : circuit de PUISSANCE (fils épais, 3 x 400 V) ; colonne droite :
+%% circuit de COMMANDE (fils fins, 24 V). Le contact d'auto-maintien KM1 est en solideE.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  pui/.style={line width=1.15pt, line cap=round, line join=round},
+  cde/.style={line width=0.7pt, line cap=round, line join=round},
+  rep/.style={font=\scriptsize\bfseries},
+  lab/.style={font=\scriptsize, inner sep=1.5pt},
+  labg/.style={lab, anchor=east},
+  labd/.style={lab, anchor=west, align=left}]
+
+%% ================= macros de symboles ====================================
+%% contact ouvert (sectionneur, contact de puissance) sur un fil vertical
+\newcommand\contactouvert[3][pui]{%
+  \fill (#2,#3-0.2) circle (0.85pt);  \fill (#2,#3+0.2) circle (0.85pt);
+  \draw[#1] (#2,#3-0.2) -- (#2+0.26,#3+0.16);}
+%% fusible : rectangle traversé par le fil
+\newcommand\fusible[3][pui]{%
+  \draw[#1, fill=white] (#2-0.1,#3-0.2) rectangle (#2+0.1,#3+0.2);
+  \draw[#1] (#2,#3-0.2) -- (#2,#3+0.2);}
+%% élément de relais thermique (bilame)
+\newcommand\bilame[2]{%
+  \draw[pui, fill=white] (#1-0.1,#2-0.2) rectangle (#1+0.1,#2+0.2);
+  \draw[pui] (#1+0.1,#2+0.1) -- (#1+0.24,#2+0.1) -- (#1+0.24,#2-0.1);}
+%% contact à ouverture (NF) sur un fil vertical de commande
+\newcommand\contactNF[3][cde]{%
+  \fill (#2,#3-0.22) circle (0.8pt);
+  \draw[#1] (#2,#3+0.22) -- (#2+0.3,#3+0.22);
+  \draw[#1] (#2,#3-0.22) -- (#2+0.2,#3+0.22);}
+%% contact à fermeture (NO) sur un fil vertical de commande
+\newcommand\contactNO[3][cde]{%
+  \fill (#2,#3-0.22) circle (0.8pt);  \fill (#2,#3+0.22) circle (0.8pt);
+  \draw[#1] (#2,#3-0.22) -- (#2+0.3,#3+0.1);}
+%% tête de bouton poussoir accrochée à la lame (#2,#3 = centre du contact)
+\newcommand\poussoir[3][cde]{%
+  \draw[#1] (#2+0.15,#3-0.06) -- (#2+0.42,#3-0.06);
+  \draw[#1] (#2+0.42,#3-0.15) -- (#2+0.42,#3+0.03);}
+
+%% ################ COLONNE GAUCHE : CIRCUIT DE PUISSANCE ##################
+\node[rep, text=solideD] at (0.9,5.33) {PUISSANCE};
+\node[font=\scriptsize, anchor=south] at (0.9,4.98) {$3 \times 400$ V};
+
+\foreach \x in {0.4,0.9,1.4} {
+  \draw[pui] (\x,4.95) -- (\x,4.55);          % arrivée réseau
+  \contactouvert{\x}{4.35}                     % Q0 : sectionneur 3 pôles
+  \draw[pui] (\x,4.15) -- (\x,3.85);
+  \fusible{\x}{3.65}                           % F1 : fusibles
+  \draw[pui] (\x,3.45) -- (\x,3.15);
+  \contactouvert{\x}{2.95}                     % KM1 : contacts de puissance
+  \draw[pui] (\x,2.75) -- (\x,2.45);
+  \bilame{\x}{2.25}                            % F4 : relais thermique
+  \draw[pui] (\x,2.05) -- (\x,1.78);
+}
+%% liaisons mécaniques (trait pointillé entre les trois pôles)
+\draw[cde, dash pattern=on 1.6pt off 1.4pt] (0.52,4.33) -- (1.56,4.33);
+\draw[cde, dash pattern=on 1.6pt off 1.4pt] (0.52,2.93) -- (1.56,2.93);
+
+%% moteur asynchrone triphasé
+\draw[pui] (0.4,1.78) -- (0.62,1.48)  (0.9,1.78) -- (0.9,1.60)  (1.4,1.78) -- (1.18,1.48);
+\draw[pui, fill=white] (0.9,1.18) circle (0.42);
+\node[font=\scriptsize] at (0.9,1.28) {M};
+\node[font=\scriptsize] at (0.9,1.02) {$3\sim$};
+%% mise à la terre
+\draw[pui] (0.9,0.76) -- (0.9,0.52);
+\draw[pui] (0.73,0.52) -- (1.07,0.52)  (0.79,0.44) -- (1.01,0.44)  (0.85,0.36) -- (0.95,0.36);
+
+\node[labg] at (0.25,4.35) {Q0};
+\node[labg] at (0.25,3.65) {F1};
+\node[labg] at (0.25,2.95) {KM1};
+\node[labg] at (0.25,2.25) {F4};
+\node[labg] at (0.32,1.18) {M3};
+
+%% ################ séparation des deux circuits ###########################
+\draw[black!45, line width=0.6pt, dash pattern=on 2pt off 2pt] (2.3,0.1) -- (2.3,5.5);
+
+%% ################ COLONNE DROITE : CIRCUIT DE COMMANDE ###################
+\node[rep, text=solideB] at (4.5,5.33) {COMMANDE};
+
+%% --- primaire du transformateur (400 V) ---
+\draw[cde] (3.4,4.95) -- (3.6,4.95) -- (3.6,4.85);
+\fusible[cde]{3.6}{4.65}
+\draw[cde] (3.6,4.45) -- (3.6,3.95) -- (4.22,3.95);
+\draw[cde] (5.6,4.95) -- (5.4,4.95) -- (5.4,3.95) -- (4.78,3.95);
+%% --- transformateur T1 : deux cercles sécants ---
+\draw[cde] (4.5,3.95) circle (0.28)  (4.5,3.55) circle (0.28);
+%% --- secondaire (24 V) ---
+\draw[cde] (4.22,3.55) -- (3.6,3.55) -- (3.6,3.35);
+\draw[cde] (4.78,3.55) -- (5.4,3.55) -- (5.4,0.55) -- (4.9,0.55);
+\node[labd] at (5.5,3.75) {T1\\$400$ V / $24$ V\\$50$ V$\cdot$A};
+
+%% --- boucle de commande, de haut en bas ---
+\fusible[cde]{3.6}{3.15}                        % F3
+\draw[cde] (3.6,2.95) -- (3.6,2.82);
+\contactNF{3.6}{2.6}                            % contact NF du relais thermique F4
+\draw[cde] (3.6,2.38) -- (3.6,2.22);
+\contactNF{3.6}{2.0}  \poussoir{3.6}{2.0}       % S2 : arrêt (NF)
+\draw[cde] (3.6,1.78) -- (3.6,1.42);
+\contactNO{3.6}{1.2}  \poussoir{3.6}{1.2}       % S1 : marche (NO)
+\draw[cde] (3.6,0.98) -- (3.6,0.55) -- (4.1,0.55);
+%% bobine du contacteur
+\draw[cde, fill=white] (4.1,0.37) rectangle (4.9,0.73);
+\node[font=\scriptsize, anchor=north] at (4.5,0.28) {KM1};
+
+%% --- branche d'auto-maintien (en parallèle sur S1) ---
+\draw[solideE, line width=0.9pt] (3.6,1.58) -- (3.0,1.58) -- (3.0,1.42);
+\contactNO[{solideE, line width=0.9pt}]{3.0}{1.2}
+\draw[solideE, line width=0.9pt] (3.0,0.98) -- (3.0,0.82) -- (3.6,0.82);
+\node[font=\scriptsize, text=solideE, align=center, text width=1.05cm] at (2.86,2.42)
+  {auto-\\maintien\\KM1};
+\draw[solideE, line width=0.5pt] (2.95,1.95) -- (3.02,1.45);
+
+\node[labg] at (3.45,3.15) {F3};
+\node[labd] at (4.15,2.6)  {F4};
+\node[labd] at (4.15,2.0)  {S2\\Arrêt};
+\node[labd] at (4.15,1.2)  {S1\\Marche};
+\end{tikzpicture}
+\end{document}

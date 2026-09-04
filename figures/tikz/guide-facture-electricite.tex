@@ -1,0 +1,80 @@
+%% guide-facture-electricite — extrait simplifié d'une facture d'électricité, dessiné au trait.
+%% Trois blocs séparés par des bandeaux gris : consommations relevées, détail de la
+%% facturation, total. Deux mentions manuscrites (solideB) désignent la puissance souscrite
+%% et la période facturée.
+%% RÈGLE : aucune intensité, aucune durée en jours, aucun coût estimé (réponses des étapes).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{textcomp}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cadre/.style={line width=0.8pt, rounded corners=3pt, draw=black!70},
+  bandeau/.style={fill=black!8},
+  titre/.style={font=\scriptsize\bfseries, anchor=west, inner sep=0pt},
+  cel/.style={font=\tiny, inner sep=1pt},
+  det/.style={font=\scriptsize, inner sep=0pt, anchor=west},
+  sub/.style={font=\tiny, inner sep=0pt, anchor=west, text=black!75},
+  mont/.style={font=\scriptsize, inner sep=0pt, anchor=east},
+  ann/.style={font=\tiny, text=solideB, inner sep=1pt, anchor=west},
+  fleche/.style={-{Stealth[length=4pt]}, line width=0.5pt, draw=solideB}]
+
+\newcommand\eur{\,\texteuro}
+\def\W{8.0}            % largeur du document
+
+%% ================= cadre général ==========================================
+\draw[cadre] (0,0.55) rectangle (\W,5.70);
+
+%% ================= bandeau 1 : consommations ==============================
+\fill[bandeau] (0,5.20) rectangle (\W,5.68);
+\node[titre] at (0.12,5.44) {Consommations};
+
+%% en-tête du tableau (deux lignes)
+\node[cel, align=center, anchor=north] at (3.30,5.05) {Nouveau\\relevé};
+\node[cel, align=center, anchor=north] at (4.50,5.05) {Ancien\\relevé};
+\node[cel, align=center, anchor=north] at (5.70,5.05) {Diffé-\\rence};
+\node[cel, align=center, anchor=north] at (7.00,5.05) {Conso\\(kWh)};
+\draw[line width=0.4pt, black!45] (0.10,4.62) -- (\W-0.10,4.62);
+
+%% les deux lignes de relevé
+\foreach \y/\lib/\a/\b/\c in {4.42/{HC --- heures creuses}/{25\,913}/{24\,391}/{1\,522},
+                              4.08/{HP --- heures pleines}/{66\,776}/{65\,507}/{1\,269} } {
+  \node[cel, anchor=west] at (0.12,\y) {\lib};
+  \node[cel] at (3.30,\y) {\a};
+  \node[cel] at (4.50,\y) {\b};
+  \node[cel] at (5.70,\y) {\c};
+  \node[cel] at (7.00,\y) {\c}; }
+
+%% ================= bandeau 2 : détails de la facturation ==================
+\fill[bandeau] (0,3.35) rectangle (\W,3.85);
+\node[titre] at (0.12,3.60) {Détails de la facturation};
+
+%% sous-titre, coupé en trois pour pouvoir viser « 6 kV.A »
+\node[sub] (sA) at (0.12,3.16) {TARIF bleu --- PUISSANCE};
+\node[sub] (sB) at (sA.east) {\,6 kV$\cdot$A\,};
+\node[sub] (sC) at (sB.east) {--- monophasé 230 V};
+\draw[line width=0.5pt, draw=solideB] (sB.south west) -- (sB.south east);
+
+%% trois lignes de facturation, montants alignés à droite
+\node[det] (l1a) at (0.12,2.72) {Abonnement du};
+\node[det] (l1b) at (l1a.east) {\,13.01.2022 au 13.08.2022};
+\node[mont] at (\W-0.15,2.72) {85,05\eur};
+\node[det] at (0.12,2.40) {Consommation HC : 1\,522 kWh $\times$ 0,1360\eur};
+\node[mont] at (\W-0.15,2.40) {206,99\eur};
+\node[det] at (0.12,2.08) {Consommation HP : 1\,269 kWh $\times$ 0,1820\eur};
+\node[mont] at (\W-0.15,2.08) {230,96\eur};
+
+%% ================= bandeau 3 : total ======================================
+\fill[bandeau] (0,1.35) rectangle (\W,1.85);
+\node[titre] at (0.12,1.60) {Total de la facture};
+\node[det] at (0.12,1.00) {Montant à payer};
+\draw[line width=1pt, draw=solideA] (6.10,0.78) rectangle (7.85,1.22);
+\node[font=\small\bfseries, text=solideA] at (6.975,1.00) {523,00\eur};
+
+%% ================= mentions manuscrites ===================================
+%% placées dans les espaces libres du document, reliées par une flèche fine
+\node[ann, anchor=east] at (\W-0.12,3.60) {puissance souscrite};
+\draw[fleche] (5.78,3.55) .. controls (4.60,3.44) .. ([xshift=-1pt,yshift=1pt]sB.north east);
+\node[ann, anchor=east] at (\W-0.12,3.00) {période facturée};
+\draw[fleche] (6.40,2.96) .. controls (5.90,2.86) .. ([xshift=3pt,yshift=1pt]l1b.east);
+\end{tikzpicture}
+\end{document}

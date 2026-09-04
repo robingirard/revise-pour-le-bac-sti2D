@@ -1,0 +1,56 @@
+%% Liaison symétrique (différentielle) : DATA+ et DATA- portent des signaux opposés.
+%% Une perturbation extérieure se superpose de la même façon aux deux fils : elle
+%% disparaît dans la différence U(DATA+) - U(DATA-), qui vaut alors +5 V ou -5 V.
+%% Échelle verticale : y = 0,94 cm ; 5 V = 0,90 unité, donc 1 V = 0,18 cm. Intervalle binaire : 0,8 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=0.94cm,
+  ax/.style={black!35, line width=0.5pt, -{Stealth[length=4pt]}},
+  sep/.style={black!40, dash pattern=on 1.6pt off 1.6pt, line width=0.5pt},
+  grad/.style={font=\scriptsize},
+  nom/.style={font=\scriptsize, anchor=east, align=right, inner sep=3pt},
+  fl/.style={-{Stealth[length=4pt]}, solideD, line width=0.8pt}]
+
+%% ================== quadrillage temporel commun =======================
+\foreach \i in {0,1,...,6} { \draw[sep] ({0.8*\i},-0.05) -- ({0.8*\i},5.25); }
+
+%% ================== panneau 1 : DATA+ =================================
+\draw[ax] (-0.1,4.15) -- (5.05,4.15);
+\node[nom] at (-0.15,4.60) {$U_{\text{DATA}+}$};
+\node[grad, anchor=west, inner sep=3pt] at (4.95,4.15) {0};
+\node[grad, anchor=west, inner sep=3pt] at (4.95,5.05) {5 V};
+\draw[solideB, line width=1.3pt, line join=round]
+  (0,5.05) -- (0.8,5.05) -- (0.8,4.15) -- (1.0,4.15) -- (1.0,4.33) -- (1.5,4.33) --
+  (1.5,4.15) -- (1.6,4.15) -- (1.6,5.05) -- (3.2,5.05) -- (3.2,4.15) -- (4.0,4.15) --
+  (4.0,5.05) -- (4.8,5.05);
+
+%% ================== panneau 2 : DATA- (complémentaire) ================
+\draw[ax] (-0.1,2.35) -- (5.05,2.35);
+\node[nom] at (-0.15,2.80) {$U_{\text{DATA}-}$};
+\node[grad, anchor=west, inner sep=3pt] at (4.95,2.35) {0};
+\node[grad, anchor=west, inner sep=3pt] at (4.95,3.25) {5 V};
+\draw[solideB, line width=1.3pt, line join=round]
+  (0,2.35) -- (0.8,2.35) -- (0.8,3.25) -- (1.0,3.25) -- (1.0,3.43) -- (1.5,3.43) --
+  (1.5,3.25) -- (1.6,3.25) -- (1.6,2.35) -- (3.2,2.35) -- (3.2,3.25) -- (4.0,3.25) --
+  (4.0,2.35) -- (4.8,2.35);
+
+%% ================== la perturbation, commune aux deux fils ============
+\node[grad, text=solideD, fill=white, inner sep=1.5pt, anchor=west] (pert) at (1.95,3.79)
+      {perturbation de 1 V};
+\draw[fl] (pert.north west) -- (1.52,4.30);
+\draw[fl] (pert.south west) -- (1.52,3.46);
+
+%% ================== panneau 3 : la différence =========================
+\draw[ax] (-0.1,1.0) -- (5.05,1.0);
+\node[nom] at (-0.15,1.0) {$U_{\text{DATA}+}$\\[-1pt] $-\,U_{\text{DATA}-}$};
+\node[grad, anchor=west, inner sep=3pt] at (4.95,1.9) {$+5$ V};
+\node[grad, anchor=west, inner sep=3pt] at (4.95,1.0) {0};
+\node[grad, anchor=west, inner sep=3pt] at (4.95,0.1) {$-5$ V};
+\draw[solideA, line width=1.4pt, line join=round]
+  (0,1.9) -- (0.8,1.9) -- (0.8,0.1) -- (1.6,0.1) -- (1.6,1.9) -- (3.2,1.9) --
+  (3.2,0.1) -- (4.0,0.1) -- (4.0,1.9) -- (4.8,1.9);
+\node[grad, text=solideA, anchor=north] at (2.4,-0.12)
+      {la perturbation commune disparaît};
+\end{tikzpicture}
+\end{document}

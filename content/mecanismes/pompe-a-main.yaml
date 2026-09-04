@@ -230,8 +230,8 @@ animation:
   bbox:
   - 1.0
   - 0.3
-  - 7.75
-  - 7.6
+  - 8.55
+  - 8.0
   border: 4
   duration: 4
   legende: Le levier oscille, la bielle transmet, le piston monte et descend dans le cylindre.

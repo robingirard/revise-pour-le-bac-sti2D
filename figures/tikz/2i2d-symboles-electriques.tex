@@ -1,0 +1,129 @@
+%% 2i2d-symboles-electriques — planche des symboles normalisés (NF/IEC) utilisés dans
+%% les schémas électriques de la chaîne de puissance : 10 vignettes en 5 colonnes x 2 lignes.
+%% Les trois dernières vignettes (protections) sont regroupées par un liseré solideA.
+%% Chaque symbole est dessiné dans un repère local centré, dans un carré de 1,4 cm de côté.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  sym/.style={line width=0.8pt, line cap=round, line join=round},
+  cadre/.style={draw=black!30, line width=0.5pt, rounded corners=2pt},
+  nom/.style={font=\scriptsize, anchor=north, align=center, inner sep=1pt, text width=1.5cm}]
+
+%% ---- cadre + nom d'une vignette -----------------------------------------
+\newcommand\cadre[3]{%
+  \draw[cadre] (#1-0.7,#2-0.7) rectangle (#1+0.7,#2+0.7);
+  \node[nom] at (#1,#2-0.76) {#3};}
+\def\cx{1.50}   % pas horizontal
+\def\cy{2.4}   % pas vertical
+
+%% ======================= ligne 1 =========================================
+%% (1) pack batterie : traits verticaux longs (+) et courts (-)
+\cadre{0}{0}{Pack batterie}
+\begin{scope}[shift={(0,0)}]
+  \draw[sym] (-0.58,0) -- (-0.3,0)  (0.3,0) -- (0.58,0);
+  \draw[sym] (-0.3,-0.28) -- (-0.3,0.28)  (0.1,-0.28) -- (0.1,0.28);
+  \draw[sym] (-0.1,-0.13) -- (-0.1,0.13)  (0.3,-0.13) -- (0.3,0.13);
+  \node[font=\tiny] at (-0.3,0.44) {$+$};
+  \node[font=\tiny] at (0.3,-0.44) {$-$};
+\end{scope}
+
+%% (2) transformateur : deux cercles sécants
+\cadre{\cx}{0}{Transformateur}
+\begin{scope}[shift={(\cx,0)}]
+  \draw[sym] (0,0.19) circle (0.26)  (0,-0.19) circle (0.26);
+  \draw[sym] (-0.62,0.19) -- (-0.26,0.19)  (0.26,0.19) -- (0.62,0.19);
+  \draw[sym] (-0.62,-0.19) -- (-0.26,-0.19)  (0.26,-0.19) -- (0.62,-0.19);
+\end{scope}
+
+%% (3) moteur : cercle, M et le signe ~
+\cadre{2*\cx}{0}{Moteur}
+\begin{scope}[shift={(2*\cx,0)}]
+  \draw[sym] (0,0) circle (0.38);
+  \node[font=\scriptsize] at (0,0.1) {M};
+  \node[font=\scriptsize] at (0,-0.15) {$\sim$};
+  \draw[sym] (-0.62,0) -- (-0.38,0)  (0.38,0) -- (0.62,0);
+\end{scope}
+
+%% (4) lampe : cercle barré d'une croix
+\cadre{3*\cx}{0}{Lampe}
+\begin{scope}[shift={(3*\cx,0)}]
+  \draw[sym] (0,0) circle (0.32);
+  \draw[sym] (-0.226,-0.226) -- (0.226,0.226)  (-0.226,0.226) -- (0.226,-0.226);
+  \draw[sym] (-0.62,0) -- (-0.32,0)  (0.32,0) -- (0.62,0);
+\end{scope}
+
+%% (5) DEL : diode + deux flèches sortantes
+\cadre{4*\cx}{0}{DEL}
+\begin{scope}[shift={(4*\cx,0)}]
+  \draw[sym] (-0.2,-0.26) -- (-0.2,0.26) -- (0.2,0) -- cycle;
+  \draw[sym] (0.2,-0.26) -- (0.2,0.26);
+  \draw[sym] (-0.62,0) -- (-0.2,0)  (0.2,0) -- (0.62,0);
+  \draw[sym, -{Stealth[length=3pt]}] (-0.14,0.34) -- (0.06,0.56);
+  \draw[sym, -{Stealth[length=3pt]}] (0.06,0.3) -- (0.26,0.52);
+\end{scope}
+
+%% ======================= ligne 2 =========================================
+%% (6) transistor
+\cadre{0}{-\cy}{Transistor}
+\begin{scope}[shift={(0,-\cy)}]
+  \draw[sym] (0,0) circle (0.38);
+  \draw[sym] (-0.66,0) -- (-0.18,0);
+  \draw[sym] (-0.18,-0.24) -- (-0.18,0.24);
+  \draw[sym] (-0.18,0.11) -- (0.2,0.33) -- (0.2,0.66);
+  \draw[sym, -{Stealth[length=3.4pt]}] (-0.18,-0.11) -- (0.2,-0.33);
+  \draw[sym] (0.2,-0.33) -- (0.2,-0.66);
+  \node[font=\tiny] at (-0.5,0.16) {B};
+  \node[font=\tiny] at (0.4,0.52) {C};
+  \node[font=\tiny] at (0.4,-0.52) {E};
+\end{scope}
+
+%% (7) résistance : rectangle (norme européenne)
+\cadre{\cx}{-\cy}{Résistance}
+\begin{scope}[shift={(\cx,-\cy)}]
+  \draw[sym] (-0.62,0.14) -- (-0.34,0.14)  (0.34,0.14) -- (0.62,0.14);
+  \draw[sym] (-0.34,-0.04) rectangle (0.34,0.32);
+  \node[font=\tiny, align=center, text width=1.3cm] at (0,-0.36) {norme\\européenne};
+\end{scope}
+
+%% (8) arrêt d'urgence : contact fermé au repos + tête coup de poing
+\cadre{2*\cx}{-\cy}{Arrêt d'urgence}
+\begin{scope}[shift={(2*\cx,-\cy)}]
+  \draw[sym] (-0.64,-0.22) -- (-0.32,-0.22)  (0.28,-0.22) -- (0.64,-0.22);
+  \draw[sym] (0.28,-0.22) -- (0.28,0.1);
+  \draw[sym] (-0.32,-0.22) -- (0.28,0.02);
+  \fill (-0.32,-0.22) circle (0.9pt)  (0.28,-0.22) circle (0.9pt);
+  \draw[sym] (-0.02,-0.1) -- (-0.02,0.22);
+  \draw[sym, fill=black!8] (-0.3,0.22) arc (180:0:0.28) -- cycle;
+\end{scope}
+
+%% (9) sectionneur à fusible : contact ouvert + fusible
+\cadre{3*\cx}{-\cy}{Sectionneur\\à fusible}
+\begin{scope}[shift={(3*\cx,-\cy)}]
+  \draw[sym] (-0.66,0.06) -- (-0.5,0.06)  (-0.1,0.06) -- (0.06,0.06)  (0.56,0.06) -- (0.68,0.06);
+  \fill (-0.5,0.06) circle (0.9pt)  (-0.1,0.06) circle (0.9pt);
+  \draw[sym] (-0.5,0.06) -- (-0.16,0.4);
+  \draw[sym] (0.06,-0.1) rectangle (0.56,0.22);
+  \draw[sym] (0.06,0.06) -- (0.56,0.06);
+\end{scope}
+
+%% (10) disjoncteur différentiel : contact + tore
+\cadre{4*\cx}{-\cy}{Disjoncteur\\différentiel}
+\begin{scope}[shift={(4*\cx,-\cy)}]
+  \draw[sym] (-0.66,0.14) -- (-0.38,0.14)  (0.06,0.14) -- (0.66,0.14);
+  \fill (-0.38,0.14) circle (0.9pt)  (0.06,0.14) circle (0.9pt);
+  \draw[sym] (-0.38,0.14) -- (0.0,0.46);
+  \node[font=\scriptsize] at (0.3,0.44) {$*$};
+  \draw[sym, dash pattern=on 1.4pt off 1.2pt] (0,-0.28) ellipse (0.46 and 0.16);
+  \draw[sym, dotted] (-0.08,-0.14) -- (-0.2,0.3);
+\end{scope}
+
+%% ======================= regroupement PROTECTIONS ========================
+\draw[solideA, line width=0.7pt, rounded corners=4pt, dash pattern=on 2.6pt off 1.8pt]
+  (2*\cx-0.86,-\cy-2.5) rectangle (4*\cx+0.86,-\cy+0.9);
+\node[font=\scriptsize\bfseries, text=solideA, fill=white, inner sep=1.5pt]
+  at (3*\cx,-\cy+0.9) {PROTECTIONS};
+\node[font=\scriptsize, align=center, text=solideA, text width=4.5cm, inner sep=1pt] at (3*\cx,-\cy-1.98)
+  {différentiel $\rightarrow$ \textbf{personnes} ;\\ fusible et magnéto-thermique $\rightarrow$ \textbf{matériel}};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,66 @@
+%% Codeur incrémental à deux têtes de lecture : les deux voies sont décalées d'un quart
+%% de période. On lit l'état de la tête 2 au moment d'un front descendant de la tête 1 :
+%%   - marche avant  : la tête 2 est en retard, elle est encore à 1 ;
+%%   - marche arrière: la tête 2 est en avance, elle est déjà à 0.
+%% Période T = 1 unité (0,92 cm à l'écran), décalage T/4 = 0,25 unité.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=0.92cm,y=1cm,
+  sig/.style={solideB, line width=1.3pt, line join=round},
+  ax/.style={black!35, line width=0.5pt, -{Stealth[length=4pt]}},
+  nom/.style={font=\scriptsize, anchor=east, inner sep=3pt},
+  titre/.style={font=\small\bfseries, anchor=south},
+  lect/.style={solideA, dash pattern=on 2pt off 1.6pt, line width=0.9pt},
+  guide/.style={black!45, dash pattern=on 1.6pt off 1.6pt, line width=0.5pt},
+  cote/.style={{Stealth[length=4pt]}-, line width=0.9pt},
+  cote2/.style={-{Stealth[length=4pt]}, line width=0.9pt}]
+
+%% ================== panneau gauche : marche avant =====================
+\begin{scope}[shift={(0,0)}]
+  \node[titre] at (1.5,2.3) {Marche avant};
+  \draw[ax] (-0.1,1.45) -- (3.2,1.45);
+  \draw[ax] (-0.1,0.35) -- (3.2,0.35);
+  \node[nom] at (-0.12,1.7) {Tête 1};
+  \node[nom] at (-0.12,0.6) {Tête 2};
+  % tête 1 : haut sur [0;0,5[, [1;1,5[, [2;2,5[
+  \draw[sig] (0,2.0) -- (0.5,2.0) -- (0.5,1.45) -- (1.0,1.45) -- (1.0,2.0) -- (1.5,2.0)
+             -- (1.5,1.45) -- (2.0,1.45) -- (2.0,2.0) -- (2.5,2.0) -- (2.5,1.45) -- (3.0,1.45);
+  % tête 2 : en retard de T/4
+  \draw[sig] (0,0.35) -- (0.25,0.35) -- (0.25,0.9) -- (0.75,0.9) -- (0.75,0.35)
+             -- (1.25,0.35) -- (1.25,0.9) -- (1.75,0.9) -- (1.75,0.35) -- (2.25,0.35)
+             -- (2.25,0.9) -- (2.75,0.9) -- (2.75,0.35) -- (3.0,0.35);
+  % cote du décalage T/4 (front descendant tête 1 puis tête 2)
+  \draw[guide] (0.5,1.45) -- (0.5,1.00);
+  \draw[guide] (0.75,0.90) -- (0.75,1.00);
+  %% cote « de l'extérieur » : l'écart T/4 est trop court pour deux pointes rentrantes
+  \draw[cote, solideE] (0.14,1.06) -- (0.50,1.06);
+  \draw[cote2, solideE] (0.75,1.06) -- (1.11,1.06);
+  \node[font=\scriptsize, text=solideE, fill=white, anchor=south, inner sep=1pt] at (0.625,1.11) {$T/4$};
+  % lecture sur un front descendant de la tête 1
+  \draw[lect] (2.5,2.05) -- (2.5,0.18);
+  \node[font=\scriptsize, text=solideA, anchor=north east, inner sep=1pt] at (3.05,0.15)
+        {Tête 2 = 1};
+\end{scope}
+
+%% ================== panneau droit : marche arrière ====================
+\begin{scope}[xshift=4.00cm]
+  \node[titre] at (1.5,2.3) {Marche arrière};
+  \draw[ax] (-0.1,1.45) -- (3.2,1.45);
+  \draw[ax] (-0.1,0.35) -- (3.2,0.35);
+  \node[nom] at (-0.12,1.7) {Tête 1};
+  \node[nom] at (-0.12,0.6) {Tête 2};
+  % tête 1 : identique
+  \draw[sig] (0,2.0) -- (0.5,2.0) -- (0.5,1.45) -- (1.0,1.45) -- (1.0,2.0) -- (1.5,2.0)
+             -- (1.5,1.45) -- (2.0,1.45) -- (2.0,2.0) -- (2.5,2.0) -- (2.5,1.45) -- (3.0,1.45);
+  % tête 2 : en avance de T/4
+  \draw[sig] (0,0.9) -- (0.25,0.9) -- (0.25,0.35) -- (0.75,0.35) -- (0.75,0.9)
+             -- (1.25,0.9) -- (1.25,0.35) -- (1.75,0.35) -- (1.75,0.9) -- (2.25,0.9)
+             -- (2.25,0.35) -- (2.75,0.35) -- (2.75,0.9) -- (3.0,0.9);
+  % lecture sur le même front descendant de la tête 1
+  \draw[lect] (2.5,2.05) -- (2.5,0.18);
+  \node[font=\scriptsize, text=solideA, anchor=north east, inner sep=1pt] at (3.05,0.15)
+        {Tête 2 = 0};
+\end{scope}
+\end{tikzpicture}
+\end{document}

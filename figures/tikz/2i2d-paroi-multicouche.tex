@@ -1,0 +1,92 @@
+%% 2i2d-paroi-multicouche — coupe d'un mur béton + laine de verre (vue de dessus).
+%% Les épaisseurs dessinées sont proportionnelles aux épaisseurs réelles (0,20 m et 0,12 m) :
+%% la couche la plus mince apporte pourtant 94 % de la résistance totale.
+%% Extérieur à gauche (-1 °C), intérieur à droite (19 °C), flux orienté du chaud vers le froid.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{decorations.pathmorphing}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  txt/.style={font=\scriptsize},
+  amb/.style={font=\scriptsize\bfseries}]
+
+%% ---------- géométrie ------------------------------------------------------
+\def\hm{1.8}          % hauteur dessinée du mur
+\def\xa{0}\def\xb{2.0}\def\xc{3.2}   % béton : 0 -> 2,0 ; laine : 2,0 -> 3,2
+
+%% ---------- ambiances extérieure et intérieure -----------------------------
+\fill[solideB!12] (-1.85,0) rectangle (\xa,\hm);
+\fill[solideA!12] (\xc,0) rectangle (5.05,\hm);
+\node[amb, text=solideB, anchor=north] at (-0.92,\hm) {EXTÉRIEUR};
+\node[amb, text=solideA, anchor=north] at (4.12,\hm) {INTÉRIEUR};
+
+%% petit thermomètre : \thermo{x}{y}{couleur}
+\newcommand\thermo[3]{%
+  \begin{scope}[shift={(#1,#2)}]
+    \fill[#3] (0,0.10) circle (0.13);
+    \fill[#3!85] (-0.055,0.10) rectangle (0.055,0.58);
+    \draw[line width=0.5pt, black!70] (-0.055,0.10) -- (-0.055,0.56) arc (180:0:0.055) -- (0.055,0.10);
+    \draw[line width=0.5pt, black!70] ([shift={(60:0.13)}]0,0.10) arc (60:-240:0.13);
+  \end{scope}}
+\thermo{-1.58}{0.78}{solideB}
+\thermo{4.55}{0.78}{solideA}
+\node[txt, text=solideB, anchor=west] at (-1.40,1.05) {$-1\ ^\circ$C};
+\node[txt, text=solideA, anchor=west] at (4.73,1.05) {$19\ ^\circ$C};
+
+%% ---------- bande de béton (granulats semés) -------------------------------
+\fill[black!18] (\xa,0) rectangle (\xb,\hm);
+\foreach \gx/\gy in {0.25/0.32, 0.75/0.22, 1.35/0.42, 1.75/0.18, 0.45/0.88,
+                     1.05/0.74, 1.60/0.96, 0.20/1.32, 0.85/1.42, 1.45/1.55,
+                     1.85/1.26, 0.55/1.14, 1.20/1.14, 0.30/0.58, 1.70/0.64} {
+  \fill[black!42] (\gx,\gy) circle (0.055); }
+\draw[line width=0.7pt] (\xa,0) rectangle (\xb,\hm);
+
+%% ---------- bande de laine de verre (zigzag serré) -------------------------
+\fill[solideE!25] (\xb,0) rectangle (\xc,\hm);
+\begin{scope}
+  \path[clip] (\xb,0) rectangle (\xc,\hm);
+  \foreach \k in {0,1,...,11} {
+    \draw[solideE!80!black, line width=0.5pt, decorate,
+          decoration={zigzag, amplitude=1.4pt, segment length=3.4pt}]
+      (\xb,{0.08+0.155*\k}) -- (\xc,{0.08+0.155*\k}); }
+\end{scope}
+\draw[line width=0.7pt] (\xb,0) rectangle (\xc,\hm);
+
+%% ---------- flux thermique : de l'intérieur vers l'extérieur ---------------
+\draw[-{Stealth[length=8pt, width=7pt]}, line width=3pt, solideD] (4.25,0.38) -- (-1.30,0.38);
+\node[txt, text=solideD, fill=white, inner sep=1.5pt, anchor=south]
+  at (1.60,0.60) {$\varphi = 6{,}25$ W/m$^2$};
+
+%% ---------- profil de température (au-dessus du mur) -----------------------
+%% échelle : T = -1 °C -> y = 1,95 ; T = 19 °C -> y = 2,60
+\draw[solideA, line width=1pt, line join=round]
+  (5.05,2.60) -- (\xc,2.60) -- (\xb,1.99) -- (\xa,1.95) -- (-1.85,1.95);
+\draw[black!35, line width=0.4pt, dash pattern=on 1.6pt off 1.6pt]
+  (\xb,1.86) -- (\xb,2.72) (\xc,1.86) -- (\xc,2.66);
+\node[txt, text=solideA, anchor=south] at (1.00,2.72) {profil de température};
+
+%% ---------- accolade et résistance totale ----------------------------------
+\draw[line width=0.6pt, line join=round]
+  (\xa,-0.10) -- (\xa,-0.42) -- (1.50,-0.42) -- (1.60,-0.57) -- (1.70,-0.42) -- (\xc,-0.42) -- (\xc,-0.10);
+\node[draw=black!70, line width=0.7pt, rounded corners=2pt, fill=black!3, align=center,
+      inner sep=4pt, anchor=north] at (1.60,-0.66)
+  {{\small $R = 0{,}20 + 3{,}00 = \mathbf{3{,}20}$ m$^2\cdot$K/W}\\[1pt]
+   {\scriptsize les résistances des couches accolées s'additionnent}};
+
+%% ---------- étiquettes des couches (pastille + texte) ----------------------
+\fill[black!18] (-1.80,-2.05) rectangle (-1.52,-1.77);
+\foreach \gx/\gy in {-1.72/-1.85, -1.60/-1.98, -1.66/-1.81} { \fill[black!42] (\gx,\gy) circle (0.04); }
+\draw[line width=0.5pt] (-1.80,-2.05) rectangle (-1.52,-1.77);
+\node[txt, anchor=north west, align=left] at (-1.42,-1.73)
+  {\textbf{Béton} — $e = 0{,}20$ m\\ $\lambda = 1$ W/(m$\cdot$K)\\ $R = 0{,}20$ m$^2\cdot$K/W};
+
+\fill[solideE!25] (1.55,-2.05) rectangle (1.83,-1.77);
+\foreach \k in {0,1,2} {
+  \draw[solideE!80!black, line width=0.4pt, decorate,
+        decoration={zigzag, amplitude=1.1pt, segment length=3pt}]
+    (1.55,{-1.99+0.09*\k}) -- (1.83,{-1.99+0.09*\k}); }
+\draw[line width=0.5pt] (1.55,-2.05) rectangle (1.83,-1.77);
+\node[txt, anchor=north west, align=left, text=solideE!55!black] at (1.93,-1.73)
+  {\textbf{Laine de verre} — $e = 0{,}12$ m\\ $\lambda = 0{,}04$ W/(m$\cdot$K)\\ $R = 3{,}00$ m$^2\cdot$K/W};
+\end{tikzpicture}
+\end{document}

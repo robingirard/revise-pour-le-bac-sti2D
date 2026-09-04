@@ -1,0 +1,46 @@
+%% Échantillonnage : on prélève la valeur du signal analogique à intervalles réguliers Te.
+%% Chaque échantillon (disque rouge) est maintenu jusqu'au suivant : d'où l'escalier rouge.
+%% Les hauteurs de l'escalier sont celles de la courbe aux instants k*Te (Te = 0,7 cm ici).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  grad/.style={font=\scriptsize},
+  guide/.style={black!45, dash pattern=on 1.6pt off 1.6pt, line width=0.5pt},
+  cote/.style={{Stealth[length=4.5pt]}-{Stealth[length=4.5pt]}, line width=1pt}]
+
+%% ================== repère ============================================
+\draw[axe] (-0.3,0) -- (7.5,0) node[grad, anchor=north east, inner sep=3pt] {Temps};
+\draw[axe] (0,-0.25) -- (0,2.9) node[grad, anchor=south west, inner sep=2pt] {Tension};
+
+%% ================== signal analogique (cloche asymétrique) ============
+\draw[solideB, line width=1.4pt] plot[domain=0:7, samples=90, smooth]
+      (\x,{2.35*exp(-(\x-2.1)*(\x-2.1)/1.7) + 1.05*exp(-(\x-4.9)*(\x-4.9)/1.3)});
+
+%% ================== instants d'échantillonnage ========================
+%% graduations, pointillés jusqu'à la courbe et échantillon prélevé
+\foreach \k/\h in {0/0.18, 0.7/0.74, 1.4/1.76, 2.1/2.35, 2.8/1.80,
+                   3.5/0.97, 4.2/0.90, 4.9/1.07, 5.6/0.72, 6.3/0.23} {
+  \draw[line width=0.5pt] (\k,0) -- (\k,-0.12);
+  \draw[guide] (\k,0) -- (\k,\h);
+  \fill[solideA] (\k,\h) circle (2.2pt); }
+
+%% ================== signal échantillonné (bloqué) =====================
+\draw[solideA, line width=1.4pt, line join=round]
+  (0,0.18) -- (0.7,0.18) -- (0.7,0.74) -- (1.4,0.74) -- (1.4,1.76) -- (2.1,1.76) --
+  (2.1,2.35) -- (2.8,2.35) -- (2.8,1.80) -- (3.5,1.80) -- (3.5,0.97) -- (4.2,0.97) --
+  (4.2,0.90) -- (4.9,0.90) -- (4.9,1.07) -- (5.6,1.07) -- (5.6,0.72) -- (6.3,0.72) --
+  (6.3,0.23) -- (7.0,0.23);
+
+%% ================== cote de la période d'échantillonnage ==============
+\draw[cote, solideE] (2.8,-0.35) -- (3.5,-0.35);
+\node[grad, text=solideE, anchor=north, inner sep=2pt] at (3.15,-0.38) {$T_e$};
+\node[grad, text=solideE, anchor=west, inner sep=3pt] at (3.6,-0.4)
+      {période d'échantillonnage};
+
+%% ================== fréquence d'échantillonnage =======================
+\node[draw=black!45, line width=0.5pt, rounded corners=2pt, fill=white,
+      font=\small, inner sep=3pt, anchor=north east] at (7.3,2.85) {$f_e = 1 \div T_e$};
+\end{tikzpicture}
+\end{document}

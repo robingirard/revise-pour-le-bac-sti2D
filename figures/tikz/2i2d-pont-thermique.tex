@@ -1,0 +1,84 @@
+%% 2i2d-pont-thermique — liaison plancher/façade : isolation intérieure (ITI) contre extérieure (ITE).
+%% Même géométrie dans les deux vignettes : mur vertical + plancher horizontal en béton.
+%% ITI : l'isolant est interrompu par le plancher, les lignes de flux se resserrent -> point froid.
+%% ITE : l'isolant est continu, les lignes de flux restent parallèles et espacées.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{decorations.pathmorphing}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  txt/.style={font=\scriptsize},
+  amb/.style={font=\tiny\bfseries},
+  flux/.style={-{Stealth[length=4pt]}, line width=0.9pt, solideD},
+  beton/.style={fill=black!18, draw=black!70, line width=0.6pt}]
+
+\def\hv{2.4}     % hauteur d'une vignette
+\def\dx{3.95}    % décalage de la vignette de droite
+
+%% ---------- béton : mur vertical (0,9 -> 1,35) et plancher (1,35 -> 2,9) ---
+\newcommand\betons{%
+  \draw[beton] (0.90,0) rectangle (1.35,\hv);
+  \draw[beton] (1.35,1.05) rectangle (2.90,1.35);}
+%% ---------- zigzag « isolant » dans un rectangle ---------------------------
+\newcommand\isolant[4]{%
+  \fill[solideE!30] (#1,#2) rectangle (#3,#4);
+  \begin{scope}
+    \path[clip] (#1,#2) rectangle (#3,#4);
+    \foreach \k in {0,1,...,20} {
+      \pgfmathsetmacro\yy{#2+0.13*\k}
+      \ifdim\yy cm<#4 cm
+        \draw[solideE!80!black, line width=0.45pt, decorate,
+              decoration={zigzag, amplitude=1.1pt, segment length=2.8pt}]
+          (#1,\yy) -- (#3,\yy);
+      \fi }
+  \end{scope}
+  \draw[line width=0.5pt, black!70] (#1,#2) rectangle (#3,#4);}
+
+%% ======================= vignette gauche : ITI ==============================
+\begin{scope}
+  \fill[solideB!12] (0,0) rectangle (0.90,\hv);
+  \fill[solideA!12] (1.60,0) rectangle (3.30,\hv);
+  \fill[solideA!12] (1.35,1.05) rectangle (1.60,1.35);
+  \isolant{1.35}{1.35}{1.60}{\hv}          % isolant au-dessus du plancher
+  \isolant{1.35}{0}{1.60}{1.05}            % isolant au-dessous : interrompu
+  \betons
+  %% faisceau resserré : toutes les lignes contournent l'isolant par le plancher
+  \foreach \y in {0.35, 0.80, 1.20, 1.70, 2.10} {
+    \pgfmathsetmacro\ye{1.20+0.30*(\y-1.20)}
+    \draw[flux] (2.95,\y) .. controls (2.10,\y) and (1.95,1.20) .. (1.35,1.20)
+                          .. controls (0.95,1.20) and (0.70,\ye) .. (0.10,\ye); }
+  \fill[solideA] (1.35,1.20) circle (0.085);
+  \draw[line width=0.4pt, black!70] (1.42,1.28) -- (1.62,1.72);
+  \node[txt, text=solideA, fill=white, inner sep=1pt, anchor=south west] at (1.55,1.70) {point froid};
+  \node[amb, text=solideB, fill=solideB!12, inner sep=1pt] at (0.45,0.18) {EXT.};
+  \node[amb, text=solideA, fill=solideA!12, inner sep=1pt] at (2.85,2.22) {INT.};
+  \draw[line width=0.6pt, black!55] (0,0) rectangle (3.30,\hv);
+  \node[font=\scriptsize\bfseries, anchor=south, align=center] at (1.65,\hv+0.10)
+    {Isolation par\\ l'intérieur (ITI)};
+  \node[txt, anchor=north, text=solideD] at (1.65,-0.10) {$\psi = 0{,}60$ W/(m$\cdot$K)};
+\end{scope}
+
+%% ======================= vignette droite : ITE ==============================
+\begin{scope}[shift={(\dx,0)}]
+  \fill[solideB!12] (0,0) rectangle (0.65,\hv);
+  \fill[solideA!12] (1.35,0) rectangle (3.30,\hv);
+  \isolant{0.65}{0}{0.90}{\hv}             % isolant continu, côté extérieur
+  \betons
+  %% lignes de flux parallèles et espacées : pas de resserrement
+  \foreach \y in {0.35, 0.80, 1.20, 1.70, 2.10} {
+    \draw[flux] (2.95,\y) -- (0.10,\y); }
+  \node[amb, text=solideB, fill=solideB!12, inner sep=1pt] at (0.33,0.18) {EXT.};
+  \node[amb, text=solideA, fill=solideA!12, inner sep=1pt] at (2.85,2.22) {INT.};
+  \draw[line width=0.6pt, black!55] (0,0) rectangle (3.30,\hv);
+  \node[font=\scriptsize\bfseries, anchor=south, align=center] at (1.65,\hv+0.10)
+    {Isolation par\\ l'extérieur (ITE)};
+  \node[txt, anchor=north, text=solideE!60!black] at (1.65,-0.10) {$\psi$ fortement réduit};
+\end{scope}
+
+%% ======================= relation commune ===================================
+\node[draw=black!70, line width=0.7pt, rounded corners=2pt, fill=black!3, align=center,
+      inner sep=4pt, anchor=north] at (3.62,-0.62)
+  {{\small $\Phi = \psi \times L \times \Delta T$}\\[1pt]
+   {\scriptsize $\Phi$ en W ; $\psi$ en W/(m$\cdot$K) ; $L$ en m ; $\Delta T$ en K}};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,52 @@
+%% Impédance d'un circuit RL dans le plan complexe : Z = R + X i = 100 + 100 racine(3) i (ohms).
+%% Échelle : 1 unité de dessin = 50 ohms. Le module |Z| et l'argument phi ne sont pas chiffrés :
+%% ce sont les résultats demandés à l'élève.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=0.95cm,y=0.95cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  rappel/.style={line width=0.5pt, dash pattern=on 3pt off 2pt, black!55},
+  grad/.style={font=\scriptsize}]
+
+\def\zr{2}\def\zi{3.464}          % Z = 100 + 100*racine(3) i, à l'échelle 1 u = 50 ohms
+\coordinate (M) at (\zr,\zi);
+
+%% ---------------- axes ---------------------------------------------------
+\draw[axe] (-0.4,0) -- (3.3,0);
+\draw[axe] (0,-0.4) -- (0,4.35);
+\node[font=\scriptsize, anchor=north east, align=right, inner sep=3pt] at (3.35,-0.42)
+     {axe réel\\résistance $R$ ($\Omega$)};
+\node[font=\scriptsize, anchor=south, align=center, inner sep=3pt] at (0,4.40)
+     {axe imaginaire\\réactance $X$ ($\Omega$)};
+\node[font=\small, anchor=north east, inner sep=2pt] at (-0.04,-0.04) {$O$};
+\foreach \i/\lab in {1/50, 2/100, 3/150} {
+  \draw[line width=0.5pt] (\i,0) -- (\i,-0.12) node[grad, anchor=north, inner sep=2pt] {\lab};}
+\foreach \j/\lab in {1/50, 2/100, 3/150} {
+  \draw[line width=0.5pt] (0,\j) -- (-0.12,\j) node[grad, anchor=east, inner sep=2pt] {\lab};}
+
+%% ---------------- traits de rappel ---------------------------------------
+\draw[rappel] (M) -- (0,\zi);
+\draw[rappel] (M) -- (\zr,0);
+\fill[black!55] (0,\zi) circle (1.5pt);
+\fill[black!55] (\zr,0) circle (1.5pt);
+\node[font=\scriptsize, anchor=east, inner sep=3pt] at (-0.14,\zi) {$X=100\sqrt{3}$};
+\node[font=\scriptsize, anchor=south east, inner sep=2pt] at (\zr-0.06,0.08) {$R=100$};
+\draw[line width=0.5pt, black!55] (\zr-0.2,0) -- (\zr-0.2,0.2) -- (\zr,0.2);
+
+%% ---------------- vecteur OM ----------------------------------------------
+\draw[-{Stealth[length=7pt]}, solideA, line width=1.2pt] (0,0) -- (M);
+\node[font=\small, text=black!60, sloped, anchor=south, inner sep=3pt] at (1.0,1.732)
+     {$\left|Z\right|$};
+
+%% ---------------- argument -------------------------------------------------
+\draw[solideB, line width=1pt, -{Stealth[length=4pt]}] (0.8,0) arc (0:60:0.8);
+\node[font=\small, text=solideB, anchor=west, inner sep=2pt] at (26:0.95) {$\varphi=\arg(Z)$};
+
+%% ---------------- le point M ------------------------------------------------
+\fill[solideA] (M) circle (2.2pt);
+\node[font=\small, anchor=south west, inner sep=4pt] at (M) {$M(Z)$};
+\node[font=\scriptsize, anchor=west, inner sep=4pt] at (\zr,\zi-0.42) {$Z=100+100\sqrt{3}\,i$};
+\node[font=\scriptsize, text=black!60, anchor=east] at (3.3,1.0) {$Z=R+X\,i$};
+\end{tikzpicture}
+\end{document}

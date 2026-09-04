@@ -1,0 +1,55 @@
+%% 2i2d-chaine-puissance — les cinq blocs de la chaîne d'énergie et les grandeurs de lien.
+%% Les grosses flèches solideD portent le flux de puissance ; au-dessus de chacune, le couple
+%% effort/flux du domaine (électrique puis mécanique). Ordres (solideB) en entrée, pertes (solideA).
+%% Les noms de fonction sont coupés sur deux lignes pour tenir dans la largeur d'un écran.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  bloc/.style={draw=black!75, line width=0.9pt, rounded corners=2pt, fill=white,
+               text width=1.34cm, minimum height=0.9cm, inner sep=1pt,
+               font=\tiny\bfseries, align=center},
+  flux/.style={-{Stealth[length=5pt,width=6pt]}, line width=2.6pt, draw=solideD},
+  ef/.style={font=\tiny, text=solideD, align=center, inner sep=1pt, text width=1.6cm},
+  compo/.style={font=\scriptsize, text=black!55, anchor=north, inner sep=2pt},
+  ordre/.style={-{Stealth[length=5pt]}, line width=1pt, draw=solideB},
+  perte/.style={-{Stealth[length=5pt]}, line width=1pt, draw=solideA}]
+
+\def\p{1.70}   % pas horizontal entre les blocs
+
+%% ---- les cinq blocs ------------------------------------------------------
+\node[bloc] (b1) at (0,0)      {ALIMEN-\\TER};
+\node[bloc] (b2) at (\p,0)     {DISTRI-\\BUER};
+\node[bloc] (b3) at (2*\p,0)   {CONVER-\\TIR};
+\node[bloc] (b4) at (3*\p,0)   {TRANS-\\METTRE};
+\node[bloc] (b5) at (4*\p,0)   {AGIR};
+
+%% ---- flux de puissance ---------------------------------------------------
+\foreach \i/\j in {1/2,2/3,3/4,4/5} { \draw[flux] (b\i) -- (b\j); }
+
+%% ---- couple effort / flux au-dessus de chaque flèche ---------------------
+\foreach \k in {0,1} {
+  \node[ef] at ({(\k+0.5)*\p},0.74) {$U$ (V) $\cdot$ $I$ (A)};}
+\foreach \k in {2,3} {
+  \node[ef] at ({(\k+0.5)*\p},0.74) {$C$ (N$\cdot$m) $\cdot$ $\omega$ (rad$\cdot$s$^{-1}$)};}
+
+%% ---- composant type sous chaque bloc -------------------------------------
+\foreach \k/\c in {0/Batterie, 1/Contacteur, 2/Moteur, 3/Réducteur, 4/Roue} {
+  \node[compo] at ({\k*\p},-0.48) {\c};}
+
+%% ---- cadre englobant -----------------------------------------------------
+\draw[black!45, line width=0.6pt, rounded corners=5pt, dash pattern=on 3pt off 2pt]
+  (-0.72,-0.86) rectangle (4*\p+0.72,1.18);
+\node[anchor=south east, font=\scriptsize\bfseries, inner sep=2pt] at (4*\p+0.72,1.2)
+  {Chaîne d'énergie (chaîne de puissance)};
+
+%% ---- ordres venant de la chaîne d'information ----------------------------
+\draw[ordre] (\p,1.16) -- (\p,0.48);
+\node[font=\scriptsize, text=solideB, anchor=west, inner sep=2pt] at (\p+0.08,1.03) {Ordres};
+
+%% ---- pertes sortant de CONVERTIR et TRANSMETTRE --------------------------
+\draw[perte] (2*\p-0.70,-0.46) -- (2*\p-0.70,-1.10) -- (3.42,-1.28);
+\draw[perte] (3*\p-0.70,-0.46) -- (3*\p-0.70,-1.10) -- (3.68,-1.28);
+\node[font=\scriptsize, text=solideA, anchor=north, inner sep=1pt] at (3.55,-1.30) {Pertes};
+\end{tikzpicture}
+\end{document}

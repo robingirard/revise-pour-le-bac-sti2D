@@ -1,0 +1,54 @@
+%% Machine à nettoyer les lunettes : courbe de vitesse du chariot, modélisée par un trapèze.
+%% Phases : 1 accélération (0,25 s -> 0,50 s), 2 vitesse constante (0,50 s -> 1,25 s),
+%% 3 freinage (1,25 s -> 1,50 s). L'aire sous la courbe est la course du chariot.
+%% Ni la course ni l'accélération ne sont chiffrées : ce sont les résultats demandés.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=3.8cm,y=20cm,          % 1 s -> 3,8 cm ; 0,05 m/s -> 1 cm
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={solideB, line width=1.4pt, line join=round, line cap=round},
+  pointille/.style={line width=0.5pt, dash pattern=on 2.5pt off 2pt, black!55},
+  grad/.style={font=\scriptsize}]
+
+\def\tk{0.006}     % longueur des graduations sur l'axe des temps (en m/s)
+\def\tkx{0.028}    % longueur des graduations sur l'axe des vitesses (en s)
+
+%% ---------------- aire sous la courbe = course du chariot ----------------
+\fill[solideD!15] (0.25,0) -- (0.5,0.125) -- (1.25,0.125) -- (1.5,0) -- cycle;
+
+%% ---------------- axes ----------------------------------------------------
+\draw[axe] (-0.05,0) -- (1.82,0) node[anchor=north east, inner sep=4pt, font=\small] {$t$ (s)};
+\draw[axe] (0,-0.008) -- (0,0.172);
+\node[font=\small, anchor=south west, inner sep=1pt] at (0.005,0.163) {$V$ (m/s)};
+\node[grad, anchor=north east, inner sep=2pt] at (-0.006,-0.002) {$O$};
+\foreach \t in {0.25,0.5,0.75,1.0,1.25,1.5,1.75} {\draw[line width=0.5pt] (\t,0) -- (\t,-\tk);}
+\foreach \t/\lab in {0.25/{0,25}, 0.5/{0,50}, 1.25/{1,25}, 1.5/{1,50}} {
+  \node[grad, anchor=north, inner sep=3pt] at (\t,-\tk) {\lab};}
+%% niveau du palier
+\draw[pointille] (0,0.125) -- (1.5,0.125);
+\draw[line width=0.5pt] (0,0.125) -- (-\tkx,0.125) node[grad, anchor=east, inner sep=2pt] {0,125};
+
+%% ---------------- séparation des trois zones -----------------------------
+\foreach \t in {0.5,1.25} {\draw[pointille, solideE] (\t,-0.012) -- (\t,0.158);}
+\foreach \t/\n/\txt in {0.28/1/{accélération}, 0.875/2/{vitesse constante}, 1.395/3/{freinage}} {
+  \node[font=\scriptsize, text=solideE, anchor=south] at (\t,0.138) {\textbf{\n} \txt};}
+
+%% ---------------- la courbe -----------------------------------------------
+\draw[courbe] (0,0) -- (0.25,0) -- (0.5,0.125) -- (1.25,0.125) -- (1.5,0) -- (1.75,0);
+
+%% ---------------- étiquette de l'aire --------------------------------------
+\node[font=\small, text=solideD!70!black] at (0.95,0.078) {aire = course du chariot};
+
+%% ---------------- triangle de pente en zone 1 ------------------------------
+\draw[solideA, line width=0.7pt] (0.25,0) -- (0.5,0) -- (0.5,0.125);
+\node[font=\scriptsize, text=solideA, anchor=north, inner sep=2pt] at (0.375,0.001) {$\Delta t$};
+\node[font=\scriptsize, text=solideA, anchor=west, inner sep=2pt] at (0.505,0.022) {$\Delta V$};
+\node[font=\scriptsize, text=solideA, anchor=east, inner sep=1pt] at (0.36,0.100)
+     {pente $a$};
+
+%% ---------------- légende ---------------------------------------------------
+\node[font=\small, text=black!65, anchor=north west] at (0.02,-0.044)
+     {courbe mesurée modélisée par un trapèze};
+\end{tikzpicture}
+\end{document}

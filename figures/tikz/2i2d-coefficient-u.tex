@@ -1,0 +1,66 @@
+%% 2i2d-coefficient-u — de la résistance thermique R au coefficient de transmission U.
+%% Deux vignettes à la même échelle : 1 m² de paroi non isolée (10 flèches de flux serrées)
+%% et 1 m² de paroi isolée (1 seule flèche). U = 1/R : grand R -> petit U -> peu de flux.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{decorations.pathmorphing}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  txt/.style={font=\scriptsize},
+  val/.style={font=\scriptsize, align=center},
+  flux/.style={-{Stealth[length=4.5pt]}, line width=0.9pt, solideD},
+  cadre/.style={line width=0.7pt, black!70}]
+
+\def\hv{2.2}   % hauteur des vignettes
+
+%% ================= vignette gauche : mur non isolé ==========================
+\begin{scope}[shift={(0,0)}]
+  \fill[white] (0,0) rectangle (2.6,\hv);
+  \fill[black!18] (0.95,0) rectangle (1.65,\hv);          % béton seul
+  \foreach \gx/\gy in {1.10/0.35, 1.45/0.85, 1.15/1.45, 1.50/1.95, 1.30/1.15, 1.25/0.60} {
+    \fill[black!42] (\gx,\gy) circle (0.05); }
+  \draw[line width=0.6pt, black!60] (0.95,0) -- (0.95,\hv) (1.65,0) -- (1.65,\hv);
+  \foreach \k in {0,1,...,9} {                            % 10 flèches serrées
+    \draw[flux] (0.15,{0.13+0.21*\k}) -- (2.45,{0.13+0.21*\k}); }
+  \draw[cadre] (0,0) rectangle (2.6,\hv);
+\end{scope}
+\node[font=\small\bfseries, fill=solideA!20, rounded corners=2pt, inner sep=3pt,
+      text width=2.5cm, align=center, anchor=south] at (1.3,\hv+0.10) {Mur non isolé};
+\node[val, anchor=north] at (1.3,-0.12)
+  {1 m$^2$ de paroi\\ $R = 0{,}20$ m$^2\cdot$K/W\\ $U = 5{,}0$ W/(m$^2\cdot$K)};
+
+%% ================= vignette droite : mur isolé ==============================
+\begin{scope}[shift={(3.6,0)}]
+  \fill[white] (0,0) rectangle (2.6,\hv);
+  \fill[black!18] (0.80,0) rectangle (1.35,\hv);          % béton
+  \foreach \gx/\gy in {0.95/0.45, 1.20/1.00, 0.98/1.60, 1.18/2.00} {
+    \fill[black!42] (\gx,\gy) circle (0.05); }
+  \fill[solideE!25] (1.35,0) rectangle (1.95,\hv);        % isolant
+  \begin{scope}
+    \path[clip] (1.35,0) rectangle (1.95,\hv);
+    \foreach \k in {0,1,...,13} {
+      \draw[solideE!80!black, line width=0.5pt, decorate,
+            decoration={zigzag, amplitude=1.4pt, segment length=3.4pt}]
+        (1.35,{0.09+0.16*\k}) -- (1.95,{0.09+0.16*\k}); }
+  \end{scope}
+  \draw[line width=0.6pt, black!60] (0.80,0) -- (0.80,\hv) (1.35,0) -- (1.35,\hv)
+        (1.95,0) -- (1.95,\hv);
+  \draw[flux] (0.15,1.05) -- (2.45,1.05);                 % une seule flèche
+  \draw[cadre] (0,0) rectangle (2.6,\hv);
+\end{scope}
+\node[font=\small\bfseries, fill=solideE!20, rounded corners=2pt, inner sep=3pt,
+      text width=2.5cm, align=center, anchor=south] at (4.9,\hv+0.10) {Mur isolé};
+\node[val, anchor=north] at (4.9,-0.12)
+  {1 m$^2$ de paroi\\ $R = 3{,}20$ m$^2\cdot$K/W\\ $U = 0{,}31$ W/(m$^2\cdot$K)};
+
+%% ================= relations et légende =====================================
+\node[draw=black!70, line width=0.7pt, rounded corners=2pt, fill=black!3, font=\small,
+      inner sep=4pt, anchor=north] at (1.3,-1.30) {$U = \dfrac{1}{R}$ \ \ (W/(m$^2\cdot$K))};
+\node[draw=black!70, line width=0.7pt, rounded corners=2pt, fill=black!3, font=\small,
+      inner sep=4pt, anchor=north] at (4.9,-1.30) {$\Phi = U \times S \times \Delta T$ \ \ (W)};
+\node[txt, anchor=north, text=solideD] at (3.1,-2.18)
+  {à même $\Delta T$, le mur non isolé laisse passer environ \textbf{16 fois} plus de flux};
+\node[txt, anchor=north] at (3.1,-2.50)
+  {grand $R$, petit $U$ : les deux disent la même chose, à l'envers};
+\end{tikzpicture}
+\end{document}

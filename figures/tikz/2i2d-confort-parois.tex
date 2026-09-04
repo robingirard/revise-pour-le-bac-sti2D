@@ -1,0 +1,60 @@
+%% 2i2d-confort-parois — la sensation de confort dépend de l'air ET des parois.
+%% Droite de confort T_air + T_parois = 36 (soit T_ressentie = 18 °C) : les points A (avant
+%% isolation) et B (après isolation) sont sur la même droite — même sensation, 4 °C de
+%% consigne en moins.  Le repère est gradué de 12 à 24 °C sur les deux axes.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  txt/.style={font=\scriptsize},
+  grad/.style={font=\tiny}]
+
+%% ================= diagramme (coordonnées locales : T - 12) =================
+\begin{scope}[x=0.30cm, y=0.30cm]
+  %% demi-plans « trop chaud » (au-dessus) et « trop frais » (au-dessous)
+  \fill[solideA!8] (1,12) -- (12,1) -- (12,12) -- cycle;
+  \fill[solideB!8] (0,0) -- (0,11) -- (11,0) -- cycle;
+  %% bande de confort : 35 <= T_air + T_parois <= 37
+  \fill[solideE!18] (0,11) -- (11,0) -- (12,1) -- (1,12) -- cycle;
+  %% grille
+  \foreach \v in {2,4,6,8,10} {
+    \draw[black!25, line width=0.4pt, dotted] (\v,0) -- (\v,12) (0,\v) -- (12,\v); }
+  %% droite de confort
+  \draw[solideE, line width=1.2pt] (0,12) -- (12,0);
+  \node[txt, text=solideE!55!black, rotate=-45, anchor=south] at (9.4,2.6)
+    {zone de confort ressenti};
+  %% mentions des deux demi-plans
+  \node[grad, text=solideA!70!black] at (9.2,10.2) {trop chaud};
+  \node[grad, text=solideB!70!black] at (2.2,1.4) {trop frais};
+
+  %% ---------- les deux points et le passage de A à B ----------------------
+  \draw[-{Stealth[length=5pt]}, line width=1.1pt, solideD] (3.35,8.65) -- (6.65,5.35);
+  \foreach \px/\py/\lab/\pos in {3/9/A/{above right}, 7/5/B/{above right}} {
+    \fill[black] (\px,\py) circle (0.28);
+    \node[txt, \pos, inner sep=2pt] at (\px,\py) {\textbf{\lab}}; }
+
+  %% ---------- axes --------------------------------------------------------
+  \draw[-{Stealth[length=5pt]}, line width=0.6pt] (0,0) -- (13.2,0);
+  \draw[-{Stealth[length=5pt]}, line width=0.6pt] (0,0) -- (0,13.2);
+  \foreach \v in {0,2,...,12} {
+    \draw[line width=0.5pt] (\v,0) -- (\v,-0.45) node[grad, anchor=north, inner sep=2pt] {\the\numexpr\v+12\relax};
+    \draw[line width=0.5pt] (0,\v) -- (-0.45,\v) node[grad, anchor=east, inner sep=2pt] {\the\numexpr\v+12\relax}; }
+\end{scope}
+\node[txt, anchor=north] at (1.80,-0.62) {$T_{\text{parois}}$ ($^\circ$C)};
+\node[txt, anchor=south west, inner sep=1pt] at (-0.55,4.05) {$T_{\text{air}}$ ($^\circ$C)};
+
+%% ================= repérage des deux points =================================
+\node[txt, anchor=north west, align=left] at (4.30,3.95)
+  {\textbf{A} — avant isolation\\ parois $15\ ^\circ$C, air $21\ ^\circ$C};
+\node[txt, anchor=north west, align=left] at (4.30,2.85)
+  {\textbf{B} — après isolation\\ parois $19\ ^\circ$C, air $17\ ^\circ$C};
+\node[txt, anchor=north west, align=left, text=solideD] at (4.30,1.75)
+  {même sensation ($\approx 18\ ^\circ$C),\\ mais $4\ ^\circ$C de consigne\\ en moins};
+
+%% ================= relation encadrée ========================================
+\node[draw=black!70, line width=0.7pt, rounded corners=2pt, fill=black!3, align=center,
+      inner sep=4pt, anchor=north] at (3.20,-1.05)
+  {{\small $T_{\text{ressentie}} \approx \dfrac{T_{\text{air}} + T_{\text{parois}}}{2}$}\\[1pt]
+   {\scriptsize modèle simplifié}};
+\end{tikzpicture}
+\end{document}

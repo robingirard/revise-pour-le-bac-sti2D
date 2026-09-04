@@ -1,0 +1,58 @@
+%% 2i2d-dynamique-echelle — à gauche le dynamique (les trois vecteurs bout à bout
+%% forment un triangle fermé), à droite l'échelle qui convertit les centimètres
+%% mesurés sur le dessin en kilonewtons.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  force/.style={-{Stealth[length=5pt]}, line width=1.1pt, solideA},
+  etiq/.style={font=\small, inner sep=2pt},
+  petit/.style={font=\scriptsize, inner sep=1.5pt},
+  titre/.style={font=\small\bfseries, anchor=south, align=center, inner sep=2pt}]
+
+%% =========================== vignette de gauche : le dynamique ===============
+\coordinate (S1) at (0.5,0.4);
+\coordinate (S2) at (0.5,3.2);
+\coordinate (S3) at (1.9,0.4);
+
+\node[titre] at (1.2,3.62) {Le dynamique \textbf{fermé}};
+
+\draw[force] (S2) -- (S1);                       % le poids, vers le bas
+\draw[force] (S1) -- (S3);                       % le vent, vers la droite
+\draw[force] (S3) -- (S2);                       % la réaction d'appui, oblique
+
+\foreach \p in {(S1),(S2),(S3)}
+  { \fill[solideA] \p ++(-0.05,-0.05) rectangle ++(0.1,0.1); }
+
+\node[etiq, anchor=east, text=solideA] at (0.42,1.9) {$\vec{P}$};
+\node[etiq, anchor=north, text=solideA] at (1.2,0.32) {$\vec{F}$};
+\node[etiq, anchor=west, text=solideA] at (1.35,2.0) {$\vec{R_A}$};
+
+\node[etiq, anchor=north] at (1.2,-0.05) {$\vec{P} + \vec{F} + \vec{R_A} = \vec{0}$};
+\node[petit, anchor=north, text=black!65, align=center] at (1.2,-0.55)
+     {proportions exagérées\\pour la lisibilité};
+
+%% =========================== filet de séparation =============================
+\draw[line width=0.4pt, black!35] (3.35,-0.95) -- (3.35,3.75);
+
+%% =========================== vignette de droite : l'échelle ==================
+\node[titre] at (5.8,3.62) {L'\textbf{échelle} du tracé};
+
+% le témoin de 1 cm
+\draw[line width=1pt, solideD] (4.6,2.2) -- (5.6,2.2);
+\draw[line width=1pt, solideD] (4.6,2.05) -- (4.6,2.35)  (5.6,2.05) -- (5.6,2.35);
+\node[petit, anchor=north, text=solideD] at (5.1,2.0) {1 cm};
+\node[etiq, anchor=west] at (5.75,2.2) {$\leftrightarrow$ \; 10 kN};
+
+% les deux sens de lecture
+\node[petit, anchor=west, align=left] at (4.0,1.25)
+     {lire : \; $F = \ell_{\text{mesur\'ee}} \times 10$ \; (kN)};
+\node[petit, anchor=west, align=left] at (4.0,0.8)
+     {tracer : \; $\ell = F / 10$ \; (cm)};
+
+% exemple chiffré
+\node[draw=solideD!70, fill=solideD!8, rounded corners=2.5pt, inner sep=4pt,
+      anchor=north west, font=\scriptsize] at (4.0,0.25)
+     {exemple : $4{,}3$ cm $\leftrightarrow$ $43$ kN};
+\end{tikzpicture}
+\end{document}

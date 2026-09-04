@@ -1,0 +1,62 @@
+%% 2i2d-poinconnement — à gauche l'ouvrage (deux piliers, un tablier, la nacelle
+%% d'inspection) ; à droite le pied du pilier 1 : la semelle répartit l'effort F
+%% sur le sol. Le poinçonnement est évité tant que p = F/S reste sous p_sol.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  force/.style={-{Stealth[length=5pt]}, line width=1.2pt, solideA},
+  pression/.style={-{Stealth[length=4pt]}, line width=0.8pt, solideF},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.6pt, solideD},
+  attache/.style={line width=0.4pt, solideD!80},
+  etiq/.style={font=\small, inner sep=2pt},
+  petit/.style={font=\scriptsize, inner sep=1.5pt},
+  titre/.style={font=\small\bfseries, anchor=south, inner sep=2pt}]
+
+\newcommand\batihoriz[3]{%
+  \draw[line width=1pt, solideE] (#1,#3) -- (#2,#3);
+  \begin{scope}
+    \clip (#1,#3-0.26) rectangle (#2,#3);
+    \foreach \hx in {-16,-15.76,...,16} { \draw[line width=0.5pt, solideE!75] (\hx,#3) -- (\hx-0.3,#3-0.3); }
+  \end{scope}}
+
+%% ==================== gauche : l'ouvrage ====================================
+\node[titre] at (2.2,3.15) {L'ouvrage};
+\batihoriz{0.3}{4.2}{0}
+\draw[line width=0.8pt, draw=solideB, fill=solideB!18] (1.0,0) rectangle (1.3,2.2);
+\draw[line width=0.8pt, draw=solideB, fill=solideB!18] (3.4,0) rectangle (3.7,2.2);
+\draw[line width=0.8pt, draw=solideB, fill=solideB!18] (0.55,2.2) rectangle (4.15,2.5);
+\node[petit, anchor=north] at (1.15,-0.32) {pilier 1};
+\node[petit, anchor=north] at (3.55,-0.32) {pilier 2};
+
+% la nacelle suspendue sous le tablier, qui parcourt la rue aérienne
+\draw[line width=0.4pt, black!60] (2.15,2.2) -- (2.15,1.85)  (2.55,2.2) -- (2.55,1.85);
+\draw[line width=0.7pt, draw=solideF, fill=solideF!25] (2.15,1.6) rectangle (2.55,1.85);
+\draw[{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.6pt, solideD] (1.5,1.35) -- (3.2,1.35);
+\node[petit, anchor=north, text=solideF] at (2.35,1.3) {nacelle 2,00 MN};
+\node[petit, anchor=south] at (2.35,2.56) {rue aérienne 270 m $\times$ 15 m};
+
+%% ==================== filet de séparation ===================================
+\draw[line width=0.4pt, black!35] (4.55,-1.5) -- (4.55,3.35);
+
+%% ==================== droite : le poinçonnement =============================
+\node[titre] at (6.4,3.15) {Le poinçonnement};
+\draw[force] (6.4,3.0) -- (6.4,2.3);
+\node[etiq, anchor=west, text=solideA] at (6.52,2.68) {$F = 35{,}07$ MN};
+\draw[line width=0.8pt, draw=solideB, fill=solideB!18] (6.25,1.15) rectangle (6.55,2.3);
+\draw[line width=0.9pt, draw=solideE, fill=solideE!22] (5.5,0.8) rectangle (7.3,1.15);
+\batihoriz{5.1}{7.7}{0.8}
+\foreach \x in {5.65,5.9,6.15,6.4,6.65,6.9,7.15} { \draw[pression] (\x,0.3) -- (\x,0.76); }
+\node[petit, anchor=north, text=solideF] at (6.4,0.26) {pression $p$ répartie};
+
+\draw[attache] (5.5,0.75) -- (5.5,-0.38)  (7.3,0.75) -- (7.3,-0.38);
+\draw[cote] (5.5,-0.25) -- (7.3,-0.25);
+\node[petit, anchor=east, text=solideD] at (5.42,-0.25) {15 m};
+
+\node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=4pt, anchor=north,
+      align=center, font=\scriptsize] at (6.4,-0.48)
+     {$p = F / S \leq p_{\text{sol}}$\\[1pt]
+      $S = 15 \times 15 = 225$ m$^2$\\[1pt]
+      $p_{\text{sol}} = 0{,}20$ MPa};
+\end{tikzpicture}
+\end{document}

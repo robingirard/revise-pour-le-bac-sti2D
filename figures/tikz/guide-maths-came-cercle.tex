@@ -1,0 +1,59 @@
+%% Cercle trigonométrique : intersections utilisées pour résoudre cos(theta) = -1/2
+%% (droite verticale x = -1/2, points rouges M1 et M2) et sin(theta) = racine(2)/2
+%% (droite horizontale y = racine(2)/2, points bleus N1 et N2).
+%% Les mesures d'angle ne sont PAS écrites : ce sont les réponses attendues.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=2.1cm,y=2.1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  cercle/.style={solideE, line width=1.1pt},
+  droite/.style={black!45, line width=0.7pt, dash pattern=on 3pt off 2pt},
+  rayonA/.style={solideA, line width=1.1pt},
+  rayonB/.style={solideB, line width=1.1pt},
+  sens/.style={-{Stealth[length=5pt]}, line width=0.7pt}]
+
+%% ---------------- repère (O,I,J) --------------------------------------
+\draw[axe] (-1.35,0) -- (1.35,0);
+\draw[axe] (0,-1.35) -- (0,1.35);
+\node[font=\small, anchor=north east, inner sep=2pt] at (-0.02,-0.02) {$O$};
+
+%% ---------------- cercle trigonométrique ------------------------------
+\draw[cercle] (0,0) circle (1);
+\fill (1,0) circle (1.5pt);
+\node[font=\small, anchor=north east, inner sep=2pt] at (0.98,-0.02) {$I$};
+\fill (0,1) circle (1.5pt);
+\node[font=\small, anchor=north east, inner sep=2pt] at (-0.02,0.98) {$J$};
+%% sens direct (premier quadrant, à l'extérieur)
+\draw[sens, solideE] (8:1.24) arc (8:32:1.24);
+\node[font=\scriptsize, text=solideE, anchor=west, inner sep=1pt] at (20:1.28) {$+$};
+
+%% ---------------- droite x = -1/2 et points M1, M2 --------------------
+\draw[droite] (-0.5,-1.25) -- (-0.5,1.25);
+\node[font=\small, text=black!55, anchor=north, inner sep=2pt] at (-0.5,-1.27)
+     {$x=-\tfrac{1}{2}$};
+\draw[rayonA] (0,0) -- (-0.5,0.866);
+\draw[rayonA] (0,0) -- (-0.5,-0.866);
+\fill[solideA] (-0.5,0.866) circle (2pt);
+\fill[solideA] (-0.5,-0.866) circle (2pt);
+\node[font=\small, text=solideA, anchor=south, inner sep=2pt] at (-0.44,0.95) {$M_1$};
+\node[font=\small, text=solideA, anchor=north east, inner sep=2pt] at (-0.54,-0.90) {$M_2$};
+
+%% ---------------- droite y = racine(2)/2 et points N1, N2 -------------
+\draw[droite] (-1.25,0.707) -- (1.25,0.707);
+\node[font=\small, text=black!55, anchor=west, inner sep=2pt] at (1.27,0.707)
+     {$y=\tfrac{\sqrt{2}}{2}$};
+\draw[rayonB] (0,0) -- (0.707,0.707);
+\draw[rayonB] (0,0) -- (-0.707,0.707);
+\fill[solideB] (0.707,0.707) circle (2pt);
+\fill[solideB] (-0.707,0.707) circle (2pt);
+\node[font=\small, text=solideB, anchor=south west, inner sep=1pt] at (0.73,0.73) {$N_1$};
+\node[font=\small, text=solideB, anchor=east, inner sep=3pt] at (-0.75,0.76) {$N_2$};
+
+%% ---------------- arcs d'angle (sans valeur) --------------------------
+\draw[sens, solideB] (0:0.55) arc (0:45:0.55);
+\node[font=\small, text=solideB, anchor=west, inner sep=1pt] at (21:0.60) {$\theta$};
+\draw[sens, solideA] (0:0.28) arc (0:120:0.28);
+\node[font=\small, text=solideA, anchor=south, inner sep=1pt] at (95:0.34) {$\theta$};
+\end{tikzpicture}
+\end{document}

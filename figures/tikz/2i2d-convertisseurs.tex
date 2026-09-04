@@ -1,0 +1,37 @@
+%% 2i2d-convertisseurs — les quatre convertisseurs d'énergie électrique.
+%% Symbole normalisé : carré barré d'une diagonale montante, grandeur d'entrée en haut à gauche,
+%% grandeur de sortie en bas à droite. Le fil de sortie porte une flèche solideD (flux de puissance).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  fil/.style={line width=0.9pt, line cap=round},
+  flux/.style={-{Stealth[length=5pt,width=4.5pt]}, line width=1.4pt, draw=solideD},
+  boite/.style={line width=1pt, line join=round, fill=white},
+  gr/.style={font=\small},
+  nom/.style={font=\scriptsize\bfseries, anchor=north, align=center, text width=1.7cm}]
+
+\def\p{1.92}   % pas horizontal entre les vignettes
+
+%% \conv{indice}{entrée}{sortie}{nom}
+\newcommand\conv[4]{%
+  \begin{scope}[shift={(#1*\p,0)}]
+    \draw[fil] (-1.0,0) -- (-0.6,0);
+    \draw[boite] (-0.6,-0.6) rectangle (0.6,0.6);
+    \draw[fil] (-0.6,-0.6) -- (0.6,0.6);
+    \node[gr] at (-0.28,0.28) {#2};
+    \node[gr] at (0.28,-0.28) {#3};
+    \draw[flux] (0.6,0) -- (1.02,0);
+    \node[nom] at (0,-0.72) {#4};
+  \end{scope}}
+
+\conv{0}{$=$}{$\sim$}{Onduleur}
+\conv{1}{$\sim$}{$=$}{Redresseur}
+\conv{2}{$=$}{$=$}{Hacheur}
+\conv{3}{$\sim$}{$\sim$}{Variateur\\(gradateur)}
+
+%% ---- rappel de la convention de notation --------------------------------
+\node[font=\scriptsize, anchor=north] at (1.5*\p,-1.72)
+  {$=$ continu \quad$\cdot$\quad $\sim$ alternatif};
+\end{tikzpicture}
+\end{document}

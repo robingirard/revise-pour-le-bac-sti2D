@@ -1,0 +1,39 @@
+%% Adressage IP : l'adresse 10.0.3.19 et son masque /22 (255.255.252.0), bit à bit.
+%% Les 22 bits à 1 du masque désignent la partie réseau, les 10 bits à 0 la partie hôte.
+%% Un bit occupe 0,135 cm ; on ajoute 0,06 cm entre deux quartets et 0,14 cm entre deux octets.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  bit/.style={font=\ttfamily\scriptsize, inner sep=0pt},
+  nom/.style={font=\scriptsize, anchor=east, inner sep=4pt},
+  leg/.style={font=\scriptsize, anchor=south, inner sep=2pt},
+  boite/.style={rounded corners=2pt, line width=0.9pt, fill=white,
+                font=\scriptsize, inner sep=3pt}]
+
+%% ================== bandeaux réseau / hôte (en arrière-plan) ==========
+\fill[solideB, opacity=0.16] (-0.06,0.72) rectangle (3.55,2.32);
+\fill[solideD, opacity=0.20] ( 3.55,0.72) rectangle (5.20,2.32);
+\node[leg, text=solideB, anchor=south west] at (-0.06,2.34) {partie réseau (22 bits)};
+%% la légende « hôte » est décalée d'une ligne : les deux titres ne tiennent pas côte à côte
+\node[leg, text=solideD, anchor=south east] at (5.20,2.66) {partie hôte (10 bits)};
+\draw[solideD, line width=0.6pt] (4.38,2.64) -- (4.38,2.34);
+
+%% ================== les trois lignes, bit à bit =======================
+%% l'abscisse du bit i vaut i*0,16 + 0,06 par quartet franchi + 0,14 par octet franchi
+\foreach \y/\mots in {%
+  2.05/{0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,1,1},
+  1.50/{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0},
+  0.95/{0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,x,x,x,x,x,x,x,x,x,x}} {
+  \foreach \b [count=\i from 0] in \mots {
+    \node[bit] at ({\i*0.135 + int(\i/4)*0.06 + int(\i/8)*0.14 + 0.0675},\y) {\b}; } }
+
+\node[nom] at (-0.1,2.05) {@ IP 10.0.3.19};
+\node[nom] at (-0.1,1.50) {Masque /22};
+\node[nom] at (-0.1,0.95) {Adresses d'hôtes};
+
+%% ================== adresses remarquables =============================
+\node[boite, draw=solideE, text=solideE] at (1.30,0.28) {réseau : 10.0.0.0};
+\node[boite, draw=solideA, text=solideA] at (3.90,0.28) {diffusion : 10.0.3.255};
+\end{tikzpicture}
+\end{document}

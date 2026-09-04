@@ -1,0 +1,74 @@
+%% Diagramme de blocs internes (ibd) : alimentation électrique de la navette.
+%% Les parts échangent des flux par des PORTS (petits carrés) ; la nature du flux
+%% est écrite au-dessus de la ligne. Repères 1 à 4 = points de lecture des flux.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cadre/.style={draw=black!70, line width=0.9pt},
+  part/.style={draw=solideE, line width=1pt, fill=solideE!7},
+  titre/.style={font=\scriptsize, align=center, inner sep=2pt, anchor=north, text width=2.06cm,
+                draw=solideE, line width=1pt, fill=solideE!18,
+                execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+  flux/.style={font=\scriptsize, align=center, inner sep=1pt, anchor=south,
+               execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+  fl/.style={-{Stealth[length=4.5pt,width=4pt]}, line width=0.9pt, black!80},
+  fl2/.style={{Stealth[length=4.5pt,width=4pt]}-{Stealth[length=4.5pt,width=4pt]},
+              line width=0.9pt, black!80}]
+
+%% ---- macro « part » : \bpart{x1}{y1}{x2}{y2}{nom} --------------------
+\newcommand\bpart[5]{%
+  \draw[part] (#1,#2) rectangle (#3,#4);
+  \node[titre] at (#1/2+#3/2,#4) {: #5};}
+%% ---- macro « port » : petit carré plein posé sur un bord -------------
+\newcommand\port[2]{\fill[solideE] (#1-0.09,#2-0.09) rectangle (#1+0.09,#2+0.09);}
+%% ---- macro « repère » : pastille rouge numérotée ---------------------
+\newcommand\rep[3]{%
+  \fill[solideA] (#1,#2) circle (0.17);
+  \node[font=\scriptsize\bfseries, text=white, inner sep=0pt] at (#1,#2) {#3};}
+
+%% ================== cadre à onglet ====================================
+\draw[cadre] (0,0.15) rectangle (10.2,4.9);
+\draw[cadre] (0,4.45) -- (4.2,4.45) -- (4.45,4.68) -- (4.45,4.9);
+\node[font=\scriptsize, anchor=west, inner sep=3pt] at (0.1,4.67)
+     {\texttt{ibd} [Subsystem] Alimentation électrique};
+
+%% ================== les quatre parts ==================================
+\bpart{0.95}{0.5}{3.15}{2.15}{Panneaux photovoltaïques Propulsion}
+\bpart{4.25}{0.5}{6.45}{2.15}{Chargeur Propulsion}
+\bpart{7.55}{0.5}{9.75}{2.15}{Parc 1 Batteries Propulsion}
+\bpart{4.25}{3.15}{6.45}{4.25}{Battery Management System}
+
+%% ================== entrées sur le bord du cadre ======================
+%% prise de quai EDF (repère 1) : bord gauche -> chargeur
+\port{0}{2.7} \port{4.6}{2.15}
+\draw[fl] (0.09,2.7) -- (4.6,2.7) -- (4.6,2.24);
+\node[flux] at (2.0,2.75) {Prise de quai EDF};
+\rep{3.6}{2.7}{1}
+%% énergie solaire : bord gauche -> panneaux
+\port{0}{1.3} \port{0.95}{1.3}
+\draw[fl] (0.09,1.3) -- (0.86,1.3);
+\node[flux, text width=0.85cm] at (0.48,1.38) {Énergie solaire};
+
+%% ================== connecteurs internes ==============================
+%% panneaux -> chargeur (repère 2)
+\port{3.15}{1.15} \port{4.25}{1.15}
+\draw[fl] (3.24,1.15) -- (4.16,1.15);
+\node[flux, text width=1.1cm] at (3.7,1.21) {Énergie électrique};
+\rep{3.7}{0.85}{2}
+%% chargeur -> parc de batteries (repère 3)
+\port{6.45}{1.15} \port{7.55}{1.15}
+\draw[fl] (6.54,1.15) -- (7.46,1.15);
+\node[flux, text width=1.1cm] at (7.0,1.21) {Courant de charge};
+\rep{7.0}{0.85}{3}
+%% parc de batteries <-> BMS (repère 4)
+\port{8.65}{2.15} \port{6.45}{3.7}
+\draw[fl2] (8.65,2.24) -- (8.65,3.7) -- (6.54,3.7);
+\node[flux] at (7.75,3.75) {384 V Parc 1};
+\rep{8.65}{2.9}{4}
+%% BMS <-> chargeur : bus de communication (bleu)
+\port{5.6}{3.15} \port{5.6}{2.15}
+\draw[fl2, solideB] (5.6,3.06) -- (5.6,2.24);
+\node[font=\scriptsize, text=solideB, anchor=west, inner sep=3pt] at (5.7,2.65) {Bus CAN};
+\end{tikzpicture}
+\end{document}

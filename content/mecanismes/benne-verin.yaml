@@ -18,7 +18,7 @@ figures:
   schema: mecanisme-benne-verin-schema
 pieces:
 - num: 0
-  nom: châssis (cadre, cabine et roues)
+  nom: châssis du camion
 - num: 1
   nom: benne
 - num: 2
@@ -26,11 +26,11 @@ pieces:
 - num: 3
   nom: tige du vérin
 - num: 4
-  nom: axe de basculement (en C)
+  nom: axe de basculement C
 - num: 5
-  nom: axe du pied de vérin (en O)
+  nom: axe du pied de vérin O
 - num: 6
-  nom: axe d'articulation tige/benne (en P)
+  nom: axe d'articulation tige/benne P
 classes:
 - id: E0
   nom: châssis
@@ -41,8 +41,9 @@ classes:
   couleur: black
   bati: true
   pourquoi: >-
-    Le camion est à l'arrêt : le châssis est le solide de référence. Les axes 4 et 5 sont montés
-    serrés dans ses chapes : ils ne bougent pas par rapport à lui.
+    Le camion est à l'arrêt, frein serré : le châssis (cadre, cabine et roues) est le solide de
+    référence. Les axes 4 et 5 sont montés serrés dans ses chapes : ils ne bougent pas par rapport
+    à lui.
 - id: E1
   nom: benne
   pieces:

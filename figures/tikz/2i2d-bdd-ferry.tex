@@ -1,0 +1,71 @@
+%% Diagramme de définition de blocs (bdd) de la navette maritime électro-solaire.
+%% Arborescence système -> sous-système -> blocs ; losange plein = composant
+%% obligatoire, losange vide = composant optionnel ; le nombre porté sur le lien
+%% est le nombre d'éléments identiques.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cadre/.style={draw=black!70, line width=0.9pt},
+  lien/.style={line width=0.8pt, black!75},
+  boite/.style={draw=solideE, line width=0.9pt, fill=solideE!7, inner sep=3pt, font=\scriptsize,
+                execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+  tete/.style={boite, align=center},
+  vals/.style={boite, align=left, fill=white},
+  mult/.style={font=\scriptsize, inner sep=2pt}]
+
+%% ---- macro « bloc » : \bloc{nom TikZ}{x}{y}{largeur}{stéréotype}{nom}{values} ----
+\newcommand\bloc[7]{%
+  \node[tete, text width=#4, anchor=north] (#1h) at (#2,#3) {\textit{#5}\\[1pt] \textbf{#6}};
+  \node[vals, text width=#4, anchor=north] (#1v) at (#1h.south) {#7};}
+%% ---- losanges de composition : plein (obligatoire) / vide (optionnel) ----
+\newcommand\losangeplein[2]{%
+  \fill[black] (#1,#2) -- (#1+0.12,#2-0.16) -- (#1,#2-0.32) -- (#1-0.12,#2-0.16) -- cycle;}
+\newcommand\losangevide[2]{%
+  \draw[lien, fill=white] (#1,#2) -- (#1+0.12,#2-0.16) -- (#1,#2-0.32) -- (#1-0.12,#2-0.16) -- cycle;}
+%% ---- lien de composition en trois segments ---------------------------
+\newcommand\lienbloc[3]{% #1 = x du losange, #2 = altitude du palier, #3 = x du bloc
+  \draw[lien] (#1,2.72) -- (#1,#2) -- (#3,#2) -- (#3,2.1);}
+
+%% ================== cadre à onglet ====================================
+\draw[cadre] (0,-1.05) rectangle (11.9,6.9);
+\draw[cadre] (0,6.45) -- (4.5,6.45) -- (4.75,6.68) -- (4.75,6.9);
+\node[font=\scriptsize, anchor=west, inner sep=3pt] at (0.1,6.67)
+     {\texttt{bdd} [Paquet] Blocks [BDD Ferry Boat]};
+
+%% ================== niveau 1 : le système =============================
+\bloc{sys}{5.8}{6.25}{4cm}{«system»}{Ferry Boat}
+     {Longueur = 13 m ; Largeur = 4,70 m ; Vitesse = 7 nœuds}
+
+%% ================== niveau 2 : le sous-système ========================
+\node[tete, text width=3cm, anchor=north] (sub) at (5.8,3.95)
+     {\textit{«subsystem»}\\[1pt] \textbf{Alimentation électrique}};
+\losangeplein{5.8}{4.47}
+\draw[lien] (5.8,4.15) -- (5.8,3.95);
+
+%% ================== niveau 3 : les blocs ==============================
+\bloc{pv1}{1.45}{2.1}{2.4cm}{«block»}{Panneaux photovoltaïques Propulsion}
+     {Modèle = CENIT 220\\ Puissance crête = 220 Wc\\ Rendement = 13,8 \%}
+\bloc{pv2}{4.35}{2.1}{2.4cm}{«block»}{Panneaux photovoltaïques Service}
+     {Modèle = CENIT 150\\ Puissance crête = 150 Wc\\ Rendement = 11,8 \%}
+\bloc{bat}{7.25}{2.1}{2.4cm}{«block»}{Parc 1 Batteries Propulsion}
+     {Technologie = Ni-Cd\\ Tension = 384 V}
+\bloc{ven}{10.15}{2.1}{2.4cm}{«block»}{Ventilateurs batteries}
+     {Modèle = JABSCO DC150CFM}
+
+%% ================== liens de composition ==============================
+\losangeplein{4.6}{3.04} \lienbloc{4.6}{2.55}{1.45}
+\losangeplein{5.4}{3.04} \lienbloc{5.4}{2.40}{4.35}
+\losangeplein{6.2}{3.04} \lienbloc{6.2}{2.40}{7.25}
+\losangevide{7.0}{3.04}  \lienbloc{7.0}{2.55}{10.15}
+\node[mult, anchor=south west] at (1.5,2.12) {16};
+\node[mult, anchor=south west] at (4.4,2.12) {8};
+
+%% ================== légende ===========================================
+\losangeplein{0.35}{-1.2}
+\node[font=\scriptsize, anchor=west] at (0.5,-1.36) {obligatoire ---};
+\losangevide{2.6}{-1.2}
+\node[font=\scriptsize, anchor=west] at (2.75,-1.36)
+     {optionnel --- le nombre porté sur le lien est le nombre d'éléments identiques};
+\end{tikzpicture}
+\end{document}

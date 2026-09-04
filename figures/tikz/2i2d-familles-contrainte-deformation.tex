@@ -1,0 +1,74 @@
+%% 2i2d-familles-contrainte-deformation — allure qualitative de l'essai de traction
+%% pour quatre familles de matériaux. Aucune valeur chiffrée : seules comptent la
+%% pente (rigidité E) et la longueur de la partie plastique (ductilité).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.7pt, solideF},
+  rappel/.style={line width=0.4pt, dash pattern=on 2.5pt off 2pt, black!55},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.6pt, solideD},
+  etiq/.style={font=\small, inner sep=2pt},
+  petit/.style={font=\scriptsize, inner sep=1.5pt}]
+
+%% --- les axes ---------------------------------------------------------------
+\draw[axe] (0,0) -- (0,3.5);
+\draw[axe] (0,0) -- (5.5,0);
+\node[petit, anchor=north east] at (-0.02,-0.02) {$0$};
+\node[petit, anchor=north east] at (5.5,-0.08) {Déformation $\varepsilon = \Delta L / L$};
+\node[petit, anchor=south west] at (-0.35,3.55) {Contrainte $\sigma = F/S$};
+
+%% --- A : céramique / verre — fragile ------------------------------------------
+\draw[line width=1.1pt, solideA] (0,0) -- (0.62,3.1);
+\draw[line width=1.1pt, solideA] (0.5,2.98) -- (0.76,3.22) (0.5,3.22) -- (0.76,2.98);
+\node[petit, anchor=west, text=solideA, align=left] at (0.82,3.2)
+     {rupture \textbf{sans}\\déformation plastique};
+
+%% --- B : acier doux — ductile ---------------------------------------------------
+\draw[rappel] (0,1.9) -- (0.95,1.9);
+\draw[rappel] (0,2.62) -- (3.15,2.62);
+\node[petit, anchor=east] at (-0.03,1.9) {$R_e$};
+\node[petit, anchor=east] at (-0.03,2.62) {$R_r$};
+\draw[line width=1.6pt, solideB, line cap=round, line join=round] (0,0) -- (0.95,1.9)
+  .. controls (1.02,2.06) and (1.12,1.72) .. (1.25,1.70)
+  .. controls (1.45,1.68) and (1.55,1.78) .. (1.75,1.86)
+  .. controls (2.35,2.25) and (2.70,2.54) .. (3.15,2.62)
+  .. controls (3.5,2.67) and (3.72,2.5) .. (3.92,2.2);
+\draw[line width=1pt, solideB] (3.80,2.32) -- (4.04,2.10) (3.80,2.10) -- (4.04,2.32);
+\node[petit, anchor=west, text=solideB] at (4.05,2.22) {rupture};
+\draw[line width=0.5pt, black!60] (0.34,0.68) -- (0.6,0.68) -- (0.6,1.2);
+\node[petit, anchor=north west, inner sep=1pt] at (0.6,1.2) {$E$};
+
+%% --- C : alliage d'aluminium ----------------------------------------------------
+\draw[line width=1.1pt, solideE, line cap=round] (0,0) -- (0.85,1.05)
+  .. controls (1.4,1.35) and (2.0,1.55) .. (2.6,1.62)
+  .. controls (2.95,1.65) and (3.1,1.5) .. (3.2,1.3);
+\draw[line width=0.9pt, solideE] (3.1,1.42) -- (3.3,1.22) (3.1,1.22) -- (3.3,1.42);
+
+%% --- D : élastomère --------------------------------------------------------------
+\draw[line width=1.1pt, solideD, line cap=round] (0,0)
+  .. controls (1.6,0.28) and (3.4,0.42) .. (4.4,0.62)
+  .. controls (4.95,0.78) and (5.2,1.25) .. (5.3,1.85);
+
+%% --- légende ---------------------------------------------------------------------
+\begin{scope}[shift={(5.75,3.4)}]
+  \foreach \i/\c/\t in {0/solideA/{céramique (fragile)}, 1/solideB/{acier doux (ductile)},
+                        2/solideE/{alliage d'aluminium}, 3/solideD/{élastomère}} {
+    \draw[line width=1.2pt, \c] (0,-0.42*\i) -- (0.5,-0.42*\i);
+    \node[petit, anchor=west, text=\c] at (0.58,-0.42*\i) {\t}; }
+\end{scope}
+
+%% --- zones élastique et plastique de l'acier ---------------------------------------
+\draw[rappel] (0.95,1.9) -- (0.95,-0.7)  (3.92,2.2) -- (3.92,-0.7);
+\draw[cote] (0.03,-0.55) -- (0.95,-0.55);
+\draw[cote] (0.95,-0.55) -- (3.92,-0.55);
+\node[petit, anchor=north, text=solideD] at (0.5,-0.6) {zone élastique};
+\node[petit, anchor=north, text=solideD] at (2.4,-0.6) {zone plastique};
+
+%% --- cartouche -------------------------------------------------------------------------
+\node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=4pt, anchor=north west,
+      align=left, font=\scriptsize] at (4.75,0.55)
+     {la \textbf{pente} donne la rigidité $E$ ;\\
+      la \textbf{longueur} de la partie\\plastique donne la ductilité};
+\end{tikzpicture}
+\end{document}

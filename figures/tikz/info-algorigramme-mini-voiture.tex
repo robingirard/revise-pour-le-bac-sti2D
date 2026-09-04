@@ -1,0 +1,59 @@
+%% Algorigramme de la mini-voiture suiveuse de ligne : deux capteurs infrarouges
+%% Capt_G et Capt_D (1 = bande vue). Les trois tests, en escalier vers la droite,
+%% passent en revue les combinaisons ; la dernière sortie « non » traite le cas restant.
+%% Les quatre branches se rejoignent sur la ligne violette qui mène au stade Fin.
+%% Géométrie : colonnes x = 0 / 1,95 / 3,90 / 5,80 ; losanges 2,90 x 0,84 cm.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  stade/.style={draw=black!70, line width=1pt, fill=white, rounded corners=0.21cm,
+                minimum width=1.3cm, minimum height=0.42cm, font=\scriptsize},
+  act/.style={draw=solideD, line width=1pt, fill=white, line join=round},
+  los/.style={draw=solideB, line width=1pt, fill=white, line join=round},
+  txt/.style={font=\scriptsize, align=center, inner sep=1pt},
+  fl/.style={-{Stealth[length=4.5pt]}, line width=0.8pt},
+  jonc/.style={solideF, line width=1pt, line join=round},
+  bal/.style={font=\scriptsize, inner sep=1.5pt}]
+
+%% ================== entrée : lecture des deux capteurs ================
+\node[stade] at (0,3.78) {Début};
+\foreach \y/\t in {3.18/{Lire Capt\_G}, 2.58/{Lire Capt\_D}} {
+  \draw[act] (-1.05,\y-0.23) -- (-0.85,\y+0.23) -- (1.05,\y+0.23) -- (0.85,\y-0.23) -- cycle;
+  \node[txt] at (0,\y) {\t}; }
+\draw[fl] (0,3.57) -- (0,3.41);
+\draw[fl] (0,2.95) -- (0,2.81);
+\draw[fl] (0,2.35) -- (0,2.18);
+
+%% ================== les trois tests ===================================
+\newcommand\losange[3]{%
+  \draw[los] (#1-1.45,#2) -- (#1,#2+0.42) -- (#1+1.45,#2) -- (#1,#2-0.42) -- cycle;
+  \node[txt] at (#1,#2) {#3};}
+\losange{0}{1.76}{Capt\_G = 1 et\\Capt\_D = 1 ?}
+\losange{1.95}{1.16}{Capt\_G = 1 et\\Capt\_D = 0 ?}
+\losange{3.90}{0.56}{Capt\_G = 0 et\\Capt\_D = 1 ?}
+
+%% ================== sorties « non » : vers le test suivant ============
+\foreach \a/\b/\yh/\yb in {0/1.95/1.76/1.58, 1.95/3.90/1.16/0.98} {
+  \draw[fl] (\a+1.45,\yh) -- (\b,\yh) -- (\b,\yb);
+  \node[bal, text=solideA, anchor=south] at ({(\a+1.45+\b)/2},\yh+0.02) {non}; }
+%% dernière sortie « non » : aucun capteur ne voit la bande
+\draw[fl] (5.35,0.56) -- (5.80,0.56) -- (5.80,-0.20);
+\node[bal, text=solideA, anchor=south] at (5.58,0.58) {non};
+
+%% ================== sorties « oui » et actions ========================
+\foreach \x/\yl in {0/1.34, 1.95/0.74, 3.90/0.14} {
+  \draw[fl] (\x,\yl) -- (\x,-0.20);
+  \node[bal, text=solideE, anchor=west] at (\x+0.05,\yl-0.20) {oui}; }
+\foreach \x/\ta/\tb in {0/{Arrêt = 0}/{Alarme = 0}, 1.95/{Arrêt = 0}/{Alarme = 1},
+                        3.90/{Arrêt = 0}/{Alarme = 1}, 5.80/{Arrêt = 1}/{Alarme = 1}} {
+  \draw[act] (\x-0.82,-0.20) rectangle (\x+0.82,-0.78);
+  \node[txt] at (\x,-0.49) {\ta\\\tb}; }
+
+%% ================== jonction des quatre branches et sortie ============
+\foreach \x in {0,1.95,3.90,5.80} { \draw[jonc] (\x,-0.78) -- (\x,-1.09); }
+\draw[jonc] (0,-1.09) -- (5.80,-1.09);
+\draw[fl, solideF] (2.90,-1.09) -- (2.90,-1.29);
+\node[stade] at (2.90,-1.50) {Fin};
+\end{tikzpicture}
+\end{document}

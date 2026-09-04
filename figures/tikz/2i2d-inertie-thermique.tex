@@ -1,0 +1,89 @@
+%% 2i2d-inertie-thermique — évolution de la température intérieure sur 24 h.
+%% Trois allures qualitatives : température extérieure (pointillés), bâtiment léger (faible
+%% inertie, suit l'extérieur) et bâtiment lourd (forte inertie, amorti et déphasé).
+%% Les deux double-flèches mesurent l'amortissement (en °C) et le déphasage (en h).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  txt/.style={font=\scriptsize},
+  grad/.style={font=\tiny},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.6pt, black!75},
+  guide/.style={black!45, line width=0.4pt, dash pattern=on 1.6pt off 1.6pt}]
+
+%% ================= graphique : x = heure, y = (température - 19 °C) =========
+\begin{scope}[x=0.175cm, y=0.19cm]
+  %% grille pointillée
+  \foreach \t in {20,25,30,35} {
+    \draw[black!25, line width=0.4pt, dotted] (0,{\t-19}) -- (24.5,{\t-19}); }
+  \foreach \h in {6,12,18,24} {
+    \draw[black!25, line width=0.4pt, dotted] (\h,0) -- (\h,17); }
+
+  %% axes
+  \draw[-{Stealth[length=5pt]}, line width=0.6pt] (0,0) -- (26.5,0);
+  \draw[-{Stealth[length=5pt]}, line width=0.6pt] (0,0) -- (0,18.5);
+  \foreach \h in {0,6,12,18,24} {
+    \draw[line width=0.5pt] (\h,0) -- (\h,-0.55)
+      node[grad, anchor=north, inner sep=2pt] {\h}; }
+  \foreach \t in {20,25,30,35} {
+    \draw[line width=0.5pt] (0,{\t-19}) -- (-0.45,{\t-19})
+      node[grad, anchor=east, inner sep=2pt] {\t}; }
+  \node[txt, anchor=north, inner sep=1pt] at (12,-1.9) {temps (h)};
+  \node[txt, anchor=south west, inner sep=1pt] at (-0.4,18.4) {$\theta$ ($^\circ$C)};
+
+  %% température extérieure (pointillés) : 20 °C à 6 h, 35 °C à 15 h
+  \draw[solideD, line width=1pt, dash pattern=on 2.6pt off 1.8pt, line join=round]
+    plot[smooth, tension=0.7] coordinates
+    {(0,4) (3,2) (6,1) (9,6.5) (12,12.5) (15,16) (18,13) (21,7) (24,2)};
+  %% bâtiment léger : suit de près l'extérieur, maximum ~32 °C vers 16 h
+  \draw[solideA, line width=1pt, line join=round]
+    plot[smooth, tension=0.7] coordinates
+    {(0,4.5) (3,3.5) (6,3) (9,6) (12,10.5) (16,13) (19,11) (21,8.5) (24,5)};
+  %% bâtiment lourd : oscillation très amortie, maximum ~26 °C vers 21 h
+  \draw[solideB, line width=1.6pt, line join=round]
+    plot[smooth, tension=0.7] coordinates
+    {(0,5.5) (3,5) (6,4.6) (9,4.8) (12,5.3) (15,6) (18,6.6) (21,7) (24,6.6)};
+
+  %% ---------- amortissement (entre les deux maxima) -----------------------
+  \draw[guide] (16,13) -- (23.2,13);
+  \draw[guide] (21,7) -- (23.2,7);
+  \draw[cote] (23.2,13) -- (23.2,7);
+  %% ---------- déphasage (entre les abscisses des deux maxima) -------------
+  \draw[guide] (16,13) -- (16,1.6);
+  \draw[guide] (21,7) -- (21,1.6);
+  \draw[cote] (16,1.6) -- (21,1.6);
+\end{scope}
+%% étiquettes des deux cotes (coordonnées en cm)
+\node[txt, anchor=south east, text=black!75, fill=white, inner sep=1pt] at ({23.6*0.175},{13.4*0.19}) {amortissement};
+\node[txt, anchor=north, text=black!75, fill=white, inner sep=1pt]
+  at ({18.5*0.175},{1.5*0.19}) {déphasage ($\approx 5$ h)};
+
+%% ================= légende des trois courbes ================================
+\def\xl{4.85}
+\draw[solideD, line width=1pt, dash pattern=on 2.6pt off 1.8pt] (\xl,3.30) -- (\xl+0.45,3.30);
+\node[txt, anchor=west, inner sep=2pt] at (\xl+0.52,3.30) {extérieur};
+\draw[solideA, line width=1.2pt] (\xl,2.96) -- (\xl+0.45,2.96);
+\node[txt, anchor=west, inner sep=2pt] at (\xl+0.52,2.96) {bâtiment léger};
+\draw[solideB, line width=1.6pt] (\xl,2.62) -- (\xl+0.45,2.62);
+\node[txt, anchor=west, inner sep=2pt] at (\xl+0.52,2.62) {bâtiment lourd};
+
+%% ================= vignette : la dalle de béton =============================
+\begin{scope}[shift={(4.95,1.05)}]
+  \fill[black!15] (0,0) -- (1.55,0) -- (1.55,0.34) -- (0,0.34) -- cycle;
+  \fill[black!22] (0,0.34) -- (1.55,0.34) -- (1.85,0.56) -- (0.30,0.56) -- cycle;
+  \fill[black!10] (1.55,0) -- (1.85,0.22) -- (1.85,0.56) -- (1.55,0.34) -- cycle;
+  \draw[line width=0.6pt, black!70, line join=round]
+    (0,0) -- (1.55,0) -- (1.85,0.22) -- (1.85,0.56) -- (0.30,0.56) -- (0,0.34) -- cycle;
+  \draw[line width=0.6pt, black!70] (0,0.34) -- (1.55,0.34) -- (1.55,0) (1.55,0.34) -- (1.85,0.56);
+  \foreach \gx/\gy in {0.25/0.12, 0.65/0.22, 1.05/0.10, 1.30/0.24, 0.45/0.06} {
+    \fill[black!40] (\gx,\gy) circle (0.04); }
+  \node[font=\tiny, anchor=north west, align=left] at (-0.05,-0.12)
+    {dalle 4 $\times$ 5 $\times$ 0,20 m\\ masse 9 200 kg\\ $+1\ ^\circ$C $\rightarrow$ 8,1 MJ (2,25 kWh)};
+\end{scope}
+
+%% ================= note de bas de figure ====================================
+\node[txt, anchor=north, align=center] at (3.5,-1.05)
+  {allures qualitatives ; l'inertie ne supprime pas l'énergie entrante,\\
+   elle la retarde et l'amortit};
+\end{tikzpicture}
+\end{document}

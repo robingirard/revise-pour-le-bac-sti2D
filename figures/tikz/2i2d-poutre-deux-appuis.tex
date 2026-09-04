@@ -1,0 +1,65 @@
+%% 2i2d-poutre-deux-appuis — poutre de 6,00 m articulée en A, sur appui glissant
+%% en B, portant deux charges ponctuelles. Les réactions R_A et R_B sont les inconnues.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  force/.style={-{Stealth[length=5pt]}, line width=1pt, solideA},
+  inconnue/.style={-{Stealth[length=5pt]}, line width=1pt, solideF},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.6pt, solideD},
+  attache/.style={line width=0.4pt, solideD!80},
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt, solideF},
+  etiq/.style={font=\small, inner sep=2pt},
+  petit/.style={font=\scriptsize, inner sep=1.5pt}]
+
+\newcommand\batihoriz[3]{%
+  \draw[line width=1pt, solideE] (#1,#3) -- (#2,#3);
+  \begin{scope}
+    \clip (#1,#3-0.24) rectangle (#2,#3);
+    \foreach \hx in {-16,-15.76,...,16} { \draw[line width=0.5pt, solideE!75] (\hx,#3) -- (\hx-0.28,#3-0.28); }
+  \end{scope}}
+\newcommand\appuitri[3]{%
+  \draw[line width=1pt, draw=solideE, fill=solideE!12, line join=round]
+    (#1,#2) -- (#1-0.3,#3) -- (#1+0.3,#3) -- cycle;}
+
+%% --- la poutre --------------------------------------------------------------
+\draw[line width=2.6pt, solideB, line cap=round] (0.9,1.6) -- (6.9,1.6);
+
+%% --- appui A : articulation ---------------------------------------------------
+\appuitri{0.9}{1.57}{1.15}
+\batihoriz{0.45}{1.35}{1.15}
+\node[etiq, anchor=north] at (0.9,0.88) {$A$};
+
+%% --- appui B : appui glissant (triangle + rouleaux) -----------------------------
+\appuitri{6.9}{1.57}{1.22}
+\draw[line width=0.8pt, draw=solideE, fill=white] (6.72,1.11) circle (0.11);
+\draw[line width=0.8pt, draw=solideE, fill=white] (7.08,1.11) circle (0.11);
+\batihoriz{6.45}{7.35}{1.0}
+\node[etiq, anchor=north] at (6.9,0.88) {$B$};
+
+%% --- les charges ----------------------------------------------------------------
+\draw[force] (2.9,2.6) -- (2.9,1.68);
+\node[etiq, anchor=south, text=solideA] at (2.9,2.62) {12 kN};
+\draw[force] (4.9,2.6) -- (4.9,1.68);
+\node[etiq, anchor=south, text=solideA] at (4.9,2.62) {6 kN};
+
+%% --- les réactions d'appui (inconnues) ---------------------------------------------
+\draw[inconnue] (0.9,1.66) -- (0.9,2.5);
+\node[etiq, anchor=east, text=solideF] at (0.82,2.2) {$R_A$};
+\draw[inconnue] (6.9,1.66) -- (6.9,2.5);
+\node[etiq, anchor=west, text=solideF] at (6.98,2.2) {$R_B$};
+
+%% --- les cotes -------------------------------------------------------------------------
+\foreach \x in {0.9,2.9,4.9,6.9} { \draw[attache] (\x,0.8) -- (\x,0.0); }
+\draw[cote] (0.9,0.45) -- (2.9,0.45);
+\draw[cote] (2.9,0.45) -- (4.9,0.45);
+\draw[cote] (4.9,0.45) -- (6.9,0.45);
+\foreach \x in {1.9,3.9,5.9} { \node[petit, anchor=south, text=solideD] at (\x,0.48) {2,00 m}; }
+\draw[cote] (0.9,0.05) -- (6.9,0.05);
+\node[petit, anchor=south, text=solideD] at (3.9,0.08) {6,00 m};
+
+%% --- repère ------------------------------------------------------------------------------
+\draw[axe] (0.15,0.05) -- ++(0.55,0) node[petit, anchor=north] {$\vec{x}$};
+\draw[axe] (0.15,0.05) -- ++(0,0.55) node[petit, anchor=east] {$\vec{y}$};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,54 @@
+%% 2i2d-descente-charges — le cheminement des charges dans un bâtiment :
+%% charges → porteur horizontal (flexion) → porteurs verticaux (compression)
+%% → fondations → sol (réaction répartie).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  charge/.style={-{Stealth[length=4pt]}, line width=0.8pt, solideA},
+  reaction/.style={-{Stealth[length=4pt]}, line width=0.8pt, solideF},
+  petit/.style={font=\scriptsize, inner sep=1.5pt}]
+
+\newcommand\batihoriz[3]{%
+  \draw[line width=1pt, solideE] (#1,#3) -- (#2,#3);
+  \begin{scope}
+    \clip (#1,#3-0.26) rectangle (#2,#3);
+    \foreach \hx in {-16,-15.76,...,16} { \draw[line width=0.5pt, solideE!75] (\hx,#3) -- (\hx-0.3,#3-0.3); }
+  \end{scope}}
+
+%% --- 1. les charges qui arrivent sur la dalle ---------------------------------
+\foreach \x in {1.0,1.62,2.24,2.85,3.47,4.09,4.7} { \draw[charge] (\x,4.45) -- (\x,3.92); }
+\node[petit, anchor=west, text=solideA, align=left] at (5.35,4.2)
+     {charges : poids propre,\\exploitation, neige};
+
+%% --- 2. porteur horizontal : la dalle, qui fléchit ------------------------------
+\draw[line width=0.7pt, draw=solideB, fill=solideB!18] (0.7,3.5) rectangle (5.0,3.85);
+\draw[line width=0.7pt, solideB!60] (0.7,3.44) .. controls (2.1,3.2) and (3.6,3.2) .. (5.0,3.44);
+\node[petit, anchor=west, text=solideB, align=left] at (5.35,3.5)
+     {porteur horizontal\\$\rightarrow$ \textbf{flexion}};
+
+%% --- 3. porteurs verticaux : les poteaux, comprimés -------------------------------
+\foreach \x in {1.05,4.2} {
+  \draw[line width=0.7pt, draw=solideB, fill=solideB!18] (\x,1.3) rectangle (\x+0.45,3.5);
+  \draw[charge] (\x+0.225,3.35) -- (\x+0.225,2.75);
+  \draw[charge] (\x+0.225,1.45) -- (\x+0.225,2.05);}
+\node[petit, anchor=west, text=solideB, align=left] at (5.35,2.4)
+     {porteur vertical\\$\rightarrow$ \textbf{compression}};
+
+%% --- 4. fondations : les semelles ---------------------------------------------------
+\draw[line width=0.7pt, draw=solideE, fill=solideE!20, line join=round]
+  (0.7,0.9) -- (1.85,0.9) -- (1.6,1.3) -- (0.95,1.3) -- cycle;
+\draw[line width=0.7pt, draw=solideE, fill=solideE!20, line join=round]
+  (3.85,0.9) -- (5.0,0.9) -- (4.75,1.3) -- (4.1,1.3) -- cycle;
+\node[petit, anchor=west, text=solideE] at (5.35,1.1) {fondations};
+
+%% --- 5. le sol et sa réaction ----------------------------------------------------------
+\batihoriz{0.45}{5.25}{0.9}
+\foreach \x in {0.85,1.15,1.45,1.75,3.95,4.25,4.55,4.85} { \draw[reaction] (\x,0.28) -- (\x,0.82); }
+\node[petit, anchor=west, text=solideF] at (5.35,0.5) {réaction du sol};
+
+%% --- la grande flèche « descente de charges » -----------------------------------------
+\draw[-{Stealth[length=7pt]}, line width=2.2pt, solideD] (0.2,3.9) -- (0.2,0.98);
+\node[petit, anchor=south, text=solideD, rotate=90] at (0.06,1.55) {descente de charges};
+\end{tikzpicture}
+\end{document}

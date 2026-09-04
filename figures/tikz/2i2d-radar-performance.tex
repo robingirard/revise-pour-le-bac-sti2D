@@ -1,0 +1,54 @@
+%% 2i2d-radar-performance — diagramme en toile d'araignée : six indices de
+%% performance notés de 0 (centre) à 5 (extérieur). Deux matériaux comparés
+%% (le diagramme du manuel est vierge : c'est à l'élève de le remplir).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  toile/.style={line width=0.4pt, black!35},
+  petit/.style={font=\scriptsize, inner sep=1.5pt}]
+
+%% --- les six directions, en partant du haut et dans le sens horaire ----------
+%% angle 90, 30, -30, -90, -150, 150
+\newcommand\ang[1]{90-60*#1}
+
+%% --- hexagones concentriques et graduations ----------------------------------
+\foreach \r in {0.4,0.8,1.2,1.6,2.0} {
+  \draw[toile] (\ang{0}:\r) \foreach \k in {1,...,5} { -- (\ang{\k}:\r) } -- cycle; }
+\foreach \k in {0,...,5} { \draw[toile] (0,0) -- (\ang{\k}:2.0); }
+\foreach \n in {0,1,2,3,4,5} { \node[petit, anchor=west, text=black!60] at (0.12,-0.4*\n) {\n}; }
+
+%% --- étiquettes des axes -------------------------------------------------------
+\node[petit, anchor=south, align=center]      at (\ang{0}:2.15) {Résistance\\à la corrosion};
+\node[petit, anchor=west, align=left]         at (\ang{1}:2.15) {Coulabilité};
+\node[petit, anchor=west, align=left]         at (\ang{2}:2.15) {Empreinte\\carbone};
+\node[petit, anchor=north, align=center]      at (\ang{3}:2.45) {Recyclabilité};
+\node[petit, anchor=east, align=right]        at (\ang{4}:2.15) {Masse};
+\node[petit, anchor=east, align=right]        at (\ang{5}:2.15) {Limite\\élastique};
+
+%% --- matériau 1 : notes 3, 4, 2, 3, 1, 5 -----------------------------------------
+\draw[line width=1pt, solideA, fill=solideA, fill opacity=0.10, draw opacity=1]
+  (\ang{0}:1.2) -- (\ang{1}:1.6) -- (\ang{2}:0.8) -- (\ang{3}:1.2) -- (\ang{4}:0.4) -- (\ang{5}:2.0) -- cycle;
+\foreach \k/\n in {0/3, 1/4, 2/2, 3/3, 4/1, 5/5} { \fill[solideA] (\ang{\k}:0.4*\n) circle (1.3pt); }
+
+%% --- matériau 2 : notes 4, 2, 4, 5, 4, 3 -------------------------------------------
+\draw[line width=1pt, solideB, dash pattern=on 3pt off 2pt, fill=solideB, fill opacity=0.08, draw opacity=1]
+  (\ang{0}:1.6) -- (\ang{1}:0.8) -- (\ang{2}:1.6) -- (\ang{3}:2.0) -- (\ang{4}:1.6) -- (\ang{5}:1.2) -- cycle;
+\foreach \k/\n in {0/4, 1/2, 2/4, 3/5, 4/4, 5/3} { \fill[solideB] (\ang{\k}:0.4*\n) circle (1.3pt); }
+
+%% --- légende --------------------------------------------------------------------------
+\begin{scope}[shift={(3.9,1.4)}]
+  \draw[line width=1pt, solideA] (0,0) -- (0.5,0);
+  \node[petit, anchor=west, text=solideA] at (0.58,0) {matériau 1};
+  \draw[line width=1pt, solideB, dash pattern=on 3pt off 2pt] (0,-0.42) -- (0.5,-0.42);
+  \node[petit, anchor=west, text=solideB] at (0.58,-0.42) {matériau 2};
+  \node[petit, anchor=north west, text=black!60, align=left] at (0,-0.9)
+       {(dans le manuel, le\\diagramme est vierge :\\c'est à vous de le remplir)};
+\end{scope}
+
+%% --- bandeau de l'échelle de notation ------------------------------------------------------
+\node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=4pt, anchor=north,
+      font=\scriptsize] at (1.6,-3.05)
+     {0 Mauvais $\cdot$ 1 Faible $\cdot$ 2 Médiocre $\cdot$ 3 Acceptable $\cdot$ 4 Bon $\cdot$ 5 Excellent};
+\end{tikzpicture}
+\end{document}

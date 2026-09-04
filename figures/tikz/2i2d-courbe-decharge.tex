@@ -1,0 +1,62 @@
+%% 2i2d-courbe-decharge — allure de la tension d'un pack au cours de la décharge.
+%% Lithium-ion (solideA) : long plateau puis chute brutale ; plomb-acide (solideB) : décroissance
+%% continue. Échelles : 1 % -> 0,06 cm en abscisse ; 1 V -> 0,185 cm en ordonnée (origine à 42 V).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.7pt},
+  grille/.style={black!15, line width=0.35pt},
+  grad/.style={font=\scriptsize, inner sep=2pt},
+  courbe/.style={line width=1.5pt, line join=round, line cap=round}]
+
+\newcommand\xp[1]{0.06*(#1)}          % abscisse : profondeur de décharge en %
+\newcommand\yv[1]{0.185*((#1)-42)}     % ordonnée : tension en V
+
+%% ---------- quadrillage et axes ------------------------------------------
+\foreach \p in {10,20,...,100} { \draw[grille] ({\xp{\p}},0) -- ({\xp{\p}},{\yv{60}}); }
+\foreach \v in {44,46,...,60}  { \draw[grille] (0,{\yv{\v}}) -- ({\xp{100}},{\yv{\v}}); }
+\draw[axe] (0,-0.08) -- (0,{\yv{60}+0.35});
+\draw[axe] (-0.08,0) -- ({\xp{100}+0.4},0);
+\foreach \p in {0,10,...,100} { \draw[line width=0.5pt] ({\xp{\p}},0) -- ({\xp{\p}},-0.08);
+  \node[grad, anchor=north] at ({\xp{\p}},-0.06) {\p}; }
+\foreach \v in {42,44,...,60} { \draw[line width=0.5pt] (0,{\yv{\v}}) -- (-0.08,{\yv{\v}});
+  \node[grad, anchor=east] at (-0.08,{\yv{\v}}) {\v}; }
+\node[font=\scriptsize, anchor=south west, inner sep=2pt] at (0.05,{\yv{60}+0.36})
+  {Tension de batterie (V)};
+\node[font=\scriptsize, anchor=north] at ({\xp{50}},-0.42) {Profondeur de décharge (\%)};
+
+%% ---------- tension de coupure -------------------------------------------
+\draw[solideD, line width=1pt, dash pattern=on 3pt off 2pt]
+  (0,{\yv{48}}) -- ({\xp{100}+0.3},{\yv{48}});
+\node[font=\scriptsize, text=solideD, anchor=east, fill=white, inner sep=1.5pt]
+  at ({\xp{62}},{\yv{48}}) {tension de coupure (exemple)};
+
+%% ---------- courbe lithium-ion -------------------------------------------
+\draw[courbe, solideA] plot[smooth, tension=0.7] coordinates {
+  ({\xp{0}},{\yv{58}}) ({\xp{3}},{\yv{56.6}}) ({\xp{10}},{\yv{56}}) ({\xp{30}},{\yv{55.4}})
+  ({\xp{50}},{\yv{55}}) ({\xp{70}},{\yv{54.4}}) ({\xp{80}},{\yv{54}}) ({\xp{85}},{\yv{53.2}})
+  ({\xp{90}},{\yv{51.8}}) ({\xp{95}},{\yv{49.5}}) ({\xp{100}},{\yv{46}}) };
+\node[font=\scriptsize, text=solideA, anchor=south, fill=white, inner sep=1.5pt]
+  at ({\xp{32}},{\yv{55.9}}) {Lithium-ion};
+
+%% ---------- courbe plomb-acide -------------------------------------------
+\draw[courbe, solideB] plot[smooth, tension=0.7] coordinates {
+  ({\xp{0}},{\yv{56}}) ({\xp{10}},{\yv{54.8}}) ({\xp{20}},{\yv{53.8}}) ({\xp{30}},{\yv{52.9}})
+  ({\xp{40}},{\yv{52}}) ({\xp{50}},{\yv{51}}) ({\xp{60}},{\yv{49.9}}) ({\xp{70}},{\yv{48.6}})
+  ({\xp{80}},{\yv{47}}) ({\xp{90}},{\yv{45}}) ({\xp{100}},{\yv{42}}) };
+\node[font=\scriptsize, text=solideB, anchor=north east, fill=white, inner sep=1.5pt]
+  at ({\xp{34}},{\yv{52.3}}) {Plomb-acide};
+
+%% ---------- écart entre les deux coupures --------------------------------
+\draw[{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.7pt, black!70]
+  ({\xp{74}},{\yv{48}}) -- ({\xp{97}},{\yv{48}});
+\node[font=\scriptsize, anchor=south, inner sep=1.5pt] at ({\xp{85.5}},{\yv{48.3}})
+  {bien plus tard};
+
+%% ---------- note de lecture ----------------------------------------------
+\node[font=\scriptsize, anchor=north, align=center, text=black!65, text width=6.2cm]
+  at ({\xp{50}},-0.84)
+  {tensions de départ (58 V et 56 V) lues sur le graphique\\ du manuel, qui ne les imprime pas};
+\end{tikzpicture}
+\end{document}

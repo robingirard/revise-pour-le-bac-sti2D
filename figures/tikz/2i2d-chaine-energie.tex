@@ -1,0 +1,41 @@
+%% Chaîne d'énergie générique et exemples de composants (Tle, p. 245).
+%% Alimenter -> Distribuer -> Convertir -> Transmettre -> Agir ;
+%% les ordres venus de la chaîne d'information arrivent sur DISTRIBUER.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  be/.style={draw=solideD, line width=1.1pt, fill=solideD!10, rounded corners=2pt,
+             minimum width=1.7cm, minimum height=0.75cm, inner sep=1pt, font=\small},
+  ex/.style={draw=black!45, line width=0.5pt, fill=white, text width=1.5cm, align=center,
+             font=\scriptsize, inner sep=3pt, anchor=north,
+             execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+  fe/.style={-{Stealth[length=6pt,width=5pt]}, line width=1.8pt, draw=solideD},
+  tirette/.style={line width=0.5pt, draw=black!45}]
+
+%% ================== les cinq fonctions ================================
+\node[be] (ali) at (1.0,2.7)  {Alimenter};
+\node[be] (dis) at (2.95,2.7) {Distribuer};
+\node[be] (con) at (4.9,2.7)  {Convertir};
+\node[be] (tra) at (6.85,2.7) {Transmettre};
+\node[be] (agi) at (8.8,2.7)  {Agir};
+\foreach \a/\b in {ali/dis,dis/con,con/tra,tra/agi} { \draw[fe] (\a) -- (\b); }
+
+%% ================== entrée et sortie ==================================
+\draw[fe] (-0.25,2.7) -- (ali.west);
+\draw[fe] (agi.east) -- (10.05,2.7);
+
+%% ================== exemples de composants ============================
+\node[ex] (eali) at (1.0,1.85)  {Réseau EDF, batterie, réservoir};
+\node[ex] (edis) at (2.95,1.85) {Distributeur, contacteur, relais};
+\node[ex] (econ) at (4.9,1.85)  {Moteur électrique, pompe, vérin};
+\node[ex] (etra) at (6.85,1.85) {Engrenages, poulies et courroie};
+\node[ex] (eagi) at (8.8,1.85)  {Roue, pince, ventouse};
+\foreach \b/\e in {ali/eali,dis/edis,con/econ,tra/etra,agi/eagi} {
+  \draw[tirette] (\b.south) -- (\e.north); }
+
+%% ================== ordres venus de la chaîne d'information ===========
+\draw[-{Stealth[length=7pt,width=7pt]}, line width=2.4pt, solideB] (2.95,3.85) -- (2.95,3.13);
+\node[font=\small\bfseries, text=solideB, anchor=south, inner sep=2pt] at (2.95,3.87) {Ordres};
+\end{tikzpicture}
+\end{document}
