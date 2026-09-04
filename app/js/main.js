@@ -208,7 +208,7 @@ function renderAnnaleCard(a) {
 function renderUnit(unit, today) {
   return h('section', { class: 'unit' },
     h('h2', {}, unit.title),
-    unit.description ? h('p', { class: 'muted' }, unit.description) : null,
+    unit.description ? h('p', { class: 'muted', html: renderRich(unit.description, figures) }) : null,
     h('div', { class: 'skills' }, ...(unit.skills || []).map((skill) => renderSkillCard(skill, today))));
 }
 
@@ -244,7 +244,7 @@ function renderSkill(root, skillId) {
     h('section', { class: 'skill-head' },
       h('div', { class: 'skill-icon big' }, skill.icon || '📘'),
       h('h2', {}, skill.title),
-      skill.description ? h('p', { class: 'muted' }, skill.description) : null,
+      skill.description ? h('p', { class: 'muted', html: renderRich(skill.description, figures) }) : null,
       levelRing(st, levels),
       st.level < levels ? bar(st.progress, 'bar-small') : h('p', { class: 'muted' }, 'Compétence terminée ✔'),
     ),
