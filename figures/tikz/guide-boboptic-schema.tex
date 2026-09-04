@@ -1,0 +1,80 @@
+%% Machine à nettoyer les lunettes : schéma cinématique de la chaîne rouleau + chariot.
+%% Pignon moteur 3 -> roue 4 (engrenage), pignon 5 solidaire de 4 roulant sur la crémaillère 6
+%% fixée au bâti 10 (avance du chariot 1), renvoi d'angle conique 7-8 entraînant le rouleau 9.
+%% Cercles primitifs ; la roue 4 est interrompue par la crémaillère (projection plane).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{backgrounds}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  primitif/.style={line width=0.9pt, dash pattern=on 5pt off 2pt on 1pt off 2pt},
+  roue/.style={line width=1.4pt, line cap=round, line join=round},
+  arbre/.style={line width=1pt, line cap=round},
+  fleche/.style={-{Stealth[length=5pt]}, line width=0.8pt},
+  lab/.style={font=\small}]
+
+\useasboundingbox (-0.6,-2.75) rectangle (8.2,2.4);
+\def\xq{3.3}\def\yq{0.30}      % axe de la roue 4 et du pignon 5
+\def\xt{4.875}                 % axe du pignon moteur 3
+\def\yc{-0.45}                 % ligne de contact pignon 5 / crémaillère
+
+%% ---------------- chariot 1 ------------------------------------------------
+\draw[roue, solideB] (0.4,1.85) -- (7.2,1.85);
+\node[lab, text=solideB, anchor=west] at (5.95,2.02) {\textbf{1} chariot};
+\begin{scope}[on background layer]
+  \draw[arbre] (\xq,1.85) -- (\xq,\yq);
+  \draw[arbre] (\xt,1.85) -- (\xt,\yq);
+  \draw[arbre] (1.15,\yq) -- (\xq,\yq);          % arbre du renvoi d'angle
+  \draw[arbre] (1.15,\yc) -- (1.15,-0.65);       % arbre du rouleau
+\end{scope}
+\pic[s1=solideB, s2=solideB, liens=false] at (\xq,1.50) {pivot bout};
+\pic[s1=solideA, s2=solideB, liens=false] at (\xt,1.50) {pivot bout};
+
+%% ---------------- engrenage 3 / 4 et pignon 5 -------------------------------
+\begin{scope}
+  \clip (-0.6,\yc) rectangle (8.2,2.4);           % la roue 4 s'arrête à la crémaillère
+  \draw[primitif, solideB] (\xq,\yq) circle (1.35);
+\end{scope}
+\draw[roue, solideA] (\xt,\yq) circle (0.225);
+\draw[roue, solideB] (\xq,\yq) circle (0.75);
+\foreach \a in {160,172,...,205} {\draw[line width=0.7pt, solideB]
+  ([shift=(\a:0.68)]\xt,\yq) -- ([shift=(\a:0.88)]\xt,\yq);}
+\node[lab, text=solideA, anchor=west] at (5.25,0.80) {\textbf{3} Z3 = 12};
+\node[lab, text=solideB, anchor=east] at (2.40,1.05) {\textbf{4} Z4 = 72};
+\node[lab, text=solideB, anchor=west, fill=white, inner sep=1.5pt] at (4.10,-0.15)
+     {\textbf{5} Z5 = 25 — R = 10 mm};
+
+%% ---------------- crémaillère 6 fixée au bâti 10 ----------------------------
+\fill[white] (2.0,\yc-0.9) rectangle (6.5,\yc);
+\draw[roue, solideE] (2.0,\yc) -- (6.5,\yc) (2.0,\yc-0.22) -- (6.5,\yc-0.22);
+\foreach \x in {2.15,2.45,...,6.4} {\draw[line width=0.7pt, solideE] (\x,\yc) -- (\x,\yc-0.22);}
+\foreach \x in {2.05,2.25,...,6.5} {\draw[line width=0.5pt, black!70]
+  (\x,\yc-0.22) -- (\x-0.14,\yc-0.42);}
+\draw[line width=0.8pt] (2.0,\yc-0.22) -- (6.5,\yc-0.22);
+
+%% ---------------- renvoi d'angle conique 7 / 8 -------------------------------
+\draw[roue, solideA, fill=white] (0.90,\yq+0.25) -- (0.40,\yq+0.75)
+     -- (0.40,\yq-0.75) -- (0.90,\yq-0.25) -- cycle;                 % pignon conique 7
+\draw[roue, solideB, fill=white] (0.90,\yq-0.25) -- (1.40,\yq-0.25)
+     -- (1.90,\yq-0.75) -- (0.40,\yq-0.75) -- cycle;                 % roue conique 8
+\node[lab, text=solideA, anchor=south] at (0.55,\yq+0.68) {\textbf{7}};
+\node[lab, text=solideB, anchor=west] at (1.74,\yq-0.45) {\textbf{8}};
+
+%% ---------------- rouleau 9 et verre ------------------------------------------
+\draw[roue, solideA, fill=white] (0.80,-2.05) rectangle (1.50,-0.65);
+\draw[line width=2pt, black!45, line cap=round] (0.20,-2.10) -- (2.60,-2.10);
+\node[font=\scriptsize, text=black!55, anchor=north] at (0.75,-2.16) {verre};
+\draw[fleche, solideA!70] ([shift=(-55:0.62)]1.15,-1.35) arc (-55:55:0.62);
+\node[font=\small, text=solideA, anchor=west, inner sep=1pt] at (1.84,-1.30) {$\omega_9$};
+
+%% ---------------- vitesse du chariot -------------------------------------------
+\draw[fleche, solideD] (5.55,1.60) -- (6.95,1.60);
+\node[font=\small, text=solideD, anchor=north] at (6.25,1.55) {$\vec{V}$ chariot / bâti};
+
+%% ---------------- légendes du bas -----------------------------------------------
+\node[lab, text=solideE, anchor=north west] at (2.25,-1.05) {\textbf{6} crémaillère (fixe) — \textbf{10} bâti};
+\node[font=\scriptsize, anchor=north west] at (2.25,-1.50) {renvoi d'angle \textbf{7}/\textbf{8} : Z7 = Z8 = 20};
+\node[font=\scriptsize, text=solideA, anchor=north west] at (2.25,-1.90) {\textbf{9} rouleau — diamètre 30 mm};
+\repere{(7.1,-2.45)}{x}{y}{1}
+\end{tikzpicture}
+\end{document}

@@ -14,7 +14,7 @@
   retour/.style={-{Stealth[length=5pt]}, line width=0.8pt, solideE,
                  dash pattern=on 3pt off 2pt},
   sortie/.style={draw=solideE, fill=solideE!8, line width=0.8pt, rounded corners=2.5pt,
-                 inner sep=3pt, align=left},
+                 inner sep=3pt, align=left, text width=1.95cm},
   petit/.style={font=\scriptsize, inner sep=1.5pt},
   retlab/.style={font=\scriptsize, text=solideE, fill=white, inner sep=1.5pt}]
 
@@ -46,7 +46,7 @@
 \draw[voie] (S5.south east) to[out=-55,in=180] (V3.west);
 
 %% --- les deux retours qui referment la boucle ---------------------------------------
-\draw[retour] (V1.north) to[out=90,in=75,looseness=1.25]
+\draw[retour] (V1.north) to[out=90,in=65,looseness=0.72]
       node[retlab, pos=0.55] {retour vers la fabrication} (S3.north east);
 \draw[retour] (V2.south west) to[out=-125,in=20,looseness=0.9]
       node[retlab, pos=0.4, anchor=south] {retour vers l'extraction} (S1.east);

@@ -798,5 +798,404 @@ units:
         - Un coefficient de l'expression n'est pas une limite.
         - Une forme indéterminée signifie qu'il faut lever l'indétermination, pas que la limite n'existe pas.
         explanation: '$u(t)=\dfrac{5t}{\mathrm{e}^{0{,}5t}}$ et $\lim\limits_{t\to+\infty}\dfrac{\mathrm{e}^{0{,}5t}}{t}=+\infty$, donc $\lim\limits_{t\to+\infty}u(t)=0$. Le capteur revient au repos, sans jamais y être exactement.'
+  - id: mathstle-integrale
+    title: Intégrale, aire et valeur moyenne
+    icon: 🟦
+    description: Primitives de composées, intégrale d'une fonction sur un segment, aire, valeur moyenne et propriétés.
+    prerequisites:
+    - mathstle-derivation
+    lesson: lessons/maths-tle-integrale.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Soit $f$ une fonction **positive** et continue sur $\left[a\,;b\right]$ avec $a<b$. Que représente $\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x$ ?
+      choices:
+      - L'aire, en unités d'aire, du domaine compris entre la courbe de $f$, l'axe des abscisses et les droites $x=a$ et $x=b$
+      - La longueur de la courbe de $f$ entre $x=a$ et $x=b$
+      - La valeur moyenne de $f$ sur $\left[a\,;b\right]$
+      - Le coefficient directeur de la corde joignant les points d'abscisses $a$ et $b$
+      answer: 0
+      feedback:
+      - null
+      - L'intégrale mesure une aire sous la courbe, pas la longueur de la courbe.
+      - 'La valeur moyenne est cette aire **divisée par** $b-a$ : c''est une hauteur, pas une aire.'
+      - Ce coefficient directeur est un taux de variation, il concerne la dérivation.
+      explanation: 'C''est la définition du programme : pour $f$ positive, $\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x$ est l''aire sous la courbe, exprimée en unités d''aire (u.a.). L''existence de l''intégrale est admise.
+
+
+        {{fig:mathstle-aire-sous-courbe}}'
+    - type: mcq
+      level: 1
+      prompt: Si $F$ est une primitive de $f$ sur $\left[a\,;b\right]$, que vaut $\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x$ ?
+      choices:
+      - $F(b)-F(a)$
+      - $F(a)-F(b)$
+      - $f(b)-f(a)$
+      - $\dfrac{F(b)-F(a)}{b-a}$
+      answer: 0
+      feedback:
+      - null
+      - 'L''ordre compte : on retranche la valeur en la borne **inférieure**.'
+      - On évalue la primitive $F$, pas la fonction $f$.
+      - Cette expression est la valeur moyenne de $f$, pas l'intégrale.
+      explanation: '$\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x=\left[F(x)\right]_{a}^{b}=F(b)-F(a)$. Le résultat ne dépend pas de la primitive choisie, car la constante additive disparaît par différence.'
+    - type: mcq
+      level: 2
+      prompt: 'Dans l''écriture $F_{a}(x)=\displaystyle\int_{a}^{x}f(t)\,\mathrm{d}t$, quel est le rôle de chacune des trois lettres ?'
+      choices:
+      - $a$ est un paramètre, $x$ est la variable, $t$ est une variable muette
+      - $a$ est la variable, $x$ est un paramètre, $t$ est une variable muette
+      - $a$ et $x$ sont des variables muettes, $t$ est la variable
+      - Les trois lettres jouent le même rôle
+      answer: 0
+      feedback:
+      - null
+      - 'C''est $x$ qui varie : $F_{a}$ est une fonction de $x$.'
+      - 'La lettre $t$ disparaît après le calcul : c''est elle, la variable muette.'
+      - Elles ont des rôles bien distincts, c'est un point de vigilance du programme.
+      explanation: 'On peut remplacer $t$ par n''importe quelle autre lettre sans changer la valeur : $\displaystyle\int_{a}^{x}f(t)\,\mathrm{d}t=\int_{a}^{x}f(u)\,\mathrm{d}u$. En revanche $a$ fixe l''origine et $x$ est la variable de la fonction $F_{a}$. De plus $F_{a}'=f$.'
+    - type: mcq
+      level: 2
+      prompt: Que vaut $\displaystyle\int_{b}^{a}f(x)\,\mathrm{d}x$ en fonction de $\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x$ ?
+      choices:
+      - $-\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x$
+      - $\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x$
+      - $\dfrac{1}{\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x}$
+      - $0$
+      answer: 0
+      feedback:
+      - null
+      - Échanger les bornes change le signe du résultat.
+      - Le résultat est un opposé, pas un inverse.
+      - Le résultat n'est nul que si l'intégrale de départ l'est.
+      explanation: 'Avec $F$ une primitive de $f$ : $F(a)-F(b)=-\left(F(b)-F(a)\right)$. Échanger les bornes échange le signe.'
+    - type: mcq
+      level: 2
+      prompt: 'Soit $a<c<b$. Quelle égalité traduit la relation de Chasles ?'
+      choices:
+      - $\displaystyle\int_{a}^{b}f=\int_{a}^{c}f+\int_{c}^{b}f$
+      - $\displaystyle\int_{a}^{b}f=\int_{a}^{c}f\times\int_{c}^{b}f$
+      - $\displaystyle\int_{a}^{b}f=\int_{a}^{c}f-\int_{c}^{b}f$
+      - $\displaystyle\int_{a}^{b}f=\dfrac{1}{2}\left(\int_{a}^{c}f+\int_{c}^{b}f\right)$
+      answer: 0
+      feedback:
+      - null
+      - Les aires de deux domaines accolés s'ajoutent, elles ne se multiplient pas.
+      - 'Les deux morceaux sont parcourus dans le même sens : les contributions s''ajoutent.'
+      - Il n'y a pas de moyenne à faire, les deux morceaux couvrent l'intervalle une seule fois.
+      explanation: 'Pour $f$ positive, découper $\left[a\,;b\right]$ en $\left[a\,;c\right]$ et $\left[c\,;b\right]$ découpe l''aire en deux morceaux qui s''ajoutent. Le programme admet la propriété dans le cas général.'
+    - type: mcq
+      level: 2
+      prompt: Quelle est la définition de la **valeur moyenne** $\mu$ d'une fonction $f$ sur $\left[a\,;b\right]$ ?
+      choices:
+      - $\mu=\dfrac{1}{b-a}\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x$
+      - $\mu=\dfrac{f(a)+f(b)}{2}$
+      - $\mu=\left(b-a\right)\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x$
+      - $\mu=\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x$
+      answer: 0
+      feedback:
+      - null
+      - 'C''est la moyenne des deux valeurs extrêmes : elle ne tient pas compte de ce qui se passe entre $a$ et $b$.'
+      - 'On divise par la largeur $b-a$, on ne multiplie pas : sinon $\mu$ serait une aire.'
+      - L'intégrale seule est une aire ; la valeur moyenne est une hauteur.
+      explanation: '$\mu$ est la hauteur du rectangle de largeur $b-a$ qui a la **même aire** que le domaine sous la courbe : $\mu\times(b-a)=\displaystyle\int_{a}^{b}f$.
+
+
+        {{fig:mathstle-valeur-moyenne}}'
+    - type: match
+      level: 2
+      prompt: Associer chaque fonction à une de ses primitives ($u$ désigne une fonction dérivable).
+      pairs:
+      - left: $u'\,\mathrm{e}^{u}$
+        right: $\mathrm{e}^{u}$
+      - left: $\dfrac{u'}{u}$ avec $u>0$
+        right: $\ln(u)$
+      - left: $u'u^{3}$
+        right: $\dfrac{u^{4}}{4}$
+      - left: $u'\cos(u)$
+        right: $\sin(u)$
+      - left: $u'\sin(u)$
+        right: $-\cos(u)$
+    - type: mcq
+      level: 2
+      prompt: Une primitive de $x\mapsto\mathrm{e}^{-5x}$ sur $\mathbb{R}$ est
+      choices:
+      - $x\mapsto-\dfrac{1}{5}\mathrm{e}^{-5x}$
+      - $x\mapsto\dfrac{1}{5}\mathrm{e}^{-5x}$
+      - $x\mapsto-5\,\mathrm{e}^{-5x}$
+      - $x\mapsto\mathrm{e}^{-5x}$
+      answer: 0
+      feedback:
+      - null
+      - 'Erreur de signe : $\dfrac{1}{-5}=-\dfrac{1}{5}$.'
+      - 'On a multiplié par $-5$ au lieu de diviser : c''est la dérivée.'
+      - Seule $\mathrm{e}^{x}$ est sa propre primitive.
+      explanation: 'Une primitive de $x\mapsto\mathrm{e}^{ax}$ ($a\neq0$) est $x\mapsto\dfrac{1}{a}\mathrm{e}^{ax}$. Vérification : $\left(-\dfrac{1}{5}\mathrm{e}^{-5x}\right)''=-\dfrac{1}{5}\times(-5)\mathrm{e}^{-5x}=\mathrm{e}^{-5x}$.'
+    - type: mcq
+      level: 3
+      prompt: 'Soit $f(x)=(8x+1)\mathrm{e}^{-x}$ et $F(x)=-(8x+9)\mathrm{e}^{-x}$. Comment vérifie-t-on que $F$ est une primitive de $f$ ?'
+      choices:
+      - En dérivant $F$ et en constatant que $F'(x)=(8x+1)\mathrm{e}^{-x}$
+      - En intégrant $F$ entre $0$ et $2$
+      - En dérivant $f$ et en constatant que $f'=F$
+      - En calculant $F(0)$ et en vérifiant que $F(0)=f(0)$
+      answer: 0
+      feedback:
+      - null
+      - 'Intégrer $F$ ne renseigne pas sur le lien entre $F$ et $f$ : c''est la dérivation qui teste la définition.'
+      - 'C''est l''inverse : on dérive la primitive pour retrouver la fonction.'
+      - Une égalité en un seul point ne prouve rien sur tout l'intervalle.
+      explanation: '$F''(x)=-8\mathrm{e}^{-x}-(8x+9)\times(-\mathrm{e}^{-x})=\mathrm{e}^{-x}\left(-8+8x+9\right)=(8x+1)\mathrm{e}^{-x}=f(x)$. La bonne technique pour « montrer que $F$ est une primitive de $f$ » est toujours la dérivation.'
+    - type: input
+      level: 3
+      prompt: 'Avec $f(x)=(8x+1)\mathrm{e}^{-x}$ et $F(x)=-(8x+9)\mathrm{e}^{-x}$, calculer l''aire, en unités d''aire, du domaine situé sous la courbe de $f$ entre $x=0$ et $x=2$. (arrondir à $0{,}01$)'
+      answer: '5.62'
+      numeric: true
+      tolerance: 0.02
+      unit: u.a.
+      explanation: '$f$ est positive sur $\left[0\,;2\right]$, donc l''aire vaut $\displaystyle\int_{0}^{2}f(x)\,\mathrm{d}x=F(2)-F(0)=-25\mathrm{e}^{-2}+9=9-25\mathrm{e}^{-2}\approx9-3{,}383\approx5{,}62$ u.a.'
+    - type: input
+      level: 3
+      prompt: 'Un parachutiste a pour vitesse $v(t)=48\,\mathrm{e}^{-5t}+2$ (en $\mathrm{m}\cdot\mathrm{s}^{-1}$, $t$ en secondes). Calculer la distance parcourue pendant les $10$ premières secondes, $\displaystyle\int_{0}^{10}v(t)\,\mathrm{d}t$, arrondie à $0{,}1$.'
+      answer: '29.6'
+      numeric: true
+      tolerance: 0.2
+      unit: m
+      explanation: 'Une primitive est $V(t)=-\dfrac{48}{5}\mathrm{e}^{-5t}+2t=-9{,}6\,\mathrm{e}^{-5t}+2t$. Alors $\displaystyle\int_{0}^{10}v=V(10)-V(0)=\left(20-9{,}6\,\mathrm{e}^{-50}\right)+9{,}6\approx29{,}6$ m, car $\mathrm{e}^{-50}$ est négligeable.'
+    - type: mcq
+      level: 3
+      prompt: 'Soit $f(t)=12{,}25-13{,}91\sin(12\,466\,t)$. Parmi ces fonctions, laquelle est une primitive de $f$ ?'
+      choices:
+      - $F(t)=12{,}25\,t+\dfrac{13{,}91}{12\,466}\cos(12\,466\,t)$
+      - $F(t)=12{,}25\,t-\dfrac{13{,}91}{12\,466}\cos(12\,466\,t)$
+      - $F(t)=12{,}25\,t+13{,}91\times12\,466\cos(12\,466\,t)$
+      - $F(t)=12{,}25-13{,}91\cos(12\,466\,t)$
+      answer: 0
+      feedback:
+      - null
+      - 'Deux signes moins se compensent : la dérivée de $\cos$ est $-\sin$, et le terme de $f$ est déjà négatif.'
+      - 'On divise par $12\,466$ (dérivée intérieure), on ne multiplie pas.'
+      - 'Le terme constant $12{,}25$ a pour primitive $12{,}25\,t$, pas $12{,}25$.'
+      explanation: 'En dérivant : $F''(t)=12{,}25+\dfrac{13{,}91}{12\,466}\times\left(-12\,466\sin(12\,466\,t)\right)=12{,}25-13{,}91\sin(12\,466\,t)=f(t)$.'
+    - type: input
+      level: 2
+      prompt: Calculer $\displaystyle\int_{1}^{\mathrm{e}}\dfrac{1}{x}\,\mathrm{d}x$.
+      answer: '1'
+      numeric: true
+      tolerance: 0.01
+      explanation: 'Une primitive de $x\mapsto\dfrac{1}{x}$ sur $\left]0\,;+\infty\right[$ est $\ln$, donc l''intégrale vaut $\ln(\mathrm{e})-\ln(1)=1-0=1$.'
+    - type: mcq
+      level: 2
+      prompt: Comment calcule-t-on l'aire du domaine compris entre deux courbes $\mathcal{C}_{f}$ et $\mathcal{C}_{g}$ sur $\left[a\,;b\right]$, sachant que $f\geqslant g$ sur cet intervalle ?
+      choices:
+      - $\displaystyle\int_{a}^{b}\left(f(x)-g(x)\right)\mathrm{d}x$
+      - $\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x\times\int_{a}^{b}g(x)\,\mathrm{d}x$
+      - $\displaystyle\int_{a}^{b}\left(g(x)-f(x)\right)\mathrm{d}x$
+      - $\left|\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x\right|+\left|\int_{a}^{b}g(x)\,\mathrm{d}x\right|$
+      answer: 0
+      feedback:
+      - null
+      - Une aire ne s'obtient pas en multipliant deux intégrales.
+      - 'Le résultat serait négatif : on soustrait la courbe du **bas** à celle du **haut**.'
+      - 'Additionner les deux aires compte deux fois la partie commune : ce n''est pas l''aire entre les courbes.'
+      explanation: 'Par linéarité, l''aire vaut $\displaystyle\int_{a}^{b}(f-g)$ dès que $f\geqslant g$. Cette formule reste valable même si les courbes passent sous l''axe des abscisses.'
+    - type: input
+      level: 3
+      prompt: 'Soit $f(x)=\mathrm{e}^{-0{,}5x}+1$ et $g(x)=0{,}25x$ sur $\left[0\,;2\right]$, avec $f\geqslant g$. Calculer l''aire, en unités d''aire, du domaine compris entre les deux courbes. (arrondir à $0{,}01$)'
+      answer: '2.76'
+      numeric: true
+      tolerance: 0.02
+      unit: u.a.
+      explanation: 'Une primitive de $f-g$ est $H(x)=-2\,\mathrm{e}^{-0{,}5x}+x-0{,}125x^{2}$. L''aire vaut $H(2)-H(0)=\left(-2\mathrm{e}^{-1}+2-0{,}5\right)-\left(-2\right)=3{,}5-2\mathrm{e}^{-1}\approx3{,}5-0{,}736\approx2{,}76$ u.a.'
+    - type: mcq
+      level: 3
+      prompt: 'Comment linéarise-t-on $\cos^{2}(\theta)$ pour pouvoir en calculer une primitive ?'
+      choices:
+      - $\cos^{2}(\theta)=\dfrac{1+\cos(2\theta)}{2}$
+      - $\cos^{2}(\theta)=\dfrac{1-\cos(2\theta)}{2}$
+      - $\cos^{2}(\theta)=\dfrac{\cos(2\theta)}{2}$
+      - $\cos^{2}(\theta)=2\cos(\theta)$
+      answer: 0
+      feedback:
+      - null
+      - 'C''est la formule de $\sin^{2}(\theta)$ : le signe moins va avec le sinus.'
+      - 'Il manque le terme constant $\dfrac{1}{2}$ : sinon la valeur moyenne serait nulle, alors que $\cos^{2}\geqslant0$.'
+      - Un carré ne se simplifie pas en multipliant par $2$.
+      explanation: 'De $\cos(2\theta)=2\cos^{2}(\theta)-1$ on tire $\cos^{2}(\theta)=\dfrac{1+\cos(2\theta)}{2}$, dont une primitive est $\dfrac{\theta}{2}+\dfrac{\sin(2\theta)}{4}$. De même $\sin^{2}(\theta)=\dfrac{1-\cos(2\theta)}{2}$.'
+    - type: input
+      level: 3
+      prompt: 'La puissance instantanée reçue par un dipôle est $p(t)=U_{m}I_{m}\cos^{2}(\omega t)$, avec $U_{m}=325$ V et $I_{m}=4{,}0$ A. Calculer la puissance moyenne sur une période.'
+      answer: '650'
+      numeric: true
+      tolerance: 2
+      unit: W
+      explanation: 'La valeur moyenne de $\cos^{2}(\omega t)$ sur une période vaut $\dfrac{1}{2}$ (le terme $\cos(2\omega t)$ a une moyenne nulle). Donc $P=\dfrac{U_{m}I_{m}}{2}=\dfrac{325\times4{,}0}{2}=650$ W. C''est la puissance active du dipôle.'
+    - type: input
+      level: 3
+      prompt: 'Sur un graphique donnant la vitesse $v$ d''un véhicule sur $\left[0\,;50\right]$ (en secondes), on compte $28$ carreaux sous la courbe, chaque carreau valant $25$ unités d''aire, soit $25$ mètres. Calculer la vitesse moyenne du véhicule sur ces $50$ secondes.'
+      answer: '14'
+      numeric: true
+      tolerance: 0.5
+      unit: m/s
+      explanation: 'La distance parcourue est $D=\displaystyle\int_{0}^{50}v(t)\,\mathrm{d}t\approx28\times25=700$ m. La vitesse moyenne vaut $\dfrac{D}{50}=\dfrac{700}{50}=14\ \mathrm{m}\cdot\mathrm{s}^{-1}$, soit $50{,}4\ \mathrm{km}\cdot\mathrm{h}^{-1}$.'
+    - type: mcq
+      level: 2
+      prompt: 'Si $f\leqslant g$ sur $\left[a\,;b\right]$ avec $a<b$, que peut-on affirmer ?'
+      choices:
+      - $\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x\leqslant\int_{a}^{b}g(x)\,\mathrm{d}x$
+      - $\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x\geqslant\int_{a}^{b}g(x)\,\mathrm{d}x$
+      - Les deux intégrales sont égales
+      - On ne peut rien dire sans connaître les signes de $f$ et $g$
+      answer: 0
+      feedback:
+      - null
+      - L'inégalité est conservée, elle ne s'inverse pas.
+      - Elles ne sont égales que si $f=g$.
+      - 'La croissance de l''intégrale vaut quels que soient les signes, dès que $a<b$.'
+      explanation: 'C''est la **croissance** de l''intégrale. Dans le cas de fonctions positives, elle traduit simplement le fait qu''un domaine inclus dans un autre a une aire plus petite ; le programme l''admet dans le cas général.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre la méthode pour calculer l'aire du domaine sous une courbe entre deux bornes.
+      steps:
+      - Vérifier que la fonction $f$ est positive sur l'intervalle $\left[a\,;b\right]$
+      - Écrire l'aire sous forme d'intégrale $\displaystyle\int_{a}^{b}f(x)\,\mathrm{d}x$
+      - Déterminer une primitive $F$ de $f$
+      - Vérifier par dérivation que $F'=f$
+      - Calculer $F(b)-F(a)$
+      - Donner la valeur exacte puis la valeur approchée, avec l'unité d'aire
+      explanation: 'Le premier réflexe est le signe de $f$ : si $f$ change de signe, l''intégrale ne donne plus directement l''aire, il faut découper l''intervalle (relation de Chasles).'
+    - type: grid
+      level: 3
+      prompt: Pour chaque affirmation sur les intégrales, cocher si elle est vraie ou fausse.
+      rows:
+      - id: lin
+        label: $\displaystyle\int_{a}^{b}\left(f+g\right)=\int_{a}^{b}f+\int_{a}^{b}g$
+      - id: prod
+        label: $\displaystyle\int_{a}^{b}\left(f\times g\right)=\int_{a}^{b}f\times\int_{a}^{b}g$
+      - id: cst
+        label: $\displaystyle\int_{a}^{b}k\,f=k\int_{a}^{b}f$
+      - id: aa
+        label: $\displaystyle\int_{a}^{a}f=0$
+      - id: pos
+        label: si $f\geqslant0$ sur $\left[a\,;b\right]$ et $a<b$, alors $\displaystyle\int_{a}^{b}f\geqslant0$
+      cols:
+      - id: V
+        label: Vrai
+      - id: F
+        label: Faux
+      answer:
+      - Vlin
+      - Fprod
+      - Vcst
+      - Vaa
+      - Vpos
+      cellFeedback:
+        Flin: c'est la linéarité de l'intégrale, elle est vraie
+        Vprod: 'l''intégrale n''est pas multiplicative : contre-exemple avec $f=g=1$ sur $\left[0\,;2\right]$, à gauche $2$, à droite $4$'
+        Fcst: sortir une constante multiplicative est licite
+        Faa: les deux bornes sont confondues, le domaine est réduit à un segment d'aire nulle
+        Fpos: c'est la positivité de l'intégrale
+      explanation: 'L''intégrale est **linéaire** (sommes et multiples), mais pas multiplicative. C''est la source d''erreur la plus fréquente.'
+    - type: guided
+      level: 3
+      title: L'énergie consommée par un moteur
+      prompt: 'Exercice complet : primitive d''une somme, énergie par intégrale, puissance moyenne et régime établi.'
+      intro: 'Au démarrage, la puissance électrique absorbée par un moteur, en watts, est modélisée pour $t\in\left[0\,;10\right]$ ($t$ en secondes) par
+
+
+        $$p(t)=1\,200+800\,\mathrm{e}^{-0{,}4t}\qquad(p\text{ en W}).$$
+
+
+        On cherche l''énergie $E$ consommée pendant ces $10$ secondes, puis la puissance moyenne du moteur.'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelle grandeur l''aire sous la courbe de $p$ entre $t=0$ et $t=10$ représente-t-elle, et dans quelle unité ?'
+        choices:
+        - L'énergie consommée, en joules
+        - La puissance moyenne, en watts
+        - La puissance maximale, en watts
+        - La variation de puissance, en watts
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'La puissance moyenne s''obtient en **divisant** cette aire par la durée $10$ s.'
+        - La puissance maximale se lit sur l'axe des ordonnées, ce n'est pas une aire.
+        - 'La variation de puissance est la différence $p(10)-p(0)$, pas une aire.'
+        explanation: 'La puissance est l''énergie par unité de temps, donc l''énergie est l''intégrale de la puissance : $E=\displaystyle\int_{0}^{10}p(t)\,\mathrm{d}t$, en $\mathrm{W}\times\mathrm{s}=\mathrm{J}$.'
+      - kind: mcq
+        prompt: '**Étape 2.** Quelles sont les primitives $P$ de $p$ sur $\left[0\,;10\right]$ ?'
+        choices:
+        - $P(t)=1\,200\,t-2\,000\,\mathrm{e}^{-0{,}4t}+k$
+        - $P(t)=1\,200\,t+2\,000\,\mathrm{e}^{-0{,}4t}+k$
+        - $P(t)=1\,200\,t-320\,\mathrm{e}^{-0{,}4t}+k$
+        - $P(t)=1\,200+800\,\mathrm{e}^{-0{,}4t}+k$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Erreur de signe : $\dfrac{800}{-0{,}4}=-2\,000$.'
+        - 'On a multiplié par $-0{,}4$ au lieu de diviser : $800\times(-0{,}4)=-320$.'
+        - 'On a recopié $p$ : le terme constant $1\,200$ a pour primitive $1\,200\,t$.'
+        explanation: 'Terme à terme : $1\,200\mapsto1\,200\,t$ et $800\,\mathrm{e}^{-0{,}4t}\mapsto\dfrac{800}{-0{,}4}\mathrm{e}^{-0{,}4t}=-2\,000\,\mathrm{e}^{-0{,}4t}$. Vérification en dérivant : $P''(t)=1\,200-2\,000\times(-0{,}4)\mathrm{e}^{-0{,}4t}=1\,200+800\,\mathrm{e}^{-0{,}4t}$.'
+      - kind: input
+        prompt: '**Étape 3.** Calculer l''énergie $E$ consommée entre $t=0$ et $t=10$ s, arrondie au joule.'
+        answer: '13963'
+        numeric: true
+        tolerance: 5
+        unit: J
+        explanation: '$E=P(10)-P(0)=\left(12\,000-2\,000\,\mathrm{e}^{-4}\right)-\left(-2\,000\right)=14\,000-2\,000\,\mathrm{e}^{-4}\approx14\,000-36{,}6\approx13\,963$ J.'
+      - kind: input
+        prompt: '**Étape 4.** En déduire la puissance moyenne du moteur sur ces $10$ secondes, arrondie au watt.'
+        answer: '1396'
+        numeric: true
+        tolerance: 2
+        unit: W
+        explanation: 'La valeur moyenne vaut $\dfrac{E}{10-0}=\dfrac{13\,963}{10}\approx1\,396$ W.'
+      - kind: input
+        prompt: '**Étape 5.** Quelle est la puissance absorbée à l''instant $t=0$ ?'
+        answer: '2000'
+        numeric: true
+        tolerance: 5
+        unit: W
+        explanation: '$p(0)=1\,200+800\,\mathrm{e}^{0}=1\,200+800=2\,000$ W. La pointe de démarrage vaut donc $2\,000$ W.'
+      - kind: mcq
+        prompt: '**Étape 6.** Vers quelle valeur la puissance tend-elle quand $t$ devient grand ?'
+        choices:
+        - $1\,200$ W, car $\mathrm{e}^{-0{,}4t}$ tend vers $0$
+        - $2\,000$ W, car c'est la valeur de départ
+        - $0$ W, car l'exponentielle tend vers $0$
+        - $800$ W, car c'est le coefficient de l'exponentielle
+        answer:
+        - 0
+        feedback:
+        - null
+        - '$2\,000$ W est la valeur en $t=0$ ; la puissance **décroît** ensuite.'
+        - Seul le terme exponentiel tend vers $0$ ; le terme constant subsiste.
+        - $800$ est le coefficient du terme qui disparaît, pas la limite.
+        explanation: '$\lim\limits_{t\to+\infty}\mathrm{e}^{-0{,}4t}=0$, donc $p(t)\to1\,200$ W : c''est la puissance du régime établi, une fois la pointe de démarrage passée.'
+      - kind: mcq
+        prompt: '**Étape 7.** Comment interpréter la puissance moyenne trouvée à l''étape 4 ?'
+        choices:
+        - C'est la puissance constante qui, appliquée pendant $10$ s, consommerait la même énergie
+        - C'est la moyenne des puissances de début et de fin
+        - C'est la puissance maximale atteinte
+        - C'est l'énergie consommée pendant une seconde quelconque
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'La moyenne des extrêmes vaudrait $\dfrac{2\,000+1\,215}{2}\approx1\,607$ W : ce n''est pas la valeur moyenne.'
+        - La puissance maximale est $2\,000$ W, atteinte au démarrage.
+        - 'La consommation d''une seconde donnée varie ; la moyenne ne concerne que l''ensemble des $10$ s.'
+        explanation: 'La valeur moyenne est la hauteur du rectangle de largeur $10$ s ayant la même aire que le domaine sous la courbe : $1\,396\times10\approx13\,963$ J.'
+      - kind: input
+        prompt: '**Étape 8.** Convertir l''énergie $E$ en wattheures. (arrondir à $0{,}01$)'
+        answer: '3.88'
+        numeric: true
+        tolerance: 0.03
+        unit: Wh
+        explanation: '$1$ Wh $=3\,600$ J, donc $E=\dfrac{13\,963}{3\,600}\approx3{,}88$ Wh. Le démarrage coûte donc à peine $0{,}004$ kWh.'
 # --- SUITE ---
+
 

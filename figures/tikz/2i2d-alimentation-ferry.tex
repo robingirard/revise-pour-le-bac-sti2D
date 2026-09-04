@@ -26,7 +26,7 @@
 \node[bloc] (p1)    at (5.35,3.10)  {Parc 1\\(384 V)};
 \node[bloc] (p2)    at (5.35,1.50)  {Parc 2\\(384 V)};
 \node[bloc] (prop)  at (7.20,2.30)  {Propulsion (moteurs)};
-\node[bloc] (bms)   at (3.05,0.30)  {Battery Management System};
+\node[bloc, text width=1.75cm] (bms) at (3.05,0.30) {Battery Management System};
 \node[bloc] (vent)  at (3.05,-0.95) {Ventilateurs batteries};
 
 %% ================= flux de puissance =====================================
@@ -41,16 +41,17 @@
 \draw[line width=1.8pt, draw=solideD] (3.76,2.25) -- (4.85,2.25);
 \draw[puiss] (4.85,2.25) -- (4.85,2.75);
 \draw[puiss] (4.85,2.25) -- (4.85,1.85);
-\node[et, text=solideD, anchor=south] at (4.30,2.34) {Courant de charge};
-\pastille{4.24}{2.25}{solideE}{$=$}
+\node[et, text=solideD, anchor=south] at (4.28,2.32) {Courant\\de charge};
+\pastille{4.85}{2.60}{solideE}{$=$}
+\pastille{4.85}{2.00}{solideE}{$=$}
 
 \draw[puiss] (6.04,3.10) -- (6.49,2.60);
 \draw[puiss] (6.04,1.50) -- (6.49,2.00);
 \pastille{6.30}{2.30}{solideE}{$=$}
 
 %% ================= flux d'information ====================================
-\draw[info] (3.76,0.30) -- (5.35,0.30) -- (5.35,1.15);
-\node[et, text=solideB, anchor=south] at (4.52,0.36) {Mesures $U$, $I$, température};
+\draw[info] (3.97,0.30) -- (5.35,0.30) -- (5.35,1.15);
+\node[et, text=solideB, anchor=west] at (4.06,0.12) {Mesures $U$, $I$, température};
 \draw[{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.7pt, draw=solideB,
       dash pattern=on 2pt off 1.6pt] (5.35,1.85) -- (5.35,2.75);
 
