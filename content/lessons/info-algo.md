@@ -39,6 +39,23 @@ La **portée** d'une variable désigne les espaces où elle est utilisable : dé
 
 Exemple de pseudo-code, pour faire clignoter une DEL branchée sur la broche 2 : **Début** ; allumer la DEL branchée sur la broche 2 ; attendre 1 seconde ; éteindre la DEL ; attendre 1 seconde ; recommencer ; **Fin**.
 
+## Les opérateurs
+
+| Famille | Opérateurs |
+|---|---|
+| Arithmétiques | + , − , * , / , % (modulo, le **reste** de la division entière) |
+| Comparaison | == (égal à) , != (différent de) , < , > , <= , >= |
+| Booléens | && (ET) , double barre verticale (OU) , ! (NON) |
+| Composés | ++ (incrémentation) , −− (décrémentation) |
+
+Le piège classique : **=** range une valeur dans une variable (affectation), alors que **==** compare deux valeurs.
+
+## Les fonctions
+
+Une fonction est un « programme dans le programme » : elle regroupe des instructions sous un nom, pour les appeler à la demande. Son emploi comporte deux phases, la **définition** (nom, paramètres, corps, valeur de retour) et l'**appel** (avec les arguments).
+
+Les **paramètres** sont les variables écrites dans la définition ; les **arguments** sont les valeurs fournies au moment de l'appel. Exemple en Python, pour compter les caractères d'un mot : la définition commence par def nbrCaractere(ch), où ch est le paramètre ; le corps initialise un compteur i = 0, le parcourt avec for j in ch en faisant i += 1, puis renvoie return(i). L'appel nbrCaractere('Ornithorynque') fournit la chaîne en argument et renvoie 13.
+
 ## Les diagrammes SysML
 
 Le **diagramme d'activité** (act) décrit la transformation des flux d'entrée en flux de sortie par des séquences d'**actions** (rectangles à coins arrondis), avec un état initial (disque noir), des nœuds de décision (losanges) portant des **gardes** entre crochets, des barres de synchronisation et un état final. Dès qu'une tâche est terminée, la suivante commence : **aucun événement** n'est associé aux transitions.

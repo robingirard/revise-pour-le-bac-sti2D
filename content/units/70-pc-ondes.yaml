@@ -321,6 +321,100 @@ units:
       explanation: 'Réflexion : dans le milieu A, à la surface de contact. Absorption : dans le milieu B. Transmission : après le milieu B. C''est la part transmise que l''isolation acoustique cherche à réduire.'
       tags:
       - reflexion-transmission
+    - type: guided
+      level: 3
+      title: 'Le sismogramme : lire la double périodicité d''une onde'
+      intro: 'Une station sismique enregistre le passage des **ondes S** émises par un séisme lointain. Ces ondes se propagent dans la croûte terrestre à la célérité **v S = 4,0 km·s⁻¹**.
+
+
+        Sur une durée très courte, l''enregistrement est une **sinusoïde régulière**. Le sismogramme donne l''élongation x du stylet (en cm) en fonction du temps t (en s) : on y compte **exactement 4 périodes entre t = 0 et t = 0,40 s**, et les crêtes atteignent **x = 2,0 cm**.
+
+        {{fig:guide-sismogramme}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Les ondes sismiques sont des ondes **mécaniques**. Qu''est-ce que cela implique ?'
+        choices:
+        - Elles ont besoin d'un milieu matériel pour se propager, et elles y transportent de l'énergie sans déplacement global de matière.
+        - Elles transportent la matière de la croûte terrestre d'un point à un autre.
+        - Elles peuvent se propager dans le vide, comme la lumière.
+        - Elles se propagent nécessairement plus vite que la lumière.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : aucune onde ne transporte de matière. Le sol vibre sur place, seule l''énergie se propage.'
+        - 'Non : c''est le propre des ondes **électromagnétiques**. Une onde mécanique exige un milieu matériel.'
+        - 'Non : 4,0 km·s⁻¹, c''est environ 75 000 fois moins que c = 3,0 × 10⁸ m·s⁻¹.'
+        explanation: 'Une onde mécanique se propage dans un milieu matériel (ici les roches) : elle y transporte de l''énergie sans déplacement global de matière.'
+      - kind: input
+        prompt: '**Étape 2.** Déterminer l''amplitude du signal enregistré, en centimètres.'
+        answer: '2'
+        numeric: true
+        tolerance: 0.1
+        unit: cm
+        explanation: 'L''amplitude est l''élongation **maximale** comptée depuis l''axe des abscisses (la position d''équilibre) : 2,0 cm. Attention à ne pas répondre 4,0 cm, qui est l''écart crête à crête, c''est-à-dire le double de l''amplitude.'
+      - kind: mcq
+        prompt: '**Étape 3.** Comment déterminer la période le plus précisément possible sur un tel enregistrement ?'
+        choices:
+        - En mesurant la durée de plusieurs périodes successives, puis en divisant par leur nombre.
+        - En mesurant au jugé la durée d'une seule période.
+        - En lisant l'amplitude sur l'axe des ordonnées.
+        - En divisant la longueur d'onde par l'amplitude.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : sur une seule période, l''incertitude de lecture pèse de tout son poids. La mesurer sur 4 périodes divise cette incertitude par 4.'
+        - 'Non : l''amplitude est une longueur (en cm), pas une durée.'
+        - 'Non : λ se déduit de la période, elle ne s''obtient pas en divisant par une amplitude — le résultat ne serait même pas une durée.'
+        explanation: 'Mesurer n périodes puis diviser par n réduit l''incertitude relative de la lecture graphique : c''est le réflexe attendu à l''examen.'
+      - kind: input
+        prompt: '**Étape 4.** Le tracé compte 4 périodes entre 0 et 0,40 s. En déduire la période T, en secondes.'
+        answer: '0.1'
+        numeric: true
+        tolerance: 0.005
+        unit: s
+        explanation: T = 0,40 ÷ 4 = 0,10 s.
+      - kind: input
+        prompt: '**Étape 5.** En déduire la fréquence f de ce signal, en hertz.'
+        answer: '10'
+        numeric: true
+        tolerance: 0.5
+        unit: Hz
+        explanation: 'f = 1 / T = 1 / 0,10 = 10 Hz. Cette fréquence est inférieure à 20 Hz : ces vibrations ne sont pas audibles, ce sont des infrasons.'
+      - kind: input
+        prompt: '**Étape 6.** Convertir la célérité des ondes S, v S = 4,0 km·s⁻¹, en mètres par seconde.'
+        answer: '4000'
+        numeric: true
+        tolerance: 10
+        unit: m·s⁻¹
+        explanation: '4,0 km·s⁻¹ = 4,0 × 10³ m·s⁻¹ = 4 000 m·s⁻¹. Cette conversion est indispensable avant tout calcul de longueur d''onde en mètres.'
+      - kind: input
+        prompt: '**Étape 7.** Calculer la longueur d''onde λ de ces ondes S, en mètres.'
+        answer: '400'
+        numeric: true
+        tolerance: 5
+        unit: m
+        explanation: 'λ = v S × T = 4,0 × 10³ × 0,10 = 4,0 × 10² m, soit 400 m. Contrôle par les unités : m·s⁻¹ × s = m.'
+      - kind: mcq
+        prompt: '**Étape 8.** Les **ondes P**, plus rapides (v P = 6,0 km·s⁻¹), sont enregistrées avec la même période T = 0,10 s. Que vaut leur longueur d''onde ?'
+        choices:
+        - 6,0 × 10² m, car λ est proportionnelle à la célérité à période fixée
+        - 4,0 × 10² m, car la période est la même
+        - 0,60 m
+        - 6,0 × 10³ m
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : à période fixée, λ = v × T dépend encore de v. Une onde plus rapide parcourt plus de distance pendant une période.'
+        - 'Erreur de conversion : c''est 6,0 × 0,10 sans convertir les km·s⁻¹ en m·s⁻¹. Il faut écrire 6,0 × 10³ m·s⁻¹.'
+        - 'Non : 6,0 × 10³ est la **célérité** en m·s⁻¹, pas la longueur d''onde. Il reste à la multiplier par T = 0,10 s.'
+        explanation: 'λ P = 6,0 × 10³ × 0,10 = 6,0 × 10² m. Les ondes P arrivent avant les ondes S et ont, à période égale, une longueur d''onde plus grande : c''est l''écart entre leurs deux arrivées qui permet de localiser l''épicentre.'
+      tags:
+      - periodicite
+      - ondes-nature
+      - celerite
   - id: pc-son
     title: Ondes sonores
     icon: 🔊
@@ -617,6 +711,110 @@ units:
       explanation: 'À chaque interface, I = I r + I a + I t : seule une part de l''énergie repart vers la sonde, et l''énergie se répartit de plus en plus loin. La durée Δt de chaque écho donne la profondeur : d = v × Δt / 2.'
       tags:
       - ultrasons
+    - type: guided
+      level: 3
+      title: Mesurer sans contact le niveau d'une cuve de produit toxique
+      intro: 'Dans une installation industrielle maintenue à **20 °C**, on mesure le niveau d''un produit toxique **sans jamais y plonger de sonde**. Un capteur à ultrasons, composé d''un émetteur de salves et d''un récepteur, est fixé **1,00 m au-dessus du fond** de la cuve, au-dessus de la surface libre du produit. La mesure est répétée en continu.
+
+
+        Un oscilloscope affiche la salve émise et la salve reçue après réflexion sur la surface du produit. La base de temps vaut **250 µs par division** et on compte **8 divisions** entre le début de la salve émise et le début de la salve reçue.
+
+
+        **Données** : v son/air = 340 m·s⁻¹ à 20 °C ; v son/produit = 1,5 × 10³ m·s⁻¹.
+
+        {{fig:guide-cuve-ultrasons}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Pourquoi utilise-t-on des **ultrasons** et non un son audible pour cette mesure ?'
+        choices:
+        - 'Leur fréquence dépasse 20 kHz : ils sont inaudibles pour le personnel et se concentrent en un faisceau étroit dirigé vers la surface.'
+        - Parce qu'ils se propagent beaucoup plus vite que les sons audibles dans l'air.
+        - Parce qu'ils traversent le produit toxique sans se réfléchir.
+        - Parce qu'ils sont des ondes électromagnétiques, insensibles à la température.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : dans un même milieu, la célérité ne dépend pas de la fréquence. Ultrasons et sons audibles se propagent tous deux à 340 m·s⁻¹ dans l''air à 20 °C.'
+        - 'Non : la mesure repose justement sur la **réflexion** des ultrasons à la surface du produit.'
+        - 'Non : les ultrasons sont des ondes **mécaniques** — c''est bien pour cela qu''il leur faut de l''air entre le capteur et la surface.'
+        explanation: 'Un ultrason est une onde sonore de fréquence supérieure à 20 kHz, donc inaudible. Un faisceau ultrasonore est de plus très directif, ce qui permet de viser la surface du produit.'
+      - kind: input
+        prompt: '**Étape 2.** Calculer la durée Δt séparant l''émission de la réception, en millisecondes (8 divisions à 250 µs par division).'
+        answer: '2'
+        numeric: true
+        tolerance: 0.05
+        unit: ms
+        explanation: Δt = 8 × 250 = 2 000 µs = 2 000 × 10⁻⁶ s = 2,0 × 10⁻³ s = 2,0 ms.
+      - kind: mcq
+        prompt: '**Étape 3.** Quelle célérité faut-il utiliser pour exploiter cette durée ?'
+        choices:
+        - 'v son/air = 340 m·s⁻¹ : tout le trajet mesuré a lieu dans l''air, entre le capteur et la surface du produit.'
+        - 'v son/produit = 1,5 × 10³ m·s⁻¹ : c''est le produit que l''on cherche à mesurer.'
+        - La moyenne des deux célérités, car l'onde traverse successivement les deux milieux.
+        - c = 3,0 × 10⁸ m·s⁻¹, célérité de propagation des salves.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : les ultrasons se **réfléchissent** sur la surface, ils n''entrent pas dans le produit. La donnée v son/produit est un distracteur.'
+        - 'Non : l''onde ne traverse jamais le produit ; aucune moyenne n''a de sens ici.'
+        - 'Non : c est la célérité des ondes **électromagnétiques**. Les ultrasons sont des ondes mécaniques.'
+        explanation: 'Le trajet mesuré est capteur → surface → capteur, entièrement dans l''air : seule v son/air = 340 m·s⁻¹ intervient.'
+      - kind: input
+        prompt: '**Étape 4.** Calculer la distance totale d parcourue par les ultrasons pendant Δt, en mètres.'
+        answer: '0.68'
+        numeric: true
+        tolerance: 0.02
+        unit: m
+        explanation: d = v son/air × Δt = 340 × 2,0 × 10⁻³ = 0,68 m.
+      - kind: input
+        prompt: '**Étape 5.** En déduire la distance entre le capteur et la surface du produit, en mètres.'
+        answer: '0.34'
+        numeric: true
+        tolerance: 0.01
+        unit: m
+        explanation: 'La distance d correspond à un **aller-retour** : la distance capteur-surface vaut d / 2 = 0,68 / 2 = 0,34 m. Oublier ce facteur 2 est l''erreur la plus fréquente de tout l''exercice.'
+      - kind: input
+        prompt: '**Étape 6.** Le capteur est à 1,00 m au-dessus du fond. En déduire la hauteur h de produit dans la cuve, en mètres.'
+        answer: '0.66'
+        numeric: true
+        tolerance: 0.02
+        unit: m
+        explanation: h = 1,00 − 0,34 = 0,66 m. Le capteur mesure la hauteur d'air ; la hauteur de produit s'obtient par soustraction.
+      - kind: mcq
+        prompt: '**Étape 7.** Une heure plus tard, on ne compte plus que **5 divisions**. Qu''en conclure sur le niveau dans la cuve ?'
+        choices:
+        - 'Il a monté : h = 0,79 m, car un Δt plus court signifie une surface plus proche du capteur.'
+        - Il a baissé, car un Δt plus court signifie que l'onde a moins de produit à traverser.
+        - Il n'a pas changé, car le nombre de divisions ne dépend que de la base de temps.
+        - Il a monté, mais on ne peut pas chiffrer h sans connaître v son/produit.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : plus la surface est proche du capteur, plus l''écho revient tôt — donc plus le niveau est **haut**.'
+        - 'Non : le nombre de divisions mesure Δt ; s''il change, c''est que la durée du trajet a changé.'
+        - 'Non : le trajet reste entièrement dans l''air. Δt = 5 × 250 µs = 1,25 ms suffit à conclure.'
+        explanation: 'Δt = 5 × 250 = 1 250 µs = 1,25 ms ; d = 340 × 1,25 × 10⁻³ = 0,425 m ; distance capteur-surface = 0,21 m ; h = 1,00 − 0,21 = 0,79 m. Le niveau a monté de 0,66 m à 0,79 m.'
+      - kind: mcq
+        prompt: '**Étape 8.** L''atelier est finalement porté à 40 °C, température à laquelle le son se propage plus vite dans l''air. Si l''on continue d''utiliser 340 m·s⁻¹ dans le calcul, que devient la hauteur h obtenue ?'
+        choices:
+        - Elle est surestimée, car la distance capteur-surface calculée est plus petite que la distance réelle.
+        - Elle est sous-estimée, car la vraie célérité est plus grande.
+        - Elle est inchangée, car la célérité du son ne dépend pas de la température.
+        - Elle est inchangée, car les erreurs sur l'aller et sur le retour se compensent.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Attention au sens : d = v × Δt, donc utiliser une célérité **trop faible** donne une distance capteur-surface **trop petite**, donc un h = 1,00 − d/2 **trop grand**.'
+        - 'Non : la célérité du son dans l''air augmente avec la température (340 m·s⁻¹ est la valeur à 20 °C).'
+        - 'Non : l''aller et le retour se font tous deux à la vraie célérité ; l''erreur s''ajoute, elle ne se compense pas.'
+        explanation: 'À 40 °C la célérité réelle dépasse 340 m·s⁻¹ : la distance capteur-surface réelle est plus grande que celle calculée, donc h = 1,00 − d/2 est **surestimée**. Un capteur industriel embarque pour cette raison une compensation en température.'
+      tags:
+      - ultrasons
+      - son-celerite
   - id: pc-ondes-em
     title: Ondes électromagnétiques
     icon: 🌈
@@ -920,6 +1118,103 @@ units:
       explanation: 'λ = c / ν = 3,0 × 10⁸ / (3,00 × 10¹⁴) = 1,0 × 10⁻⁶ m = 1,0 µm. Cette valeur est **au-delà** de 0,8 µm : elle est déjà dans l''infrarouge. Les repères de fréquence de cette figure sont des ordres de grandeur, pas les valeurs exactes des frontières.'
       tags:
       - spectre-em
+    - type: guided
+      level: 3
+      title: 'Le câble coaxial : mesurer la célérité d''une onde électromagnétique'
+      intro: 'Pour mesurer la célérité des ondes électromagnétiques dans un **câble coaxial de 100 m**, on branche un générateur d''impulsions sur l''entrée d''un oscilloscope au moyen d''une dérivation en T. Le câble coaxial part de cette dérivation ; son **autre extrémité reste libre**, les deux conducteurs n''étant pas en contact.
+
+
+        Sans le câble, l''oscilloscope affiche un **signal créneau de période 2,0 µs** (courbe 1). Le câble branché, un **palier supplémentaire** apparaît, décalé de **4 divisions** (courbe 2). La base de temps vaut **0,25 µs par division**.
+
+
+        **Donnée** : célérité de la lumière dans le vide, c = 3,0 × 10⁸ m·s⁻¹.
+
+        {{fig:guide-cable-coaxial}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Le câble coaxial est présenté comme un **guide d''ondes électromagnétiques**. Que signifie cette expression ?'
+        choices:
+        - Le câble canalise l'onde électromagnétique le long de son axe, entre l'âme centrale et le blindage, au lieu de la laisser rayonner dans toutes les directions.
+        - Le câble transforme l'onde électromagnétique en onde mécanique pour la transporter.
+        - Le câble fournit à l'onde le milieu matériel dont elle a besoin pour exister.
+        - Le câble accélère l'onde au-delà de la célérité de la lumière dans le vide.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le signal reste électromagnétique d''un bout à l''autre du câble ; rien n''est converti en vibration mécanique.'
+        - 'Non : une onde électromagnétique se propage aussi dans le vide. Le câble ne lui est pas indispensable, il la **guide**.'
+        - 'Non : aucune onde ne dépasse c. On va justement vérifier que la célérité mesurée reste inférieure à c.'
+        explanation: 'Dans un coaxial, l''onde est confinée entre l''âme et le blindage : l''énergie voyage le long du câble sans rayonner ni être perturbée par l''extérieur. C''est le principe des liaisons antenne, vidéo et réseau.'
+      - kind: input
+        prompt: '**Étape 2.** Le signal du générateur a une période de 2,0 µs. Calculer sa fréquence, en kHz.'
+        answer: '500'
+        numeric: true
+        tolerance: 10
+        unit: kHz
+        explanation: 'f = 1 / T = 1 / (2,0 × 10⁻⁶) = 5,0 × 10⁵ Hz = 500 kHz. C''est bien une **haute fréquence** (domaine des radiofréquences), très au-dessus du domaine audible.'
+      - kind: mcq
+        prompt: '**Étape 3.** Pourquoi un palier supplémentaire apparaît-il sur la courbe (2), absent de la courbe (1) ?'
+        choices:
+        - L'impulsion se réfléchit sur l'extrémité libre du câble et revient jusqu'à l'oscilloscope, où elle s'ajoute au signal du générateur.
+        - Le générateur d'impulsions a changé de réglage entre les deux courbes.
+        - L'oscilloscope a changé de base de temps entre les deux courbes.
+        - La dérivation en T fabrique à elle seule un second signal, qu'il y ait un câble ou non.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : l''énoncé précise que le générateur délivre le même signal d''impulsions.'
+        - 'Non : les réglages de l''oscilloscope sont inchangés, ce qui rend précisément les deux courbes comparables.'
+        - 'Non : la dérivation en T sert seulement à brancher le câble en parallèle sur l''entrée de l''oscilloscope. Sans câble (courbe 1), elle ne produit aucun palier.'
+        explanation: 'À l''extrémité libre, le milieu change brutalement : l''onde s''y **réfléchit** (comme un son sur un mur) et revient au point de mesure. Le retard entre les deux fronts est la durée de l''aller-retour.'
+      - kind: input
+        prompt: '**Étape 4.** Quelle distance l''onde parcourt-elle entre son émission et la détection de son écho ? Répondre en mètres.'
+        answer: '200'
+        numeric: true
+        tolerance: 2
+        unit: m
+        explanation: 'Le câble mesure 100 m et l''onde le parcourt dans les deux sens : d = 2 × 100 = 200 m. Répondre 100 m revient à oublier le retour.'
+      - kind: input
+        prompt: '**Étape 5.** Calculer le retard Δt lu sur l''oscillogramme, en µs (4 divisions à 0,25 µs par division).'
+        answer: '1'
+        numeric: true
+        tolerance: 0.05
+        unit: µs
+        explanation: Δt = 4 × 0,25 = 1,0 µs, soit 1,0 × 10⁻⁶ s.
+      - kind: input
+        prompt: '**Étape 6.** En déduire la célérité v de l''onde dans le câble, exprimée en 10⁸ m·s⁻¹ (donner le coefficient devant 10⁸).'
+        answer: '2'
+        numeric: true
+        tolerance: 0.1
+        unit: 10⁸ m·s⁻¹
+        explanation: v = d / Δt = 200 / (1,0 × 10⁻⁶) = 2,0 × 10⁸ m·s⁻¹.
+      - kind: input
+        prompt: '**Étape 7.** Calculer le rapport v / c (sans unité, arrondi au centième).'
+        answer: '0.67'
+        numeric: true
+        tolerance: 0.03
+        unit: sans unité
+        explanation: 'v / c = 2,0 × 10⁸ / (3,0 × 10⁸) = 0,67. L''onde va donc environ 1,5 fois moins vite que la lumière dans le vide, mais reste bien inférieure à c.'
+      - kind: mcq
+        prompt: '**Étape 8.** Cette propagation est-elle lente ou rapide ? Que se passerait-il avec un câble deux fois plus long, de même nature ?'
+        choices:
+        - Très rapide (67 % de c) ; avec 200 m de câble, le retard doublerait et vaudrait 2,0 µs.
+        - Très lente (comparable au son dans l'air) ; avec 200 m de câble, le retard serait inchangé.
+        - Instantanée ; le retard observé n'est qu'un défaut de l'oscilloscope.
+        - Plus rapide que la lumière dans le vide ; avec 200 m, le retard serait divisé par deux.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le son dans l''air se propage à 340 m·s⁻¹, soit près d''un million de fois moins vite que 2,0 × 10⁸ m·s⁻¹.'
+        - 'Non : aucune propagation n''est instantanée, et le retard se mesure très bien — c''est même le principe de la mesure.'
+        - 'Non : on a trouvé v / c = 0,67 < 1. Et à célérité constante, doubler la distance **double** la durée.'
+        explanation: 'v = 2,0 × 10⁸ m·s⁻¹ est du même ordre de grandeur que c : la propagation est très rapide. À v constante, Δt = 2 L / v est proportionnelle à la longueur : 200 m de câble donneraient Δt = 2,0 µs. C''est ainsi qu''un réflectomètre localise un défaut dans un câble.'
+      tags:
+      - spectre-em
+      - celerite
+      - reflexion-transmission
   - id: pc-lumiere-energie
     title: Énergie transportée par la lumière
     icon: ☀️

@@ -725,6 +725,127 @@ units:
       explanation: $n(e^-) = 2 \times n(\mathrm{Cu^{2+}}) = 2 \times 0{,}30 = 0{,}60$ mol. Par ailleurs $n(\mathrm{Zn^{2+}})$ formé $= n(\mathrm{Cu^{2+}})$ consommé $= 0{,}30$ mol.
       tags:
       - bilan-matiere
+    - type: guided
+      level: 3
+      title: 'L''accumulateur Ni-Cd : décharge, capacité et recharge'
+      intro: 'Un **accumulateur nickel-cadmium** met en jeu les éléments nickel et cadmium, aussi bien aux électrodes (cadmium d''un côté, nickel de l''autre) que dans les entités présentes à leur voisinage.
+
+
+        **Demi-équations électroniques** : $\mathrm{Cd(OH)_2 + 2\,H^+ + 2\,e^- = Cd + 2\,H_2O}$ et $\mathrm{2\,NiOOH + 2\,H^+ + 2\,e^- = 2\,Ni(OH)_2}$.
+
+
+        **Données** : tension aux bornes en décharge sur un récepteur, $U = 1{,}22$ V ; capacité annoncée, $Q = 2\,400$ mA·h. Lorsque l''accumulateur est totalement déchargé, il reste du cadmium **et** de l''eau.
+
+        {{fig:pc-pile-accumulateur}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelle différence essentielle sépare une **pile** d''un **accumulateur** ?'
+        choices:
+        - La transformation chimique est irréversible dans une pile, réversible dans un accumulateur, qui peut donc être rechargé.
+        - Une pile fournit une tension continue, un accumulateur une tension alternative.
+        - Une pile met en jeu une réaction acido-basique, un accumulateur une réaction d'oxydoréduction.
+        - Un accumulateur ne contient pas d'électrolyte, contrairement à une pile.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : les deux sont des générateurs de tension **continue**.'
+        - 'Non : les deux reposent sur une réaction d''**oxydoréduction** entre deux couples.'
+        - 'Non : l''électrolyte est indispensable dans les deux cas pour assurer le transport des ions.'
+        explanation: 'Une pile s''use : sa transformation n''est pas réversible. Un accumulateur peut être rechargé en imposant le passage du courant en sens inverse, ce qui reconstitue les réactifs.'
+      - kind: mcq
+        prompt: '**Étape 2.** Donner les deux couples oxydant/réducteur mis en jeu.'
+        choices:
+        - $\mathrm{Cd(OH)_2/Cd}$ et $\mathrm{NiOOH/Ni(OH)_2}$
+        - $\mathrm{Cd/Cd(OH)_2}$ et $\mathrm{Ni(OH)_2/NiOOH}$
+        - $\mathrm{Cd^{2+}/Cd}$ et $\mathrm{Ni^{2+}/Ni}$
+        - $\mathrm{H^+/H_2}$ et $\mathrm{H_2O/HO^-}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : un couple s''écrit toujours **oxydant/réducteur**, donc l''espèce qui capte les électrons en premier. Ici les deux couples sont écrits à l''envers.'
+        - 'Non : ces ions n''apparaissent dans aucune des deux demi-équations données.'
+        - 'Non : ce sont les couples de l''eau ; ils n''interviennent pas comme couples oxydant/réducteur de cet accumulateur.'
+        explanation: 'Dans une demi-équation écrite « ox $+ n\,e^- =$ réd », l''oxydant est à gauche : $\mathrm{Cd(OH)_2/Cd}$ et $\mathrm{NiOOH/Ni(OH)_2}$.'
+      - kind: mcq
+        prompt: '**Étape 3.** Sachant que le cadmium est **oxydé** lors de la décharge, quelle est l''équation de la réaction ?'
+        choices:
+        - $\mathrm{Cd + 2\,NiOOH + 2\,H_2O \rightarrow Cd(OH)_2 + 2\,Ni(OH)_2}$
+        - $\mathrm{Cd(OH)_2 + 2\,Ni(OH)_2 \rightarrow Cd + 2\,NiOOH + 2\,H_2O}$
+        - $\mathrm{Cd + 2\,NiOOH \rightarrow Cd(OH)_2 + 2\,Ni(OH)_2}$
+        - $\mathrm{Cd + Ni(OH)_2 \rightarrow Cd(OH)_2 + Ni}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'C''est l''équation de la **recharge** : c''est exactement la réaction inverse.'
+        - 'Non : sans les 2 $\mathrm{H_2O}$, ni les atomes d''hydrogène ni ceux d''oxygène ne sont conservés.'
+        - 'Non : cette équation ne respecte aucun des deux couples donnés et fait apparaître du nickel métallique, absent de l''énoncé.'
+        explanation: 'Oxydation : $\mathrm{Cd + 2\,H_2O \rightarrow Cd(OH)_2 + 2\,H^+ + 2\,e^-}$. Réduction : $\mathrm{2\,NiOOH + 2\,H^+ + 2\,e^- \rightarrow 2\,Ni(OH)_2}$. En sommant, les électrons et les protons se simplifient : $\mathrm{Cd + 2\,NiOOH + 2\,H_2O \rightarrow Cd(OH)_2 + 2\,Ni(OH)_2}$.'
+      - kind: mcq
+        prompt: '**Étape 4.** Pendant la décharge, quelle électrode est l''anode et quelle est sa polarité ?'
+        choices:
+        - 'L''électrode de cadmium : elle est le siège de l''oxydation, c''est l''anode, et c''est la borne **négative**.'
+        - 'L''électrode de cadmium : siège de l''oxydation, c''est l''anode, et c''est la borne **positive**.'
+        - 'L''électrode de nickel : siège de l''oxydation, c''est l''anode, et c''est la borne négative.'
+        - 'L''électrode de nickel : siège de la réduction, c''est l''anode, et c''est la borne positive.'
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'L''identification de l''anode est juste, mais pas la polarité : en fonctionnement **générateur**, l''anode est la borne négative, car les électrons y sont produits et sortent vers le circuit extérieur.'
+        - 'Non : c''est le cadmium qui est oxydé (donnée de l''énoncé) ; le nickel, lui, est réduit.'
+        - 'Deux erreurs : l''anode est le siège de l''**oxydation**, et c''est le cadmium qui est oxydé.'
+        explanation: 'Anode = oxydation = électrode de cadmium = borne ⊖. Cathode = réduction = électrode de nickel = borne ⊕. Dans le récepteur branché, ce sont les **électrons** qui circulent, en sens inverse du courant conventionnel.'
+      - kind: input
+        prompt: '**Étape 5.** Convertir la capacité $Q = 2\,400$ mA·h en coulombs (1 h = 3 600 s).'
+        answer: '8640'
+        numeric: true
+        tolerance: 20
+        unit: C
+        explanation: $Q = 2\,400$ mA·h $= 2{,}4$ A·h $= 2{,}4 \times 3\,600 = 8\,640$ C. Le coulomb est le produit d'une intensité (A) par une durée (s).
+      - kind: input
+        prompt: '**Étape 6.** En déduire l''énergie disponible en pleine charge, en kJ (arrondir au dixième).'
+        answer: '10.5'
+        numeric: true
+        tolerance: 0.3
+        unit: kJ
+        explanation: '$E = Q \times U = 8\,640 \times 1{,}22 = 1{,}05 \times 10^{4}$ J $= 10{,}5$ kJ. Erreurs fréquentes : utiliser 2 400 sans conversion, ou oublier de multiplier par la tension.'
+      - kind: mcq
+        prompt: '**Étape 7.** En fin de décharge, il reste du cadmium **et** de l''eau. Quel réactif a été entièrement consommé ?'
+        choices:
+        - $\mathrm{NiOOH}$, qui est donc le réactif limitant
+        - $\mathrm{Cd}$, qui est donc le réactif limitant
+        - $\mathrm{H_2O}$, qui est donc le réactif limitant
+        - $\mathrm{Ni(OH)_2}$, qui est donc le réactif limitant
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : l''énoncé précise justement qu''il **reste** du cadmium ; un réactif limitant disparaît totalement.'
+        - 'Non : l''énoncé précise qu''il reste aussi de l''eau.'
+        - 'Non : $\mathrm{Ni(OH)_2}$ est un **produit** de la décharge, il se forme au lieu de disparaître.'
+        explanation: 'Les trois réactifs de la décharge sont $\mathrm{Cd}$, $\mathrm{NiOOH}$ et $\mathrm{H_2O}$. Deux d''entre eux restent en fin de réaction : c''est donc la disparition totale de $\mathrm{NiOOH}$ qui arrête la transformation.'
+      - kind: mcq
+        prompt: '**Étape 8.** Comment recharger cet accumulateur, et quelle équation décrit alors la transformation ?'
+        choices:
+        - En le branchant en opposition sur un générateur de tension supérieure à 1,22 V (⊕ sur ⊕, ⊖ sur ⊖) ; l'équation est celle de la réaction inverse de la décharge.
+        - En inversant les bornes du générateur (⊕ sur ⊖) ; l'équation est la même qu'à la décharge.
+        - En le court-circuitant quelques heures ; l'équation est la même qu'à la décharge.
+        - En le branchant sur un récepteur plus puissant ; l'équation est celle de la réaction inverse.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : brancher ⊕ sur ⊖ ne recharge pas, cela revient à décharger encore plus vite et détériore l''accumulateur.'
+        - 'Non : un court-circuit ne fait que vider l''accumulateur en dissipant l''énergie par effet Joule — et il est dangereux.'
+        - 'Non : un récepteur **consomme** l''énergie de l''accumulateur ; il faut au contraire un **générateur** pour la lui rendre.'
+        explanation: 'Il faut imposer le passage du courant en sens inverse avec un générateur de tension supérieure : borne ⊕ du chargeur sur l''électrode de nickel, borne ⊖ sur celle de cadmium. La transformation est alors $\mathrm{Cd(OH)_2 + 2\,Ni(OH)_2 \rightarrow Cd + 2\,NiOOH + 2\,H_2O}$. Les polarités ne changent pas, mais chaque électrode change de rôle (anode ↔ cathode).'
+      tags:
+      - accumulateur
+      - electrodes
+      - capacite
   - id: pc-acido-basique
     title: Réactions acido-basiques et pH
     icon: 🧪
@@ -1034,6 +1155,118 @@ units:
       explanation: « Quand il s'agit de diluer des solutions acides ou basiques très concentrées, il faut toujours les verser dans l'eau et non l'inverse. »
       tags:
       - dilution
+    - type: guided
+      level: 3
+      title: 'Alerte pollution : les pluies acides'
+      intro: 'Le dioxyde de soufre et les oxydes d''azote rejetés par certaines industries et par les gaz d''échappement sont les principales causes des **pluies acides**. Emportés par les nuages, on les retrouve parfois à des milliers de kilomètres de leur point d''émission.
+
+
+        Une pluie « naturelle » a un pH de l''ordre de **5,6**, à cause du dioxyde de carbone dissous. Une station de mesure relève, un jour de pollution, un pH de **4,0**.
+
+
+        **Réactions citées** : $\mathrm{3\,NO_{2(g)} + H_2O_{(l)} \rightarrow 2\,HNO_{3(aq)} + NO_{(g)}}$, puis l''acide nitrique formé réagit avec l''eau.
+
+        {{fig:pc-echelle-ph}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Comment définit-on une **base** selon Brønsted ?'
+        choices:
+        - Une espèce chimique capable de capter un proton $\mathrm{H^+}$
+        - Une espèce chimique capable de céder un proton $\mathrm{H^+}$
+        - Une espèce chimique capable de capter un électron
+        - Une espèce chimique dont le pH est supérieur à 7
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : c''est la définition d''un **acide** de Brønsted.'
+        - 'Non : capter un électron, c''est le rôle d''un **oxydant**. En acido-basique, on échange des protons.'
+        - 'Non : le pH caractérise une **solution**, pas une espèce chimique. Une base est définie par son comportement vis-à-vis du proton.'
+        explanation: 'Acide de Brønsted : espèce capable de **céder** un proton $\mathrm{H^+}$. Base de Brønsted : espèce capable de **capter** un proton $\mathrm{H^+}$.'
+      - kind: mcq
+        prompt: '**Étape 2.** Une pluie « normale » de pH = 5,6 est-elle acide, neutre ou basique, et quel rôle y joue le dioxyde de carbone ?'
+        choices:
+        - Acide ; le $\mathrm{CO_2}$ dissous a des propriétés acides et fait baisser le pH sous 7,0.
+        - Neutre ; le $\mathrm{CO_2}$ dissous n'a aucune propriété acido-basique.
+        - Basique ; le $\mathrm{CO_2}$ dissous fait augmenter le pH.
+        - Acide ; le $\mathrm{CO_2}$ dissous fait augmenter le pH au-dessus de 7,0.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : 5,6 < 7,0, la pluie est déjà acide, et c''est bien le $\mathrm{CO_2}$ dissous qui en est responsable.'
+        - 'Non : un pH de 5,6 est inférieur à 7,0, donc **acide**. Et le $\mathrm{CO_2}$ fait baisser le pH.'
+        - 'Attention : « acide » et « pH supérieur à 7 » sont contradictoires. Un pH acide est **inférieur** à 7,0.'
+        explanation: 'À 25 °C, une solution est acide si pH < 7,0. Le dioxyde de carbone dissous forme de l''acide carbonique, qui libère des ions $\mathrm{H_3O^+}$ : le pH d''une pluie non polluée descend ainsi vers 5,6.'
+      - kind: mcq
+        prompt: '**Étape 3.** La réaction $\mathrm{3\,NO_2 + H_2O \rightarrow 2\,HNO_3 + NO}$ est-elle une réaction acido-basique ?'
+        choices:
+        - 'Non : il n''y a pas simple échange de protons ; l''azote change d''état d''oxydation, c''est une oxydoréduction.'
+        - 'Oui : l''eau capte un proton, elle joue le rôle de base.'
+        - 'Oui : $\mathrm{NO_2}$ est un acide qui cède un proton à l''eau.'
+        - 'Non : aucune espèce ne contient d''hydrogène.'
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : dans une réaction acido-basique, les éléments ne changent pas d''état d''oxydation. Ici l''azote se retrouve à la fois plus oxydé (dans $\mathrm{HNO_3}$) et plus réduit (dans $\mathrm{NO}$).'
+        - 'Non : $\mathrm{NO_2}$ ne contient aucun atome d''hydrogène, il ne peut donc céder aucun proton.'
+        - 'Attention : l''eau $\mathrm{H_2O}$ et l''acide nitrique $\mathrm{HNO_3}$ en contiennent bien. L''argument est faux, même si la conclusion est bonne.'
+        explanation: 'Un même réactif, $\mathrm{NO_2}$, donne un produit plus oxydé ($\mathrm{HNO_3}$) et un produit plus réduit ($\mathrm{NO}$) : c''est une **oxydoréduction** (une dismutation), pas un échange de protons.'
+      - kind: mcq
+        prompt: '**Étape 4.** L''acide nitrique formé réagit ensuite avec l''eau. Écrire l''équation de cette réaction acido-basique.'
+        choices:
+        - $\mathrm{HNO_{3(aq)} + H_2O_{(l)} \rightarrow NO^-_{3(aq)} + H_3O^+_{(aq)}}$
+        - $\mathrm{HNO_{3(aq)} + H_2O_{(l)} \rightarrow NO^+_{3(aq)} + HO^-_{(aq)}}$
+        - $\mathrm{HNO_{3(aq)} + H_3O^+_{(aq)} \rightarrow NO^-_{3(aq)} + 2\,H_2O_{(l)}}$
+        - $\mathrm{HNO_{3(aq)} \rightarrow NO_{2(g)} + HO^-_{(aq)}}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : les charges ne sont pas conservées et l''ion nitrate porte une charge **négative**, $\mathrm{NO_3^-}$.'
+        - 'Non : $\mathrm{H_3O^+}$ est l''acide du couple $\mathrm{H_3O^+/H_2O}$ ; deux acides ne réagissent pas entre eux. C''est l''eau qui joue ici le rôle de base.'
+        - 'Non : cette équation ne conserve ni les éléments ni les charges, et elle ne fait intervenir aucun échange de proton avec l''eau.'
+        explanation: 'L''acide nitrique cède un proton à l''eau : $\mathrm{HNO_3 + H_2O \rightarrow NO_3^- + H_3O^+}$. C''est cette libération d''ions oxonium qui fait chuter le pH de la pluie.'
+      - kind: mcq
+        prompt: '**Étape 5.** Quels sont les deux couples acide/base mis en jeu dans cette dernière réaction ?'
+        choices:
+        - $\mathrm{HNO_3/NO_3^-}$ et $\mathrm{H_3O^+/H_2O}$
+        - $\mathrm{NO_3^-/HNO_3}$ et $\mathrm{H_2O/H_3O^+}$
+        - $\mathrm{HNO_3/NO_3^-}$ et $\mathrm{H_2O/HO^-}$
+        - $\mathrm{NO_2/NO}$ et $\mathrm{H_3O^+/H_2O}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : un couple s''écrit **acide/base**, dans cet ordre. Ces deux couples sont écrits à l''envers.'
+        - 'Le premier couple est juste, mais l''eau joue ici le rôle de **base** : elle capte le proton et donne $\mathrm{H_3O^+}$. Le couple concerné est donc $\mathrm{H_3O^+/H_2O}$.'
+        - 'Non : $\mathrm{NO_2/NO}$ est un couple d''oxydoréduction, pas un couple acide/base.'
+        explanation: 'Une réaction acido-basique met en jeu l''acide d''un couple et la base d''un **autre** couple : ici $\mathrm{HNO_3}$ (acide de $\mathrm{HNO_3/NO_3^-}$) cède son proton à $\mathrm{H_2O}$ (base de $\mathrm{H_3O^+/H_2O}$).'
+      - kind: input
+        prompt: '**Étape 6.** Calculer la concentration en ions oxonium d''une pluie normale de pH = 5,6, en mol·L⁻¹, en écriture scientifique à **2 chiffres significatifs** (par exemple 1,2e-5).'
+        answer: '2.5e-6'
+        numeric: true
+        tolerance: 1.0e-07
+        unit: mol·L⁻¹
+        explanation: $[\mathrm{H_3O^+}] = 10^{-\mathrm{pH}} = 10^{-5{,}6} = 2{,}5 \times 10^{-6}$ mol·L⁻¹.
+      - kind: input
+        prompt: '**Étape 7.** Même calcul pour la pluie polluée, de pH = 4,0. Répondre en mol·L⁻¹, en écriture scientifique.'
+        answer: '1.0e-4'
+        numeric: true
+        tolerance: 5.0e-06
+        unit: mol·L⁻¹
+        explanation: $[\mathrm{H_3O^+}] = 10^{-4{,}0} = 1{,}0 \times 10^{-4}$ mol·L⁻¹.
+      - kind: input
+        prompt: '**Étape 8.** Par quel facteur la concentration en ions oxonium a-t-elle été multipliée entre la pluie normale et la pluie polluée ? Répondre par un nombre sans unité (arrondir à l''unité).'
+        answer: '40'
+        numeric: true
+        tolerance: 3
+        unit: sans unité
+        explanation: '$1{,}0 \times 10^{-4} \div (2{,}5 \times 10^{-6}) = 40$. Une baisse de 1,6 unité de pH correspond à une acidité **40 fois** plus grande : l''échelle de pH est logarithmique, ce qui explique les dégâts sur les forêts, les rivières et les pierres calcaires.'
+      tags:
+      - bronsted
+      - ph
   - id: pc-signaux-spectres
     title: Signaux, spectres et transmission
     icon: 📶
@@ -1383,4 +1616,100 @@ units:
       - 'Non : « pour que la réception soit optimale, il faut que la taille de l''antenne soit du même ordre de grandeur que la longueur d''onde de l''onde porteuse ».'
       explanation: $\lambda = c/f = 3{,}00 \times 10^{8}/(900 \times 10^{6}) = 0{,}33$ m, soit 33 cm. 900 MHz appartient bien à la bande UHF (3 GHz → 300 MHz, soit 10 cm → 1 m).
       tags:
+      - telecom
+    - type: guided
+      level: 3
+      title: 'Modulons puis recevons : spectre d''une modulation de fréquence et antenne'
+      intro: 'Pour transmettre un signal, on filtre d''abord les harmoniques de faible amplitude afin de limiter la largeur de bande émise, puis on module avec ce signal une **porteuse**, onde électromagnétique de haute fréquence.
+
+
+        Un émetteur module en fréquence une porteuse par un signal **sinusoïdal**. Le spectre d''amplitude du signal modulé montre **sept raies régulièrement espacées** : la plus haute est à **500 kHz**, la dernière à droite est à **515 kHz**, et trois raies plus courtes se trouvent à gauche de la raie principale.
+
+
+        On s''intéresse ensuite à une **antenne « demi-onde »** de radiodiffusion : elle capte au mieux les porteuses dont la longueur d''onde vaut le double de la longueur $L$ de chaque dipôle. **Donnée** : $c = 3{,}00 \times 10^{8}$ m·s⁻¹.
+
+        {{fig:guide-spectre-fm}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Dans une **modulation de fréquence**, quelle grandeur de la porteuse est modifiée par le signal modulant ?'
+        choices:
+        - Sa fréquence
+        - Son amplitude
+        - Sa phase à l'origine
+        - Sa vitesse de propagation
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : moduler l''amplitude, c''est la modulation **AM**. Ici, l''amplitude de la porteuse reste constante.'
+        - 'Non : la modulation de phase existe, mais ce n''est pas celle dont il est question ici.'
+        - 'Non : la célérité d''une onde électromagnétique dans l''air est imposée par le milieu, on ne peut pas la moduler.'
+        explanation: 'En modulation de fréquence, l''amplitude de la porteuse est constante et c''est sa **fréquence** qui varie au rythme du signal modulant. C''est ce qui rend la FM peu sensible aux parasites, qui affectent surtout l''amplitude.'
+      - kind: input
+        prompt: '**Étape 2.** Déterminer la fréquence $F$ de la porteuse, en kHz.'
+        answer: '500'
+        numeric: true
+        tolerance: 5
+        unit: kHz
+        explanation: 'La porteuse correspond à la **raie la plus haute** du spectre, ici à 500 kHz. Les autres raies sont les raies latérales créées par la modulation.'
+      - kind: input
+        prompt: '**Étape 3.** Les raies sont espacées de la fréquence $f$ du signal modulant. Sachant que **trois intervalles** séparent 500 kHz de 515 kHz, calculer $f$ en kHz.'
+        answer: '5'
+        numeric: true
+        tolerance: 0.3
+        unit: kHz
+        explanation: $f = (515 - 500) / 3 = 15/3 = 5$ kHz. Mesurer l'écart sur plusieurs intervalles plutôt que sur un seul réduit l'incertitude de lecture.
+      - kind: input
+        prompt: '**Étape 4.** Les sept raies s''étendent symétriquement de part et d''autre de la porteuse. Déterminer la largeur de la bande de fréquences nécessaire pour transmettre ce signal, en kHz.'
+        answer: '30'
+        numeric: true
+        tolerance: 1
+        unit: kHz
+        explanation: 'Trois raies de chaque côté : le spectre s''étend de $500 - 3 \times 5 = 485$ kHz à $500 + 3 \times 5 = 515$ kHz. La largeur de bande vaut $515 - 485 = 30$ kHz, soit $6f$.'
+      - kind: mcq
+        prompt: '**Étape 5.** Le signal transmis par cet émetteur est-il un **son audible** ?'
+        choices:
+        - 'Non, deux fois : c''est une onde électromagnétique et non une onde sonore, et 500 kHz est très au-dessus de 20 kHz.'
+        - 'Oui : 5 kHz est bien compris entre 20 Hz et 20 kHz.'
+        - 'Non : 500 kHz est trop **basse** pour être entendue.'
+        - 'Oui : toute onde transportant une information sonore est un son.'
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Attention : 5 kHz est bien la fréquence du signal **modulant**, mais ce qui est émis est l''onde électromagnétique modulée, pas une onde sonore.'
+        - 'Non : 500 kHz est au contraire bien **au-dessus** de la limite supérieure de l''audible, 20 kHz.'
+        - 'Non : l''onde émise est électromagnétique. Elle ne redeviendra un son qu''après démodulation et passage dans un haut-parleur.'
+        explanation: 'Un son est une onde **mécanique** de fréquence comprise entre 20 Hz et 20 kHz. Ici l''onde émise est électromagnétique, à 500 kHz : elle n''est ni audible, ni même de nature sonore.'
+      - kind: input
+        prompt: '**Étape 6.** On s''intéresse maintenant à une antenne prévue pour une porteuse de fréquence $F = 100$ MHz. Calculer la longueur d''onde correspondante, en mètres.'
+        answer: '3'
+        numeric: true
+        tolerance: 0.1
+        unit: m
+        explanation: $\lambda = c / F = 3{,}00 \times 10^{8} / (100 \times 10^{6}) = 3{,}00$ m. Attention à convertir les mégahertz en hertz.
+      - kind: input
+        prompt: '**Étape 7.** En déduire la longueur $L$ préconisée pour chaque dipôle de l''antenne « demi-onde », en mètres.'
+        answer: '1.5'
+        numeric: true
+        tolerance: 0.05
+        unit: m
+        explanation: 'L''antenne est dite « demi-onde » parce que $\lambda = 2L$, donc $L = \lambda/2 = 3{,}00/2 = 1{,}50$ m. On retrouve la règle générale : la taille d''une antenne est de l''ordre de grandeur de la longueur d''onde captée.'
+      - kind: mcq
+        prompt: '**Étape 8.** Sur le mât, l''antenne A.M. est une tige **verticale** et l''antenne F.M. est formée de deux dipôles dans un plan **horizontal**. Quel angle forment ces deux types d''antenne ?'
+        choices:
+        - 90°, les dipôles horizontaux étant perpendiculaires à la tige verticale
+        - 0°, les deux antennes étant parallèles
+        - 45°, valeur qui permet de capter les deux bandes
+        - 180°, les deux antennes étant opposées
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : une direction verticale et une direction horizontale ne sont jamais parallèles.'
+        - 'Non : rien dans le montage ne fait apparaître un angle de 45° ; les dipôles sont bien dans un plan horizontal.'
+        - 'Non : 180° désignerait deux directions opposées mais **de même** direction, ce qui n''est pas le cas ici.'
+        explanation: 'Vertical et horizontal sont perpendiculaires : l''angle vaut 90°. Cette orientation croisée correspond aux polarisations différentes utilisées en A.M. (verticale) et en F.M. (horizontale).'
+      tags:
+      - modulation
       - telecom

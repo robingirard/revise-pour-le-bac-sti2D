@@ -166,3 +166,87 @@ ouverte vers la droite « ordre de fermeture » ; (4) message réflexif sur la l
 (flèche qui part et revient en formant un rectangle) « comparer N au seuil ». Flèche verticale
 `solideA` à gauche, étiquetée « sens d'écoulement du temps ». Un cadre étiqueté `loop [tant que
 le système est en marche]` englobe les messages, pour illustrer un opérateur de séquence.
+
+---
+
+# Figures ajoutées (Tle et exercices guidés)
+
+Six figures nouvelles, ajoutées avec les notions de Terminale (échantillonnage, codeur à deux voies)
+et la compétence **Codage et transmission** (`info-transmission`). Mêmes conventions que ci-dessus :
+un fichier `figures/tikz/<ID>.tex`, largeur ≈ 8 cm, peu de texte, couleurs `solideA` (rouge),
+`solideB` (bleu), `solideD` (orange), `solideE` (vert).
+
+| # | Identifiant | Leçon | Source (notes) |
+|---|---|---|---|
+| 15 | `info-echantillonnage` | info-signaux | Tle, § 4, p. 288 (échantillonnage) et fig. 9, p. 290 |
+| 16 | `info-codeur-deux-voies` | info-chaine | exercices Tle B, ex. 7, fig. 2, p. 331 |
+| 17 | `info-trame-serie` | info-transmission | exercices 1re B, ex. 14, chronogramme UART, p. 182 |
+| 18 | `info-liaison-symetrique` | info-transmission | exercices 1re B, ex. 17, chronogramme DMX, p. 188 |
+| 19 | `info-adressage-ip` | info-transmission | exercices Tle B, ex. 8, tableau d'adressage, p. 335 |
+| 20 | `info-algorigramme-mini-voiture` | info-logique | exercices 1re B, ex. 12, algorigramme, p. 178 |
+
+## 15. `info-echantillonnage`
+
+Un seul repère : axe horizontal « Temps », axe vertical « Tension ». Une courbe lisse `solideB`
+en cloche asymétrique (le signal analogique). Sur l'axe des temps, des graduations régulières
+espacées de $T_e$ ; à chaque graduation, un trait vertical pointillé gris monte jusqu'à la courbe
+et se termine par un disque plein `solideA` (l'échantillon prélevé). Par-dessus, l'escalier
+`solideA` en trait plein qui joint les paliers successifs. Double flèche horizontale entre deux
+graduations, cotée $T_e$, avec l'étiquette « période d'échantillonnage ». Encadré discret en haut
+à droite : $f_e = 1 \div T_e$. Huit à dix échantillons suffisent pour que la figure reste lisible.
+
+## 16. `info-codeur-deux-voies`
+
+Deux panneaux côte à côte, titrés « Marche avant » et « Marche arrière », de même largeur.
+Chaque panneau contient deux axes de temps superposés, étiquetés à gauche « Tête 1 » et
+« Tête 2 » : deux créneaux `solideB` de rapport cyclique 1/2, sur trois périodes, la voie 2 étant
+décalée d'un quart de période — **en retard** dans le panneau de gauche, **en avance** dans celui
+de droite. Sur chaque panneau, un trait vertical pointillé `solideA` passe par un **front
+descendant** de la tête 1 et descend jusqu'à la voie 2 ; l'état lu y est annoté en `\scriptsize`
+(« Tête 2 = 1 » à gauche, « Tête 2 = 0 » à droite). Double flèche horizontale cotée $T/4$ entre les
+deux fronts correspondants, dans le panneau de gauche seulement.
+
+## 17. `info-trame-serie`
+
+Chronogramme d'une trame série asynchrone, sur un seul axe de temps. Niveaux 0 et 1 gradués à
+gauche. Le tracé `solideB` part du niveau haut (« Repos »), descend pour le **bit de start**,
+puis enchaîne huit intervalles de même largeur étiquetés `D0` à `D7` sous l'axe, dont le motif
+tracé correspond à 1 0 1 0 1 1 0 0 (le caractère « 5 », code ASCII 0011 0101, transmis poids
+faible en tête), puis un intervalle « parité » à l'état 1, un intervalle « stop » à l'état 1, et
+le retour au repos. Sous l'axe, quatre accolades `solideD` regroupent et nomment les champs :
+« start », « 8 bits de donnée (D0 en tête) », « parité », « stop ». Deux étiquettes « Repos » aux
+extrémités. Traits verticaux pointillés gris entre les intervalles.
+
+## 18. `info-liaison-symetrique`
+
+Trois repères superposés partageant le même axe des temps et le même quadrillage vertical
+pointillé, étiquetés à gauche $U_{\text{DATA}+}$, $U_{\text{DATA}-}$ et
+$U_{\text{DATA}+} - U_{\text{DATA}-}$.
+
+- Panneau 1 : créneau `solideB` entre 0 et 5 V, portant une petite marche de 1 V (perturbation)
+  pendant un état bas, annotée « perturbation de 1 V » par une flèche `solideD`.
+- Panneau 2 : le créneau **complémentaire**, également entre 0 et 5 V, portant la **même** marche
+  de 1 V au même instant.
+- Panneau 3 : le signal différentiel `solideA`, gradué + 5 V, 0 V, − 5 V, parfaitement rectangulaire
+  et **sans aucune perturbation**, avec l'étiquette « la perturbation commune disparaît ».
+
+## 19. `info-adressage-ip`
+
+Tableau de quatre colonnes (les quatre octets), sans bordure extérieure, aligné en `\ttfamily`.
+Trois lignes étiquetées à gauche : « @ IP 10.0.3.19 » → `0000 1010 | 0000 0000 | 0000 0011 |
+0001 0011` ; « Masque /22 » → `1111 1111 | 1111 1111 | 1111 1100 | 0000 0000` ; « Adresses
+d'hôtes » → `0000 1010 | 0000 0000 | 0000 00xx | xxxx xxxx`. Un bandeau `solideB` translucide
+couvre les 22 premiers bits des trois lignes, étiqueté « partie réseau (22 bits) » ; un bandeau
+`solideD` couvre les 10 derniers, étiqueté « partie hôte (10 bits) ». Sous le tableau, deux
+encadrés : « réseau : 10.0.0.0 » (`solideE`) et « diffusion : 10.0.3.255 » (`solideA`).
+
+## 20. `info-algorigramme-mini-voiture`
+
+Algorigramme en cascade, formes blanches, rectangles bord `solideD` et losanges bord `solideB`.
+Stade « Début » → parallélogramme « Lire Capt_G » → parallélogramme « Lire Capt_D » → trois
+losanges en escalier vers la droite : « Capt_G = 1 et Capt_D = 1 ? » (sortie **oui** vers le bas →
+rectangle « Arrêt = 0 / Alarme = 0 ») ; « Capt_G = 1 et Capt_D = 0 ? » (oui → « Arrêt = 0 /
+Alarme = 1 ») ; « Capt_G = 0 et Capt_D = 1 ? » (oui → « Arrêt = 0 / Alarme = 1 » ; **non**, sortie
+la plus à droite → « Arrêt = 1 / Alarme = 1 »). Toutes les branches se rejoignent sur une ligne
+horizontale basse `solideF` qui mène au stade « Fin ». Les sorties « non » des losanges sont
+étiquetées à droite, les sorties « oui » en dessous.

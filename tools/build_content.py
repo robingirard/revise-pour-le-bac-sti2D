@@ -559,7 +559,7 @@ class Builder:
 
     def add_handwritten(self, skill, q, prefix):
         t = q["type"]
-        text = q.get("prompt") or q.get("front") or ""
+        text = q.get("prompt") or q.get("front") or q.get("title") or ""   # guided : id stable dérivé du titre
         iid = f"{prefix}.h{crc(t + text)}"
         level = q.get("level", 1)
         if t == "flashcard":

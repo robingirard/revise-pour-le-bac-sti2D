@@ -325,6 +325,108 @@ units:
       explanation: 'Conversion en kelvins : 0 K ; −39 °C = 234,15 K ; 250 K ; 0 °C = 273,15 K ; 100 °C = 373,15 K. Le piège : comparer un nombre en °C à un nombre en K sans convertir.'
       tags:
       - temperature
+    - type: guided
+      level: 3
+      title: 'La bouilloire électrique : mesurer la capacité thermique de l''eau'
+      intro: 'On verse $m = 1{,}00$ kg d''eau dans une bouilloire **très bien isolée thermiquement**. Sa résistance chauffante, de résistance $R = 40\ \Omega$, est alimentée par le réseau ($U_{\text{eff}} = 230$ V). On enregistre la température $\theta$ de l''eau au cours du temps.
+
+
+        Le relevé est une **droite** partant de $\theta_i = 20$ °C à $t = 0$ s et atteignant 100 °C à $t = 250$ s, suivie d''un **palier** à 100 °C.
+
+
+        Objectif : retrouver expérimentalement la capacité thermique massique de l''eau, dont la valeur tabulée est $c = 4\,200$ J·kg⁻¹·K⁻¹.
+
+
+        {{fig:guide-bouilloire-courbe}}'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Calculer la puissance électrique dissipée par la résistance chauffante (1 décimale).'
+        answer: '1322.5'
+        numeric: true
+        tolerance: 10
+        unit: W
+        explanation: $P = \dfrac{U_{\text{eff}}^{2}}{R} = \dfrac{230^{2}}{40} = \dfrac{52\,900}{40} = 1\,322{,}5$ W, soit environ 1,3 kW.
+      - kind: mcq
+        prompt: '**Étape 2.** Quelle égalité traduit l''hypothèse « bouilloire très bien isolée thermiquement » ?'
+        choices:
+        - '$P \times t = m \times c \times (\theta - \theta_i)$ : toute l''énergie électrique est transférée à l''eau'
+        - $P \times t = m \times c \times \theta$
+        - $P = m \times c \times (\theta - \theta_i)$
+        - $P \times t = \dfrac{m \times c}{\theta - \theta_i}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : c''est l''**écart** de température $\theta - \theta_i$ qui intervient, pas la température atteinte.'
+        - 'Non : les deux membres n''ont pas la même unité — une puissance (W) à gauche, une énergie (J) à droite.'
+        - 'Non : $Q = m\,c\,\Delta\theta$ est un **produit**. En divisant, l''énergie diminuerait quand l''échauffement augmente.'
+        explanation: Sans pertes, l'énergie électrique reçue $E = P \times t$ est intégralement convertie en énergie thermique reçue par l'eau, $Q = m\,c\,(\theta - \theta_i)$.
+      - kind: input
+        prompt: '**Étape 3.** Déterminer le coefficient directeur $a$ de la partie linéaire du relevé, en °C·s⁻¹ (2 décimales).'
+        answer: '0.32'
+        numeric: true
+        tolerance: 0.02
+        unit: °C·s⁻¹
+        explanation: '$a = \dfrac{100 - 20}{250 - 0} = \dfrac{80}{250} = 0{,}32$ °C·s⁻¹ : l''eau gagne environ un tiers de degré par seconde.'
+      - kind: mcq
+        prompt: '**Étape 4.** En écrivant l''égalité de l''étape 2 sous la forme $\theta = a \times t + b$, que valent $a$ et $b$ ?'
+        choices:
+        - $a = \dfrac{U^{2}}{R\,m\,c}$ et $b = \theta_i$
+        - $a = \theta_i$ et $b = \dfrac{U^{2}}{R\,m\,c}$
+        - $a = \dfrac{R\,m\,c}{U^{2}}$ et $b = 0$
+        - $a = m\,c$ et $b = \theta_i$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : $b$ est l''ordonnée à l''origine, c''est-à-dire la température à $t = 0$, donc $\theta_i$.'
+        - 'Non : c''est l''inverse. En isolant $\theta$, le facteur de $t$ est $\dfrac{U^{2}}{R\,m\,c}$, et la droite ne passe pas par l''origine.'
+        - 'Non : $a$ doit s''exprimer en °C·s⁻¹ ; $m\,c$ s''exprime en J·K⁻¹.'
+        explanation: 'De $\dfrac{U^{2}}{R}\,t = m\,c\,(\theta - \theta_i)$ on tire $\theta = \dfrac{U^{2}}{R\,m\,c}\,t + \theta_i$ : le coefficient directeur contient $c$, l''ordonnée à l''origine vaut $\theta_i = 20$ °C, ce que confirme le relevé.'
+      - kind: input
+        prompt: '**Étape 5.** En déduire la valeur expérimentale de la capacité thermique massique de l''eau (3 chiffres significatifs).'
+        answer: '4130'
+        numeric: true
+        tolerance: 100
+        unit: J·kg⁻¹·K⁻¹
+        explanation: '$c = \dfrac{U^{2}}{R\,m\,a} = \dfrac{P}{m\,a} = \dfrac{1\,322{,}5}{1{,}00 \times 0{,}32} = 4{,}13 \times 10^{3}$ J·kg⁻¹·K⁻¹.'
+      - kind: mcq
+        prompt: '**Étape 6.** Comparer cette valeur à la valeur tabulée $c = 4\,200$ J·kg⁻¹·K⁻¹. Que conclure ?'
+        choices:
+        - L'écart relatif vaut environ 1,6 % ; la méthode est validée
+        - L'écart relatif vaut environ 16 % ; la méthode n'est pas valable
+        - La mesure est exacte, l'écart est nul
+        - L'écart est trop grand pour conclure, il faudrait connaître la masse d'eau
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non, erreur de puissance de dix : $\dfrac{4\,200 - 4\,130}{4\,200} = 0{,}016$, soit 1,6 %.'
+        - 'Non : la valeur trouvée, $4{,}13 \times 10^{3}$, diffère de $4\,200$ — mais de très peu.'
+        - 'Non : la masse d''eau est donnée ($1{,}00$ kg) et intervient déjà dans le calcul.'
+        explanation: '$\dfrac{4\,200 - 4\,130}{4\,200} \approx 1{,}6$ %. Un tel écart s''explique par la précision de la lecture graphique et par les pertes résiduelles de la bouilloire.'
+      - kind: input
+        prompt: '**Étape 7.** Quelle énergie électrique la bouilloire a-t-elle consommée pour amener l''eau de 20 °C à 100 °C ? Répondre en kilojoules (arrondir à l''unité).'
+        answer: '331'
+        numeric: true
+        tolerance: 5
+        unit: kJ
+        explanation: '$E = P \times \Delta t = 1\,322{,}5 \times 250 = 3{,}31 \times 10^{5}$ J $= 331$ kJ. Vérification par l''eau : $Q = 1{,}00 \times 4\,130 \times 80 = 3{,}30 \times 10^{5}$ J. Les deux voies concordent.'
+      - kind: mcq
+        prompt: '**Étape 8.** Si la bouilloire n''était pas parfaitement isolée, la valeur trouvée pour $c$ serait :'
+        choices:
+        - surestimée, car le chauffage serait plus lent ($a$ plus petit) pour la même puissance
+        - sous-estimée, car une partie de l'énergie n'atteindrait pas l'eau
+        - inchangée, car les pertes concernent la bouilloire et non l'eau
+        - impossible à calculer
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Attention au sens : le calcul attribue à l''eau **toute** l''énergie $P\,t$. En surestimant l''énergie reçue par l''eau, on surestime $c$.'
+        - 'Non : des pertes ralentissent l''échauffement de l''eau, donc modifient $a$ et le résultat.'
+        - 'Non : la relation $c = \dfrac{P}{m\,a}$ reste utilisable, elle donne simplement un résultat biaisé.'
+        explanation: Avec des pertes, l'eau reçoit moins que $P \times t$, elle s'échauffe plus lentement, donc $a$ diminue ; comme $c = \dfrac{P}{m\,a}$, la valeur calculée augmente. C'est bien pour cela que l'énoncé précise « très bien isolée ».
   - id: pc-changements-etat
     title: Changements d'état et bilans
     icon: 🧊
@@ -684,6 +786,105 @@ units:
       explanation: 'L''énergie de vaporisation dépend de la température (environ 2 500 kJ·kg⁻¹ à 0 °C contre 2 260 kJ·kg⁻¹ à 100 °C). En prenant les valeurs à 0 °C, $334 + 2\,500 \approx 2\,830$ kJ·kg⁻¹ : le tableau devient cohérent. Toujours vérifier à quelle température une donnée est tabulée.'
       tags:
       - chaleur-latente
+    - type: guided
+      level: 3
+      title: 'L''eau des pâtes : chauffer, puis faire bouillir'
+      intro: 'Avant de cuire des pâtes, il faut porter **2,0 L d''eau** de 16 °C à 100 °C. On utilise une plaque à induction de puissance $P = 3{,}0$ kW.
+
+
+        Données : masse volumique de l''eau $\rho = 1{,}0$ kg·L⁻¹ ; $c_{\text{eau}} = 4{,}2$ kJ·kg⁻¹·°C⁻¹ ; $L_{\text{vaporisation}} = 2{,}26 \times 10^{3}$ kJ·kg⁻¹.
+
+
+        {{fig:pc-courbe-chauffage-eau}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelle masse d''eau la casserole contient-elle ?'
+        choices:
+        - 2,0 kg
+        - 2,0 g
+        - 0,50 kg
+        - On ne peut pas le savoir sans connaître la température
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : $m = \rho \times V = 1{,}0 \times 2{,}0 = 2{,}0$ kg, soit 2 000 g.'
+        - 'Non : $0{,}50$ kg correspondrait à $V/4$. Ici $m = \rho V$, avec $\rho = 1{,}0$ kg·L⁻¹.'
+        - 'Non : la masse volumique de l''eau liquide varie très peu avec la température ; on la prend égale à 1,0 kg·L⁻¹.'
+        explanation: '$m = \rho \times V = 1{,}0 \times 2{,}0 = 2{,}0$ kg. Retenir le repère : 1 L d''eau ↔ 1 kg.'
+      - kind: input
+        prompt: '**Étape 2.** Calculer l''énergie thermique nécessaire pour porter cette eau de 16 °C à 100 °C. Répondre en kilojoules (arrondir à l''unité).'
+        answer: '706'
+        numeric: true
+        tolerance: 8
+        unit: kJ
+        explanation: '$Q = m \times c \times \Delta\theta = 2{,}0 \times 4\,200 \times (100 - 16) = 2{,}0 \times 4\,200 \times 84 = 7{,}06 \times 10^{5}$ J $= 706$ kJ. Erreur classique : utiliser 100 au lieu de l''écart 84 (on trouverait 840 kJ).'
+      - kind: input
+        prompt: '**Étape 3.** En supposant que toute la puissance de la plaque est transmise à l''eau, calculer la durée nécessaire pour atteindre l''ébullition (arrondir à l''unité).'
+        answer: '235'
+        numeric: true
+        tolerance: 5
+        unit: s
+        explanation: $\Delta t = \dfrac{Q}{P} = \dfrac{7{,}06 \times 10^{5}}{3{,}0 \times 10^{3}} = 235$ s, soit 3 min 55 s.
+      - kind: mcq
+        prompt: '**Étape 4.** En cuisine, l''eau met en réalité plus longtemps à bouillir. Pourquoi ?'
+        choices:
+        - Parce qu'une partie de l'énergie chauffe la casserole et se perd vers l'air ambiant
+        - Parce que la capacité thermique massique de l'eau augmente avec la température
+        - Parce que la plaque fournit moins de 3,0 kW quand elle est chaude
+        - Parce que l'eau se dilate en chauffant
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : $c_{\text{eau}}$ varie très peu entre 16 °C et 100 °C, l''effet serait négligeable.'
+        - 'Non : la plaque délivre sa puissance nominale ; ce sont les transferts vers l''extérieur qui allongent la durée.'
+        - 'Non : la dilatation de l''eau ne consomme pas une énergie significative devant les 706 kJ du chauffage.'
+        explanation: 'Le rendement du chauffage est inférieur à 100 % : la casserole, la plaque et l''air ambiant reçoivent aussi de l''énergie (conduction, convection, rayonnement).'
+      - kind: input
+        prompt: '**Étape 5.** On mesure un rendement $\eta = 80$ % pour l''ensemble plaque + casserole. Calculer la durée réelle d''ébullition (arrondir à l''unité).'
+        answer: '294'
+        numeric: true
+        tolerance: 8
+        unit: s
+        explanation: 'La puissance réellement transmise à l''eau vaut $0{,}80 \times 3\,000 = 2\,400$ W, d''où $\Delta t = \dfrac{7{,}06 \times 10^{5}}{2\,400} = 294$ s, soit 4 min 54 s — une minute de plus. Erreur classique : multiplier la durée par 0,80 au lieu de diviser.'
+      - kind: mcq
+        prompt: '**Étape 6.** L''eau bout depuis plusieurs minutes et la plaque fonctionne toujours, pourtant le thermomètre reste bloqué à 100 °C. Pourquoi ?'
+        choices:
+        - Parce que l'énergie fournie sert entièrement au **changement d'état** (vaporisation), qui se fait à température constante
+        - Parce que la plaque s'arrête automatiquement à 100 °C
+        - Parce que l'eau ne peut pas dépasser 100 °C, quelles que soient les conditions
+        - Parce que le thermomètre est saturé
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la plaque continue de fournir 3,0 kW ; c''est l''eau qui change d''état.'
+        - 'Non : sous pression plus élevée (cocotte-minute), l''eau bout à une température supérieure à 100 °C.'
+        - 'Non : le palier est un phénomène physique, pas un défaut de mesure. Il apparaît aussi avec la fusion de la glace, à 0 °C.'
+        explanation: Pendant un changement d'état d'un corps pur, la température reste constante ; l'énergie reçue, $Q_p = m \times L$, sert à séparer les molécules et non à les agiter davantage.
+      - kind: input
+        prompt: '**Étape 7.** Le cuisinier oublie sa casserole : 200 g d''eau s''évaporent. Quelle énergie ce changement d''état a-t-il consommé ? Répondre en kilojoules (arrondir à l''unité).'
+        answer: '452'
+        numeric: true
+        tolerance: 6
+        unit: kJ
+        explanation: '$Q_p = m \times L_{\text{vaporisation}} = 0{,}200 \times 2\,260 = 452$ kJ. Erreur classique : oublier de convertir les 200 g en 0,200 kg.'
+      - kind: mcq
+        prompt: '**Étape 8.** Comparer ces 452 kJ aux 706 kJ du chauffage initial. Que faut-il en retenir ?'
+        choices:
+        - Vaporiser seulement 10 % de l'eau coûte déjà 64 % de l'énergie du chauffage complet
+        - Vaporiser 10 % de l'eau coûte 10 % de l'énergie du chauffage
+        - La vaporisation coûte moins cher que le chauffage, il vaut mieux laisser bouillir à feu vif
+        - Les deux énergies ne sont pas comparables, elles n'ont pas la même unité
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le rapport n''est pas proportionnel, justement parce que la vaporisation demande une énergie massique $L$ très élevée.'
+        - 'Non : $452 < 706$, mais pour seulement 200 g d''eau contre 2,0 kg chauffés de 84 °C.'
+        - 'Non : les deux valeurs sont des énergies exprimées en kilojoules.'
+        explanation: '$\dfrac{452}{706} = 0{,}64$. C''est pourquoi on couvre la casserole et on baisse le feu dès l''ébullition : maintenir un bouillonnement violent consomme énormément d''énergie pour rien.'
   - id: pc-flux-isolation
     title: Flux thermique et isolation
     icon: 🏠
@@ -1068,3 +1269,98 @@ units:
         tolerance: 0.03
         unit: A
         explanation: '$I = \dfrac{P}{U} = \dfrac{152}{230} \approx 0{,}66$ A. Bilan de l''étude : une toiture correctement isolée ramène les déperditions d''une pièce de 60 m² à la puissance d''une simple ampoule halogène.'
+    - type: guided
+      level: 3
+      title: Le super-congélateur à vaccins
+      intro: 'Certains vaccins doivent être conservés à **−80 °C**, alors que la température ambiante du local vaut **20 °C**. On utilise pour cela un super-congélateur.
+
+
+        Son **cycle frigorifique** fait circuler du propane : le fluide se vaporise dans l''évaporateur, placé à l''intérieur de l''enceinte ; il est ensuite comprimé à l''état gazeux ; il se liquéfie dans le condenseur, au contact de l''air extérieur ; enfin un détendeur ramène sa pression à la pression atmosphérique avant son retour à l''évaporateur.
+
+
+        Données : $L_{\text{vaporisation}}$(propane) $= 426$ kJ·kg⁻¹ ; masse de propane vaporisée en un cycle : 100 g ; air intérieur : 750 g, $c_{\text{air}} = 1{,}0$ kJ·kg⁻¹·K⁻¹, initialement à 20 °C ; parois : surface $S = 10$ m², épaisseur $e = 10$ cm, conductivité thermique globale $\lambda = 0{,}0050$ W·m⁻¹·K⁻¹.
+
+
+        {{fig:guide-cycle-frigorifique}}'
+      steps:
+      - kind: order
+        prompt: '**Étape 1.** Remettez dans l''ordre les quatre organes traversés par le fluide frigorigène, en partant de l''intérieur de l''enceinte.'
+        steps:
+        - L'évaporateur — le fluide passe de l'état liquide à l'état gazeux
+        - Le compresseur — la pression du gaz augmente
+        - Le condenseur — le fluide redevient liquide au contact de l'air extérieur
+        - Le détendeur — la pression redescend à la pression atmosphérique
+        explanation: Le fluide décrit une boucle fermée. Il prélève de l'énergie **à l'intérieur** (évaporateur) et la rejette **à l'extérieur** (condenseur) ; le compresseur et le détendeur pilotent la pression, donc les températures de changement d'état.
+      - kind: mcq
+        prompt: '**Étape 2.** Dans l''évaporateur, le fluide passe de l''état liquide à l''état gazeux. Quel est l''effet sur l''air intérieur du congélateur ?'
+        choices:
+        - La vaporisation est endothermique, le fluide prélève de l'énergie à l'air intérieur, qui se refroidit
+        - La vaporisation est exothermique, le fluide cède de l'énergie à l'air intérieur, qui se réchauffe
+        - Aucun échange, puisque la température du fluide reste constante
+        - Le fluide prélève de l'énergie, mais à l'air extérieur
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : c''est la **liquéfaction** qui est exothermique. Elle a lieu dans le condenseur, à l''extérieur.'
+        - 'Non : un changement d''état se fait à température constante, mais met en jeu une énergie $Q_p = m \times L$.'
+        - 'Non : l''évaporateur est placé à l''intérieur de l''enceinte ; c''est bien l''air intérieur qui est refroidi.'
+        explanation: 'Vaporiser un corps demande de l''énergie ($Q_p > 0$) : cette énergie est prélevée à l''air de l''enceinte, dont la température baisse. C''est le principe de tout réfrigérateur.'
+      - kind: input
+        prompt: '**Étape 3.** Calculer l''énergie absorbée par la vaporisation de 100 g de propane. Répondre en kilojoules (1 décimale).'
+        answer: '42.6'
+        numeric: true
+        tolerance: 0.5
+        unit: kJ
+        explanation: $Q_p = m \times L_{\text{vaporisation}} = 0{,}100 \times 426 = 42{,}6$ kJ, soit $4{,}26 \times 10^{4}$ J.
+      - kind: input
+        prompt: '**Étape 4.** Cette énergie est prélevée aux 750 g d''air de l''enceinte. Quelle baisse de température peut-elle provoquer (1 décimale) ?'
+        answer: '56.8'
+        numeric: true
+        tolerance: 0.5
+        unit: °C
+        explanation: '$\Delta\theta = \dfrac{Q_p}{m_{\text{air}} \times c_{\text{air}}} = \dfrac{4{,}26 \times 10^{4}}{0{,}750 \times 1\,000} = 56{,}8$ °C. Attention aux unités : $c$ est donné en kJ·kg⁻¹·K⁻¹, soit $1{,}0 \times 10^{3}$ J·kg⁻¹·K⁻¹.'
+      - kind: mcq
+        prompt: '**Étape 5.** L''air part de 20 °C. Un seul passage de propane dans l''évaporateur suffit-il à atteindre −80 °C ?'
+        choices:
+        - Non, l'air ne descend qu'à environ −36,8 °C, il faut de nombreux cycles
+        - Oui, exactement, l'air atteint −80 °C
+        - Non, l'air ne descend qu'à environ −56,8 °C
+        - Non, l'air ne peut jamais descendre en dessous de 0 °C
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : $20 - 56{,}8 = -36{,}8$ °C, il manque plus de 43 °C.'
+        - 'Attention : 56,8 °C est la **baisse** de température, pas la température atteinte. Il faut la retrancher à 20 °C.'
+        - 'Non : rien n''interdit à de l''air d''être à −80 °C ; c''est justement ce que réalise le super-congélateur, par cycles successifs.'
+        explanation: $\theta_f = 20 - 56{,}8 = -36{,}8$ °C. Le fluide décrit la boucle en continu ; c'est la répétition des cycles, et non un cycle unique, qui amène l'enceinte à −80 °C.
+      - kind: input
+        prompt: '**Étape 6.** Calculer la résistance thermique surfacique des parois, $R_{\text{th}} = e/\lambda$ (arrondir à l''unité).'
+        answer: '20'
+        numeric: true
+        tolerance: 0.5
+        unit: m²·K·W⁻¹
+        explanation: '$R_{\text{th}} = \dfrac{e}{\lambda} = \dfrac{0{,}10}{0{,}0050} = 20$ m²·K·W⁻¹. Erreur classique : oublier de convertir les 10 cm en 0,10 m (on trouverait 2 000).'
+      - kind: input
+        prompt: '**Étape 7.** En déduire le flux thermique qui traverse les parois lorsque l''enceinte est à −80 °C et le local à 20 °C (arrondir à l''unité).'
+        answer: '50'
+        numeric: true
+        tolerance: 2
+        unit: W
+        explanation: '$\Phi = \dfrac{S \times (T_{\text{chaud}} - T_{\text{froid}})}{R_{\text{th}}} = \dfrac{10 \times (20 - (-80))}{20} = \dfrac{1\,000}{20} = 50$ W. Attention au signe : l''écart vaut 100 °C, soit 100 K, et non 60.'
+      - kind: mcq
+        prompt: '**Étape 8.** Les parois associent des panneaux isolés sous vide et une mousse de polyuréthane, dont la conductivité thermique vaut environ 0,022 W·m⁻¹·K⁻¹. Que peut-on dire des panneaux sous vide ?'
+        choices:
+        - Leur conductivité est encore plus faible que 0,0050 W·m⁻¹·K⁻¹, puisque la valeur globale de l'ensemble est déjà quatre fois inférieure à celle du polyuréthane seul
+        - Leur conductivité vaut exactement 0,022 W·m⁻¹·K⁻¹
+        - Leur conductivité est supérieure à celle du polyuréthane
+        - On ne peut rien dire sans connaître leur épaisseur
+        answer:
+        - 0
+        feedback:
+        - null
+        - '0,022 W·m⁻¹·K⁻¹ est la valeur du **polyuréthane** ; la valeur globale de la paroi, 0,0050, est bien plus faible.'
+        - 'Non : si les panneaux conduisaient mieux que la mousse, la conductivité globale ne pourrait pas descendre à 0,0050.'
+        - 'Non : la comparaison des conductivités thermiques ($\lambda$, en W·m⁻¹·K⁻¹) ne dépend pas de l''épaisseur, contrairement à celle des résistances thermiques.'
+        explanation: '$0{,}0050 \ll 0{,}022$ W·m⁻¹·K⁻¹ : pour que l''ensemble atteigne une conductivité globale aussi basse, les panneaux sous vide doivent être bien meilleurs isolants que la mousse. Rappel : plus $\lambda$ est petite, meilleur est l''isolant.'

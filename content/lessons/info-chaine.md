@@ -40,6 +40,14 @@ $$V_s = R_1 \times \frac{V_e}{R_1 + R_2}$$
 
 Un capteur **proportionnel numérique** fournit directement un mot binaire, du *msb* au *lsb* : $N = (10100001)_2 = (161)_{10}$. Le **codeur absolu** donne ainsi la position d'un axe ; le **codeur incrémental** compte des impulsions, et une seconde piste décalée de 25 % permet de connaître le **sens de rotation** (on regarde l'état de la voie B au moment d'un front descendant de la voie A).
 
+## Le train d'impulsions
+
+Un **train d'impulsions** est un signal logique dont ce sont les **changements d'état** qui portent l'information. Exemple : sur un bus, un capteur inductif à deux têtes, placé sans contact face à une couronne de 90 dents solidaire de l'arbre du moteur, délivre 90 impulsions par tour. Le nombre d'impulsions donne l'angle parcouru, leur cadence donne la vitesse : un tour dure $t = 90\,T$, où $T$ est la période du signal.
+
+{{fig:info-codeur-deux-voies}}
+
+Les deux têtes sont décalées d'une demi-dent, donc les deux signaux d'un **quart de période** (90°). Il suffit alors de lire l'état de la voie 2 au moment d'un **front descendant** de la voie 1 pour connaître le sens de rotation : si la voie 2 est encore à 1, elle est en retard et la roue tourne dans un sens ; si elle est déjà à 0, elle est en avance et la roue tourne dans l'autre.
+
 ## Les systèmes asservis
 
 Un système **asservi ou régulé** compare en permanence ce qu'il fait à ce qu'il doit faire : consigne → comparateur → correcteur → système → sortie, avec une **boucle de retour** qui ramène la mesure du capteur vers le comparateur. Si un écart est détecté, le système le corrige.

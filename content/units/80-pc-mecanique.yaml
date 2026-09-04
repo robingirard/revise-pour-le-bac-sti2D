@@ -304,6 +304,123 @@ units:
       tags:
       - inertie
       - frottements
+    - type: guided
+      level: 3
+      title: 'Le curling : quatre phases, quatre bilans de forces'
+      intro: 'Au curling, on fait glisser sur une piste de glace un palet muni d''une poignée, la **pierre**, de masse **m = 19,96 kg**. On distingue quatre phases :
+
+
+        **A** — la pierre est immobile sur la glace ; **B** — le lanceur la pousse en ligne droite, sans effet ; **C** — elle glisse librement sur la glace, sans tourner sur elle-même ; **D** — deux coéquipiers frottent la glace devant elle avec des balais, et sa vitesse reste constante.
+
+
+        **Donnée** : g = 9,81 N/kg.
+
+        {{fig:guide-curling-phases}}'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Calculer le poids de la pierre, en N (arrondir à l''unité).'
+        answer: '196'
+        numeric: true
+        tolerance: 2
+        unit: N
+        explanation: 'P = m × g = 19,96 × 9,81 = 195,8 N, soit 1,96 × 10² N. Le poids est une **force** en newtons, à ne pas confondre avec la masse en kilogrammes.'
+      - kind: match
+        prompt: '**Étape 2.** Associer chaque phase à la nature du mouvement de la pierre dans le référentiel terrestre.'
+        pairs:
+        - left: Phase A — pierre posée sur la glace
+          right: repos (vitesse nulle)
+        - left: Phase B — poussée par le lanceur
+          right: rectiligne accéléré
+        - left: Phase C — glissement libre
+          right: rectiligne ralenti
+        - left: Phase D — balayage devant la pierre
+          right: rectiligne uniforme
+      - kind: mcq
+        prompt: '**Étape 3.** Faire le bilan des forces extérieures en **phase A**.'
+        choices:
+        - Le poids (vertical, vers le bas) et la réaction normale de la glace (verticale, vers le haut) ; ces deux forces se compensent.
+        - Le poids seul, puisque la pierre ne bouge pas.
+        - Le poids, la réaction normale et une force de frottement dirigée vers l'avant.
+        - Aucune force, puisque la vitesse est nulle.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : sans la réaction de la glace, la pierre s''enfoncerait. Le contact exerce bien une action mécanique.'
+        - 'Non : le frottement ne se manifeste qu''en présence d''un mouvement (ou d''une tendance au mouvement) ; ici la pierre est simplement posée.'
+        - 'Non : une vitesse nulle ne signifie pas absence de forces, mais que les forces **se compensent**.'
+        explanation: 'Deux forces extérieures seulement : le poids et la réaction normale de la glace. La pierre étant immobile, leur somme vectorielle est nulle.'
+      - kind: input
+        prompt: '**Étape 4.** En déduire la norme de la réaction normale de la glace en phase A, en N.'
+        answer: '196'
+        numeric: true
+        tolerance: 2
+        unit: N
+        explanation: 'Les deux forces se compensent : R N = P = 196 N, de même direction et de sens opposé au poids.'
+      - kind: mcq
+        prompt: '**Étape 5.** En **phase C**, la pierre glisse seule et ralentit. Qu''en déduit-on ?'
+        choices:
+        - Une force de frottement horizontale, opposée au mouvement, s'ajoute au poids et à la réaction normale ; les forces ne se compensent plus.
+        - La force de poussée du lanceur continue d'agir, mais elle diminue.
+        - Le poids devient plus grand que la réaction normale.
+        - La pierre ralentit parce qu'elle a perdu la force que le lanceur lui avait donnée.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le lanceur a lâché la pierre. Une force n''existe que tant que son auteur agit.'
+        - 'Non : la pierre ne s''enfonce pas et ne décolle pas ; verticalement, poids et réaction se compensent toujours.'
+        - 'Non : une force n''est pas une réserve que l''on emporterait. C''est le **frottement** qui fait varier la vitesse.'
+        explanation: 'Verticalement, P et R N se compensent encore. Horizontalement, seule la force de frottement glace-pierre agit : elle est opposée au mouvement, donc la vitesse diminue.'
+      - kind: mcq
+        prompt: '**Étape 6.** Peut-on déterminer la norme de la force de poussée du lanceur en **phase B** avec les seules données de l''énoncé ?'
+        choices:
+        - 'Non : les forces ne se compensent pas (mouvement accéléré) et on ne connaît ni l''accélération ni la durée de la poussée.'
+        - 'Oui : elle vaut nécessairement 196 N, comme le poids.'
+        - 'Oui : elle vaut la moitié du poids, soit 98 N.'
+        - 'Non, car une force de poussée ne se mesure jamais en newtons.'
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la poussée est **horizontale** et le poids **vertical** ; il n''y a aucune raison qu''ils aient la même norme.'
+        - 'Non : aucune donnée ne justifie ce facteur 2.'
+        - 'Non : toute force se mesure en newtons.'
+        explanation: 'Quand les forces se compensent, le principe d''inertie permet de déduire une norme inconnue. Ici la vitesse **varie** : il faudrait connaître l''accélération pour appliquer le principe fondamental de la dynamique.'
+      - kind: mcq
+        prompt: '**Étape 7.** Comparer les phases A et D. Quel principe retrouve-t-on ?'
+        choices:
+        - Le principe d'inertie ; dans les deux cas les forces extérieures se compensent, et la pierre est soit immobile, soit en mouvement rectiligne uniforme.
+        - Le principe fondamental de la dynamique, car la vitesse est différente dans les deux phases.
+        - Le théorème de l'énergie cinétique, car l'énergie cinétique est la même dans les deux phases.
+        - 'Rien de commun : dans une phase la pierre est immobile, dans l''autre elle avance.'
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le principe fondamental de la dynamique décrit les mouvements où la vitesse **varie**, ce qui n''est le cas ni en A ni en D.'
+        - 'Non : l''énergie cinétique vaut 0 J en phase A et n''est pas nulle en phase D.'
+        - 'Justement si : le repos et le mouvement rectiligne uniforme sont les **deux** situations décrites par un seul et même principe.'
+        explanation: 'Principe d''inertie (première loi de Newton) : dans un référentiel galiléen, un solide soumis à des forces qui se compensent est soit immobile, soit animé d''un mouvement rectiligne uniforme — et réciproquement.'
+      - kind: mcq
+        prompt: '**Étape 8.** À quoi sert alors le balayage de la glace devant la pierre ?'
+        choices:
+        - À réduire le frottement, pour que les forces se compensent à nouveau et que la pierre garde une vitesse constante, donc aille plus loin.
+        - À exercer une force de poussée supplémentaire vers l'avant.
+        - À augmenter la réaction normale de la glace, donc à alléger la pierre.
+        - À refroidir la glace pour rendre la pierre plus rapide.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : les balais frottent la **glace**, pas la pierre ; ils ne la poussent pas.'
+        - 'Non : la réaction normale reste égale au poids, 196 N, quel que soit l''état de la surface.'
+        - 'Non : le balayage **réchauffe** légèrement la surface et modifie la pellicule d''eau ; en tout état de cause c''est le frottement qui est en jeu.'
+        explanation: 'En rendant le frottement négligeable, le balayage replace la pierre dans les conditions du principe d''inertie : somme des forces nulle, donc vitesse constante — et une trajectoire plus longue.'
+      tags:
+      - forces
+      - inertie
+      - frottements
   - id: pc-travail-energie
     title: Travail, puissance et énergie mécanique
     icon: ⚡
@@ -360,7 +477,7 @@ units:
       cols:
       - id: M
         label: Moteur (W > 0)
-      - id: N
+      - id: 'N'
         label: Nul (W = 0)
       - id: R
         label: Résistant (W < 0)
@@ -610,6 +727,119 @@ units:
       - En déduire la grandeur cherchée (vitesse, distance ou force)
       tags:
       - energie-cinetique
+    - type: guided
+      level: 3
+      title: 'Le skieur : du tire-fesses au bas de la piste'
+      intro: 'Un skieur de masse **m = 70 kg** (équipement compris) est d''abord tracté **à vitesse constante** par un tire-fesses le long d''une pente.
+
+
+        Arrivé au sommet avec une vitesse **v0 = 2,0 m/s**, il dévale ensuite une piste **rectiligne inclinée de 15°** par rapport à l''horizontale, sur **50,0 m**, sans prendre de virage. Sur cette descente, on considère les **frottements comme nuls**.
+
+
+        **Donnée** : g = 9,78 N/kg.
+
+        {{fig:guide-skieur-pente}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Pendant la **remontée** à vitesse constante, le skieur reçoit-il ou cède-t-il de l''énergie ?'
+        choices:
+        - 'Il en reçoit : son énergie cinétique ne change pas, mais son altitude augmente, donc son énergie potentielle de pesanteur augmente.'
+        - 'Il en cède : c''est lui qui tire sur la perche du tire-fesses.'
+        - 'Ni l''un ni l''autre : à vitesse constante, son énergie mécanique ne change pas.'
+        - Il en reçoit, car son énergie cinétique augmente avec l'altitude.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le tire-fesses exerce sur le skieur une force dirigée vers le haut de la pente, dans le sens du déplacement. C''est bien lui qui fournit l''énergie.'
+        - 'Non : l''énergie mécanique Em = Ec + Epp **augmente**, puisque Epp augmente avec l''altitude alors que Ec reste constante.'
+        - 'Attention : c''est l''énergie **potentielle de pesanteur** qui augmente avec l''altitude. L''énergie cinétique ne dépend que de la vitesse, ici constante.'
+        explanation: 'Ec = ½ m v² est constante (v constante) mais Epp = m g z augmente : le skieur reçoit de l''énergie, fournie par le moteur de la remontée mécanique.'
+      - kind: grid
+        prompt: '**Étape 2.** Toujours pendant la **remontée**, classer le travail de chaque force extérieure.'
+        rows:
+        - id: '1'
+          label: Poids du skieur
+        - id: '2'
+          label: Réaction normale de la neige
+        - id: '3'
+          label: Force de traction du tire-fesses
+        - id: '4'
+          label: Forces de frottement (neige et air)
+        cols:
+        - id: M
+          label: Travail moteur
+        - id: R
+          label: Travail résistant
+        - id: 'N'
+          label: Travail nul
+        answer:
+        - R1
+        - N2
+        - M3
+        - R4
+        cellFeedback:
+          R1: 'le skieur **monte**, le poids est dirigé vers le bas : son travail est résistant, W(P) = − m g h'
+          M1: le poids ne serait moteur qu'en **descente**, quand le déplacement a une composante vers le bas
+          N2: la réaction normale est perpendiculaire au plan, donc au déplacement (α = 90°, cos 90° = 0)
+          M3: la traction est dirigée vers le haut de la pente, dans le sens du déplacement (α = 0°)
+          R4: les frottements s'opposent toujours au déplacement (α = 180°)
+          N4: les frottements ne sont négligés que pendant la **descente** ; à la montée, ils travaillent
+        explanation: 'Le signe du travail se lit sur l''angle α entre la force et le déplacement : W = F × AB × cos α. Moteur si α < 90°, nul si α = 90°, résistant si α > 90°.'
+      - kind: input
+        prompt: '**Étape 3.** Pour la **descente**, calculer le dénivelé h correspondant aux 50,0 m de piste inclinée à 15°. Répondre en mètres (arrondir au dixième).'
+        answer: '12.9'
+        numeric: true
+        tolerance: 0.3
+        unit: m
+        explanation: 'h = 50,0 × sin 15° = 50,0 × 0,2588 = 12,9 m. C''est bien le **sinus** qu''il faut utiliser : h est le côté opposé à l''angle de 15°.'
+      - kind: input
+        prompt: '**Étape 4.** Calculer le travail du poids sur cette descente, en kJ (arrondir au dixième).'
+        answer: '8.9'
+        numeric: true
+        tolerance: 0.3
+        unit: kJ
+        explanation: 'W(P) = m × g × h = 70 × 9,78 × 12,9 = 8,86 × 10³ J ≈ 8,9 kJ. Le travail est **moteur** (positif) puisque le skieur descend.'
+      - kind: input
+        prompt: '**Étape 5.** Calculer l''énergie cinétique du skieur au sommet de la piste, en J.'
+        answer: '140'
+        numeric: true
+        tolerance: 3
+        unit: J
+        explanation: 'Ec = ½ × m × v0² = 0,5 × 70 × 2,0² = 0,5 × 70 × 4,0 = 140 J. Elle est négligeable devant les 8 900 J apportés par le poids.'
+      - kind: input
+        prompt: '**Étape 6.** En appliquant le théorème de l''énergie cinétique sur la descente (frottements nuls), calculer l''énergie cinétique en bas de la piste, en kJ (arrondir au dixième).'
+        answer: '9'
+        numeric: true
+        tolerance: 0.3
+        unit: kJ
+        explanation: 'Seul le poids travaille : Ec(B) − Ec(A) = W(P), donc Ec(B) = 140 + 8 860 = 9,0 × 10³ J = 9,0 kJ.'
+      - kind: input
+        prompt: '**Étape 7.** En déduire la vitesse atteinte en bas de la piste, en m/s (arrondir au dixième).'
+        answer: '16'
+        numeric: true
+        tolerance: 0.4
+        unit: m/s
+        explanation: 'Ec = ½ m v² donne v = √(2 Ec / m) = √(2 × 9 000 / 70) = √257 = 16,0 m/s. Erreur classique : oublier la racine carrée.'
+      - kind: mcq
+        prompt: '**Étape 8.** Convertir cette vitesse en km/h, puis dire ce que changerait la prise en compte des frottements.'
+        choices:
+        - 58 km/h ; avec des frottements, une partie de l'énergie serait dissipée et la vitesse en bas serait plus faible.
+        - 58 km/h ; les frottements ne changeraient rien, puisque le poids fournit toujours la même énergie.
+        - 4,4 km/h ; avec des frottements, la vitesse serait plus grande.
+        - 58 km/h ; avec des frottements, la vitesse serait plus grande car ils poussent le skieur vers le bas.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le travail du poids serait bien le même, mais celui des frottements est **résistant** et se retrancherait, d''où une Ec finale plus faible.'
+        - 'Non : on **multiplie** par 3,6 pour passer des m/s aux km/h (16,0 × 3,6 = 58), on ne divise pas. Et les frottements freinent.'
+        - 'Non : les frottements s''opposent toujours au déplacement, ils ne peuvent en aucun cas accélérer le skieur.'
+        explanation: 'v = 16,0 × 3,6 = 57,7 ≈ 58 km/h. Avec frottements : Ec(B) = Ec(A) + W(P) − |W(f)| < 9,0 kJ, donc une vitesse plus faible — c''est le cas réel, et c''est aussi pourquoi on farte les skis.'
+      tags:
+      - travail
+      - energie-cinetique
+      - energie-mecanique
   - id: pc-dynamique
     title: 'Dynamique : translation et rotation'
     icon: 🚀
@@ -1247,4 +1477,97 @@ units:
       unit: N
       explanation: 'P = F1 ÷ S1 = 100 ÷ (5,0 × 10⁻⁴) = 2,0 × 10⁵ Pa (soit 2,0 bars). Puis F2 = P × S2 = 2,0 × 10⁵ × 250 × 10⁻⁴ = 5 000 N. La force est multipliée par le rapport des surfaces : 250 ÷ 5,0 = 50.'
       tags:
+      - pression
+    - type: guided
+      level: 3
+      title: 'La fosse des Mariannes : jusqu''où monte la pression ?'
+      intro: 'La **fosse des Mariannes**, dans l''océan Pacifique, est la fosse sous-marine la plus profonde du monde : **h = 10 994 m**. Le 23 janvier 1960, les instruments de bord d''un bathyscaphe y ont mesuré une pression absolue de **1 087 bars** — et on y a observé des formes de vie.
+
+
+        **Données** : masse volumique de l''eau de mer ρ = 1 030 kg/m³ ; pression atmosphérique à la surface P atm = 1 013 hPa ; g = 9,807 N/kg ; 1 bar = 1 × 10⁵ Pa.
+
+        {{fig:guide-fosse-mariannes}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelle relation permet de calculer l''écart de pression entre la surface et le fond ?'
+        choices:
+        - ΔP = ρ × g × h, avec ΔP en Pa, ρ en kg/m³, g en N/kg et h en m
+        - ΔP = P × S, la pression multipliée par la surface
+        - ΔP = ρ × g / h
+        - ΔP = P atm × h, la pression de surface multipliée par la profondeur
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : P × S donne une **force** pressante en newtons, pas une pression.'
+        - 'Non : la pression **augmente** avec la profondeur, elle ne peut pas être inversement proportionnelle à h.'
+        - 'Non : cette expression n''est pas homogène à une pression et ne fait intervenir ni ρ ni g.'
+        explanation: 'Principe fondamental de la statique des fluides : entre deux points d''un même fluide au repos, ΔP = ρ × g × h, où h est la dénivellation. Contrôle des unités : kg/m³ × N/kg × m = N/m² = Pa.'
+      - kind: input
+        prompt: '**Étape 2.** Convertir la pression atmosphérique P atm = 1 013 hPa en pascals.'
+        answer: '101300'
+        numeric: true
+        tolerance: 100
+        unit: Pa
+        explanation: '1 hPa = 100 Pa, donc P atm = 1 013 × 100 = 101 300 Pa, soit 1,013 × 10⁵ Pa (à peu près 1 bar).'
+      - kind: input
+        prompt: '**Étape 3.** Calculer la variation de pression ΔP entre la surface et le fond de la fosse, en MPa (arrondir à l''unité ; 1 MPa = 10⁶ Pa).'
+        answer: '111'
+        numeric: true
+        tolerance: 2
+        unit: MPa
+        explanation: ΔP = ρ × g × h = 1 030 × 9,807 × 10 994 = 1,11 × 10⁸ Pa = 111 MPa.
+      - kind: input
+        prompt: '**Étape 4.** En déduire la pression absolue au fond de la fosse, exprimée en bars (arrondir à l''unité).'
+        answer: '1112'
+        numeric: true
+        tolerance: 5
+        unit: bar
+        explanation: 'P abs = P atm + ΔP = 101 300 + 111 052 703 = 1,1115 × 10⁸ Pa, soit 1,1115 × 10⁸ ÷ 10⁵ = 1 112 bars. On voit que P atm ne pèse presque rien : moins de 0,1 % du total.'
+      - kind: input
+        prompt: '**Étape 5.** Comparer au relevé du bathyscaphe (1 087 bars) en calculant l''erreur relative, en % (arrondir au dixième).'
+        answer: '2.3'
+        numeric: true
+        tolerance: 0.4
+        unit: '%'
+        explanation: 'Erreur relative = |1 112 − 1 087| ÷ 1 087 = 25 ÷ 1 087 = 2,3 × 10⁻² = 2,3 %. On divise toujours par la valeur de **référence**, ici la valeur mesurée.'
+      - kind: mcq
+        prompt: '**Étape 6.** Comment expliquer cet écart de 2,3 % entre calcul et mesure ?'
+        choices:
+        - Le modèle suppose ρ et g constants sur 11 km, alors que l'eau se comprime légèrement et que g varie un peu avec la profondeur.
+        - 'Le calcul est faux : la relation ΔP = ρ g h ne s''applique pas à l''eau de mer.'
+        - La mesure de 1960 est fausse, car un bathyscaphe ne peut pas mesurer une pression.
+        - L'écart vient uniquement de la pression atmosphérique, que l'on a oublié d'ajouter.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la relation s''applique bien, mais avec des valeurs **moyennes** de ρ et de g. Un accord à 2 % est excellent.'
+        - 'Non : rien ne permet de rejeter la mesure ; c''est au contraire elle qui sert de référence.'
+        - 'Non : P atm a bien été ajoutée, et elle ne représente que 1 bar sur 1 112, soit moins de 0,1 %.'
+        explanation: 'Le modèle « fluide incompressible, g uniforme » est une approximation. Sur 11 km, l''eau de mer se comprime de quelques pour cent et ρ augmente : d''où un léger écart, ici 2,3 %.'
+      - kind: mcq
+        prompt: '**Étape 7.** Quel doit être l''ordre de grandeur de la pression interne des organismes vivant au fond de la fosse ?'
+        choices:
+        - 'Environ 10⁸ Pa, soit un millier de bars : leur pression interne équilibre la pression extérieure.'
+        - Environ 10⁵ Pa, soit 1 bar, comme à la surface.
+        - Zéro, sinon ils exploseraient.
+        - Environ 10¹⁰ Pa, pour résister à la pression de l'eau.
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : avec 1 bar à l''intérieur et 1 112 bars à l''extérieur, l''écart de pression les écraserait.'
+        - 'Non : une pression interne nulle donnerait l''écart maximal possible, donc l''écrasement certain.'
+        - 'Non : une pression interne cent fois supérieure les ferait au contraire éclater. Il faut l''**égalité**, pas l''excès.'
+        explanation: 'Un organisme n''est pas écrasé si les pressions interne et externe s''équilibrent : sa pression interne est du même ordre de grandeur, environ 10⁸ Pa (≈ 1 000 bars).'
+      - kind: input
+        prompt: '**Étape 8.** Le hublot du bathyscaphe a une surface S = 0,15 m². Calculer la force pressante exercée par l''eau sur ce hublot, en MN (arrondir au dixième ; 1 MN = 10⁶ N).'
+        answer: '16.7'
+        numeric: true
+        tolerance: 0.6
+        unit: MN
+        explanation: 'F = P abs × S = 1,1115 × 10⁸ × 0,15 = 1,67 × 10⁷ N = 16,7 MN, soit le poids d''environ 1 700 tonnes sur un hublot de la taille d''une assiette. D''où les hublots en cône de plexiglas de plusieurs dizaines de centimètres d''épaisseur.'
+      tags:
+      - hydrostatique
       - pression

@@ -1,0 +1,296 @@
+# Mécanisme : la benne basculante à vérin hydraulique (camion ou remorque agricole).
+# Intérêt : une chaîne fermée à 4 classes avec un actionneur (vérin) dont le corps doit pivoter,
+# et une liaison dont l'axe n'est ni x ni y ni z mais la direction (O, P) du vérin.
+id: benne-verin
+nom: Camion à benne basculante
+titre: La benne basculante à vérin
+description: >
+  Le châssis du camion porte une benne articulée à l'arrière. Un vérin hydraulique, articulé sur le
+  châssis, pousse sous la benne : quand il s'allonge, la benne bascule autour de son axe arrière et
+  le chargement glisse au sol. Quand le vérin se rétracte, la benne redescend.
+repere: >-
+  x : horizontal, vers l'arrière du camion ; y : vertical, vers le haut ; z : axe des pivots, vers
+  l'observateur ; u : direction du vérin, de O vers P
+figures:
+  dessin: mecanisme-benne-verin-dessin
+  classes: mecanisme-benne-verin-classes
+  graphe: mecanisme-benne-verin-graphe
+  schema: mecanisme-benne-verin-schema
+pieces:
+- num: 0
+  nom: châssis (cadre, cabine et roues)
+- num: 1
+  nom: benne
+- num: 2
+  nom: corps du vérin
+- num: 3
+  nom: tige du vérin
+- num: 4
+  nom: axe de basculement (en C)
+- num: 5
+  nom: axe du pied de vérin (en O)
+- num: 6
+  nom: axe d'articulation tige/benne (en P)
+classes:
+- id: E0
+  nom: châssis
+  pieces:
+  - 0
+  - 4
+  - 5
+  couleur: black
+  bati: true
+  pourquoi: >-
+    Le camion est à l'arrêt : le châssis est le solide de référence. Les axes 4 et 5 sont montés
+    serrés dans ses chapes : ils ne bougent pas par rapport à lui.
+- id: E1
+  nom: benne
+  pieces:
+  - 1
+  - 6
+  couleur: solideB
+  pourquoi: >-
+    L'axe 6 est monté serré dans la chape de la benne : il bascule avec elle. Seule la tige tourne
+    autour de lui.
+- id: E2
+  nom: corps du vérin
+  pieces:
+  - 2
+  couleur: solideE
+  pourquoi: >-
+    Le corps du vérin tourne autour de l'axe 5 par rapport au châssis et la tige coulisse dedans :
+    il bouge par rapport à toutes les autres classes.
+- id: E3
+  nom: tige du vérin
+  pieces:
+  - 3
+  couleur: solideA
+  pourquoi: >-
+    La tige sort du corps du vérin quand l'huile est mise sous pression : elle a un mouvement par
+    rapport au corps comme par rapport à la benne.
+liaisons:
+- entre:
+  - E0
+  - E1
+  contact: cylindre-cylindre avec arrêt en translation (axe de basculement 4)
+  surfaces: les chapes de la benne tournent autour de l'axe 4 monté sur le châssis
+  liaison: pivot
+  point: C
+  axe: z
+  explication: >-
+    La benne ne peut que tourner autour de l'axe arrière : pivot d'axe (C, z). C'est le mouvement
+    utile du mécanisme.
+- entre:
+  - E0
+  - E2
+  contact: cylindre-cylindre court avec arrêt en translation (axe 5)
+  surfaces: l'œil du pied de vérin tourne autour de l'axe 5 fixé au châssis
+  liaison: pivot
+  point: O
+  axe: z
+  explication: >-
+    Le pied du vérin est articulé sur le châssis : pivot d'axe (O, z). Sans ce pivot, le vérin ne
+    pourrait pas s'incliner pendant la montée de la benne.
+- entre:
+  - E2
+  - E3
+  contact: cylindre-cylindre long (piston et tige dans l'alésage du corps)
+  surfaces: la tige coulisse dans l'alésage du corps du vérin
+  liaison: pivot-glissant
+  point: Q
+  axe: u
+  explication: >-
+    La tige peut coulisser dans le corps (c'est le mouvement de sortie du vérin) et rien ne l'empêche
+    de tourner autour de l'axe du vérin : pivot glissant d'axe (Q, u), avec u la direction (O, P).
+    Dans la projection plane du schéma, seule la translation est visible : on dessine le symbole
+    « glissière » orienté selon (O, P), incliné et non horizontal.
+- entre:
+  - E3
+  - E1
+  contact: cylindre-cylindre avec arrêt en translation (axe 6)
+  surfaces: l'œil de la tige tourne autour de l'axe 6 solidaire de la benne
+  liaison: pivot
+  point: P
+  axe: z
+  explication: >-
+    La tête de tige est articulée sous la benne : pivot d'axe (P, z). L'angle entre le vérin et la
+    benne change pendant le basculement, ce pivot est donc indispensable.
+questions:
+- level: 2
+  type: mcq
+  prompt: 'Sur le schéma cinématique de la benne, combien de liaisons **pivot d''axe z** compte-t-on ?
+
+    {{fig:mecanisme-benne-verin-schema}}'
+  choices:
+  - '3'
+  - '4'
+  - '2'
+  - '1'
+  answer: 0
+  explanation: 'Trois pivots d''axe z : en C (benne/châssis), en O (corps/châssis) et en P (tige/benne). La quatrième liaison, entre la tige et le corps, est un pivot glissant d''axe (Q, u).'
+  feedback:
+  - null
+  - 'Non : il y a bien quatre liaisons, mais celle du vérin (tige/corps) est un pivot glissant, pas un pivot.'
+  - 'Non : compte les cercles du schéma : C, O et P.'
+  - 'Non : chaque articulation du vérin (O et P) est un pivot, comme l''axe de basculement C.'
+- level: 2
+  type: mcq
+  prompt: 'Quel est le mouvement de la **benne (E1)** par rapport au **châssis (E0)** ?
+
+    {{fig:mecanisme-benne-verin-schema}}'
+  choices:
+  - Une rotation autour de l'axe (C, z)
+  - Une translation verticale selon y
+  - Un mouvement plan (translation + rotation)
+  - Une translation le long du vérin
+  answer: 0
+  explanation: 'La seule liaison entre la benne et le châssis est le pivot d''axe (C, z) : la benne ne peut que basculer autour de cet axe arrière.'
+  feedback:
+  - null
+  - 'Non : la benne ne monte pas « tout droit », elle pivote : les points de la benne décrivent des arcs de cercle de centre C.'
+  - 'Non : le mouvement plan est celui du corps et de la tige du vérin ; la benne, elle, est en rotation pure autour de (C, z).'
+  - 'Non : c''est la tige qui translate par rapport au corps du vérin ; la benne, elle, tourne autour de C.'
+- level: 3
+  type: mcq
+  prompt: 'Dans la chaîne d''énergie du camion, quel est le rôle du **vérin hydraulique** (E2 + E3) ?
+
+    {{fig:mecanisme-benne-verin-dessin}}'
+  choices:
+  - Convertir l'énergie hydraulique (huile sous pression) en mouvement de translation de la tige
+  - Stocker l'énergie hydraulique pour la restituer plus tard
+  - Distribuer l'huile vers les différents organes du camion
+  - Transmettre la rotation du moteur jusqu'aux roues
+  answer: 0
+  explanation: 'Le vérin est l''**actionneur** : la pompe met l''huile sous pression, l''huile pousse le piston, la tige sort et fait basculer la benne. Énergie hydraulique → énergie mécanique.'
+  feedback:
+  - null
+  - 'Non : stocker l''énergie est le rôle d''un accumulateur ou d''une batterie ; le vérin, lui, convertit tout de suite l''énergie reçue en mouvement.'
+  - 'Non : distribuer l''huile est le rôle du distributeur (le préactionneur) ; le vérin est l''actionneur placé après lui.'
+  - 'Non : ça, c''est la transmission du camion ; le vérin n''entraîne que la benne.'
+- level: 3
+  type: mcq
+  skill: graphe
+  prompt: 'Le graphe des liaisons de la benne forme une **boucle** E0 – E1 – E3 – E2 – E0. Qu''en déduit-on ?
+
+    {{fig:mecanisme-benne-verin-graphe}}'
+  choices:
+  - 'C''est une chaîne fermée : la longueur du vérin impose l''angle de la benne'
+  - Le mécanisme possède quatre mouvements indépendants
+  - Il y a une erreur : le graphe d'un mécanisme ne doit jamais boucler
+  - La benne peut basculer même si le vérin ne bouge pas
+  answer: 0
+  explanation: 'Les quatre classes forment un quadrilatère articulé : à chaque longueur du vérin correspond un seul angle de benne. Une seule grandeur d''entrée (la sortie de tige) commande tout le mécanisme.'
+  feedback:
+  - null
+  - 'Non : la boucle ajoute des contraintes. Il ne reste qu''un seul mouvement utile : le basculement commandé par le vérin.'
+  - 'Non : une boucle est normale, elle signale une chaîne fermée (comme dans l''étau ou le bielle-manivelle).'
+  - 'Non : justement, la boucle interdit ce mouvement libre : tant que la tige ne sort pas, la benne est bloquée.'
+- level: 3
+  type: mcq
+  prompt: 'Pourquoi le **corps du vérin (E2)** est-il lié au châssis par un **pivot** en O, et non **encastré** ?
+
+    {{fig:mecanisme-benne-verin-schema}}'
+  choices:
+  - Parce que la direction du vérin change pendant la montée : il doit pouvoir s'incliner
+  - Parce que le corps du vérin doit pouvoir coulisser sur le châssis
+  - Parce qu'un encastrement casserait la boucle du graphe
+  - Parce que le corps du vérin est trop lourd pour être encastré
+  answer: 0
+  explanation: 'Le point P décrit un arc de cercle de centre C : la droite (O, P) tourne pendant le basculement. Si le corps était encastré, la boucle serait bloquée (mécanisme hyperstatique, le vérin plierait).'
+  feedback:
+  - null
+  - 'Non : le pied du vérin reste au même endroit sur le châssis ; c''est la tige qui coulisse, dans le corps.'
+  - 'Non : la boucle existerait toujours, mais elle serait bloquée : le vrai problème est géométrique, la direction (O, P) doit pouvoir tourner.'
+  - 'Non : la masse n''a rien à voir ; c''est la géométrie du mouvement qui impose une articulation.'
+- level: 2
+  type: mcq
+  skill: classes
+  prompt: 'Pourquoi la **tige (3)** et le **corps (2)** du vérin ne sont-ils pas dans la **même** classe d''équivalence ?
+
+    {{fig:mecanisme-benne-verin-classes}}'
+  choices:
+  - Parce que la tige coulisse dans le corps : il y a un mouvement relatif
+  - Parce qu'ils ne sont pas fabriqués dans le même matériau
+  - Parce qu'ils n'ont pas la même couleur sur le dessin
+  - Parce que la tige est une pièce déformable
+  answer: 0
+  explanation: 'Deux pièces sont dans la même classe seulement s''il n''y a **aucun** mouvement relatif. Ici la tige sort et rentre : c''est même le mouvement d''entrée du mécanisme.'
+  feedback:
+  - null
+  - 'Non : le matériau ne compte pas ; seule l''absence de mouvement relatif regroupe deux pièces.'
+  - 'Non : c''est l''inverse : on leur donne deux couleurs parce qu''elles appartiennent à deux classes différentes.'
+  - 'Non : la tige est un solide indéformable (contrairement à un ressort) ; c''est bien son mouvement de sortie qui la sépare du corps.'
+- level: 2
+  type: mcq
+  skill: classes
+  prompt: 'L''**axe 6** (articulation tige/benne, en P) est monté serré dans la chape de la benne. À quelle classe appartient-il ?
+
+    {{fig:mecanisme-benne-verin-classes}}'
+  choices:
+  - 'E1, la classe de la benne'
+  - 'E3, la classe de la tige'
+  - 'E0, la classe du châssis'
+  - À aucune : un axe n'appartient jamais à une classe
+  answer: 0
+  explanation: 'Monté serré dans la benne, l''axe 6 ne bouge pas par rapport à elle : E1 = {1, 6}. C''est l''œil de la tige qui tourne autour de lui, d''où le pivot (P, z).'
+  feedback:
+  - null
+  - 'Non : la tige tourne autour de cet axe (c''est justement la liaison pivot en P) : ils ont un mouvement relatif.'
+  - 'Non : l''axe 6 est en haut du vérin, sous la benne ; il bascule avec elle, loin du châssis.'
+  - 'Non : un axe est un solide comme un autre ; on le range dans la classe de la pièce avec laquelle il ne bouge pas.'
+- level: 2
+  type: mcq
+  prompt: 'Le distributeur envoie l''huile sous pression : la **distance OP augmente**. Que se passe-t-il ?
+
+    {{fig:mecanisme-benne-verin-schema}}'
+  choices:
+  - La tige sort du corps et la benne se lève en tournant autour de C
+  - La benne monte en restant horizontale
+  - Le corps du vérin coulisse le long du châssis
+  - La benne redescend, car la tige tire sur elle
+  answer: 0
+  explanation: 'P appartient à la benne, à distance fixe de C. Si OP s''allonge, P s''éloigne de O en décrivant son arc de cercle : la benne bascule et se lève. Vérin rentré OP ≈ 2,06 m ; benne à 30°, OP ≈ 2,84 m.'
+  feedback:
+  - null
+  - 'Non : la benne est articulée en C, elle ne peut pas translater : elle tourne, l''avant monte et l''arrière reste en bas.'
+  - 'Non : le pied du vérin est articulé en O sur le châssis (pivot), il ne coulisse pas : c''est la tige qui sort.'
+  - 'Non : un vérin qui s''allonge **pousse** ; c''est en se rétractant qu''il fait redescendre la benne.'
+animation:
+  bbox:
+  - 0
+  - -1.15
+  - 6.4
+  - 4.45
+  border: 4
+  duration: 4
+  legende: "Le vérin s'allonge : sa tige pousse la benne, qui bascule autour de l'axe arrière C ; le corps du vérin pivote en O."
+  classes:
+    E0:
+      motion: fixed
+    E1:                       # oscille entre 0° et -30° (sens horaire : l'avant de la benne monte)
+      motion: rotate
+      center:
+      - 5.6
+      - 1.2
+      amplitude: -15
+      phase: 0.75
+      offset: -15
+    E2:                       # le corps pivote autour de O en visant le point P de la benne
+      motion: aim
+      pivot:
+      - 4.2
+      - 0.5
+      at: E1
+      point:
+      - 2.4
+      - 1.5
+    E3:                       # la tige vise le même point et glisse pour y rester attachée
+      motion: aim
+      pivot:
+      - 4.2
+      - 0.5
+      at: E1
+      point:
+      - 2.4
+      - 1.5
+      slide: true

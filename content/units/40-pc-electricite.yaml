@@ -256,6 +256,97 @@ units:
       - 'Non : 24 kWh est une **énergie** ; il faut la diviser par la durée.'
       - 'Non : il faut diviser par la durée, pas multiplier ($24 \times 24 = 576$).'
       explanation: $P = \Delta E / \Delta t = 24 / 24 = 1$ kW. La puissance moyenne (1 kW) est bien inférieure à la puissance instantanée des phases actives (2 kW), car l'appareil ne consomme que la moitié du temps.
+    - type: guided
+      level: 3
+      title: 'La facture d''électricité : l''estimation contre le relevé'
+      intro: 'Une famille reçoit sa facture d''électricité, établie du **13.01.2022 au 13.08.2022**. Son installation est **monophasée**, de tension nominale $U_N = 230$ V, et la puissance souscrite vaut **6 kV·A** (tarif bleu). Tous les calculs se mènent comme si l''installation était alimentée sous une tension continue de 230 V.
+
+        **Sur la facture** : 1 522 kWh en heures creuses (HC) à 0,1360 €/kWh ; 1 269 kWh en heures pleines (HP) à 0,1820 €/kWh ; abonnement 85,05 € ; total 523,00 €.
+
+        **L''estimation faite par l''abonné**, pour une journée moyenne : éclairages $L_1$ 100 W pendant 3 h, $L_2$ 100 W pendant 1 h, $L_3$ 150 W pendant 2 h, $L_4$ 100 W pendant 1,5 h (tous en HP) ; lave-linge 2 200 W pendant 30 min (HC) ; four 3 000 W pendant 30 min (HP) ; chauffe-eau 2 500 W pendant 3 h (HC) ; réfrigérateur 1,4 kWh par jour, dont 30 % en HC et 70 % en HP ; appareils divers 500 W pendant 2 h (HP).
+
+        {{fig:guide-facture-electricite}}'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Le disjoncteur d''abonné limite l''intensité appelée par l''installation. Calculer l''**intensité nominale** correspondant à la puissance souscrite de 6 kV·A sous 230 V (2 chiffres significatifs).'
+        answer: '26'
+        numeric: true
+        tolerance: 0.5
+        unit: A
+        explanation: $I = \dfrac{S}{U} = \dfrac{6\,000}{230} = 26{,}09 \approx 26$ A. C'est le calibre du disjoncteur d'abonné, qui coupe au-delà.
+      - kind: mcq
+        prompt: '**Étape 2.** Pourquoi la puissance souscrite est-elle exprimée en **kV·A** et non en kW ?'
+        choices:
+        - 'C''est une puissance **apparente** $S = U \times I$ : elle n''est égale à la puissance active $P$ que si le facteur de puissance vaut 1'
+        - 'C''est une autre écriture du kilowatt : 1 kV·A = 1 kW dans tous les cas'
+        - Parce que le compteur mesure une énergie et non une puissance
+        - Parce que l'installation est alimentée en tension continue
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : $P = S \times \cos\varphi$, et $\cos\varphi < 1$ dès que l''installation contient des moteurs.'
+        - 'Non : le compteur mesure bien une énergie (en kWh), mais la puissance souscrite, elle, limite l''intensité appelée.'
+        - 'Non : le réseau domestique est alternatif sinusoïdal (230 V, 50 Hz) ; c''est justement pour cela que $S$ et $P$ diffèrent.'
+        explanation: 'Le disjoncteur limite l''**intensité** : c''est donc la puissance apparente $S = U \times I$, en volt-ampère, qui est souscrite. La puissance réellement convertie vaut $P = S \times \cos\varphi \le S$.'
+      - kind: input
+        prompt: '**Étape 3.** Additionner les énergies consommées en **heures pleines** au cours d''une journée moyenne. Attention : seuls 70 % des 1,4 kWh du réfrigérateur sont en HP. Donner le résultat en kWh (2 décimales).'
+        answer: '4.33'
+        numeric: true
+        tolerance: 0.05
+        unit: kWh
+        explanation: '$E = P \times \Delta t$ pour chaque appareil, en W·h : $L_1$ 300, $L_2$ 100, $L_3$ 300, $L_4$ 150, four 1 500, réfrigérateur $0{,}70 \times 1\,400 = 980$, divers 1 000. Total $4\,330$ W·h $= 4{,}33$ kWh. Le lave-linge et le chauffe-eau ne comptent pas ici : ils fonctionnent en heures creuses.'
+      - kind: input
+        prompt: '**Étape 4.** Compter le nombre de jours de la période facturée, du 13.01.2022 au 13.08.2022.'
+        answer: '212'
+        numeric: true
+        tolerance: 1
+        unit: jours
+        explanation: 18 (fin janvier) + 28 + 31 + 30 + 31 + 30 + 31 + 13 (août) = 212 jours. 2022 n'est pas une année bissextile.
+      - kind: input
+        prompt: '**Étape 5.** En déduire le coût **estimé** de l''énergie consommée en heures pleines sur toute la période, au prix de 0,1820 €/kWh (arrondir à l''euro).'
+        answer: '167'
+        numeric: true
+        tolerance: 3
+        unit: €
+        explanation: '$E_{\text{HP}} = 4{,}33 \times 212 = 918$ kWh, puis coût $= 918 \times 0{,}1820 = 167$ €.'
+      - kind: mcq
+        prompt: '**Étape 6.** La facture, elle, indique 1 269 kWh en heures pleines, pour 230,96 €. Que conclure de l''estimation de l''abonné ?'
+        choices:
+        - Il a **sous-estimé** sa consommation d'environ 350 kWh, soit près de 28 % de la consommation réelle
+        - Il a **surestimé** sa consommation d'environ 350 kWh
+        - Son estimation tombe juste
+        - On ne peut pas comparer, les deux valeurs n'ont pas la même unité
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : 918 kWh estimés, c''est **moins** que les 1 269 kWh facturés.'
+        - 'Non : l''écart atteint 351 kWh et 64 € — bien plus qu''un arrondi.'
+        - 'Non : les deux valeurs sont des énergies en kWh, sur la même période de 212 jours.'
+        explanation: '$1\,269 - 918 = 351$ kWh oubliés, soit $351/1\,269 = 28$ % de la consommation réelle. Un inventaire appareil par appareil oublie presque toujours les veilles, la box, les appareils occasionnels.'
+      - kind: input
+        prompt: '**Étape 7.** Le lave-linge contient deux moteurs : $M_1$ (tambour, $P_{\text{utile}} = 800$ W, $\eta = 75$ %) et $M_2$ (pompe, $P_{\text{utile}} = 80$ W, $\eta = 65$ %). Calculer la puissance électrique **absorbée** par les deux moteurs réunis.'
+        answer: '1190'
+        numeric: true
+        tolerance: 20
+        unit: W
+        explanation: '$P_{\text{absorbée}} = P_{\text{utile}}/\eta$ : $800/0{,}75 = 1\,067$ W et $80/0{,}65 = 123$ W, soit $1{,}19 \times 10^{3}$ W au total. Erreur classique : multiplier par le rendement, ce qui donnerait une puissance absorbée **inférieure** à la puissance utile.'
+      - kind: mcq
+        prompt: '**Étape 8.** L''estimation attribue 2 200 W au lave-linge complet. Quelle puissance absorbe alors sa résistance chauffante ?'
+        choices:
+        - Environ 1 000 W
+        - Environ 1 250 W
+        - Environ 1 500 W
+        - Environ 2 200 W
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : il ne resterait que 950 W pour les deux moteurs, alors que le calcul en donne 1 190 W.'
+        - 'Non : il ne resterait que 700 W pour les moteurs, soit moins que la seule puissance **utile** du tambour (800 W).'
+        - 'Non : 2 200 W est la puissance de **tout** le lave-linge, moteurs compris.'
+        explanation: $P_{\text{résistance}} = 2\,200 - 1\,190 = 1\,010$ W, soit environ 1 000 W. Chauffer l'eau coûte presque autant que faire tourner les deux moteurs.
   - id: pc-tension-intensite
     title: Tension et intensité
     icon: 🔌
@@ -495,6 +586,85 @@ units:
       - 'Non : $5{,}0 \times \sqrt{2} = 7{,}07$ V : on a multiplié au lieu de diviser.'
       - 'Non : le facteur est $\sqrt{2} \approx 1{,}414$, pas 2.'
       explanation: $U_{\text{eff}} = U_m/\sqrt{2} = 5{,}0/1{,}414 = 3{,}54$ V.
+    - type: guided
+      level: 3
+      title: 'Le circuit à trois branches : retrouver toutes les valeurs'
+      intro: 'Un générateur de tension continue $U_G = 12$ V est monté en série avec une lampe témoin, aux bornes de laquelle on mesure 1 V. L''ensemble alimente **deux branches en dérivation**.
+
+        La branche du milieu contient un conducteur ohmique de $100\ \Omega$, soumis à la tension $U_1$ et parcouru par l''intensité $I_1$. La branche du haut contient un conducteur ohmique inconnu $R$, sous 2 V, en série avec une seconde lampe sous la tension $U_2$ ; elle est parcourue par $I_2$.
+
+        L''ampèremètre placé dans la branche du générateur indique 0,20 A.
+
+        {{fig:guide-circuit-trois-branches}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Comment branche-t-on le multimètre pour mesurer la tension aux bornes du conducteur de $100\ \Omega$ ?'
+        choices:
+        - En dérivation à ses bornes, sur les bornes V et COM, sans ouvrir le circuit
+        - En série dans la branche, sur les bornes A et COM
+        - En série dans la branche, sur les bornes V et COM
+        - Peu importe, le multimètre choisit tout seul le mode adapté
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : c''est le branchement de l''**ampèremètre**, qui mesure une intensité.'
+        - 'Non : un voltmètre ne s''insère jamais en série ; il faudrait ouvrir le circuit.'
+        - 'Non : c''est à l''utilisateur de choisir la fonction et les bornes. Se tromper peut détruire l''appareil ou faire disjoncter le montage.'
+        explanation: 'Le voltmètre se place **en dérivation** aux bornes du dipôle (bornes V et COM) ; l''ampèremètre se place **en série** (bornes A et COM).'
+      - kind: input
+        prompt: '**Étape 2.** Appliquer la loi des mailles à la maille contenant le générateur, la lampe témoin et le conducteur de $100\ \Omega$ pour calculer $U_1$.'
+        answer: '11'
+        numeric: true
+        tolerance: 0.2
+        unit: V
+        explanation: '$U_G = 1 + U_1$, donc $U_1 = 12 - 1 = 11$ V. Erreur classique : oublier la lampe témoin et répondre 12 V.'
+      - kind: input
+        prompt: '**Étape 3.** Les deux branches en dérivation sont soumises à la même tension $U_1$. En déduire $U_2$, sachant que le conducteur $R$ supporte 2 V.'
+        answer: '9'
+        numeric: true
+        tolerance: 0.2
+        unit: V
+        explanation: '$U_1 = 2 + U_2$, donc $U_2 = 11 - 2 = 9$ V. Deux branches en dérivation ont toujours la même tension entre leurs extrémités.'
+      - kind: input
+        prompt: '**Étape 4.** Calculer l''intensité $I_1$ dans la branche du milieu (2 décimales).'
+        answer: '0.11'
+        numeric: true
+        tolerance: 0.005
+        unit: A
+        explanation: 'Loi d''Ohm : $U_1 = 100 \times I_1$, donc $I_1 = U_1/100 = 11/100 = 0{,}11$ A.'
+      - kind: input
+        prompt: '**Étape 5.** Appliquer la loi des nœuds pour calculer $I_2$ (2 décimales).'
+        answer: '0.09'
+        numeric: true
+        tolerance: 0.005
+        unit: A
+        explanation: 'Le courant débité par le générateur se partage entre les deux branches : $I_1 + I_2 = 0{,}20$ A, donc $I_2 = 0{,}20 - 0{,}11 = 0{,}09$ A.'
+      - kind: input
+        prompt: '**Étape 6.** En déduire la valeur de la résistance $R$ (arrondir à l''unité).'
+        answer: '22'
+        numeric: true
+        tolerance: 1
+        unit: Ω
+        explanation: '$R = \dfrac{2}{I_2} = \dfrac{2}{0{,}09} = 22{,}2 \approx 22\ \Omega$. Erreur classique : diviser par l''intensité totale 0,20 A (on trouverait $10\ \Omega$).'
+      - kind: input
+        prompt: '**Étape 7.** Calculer la puissance électrique fournie par le générateur (1 décimale).'
+        answer: '2.4'
+        numeric: true
+        tolerance: 0.1
+        unit: W
+        explanation: '$P = U_G \times I = 12 \times 0{,}20 = 2{,}4$ W. Vérification par le bilan : lampe témoin $1 \times 0{,}20 = 0{,}20$ W, branche du milieu $11 \times 0{,}11 = 1{,}21$ W, branche du haut $11 \times 0{,}09 = 0{,}99$ W ; total $2{,}40$ W. Toute la puissance fournie est bien retrouvée.'
+      - kind: match
+        prompt: '**Étape 8.** Associer chaque relation utilisée à la loi correspondante.'
+        pairs:
+        - left: $12 = 1 + U_1$
+          right: Loi des mailles
+        - left: $I_1 + I_2 = 0{,}20$ A
+          right: Loi des nœuds
+        - left: $U_1 = 100 \times I_1$
+          right: Loi d'Ohm
+        - left: $P = U_G \times I$
+          right: Puissance électrique
   - id: pc-puissance-electrique
     title: Puissance et énergie électriques
     icon: 💡
@@ -718,6 +888,88 @@ units:
       - 'Non, contresens : les pertes valent $R \times I^{2} \times \Delta t$, elles dépendent de l''**intensité**.'
       - 'Non : l''énergie se conserve toujours ; ce sont les pertes par effet Joule qu''on cherche à réduire.'
       explanation: À puissance $P = U \times I$ transportée fixée, augmenter $U$ permet de diminuer $I$ ; comme les pertes valent $R\,I^{2}\Delta t$, diviser $I$ par 10 divise les pertes par 100.
+    - type: guided
+      level: 3
+      title: Le câble entre le compteur et la maison
+      intro: 'Une maison se trouve à $L = 50$ m de son compteur ; l''abonnement souscrit vaut **9 kV·A** sous $U = 230$ V. Le câble d''alimentation est en **cuivre**, de résistivité $\rho = 1{,}7 \times 10^{-8}\ \Omega$·m. La résistance d''un câble de longueur $L$ et de section $S$ vaut $R = \rho \times \dfrac{L}{S}$.
+
+        Longueurs maximales autorisées par le tableau du constructeur pour un abonnement de 9 kV·A : **10 mm² → 38 m** ; **16 mm² → 60 m** ; **25 mm² → 94 m**.
+
+        {{fig:guide-cable-compteur-maison}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelle section de câble faut-il choisir ?'
+        choices:
+        - 16 mm²
+        - 10 mm²
+        - 25 mm²
+        - 6 mm²
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : 10 mm² n''est autorisé que jusqu''à 38 m, or la maison est à 50 m.'
+        - 'Cela conviendrait (94 m), mais c''est un surcoût inutile : on retient la plus petite section suffisante.'
+        - 'Non : le tableau ne propose pas de section inférieure à 10 mm² pour un abonnement de 9 kV·A.'
+        explanation: 'Il faut la plus petite section dont la longueur maximale dépasse 50 m : 16 mm² (60 m).'
+      - kind: input
+        prompt: '**Étape 2.** Calculer la résistance de ce câble de 50 m. Penser à convertir la section en m² (1 mm² $= 10^{-6}$ m²). Donner le résultat avec 2 chiffres significatifs.'
+        answer: '0.053'
+        numeric: true
+        tolerance: 0.003
+        unit: Ω
+        explanation: '$R = \rho \dfrac{L}{S} = 1{,}7 \times 10^{-8} \times \dfrac{50}{16 \times 10^{-6}} = \dfrac{8{,}5 \times 10^{-7}}{1{,}6 \times 10^{-5}} = 5{,}3 \times 10^{-2}\ \Omega$. Erreur classique : oublier la conversion des mm² (on trouverait $8{,}5 \times 10^{-7}\ \Omega$).'
+      - kind: input
+        prompt: '**Étape 3.** Calculer l''intensité efficace appelée par l''habitation lorsqu''elle utilise toute la puissance souscrite (arrondir à l''unité).'
+        answer: '39'
+        numeric: true
+        tolerance: 1
+        unit: A
+        explanation: $I = \dfrac{P}{U} = \dfrac{9\,000}{230} = 39{,}1$ A. C'est bien plus que les 26 A d'un abonnement de 6 kV·A.
+      - kind: input
+        prompt: '**Étape 4.** En déduire la puissance dissipée par effet Joule dans le câble (arrondir à l''unité).'
+        answer: '81'
+        numeric: true
+        tolerance: 3
+        unit: W
+        explanation: '$P_J = R \times I^{2} = 5{,}3 \times 10^{-2} \times 39{,}1^{2} = 5{,}3 \times 10^{-2} \times 1\,529 = 81$ W. Cette énergie chauffe le câble : elle est entièrement perdue.'
+      - kind: input
+        prompt: '**Étape 5.** Quelle part de la puissance transportée ces pertes représentent-elles, en pourcentage (1 décimale) ?'
+        answer: '0.9'
+        numeric: true
+        tolerance: 0.1
+        unit: '%'
+        explanation: $\dfrac{81}{9\,000} = 9{,}0 \times 10^{-3}$, soit 0,9 %. C'est précisément ce que le tableau des longueurs maximales cherche à limiter.
+      - kind: mcq
+        prompt: '**Étape 6.** Si l''on avait posé, à tort, un câble de 10 mm² sur ces 50 m, que deviendraient les pertes ?'
+        choices:
+        - Elles passeraient à environ 130 W, car $R$ est multipliée par $16/10 = 1{,}6$
+        - Elles passeraient à environ 51 W, car un câble plus fin chauffe moins
+        - Elles resteraient à 81 W, car l'intensité ne change pas
+        - Elles passeraient à environ 40 W
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : réduire la section **augmente** la résistance, donc les pertes.'
+        - 'Non : les pertes valent $R\,I^{2}$, or $R = \rho L/S$ dépend bien de la section.'
+        - 'Non : c''est le sens inverse de la variation. Diviser $S$ par 1,6 multiplie $R$ par 1,6.'
+        explanation: '$R'' = 1{,}7 \times 10^{-8} \times \dfrac{50}{10 \times 10^{-6}} = 8{,}5 \times 10^{-2}\ \Omega$ et $P_J'' = 8{,}5 \times 10^{-2} \times 39{,}1^{2} = 130$ W, soit 1,4 % de la puissance transportée — et un câble qui s''échauffe davantage.'
+      - kind: mcq
+        prompt: '**Étape 7.** Pourquoi la longueur maximale autorisée dépend-elle à la fois de la section du câble et de la puissance de l''abonnement ?'
+        choices:
+        - Parce que $R = \rho L/S$ augmente avec $L$ et que les pertes $R\,I^{2}$ augmentent avec l'intensité appelée
+        - Parce que l'intensité dans le câble augmente avec sa longueur
+        - Parce que la résistivité du cuivre augmente avec la longueur du câble
+        - Parce que la tension du réseau diminue quand l'abonnement augmente
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : l''intensité est imposée par la puissance appelée et par la tension du réseau, pas par la longueur du câble.'
+        - 'Non : la résistivité est une propriété du matériau, indépendante de la géométrie.'
+        - 'Non : la tension du réseau reste fixée à 230 V ; c''est l''intensité qui augmente avec l''abonnement.'
+        explanation: Allonger le câble augmente $R$ ; augmenter l'abonnement augmente $I$. Les pertes $R\,I^{2}$ et la chute de tension en ligne croissent dans les deux cas, d'où la nécessité d'une section plus grande.
   - id: pc-sinusoidal-transport
     title: Régime sinusoïdal et transport
     icon: 🗼

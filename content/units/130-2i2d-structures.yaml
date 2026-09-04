@@ -1,0 +1,2182 @@
+# Ingénierie 2I2D (Tle) — statique graphique, structures porteuses et matériaux
+# Sources : docs/notes/cours-tle-c.md (méthode graphique p. 270, structures p. 272-273,
+#           matériaux p. 277-283), docs/notes/cours-tle-b.md (actions mécaniques, PFS p. 266-269),
+#           docs/notes/exercices-tle-b.md (ex. 5 tour de guet p. 325-326, ex. 6 RDM bâtiment p. 327-329),
+#           docs/notes/exercices-1re-c.md (ex. 18 fondations, ex. 19 Palais des sports, ex. 21 pont).
+# Remarque : le symbole d'appui de la p. 272 du manuel est ambigu (texte « pointe ponctuelle »
+# contre dessin base au sol) ; on retient ici la convention « triangle pointe en haut »
+# déjà employée par la figure statique-appuis.
+units:
+- id: 2i2d-structures
+  matiere: ingenierie
+  title: '2I2D Tle : statique graphique, structures et matériaux'
+  description: Résolution graphique d'un problème de statique, comportement des structures porteuses, treillis et stabilité, familles de matériaux et critères de choix.
+  skills:
+  - id: 2i2d-statique-graphique
+    title: La statique graphique
+    icon: 📐
+    description: Solide soumis à 2 forces, solide soumis à 3 forces concourantes, point de concours, dynamique fermé, échelle de tracé et lecture des intensités.
+    prerequisites:
+    - statique-pfs
+    lesson: lessons/2i2d-structures-statique-graphique.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Une bielle est en équilibre sous l''action de **deux forces** seulement, appliquées en $A$ et en $B$. Quelle est nécessairement la direction de ces deux forces ?
+
+
+        {{fig:statique-deux-forces}}'
+      choices:
+      - La droite $(AB)$, qui joint les deux points d'application
+      - La verticale, quel que soit le placement de $A$ et de $B$
+      - La perpendiculaire à $(AB)$
+      - Une direction quelconque, tant que les intensités sont égales
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la verticale n''intervient que pour le poids. Ici le poids de la bielle est négligé, il ne reste que les deux actions de liaison.'
+      - 'Non : deux forces perpendiculaires à $(AB)$ formeraient un **couple** qui ferait tourner la bielle.'
+      - 'Non : des intensités égales ne suffisent pas ; il faut aussi que le **support** soit commun, sinon la somme des moments n''est pas nulle.'
+      explanation: Deux forces en équilibre ont le **même support**, la **même intensité** et des **sens opposés**. Le support commun ne peut être que la droite qui passe par les deux points d'application, donc $(AB)$. C'est ce qui rend les bielles, tirants et haubans si commodes à calculer.
+      tags:
+      - deux-forces
+    - type: mcq
+      level: 1
+      prompt: 'Sur le schéma, les deux flèches appliquées aux extrémités de la barre pointent **l''une vers l''autre**. Comment la barre est-elle sollicitée ?
+
+
+        {{fig:statique-deux-forces}}'
+      choices:
+      - En compression
+      - En traction
+      - En flexion
+      - En torsion
+      answer: 0
+      feedback:
+      - null
+      - 'Non : en traction, les deux flèches pointent vers l''**extérieur** et tendent à allonger la barre.'
+      - 'Non : la flexion suppose des efforts **transversaux** à l''axe de la barre.'
+      - 'Non : la torsion suppose des moments autour de l''axe de la barre.'
+      explanation: 'Une pièce soumise à 2 forces est soit en **traction** (flèches vers l''extérieur), soit en **compression** (flèches vers l''intérieur). C''est le seul cas où l''on peut conclure sur la sollicitation sans aucun calcul.'
+      tags:
+      - deux-forces
+    - type: mcq
+      level: 1
+      prompt: 'Un solide est en équilibre sous l''action de **3 forces** non parallèles. Par quoi commence-t-on la résolution graphique ?
+
+
+        {{fig:2i2d-trois-forces-methode}}'
+      choices:
+      - On trace les supports des deux forces **entièrement connues en direction**, et on repère leur point d'intersection $I$
+      - On trace tout de suite le triangle des forces, sans regarder le schéma
+      - On mesure les angles de la figure au rapporteur
+      - On calcule d'abord les moments au centre de gravité
+      answer: 0
+      feedback:
+      - null
+      - 'Non : sans le point de concours, la **direction** de la troisième force reste inconnue et le triangle ne peut pas être construit.'
+      - 'Non : les angles se déduisent de la construction, on ne les mesure pas au départ.'
+      - 'Non : ce serait la méthode **analytique**. La méthode graphique se passe d''équations de moments.'
+      explanation: 'Ordre de travail : (1) les 3 supports sont **concourants** en un point $I$, ce qui donne la direction manquante — celle de la droite joignant $I$ au point d''application de la troisième force ; (2) le **dynamique** fermé donne ensuite les intensités.'
+      tags:
+      - trois-forces
+    - type: mcq
+      level: 2
+      prompt: Pourquoi les supports de 3 forces en équilibre se coupent-ils forcément en un même point ?
+      choices:
+      - Parce que si l'on écrit les moments au point $I$ où deux supports se coupent, ces deux moments sont nuls, donc le troisième doit l'être aussi
+      - Parce que les trois forces ont la même intensité
+      - Parce que le point de concours est toujours le centre de gravité
+      - C'est une convention de dessin, sans justification
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le triangle des forces est en général quelconque ; les intensités peuvent être très différentes.'
+      - 'Non : le point de concours $I$ n''a aucune raison de coïncider avec $G$ ; il est souvent très loin du solide.'
+      - 'Non : c''est une conséquence directe du théorème du moment résultant.'
+      explanation: 'Au point $I$, le bras de levier des deux premières forces est nul. Le théorème du moment $\sum \vec{M}_I = \vec{0}$ impose alors un moment nul pour la troisième : son support passe donc par $I$.'
+      tags:
+      - trois-forces
+    - type: mcq
+      level: 1
+      prompt: 'Qu''appelle-t-on le **dynamique** d''un problème de statique graphique ?
+
+
+        {{fig:2i2d-dynamique-echelle}}'
+      choices:
+      - Le polygone obtenu en plaçant les vecteurs forces bout à bout ; il doit se **fermer**
+      - La vitesse prise par le solide quand l'équilibre est rompu
+      - Le point où se coupent les supports des trois forces
+      - La somme arithmétique des intensités des forces
+      answer: 0
+      feedback:
+      - null
+      - 'Non : en statique il n''y a pas de mouvement. Le mot « dynamique » désigne ici une **construction graphique**.'
+      - 'Non : ce point s''appelle le point de **concours** ; il se trace sur le schéma, pas sur le dynamique.'
+      - 'Non : additionner des intensités n''a pas de sens, il faut additionner des **vecteurs**.'
+      explanation: 'Trois forces en équilibre : $\vec{F_1} + \vec{F_2} + \vec{F_3} = \vec{0}$. Mis bout à bout, les trois vecteurs reviennent au point de départ : le dynamique est un **triangle fermé**.'
+      tags:
+      - dynamique
+    - type: mcq
+      level: 2
+      prompt: 'Sur un dynamique correctement tracé, comment les flèches des trois vecteurs se suivent-elles ?'
+      choices:
+      - Toujours dans le même sens de parcours, la pointe de l'une touchant l'origine de la suivante
+      - En alternance, une pointe sur deux inversée
+      - Toutes les pointes tournées vers le centre du triangle
+      - Toutes les pointes tournées vers l'extérieur du triangle
+      answer: 0
+      feedback:
+      - null
+      - 'Non : une flèche inversée signifie qu''on soustrait le vecteur au lieu de l''ajouter, la somme n''est plus nulle.'
+      - 'Non : le triangle n''a pas de « centre » qui compte ; c''est le **sens de parcours** qui doit être continu.'
+      - 'Non : là encore, seule compte la mise bout à bout, tête contre queue.'
+      explanation: 'Une somme vectorielle nulle se lit sur le dessin : on part d''un sommet, on parcourt les trois vecteurs dans le même sens et on revient au point de départ. Une flèche à contresens est l''erreur de tracé la plus fréquente.'
+      tags:
+      - dynamique
+    - type: mcq
+      level: 1
+      prompt: 'Sur un dynamique, l''échelle choisie est « 1 cm ↔ 10 kN ». Que signifie-t-elle ?
+
+
+        {{fig:2i2d-dynamique-echelle}}'
+      choices:
+      - Un segment de 1 cm sur le dessin représente une force de 10 kN
+      - Une force de 1 kN se dessine avec un segment de 10 cm
+      - Le solide dessiné est 10 fois plus petit que le solide réel
+      - Les moments se lisent en centimètres-kilonewtons
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est l''inverse. Une force de 1 kN se dessinerait sur 0,1 cm, c''est-à-dire 1 mm.'
+      - 'Non : l''échelle du **schéma** (les longueurs) et celle du **dynamique** (les forces) sont deux échelles indépendantes.'
+      - 'Non : le dynamique ne représente que des forces, jamais des moments.'
+      explanation: 'L''échelle des forces convertit une longueur mesurée à la règle en une intensité. Elle doit toujours être **indiquée sur la copie**, sans quoi le tracé n''est pas exploitable.'
+      tags:
+      - echelle
+    - type: input
+      level: 2
+      prompt: 'Le dynamique est tracé à l''échelle **1 cm ↔ 10 kN**. On mesure à la règle un côté du triangle de **4,3 cm**. Quelle est l''intensité de la force correspondante ?
+
+
+        {{fig:2i2d-dynamique-echelle}}'
+      answer: '43'
+      numeric: true
+      tolerance: 1
+      unit: kN
+      explanation: '$F = 4{,}3 \times 10 = 43$ kN. On **multiplie** la longueur mesurée par l''échelle. Erreur classique : diviser, ce qui donnerait 0,43 kN, une valeur dérisoire pour une structure.'
+      tags:
+      - echelle
+    - type: input
+      level: 2
+      prompt: On souhaite tracer un dynamique à l'échelle **1 cm ↔ 500 N**. Quelle longueur, en centimètres, faut-il donner au vecteur représentant une force de 3 200 N ?
+      answer: '6.4'
+      numeric: true
+      tolerance: 0.1
+      unit: cm
+      explanation: '$\ell = \dfrac{3\,200}{500} = 6{,}4$ cm. Ici on **divise** l''intensité par l''échelle. Bon réflexe : vérifier que le tracé tient sur la feuille — si le vecteur dépasse 15 cm, il faut changer d''échelle.'
+      tags:
+      - echelle
+    - type: order
+      level: 2
+      prompt: 'Remettez dans l''ordre les étapes de la résolution graphique d''un solide soumis à **3 forces**, dont une seule est entièrement connue.
+
+
+        {{fig:2i2d-trois-forces-methode}}'
+      steps:
+      - Isoler le solide et faire le bilan des trois actions extérieures
+      - Tracer les supports des deux forces dont la direction est connue et repérer leur point de concours $I$
+      - Joindre $I$ au point d'application de la troisième force pour obtenir sa direction
+      - Choisir une échelle des forces et tracer le vecteur entièrement connu
+      - Tracer par ses extrémités les parallèles aux deux directions trouvées, jusqu'à fermer le triangle
+      - Mesurer les deux côtés inconnus et les convertir en newtons grâce à l'échelle
+      explanation: 'La construction se fait toujours en deux temps : d''abord les **directions** sur le schéma (point de concours), ensuite les **intensités** sur le dynamique (triangle fermé).'
+      tags:
+      - trois-forces
+    - type: mcq
+      level: 2
+      prompt: Les supports des trois forces appliquées à un solide sont **parallèles entre eux**. Que peut-on dire ?
+      choices:
+      - Le point de concours est rejeté à l'infini ; la méthode du triangle ne s'applique pas telle quelle, on résout analytiquement
+      - Le solide ne peut pas être en équilibre
+      - Le dynamique est un triangle équilatéral
+      - Les trois forces ont forcément la même intensité
+      answer: 0
+      feedback:
+      - null
+      - 'Non : une poutre sur deux appuis chargée verticalement est un exemple courant d''équilibre sous trois forces parallèles.'
+      - 'Non : les trois vecteurs sont alignés, le « triangle » est aplati sur une seule droite.'
+      - 'Non : deux réactions d''appui et une charge parallèles se répartissent en général de façon inégale.'
+      explanation: 'Trois forces parallèles peuvent équilibrer un solide, mais la construction du point de concours devient impossible. On écrit alors $\sum F_y = 0$ et $\sum M_z = 0$ : c''est le cas classique de la poutre sur deux appuis.'
+      tags:
+      - trois-forces
+    - type: mcq
+      level: 2
+      prompt: Une potence est constituée d'une barre horizontale et d'un câble incliné. On isole le **nœud** où sont accrochés la charge, la barre et le câble. Combien de forces s'y appliquent, et que vaut leur somme ?
+      choices:
+      - Trois forces concourantes au nœud, de somme vectorielle nulle
+      - Deux forces de même support
+      - Trois forces dont la somme vaut le poids de la charge
+      - Quatre forces, en comptant le poids du nœud
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le câble, la barre et la charge font bien **trois** actions distinctes.'
+      - 'Non : la somme des actions extérieures est **nulle** à l''équilibre ; le poids de la charge est l''une de ces actions, il est déjà compté.'
+      - 'Non : le nœud est un point géométrique, on néglige sa masse.'
+      explanation: 'Le nœud est le point de concours naturel : les trois supports y passent déjà. Il ne reste qu''à construire le triangle des forces.'
+      tags:
+      - trois-forces
+    - type: input
+      level: 3
+      prompt: 'Une potence supporte une charge $P = 2\,000$ N à son extrémité. Le câble de retenue fait un angle de **30°** avec la barre horizontale. Calculer la tension $T$ du câble (arrondir à l''unité).'
+      answer: '4000'
+      numeric: true
+      tolerance: 30
+      unit: N
+      explanation: 'Projection sur la verticale au nœud : $T \sin 30° = P$, donc $T = \dfrac{2\,000}{0{,}5} = 4\,000$ N. Un angle faible est très pénalisant : à 15°, la tension atteindrait déjà $2\,000 / \sin 15° \approx 7\,727$ N.'
+      tags:
+      - trois-forces
+    - type: input
+      level: 3
+      prompt: Même potence ($P = 2\,000$ N, câble à **30°** de la barre horizontale, tension $T = 4\,000$ N). Calculer l'effort de compression dans la barre horizontale (arrondir à l'unité).
+      answer: '3464'
+      numeric: true
+      tolerance: 30
+      unit: N
+      explanation: 'Projection sur l''horizontale : $N = T \cos 30° = 4\,000 \times 0{,}866 = 3\,464$ N. La barre est **comprimée** (elle repousse le nœud vers l''extérieur) : c''est un solide à 2 forces, son effort est porté par son axe.'
+      tags:
+      - trois-forces
+    - type: input
+      level: 3
+      prompt: 'Une tour est à la limite du basculement. Elle est soumise à trois forces : son poids $P = 55$ kN (vertical), l''action du vent $F = 5{,}4$ kN (horizontale) et la réaction $R_A$ en son pied. Le dynamique est un **triangle rectangle**. Calculer $R_A$ (arrondir au dixième).
+
+
+        {{fig:2i2d-dynamique-echelle}}'
+      answer: '55.3'
+      numeric: true
+      tolerance: 0.4
+      unit: kN
+      explanation: 'Le poids et le vent étant perpendiculaires, $R_A = \sqrt{P^2 + F^2} = \sqrt{55^2 + 5{,}4^2} = \sqrt{3\,054{,}2} \approx 55{,}3$ kN. Erreur classique : additionner les intensités (55 + 5,4 = 60,4 kN), ce qui n''a pas de sens pour des vecteurs non colinéaires.'
+      tags:
+      - dynamique
+    - type: mcq
+      level: 3
+      prompt: 'Dans le cas précédent ($P = 55$ kN vertical, $F = 5{,}4$ kN horizontal), la réaction $R_A$ est-elle verticale ?'
+      choices:
+      - 'Non : elle est légèrement inclinée, car elle doit aussi équilibrer la composante horizontale du vent'
+      - 'Oui : une réaction d''appui est toujours verticale'
+      - 'Oui : le vent est déjà équilibré par le poids'
+      - 'Non : elle est horizontale, comme le vent'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : seule la réaction d''un appui **glissant** parfait est perpendiculaire au plan de contact. Une articulation transmet aussi un effort horizontal.'
+      - 'Non : le poids est vertical, il ne peut rien équilibrer d''horizontal.'
+      - 'Non : elle a une composante verticale de 55 kN, très supérieure à sa composante horizontale de 5,4 kN.'
+      explanation: 'La fermeture du dynamique impose $\vec{R_A} = -(\vec{P} + \vec{F})$ : la réaction est inclinée de $\arctan(5{,}4/55) \approx 5{,}6°$ par rapport à la verticale, et sa droite d''action passe par le point de concours $I$.'
+      tags:
+      - dynamique
+    - type: grid
+      level: 2
+      prompt: Pour chacun des deux cas de la statique graphique, cochez les propriétés qui lui correspondent.
+      rows:
+      - id: d
+        label: Solide soumis à 2 forces
+      - id: t
+        label: Solide soumis à 3 forces non parallèles
+      cols:
+      - id: SUP
+        label: Supports confondus
+      - id: CON
+        label: Supports concourants en un point
+      - id: TRI
+        label: Dynamique = triangle fermé
+      answer:
+      - SUPd
+      - CONt
+      - TRIt
+      cellFeedback:
+        SUPd: 'deux forces en équilibre ont bien le même support : la droite joignant les deux points d''application'
+        CONd: 'les supports ne se coupent pas en un point : ils sont **confondus**, c''est plus fort que concourants'
+        TRId: 'le « polygone » de deux vecteurs opposés est un aller-retour sur une même droite, pas un triangle'
+        SUPt: si les trois supports étaient confondus, il n'y aurait aucune construction à faire
+        CONt: c'est la première condition du théorème des 3 forces
+        TRIt: c'est la traduction graphique de la somme vectorielle nulle
+      explanation: '2 forces : même support, même intensité, sens opposés. 3 forces : supports concourants **et** dynamique fermé (manuel Tle, p. 270).'
+      tags:
+      - trois-forces
+    - type: match
+      level: 2
+      prompt: Associez chaque terme de la statique graphique à sa définition.
+      pairs:
+      - left: Support d'une force
+        right: la droite qui porte le vecteur, prolongée à l'infini dans les deux sens
+      - left: Point de concours
+        right: le point où se coupent les supports des trois forces
+      - left: Dynamique
+        right: le polygone des vecteurs mis bout à bout, qui doit se fermer
+      - left: Échelle des forces
+        right: la correspondance entre une longueur du tracé et une intensité en newtons
+      explanation: Ces quatre mots reviennent dans toutes les questions de statique graphique ; les confondre coûte des points même quand le tracé est juste.
+      tags:
+      - vocabulaire
+    - type: mcq
+      level: 3
+      prompt: Deux élèves résolvent le même problème, l'un graphiquement, l'autre analytiquement. Ils trouvent 5,3 kN et 5,41 kN. Que conclure ?
+      choices:
+      - Les deux résultats sont cohérents ; la méthode graphique est limitée par la précision du tracé et de la lecture à la règle
+      - L'un des deux a forcément fait une erreur de méthode
+      - La méthode graphique donne toujours un résultat plus grand
+      - La méthode analytique est fausse car elle ne se vérifie pas sur un dessin
+      answer: 0
+      feedback:
+      - null
+      - 'Non : un écart de 2 % est normal entre un tracé au crayon et un calcul.'
+      - 'Non : l''erreur de lecture peut se faire dans les deux sens.'
+      - 'Non : c''est au contraire l''analytique qui sert de référence ; le graphique en donne l''ordre de grandeur et le sens physique.'
+      explanation: 'La méthode graphique est rapide et parlante (on « voit » la direction des efforts) mais sa précision dépend de l''épaisseur du trait et de l''échelle choisie. Une échelle plus grande améliore la précision.'
+      tags:
+      - echelle
+    - type: mcq
+      level: 3
+      prompt: Sur un dynamique fermé, l'un des trois côtés est beaucoup plus long que les deux autres. Qu'est-ce que cela signifie physiquement ?
+      choices:
+      - L'action correspondante est de loin la plus intense des trois
+      - Le tracé est faux, un triangle des forces est toujours équilatéral
+      - Le solide n'est pas en équilibre
+      - L'échelle a été mal choisie
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le triangle des forces est quelconque, sa forme dépend des directions des supports.'
+      - 'Non : le triangle est **fermé**, c''est justement la preuve de l''équilibre.'
+      - 'Non : l''échelle change toutes les longueurs dans le même rapport, elle ne modifie pas la forme du triangle.'
+      explanation: 'La longueur d''un côté est proportionnelle à l''intensité de la force. Un triangle très allongé signale un effort dominant — typiquement le poids devant une action de vent modérée.'
+      tags:
+      - dynamique
+    - type: guided
+      level: 3
+      title: Basculement d'une tour de guet équipée de panneaux solaires
+      intro: 'Une **tour de guet** de surveillance des incendies est bâtie sur un pylône en treillis métallique. Sa cabine est perchée au niveau **+ 40,70 m** ; le pylône repose au sol sur deux massifs de fondation, **A** et **B**, distants de **8 m**. L''axe vertical de la tour passe à **4 m** de chacun d''eux.
+
+
+        Un bandeau de **14 panneaux photovoltaïques** (surface **10 m²**) est installé sous le plancher de la cabine, dont la surface avec sa toiture vaut **4 m²**.
+
+
+        Hypothèses de l''étude de stabilité : le poids total de l''ensemble (fondations, tour, cabine, équipements) vaut **55 kN** et s''applique en **G**, sur l''axe de la tour ; la résultante des efforts de vent est **horizontale** et s''applique au point **V**, au niveau + 40,70 m ; on se place **à la limite du basculement** autour de **A**, situation dans laquelle l''action de liaison en **B** est nulle.
+
+
+        La tour est bâtie sur un site classé **protégé** : pression normale 400 Pa, pression extrême **700 Pa**.
+
+
+        {{fig:2i2d-tour-guet}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** À la limite du basculement, combien d''actions mécaniques extérieures s''exercent sur la tour isolée, et lesquelles ?'
+        choices:
+        - 'Trois : le poids en $G$, l''action du vent en $V$ et la réaction en $A$'
+        - 'Quatre : le poids, le vent et les réactions en $A$ et en $B$'
+        - 'Deux : le poids et le vent'
+        - 'Trois : le poids, le vent et la poussée des panneaux solaires'
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : l''énoncé précise qu''à la limite du basculement, l''action de liaison en $B$ est **nulle**. La tour commence à se soulever de ce côté.'
+        - 'Non : sans réaction du sol, la tour tomberait. Il reste l''appui en $A$.'
+        - 'Non : les panneaux n''exercent pas d''action à part ; ils augmentent la surface offerte au vent et leur poids est inclus dans les 55 kN.'
+        explanation: 'Trois forces non parallèles : c''est exactement le cas d''application de la méthode graphique. Le poids est vertical descendant en $G$, le vent horizontal en $V$, la réaction $R_A$ est l''inconnue.'
+      - kind: mcq
+        prompt: '**Étape 2.** Comment obtient-on graphiquement la **direction** de la réaction $\vec{R_A}$ ?'
+        choices:
+        - En traçant la verticale passant par $G$ et l'horizontale passant par $V$ ; leur intersection donne le point $I$, et la direction cherchée est celle de la droite $(AI)$
+        - En prenant la verticale, car une réaction du sol est toujours verticale
+        - En prenant la perpendiculaire à la droite $(AB)$
+        - En mesurant l'angle du treillis sur le dessin
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : si $R_A$ était verticale, rien n''équilibrerait la composante horizontale du vent.'
+        - 'Non : la perpendiculaire à $(AB)$ est justement la verticale, même objection.'
+        - 'Non : la géométrie du treillis n''intervient pas ; seuls comptent les points d''application $G$, $V$ et $A$.'
+        explanation: 'Les 3 supports d''un solide en équilibre sous 3 forces sont **concourants**. Les deux supports connus (verticale de $\vec{P}$, horizontale de $\vec{F}$) se coupent en $I$ : le support de $\vec{R_A}$ est donc la droite $(AI)$.'
+      - kind: input
+        prompt: '**Étape 3.** Calculer la **surface totale de prise au vent** de la tour (panneaux + cabine et sa toiture).'
+        answer: '14'
+        numeric: true
+        tolerance: 0.1
+        unit: m²
+        explanation: $S = 10 + 4 = 14$ m². C'est bien l'installation des panneaux qui fait exploser la prise au vent, en la multipliant par 3,5.
+      - kind: input
+        prompt: '**Étape 4.** Le site est classé **protégé**. Calculer la force maximale $F$ exercée par un vent extrême sur la structure, en newtons.'
+        answer: '9800'
+        numeric: true
+        tolerance: 50
+        unit: N
+        explanation: 'Pression extrême du site protégé : $p = 700$ Pa. $F = p \times S = 700 \times 14 = 9\,800$ N, soit **9,8 kN**. Erreur classique : prendre la pression **normale** (400 Pa), qui ne correspond pas au cas le plus défavorable.'
+      - kind: input
+        prompt: '**Étape 5.** On écrit maintenant le théorème du moment **au point $A$**, à la limite du basculement. Le vent agit à 40,70 m au-dessus du sol et le poids passe à 4 m de $A$. Calculer la force de vent $F_b$ qui provoquerait le basculement, en kilonewtons (arrondir au dixième).'
+        answer: '5.4'
+        numeric: true
+        tolerance: 0.2
+        unit: kN
+        explanation: 'Moment renversant = moment stabilisateur : $F_b \times 40{,}70 = 55 \times 4$, donc $F_b = \dfrac{220}{40{,}70} \approx 5{,}4$ kN. Écrire le moment en $A$ élimine $\vec{R_A}$, dont le bras de levier est nul.'
+      - kind: mcq
+        prompt: '**Étape 6.** Comparer la force du vent extrême (9,8 kN) à la force de basculement (5,4 kN). Que conclure ?'
+        choices:
+        - '9,8 kN > 5,4 kN : la tour bascule sous un vent extrême, la stabilité n''est pas assurée'
+        - '9,8 kN > 5,4 kN : la tour résiste, puisque la force appliquée est plus grande'
+        - 5,4 kN est une marge de sécurité, la tour est donc stable
+        - On ne peut pas conclure, les deux forces ne s'appliquent pas au même point
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : une force appliquée **supérieure** à la force qui provoque le basculement est précisément ce qu''il faut éviter.'
+        - 'Non : 5,4 kN est la valeur **limite admissible**, pas une marge. La marge serait la différence, et elle est ici négative.'
+        - 'Non : les deux valeurs se comparent bien, elles désignent la même résultante horizontale appliquée en $V$.'
+        explanation: Le vent extrême dépasse de 81 % la valeur qui met la tour à la limite du basculement. La tour ainsi équipée de panneaux n'est pas stable.
+      - kind: input
+        prompt: '**Étape 7.** Calculer le rapport « moment stabilisateur / moment renversant » sous vent extrême, c''est-à-dire $\dfrac{55 \times 4}{9{,}8 \times 40{,}70}$ (arrondir au centième).'
+        answer: '0.55'
+        numeric: true
+        tolerance: 0.03
+        unit: ''
+        explanation: '$\dfrac{220}{398{,}86} \approx 0{,}55$. Ce coefficient de stabilité est **inférieur à 1** : la tour bascule. On cherche en général une valeur nettement supérieure à 1 (souvent 1,5).'
+      - kind: mcq
+        prompt: '**Étape 8.** Quelle solution ne permettrait **pas** de rétablir la stabilité de la tour ?'
+        choices:
+        - Rehausser la cabine pour améliorer la vue sur la forêt
+        - Ancrer les massifs de fondation dans le sol pour créer un effort de traction en $B$
+        - Réduire la surface des panneaux photovoltaïques
+        - Élargir l'écartement des fondations $A$ et $B$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : un ancrage empêche le soulèvement en $B$, ce qui ajoute un moment stabilisateur. C''est la solution la plus courante.'
+        - 'Non : diminuer $S$ réduit directement $F = p \times S$, donc le moment renversant.'
+        - 'Non : augmenter la distance de $G$ à $A$ augmente le moment stabilisateur $P \times d$.'
+        explanation: 'Rehausser la cabine allonge le bras de levier du vent (40,70 m) : le moment renversant augmente et la situation empire. Les trois autres pistes jouent bien dans le bon sens.'
+  - id: 2i2d-structures-porteuses
+    title: Les structures porteuses
+    icon: 🏢
+    description: Superstructure et infrastructure, actions permanentes et variables, descente de charges, ELS et ELU, modélisation des appuis au sol et réactions.
+    prerequisites:
+    - 2i2d-statique-graphique
+    lesson: lessons/2i2d-structures-porteuses.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Quels sont les deux grands types de structures porteuses rencontrées dans la construction ?
+      choices:
+      - Les bâtiments et les ouvrages d'aménagement du territoire (ponts, barrages…)
+      - Les bâtiments individuels et les bâtiments collectifs
+      - Les structures en béton et les structures en acier
+      - Les superstructures et les infrastructures
+      answer: 0
+      feedback:
+      - null
+      - 'Non : individuel et collectif sont deux sortes de **bâtiments** ; il manque toute la catégorie des ouvrages d''art.'
+      - 'Non : c''est un classement par **matériau**, pas par destination de l''ouvrage.'
+      - 'Non : superstructure et infrastructure sont les deux **parties** d''une même structure, la visible et l''enterrée.'
+      explanation: Le manuel distingue les **bâtiments** (individuels ou collectifs) et les **ouvrages d'aménagement du territoire** (ponts, barrages…).
+      tags:
+      - structures
+    - type: mcq
+      level: 1
+      prompt: 'À quoi sert une structure porteuse ?
+
+
+        {{fig:2i2d-descente-charges}}'
+      choices:
+      - À encaisser les charges subies et à les acheminer jusqu'aux points d'ancrage au sol
+      - À isoler thermiquement le bâtiment
+      - À décorer la façade de l'ouvrage
+      - À répartir les réseaux électriques et fluidiques
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''isolation est assurée par l''enveloppe (parois, isolants), pas par les éléments porteurs.'
+      - 'Non : l''aspect relève du second œuvre ; la structure, elle, est souvent invisible.'
+      - 'Non : les réseaux passent **dans** la structure, mais ce n''est pas sa fonction.'
+      explanation: Les structures porteuses **encaissent** les charges (poids propre, vent, neige, exploitation) et les **acheminent** jusqu'aux fondations.
+      tags:
+      - structures
+    - type: mcq
+      level: 1
+      prompt: Comment appelle-t-on la partie **invisible** d'une structure, celle qui est enterrée ?
+      choices:
+      - L'infrastructure
+      - La superstructure
+      - La ferme
+      - Le treillis
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la superstructure est la partie **visible**, au-dessus du sol.'
+      - 'Non : une ferme est un élément de charpente, situé tout en haut de l''ouvrage.'
+      - 'Non : un treillis est un mode d''assemblage de barres, pas une position dans l''ouvrage.'
+      explanation: On distingue la partie visible, la **superstructure**, de la partie invisible, l'**infrastructure** (fondations).
+      tags:
+      - structures
+    - type: grid
+      level: 2
+      prompt: 'Pour chaque action mécanique subie par une structure porteuse, cochez la case correspondant à sa direction et à sa fréquence.'
+      rows:
+      - id: pp
+        label: Poids propre de la structure
+      - id: ex
+        label: Charges d'exploitation (utilisateurs, stockages)
+      - id: ne
+        label: Neige
+      - id: ve
+        label: Vent
+      cols:
+      - id: VP
+        label: Verticale, permanente
+      - id: VV
+        label: Verticale, variable
+      - id: HV
+        label: Horizontale, variable
+      answer:
+      - VPpp
+      - VVex
+      - VVne
+      - HVve
+      cellFeedback:
+        VPpp: 'le poids propre est la seule action **permanente** : la structure le subit en permanence'
+        VVpp: 'le poids propre ne varie pas : c''est une action permanente'
+        VVex: les utilisateurs et les stockages vont et viennent, la charge est verticale mais variable
+        VPex: 'un bâtiment peut être vide : cette charge n''est pas permanente'
+        VVne: la neige appuie verticalement et n'est présente qu'une partie de l'année
+        HVne: la neige pèse, elle ne pousse pas horizontalement
+        HVve: le vent, comme le séisme ou la pression de l'eau, agit horizontalement et par épisodes
+        VVve: le vent pousse **horizontalement** sur les façades
+      explanation: 'Tableau du manuel (Tle, p. 272) : verticale permanente → poids propre ; verticale variable → exploitation, neige ; horizontale variable → vent, séisme, pression de l''eau.'
+      tags:
+      - actions
+    - type: mcq
+      level: 1
+      prompt: 'Quel est l''objectif d''une **descente de charges** ?
+
+
+        {{fig:2i2d-descente-charges}}'
+      choices:
+      - Connaître la répartition et le cheminement des charges dans les éléments porteurs, du haut jusqu'aux fondations
+      - Calculer la vitesse de chute d'un objet dans la cage d'escalier
+      - Déterminer le prix du gros œuvre
+      - Choisir la couleur de la façade
+      answer: 0
+      feedback:
+      - null
+      - 'Non : « descente » désigne ici le **cheminement des efforts**, pas un mouvement.'
+      - 'Non : le coût vient ensuite, une fois les sections connues.'
+      - 'Non : rien à voir avec la statique.'
+      explanation: La descente de charges étudie le **transfert des charges** dans la structure. Les valeurs obtenues permettent ensuite de **dimensionner** chaque élément porteur.
+      tags:
+      - descente-charges
+    - type: order
+      level: 2
+      prompt: 'Remettez dans l''ordre le cheminement des charges dans un bâtiment, du haut vers le bas.
+
+
+        {{fig:2i2d-descente-charges}}'
+      steps:
+      - Les charges s'appliquent sur les porteurs « horizontaux » (dalles, poutres), principalement **fléchis**
+      - Ces porteurs horizontaux reportent les charges sur les porteurs « verticaux » (poteaux, murs), principalement **comprimés**
+      - Les charges descendent jusqu'aux fondations
+      - Les fondations transmettent les charges au sol, aux points d'ancrage
+      explanation: 'Des éléments inclinés (charpentes, câbles, haubans) peuvent s''intercaler, mais le principe reste le même : chaque niveau reprend ce que porte le niveau du dessus.'
+      tags:
+      - descente-charges
+    - type: mcq
+      level: 2
+      prompt: Dans une descente de charges, comment travaillent respectivement une **poutre** et un **poteau** ?
+      choices:
+      - La poutre est principalement fléchie, le poteau principalement comprimé
+      - La poutre est comprimée, le poteau fléchi
+      - Les deux sont en traction
+      - Les deux sont en torsion
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est exactement l''inverse. Une poutre reçoit les charges **en travers** de son axe, donc elle fléchit.'
+      - 'Non : la traction supposerait qu''on **tire** sur les éléments ; ici, tout pousse vers le bas.'
+      - 'Non : la torsion suppose un moment autour de l''axe de la pièce, ce n''est pas le cas courant en bâtiment.'
+      explanation: 'Porteurs « horizontaux » → **flexion** (accompagnée de cisaillement) ; porteurs « verticaux » → **compression**. C''est la clé pour identifier la sollicitation de chaque élément.'
+      tags:
+      - descente-charges
+    - type: mcq
+      level: 2
+      prompt: Que signifie calculer une structure à l'**ELS** (état limite de service) ?
+      choices:
+      - On étudie l'utilisation « quotidienne » de l'ouvrage, avec des charges **non pondérées**
+      - On étudie le cas le plus défavorable, avec des charges pondérées
+      - On vérifie uniquement la résistance au feu
+      - On divise toutes les charges par un coefficient de sécurité
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la définition de l''**ELU** (état limite ultime).'
+      - 'Non : le comportement au feu est une autre vérification, indépendante des états limites.'
+      - 'Non : à l''ELU on **multiplie** les charges par un coefficient ; à l''ELS on ne les touche pas.'
+      explanation: 'ELS = utilisation quotidienne, charges non pondérées (on vérifie le confort, les flèches, les fissures). ELU = cas le plus défavorable, charges **pondérées**, on vérifie la non-rupture.'
+      tags:
+      - els-elu
+    - type: mcq
+      level: 2
+      prompt: À l'**ELU** (état limite ultime), que fait-on des charges et pourquoi ?
+      choices:
+      - On les pondère, c'est-à-dire qu'on augmente leur valeur par un coefficient normalisé, pour s'assurer que l'ouvrage résiste à la rupture
+      - On les laisse telles quelles, car la norme l'interdit
+      - On les diminue pour tenir compte du vieillissement
+      - On ne garde que les charges permanentes
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la pondération est au contraire **imposée** par la norme à l''ELU.'
+      - 'Non : le principe de l''ELU est de se placer dans le cas le **plus défavorable**, donc d''augmenter les charges.'
+      - 'Non : les charges variables (neige, vent, exploitation) sont essentielles au calcul ELU.'
+      explanation: À l'ELU, on veut garantir la **sécurité des utilisateurs** en vérifiant la non-rupture, donc on majore les charges par un coefficient défini par une norme.
+      tags:
+      - els-elu
+    - type: mcq
+      level: 1
+      prompt: 'Quel symbole d''appui autorise **à la fois** la rotation et la translation le long du sol ?
+
+
+        {{fig:statique-appuis}}'
+      choices:
+      - L'appui simple glissant (triangle sur rouleaux)
+      - L'appui simple fixe (articulation)
+      - L'encastrement
+      - Aucun des trois
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''articulation laisse tourner mais **bloque** la translation.'
+      - 'Non : l''encastrement est une liaison complète, il ne laisse aucun degré de liberté.'
+      - 'Non : les rouleaux existent précisément pour laisser glisser l''élément.'
+      explanation: 'Les **rouleaux** signifient que l''appui est glissant (translation permise) ; le contact ponctuel du triangle permet en plus la rotation. C''est l''appui qui absorbe la dilatation d''un pont.'
+      tags:
+      - appuis
+    - type: mcq
+      level: 1
+      prompt: 'Que modélise un **encastrement** dans une structure ?
+
+
+        {{fig:statique-appuis}}'
+      choices:
+      - Une liaison complète, sans aucun degré de liberté
+      - Une liaison qui laisse tourner l'élément
+      - Une liaison qui laisse glisser l'élément
+      - Un contact ponctuel entre deux pièces
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est l''articulation. L''encastrement bloque **aussi** la rotation.'
+      - 'Non : c''est l''appui simple glissant.'
+      - 'Non : un contact ponctuel autorise au contraire beaucoup de mobilités.'
+      explanation: 'Encastrement = **liaison complète** : les deux pièces sont solidaires, aucun degré de liberté. C''est ce que l''on suppose en pied de poteau d''un portique en acier.'
+      tags:
+      - appuis
+    - type: grid
+      level: 2
+      prompt: 'Pour chaque modélisation d''appui, cochez les mobilités qu''elle **autorise** à la structure.
+
+
+        {{fig:statique-appuis}}'
+      rows:
+      - id: gl
+        label: Appui simple glissant (sur rouleaux)
+      - id: fi
+        label: Appui simple fixe (articulation)
+      - id: en
+        label: Encastrement
+      cols:
+      - id: ROT
+        label: Rotation
+      - id: TRA
+        label: Translation le long du sol
+      answer:
+      - ROTgl
+      - TRAgl
+      - ROTfi
+      cellFeedback:
+        ROTgl: le contact ponctuel du triangle permet la rotation
+        TRAgl: 'les rouleaux permettent le glissement : c''est ce qui distingue cet appui de l''articulation'
+        ROTfi: l'articulation laisse tourner la structure autour du point d'appui
+        TRAfi: 'l''appui simple **fixe** bloque la translation : il n''y a pas de rouleaux'
+        ROTen: 'un encastrement bloque tout, y compris la rotation : c''est une liaison complète'
+        TRAen: un encastrement ne laisse glisser l'élément dans aucune direction
+      explanation: 'Manuel Tle p. 272-273 : appui simple glissant → rotation + translation ; appui simple fixe → rotation seule ; encastrement → aucun degré de liberté.'
+      tags:
+      - appuis
+    - type: mcq
+      level: 2
+      prompt: 'Un appui **bloque** une translation dans une direction. Que transmet-il alors à la structure ?
+
+
+        {{fig:2i2d-appuis-reactions}}'
+      choices:
+      - Un effort de réaction dans cette direction
+      - Un moment autour de cette direction
+      - Rien du tout, puisque rien ne bouge
+      - Une déformation de la structure
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est le blocage d''une **rotation** qui fait naître un moment ; celui d''une translation fait naître un effort.'
+      - 'Non : c''est justement parce qu''il empêche le mouvement que l''appui exerce un effort.'
+      - 'Non : la déformation est une conséquence des efforts, pas une action de liaison.'
+      explanation: 'Règle simple, symétrique de celle des liaisons : à chaque mobilité **bloquée** correspond une inconnue de liaison. Translation bloquée → une composante de force ; rotation bloquée → un moment.'
+      tags:
+      - appuis
+    - type: mcq
+      level: 3
+      prompt: 'Dans un problème **plan**, combien d''inconnues de liaison introduit chacun de ces trois appuis ?
+
+
+        {{fig:2i2d-appuis-reactions}}'
+      choices:
+      - Appui simple glissant 1, articulation 2, encastrement 3
+      - Appui simple glissant 1, articulation 1, encastrement 2
+      - Appui simple glissant 2, articulation 3, encastrement 6
+      - Les trois en introduisent 3, comme le nombre d'équations du plan
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''articulation bloque **deux** translations (horizontale et verticale), donc deux composantes d''effort.'
+      - 'Non : 2, 3 et 6 seraient les valeurs dans l''espace pour d''autres liaisons ; en plan on ne dispose que de 3 mobilités.'
+      - 'Non : chaque appui a son propre nombre d''inconnues, il dépend de ce qu''il bloque.'
+      explanation: 'En plan, 3 mobilités possibles (2 translations, 1 rotation). Glissant : 1 translation bloquée → 1 inconnue. Articulation : 2 translations bloquées → 2 inconnues. Encastrement : tout bloqué → 3 inconnues. Comme le PFS plan ne fournit que 3 équations, une poutre articulation + appui glissant (2 + 1 = 3) est **isostatique**.'
+      tags:
+      - appuis
+    - type: input
+      level: 2
+      prompt: 'La toiture d''un parking supporte une charge d''exploitation de **2,5 kN·m⁻²** (véhicules légers) et une charge de neige de **0,45 kN·m⁻²**. Calculer la charge surfacique maximale $q_{ne}$ à prendre en compte.'
+      answer: '2.95'
+      numeric: true
+      tolerance: 0.02
+      unit: kN·m⁻²
+      explanation: '$q_{ne} = 2{,}5 + 0{,}45 = 2{,}95$ kN·m⁻². Les deux charges sont verticales et s''ajoutent ; on retient le cas le plus défavorable, c''est-à-dire leur cumul.'
+      tags:
+      - descente-charges
+    - type: input
+      level: 2
+      prompt: 'Cette charge surfacique $q_{ne} = 2{,}95$ kN·m⁻² s''applique sur une zone d''influence de dalle de **348 m²**. Calculer la charge totale $Q_{ne}$ correspondante.'
+      answer: '1026.6'
+      numeric: true
+      tolerance: 3
+      unit: kN
+      explanation: $Q_{ne} = q_{ne} \times S = 2{,}95 \times 348 = 1\,026{,}6$ kN, soit un peu plus de 100 tonnes portées par un seul ensemble poteaux-poutre.
+      tags:
+      - descente-charges
+    - type: input
+      level: 2
+      prompt: 'La même zone d''influence est une dalle de **348 m²** et de **0,40 m** d''épaisseur, en béton armé de poids volumique **25 kN·m⁻³**. Calculer le poids $P_d$ de cette portion de dalle.'
+      answer: '3480'
+      numeric: true
+      tolerance: 20
+      unit: kN
+      explanation: '$V = 348 \times 0{,}40 = 139{,}2$ m³, puis $P_d = 25 \times 139{,}2 = 3\,480$ kN. Le **poids propre** de la dalle est ici plus de trois fois supérieur aux charges d''exploitation et de neige réunies (1 026,6 kN).'
+      tags:
+      - descente-charges
+    - type: input
+      level: 2
+      prompt: On retient une charge totale de **4 500 kN** descendant sur un ensemble poteaux-poutre. Cette charge se répartit équitablement sur les **3 poteaux** qui supportent la poutre. Quelle charge $Q_p$ reprend chaque poteau ?
+      answer: '1500'
+      numeric: true
+      tolerance: 10
+      unit: kN
+      explanation: '$Q_p = \dfrac{4\,500}{3} = 1\,500$ kN par poteau, soit environ 150 tonnes. Ce résultat suppose une répartition équitable, hypothèse donnée par l''énoncé.'
+      tags:
+      - descente-charges
+    - type: input
+      level: 3
+      prompt: 'Chaque poteau, chargé à **1 500 kN**, repose sur une fondation carrée de **0,80 m** de côté. Calculer la charge surfacique $q_F$ exercée sous la fondation, en kN·m⁻².'
+      answer: '2344'
+      numeric: true
+      tolerance: 20
+      unit: kN·m⁻²
+      explanation: '$S = 0{,}80 \times 0{,}80 = 0{,}64$ m², donc $q_F = \dfrac{1\,500}{0{,}64} \approx 2\,344$ kN·m⁻², c''est-à-dire environ **2,34 MPa** ($1$ MPa $= 1\,000$ kN·m⁻²).'
+      tags:
+      - fondations
+    - type: mcq
+      level: 3
+      prompt: La charge sous la fondation vaut 2,34 MPa et le sol argileux admet au plus **2 MPa**. Que faut-il en conclure ?
+      choices:
+      - Les fondations standard sont insuffisantes ; il faut des dés de fondation de plus grande surface
+      - Tout va bien, la marge est de 0,34 MPa
+      - Il faut augmenter la charge sur les poteaux
+      - Il faut changer le matériau des poteaux
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 2,34 MPa **dépasse** les 2 MPa admissibles, la « marge » est négative.'
+      - 'Non : augmenter la charge ne ferait qu''aggraver la pression sous la semelle.'
+      - 'Non : le problème n''est pas la résistance du poteau, mais celle du **sol**.'
+      explanation: 'La pression appliquée dépasse la pression admissible du sol. Comme $q_F = Q_p / S$, la seule façon de la réduire à charge constante est d''**augmenter la surface** de la semelle.'
+      tags:
+      - fondations
+    - type: input
+      level: 3
+      prompt: 'Le sol admet 2 MPa, mais on impose un **coefficient de sécurité de 2**. Quelle surface minimale $S$ chaque fondation doit-elle avoir pour reprendre les 1 500 kN d''un poteau ?'
+      answer: '1.5'
+      numeric: true
+      tolerance: 0.05
+      unit: m²
+      explanation: 'Pression admise : $2 / 2 = 1$ MPa $= 1\,000$ kN·m⁻². Puis $S \geq \dfrac{1\,500}{1\,000} = 1{,}5$ m², soit une semelle carrée de côté $\sqrt{1{,}5} \approx 1{,}23$ m au lieu de 0,80 m.'
+      tags:
+      - fondations
+    - type: input
+      level: 2
+      prompt: 'Une poutre $AB$ de **6,00 m** repose sur deux appuis à ses extrémités. Elle porte une charge de **12 kN** à 2,00 m de $A$ et une charge de **6 kN** à 4,00 m de $A$. Calculer la réaction verticale en $B$.
+
+
+        {{fig:2i2d-poutre-deux-appuis}}'
+      answer: '8'
+      numeric: true
+      tolerance: 0.2
+      unit: kN
+      explanation: 'Moment en $A$ (la réaction $R_A$ y a un bras de levier nul) : $R_B \times 6{,}00 = 12 \times 2{,}00 + 6 \times 4{,}00 = 24 + 24 = 48$, donc $R_B = 8$ kN.'
+      tags:
+      - poutre
+    - type: input
+      level: 2
+      prompt: 'Même poutre ($12$ kN et $6$ kN, $R_B = 8$ kN). Calculer la réaction verticale en $A$.
+
+
+        {{fig:2i2d-poutre-deux-appuis}}'
+      answer: '10'
+      numeric: true
+      tolerance: 0.2
+      unit: kN
+      explanation: 'Théorème de la résultante : $R_A + R_B = 12 + 6 = 18$ kN, donc $R_A = 18 - 8 = 10$ kN. Vérification de bon sens : la charge la plus lourde est plus près de $A$, il est donc normal que $R_A > R_B$.'
+      tags:
+      - poutre
+    - type: guided
+      level: 3
+      title: Descente de charges et fondations d'un pont transbordeur
+      intro: 'Un projet de **pont transbordeur** au-dessus d''un fleuve repose sur **deux piliers**. Sous le tablier, une **nacelle** va et vient d''une rive à l''autre en transportant véhicules et passagers ; au-dessus, une **rue aérienne** est ouverte aux piétons.
+
+
+        Données de l''étude :
+
+        – poids propre de l''ouvrage (sans la nacelle) : **30,0 MN**, structure **symétrique** ;
+
+        – rue aérienne : longueur **270 m**, largeur **15 m**, charge d''exploitation **5 kN·m⁻²** ;
+
+        – nacelle et son chargement, assimilées à une charge d''exploitation ponctuelle de **2,00 MN** ;
+
+        – après application des coefficients de sécurité, la charge maximale retenue sur la fondation de chaque pilier vaut **35,07 MN** ;
+
+        – semelle de fondation envisagée : carrée, **15 m** de côté ; résistance du sol : **0,20 MPa**.
+
+
+        {{fig:2i2d-poinconnement}}'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** La structure étant symétrique, calculer la charge due au **poids propre** au pied du pilier 1, en méganewtons.'
+        answer: '15'
+        numeric: true
+        tolerance: 0.2
+        unit: MN
+        explanation: 'Symétrie : chaque pilier reprend la moitié du poids propre, $30{,}0 / 2 = 15{,}0$ MN. La symétrie remplace ici un calcul de moments.'
+      - kind: input
+        prompt: '**Étape 2.** Calculer la surface de la rue aérienne.'
+        answer: '4050'
+        numeric: true
+        tolerance: 10
+        unit: m²
+        explanation: $S = 270 \times 15 = 4\,050$ m². C'est cette surface qui transforme une charge **surfacique** (kN·m⁻²) en une charge totale (kN).
+      - kind: input
+        prompt: '**Étape 3.** Calculer la charge d''exploitation totale apportée par la rue aérienne, en méganewtons.'
+        answer: '20.25'
+        numeric: true
+        tolerance: 0.2
+        unit: MN
+        explanation: '$Q = 5 \times 4\,050 = 20\,250$ kN $= 20{,}25$ MN ($1$ MN $= 1\,000$ kN). Erreur classique : oublier la conversion kN → MN et comparer 20 250 à 30.'
+      - kind: input
+        prompt: '**Étape 4.** La rue aérienne est elle aussi symétrique. Calculer la charge **cumulée** (poids propre + exploitation de la rue) au pied du pilier 1, en méganewtons.'
+        answer: '25.125'
+        numeric: true
+        tolerance: 0.1
+        unit: MN
+        explanation: 'Part au pilier 1 : $20{,}25 / 2 = 10{,}125$ MN. Cumul : $15{,}0 + 10{,}125 = 25{,}125$ MN.'
+      - kind: input
+        prompt: '**Étape 5.** La nacelle (2,00 MN) se trouve **au droit du pilier 1**. Calculer la charge cumulée sur ce pilier, en méganewtons.'
+        answer: '27.125'
+        numeric: true
+        tolerance: 0.1
+        unit: MN
+        explanation: 'Quand la nacelle est à l''aplomb du pilier 1, celui-ci en reprend la totalité : $25{,}125 + 2{,}00 = 27{,}125$ MN. C''est le cas le plus défavorable pour ce pilier.'
+      - kind: mcq
+        prompt: '**Étape 6.** Que devient la charge sur le pilier 1 lorsque la nacelle se trouve au droit du **pilier 2**, et comment varie-t-elle entre les deux positions ?'
+        choices:
+        - Elle retombe à 25,125 MN, et la variation est linéaire en fonction de la position de la nacelle
+        - Elle reste à 27,125 MN, car la nacelle appartient toujours à l'ouvrage
+        - Elle tombe à 0 MN, puisque la nacelle est de l'autre côté
+        - Elle double, car la charge se répercute sur les deux piliers
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la nacelle est une charge **mobile**, sa contribution au pilier 1 dépend de sa position.'
+        - 'Non : le poids propre et la rue aérienne, eux, continuent de charger le pilier 1 quoi qu''il arrive.'
+        - 'Non : une charge unique de 2 MN ne peut pas produire plus de 2 MN de descente au total.'
+        explanation: La nacelle n'apporte plus rien au pilier 1 quand elle est à l'autre extrémité. Le graphe de la charge du pilier 1 en fonction de la position est donc un segment décroissant de 27,125 MN à 25,125 MN.
+      - kind: input
+        prompt: '**Étape 7.** La charge de calcul retenue sur la fondation est de **35,07 MN**. Calculer la pression exercée sous une semelle carrée de 15 m de côté, en mégapascals (arrondir au millième).'
+        answer: '0.156'
+        numeric: true
+        tolerance: 0.005
+        unit: MPa
+        explanation: '$S = 15 \times 15 = 225$ m². $p = \dfrac{35{,}07 \times 10^{6}}{225} \approx 155\,867$ Pa $\approx 0{,}156$ MPa.'
+      - kind: mcq
+        prompt: '**Étape 8.** La résistance du sol est de 0,20 MPa. Conclure sur la stabilité au **poinçonnement**.'
+        choices:
+        - '0,156 MPa < 0,20 MPa : la semelle de 15 m de côté convient'
+        - '0,156 MPa < 0,20 MPa : la semelle est insuffisante, il faut l''agrandir'
+        - On ne peut pas conclure sans connaître le matériau de la semelle
+        - Il faut comparer la charge en MN à la résistance en MPa
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la pression appliquée est **inférieure** à celle que le sol peut supporter, donc tout va bien.'
+        - 'Non : le poinçonnement met en jeu la résistance du **sol**, pas celle du béton de la semelle.'
+        - 'Non : une force (MN) et une pression (MPa) ne se comparent pas ; il faut d''abord diviser par la surface.'
+        explanation: 'Le poinçonnement est l''enfoncement vertical de l''ouvrage dans le sol. La condition est $p \leq p_{\text{admissible}}$ : ici $0{,}156 \leq 0{,}20$ MPa, avec une marge de 22 %.'
+  - id: 2i2d-treillis-stabilite
+    title: Treillis, stabilité et basculement
+    icon: 🗼
+    description: Ferme en treillis, barres tendues et comprimées, moment renversant et moment stabilisateur, poinçonnement, choix des appuis d'un ouvrage.
+    prerequisites:
+    - 2i2d-structures-porteuses
+    lesson: lessons/2i2d-structures-treillis-stabilite.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Qu''est-ce qu''un **treillis** ?
+
+
+        {{fig:2i2d-treillis-ferme}}'
+      choices:
+      - Un assemblage de barres verticales, horizontales et diagonales formant des triangles
+      - Une dalle en béton armé nervurée
+      - Un empilement de poutres parallèles
+      - Un mur porteur percé d'ouvertures
+      answer: 0
+      feedback:
+      - null
+      - 'Non : une dalle est un élément **plein** ; le treillis est fait de barres et de vide.'
+      - 'Non : sans les diagonales, l''assemblage se déformerait en parallélogramme.'
+      - 'Non : un mur porteur travaille en compression, ce n''est pas un assemblage triangulé.'
+      explanation: Le treillis est un assemblage de barres **triangulé**. C'est cette triangulation qui lui donne sa rigidité pour un poids de matière très faible.
+      tags:
+      - treillis
+    - type: mcq
+      level: 1
+      prompt: En architecture, qu'appelle-t-on une **ferme** ?
+      choices:
+      - Un élément d'une charpente supportant le poids de la couverture d'un édifice
+      - La fondation d'un poteau
+      - Un appui bloquant toutes les mobilités
+      - Un matériau composite à base de bois
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la fondation est en bas de l''ouvrage ; la ferme est tout en haut, dans la charpente.'
+      - 'Non : cet appui s''appelle un **encastrement**.'
+      - 'Non : c''est un élément de structure, pas un matériau.'
+      explanation: Une ferme porte la couverture et reporte ses charges sur les poteaux ou les murs. Elle peut être une poutre pleine ou, pour les grandes portées, un **treillis**.
+      tags:
+      - treillis
+    - type: mcq
+      level: 2
+      prompt: 'Pourquoi les barres d''un treillis sont-elles disposées en **triangles** plutôt qu''en carrés ?
+
+
+        {{fig:2i2d-treillis-ferme}}'
+      choices:
+      - Parce que le triangle est indéformable, alors qu'un quadrilatère articulé se déforme en losange
+      - Parce que le triangle utilise moins de matière par barre
+      - Parce que les angles de 60° sont plus faciles à souder
+      - Parce que c'est plus esthétique
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la quantité de matière dépend des sections calculées, pas de la forme géométrique choisie.'
+      - 'Non : les treillis réels comportent des angles très variés, rarement 60°.'
+      - 'Non : c''est une raison mécanique, pas une raison de goût.'
+      explanation: Trois longueurs de barres fixent complètement la forme d'un triangle. Un quadrilatère articulé, lui, s'affaisse en losange — c'est pourquoi on lui ajoute une diagonale.
+      tags:
+      - treillis
+    - type: mcq
+      level: 2
+      prompt: 'Dans un treillis idéal (barres articulées à leurs extrémités, charges appliquées aux nœuds), comment travaille chaque barre ?
+
+
+        {{fig:2i2d-treillis-ferme}}'
+      choices:
+      - Elle est un solide soumis à 2 forces, donc uniquement en traction ou en compression
+      - Elle est fléchie sur toute sa longueur
+      - Elle est en torsion
+      - Elle est en cisaillement pur
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la flexion viendrait de charges appliquées **en travers** de la barre ; ici les charges sont aux nœuds.'
+      - 'Non : la torsion supposerait un moment autour de l''axe de la barre.'
+      - 'Non : le cisaillement apparaît dans les assemblages (boulons, soudures), pas dans le corps de la barre.'
+      explanation: 'C''est tout l''intérêt du treillis : chaque barre étant un solide à 2 forces, l''effort est porté par son axe et la matière est utilisée au mieux. On dimensionne alors chaque barre en traction ou en compression simple.'
+      tags:
+      - treillis
+    - type: mcq
+      level: 2
+      prompt: Les deux forces appliquées à une barre de treillis pointent **vers l'extérieur** de la barre. Comment cette barre est-elle sollicitée ?
+      choices:
+      - En traction ; elle est **tendue**
+      - En compression ; elle est comprimée
+      - En flexion
+      - Elle n'est pas sollicitée
+      answer: 0
+      feedback:
+      - null
+      - 'Non : en compression, les deux forces pointent l''une vers l''autre et tendent à raccourcir la barre.'
+      - 'Non : les forces sont dans l''axe de la barre, il n''y a pas de flexion.'
+      - 'Non : deux forces opposées de même intensité donnent une résultante nulle, mais la barre est bel et bien chargée intérieurement.'
+      explanation: 'Barre tendue : les efforts l''allongent. Cette distinction est capitale, car une barre **comprimée** longue peut flamber bien avant d''atteindre sa limite élastique, alors qu''une barre tendue n''a pas ce problème.'
+      tags:
+      - treillis
+    - type: mcq
+      level: 2
+      prompt: 'Un cahier des charges impose une **portée de 56 m** entre poteaux et une toiture inclinée à **5° au maximum**. Voici quatre solutions de charpente et leur portée maximale : poutres en béton armé (15 m), poutres en béton précontraint (35 m), poutres en bois lamellé collé (100 m, mais architecture en arc, pente de 15 à 35°), treillis en acier (70 m, couvertures plates de 0 à 35°). Laquelle retenir ?'
+      choices:
+      - Le treillis en acier
+      - Les poutres en béton armé
+      - Les poutres en béton précontraint
+      - Les poutres en bois lamellé collé
+      answer: 0
+      feedback:
+      - null
+      - 'Non : sa portée maximale de 15 m est très inférieure aux 56 m exigés.'
+      - 'Non : 35 m < 56 m, la portée reste insuffisante.'
+      - 'Non : sa portée conviendrait (100 m) et c''est la solution la plus légère, mais l''architecture en arc impose une pente de toit de 15 à 35°, incompatible avec les 5° maximum.'
+      explanation: 'Deux critères éliminent trois solutions : la **portée** (≥ 56 m) et la **pente de toiture** (≤ 5°). Seul le treillis acier satisfait les deux, au prix du coût le plus élevé.'
+      tags:
+      - treillis
+    - type: input
+      level: 2
+      prompt: Une charpente en treillis acier pèse **630 daN·m⁻²** de construction. Exprimer ce poids surfacique en kN·m⁻².
+      answer: '6.3'
+      numeric: true
+      tolerance: 0.1
+      unit: kN·m⁻²
+      explanation: '$1$ daN $= 10$ N, donc $630$ daN·m⁻² $= 6\,300$ N·m⁻² $= 6{,}3$ kN·m⁻². À comparer aux 9,2 kN·m⁻² des poutres en béton armé (920 daN·m⁻²) : le treillis fait gagner près d''un tiers du poids.'
+      tags:
+      - treillis
+    - type: mcq
+      level: 1
+      prompt: 'Une tour risque de **basculer** sous l''effet du vent. Autour de quoi tourne-t-elle ?
+
+
+        {{fig:2i2d-basculement}}'
+      choices:
+      - Autour de l'appui situé du côté opposé au vent, qui joue le rôle d'arête de basculement
+      - Autour de son centre de gravité $G$
+      - Autour de l'appui situé du côté du vent
+      - Autour de son axe vertical
+      answer: 0
+      feedback:
+      - null
+      - 'Non : $G$ n''est pas en contact avec le sol, la tour ne peut pas pivoter autour de lui.'
+      - 'Non : le vent pousse la tour, elle se soulève **du côté d''où vient le vent** et pivote de l''autre côté.'
+      - 'Non : une rotation autour de l''axe vertical serait un dévissage, pas un basculement.'
+      explanation: 'Le vent pousse le haut de la tour : elle tend à décoller du côté au vent et à pivoter autour de l''appui **sous le vent**. C''est cet appui qui devient le point de calcul des moments.'
+      tags:
+      - basculement
+    - type: mcq
+      level: 2
+      prompt: Pourquoi l'action de liaison en $B$ est-elle nulle « à la limite du basculement » autour de $A$ ?
+      choices:
+      - Parce que la structure commence à décoller du sol en $B$ ; le contact ne transmet plus rien
+      - Parce que $B$ est un encastrement, qui ne transmet pas d'effort
+      - Parce que le poids passe exactement par $B$
+      - Parce que la réaction en $B$ est reprise par $A$
+      answer: 0
+      feedback:
+      - null
+      - 'Non : un encastrement transmet au contraire des efforts **et** un moment.'
+      - 'Non : le poids passe par l''axe de la tour, à mi-distance entre $A$ et $B$.'
+      - 'Non : les réactions ne se « transfèrent » pas d''un appui à l''autre, chacune est une inconnue distincte.'
+      explanation: 'À la limite du basculement, la structure ne s''appuie plus que sur $A$. Un appui simple ne peut que **pousser**, jamais retenir : dès que le contact est perdu, sa réaction devient nulle. Le problème se ramène alors à 3 forces.'
+      tags:
+      - basculement
+    - type: mcq
+      level: 2
+      prompt: 'Quelle est la condition de non-basculement d''une structure ?
+
+
+        {{fig:2i2d-basculement}}'
+      choices:
+      - Le moment stabilisateur (dû au poids) doit être supérieur au moment renversant (dû au vent)
+      - Le poids doit être supérieur à la force du vent
+      - Les deux moments doivent être nuls
+      - Le centre de gravité doit être le plus haut possible
+      answer: 0
+      feedback:
+      - null
+      - 'Non : ce sont les **moments** qui se comparent, pas les forces : les bras de levier sont très différents (4 m contre 40,70 m dans l''exemple de la tour de guet).'
+      - 'Non : le moment du poids n''est nul que si $G$ est à l''aplomb de l''arête de basculement, ce qui est la situation critique.'
+      - 'Non : c''est l''inverse — un centre de gravité **bas** augmente la stabilité, comme sur une grue lestée en pied.'
+      explanation: 'On compare $M_{\text{stab}} = P \times d_P$ et $M_{\text{renv}} = F \times h$, tous deux pris par rapport à l''arête de basculement. La structure est stable si $M_{\text{stab}} > M_{\text{renv}}$.'
+      tags:
+      - basculement
+    - type: input
+      level: 2
+      prompt: 'Une tour de 40,70 m pèse **55 kN**, son centre de gravité $G$ étant à **4 m** de l''arête de basculement $A$. Le vent agit horizontalement au sommet, à **40,70 m** du sol. Calculer la force de vent $F_b$ qui provoquerait le basculement (arrondir au dixième).
+
+
+        {{fig:2i2d-basculement}}'
+      answer: '5.4'
+      numeric: true
+      tolerance: 0.2
+      unit: kN
+      explanation: 'Égalité des moments en $A$ : $F_b \times 40{,}70 = 55 \times 4$, donc $F_b = \dfrac{220}{40{,}70} \approx 5{,}4$ kN. Le très grand bras de levier du vent (dix fois celui du poids) explique qu''une force dix fois plus faible que le poids suffise à faire basculer la tour.'
+      tags:
+      - basculement
+    - type: input
+      level: 2
+      prompt: 'Une structure offre au vent une surface de **14 m²**. Sur un site protégé, la pression de vent extrême vaut **700 Pa**. Calculer la force exercée par le vent, en kilonewtons.'
+      answer: '9.8'
+      numeric: true
+      tolerance: 0.2
+      unit: kN
+      explanation: '$F = p \times S = 700 \times 14 = 9\,800$ N $= 9{,}8$ kN. Attention à l''unité : le pascal est un newton par mètre carré, donc $\text{Pa} \times \text{m}^2 = \text{N}$.'
+      tags:
+      - basculement
+    - type: mcq
+      level: 3
+      prompt: La force de vent extrême calculée vaut 9,8 kN et la force de basculement 5,4 kN. Comment interpréter ce résultat ?
+      choices:
+      - La structure bascule sous vent extrême ; il faut ancrer les fondations ou réduire la prise au vent
+      - La structure est stable, avec une marge de 4,4 kN
+      - Le calcul est faux, une force de vent ne peut pas dépasser la force de basculement
+      - Il faut recommencer le calcul en pondérant le poids
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la marge est **négative**, la force appliquée dépasse la force limite.'
+      - 'Non : rien n''empêche physiquement le vent de dépasser cette valeur — c''est justement le risque à évaluer.'
+      - 'Non : pondérer le poids **à la hausse** serait favorable à la stabilité, donc non conservatif ; on ne triche pas avec l''action stabilisatrice.'
+      explanation: 'Le vent extrême dépasse de 81 % la force limite. Solutions habituelles : ancrer les fondations (elles reprennent alors un effort de traction), élargir l''embase, ou réduire la surface offerte au vent.'
+      tags:
+      - basculement
+    - type: input
+      level: 3
+      prompt: 'Calculer le **coefficient de stabilité** de cette tour sous vent extrême, défini comme le rapport du moment stabilisateur au moment renversant : $\dfrac{55 \times 4}{9{,}8 \times 40{,}70}$ (arrondir au centième).'
+      answer: '0.55'
+      numeric: true
+      tolerance: 0.03
+      unit: ''
+      explanation: '$\dfrac{220}{398{,}86} \approx 0{,}55$. Un coefficient inférieur à 1 signale le basculement ; on vise en général une valeur nettement supérieure à 1 pour couvrir les incertitudes.'
+      tags:
+      - basculement
+    - type: order
+      level: 2
+      prompt: Remettez dans l'ordre les étapes d'une vérification de stabilité au basculement.
+      steps:
+      - Isoler la structure et faire le bilan des actions (poids, vent, réactions d'appui)
+      - Identifier l'arête ou l'appui autour duquel la structure risque de pivoter
+      - Calculer le moment renversant du vent par rapport à ce point
+      - Calculer le moment stabilisateur du poids par rapport à ce même point
+      - Comparer les deux moments et conclure sur la stabilité
+      explanation: Comme toujours en statique, le choix du point de calcul des moments décide de la simplicité du travail. Ici on le prend sur l'arête de basculement, ce qui élimine la réaction d'appui.
+      tags:
+      - basculement
+    - type: mcq
+      level: 2
+      prompt: 'Qu''appelle-t-on le **poinçonnement** d''une fondation ?
+
+
+        {{fig:2i2d-poinconnement}}'
+      choices:
+      - L'enfoncement vertical de l'ouvrage dans le sol, quand la pression sous la semelle dépasse ce que le sol peut supporter
+      - Le percement de la semelle par les armatures du poteau
+      - Le glissement horizontal de la fondation
+      - Le basculement de l'ouvrage autour d'une arête
+      answer: 0
+      feedback:
+      - null
+      - 'Non : ce serait un défaut de ferraillage, pas un phénomène de sol.'
+      - 'Non : le glissement est un autre mode de ruine, dû aux efforts horizontaux.'
+      - 'Non : le basculement est une **rotation**, le poinçonnement une **translation verticale**.'
+      explanation: 'On vérifie le poinçonnement en comparant la pression appliquée $p = F/S$ à la résistance du sol. Deux leviers pour l''améliorer : augmenter $S$, ou descendre la fondation sur un sol plus résistant.'
+      tags:
+      - fondations
+    - type: input
+      level: 2
+      prompt: 'Une semelle carrée de **15 m** de côté reprend une charge de calcul de **35,07 MN**. Calculer la pression exercée sur le sol, en mégapascals (arrondir au millième).
+
+
+        {{fig:2i2d-poinconnement}}'
+      answer: '0.156'
+      numeric: true
+      tolerance: 0.005
+      unit: MPa
+      explanation: '$S = 15 \times 15 = 225$ m² et $p = \dfrac{35{,}07 \times 10^{6}}{225} \approx 155\,867$ Pa $\approx 0{,}156$ MPa. Erreur classique : oublier de convertir les MN en N.'
+      tags:
+      - fondations
+    - type: mcq
+      level: 3
+      prompt: La pression sous la semelle vaut 0,156 MPa et la résistance du sol 0,20 MPa. La fondation convient-elle ?
+      choices:
+      - Oui, la pression appliquée reste inférieure à la résistance du sol
+      - Non, il faudrait une semelle de 20 m de côté
+      - On ne peut pas conclure sans connaître la profondeur de la semelle
+      - Non, car 0,156 est un nombre inférieur à 1
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la semelle actuelle suffit déjà, avec 22 % de marge.'
+      - 'Non : la vérification demandée porte sur la pression de contact, la profondeur n''intervient pas dans ce calcul.'
+      - 'Non : ce qui compte est la comparaison entre deux pressions, pas la valeur absolue du nombre.'
+      explanation: '$0{,}156$ MPa $\leq 0{,}20$ MPa : la condition de non-poinçonnement est satisfaite. Les coefficients de sécurité sont déjà inclus dans la charge de calcul de 35,07 MN.'
+      tags:
+      - fondations
+    - type: mcq
+      level: 2
+      prompt: Une ferme de 56 m de portée repose sur deux poteaux. On souhaite qu'elle résiste au vent **et** qu'elle puisse se dilater librement. Quelle combinaison d'appuis choisir ?
+      choices:
+      - Un appui fixe (articulation) d'un côté, un appui glissant de l'autre
+      - Deux appuis glissants
+      - Deux appuis fixes
+      - Deux encastrements
+      answer: 0
+      feedback:
+      - null
+      - 'Non : avec deux appuis glissants, rien ne s''oppose à l''effort horizontal du vent, la ferme peut se déplacer en bloc.'
+      - 'Non : avec deux appuis fixes, la ferme est stable au vent mais **bloquée** en dilatation ; elle se déforme et des contraintes parasites apparaissent.'
+      - 'Non : deux encastrements bloquent encore davantage, y compris les rotations.'
+      explanation: 'C''est la solution universelle des ouvrages d''art : un appui **fixe** reprend l''effort horizontal et sert de point de référence, un appui **glissant** absorbe l''allongement thermique.'
+      tags:
+      - appuis
+    - type: mcq
+      level: 3
+      prompt: Que se passe-t-il si l'on place **deux appuis fixes** sous une ferme métallique de 56 m soumise à une variation de température de 40 °C ?
+      choices:
+      - La dilatation est empêchée, ce qui engendre des contraintes internes importantes dans la ferme et dans les poteaux
+      - Rien de particulier, l'acier ne se dilate pas
+      - La ferme devient instable sous l'action du vent
+      - La ferme s'allonge librement d'environ 27 mm
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''acier se dilate d''environ $12 \cdot 10^{-6}$ par degré, soit près de 27 mm sur 56 m pour 40 °C.'
+      - 'Non : deux appuis fixes rendent au contraire la structure très stable vis-à-vis du vent ; le problème est ailleurs.'
+      - 'Non : justement, un appui fixe **empêche** cet allongement.'
+      explanation: 'Empêcher une dilatation revient à imposer une déformation, donc une contrainte ($\sigma = E \varepsilon$). Sur une grande portée, ces contraintes parasites peuvent dépasser celles dues aux charges elles-mêmes.'
+      tags:
+      - appuis
+    - type: input
+      level: 3
+      prompt: 'Une ferme en acier de **56 m** de portée subit une variation de température de **−10 °C à 30 °C**. Avec un coefficient de dilatation $\alpha = 12 \cdot 10^{-6}$ °C⁻¹, calculer sa variation de longueur en millimètres (arrondir au dixième).'
+      answer: '26.9'
+      numeric: true
+      tolerance: 0.5
+      unit: mm
+      explanation: '$\Delta\theta = 30 - (-10) = 40$ °C. $\Delta L = \alpha \times L \times \Delta\theta = 12 \cdot 10^{-6} \times 56\,000 \times 40 = 26{,}88$ mm $\approx 26{,}9$ mm. L''appui glissant doit donc autoriser près de 3 cm de course.'
+      tags:
+      - appuis
+    - type: match
+      level: 2
+      prompt: Associez chaque terme du vocabulaire des structures à sa définition.
+      pairs:
+      - left: Treillis
+        right: assemblage de barres formant des triangles
+      - left: Ferme
+        right: élément de charpente qui supporte la couverture
+      - left: Basculement
+        right: rotation de l'ouvrage autour d'une arête d'appui
+      - left: Poinçonnement
+        right: enfoncement vertical de l'ouvrage dans le sol
+      - left: ELU
+        right: état limite calculé avec des charges pondérées
+      explanation: Ces cinq mots reviennent dans presque tous les sujets de bac portant sur une structure porteuse.
+      tags:
+      - vocabulaire
+    - type: mcq
+      level: 3
+      prompt: Sur un pylône en treillis, une même barre est **tendue** quand le vent souffle d'un côté et **comprimée** quand il souffle de l'autre. Quelle conséquence pour le dimensionnement ?
+      choices:
+      - Il faut la dimensionner pour le cas le plus défavorable des deux, en tenant compte du risque de flambement en compression
+      - Il suffit de la dimensionner en traction, c'est le cas le plus sévère
+      - Il faut choisir deux barres différentes selon la saison
+      - Ces deux cas s'annulent, la barre n'est pas sollicitée
+      answer: 0
+      feedback:
+      - null
+      - 'Non : à effort égal, la **compression** est plus dangereuse pour une barre élancée, à cause du flambement.'
+      - 'Non : une structure est fixe, on ne change pas ses barres selon le vent.'
+      - 'Non : les deux cas ne se produisent pas en même temps, ils ne peuvent pas s''annuler ; chacun doit être vérifié séparément.'
+      explanation: 'On envisage successivement tous les cas de charge (vent d''ouest, vent d''est, neige…) et l''on retient pour chaque barre l''effort le plus défavorable. Une barre comprimée élancée cède par **flambement** bien avant $R_e$.'
+      tags:
+      - treillis
+  - id: 2i2d-materiaux-familles
+    title: Les familles de matériaux
+    icon: 🧱
+    description: Métaux et alliages, céramiques, composites, nanomatériaux, matériaux organiques, plastiques, masse volumique, résistivité, corrosion et procédés de fabrication.
+    prerequisites: []
+    lesson: lessons/2i2d-structures-materiaux-familles.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'D''où proviennent les **métaux**, et sous quelle forme sont-ils employés en général ?
+
+
+        {{fig:pc-familles-materiaux}}'
+      choices:
+      - De l'extraction de minerais ; on les emploie rarement purs, mais mélangés à d'autres composants sous forme d'alliages
+      - De la fusion du quartz contenu dans le sable
+      - De la transformation du pétrole
+      - De la matière fabriquée par les êtres vivants
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est l''origine des **céramiques**.'
+      - 'Non : c''est l''origine des **plastiques**.'
+      - 'Non : c''est la définition des matériaux **organiques**.'
+      explanation: Les métaux sont issus de minerais. On les allie pour améliorer leurs caractéristiques (tenue à la corrosion, résistance aux chocs).
+      tags:
+      - familles
+    - type: match
+      level: 1
+      prompt: Associez chaque alliage à sa composition.
+      pairs:
+      - left: Fonte
+        right: fer + carbone (entre 2,1 % et 5 % de carbone)
+      - left: Acier
+        right: fer + carbone (moins de 2,1 % de carbone)
+      - left: Bronze
+        right: cuivre + étain
+      - left: Laiton
+        right: cuivre + zinc
+      explanation: 'Retenir les deux couples : les alliages **ferreux** (fonte, acier) se distinguent par la teneur en carbone ; les alliages de **cuivre** se distinguent par le second métal, étain pour le bronze, zinc pour le laiton.'
+      tags:
+      - metaux
+    - type: mcq
+      level: 1
+      prompt: Qu'est-ce qui distingue la **fonte** de l'**acier** ?
+      choices:
+      - 'La teneur en carbone : entre 2,1 % et 5 % pour la fonte, moins de 2,1 % pour l''acier'
+      - La fonte contient du cuivre, l'acier du fer
+      - La fonte est un composite, l'acier un métal pur
+      - La fonte est obtenue par injection, l'acier par usinage
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les deux sont des alliages de **fer** et de carbone.'
+      - 'Non : ni l''une ni l''autre n''est un métal pur, ce sont deux alliages.'
+      - 'Non : ce sont des **procédés de mise en forme**, pas des définitions de matériaux.'
+      explanation: 'Seuil à retenir : **2,1 % de carbone**. Au-dessus, c''est de la fonte (dure et fragile, bien coulable) ; en dessous, de l''acier (plus ductile, soudable).'
+      tags:
+      - metaux
+    - type: mcq
+      level: 1
+      prompt: Quelles propriétés caractérisent les **céramiques** ?
+      choices:
+      - Très dures et très rigides, résistantes à la chaleur et à la corrosion, mais fragiles aux chocs
+      - Souples, légères et bonnes conductrices d'électricité
+      - Ductiles et facilement soudables
+      - Élastiques et faiblement rigides
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les céramiques sont au contraire d''excellents **isolants** électriques, et rien moins que souples.'
+      - 'Non : la ductilité et la soudabilité sont des qualités des **métaux** ; une céramique casse au lieu de se déformer.'
+      - 'Non : leur module d''élasticité est au contraire très élevé.'
+      explanation: 'Céramiques : issues de la fusion du quartz du sable ou de l''argile. Très dures, très rigides, tenue à la chaleur, à l''usure et aux agents chimiques, mais **fragiles** au choc. Emplois : fibre optique, outils de coupe, isolants électriques, joints.'
+      tags:
+      - familles
+    - type: mcq
+      level: 1
+      prompt: 'Qu''est-ce qu''un matériau **composite** ?
+
+
+        {{fig:pc-familles-materiaux}}'
+      choices:
+      - Un assemblage d'au moins deux matériaux non miscibles, dont les performances dépassent celles des composants pris séparément
+      - Un métal auquel on a ajouté du carbone
+      - Un matériau dont les propriétés viennent de sa structure nanométrique
+      - Un matériau fabriqué par des êtres vivants
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la définition d''un **alliage** (l''acier, par exemple).'
+      - 'Non : c''est la définition d''un **nanomatériau**.'
+      - 'Non : c''est la définition d''un matériau **organique**.'
+      explanation: 'Composite = au moins deux matériaux **non miscibles** assemblés. Exemples du manuel : béton armé (béton + aciers), raquette de tennis (fibre de verre + résine polyester), brique alimentaire (carton + plastique + aluminium).'
+      tags:
+      - familles
+    - type: mcq
+      level: 1
+      prompt: Le **béton armé** est constitué de béton et de tiges d'acier. À quelle famille appartient-il ?
+      choices:
+      - Aux matériaux composites
+      - Aux alliages
+      - Aux céramiques
+      - Aux nanomatériaux
+      answer: 0
+      feedback:
+      - null
+      - 'Non : un alliage est un mélange **à l''échelle atomique** ; ici, le béton et l''acier restent parfaitement distincts.'
+      - 'Non : le béton seul est proche d''un matériau minéral, mais l''ajout des armatures en fait autre chose.'
+      - 'Non : les armatures sont des barres de plusieurs millimètres, pas des nanostructures.'
+      explanation: 'Le béton reprend très bien la **compression** mais mal la traction ; l''acier fait l''inverse. Leur assemblage donne un matériau plus performant que chacun pris séparément : c''est bien la définition d''un composite.'
+      tags:
+      - familles
+    - type: mcq
+      level: 1
+      prompt: Qu'est-ce qu'un **nanomatériau** ?
+      choices:
+      - Un matériau dont les propriétés particulières viennent de sa taille ou de sa structure nanométrique
+      - Un matériau très léger
+      - Un matériau obtenu par usinage de très haute précision
+      - Un plastique très mince
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la légèreté est une propriété (masse volumique faible), pas une définition d''échelle.'
+      - 'Non : l''usinage est un procédé de fabrication ; le nanomatériau se définit par sa structure.'
+      - 'Non : l''épaisseur d''un film plastique reste des milliers de fois supérieure au nanomètre.'
+      explanation: 'Exemples du manuel : nanoparticules d''oxyde de cérium ajoutées au diesel pour améliorer les performances, membranes de polymères nanostructurées pour purifier l''eau.'
+      tags:
+      - familles
+    - type: mcq
+      level: 1
+      prompt: Parmi ces matériaux, lequel n'est **pas** un matériau organique ?
+      choices:
+      - Le verre
+      - Le bois
+      - Le cuir
+      - Le papier
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le bois vient des arbres, c''est un matériau organique par excellence.'
+      - 'Non : le cuir provient de la peau des animaux.'
+      - 'Non : le papier est fabriqué à partir de fibres de bois.'
+      explanation: La matière organique est **fabriquée par les êtres vivants** (végétaux, animaux, champignons). Le verre, lui, est un matériau minéral obtenu à partir du sable.
+      tags:
+      - familles
+    - type: mcq
+      level: 2
+      prompt: Quelle est la différence entre un plastique **thermoplastique** et un plastique **thermodurcissable** ?
+      choices:
+      - Le thermoplastique fond sous l'effet de la chaleur et se solidifie en refroidissant ; le thermodurcissable subit une transformation irréversible
+      - Le thermoplastique résiste à la chaleur, le thermodurcissable non
+      - Le thermoplastique conduit le courant, le thermodurcissable est isolant
+      - Le thermoplastique est un composite, le thermodurcissable un polymère
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est le contraire pour la mise en forme — le thermoplastique **fond**, précisément.'
+      - 'Non : les deux catégories de plastiques sont isolantes électriquement.'
+      - 'Non : les deux sont des substances **polymères**.'
+      explanation: 'Conséquence pratique décisive : un thermoplastique se **recycle** par refusion et se met en forme par injection ; un thermodurcissable, une fois formé, ne se déforme plus et se recycle beaucoup plus difficilement.'
+      tags:
+      - plastiques
+    - type: mcq
+      level: 1
+      prompt: Quelles propriétés générales le manuel attribue-t-il aux matières plastiques ?
+      choices:
+      - Elles ne laissent pas passer le courant électrique, elles sont légères et généralement étanches
+      - Elles conduisent bien le courant et la chaleur
+      - Elles sont très denses et très rigides
+      - Elles résistent mal à l'eau
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les plastiques sont des **isolants** électriques et thermiques ; c''est même leur emploi principal en gainage de câbles.'
+      - 'Non : leur masse volumique est faible (nylon 1 000 kg·m⁻³, contre 7 800 pour l''acier).'
+      - 'Non : leur étanchéité est justement l''une de leurs qualités (bouteilles, emballages).'
+      explanation: Les plastiques sont des substances **polymères**, obtenues le plus souvent par transformation du pétrole. Isolants, légers, étanches, ils ont des usages très vastes.
+      tags:
+      - plastiques
+    - type: order
+      level: 2
+      prompt: 'Classez ces matériaux du **plus léger** au **plus lourd**, d''après leur masse volumique (en kg·m⁻³).'
+      steps:
+      - Nylon (1 000)
+      - Fibres de carbone (1 750)
+      - Fibres de verre (2 500)
+      - Alliage d'aluminium (2 700)
+      - Acier (7 800)
+      - Bronze (8 900)
+      explanation: 'Tableau du manuel, p. 279. Deux repères à retenir : l''aluminium est environ **trois fois** plus léger que l''acier, et les fibres de carbone **quatre fois** plus légères.'
+      tags:
+      - proprietes
+    - type: input
+      level: 2
+      prompt: 'Une pièce en acier occupe un volume de **2,0 dm³**. Calculer sa masse, sachant que la masse volumique de l''acier vaut **7 800 kg·m⁻³**.'
+      answer: '15.6'
+      numeric: true
+      tolerance: 0.2
+      unit: kg
+      explanation: '$2{,}0$ dm³ $= 2{,}0 \times 10^{-3}$ m³, donc $m = \rho \times V = 7\,800 \times 0{,}0020 = 15{,}6$ kg. Erreur classique : oublier la conversion dm³ → m³ et trouver 15 600 kg.'
+      tags:
+      - proprietes
+    - type: input
+      level: 3
+      prompt: 'À volume égal, combien de fois une pièce en acier ($\rho = 7\,800$ kg·m⁻³) est-elle plus lourde qu''une pièce en fibres de carbone ($\rho = 1\,750$ kg·m⁻³) ? (arrondir au dixième)'
+      answer: '4.5'
+      numeric: true
+      tolerance: 0.2
+      unit: ''
+      explanation: '$\dfrac{7\,800}{1\,750} \approx 4{,}5$. C''est cet écart qui justifie l''emploi des composites carbone en aéronautique et en compétition automobile, malgré leur coût.'
+      tags:
+      - proprietes
+    - type: grid
+      level: 2
+      prompt: 'D''après les résistivités mesurées, classez chaque matériau comme isolant ou conducteur : polystyrène $10^{20}$ Ω·m, verre $10^{17}$ Ω·m, aluminium $2{,}8 \cdot 10^{-8}$ Ω·m, cuivre $1{,}7 \cdot 10^{-8}$ Ω·m.'
+      rows:
+      - id: po
+        label: Polystyrène
+      - id: ve
+        label: Verre
+      - id: al
+        label: Aluminium
+      - id: cu
+        label: Cuivre
+      cols:
+      - id: ISO
+        label: Isolant
+      - id: CON
+        label: Conducteur
+      answer:
+      - ISOpo
+      - ISOve
+      - CONal
+      - CONcu
+      cellFeedback:
+        CONpo: 'une résistivité de $10^{20}$ Ω·m est colossale : le polystyrène est un isolant'
+        CONve: 'le verre ($10^{17}$ Ω·m) est un isolant, employé comme tel sur les lignes haute tension'
+        ISOal: '$2{,}8 \cdot 10^{-8}$ Ω·m est une valeur minuscule : l''aluminium conduit très bien'
+        ISOcu: le cuivre est le meilleur conducteur du tableau, d'où son emploi dans les câbles
+      explanation: 'La frontière est spectaculaire : les isolants dépassent $10^{12}$ Ω·m, les conducteurs sont autour de $10^{-8}$ Ω·m, soit vingt ordres de grandeur d''écart.'
+      tags:
+      - proprietes
+    - type: mcq
+      level: 2
+      prompt: 'Parmi ces quatre matériaux, lequel conduit le mieux le courant électrique : polystyrène ($10^{20}$ Ω·m), nylon ($5 \cdot 10^{12}$ Ω·m), aluminium ($2{,}8 \cdot 10^{-8}$ Ω·m), cuivre ($1{,}7 \cdot 10^{-8}$ Ω·m) ?'
+      choices:
+      - Le cuivre
+      - L'aluminium
+      - Le nylon
+      - Le polystyrène
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''aluminium est un bon conducteur, mais sa résistivité ($2{,}8 \cdot 10^{-8}$) est supérieure à celle du cuivre ($1{,}7 \cdot 10^{-8}$).'
+      - 'Non : $5 \cdot 10^{12}$ Ω·m est une valeur d''**isolant**.'
+      - 'Non : c''est le plus isolant des quatre.'
+      explanation: 'Plus la résistivité est **faible**, meilleur est le conducteur. L''aluminium reste très employé en lignes aériennes malgré sa résistivité un peu plus élevée : à section égale, il est trois fois plus léger que le cuivre.'
+      tags:
+      - proprietes
+    - type: order
+      level: 2
+      prompt: Classez ces matériaux du **moins sensible** au **plus sensible** à la corrosion, selon l'échelle du manuel.
+      steps:
+      - Or
+      - Aluminium
+      - Acier inoxydable
+      - Cuivre
+      - Zinc
+      - Acier
+      explanation: 'Échelle du manuel, p. 279. L''aluminium doit sa bonne place à sa **passivation** : il se recouvre spontanément d''une couche d''alumine qui protège le métal sous-jacent. À l''autre bout, l''acier ordinaire rouille dès qu''il n''est pas protégé.'
+      tags:
+      - corrosion
+    - type: mcq
+      level: 2
+      prompt: D'après l'échelle de corrosion du manuel, quel matériau est le **plus sensible** à la corrosion ?
+      choices:
+      - L'acier
+      - L'or
+      - L'acier inoxydable
+      - Le zinc
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''or est à l''autre extrémité de l''échelle, c''est le moins sensible.'
+      - 'Non : l''acier inoxydable résiste bien, il est classé en troisième position du côté « moins sensible ».'
+      - 'Non : le zinc est en avant-dernière position — on l''utilise d''ailleurs pour **protéger** l''acier (galvanisation).'
+      explanation: 'Ordre du manuel : Or → Aluminium → Acier inoxydable → Cuivre → Zinc → **Acier**. C''est bien pour cela qu''une charpente métallique reçoit systématiquement un traitement de surface.'
+      tags:
+      - corrosion
+    - type: match
+      level: 2
+      prompt: Associez chaque procédé de fabrication à sa définition.
+      pairs:
+      - left: Moulage
+        right: couler du métal ou du plastique en fusion dans un moule
+      - left: Soudage
+        right: assembler des pièces en chauffant leurs bords jusqu'à la fusion
+      - left: Forgeage
+        right: déformer la pièce par une force très importante, à froid ou à chaud
+      - left: Injection
+        right: faire fondre des granulés de plastique et les pousser sous pression dans un moule
+      - left: Usinage
+        right: enlever de la matière à l'aide d'outils de coupe
+      explanation: 'Quatre de ces procédés donnent une forme à la matière ; le **soudage**, lui, sert à assembler des pièces déjà obtenues. Pour un produit fini, on enchaîne souvent plusieurs procédés.'
+      tags:
+      - procedes
+    - type: mcq
+      level: 2
+      prompt: On veut fabriquer en **grande série** un boîtier de forme complexe en polypropylène (un thermoplastique). Quel procédé choisir ?
+      choices:
+      - L'injection
+      - Le forgeage
+      - L'usinage
+      - Le soudage
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le forgeage déforme une pièce massive, typiquement métallique, sous une force très importante.'
+      - 'Non : l''usinage enlève de la matière ; c''est lent, coûteux en outillage et générateur de copeaux — inadapté à une grande série de pièces plastiques.'
+      - 'Non : le soudage **assemble** des pièces existantes, il n''en crée pas la forme.'
+      explanation: L'injection consiste à faire fondre des granulés de thermoplastique et à les introduire **sous pression** dans un moule. C'est le procédé de référence pour les grandes séries de pièces plastiques de forme complexe.
+      tags:
+      - procedes
+    - type: mcq
+      level: 2
+      prompt: La **trempe**, le **recuit** et le **revenu** sont des exemples de quel type de traitement complémentaire ?
+      choices:
+      - Un traitement thermique
+      - Un traitement mécanique
+      - Un traitement thermochimique
+      - Un traitement de surface
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les traitements mécaniques sont le grenaillage, le polissage…'
+      - 'Non : les traitements thermochimiques (cémentation, carbonitruration) modifient en plus la **composition** de la surface.'
+      - 'Non : les traitements de surface sont la peinture, la chromisation…'
+      explanation: 'Quatre familles de traitements complémentaires : **mécanique** (grenaillage, polissage), **thermique** (trempe, recuit, revenu), **thermochimique** (cémentation, carbonitruration), **de surface** (peinture, chromisation).'
+      tags:
+      - procedes
+    - type: mcq
+      level: 3
+      prompt: On doit réaliser un carter de forme très complexe, en série moyenne, en alliage d'aluminium. Quel procédé principal est le plus adapté, et pourquoi ?
+      choices:
+      - Le moulage, car il permet d'obtenir directement des formes complexes en coulant le métal en fusion dans un moule
+      - L'usinage dans un bloc plein, car c'est toujours la solution la plus économique
+      - L'injection, car l'aluminium est un thermoplastique
+      - Le soudage, car il permet d'obtenir n'importe quelle forme
+      answer: 0
+      feedback:
+      - null
+      - 'Non : partir d''un bloc plein gaspille énormément de matière et de temps d''usinage. On usine ensuite seulement les portées fonctionnelles.'
+      - 'Non : l''aluminium est un **métal**, pas un thermoplastique. L''injection concerne les granulés de plastique.'
+      - 'Non : le soudage assemble des pièces, il ne crée pas une forme complexe d''un seul tenant.'
+      explanation: 'Le moulage est le procédé des « formes complexes » d''après le manuel. En pratique on moule d''abord, puis on **usine** les quelques surfaces qui demandent de la précision : c''est l''enchaînement typique de procédés.'
+      tags:
+      - procedes
+    - type: mcq
+      level: 3
+      prompt: Pourquoi les cadres de raquettes de tennis sont-ils réalisés en fibre de verre et résine polyester plutôt qu'en acier ?
+      choices:
+      - Parce que ce composite est à la fois plus souple et plus léger que l'acier
+      - Parce que ce composite est plus rigide que l'acier
+      - Parce que l'acier n'existe pas dans les dimensions voulues
+      - Parce que l'acier ne se recycle pas
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''acier est bien plus rigide ($E = 200\,000$ N/mm²) ; c''est justement cette rigidité qu''on ne veut pas ici.'
+      - 'Non : on sait parfaitement fabriquer des tubes d''acier de cette taille, on en faisait autrefois.'
+      - 'Non : l''acier se recycle très bien ; c''est plutôt le composite qui pose problème en fin de vie.'
+      explanation: 'Exemple du manuel : le composite fibre de verre + résine polyester donne des cadres « plus souples et plus légers » que l''acier. C''est un cas typique où le meilleur matériau n''est pas le plus résistant, mais celui dont le **compromis** de propriétés convient à l''usage.'
+      tags:
+      - familles
+  - id: 2i2d-materiaux-choix
+    title: Choisir un matériau
+    icon: ♻️
+    description: Critères de choix, diagramme des indices de performance, ductile et fragile, isotropie, dilatation, conductivité thermique, cycle de vie et valorisation.
+    prerequisites:
+    - 2i2d-materiaux-familles
+    lesson: lessons/2i2d-structures-materiaux-choix.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Le choix d''un matériau repose sur cinq familles de critères. Laquelle de ces listes est celle du manuel ?'
+      choices:
+      - Mécaniques, physico-chimiques, de mise en œuvre, économiques, écologiques
+      - Mécaniques, thermiques, électriques, optiques, acoustiques
+      - Résistance, rigidité, dureté, ténacité, résilience
+      - Traction, compression, flexion, cisaillement, torsion
+      answer: 0
+      feedback:
+      - null
+      - 'Non : ces cinq mots désignent des **domaines de la physique**, pas les critères de sélection d''un matériau.'
+      - 'Non : ce sont toutes des caractéristiques **mécaniques** ; elles appartiennent à une seule des cinq familles.'
+      - 'Non : ce sont les sollicitations simples auxquelles une pièce peut être soumise.'
+      explanation: 'Les cinq familles : **mécaniques** (limite élastique, masse, dureté, résilience), **physico-chimiques** (corrosion, vieillissement), **de mise en œuvre** (usinabilité, soudabilité, trempabilité), **économiques** (prix, disponibilité), **écologiques** (toxicité, empreinte carbone, recyclabilité).'
+      tags:
+      - criteres
+    - type: match
+      level: 2
+      prompt: Associez chaque critère à la famille à laquelle il appartient.
+      pairs:
+      - left: Limite élastique
+        right: critère mécanique
+      - left: Tenue à la corrosion
+        right: critère physico-chimique
+      - left: Soudabilité
+        right: critère de mise en œuvre
+      - left: Prix et disponibilité
+        right: critère économique
+      - left: Empreinte carbone et recyclabilité
+        right: critère écologique
+      explanation: Un cahier des charges de bac impose presque toujours des critères issus de plusieurs familles à la fois ; c'est le croisement de ces exigences qui élimine les solutions.
+      tags:
+      - criteres
+    - type: mcq
+      level: 1
+      prompt: 'Sur un diagramme des **indices de performance** (diagramme radar), comment se lit l''échelle ?
+
+
+        {{fig:2i2d-radar-performance}}'
+      choices:
+      - De 0 à 5, du centre vers l'extérieur ; plus le point est loin du centre, meilleure est la performance
+      - De 0 à 5, de l'extérieur vers le centre
+      - De 0 à 100 %, dans le sens horaire
+      - En unités physiques différentes sur chaque axe
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le centre correspond à la note 0 (« mauvais »), pas à la meilleure note.'
+      - 'Non : l''échelle est radiale, elle ne tourne pas avec les axes.'
+      - 'Non : tout l''intérêt du diagramme est justement de ramener des grandeurs d''unités différentes à une **note commune** de 0 à 5.'
+      explanation: 'Le diagramme radar sert à comparer d''un coup d''œil plusieurs matériaux sur six axes : résistance à la corrosion, coulabilité, empreinte carbone, recyclabilité, masse, limite élastique. La surface du polygone donne une impression globale.'
+      tags:
+      - indices
+    - type: mcq
+      level: 2
+      prompt: 'Sur l''échelle de notation du manuel (0 à 5), à quoi correspond la note **4** ?'
+      choices:
+      - Bon
+      - Excellent
+      - Acceptable
+      - Médiocre
+      answer: 0
+      feedback:
+      - null
+      - 'Non : « Excellent » correspond à la note **5**, le maximum.'
+      - 'Non : « Acceptable » correspond à la note 3.'
+      - 'Non : « Médiocre » correspond à la note 2.'
+      explanation: 'Échelle complète : 0 Mauvais, 1 Faible, 2 Médiocre, 3 Acceptable, 4 Bon, 5 Excellent.'
+      tags:
+      - indices
+    - type: mcq
+      level: 3
+      prompt: 'Deux matériaux sont comparés sur un diagramme radar. Le premier obtient 5 en limite élastique et 1 en masse, le second 3 en limite élastique et 4 en masse. Que peut-on conclure ?
+
+
+        {{fig:2i2d-radar-performance}}'
+      choices:
+      - Le premier est plus résistant mais plus lourd ; le choix dépend du critère prioritaire du cahier des charges
+      - Le premier est meilleur, puisqu'il a la note maximale sur un axe
+      - Le second est meilleur, puisque ses notes sont plus régulières
+      - On ne peut rien conclure, les deux diagrammes ne sont pas comparables
+      answer: 0
+      feedback:
+      - null
+      - 'Non : une note maximale sur un seul axe ne suffit pas ; encore faut-il que cet axe soit celui qui compte.'
+      - 'Non : la régularité d''un profil n''est pas en soi une qualité.'
+      - 'Non : c''est précisément pour permettre la comparaison que les deux sont notés sur la même échelle de 0 à 5.'
+      explanation: 'Un diagramme radar ne désigne jamais un vainqueur à lui seul : il rend visibles les **compromis**. C''est le cahier des charges (portée à franchir, masse embarquée, budget) qui tranche.'
+      tags:
+      - indices
+    - type: mcq
+      level: 1
+      prompt: Que signifie dire qu'un matériau est **isotrope** ?
+      choices:
+      - Il possède les mêmes propriétés mécaniques dans toutes les directions
+      - Il a la même composition en tout point
+      - Il ne se déforme pas
+      - Il conduit la chaleur dans toutes les directions
+      answer: 0
+      feedback:
+      - null
+      - 'Non : cette propriété-là s''appelle l''**homogénéité**.'
+      - 'Non : tous les matériaux se déforment sous charge, au moins élastiquement.'
+      - 'Non : l''isotropie concerne ici les propriétés **mécaniques** ; la formulation exacte du manuel parle bien de directions.'
+      explanation: 'Deux hypothèses distinctes de la RDM : **isotrope** = mêmes propriétés dans toutes les directions ; **homogène** = même composition en tout point. Ne pas les confondre.'
+      tags:
+      - comportement
+    - type: mcq
+      level: 2
+      prompt: Pourquoi l'hypothèse d'isotropie n'est-elle **pas** vérifiée pour le bois ou pour un matériau composite ?
+      choices:
+      - Parce que leurs propriétés mécaniques dépendent de la direction (sens des fibres)
+      - Parce que leur composition varie d'un point à l'autre
+      - Parce qu'ils n'ont pas de domaine élastique
+      - Parce que leur module de Young est trop faible
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la variation de composition est un défaut d''**homogénéité**, pas d''isotropie.'
+      - 'Non : le bois comme les composites présentent bien un domaine élastique.'
+      - 'Non : les composites carbone ont au contraire un module très élevé dans le sens des fibres.'
+      explanation: 'Une planche est bien plus résistante dans le sens du fil qu''en travers ; une plaque composite l''est dans la direction de ses fibres. Conséquence pratique : on **oriente** les fibres selon les efforts attendus.'
+      tags:
+      - comportement
+    - type: mcq
+      level: 2
+      prompt: 'Quelle différence de comportement distingue un matériau **ductile** d''un matériau **fragile** ?
+
+
+        {{fig:2i2d-familles-contrainte-deformation}}'
+      choices:
+      - Le ductile se déforme plastiquement de façon visible avant de rompre ; le fragile casse presque sans déformation préalable
+      - Le ductile est plus rigide que le fragile
+      - Le fragile n'a pas de domaine élastique
+      - Le ductile ne casse jamais
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la rigidité est la **pente** de la courbe (le module $E$) ; une céramique fragile est très rigide.'
+      - 'Non : un matériau fragile a bien un domaine élastique — c''est même à peu près tout ce qu''il a avant la rupture.'
+      - 'Non : tout matériau finit par rompre ; le ductile prévient simplement avant.'
+      explanation: 'La différence se lit sur la courbe contrainte-déformation : le ductile (acier doux) présente un long plateau plastique après $R_e$, le fragile (céramique, verre, fonte) rompt quasiment à la fin de la partie linéaire. En construction, on préfère les matériaux ductiles, car ils **annoncent** la ruine.'
+      tags:
+      - comportement
+    - type: mcq
+      level: 2
+      prompt: 'Lequel de ces matériaux est le plus **rigide** : l''acier ($E = 200\,000$ N/mm²) ou le caoutchouc ($E = 7{,}5$ N/mm²) ?'
+      choices:
+      - L'acier, car son module de Young est bien plus grand
+      - Le caoutchouc, car il se déforme davantage
+      - Les deux sont aussi rigides, seule la limite élastique diffère
+      - On ne peut pas comparer, les unités ne sont pas les mêmes
+      answer: 0
+      feedback:
+      - null
+      - 'Non : « se déformer beaucoup sous une faible contrainte » est la définition même d''un matériau **peu** rigide.'
+      - 'Non : le rapport des deux modules est de plus de 26 000.'
+      - 'Non : les deux valeurs sont en N/mm², parfaitement comparables.'
+      explanation: 'Le module d''élasticité longitudinale $E$ est la **pente** de la courbe dans le domaine élastique. Plus $E$ est grand, plus le matériau est rigide, c''est-à-dire plus il faut de contrainte pour obtenir la même déformation.'
+      tags:
+      - comportement
+    - type: mcq
+      level: 2
+      prompt: Quand utilise-t-on une **modélisation par éléments finis** plutôt qu'un calcul de RDM à la main ?
+      choices:
+      - Quand la pièce a une géométrie complexe, pour localiser les zones et les valeurs des contraintes maximales
+      - Quand on ne connaît pas le matériau
+      - Quand la pièce est une simple poutre droite
+      - Quand on veut éviter de choisir un coefficient de sécurité
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le calcul par éléments finis exige au contraire de renseigner précisément $E$ et les caractéristiques du matériau.'
+      - 'Non : une poutre droite se traite très bien avec les formules classiques, bien plus vite.'
+      - 'Non : le coefficient de sécurité s''applique de la même façon aux résultats de simulation.'
+      explanation: 'Sur une géométrie complexe, la contrainte n''est plus uniforme et se concentre aux changements de section. La simulation donne la carte des contraintes (souvent en contrainte équivalente de Von Mises) et des déplacements ; on compare ensuite le maximum à $R_e$.'
+      tags:
+      - comportement
+    - type: input
+      level: 2
+      prompt: 'Un rail en acier de longueur $L_0 = 10$ m subit une élévation de température de **40 °C**. Avec $\alpha = 12 \cdot 10^{-6}$ °C⁻¹, calculer son allongement en millimètres.'
+      answer: '4.8'
+      numeric: true
+      tolerance: 0.1
+      unit: mm
+      explanation: '$\Delta L = L_0 \times \alpha \times \Delta\theta = 10 \times 12 \cdot 10^{-6} \times 40 = 4{,}8 \cdot 10^{-3}$ m $= 4{,}8$ mm. Attention : la formule donne $\Delta L$ dans la **même unité** que $L_0$.'
+      tags:
+      - dilatation
+    - type: input
+      level: 3
+      prompt: 'Une ferme en acier de **56 m** est posée alors qu''il fait 20 °C. Calculer sa variation de longueur, en millimètres, lorsque la température passe de **−10 °C à 30 °C** ($\alpha = 12 \cdot 10^{-6}$ °C⁻¹, arrondir au dixième).'
+      answer: '26.9'
+      numeric: true
+      tolerance: 0.5
+      unit: mm
+      explanation: '$\Delta\theta = 30 - (-10) = 40$ °C, donc $\Delta L = 12 \cdot 10^{-6} \times 56\,000 \times 40 = 26{,}88 \approx 26{,}9$ mm. Erreur classique : oublier le signe et prendre $\Delta\theta = 20$ °C.'
+      tags:
+      - dilatation
+    - type: mcq
+      level: 1
+      prompt: Que peut-on dire d'un matériau dont la **conductivité thermique** $\lambda$ est faible ?
+      choices:
+      - C'est un bon isolant thermique
+      - C'est un bon conducteur thermique
+      - Il se dilate peu
+      - Il est électriquement isolant
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est l''inverse — un bon conducteur a une conductivité **élevée**.'
+      - 'Non : la dilatation est décrite par le coefficient $\alpha$, une grandeur indépendante.'
+      - 'Non : conductivité **thermique** et conductivité **électrique** sont deux propriétés distinctes, même si les métaux sont bons dans les deux.'
+      explanation: '$\lambda$ (en W/(m·K)) mesure la quantité de chaleur qui traverse un mètre d''épaisseur de matériau pour 1 K d''écart entre ses faces. Plus $\lambda$ est faible, plus le matériau est **isolant**.'
+      tags:
+      - thermique
+    - type: mcq
+      level: 2
+      prompt: Pourquoi l'air enfermé dans un double vitrage isole-t-il, alors que l'air qui circule autour d'un radiateur transporte au contraire la chaleur ?
+      choices:
+      - Emprisonné, l'air ne peut pas circuler et n'isole que par sa faible conductivité ; libre, il transporte la chaleur par convection
+      - Parce que l'air du double vitrage est un autre gaz
+      - Parce que la conductivité de l'air change avec la température
+      - Parce que le verre empêche tout transfert thermique
+      answer: 0
+      feedback:
+      - null
+      - 'Non : même avec de l''air ordinaire, le résultat serait le même ; c''est l''**immobilité** qui compte.'
+      - 'Non : la variation de $\lambda$ avec la température est bien trop faible pour expliquer cet écart.'
+      - 'Non : le verre conduit la chaleur ; c''est la lame d''air qui fait l''essentiel de l''isolation.'
+      explanation: 'Le manuel le formule ainsi : le pouvoir d''isolation vient du matériau **mais aussi de la forme** qu''on lui donne. Emprisonner l''air l''empêche de convecter ; le laisser circuler favorise au contraire la dissipation.'
+      tags:
+      - thermique
+    - type: order
+      level: 2
+      prompt: 'Remettez dans l''ordre les étapes du **cycle de vie** d''un matériau.
+
+
+        {{fig:2i2d-cycle-vie-materiau}}'
+      steps:
+      - Extraction de la matière première
+      - Transport
+      - Fabrication et production
+      - Utilisation
+      - Fin de vie
+      explanation: Chaque étape a son impact environnemental propre. Une analyse de cycle de vie compare des matériaux sur l'ensemble de ces cinq étapes, et non sur la seule phase d'usage.
+      tags:
+      - cycle-vie
+    - type: match
+      level: 2
+      prompt: 'Associez chaque situation à l''impact environnemental que lui attribue le manuel.'
+      pairs:
+      - left: Extraction du bois
+        right: déforestation
+      - left: Extraction des métaux et du verre
+        right: construction de carrières
+      - left: Extraction des plastiques
+        right: installation de plateformes pétrolières
+      - left: Transport des matériaux
+        right: émissions de gaz à effet de serre des véhicules
+      - left: Fin de vie
+        right: pollution de l'eau, de l'air et pollution visuelle par les déchets
+      explanation: 'L''impact ne se limite pas aux fumées d''usine : il commence à l''extraction et se poursuit longtemps après la mise au rebut.'
+      tags:
+      - cycle-vie
+    - type: mcq
+      level: 2
+      prompt: 'Quels sont les **trois types de valorisation** d''un objet en fin de vie ?
+
+
+        {{fig:2i2d-cycle-vie-materiau}}'
+      choices:
+      - La réutilisation, le recyclage et la valorisation énergétique
+      - Le tri, l'enfouissement et l'incinération
+      - La réparation, la revente et la location
+      - La fusion, le moulage et l'injection
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''enfouissement n''est pas une valorisation, c''est précisément ce qu''on cherche à éviter.'
+      - 'Non : ce sont des modèles économiques, pas des filières de traitement de la matière.'
+      - 'Non : ce sont des **procédés de fabrication**.'
+      explanation: '**Réutilisation** : l''objet resert, éventuellement après remplacement de composants. **Recyclage** : le matériau usagé redevient de la matière première. **Valorisation énergétique** : on brûle le matériau et on récupère la chaleur de combustion.'
+      tags:
+      - cycle-vie
+    - type: mcq
+      level: 2
+      prompt: Une bouteille en verre est fondue pour fabriquer de nouvelles bouteilles. De quel type de valorisation s'agit-il ?
+      choices:
+      - Du recyclage
+      - De la réutilisation
+      - De la valorisation énergétique
+      - D'aucune valorisation
+      answer: 0
+      feedback:
+      - null
+      - 'Non : il y aurait réutilisation si la bouteille était lavée puis **remplie de nouveau**, sans être détruite (bouteilles consignées).'
+      - 'Non : la valorisation énergétique consiste à **brûler** le matériau pour récupérer de la chaleur.'
+      - 'Non : le verre est justement l''exemple de recyclage cité par le manuel.'
+      explanation: 'Recyclage : « à partir d''un matériau usagé, on crée de la matière qui va entrer dans la constitution d''un produit ». La différence avec la réutilisation tient à ce que l''objet est **détruit** en tant qu''objet.'
+      tags:
+      - cycle-vie
+    - type: mcq
+      level: 3
+      prompt: On hésite entre deux plastiques pour un boîtier destiné à être recyclé en fin de vie. Lequel choisir et pourquoi ?
+      choices:
+      - Un thermoplastique, car il fond sous l'effet de la chaleur et peut donc être remis en forme
+      - Un thermodurcissable, car sa transformation est irréversible
+      - Indifféremment, les deux se recyclent de la même façon
+      - Un thermodurcissable, car il est plus léger
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''irréversibilité est justement le problème — une fois formé, un thermodurcissable ne se déforme plus.'
+      - 'Non : la différence de comportement à la chaleur change tout pour la filière de recyclage.'
+      - 'Non : la masse volumique ne départage pas ces deux catégories.'
+      explanation: Un thermoplastique se broie et se refond ; il retourne à l'état de granulés et repart en injection. Un thermodurcissable ne peut au mieux qu'être broyé en charge inerte ou envoyé en valorisation énergétique.
+      tags:
+      - cycle-vie
+    - type: input
+      level: 3
+      prompt: 'Une barre de treillis est soumise à un effort de traction $N = 1\,750$ kN. Le profilé creux carré 200 × 200 a une section $A = 7\,291$ mm². Calculer la contrainte de traction $\sigma$ (arrondir à l''unité).'
+      answer: '240'
+      numeric: true
+      tolerance: 2
+      unit: MPa
+      explanation: '$\sigma = \dfrac{N}{A} = \dfrac{1\,750\,000}{7\,291} \approx 240$ N/mm² $= 240$ MPa. Attention à la conversion : $1\,750$ kN $= 1\,750\,000$ N.'
+      tags:
+      - dimensionnement
+    - type: mcq
+      level: 3
+      prompt: 'Cette barre est en acier S235, de limite élastique $R_e = 235$ MPa, et la contrainte calculée vaut 240 MPa. Le profilé 200 × 200 convient-il ?'
+      choices:
+      - 'Non : la contrainte dépasse la limite élastique, même de peu ; il faut un profilé de section plus grande'
+      - 'Oui : 240 et 235 sont des valeurs très proches, l''écart est négligeable'
+      - 'Oui : la condition de résistance porte sur la limite à la rupture, pas sur $R_e$'
+      - 'Non : il faut au contraire réduire la section pour diminuer la contrainte'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la condition $\sigma \leq R_e$ est une **inégalité stricte à respecter**, et l''on applique même en général un coefficient de sécurité qui rend le critère plus sévère encore.'
+      - 'Non : le critère du manuel est bien $\sigma_{\max} \leq R_e$ ; dépasser $R_e$, c''est entrer dans le domaine plastique.'
+      - 'Non : $\sigma = N/A$ — réduire $A$ **augmente** la contrainte.'
+      explanation: '$240 > 235$ : la barre plastifierait. Le profilé suivant, 250 × 250 ($A = 9\,291$ mm²), donne $\sigma = 1\,750\,000/9\,291 \approx 188$ MPa, cette fois inférieur à $R_e$.'
+      tags:
+      - dimensionnement
+    - type: input
+      level: 3
+      prompt: 'Calculer l''allongement de cette barre avec le profilé 250 × 250 : $N = 1\,750$ kN, $L_0 = 5\,700$ mm, $A = 9\,291$ mm², $E = 210\,000$ N/mm² (arrondir au centième).'
+      answer: '5.11'
+      numeric: true
+      tolerance: 0.1
+      unit: mm
+      explanation: '$\Delta L = \dfrac{N \times L_0}{A \times E} = \dfrac{1\,750\,000 \times 5\,700}{9\,291 \times 210\,000} = \dfrac{9{,}975 \cdot 10^{9}}{1{,}951 \cdot 10^{9}} \approx 5{,}11$ mm. Cette relation n''est que la loi de Hooke réécrite : $\Delta L = \varepsilon L_0 = \dfrac{\sigma}{E} L_0$.'
+      tags:
+      - dimensionnement
+    - type: guided
+      level: 3
+      title: La charpente en treillis d'un palais des sports
+      intro: 'Un architecte conçoit la charpente d''un **palais des sports**. Deux exigences du cahier des charges sont incontournables : une **portée de 56 m** entre les poteaux (pour dégager la vue de tous les spectateurs) et une **toiture inclinée à 5° au maximum**.
+
+
+        Quatre solutions sont comparées :
+
+        – poutres préfabriquées en **béton armé** : 920 daN·m⁻², portée max. 15 m, toits de 0 à 40° ;
+
+        – poutres préfabriquées en **béton précontraint** : 850 daN·m⁻², portée max. 35 m, toits de 0 à 40° ;
+
+        – poutres en **bois lamellé collé** : 600 daN·m⁻², portée max. 100 m, arc à 2 ou 3 articulations, pente de 15 à 35° ;
+
+        – **treillis en acier** : 630 daN·m⁻², portée max. 70 m, couvertures plates de 0 à 35°.
+
+
+        Étude de la **barre 1** de la ferme principale : longueur $L_0 = 5\,700$ mm, effort de traction $N = 1\,750$ kN, profil creux carré en acier S235 ($R_e = 235$ N/mm², $E = 210\,000$ N/mm²), allongement admissible **7 mm**. Sections disponibles : 180 × 180 → $A = 6\,491$ mm² ; 200 × 200 → $A = 7\,291$ mm² ; 250 × 250 → $A = 9\,291$ mm².
+
+
+        Coefficient de dilatation de l''acier : $\alpha = 12 \cdot 10^{-6}$ °C⁻¹.
+
+
+        {{fig:2i2d-palais-sports-treillis}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelle solution de charpente satisfait les deux exigences du cahier des charges ?'
+        choices:
+        - Le treillis en acier
+        - Les poutres en béton armé
+        - Les poutres en béton précontraint
+        - Les poutres en bois lamellé collé
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : sa portée maximale est de 15 m, très loin des 56 m demandés.'
+        - 'Non : 35 m de portée maximale, c''est encore insuffisant pour 56 m.'
+        - 'Non : la portée conviendrait (100 m) et c''est la solution la plus légère (600 daN·m⁻²), mais l''architecture en arc impose une pente de toit de 15 à 35°, incompatible avec les 5° maximum.'
+        explanation: 'Le treillis acier est le seul à cocher les deux cases : portée 70 m ≥ 56 m et couverture plate possible (0 à 35°). Son poids surfacique (630 daN·m⁻²) est en outre le deuxième plus faible.'
+      - kind: input
+        prompt: '**Étape 2.** Pour le profilé **200 × 200** ($A = 7\,291$ mm²), calculer la contrainte de traction dans la barre 1 (arrondir à l''unité).'
+        answer: '240'
+        numeric: true
+        tolerance: 2
+        unit: MPa
+        explanation: $\sigma = \dfrac{1\,750\,000}{7\,291} \approx 240$ N/mm², soit 240 MPa.
+      - kind: mcq
+        prompt: '**Étape 3.** Le profilé 200 × 200 satisfait-il la condition de résistance ($\sigma \leq R_e = 235$ MPa) ?'
+        choices:
+        - 'Non : 240 MPa > 235 MPa, il est refusé, de justesse'
+        - 'Oui : 240 MPa est très proche de 235 MPa'
+        - 'Oui : la condition porte sur la limite à la rupture'
+        - On ne peut pas conclure sans connaître l'allongement
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : « très proche » ne veut rien dire en dimensionnement. La condition est une inégalité, et elle n''est pas satisfaite.'
+        - 'Non : le critère du manuel est $\sigma_{\max} \leq R_e$, la limite **élastique**.'
+        - 'Non : la condition de résistance se vérifie indépendamment du critère de déformation ; ici elle suffit déjà à écarter le profilé.'
+        explanation: 'Dépasser $R_e$, c''est faire entrer la barre dans le domaine **plastique** : elle resterait déformée après déchargement. Le profilé 180 × 180 est encore pire (270 MPa).'
+      - kind: input
+        prompt: '**Étape 4.** Calculer la contrainte de traction avec le profilé **250 × 250** ($A = 9\,291$ mm², arrondir à l''unité).'
+        answer: '188'
+        numeric: true
+        tolerance: 2
+        unit: MPa
+        explanation: $\sigma = \dfrac{1\,750\,000}{9\,291} \approx 188$ N/mm² $= 188$ MPa, cette fois bien inférieur à $R_e = 235$ MPa.
+      - kind: input
+        prompt: '**Étape 5.** Calculer l''allongement de la barre 1 avec ce profilé 250 × 250 : $\Delta L = \dfrac{N \times L_0}{A \times E}$ (arrondir au centième).'
+        answer: '5.11'
+        numeric: true
+        tolerance: 0.1
+        unit: mm
+        explanation: $\Delta L = \dfrac{1\,750\,000 \times 5\,700}{9\,291 \times 210\,000} \approx 5{,}11$ mm.
+      - kind: mcq
+        prompt: '**Étape 6.** Quel profilé retenir pour la barre 1, sachant que l''allongement admissible est de 7 mm ?'
+        choices:
+        - Le 250 × 250, seul à vérifier à la fois la condition de résistance (188 < 235 MPa) et le critère de déformation (5,11 < 7 mm)
+        - Le 180 × 180, car c'est le plus léger
+        - Le 200 × 200, car son allongement de 6,51 mm reste inférieur à 7 mm
+        - Aucun des trois ne convient
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le 180 × 180 donne 270 MPa, très au-dessus de $R_e$, et un allongement de 7,3 mm supérieur à la limite. La légèreté ne sert à rien si la barre plastifie.'
+        - 'Non : son allongement passe effectivement le critère, mais sa contrainte (240 MPa) dépasse $R_e$. **Les deux** critères doivent être satisfaits.'
+        - 'Non : le 250 × 250 satisfait les deux critères.'
+        explanation: 'Méthode générale : on part du plus petit profilé et on remonte la gamme jusqu''à satisfaire **tous** les critères. Ici, le 250 × 250 (masse linéique 72,9 kg·m⁻¹) est le premier acceptable.'
+      - kind: input
+        prompt: '**Étape 7.** Calculer la variation de longueur de la ferme (portée **56 m**) pour une variation de température de **−10 °C à 30 °C** (arrondir au dixième, en millimètres).'
+        answer: '26.9'
+        numeric: true
+        tolerance: 0.5
+        unit: mm
+        explanation: '$\Delta\theta = 30 - (-10) = 40$ °C, donc $\Delta L = 12 \cdot 10^{-6} \times 56\,000 \times 40 = 26{,}88 \approx 26{,}9$ mm. Cet allongement est **cinq fois** supérieur à celui dû à la charge (5,11 mm) : la dilatation est le phénomène dominant.'
+      - kind: mcq
+        prompt: '**Étape 8.** Quelle combinaison d''appareils d''appui adopter aux deux extrémités de la ferme ?'
+        choices:
+        - Un appui fixe d'un côté (qui reprend l'effort horizontal du vent) et un appui glissant de l'autre (qui laisse la ferme se dilater)
+        - Deux appuis glissants, pour laisser la dilatation libre des deux côtés
+        - Deux appuis fixes, pour être sûr de la stabilité au vent
+        - Peu importe, la dilatation de 27 mm est négligeable sur 56 m
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : avec deux appuis glissants, rien ne s''oppose à l''effort horizontal du vent et la ferme peut se déplacer en bloc.'
+        - 'Non : la ferme serait bien stable au vent, mais bridée en dilatation ; les 27 mm empêchés engendreraient des contraintes parasites très élevées.'
+        - 'Non : 27 mm de course sur un appui, cela se voit et cela s''organise ; c''est même la raison d''être des appareils d''appui glissants.'
+        explanation: 'La combinaison **fixe + glissant** est la solution retenue sur presque tous les ouvrages d''art : l''appui fixe sert de point de référence et reprend les efforts horizontaux, l''appui glissant absorbe les variations de longueur.'

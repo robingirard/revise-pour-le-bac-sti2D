@@ -1,0 +1,44 @@
+%% Benne basculante à vérin — schéma cinématique dans le plan (x, y).
+%% E0 châssis (noir, bâti) ; E1 benne ; E2 corps de vérin ; E3 tige de vérin.
+%% Géométrie : C = (5,6 ; 1,2) ; O = (4,2 ; 0,5) ; P = (2,4 ; 1,5) ; axe du vérin u = (O -> P) à 150,945°.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{backgrounds}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm, solide/.style={line width=1.4pt, line cap=round, line join=round}]
+\useasboundingbox (0,-1.15) rectangle (6.4,4.45);   % boîte fixe : sert à l'animation (cm -> SVG)
+\colorlet{E0}{black}\colorlet{E1}{solideB}\colorlet{E2}{solideE}\colorlet{E3}{solideA}
+\coordinate (C) at (5.6,1.2);   % axe de basculement de la benne
+\coordinate (O) at (4.2,0.5);   % pied du vérin sur le châssis
+\coordinate (P) at (2.4,1.5);   % attache de la tige sous la benne
+% position levée (30° dans le sens horaire) : tracé fantôme, gris clair (jamais animé)
+\begin{scope}[rotate around={-30:(5.6,1.2)}]
+  \draw[dashed, black!45, line width=0.7pt] (C) -- (5.6,2.1) (1.0,2.1) -- (1.0,1.5) -- (5.6,1.5);
+\end{scope}
+% Symboles : bâti d'abord, puis les pivots (leur disque blanc masque les hachures)
+\pic at (O) {bati};
+\pic at (5.6,0.5) {bati};
+\pic[s1=E1, s2=E0, liens=false, name=pC] at (C) {pivot bout};                 % benne / châssis
+\pic[s1=E2, s2=E0, liens=false, name=pO] at (O) {pivot bout};                 % corps / châssis
+\pic[s1=E3, s2=E1, liens=false, name=pP] at (P) {pivot bout};                 % tige / benne
+\pic[s1=E3, s2=E2, liens=false, rotate=150.945, name=pQ] at ($(O)!1.20cm!(P)$) {pivot glissant face}; % tige / corps
+\begin{scope}[on background layer]
+  \draw[solide, E0] (0.3,0.5) -- (6.1,0.5) (5.6,0.5) -- (C);                 % châssis (bâti)
+  \draw[solide, E1] (C) -- (5.6,2.1) (1.0,2.1) -- (1.0,1.5) -- (5.6,1.5);    % benne
+  \draw[solide, E2] (O) -- ($(O)!0.70cm!(P)$);                               % corps du vérin
+\end{scope}
+% mouvement de sortie (teinte neutre : jamais regroupée avec une classe)
+\draw[-{Stealth[length=5pt]}, line width=0.7pt, black!70] ([shift=(172:4.85)]C) arc (172:160:4.85);
+\node[black!70, font=\small] at (1.55,2.95) {$\omega_{1/0}$};
+% Étiquettes (glyphes : jamais animées)
+\node[E0, font=\small\bfseries] at (1.20,0.22) {E0};
+\node[E1, font=\small\bfseries] at (1.45,1.80) {E1};
+\node[E2, font=\small\bfseries] at (3.95,1.10) {E2};
+\node[E3, font=\small\bfseries] at (2.62,1.05) {E3};
+\node[font=\small] at (5.26,1.06) {C};
+\node[font=\small] at (4.56,0.72) {O};
+\node[font=\small] at (2.05,1.30) {P};
+\node[font=\small] at (2.95,0.75) {Q};
+\repere{(4.9,-0.9)}{x}{y}{1}
+\end{tikzpicture}
+\end{document}

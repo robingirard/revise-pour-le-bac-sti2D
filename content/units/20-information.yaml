@@ -265,6 +265,187 @@ units:
       explanation: 'La seconde piste est décalée de 25 % : selon le sens, la voie B vaut 1 ou 0 au moment d''un front descendant de la voie A.'
       tags:
       - capteurs
+    - type: mcq
+      level: 1
+      prompt: 'Qu''est-ce qu''un **train d''impulsions** ?'
+      choices:
+      - Un signal à deux états stables, dont les changements d'état au cours du temps portent l'information
+      - Un signal analogique de forme sinusoïdale
+      - Un mot binaire de 8 bits délivré en une seule fois
+      - Une tension continue proportionnelle à la grandeur mesurée
+      answer: 0
+      feedback:
+      - null
+      - 'Non : un train d''impulsions est un signal **logique**, qui ne prend que deux niveaux.'
+      - 'Non : un mot binaire est délivré par un capteur proportionnel numérique, comme un codeur absolu.'
+      - 'Non : c''est la sortie d''un capteur proportionnel analogique.'
+      explanation: 'Exemple : un codeur incrémental délivre une impulsion à chaque dent qui défile. C''est le **nombre** d''impulsions et leur **cadence** qui renseignent sur la position et la vitesse.'
+      tags:
+      - signaux
+    - type: mcq
+      level: 1
+      prompt: Une caméra de surveillance transmet ses images au poste de contrôle par une liaison **TCP/IP**. À quel bloc de la chaîne d'information appartient cette liaison ?
+      choices:
+      - COMMUNIQUER
+      - ACQUÉRIR
+      - TRAITER
+      - À aucun, elle appartient à la chaîne de puissance
+      answer: 0
+      feedback:
+      - null
+      - 'Non : ACQUÉRIR regroupe le capteur d''image et les commandes de l''opérateur, pas la liaison de sortie.'
+      - 'Non : TRAITER, c''est la carte électronique qui compresse et met en forme les images.'
+      - 'Non : la chaîne de puissance transporte de l''énergie ; ici c''est de l''information qui circule.'
+      explanation: 'Le bloc COMMUNIQUER regroupe tout ce qui transmet l''information : voyants, écran, relais vers la chaîne de puissance et **interfaces réseau** (TCP/IP, Wi-Fi, bus de terrain).'
+      tags:
+      - chaine-information
+    - type: match
+      level: 1
+      prompt: Un bus urbain mesure la vitesse de ses roues et l'affiche au poste de conduite. Associez chaque élément au bloc de la chaîne d'information auquel il appartient.
+      pairs:
+      - left: Capteur inductif placé face à la couronne dentée
+        right: ACQUÉRIR
+      - left: Calculateur de bord
+        right: TRAITER
+      - left: Afficheur du poste de conduite
+        right: COMMUNIQUER
+      tags:
+      - chaine-information
+    - type: mcq
+      level: 2
+      prompt: La vitesse du moteur de roue d'un bus est mesurée par un **capteur inductif** qui détecte le passage des dents d'une couronne, sans jamais toucher l'arbre. Quel est l'intérêt principal de cette mesure sans contact ?
+      choices:
+      - Le capteur ne s'use pas, puisqu'il ne frotte contre aucune pièce
+      - Le capteur mesure en même temps la température de l'arbre
+      - Le capteur délivre directement une vitesse en tr/min
+      - Le capteur n'a pas besoin d'être alimenté
+      answer: 0
+      feedback:
+      - null
+      - 'Non : un capteur inductif ne détecte que le passage des dents métalliques.'
+      - 'Non : il délivre un train d''impulsions ; c''est le calculateur qui en déduit la vitesse.'
+      - 'Non : le capteur est bien raccordé au calculateur par un câble à quatre conducteurs (masse et sorties comprises) ; ce n''est pas là son intérêt.'
+      explanation: 'Aucun contact mécanique, donc aucune usure et aucun frottement parasite : c''est l''argument mis en avant par le document technique du capteur.'
+      tags:
+      - capteurs
+    - type: input
+      level: 2
+      prompt: La couronne dentée du capteur de vitesse d'un bus comporte 90 dents et chaque tête de lecture délivre une impulsion par dent. Combien de périodes du signal compte-t-on pendant un tour complet de l'arbre ?
+      answer: '90'
+      numeric: true
+      tolerance: 0
+      unit: périodes
+      explanation: 'Une dent = une impulsion = une période du signal. Un tour de l''arbre fait donc défiler 90 dents, soit 90 périodes : la durée d''un tour vaut t = 90 × T.'
+      tags:
+      - capteurs
+    - type: mcq
+      level: 2
+      prompt: Le capteur de vitesse d'un bus possède **deux têtes de lecture** décalées d'une demi-dent, qui délivrent donc deux signaux décalés d'un quart de période. À quoi sert la seconde tête ?
+      choices:
+      - À déterminer le sens de rotation de la roue
+      - À doubler le nombre d'impulsions par tour
+      - À remplacer la première tête en cas de panne
+      - À mesurer le diamètre de la couronne dentée
+      answer: 0
+      feedback:
+      - null
+      - 'Non : chaque tête délivre 90 impulsions par tour ; le décalage ne change pas la résolution de chaque voie.'
+      - 'Non : le document technique n''évoque aucune redondance ; les deux voies sont exploitées ensemble.'
+      - 'Non : le capteur ne mesure aucune dimension, il compte des passages de dents.'
+      explanation: 'Selon le sens de rotation, le signal de la tête 2 est en avance ou en retard d''un quart de période sur celui de la tête 1 : il suffit de lire l''état de la tête 2 au moment d''un front descendant de la tête 1.'
+      tags:
+      - capteurs
+    - type: guided
+      level: 3
+      title: 'La caméra dôme du hall : de la scène au poste de surveillance'
+      prompt: 'Exercice complet : blocs de la chaîne d''information, rapport de réduction et vérification d''une exigence.'
+      intro: 'Le hall d''un palais des sports est surveillé par une **caméra dôme motorisée**, pilotable à distance. Chaque photosite de son capteur d''image délivre une tension proportionnelle à l''éclairement reçu ; la carte électronique numérise, compresse et envoie les images au poste de contrôle par une **liaison TCP/IP**, l''alimentation étant assurée par le câble réseau (**PoE**).
+
+
+        La motorisation d''orientation horizontale comporte un moteur de 500 tr/min et une transmission poulie-courroie de rapport de réduction R₂ = 0,18. Le démarrage étant progressif, la caméra tourne en réalité à la vitesse moyenne de 430 °·s⁻¹. Le bar et la billetterie sont vus sous un angle de 90°, et le cahier des charges impose un déplacement de l''un à l''autre en **2 s au maximum**.
+
+        {{emoji:📹}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** À quel bloc de la chaîne d''information appartient le capteur d''image de la caméra ?'
+        choices:
+        - ACQUÉRIR
+        - TRAITER
+        - COMMUNIQUER
+        - À la chaîne de puissance
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : TRAITER, c''est la carte électronique qui numérise et compresse les images.'
+        - 'Non : COMMUNIQUER, c''est la liaison TCP/IP vers le poste de contrôle.'
+        - 'Non : la chaîne de puissance alimente les moteurs d''orientation ; le capteur d''image prélève une information.'
+        explanation: 'Le capteur d''image transforme une grandeur physique (l''éclairement) en un signal électrique : c''est un capteur, donc le bloc ACQUÉRIR.'
+      - kind: mcq
+        prompt: '**Étape 2.** Quelle est la nature du signal délivré par un photosite, avant la conversion réalisée par la carte électronique ?'
+        choices:
+        - Analogique
+        - Logique
+        - Numérique
+        - Périodique
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la tension ne prend pas deux valeurs seulement, elle suit continûment l''éclairement.'
+        - 'Non : le signal ne devient numérique qu''à la **sortie** du convertisseur analogique-numérique.'
+        - 'Non : rien n''impose que l''éclairement se répète à intervalles réguliers.'
+        explanation: 'Une tension proportionnelle à l''éclairement varie de façon continue : c''est un signal analogique, qu''un CAN transforme en un nombre pour chaque photosite.'
+      - kind: input
+        prompt: '**Étape 3.** Calculer la vitesse de rotation en sortie de la motorisation horizontale, en tr/min, sachant que le moteur tourne à 500 tr/min et que le rapport de réduction vaut R₂ = 0,18.'
+        answer: '90'
+        numeric: true
+        tolerance: 0
+        unit: tr/min
+        explanation: 'N sortie = N moteur × R₂ = 500 × 0,18 = 90 tr/min. Un rapport de réduction inférieur à 1 **diminue** la vitesse.'
+      - kind: input
+        prompt: '**Étape 4.** Convertir cette vitesse de 90 tr/min en degrés par seconde.'
+        answer: '540'
+        numeric: true
+        tolerance: 1
+        unit: °·s⁻¹
+        explanation: 'Un tour = 360° et une minute = 60 s : 90 × 360 ÷ 60 = 540 °·s⁻¹.'
+      - kind: input
+        prompt: '**Étape 5.** En pratique, la caméra tourne à la vitesse moyenne de 430 °·s⁻¹. Calculer le temps mis pour passer de la billetterie au bar, séparés de 90° (deux décimales).'
+        answer: '0.21'
+        numeric: true
+        tolerance: 0.01
+        unit: s
+        explanation: 't = angle ÷ vitesse = 90 ÷ 430 = 0,209 s ≈ 0,21 s. La vitesse moyenne réelle est inférieure à la vitesse maximale, à cause du démarrage progressif.'
+      - kind: mcq
+        prompt: '**Étape 6.** Le cahier des charges impose un déplacement du bar à la billetterie en 2 s au maximum. Que peut-on conclure ?'
+        choices:
+        - L'exigence est respectée, avec une marge d'environ un facteur 10
+        - L'exigence n'est pas respectée, car 0,21 s est inférieur à 2 s
+        - L'exigence est tout juste respectée, sans marge
+        - On ne peut pas conclure sans connaître l'angle de rotation verticale
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : 2 s est un **maximum** ; être plus rapide est favorable.'
+        - 'Non : 0,21 s est près de dix fois plus petit que 2 s, la marge est très confortable.'
+        - 'Non : le déplacement du bar à la billetterie est un mouvement **horizontal** de 90° ; la rotation verticale n''intervient pas.'
+        explanation: '0,21 s < 2 s : l''exigence est vérifiée, avec un facteur de marge proche de 10.'
+      - kind: match
+        prompt: '**Étape 7.** Associer chaque exigence du cahier des charges à la caractéristique technique qui y répond.'
+        pairs:
+        - left: Piloter la caméra à distance
+          right: Liaison TCP/IP
+        - left: Alimenter la caméra par le câble réseau
+          right: PoE
+        - left: Balayer tout le hall en horizontal
+          right: Rotation horizontale 360° continu
+        - left: Distinguer les personnes de loin
+          right: Zoom 20 × minimum
+      tags:
+      - chaine-information
+      - capteurs
   - id: info-signaux
     title: Signaux, MLI et conversion
     icon: 📈
@@ -497,6 +678,110 @@ units:
       explanation: 'Sur n bits, on code 2ⁿ positions : 2⁸ = 256 < 360, donc 8 bits ne suffisent pas ; 2⁹ = 512 ≥ 360. Il faut 9 bits.'
       tags:
       - can
+    - type: mcq
+      level: 1
+      prompt: En quoi consiste l'**échantillonnage** d'un signal analogique ?
+      choices:
+      - À prélever la valeur du signal à intervalles de temps réguliers
+      - À comparer la valeur prélevée à des paliers de largeur q
+      - À transformer un nombre binaire en une tension
+      - À supprimer les parasites du signal
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la **quantification**, la seconde étape de la numérisation.'
+      - 'Non : c''est le rôle du convertisseur numérique-analogique (CNA).'
+      - 'Non : le filtrage est une opération distincte, qui ne découpe pas le temps.'
+      explanation: 'La numérisation comporte deux temps : l''échantillonnage (découper le temps) puis la conversion analogique-numérique (découper l''amplitude en paliers de largeur q).'
+      tags:
+      - can
+    - type: input
+      level: 2
+      prompt: Un convertisseur prélève 1 000 échantillons par seconde. Quelle est la période d'échantillonnage Te, en millisecondes ?
+      answer: '1'
+      numeric: true
+      tolerance: 0.01
+      unit: ms
+      explanation: 'Te = 1 ÷ fe = 1 ÷ 1 000 = 0,001 s = 1 ms. Période et fréquence sont inverses l''une de l''autre, ici comme pour tout signal périodique.'
+      tags:
+      - can
+    - type: input
+      level: 2
+      prompt: Un signal est échantillonné à la fréquence fe = 8 000 Hz pendant 2 s. Combien d'échantillons obtient-on ?
+      answer: '16000'
+      numeric: true
+      tolerance: 0
+      unit: échantillons
+      explanation: 'Nombre d''échantillons = fe × durée = 8 000 × 2 = 16 000. Chaque seconde apporte 8 000 prélèvements.'
+      tags:
+      - can
+    - type: input
+      level: 3
+      prompt: Ces 16 000 échantillons sont codés sur 8 bits chacun. Quelle taille occupe l'enregistrement, en kilo-octets (on prend 1 ko = 1 000 octets) ?
+      answer: '16'
+      numeric: true
+      tolerance: 0.1
+      unit: ko
+      explanation: '8 bits = 1 octet par échantillon, donc 16 000 octets = 16 ko. Avec un codage sur 16 bits, le fichier occuperait deux fois plus de place.'
+      tags:
+      - can
+    - type: mcq
+      level: 3
+      prompt: On échantillonne un signal qui varie rapidement avec une fréquence d'échantillonnage beaucoup trop faible. Que se passe-t-il ?
+      choices:
+      - Les variations rapides sont perdues et le signal reconstitué n'est plus fidèle
+      - Le fichier obtenu devient plus volumineux
+      - Le quantum du convertisseur augmente
+      - Le signal reconstitué reste identique, seule sa durée change
+      answer: 0
+      feedback:
+      - null
+      - 'Non : moins d''échantillons donnent au contraire un fichier **plus petit** ; tout l''enjeu est ce compromis.'
+      - 'Non : le quantum ne dépend que de l''amplitude d''entrée et du nombre de bits, pas de la cadence de prélèvement.'
+      - 'Non : tout ce qui se passe entre deux prélèvements trop espacés est définitivement perdu.'
+      explanation: 'Il faut assez d''échantillons pour représenter le signal de départ, mais pas trop pour que le fichier reste raisonnable. Trop peu d''échantillons donnent une image grossière, voire trompeuse, du signal.'
+      tags:
+      - can
+    - type: input
+      level: 2
+      prompt: Le signal délivré par une tête du capteur de vitesse d'un bus a une période T = 200 µs. Quelle est sa fréquence, en hertz ?
+      answer: '5000'
+      numeric: true
+      tolerance: 1
+      unit: Hz
+      explanation: '200 µs = 0,000 200 s ; f = 1 ÷ 0,000 2 = 5 000 Hz. Convertir la période en secondes avant de calculer évite l''erreur la plus fréquente.'
+      tags:
+      - signaux
+    - type: input
+      level: 3
+      prompt: La couronne du capteur comporte 90 dents, donc un tour de l'arbre correspond à 90 périodes du signal. Avec T = 200 µs, quelle est la durée d'un tour, en millisecondes ?
+      answer: '18'
+      numeric: true
+      tolerance: 0.1
+      unit: ms
+      explanation: 't = 90 × T = 90 × 200 µs = 18 000 µs = 18 ms.'
+      tags:
+      - signaux
+    - type: input
+      level: 3
+      prompt: Un tour de l'arbre moteur dure 18 ms. Quelle est la fréquence de rotation, en tours par minute (arrondir à l'unité) ?
+      answer: '3333'
+      numeric: true
+      tolerance: 5
+      unit: tr/min
+      explanation: 'n = 1 ÷ 0,018 = 55,6 tr·s⁻¹, puis N = 55,6 × 60 ≈ 3 333 tr/min. Erreur classique : oublier le facteur 60 entre les tours par seconde et les tours par minute.'
+      tags:
+      - signaux
+    - type: input
+      level: 3
+      prompt: Une sonde de température linéaire couvre 0 à 50 °C et délivre 0 à 5 V. Sa tension est numérisée par un CAN 8 bits de plage 0 à 5 V. À quelle variation de température, en °C, correspond une unité de la sortie numérique ? (arrondir au millième)
+      answer: '0.195'
+      numeric: true
+      tolerance: 0.002
+      unit: °C
+      explanation: 'q = 5 ÷ 2⁸ = 19,53 mV ; comme 5 V représentent 50 °C, une unité vaut 50 ÷ 256 = 0,195 °C. C''est la **résolution** de la chaîne de mesure.'
+      tags:
+      - can
     - type: guided
       level: 3
       title: 'Serre automatisée : de la luminosité à la commande du volet'
@@ -613,6 +898,96 @@ units:
       tags:
       - can
       - mli
+    - type: guided
+      level: 3
+      title: 'Le capteur de vitesse des roues d''un bus'
+      prompt: 'Exercice complet : période, fréquence, vitesse de rotation et détection du sens de marche.'
+      intro: 'La vitesse du moteur de roue d''un bus est mesurée par un **capteur inductif à double tête**, sans contact. Une couronne de **90 dents**, solidaire de l''arbre du moteur, défile devant les deux têtes de lecture : chaque tête délivre donc **90 impulsions par tour**.
+
+
+        Les deux têtes sont décalées d''une demi-dent, donc les deux signaux sont décalés d''**un quart de période**. Le constructeur précise qu''en marche avant, le signal de la tête 2 est **en retard** d''un quart de période sur celui de la tête 1.
+
+
+        Relevé à l''oscilloscope pendant un essai : le signal de la tête 1 a une période T = 200 µs.
+
+        {{emoji:🚌}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelle est la nature du signal délivré par une tête de lecture ?'
+        choices:
+        - Un signal logique, sous la forme d'un train d'impulsions
+        - Un signal analogique proportionnel à la vitesse
+        - Un signal numérique codé sur 8 bits
+        - Une tension continue proportionnelle au nombre de dents
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la sortie ne prend que deux niveaux ; c''est le **rythme** des impulsions qui porte l''information.'
+        - 'Non : la tête ne délivre qu''un seul bit à la fois, pas un mot binaire.'
+        - 'Non : la tension bascule entre deux niveaux à chaque dent, elle n''est pas continue.'
+        explanation: 'Chaque dent qui passe fait basculer la sortie : c''est un train d''impulsions, un signal logique dont les changements d''état constituent l''information utile.'
+      - kind: input
+        prompt: '**Étape 2.** Calculer la fréquence du signal de la tête 1, en hertz, sachant que T = 200 µs.'
+        answer: '5000'
+        numeric: true
+        tolerance: 1
+        unit: Hz
+        explanation: 'f = 1 ÷ T = 1 ÷ 0,000 200 = 5 000 Hz. Le capteur délivre donc 5 000 impulsions par seconde.'
+      - kind: input
+        prompt: '**Étape 3.** Un tour de l''arbre correspond à 90 périodes du signal. Calculer la durée t d''un tour, en millisecondes.'
+        answer: '18'
+        numeric: true
+        tolerance: 0.1
+        unit: ms
+        explanation: 't = 90 × T = 90 × 200 µs = 18 000 µs = 18 ms.'
+      - kind: input
+        prompt: '**Étape 4.** En déduire la fréquence de rotation de l''arbre moteur, en tours par minute (arrondir à l''unité).'
+        answer: '3333'
+        numeric: true
+        tolerance: 5
+        unit: tr/min
+        explanation: 'n = 1 ÷ 0,018 = 55,6 tr·s⁻¹ ; N = 55,6 × 60 ≈ 3 333 tr/min.'
+      - kind: input
+        prompt: '**Étape 5.** Les deux signaux sont décalés d''un quart de période. Exprimer ce déphasage en degrés.'
+        answer: '90'
+        numeric: true
+        tolerance: 1
+        unit: °
+        explanation: 'φ = Δt × 360 ÷ T avec Δt = T ÷ 4, donc φ = 360 ÷ 4 = 90°. En marche arrière, le décalage est de sens opposé, soit − 90°.'
+      - kind: mcq
+        prompt: '**Étape 6.** En marche avant, le signal de la tête 2 est en retard d''un quart de période. Quel est l''état de la tête 2 au moment d''un **front descendant** de la tête 1 ?'
+        choices:
+        - Tête 2 = 1, car elle n'est pas encore redescendue
+        - Tête 2 = 0, car elle est déjà redescendue
+        - Tête 2 est indéterminée, elle change au même instant
+        - Cela dépend de la vitesse de rotation
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la tête 2 étant **en retard**, son front descendant arrive un quart de période **après** celui de la tête 1.'
+        - 'Non : le décalage d''un quart de période garantit justement que les deux fronts ne coïncident jamais.'
+        - 'Non : le décalage vaut toujours un quart de période, quelle que soit la vitesse ; c''est ce qui rend la méthode fiable.'
+        explanation: 'Le retard d''un quart de période place le front descendant de la tête 2 après celui de la tête 1 : la tête 2 est donc encore à 1. En marche arrière, elle serait déjà à 0.'
+      - kind: mcq
+        prompt: '**Étape 7.** Dans l''algorithme de détection, une boucle « Répéter … jusqu''à » doit repérer un front descendant de la tête 1. Quelle condition d''arrêt faut-il écrire ?'
+        choices:
+        - Tête1_précédent = 1 et Tête1_actuel = 0
+        - Tête1_précédent = 0 et Tête1_actuel = 1
+        - Tête1_précédent = 1 et Tête1_actuel = 1
+        - Tête1_précédent = 0 et Tête1_actuel = 0
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : c''est la définition d''un front **montant**, du niveau bas vers le niveau haut.'
+        - 'Non : deux états hauts successifs signifient que rien n''a changé.'
+        - 'Non : deux états bas successifs : le signal est stable à 0, il n''y a pas de front.'
+        explanation: 'Un front descendant est le passage de l''état haut à l''état bas : l''échantillon précédent vaut 1 et l''échantillon actuel vaut 0. On lit alors la tête 2 pour conclure sur le sens de marche.'
+      tags:
+      - signaux
+      - capteurs
   - id: info-numeration
     title: Numération et codage
     icon: 🔢
@@ -862,6 +1237,60 @@ units:
       explanation: 'Le ET bit à bit ne conserve les bits de la donnée qu''aux positions où le masque vaut 1 : ici les 4 bits de poids faible, soit 0110, d''où 0000 0110.'
       tags:
       - binaire
+    - type: mcq
+      level: 2
+      prompt: 'Dans la table ASCII, les dix chiffres occupent la colonne de poids fort 3. Quel est le code du caractère « 5 » ?'
+      choices:
+      - (35)₁₆
+      - (53)₁₆
+      - (05)₁₆
+      - (5F)₁₆
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 53 est la valeur **décimale** de ce code, pas son écriture hexadécimale.'
+      - 'Non : le poids fort des chiffres vaut 3 ; (05)₁₆ est un caractère de commande.'
+      - 'Non : le poids faible se lit sur la ligne du caractère : pour « 5 », c''est 5.'
+      explanation: '« 5 » = (35)₁₆ = (0011 0101)₂ = 53₍₁₀₎. De même « 2 » = (32)₁₆ et « A » = (41)₁₆. Attention : le **caractère** « 5 » et le **nombre** 5 ne se codent pas de la même façon.'
+      tags:
+      - ascii
+    - type: input
+      level: 2
+      prompt: Convertir (0011 0101)₂ en base 10.
+      answer: '53'
+      numeric: true
+      tolerance: 0
+      explanation: '32 + 16 + 4 + 1 = 53. C''est le code ASCII décimal du caractère « 5 », soit (35)₁₆.'
+      tags:
+      - binaire
+    - type: input
+      level: 3
+      prompt: Écrire 92₍₁₀₎ en binaire, sur 8 bits (avec ou sans espace).
+      answer: '01011100'
+      accept:
+      - 0101 1100
+      - '1011100'
+      numeric: false
+      explanation: '92 = 64 + 16 + 8 + 4, donc 0101 1100. Par blocs de 4 bits : 0101 = 5 et 1100 = C, soit (5C)₁₆.'
+      tags:
+      - binaire
+    - type: mcq
+      level: 3
+      prompt: On veut conserver uniquement les **deux bits de poids fort** d'un octet et forcer tous les autres à 0. Quel masque faut-il combiner à la donnée par un ET ?
+      choices:
+      - 1100 0000
+      - 0000 0011
+      - 1111 1100
+      - 0000 1111
+      answer: 0
+      feedback:
+      - null
+      - 'Non : ce masque conserve les deux bits de poids **faible**, ceux de droite.'
+      - 'Non : ce masque conserve six bits sur huit.'
+      - 'Non : ce masque conserve les quatre bits de poids faible.'
+      explanation: 'Le masque porte un 1 aux positions à conserver et un 0 ailleurs. Avec la donnée 1011 0001, le ET donne 1000 0000.'
+      tags:
+      - binaire
   - id: info-logique
     title: Logique combinatoire
     icon: 🔀
@@ -925,7 +1354,7 @@ units:
       level: 1
       prompt: Que fait la fonction **NON** appliquée à une entrée e₁ ?
       choices:
-      - Elle inverse l'entrée: 0 devient 1 et 1 devient 0
+      - 'Elle inverse l''entrée: 0 devient 1 et 1 devient 0'
       - Elle recopie l'entrée
       - Elle met la sortie à 0 dans tous les cas
       - Elle compare deux entrées
@@ -1177,6 +1606,226 @@ units:
         S011: 'a = 0 : le ET impose S = 0'
         S110: a = 1 mais b = 1 et c = 0, donc la parenthèse vaut 0 + 0 = 0
       explanation: 'S = 1 exige a = 1 **et** une parenthèse à 1, c''est-à-dire b = 0 ou c = 1 : les lignes (1, 0, 0), (1, 0, 1) et (1, 1, 1).'
+      tags:
+      - logique
+    - type: mcq
+      level: 2
+      prompt: Une sortie S doit valoir 1 **uniquement** lorsque les deux entrées a et b valent 0 en même temps. Quelle équation logique écrit-on ?
+      choices:
+      - S = a barre · b barre
+      - S = a · b
+      - S = a barre + b barre
+      - S = a + b
+      answer: 0
+      feedback:
+      - null
+      - 'Non : cette expression vaut 1 quand les deux entrées valent 1, exactement le contraire.'
+      - 'Non : ce OU vaut 1 dès qu''une seule des deux entrées vaut 0, donc dans trois cas sur quatre.'
+      - 'Non : ce OU vaut 0 uniquement pour (0, 0), c''est l''inverse du résultat demandé.'
+      explanation: 'Les deux conditions « a vaut 0 » et « b vaut 0 » doivent être vraies **en même temps** : on complémente chaque variable, puis on les relie par un ET. En langage C : S = !a && !b.'
+      tags:
+      - logique
+    - type: grid
+      level: 2
+      prompt: Cochez les lignes où la sortie vaut 1 pour l'équation S = a barre · b barre.
+      rows:
+      - id: '00'
+        label: a = 0, b = 0
+      - id: '01'
+        label: a = 0, b = 1
+      - id: '10'
+        label: a = 1, b = 0
+      - id: '11'
+        label: a = 1, b = 1
+      cols:
+      - id: S
+        label: S = 1
+      answer:
+      - S00
+      labels:
+        S00: (0, 0)
+        S01: (0, 1)
+        S10: (1, 0)
+        S11: (1, 1)
+      cellFeedback:
+        S01: b = 1, donc b barre = 0 et le ET donne 0
+        S10: a = 1, donc a barre = 0 et le ET donne 0
+        S11: les deux compléments valent 0
+      explanation: 'a barre · b barre ne vaut 1 que si a barre = 1 **et** b barre = 1, c''est-à-dire a = 0 et b = 0 : une seule ligne sur quatre.'
+      tags:
+      - logique
+    - type: mcq
+      level: 3
+      prompt: Une alarme doit sonner (S = 1) dans tous les cas **sauf** lorsque les deux capteurs a et b valent 1 en même temps. Quelle équation convient ?
+      choices:
+      - S = a barre + b barre
+      - S = a barre · b barre
+      - S = a · b
+      - S = a + b
+      answer: 0
+      feedback:
+      - null
+      - 'Non : ce ET ne vaut 1 que pour (0, 0) ; l''alarme resterait muette dans trois cas sur quatre.'
+      - 'Non : cette expression vaut 1 précisément dans le seul cas où l''alarme doit se taire.'
+      - 'Non : ce OU vaut 1 pour (1, 1), alors que l''alarme doit justement y être éteinte.'
+      explanation: 'La seule ligne à 0 est (1, 1). Il suffit qu''**une** des deux entrées soit à 0 pour déclencher, d''où S = a barre + b barre : c''est le complément du ET.'
+      tags:
+      - logique
+    - type: mcq
+      level: 2
+      prompt: Sur un chronogramme, l'entrée a est au niveau haut de 0 à 3 s, l'entrée b de 1 à 5 s. Pour S = a + b, quand la sortie est-elle au niveau haut ?
+      choices:
+      - De 0 à 5 s
+      - De 1 à 3 s
+      - De 3 à 5 s
+      - De 0 à 1 s puis de 3 à 5 s
+      answer: 0
+      feedback:
+      - null
+      - 'Non : de 1 à 3 s, c''est l''intervalle où les deux entrées sont hautes, donc la sortie du **ET**.'
+      - 'Non : tu n''as retenu que la fin de l''intervalle de b ; le OU est déjà haut dès que a l''est.'
+      - 'Non : ce serait l''intervalle où une seule entrée est haute, c''est-à-dire un OU exclusif.'
+      explanation: 'Le OU est haut dès qu''au moins une entrée est haute : la réunion des deux intervalles, de 0 à 5 s.'
+      tags:
+      - logique
+    - type: input
+      level: 3
+      prompt: Une fonction logique possède 5 variables d'entrée. Combien de lignes comporte sa table de vérité ?
+      answer: '32'
+      numeric: true
+      tolerance: 0
+      unit: lignes
+      explanation: '2ⁿ lignes, donc 2⁵ = 32. Chaque variable ajoutée **double** la taille de la table.'
+      tags:
+      - logique
+    - type: match
+      level: 2
+      prompt: Associez chaque équation logique à la condition qui rend la sortie égale à 1.
+      pairs:
+      - left: S = a · b
+        right: a et b valent 1
+      - left: S = a + b
+        right: a ou b vaut 1 (au moins l'une des deux)
+      - left: S = a barre
+        right: a vaut 0
+      - left: S = a · b barre
+        right: a vaut 1 et b vaut 0
+      tags:
+      - logique
+    - type: guided
+      level: 3
+      title: 'La mini-voiture à suivi de bande : de la table de vérité aux équations'
+      prompt: 'Exercice complet : table de vérité de deux capteurs, équations logiques et traduction en langage C.'
+      intro: 'Une mini-voiture électrique pour enfants circule dans une galerie marchande. Elle ne doit avancer que sur une **bande de couleur** peinte au sol. Deux **capteurs infrarouges**, Capt_G (gauche) et Capt_D (droit), sont placés sous le pare-chocs avant : chacun délivre 1 lorsqu''il voit la bande et 0 sinon.
+
+
+        Le cahier des charges est le suivant : si la voiture sort **partiellement** de la route, une alarme sonore est émise (Alarme = 1) ; si elle en sort **totalement**, l''alarme est émise **et** la voiture est arrêtée (Arrêt = 1).
+
+        {{emoji:🚗}}'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Combien de lignes comporte la table de vérité de ce système ?'
+        answer: '4'
+        numeric: true
+        tolerance: 0
+        unit: lignes
+        explanation: 'Deux variables d''entrée, donc 2² = 4 combinaisons : (1, 1), (1, 0), (0, 1) et (0, 0).'
+      - kind: grid
+        prompt: '**Étape 2.** Cochez, pour chaque combinaison des deux capteurs, les sorties qui valent 1.'
+        rows:
+        - id: '11'
+          label: Capt_G = 1, Capt_D = 1 (voiture sur la bande)
+        - id: '10'
+          label: Capt_G = 1, Capt_D = 0 (sortie partielle)
+        - id: '01'
+          label: Capt_G = 0, Capt_D = 1 (sortie partielle)
+        - id: '00'
+          label: Capt_G = 0, Capt_D = 0 (sortie totale)
+        cols:
+        - id: A
+          label: Arrêt = 1
+        - id: L
+          label: Alarme = 1
+        answer:
+        - A00
+        - L10
+        - L01
+        - L00
+        labels:
+          A11: Arrêt (1, 1)
+          A10: Arrêt (1, 0)
+          A01: Arrêt (0, 1)
+          A00: Arrêt (0, 0)
+          L11: Alarme (1, 1)
+          L10: Alarme (1, 0)
+          L01: Alarme (0, 1)
+          L00: Alarme (0, 0)
+        cellFeedback:
+          A11: la voiture est sur la bande, rien ne se déclenche
+          A10: 'sortie partielle : l''alarme sonne, mais la voiture continue'
+          A01: 'sortie partielle : l''alarme sonne, mais la voiture continue'
+          L11: les deux capteurs voient la bande, l'alarme reste muette
+        explanation: 'Une seule ligne provoque l''arrêt, celle où aucun capteur ne voit la bande. L''alarme, elle, sonne dans les trois lignes où au moins un capteur ne voit plus la bande.'
+      - kind: mcq
+        prompt: '**Étape 3.** Écrire l''équation logique de l''arrêt de la voiture.'
+        choices:
+        - Arrêt = Capt_G barre · Capt_D barre
+        - Arrêt = Capt_G · Capt_D
+        - Arrêt = Capt_G + Capt_D
+        - Arrêt = Capt_G barre + Capt_D barre
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : cette expression vaut 1 quand les deux capteurs voient la bande, c''est-à-dire quand tout va bien.'
+        - 'Non : ce OU vaut 1 dès qu''un capteur voit la bande : la voiture s''arrêterait presque tout le temps.'
+        - 'Non : c''est l''équation de l''**alarme**, qui sonne dès qu''un capteur perd la bande.'
+        explanation: 'L''arrêt correspond à la seule ligne (0, 0) : les deux capteurs doivent être à 0 en même temps, d''où le produit des deux compléments.'
+      - kind: mcq
+        prompt: '**Étape 4.** Écrire l''équation logique du déclenchement de l''alarme.'
+        choices:
+        - Alarme = Capt_G barre + Capt_D barre
+        - Alarme = Capt_G · Capt_D
+        - Alarme = Capt_G barre · Capt_D barre
+        - Alarme = Capt_G + Capt_D
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : cette expression est vraie quand tout va bien ; l''alarme sonnerait au mauvais moment.'
+        - 'Non : c''est l''équation de l''arrêt ; l''alarme doit aussi sonner en cas de sortie partielle.'
+        - 'Non : ce OU vaut 0 pour (0, 0), alors que l''alarme doit sonner en sortie totale.'
+        explanation: 'L''alarme est muette dans le seul cas (1, 1) : il suffit qu''un capteur soit à 0 pour qu''elle sonne, d''où la somme des deux compléments (le complément du ET).'
+      - kind: mcq
+        prompt: '**Étape 5.** Les capteurs relèvent Capt_G = 1 et Capt_D = 0. Quelles sont les commandes envoyées ?'
+        choices:
+        - Arrêt = 0 et Alarme = 1
+        - Arrêt = 1 et Alarme = 1
+        - Arrêt = 0 et Alarme = 0
+        - Arrêt = 1 et Alarme = 0
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la voiture n''est arrêtée que lorsqu''elle sort **totalement**, donc si les deux capteurs sont à 0.'
+        - 'Non : un capteur ne voit plus la bande, la voiture sort partiellement : l''alarme doit sonner.'
+        - 'Non : cette combinaison n''existe pas dans le cahier des charges ; l''arrêt s''accompagne toujours de l''alarme.'
+        explanation: 'Un seul capteur sur la bande, c''est une sortie partielle : alarme sonore, mais la voiture continue d''avancer.'
+      - kind: mcq
+        prompt: '**Étape 6.** Comment traduit-on l''équation de l''arrêt en langage de type C ?'
+        choices:
+        - Arret = !CaptG && !CaptD;
+        - Arret = CaptG && CaptD;
+        - Arret = !CaptG || !CaptD;
+        - Arret = CaptG & CaptD;
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : il manque les deux compléments ; cette ligne teste que les deux capteurs voient la bande.'
+        - 'Non : || est le OU booléen ; il faut ici un ET.'
+        - 'Non : & est un ET **bit à bit**, utilisé pour les masques ; le ET booléen s''écrit &&.'
+        explanation: 'Correspondances : ET = &&, OU = ||, NON = !. L''équation Arrêt = Capt_G barre · Capt_D barre devient donc !CaptG && !CaptD.'
       tags:
       - logique
   - id: info-algo
@@ -1463,3 +2112,704 @@ units:
       explanation: 'Branche « un des codeurs ne répond pas » : transmission de E1COD à la supervision, puis on ne garde que la valeur du codeur actif avant de calculer la position réelle.'
       tags:
       - sysml
+    - type: mcq
+      level: 1
+      prompt: En langage de type C ou en Python, quel opérateur teste l'**égalité** de deux valeurs ?
+      choices:
+      - '=='
+      - '='
+      - '!='
+      - '<='
+      answer: 0
+      feedback:
+      - null
+      - 'Non : un seul signe = est l''opérateur d''**affectation**, qui range une valeur dans une variable.'
+      - 'Non : != teste la **différence** de deux valeurs.'
+      - 'Non : <= teste l''infériorité ou l''égalité.'
+      explanation: 'Opérateurs de comparaison : ==, !=, <, >, <=, >=. Opérateur d''affectation : =. Écrire = à la place de == est l''erreur la plus fréquente des débutants.'
+      tags:
+      - algorithme
+    - type: mcq
+      level: 2
+      prompt: Que donne l'opérateur **modulo**, noté %, appliqué à deux nombres entiers ?
+      choices:
+      - Le reste de la division entière
+      - Le quotient de la division
+      - Un pourcentage
+      - La partie décimale du résultat
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le quotient s''obtient avec l''opérateur de division.'
+      - 'Non : le symbole % désigne ici une opération arithmétique, pas une proportion.'
+      - 'Non : le modulo travaille sur des entiers et renvoie un entier.'
+      explanation: '13 % 2 = 1 : c''est le reste de 13 ÷ 2. C''est exactement l''opération utilisée dans les divisions successives qui convertissent un nombre décimal en binaire.'
+      tags:
+      - algorithme
+    - type: mcq
+      level: 2
+      prompt: À quoi sert une **fonction** dans un programme ?
+      choices:
+      - À regrouper des instructions sous un nom, pour les appeler à la demande
+      - À déclarer les variables globales du programme
+      - À répéter automatiquement un traitement un nombre fixé de fois
+      - À convertir un algorigramme en programme
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les variables globales se déclarent en dehors de toute fonction.'
+      - 'Non : répéter un traitement, c''est le rôle d''une **boucle**.'
+      - 'Non : la traduction de l''algorigramme en programme est le travail du programmeur.'
+      explanation: 'Une fonction, c''est un « programme dans le programme ». Son usage comporte deux phases : la **définition** (nom, paramètres, corps, valeur de retour) puis l''**appel**, avec des arguments.'
+      tags:
+      - algorithme
+    - type: mcq
+      level: 2
+      prompt: Quelle est la différence entre un **paramètre** et un **argument** de fonction ?
+      choices:
+      - Le paramètre figure dans la définition, l'argument est la valeur fournie lors de l'appel
+      - Le paramètre est la valeur fournie lors de l'appel, l'argument figure dans la définition
+      - Le paramètre est local, l'argument est global
+      - Il n'y a aucune différence, ce sont deux mots pour la même chose
+      answer: 0
+      feedback:
+      - null
+      - 'Non : les deux mots sont inversés.'
+      - 'Non : local et global décrivent la **portée** d''une variable, pas ce couple de notions.'
+      - 'Non : la distinction est précise : le paramètre est une variable, l''argument une valeur.'
+      explanation: 'Dans def nbrCaractere(ch), ch est le **paramètre** ; dans l''appel nbrCaractere(''Ornithorynque''), la chaîne de caractères est l''**argument**.'
+      tags:
+      - algorithme
+    - type: order
+      level: 2
+      prompt: Remettez dans l'ordre les lignes de la fonction Python qui compte le nombre de caractères d'un mot.
+      steps:
+      - def nbrCaractere(ch) — en-tête, avec le nom de la fonction et son paramètre
+      - i = 0 — initialisation du compteur
+      - for j in ch — parcours des caractères du mot
+      - i += 1 — incrémentation du compteur à chaque caractère
+      - return(i) — valeur retournée par la fonction
+      tags:
+      - algorithme
+    - type: mcq
+      level: 2
+      prompt: 'On déclare monTableau = [''bleu'', ''rouge'', ''vert'']. Que vaut l''élément d''indice 1 ?'
+      choices:
+      - '''rouge'''
+      - '''bleu'''
+      - '''vert'''
+      - Rien, le tableau ne comporte pas d'indice 1
+      answer: 0
+      feedback:
+      - null
+      - 'Non : ''bleu'' est l''élément d''indice **0**, le premier du tableau.'
+      - 'Non : ''vert'' est l''élément d''indice 2, le dernier du tableau.'
+      - 'Non : un tableau de trois éléments possède les indices 0, 1 et 2.'
+      explanation: 'Dans la plupart des langages, le premier indice est **0** : monTableau[0] vaut ''bleu'', monTableau[1] vaut ''rouge'', monTableau[2] vaut ''vert''.'
+      tags:
+      - algorithme
+    - type: guided
+      level: 3
+      title: 'Le distributeur de savon : de l''algorigramme à l''algorithme'
+      prompt: 'Exercice complet : symboles normalisés, ordre des blocs et structures d''un algorigramme.'
+      intro: 'Le fonctionnement d''un distributeur de savon est géré par un microprocesseur. Un capteur détecte la présence d''une main sous le bec.
+
+
+        Pour éviter le gaspillage, le cahier des charges impose une **temporisation de 2 secondes** entre la détection de la main et l''émission de la dose de savon. Les blocs disponibles pour construire l''algorigramme sont : Début_Boucle, Lire_Capteur, Présence_Main ?, Temporisation, Émission_Dose et Fin_Boucle.
+
+        {{emoji:🧼}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quel symbole normalisé représente le bloc « Lire_Capteur » sur l''algorigramme ?'
+        choices:
+        - Le parallélogramme
+        - Le losange
+        - Le rectangle
+        - Le rectangle à bouts arrondis
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le losange pose une question à deux issues ; lire un capteur n''est pas un test.'
+        - 'Non : le rectangle représente un traitement interne, comme la temporisation.'
+        - 'Non : le rectangle à bouts arrondis marque le début ou la fin de l''algorigramme.'
+        explanation: 'Lire un capteur, c''est faire entrer une donnée dans le programme : le symbole des entrées et des sorties est le parallélogramme.'
+      - kind: mcq
+        prompt: '**Étape 2.** Quel symbole représente le bloc « Présence_Main ? » ?'
+        choices:
+        - Le losange
+        - Le parallélogramme
+        - Le rectangle
+        - Le rectangle à double barre verticale
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le parallélogramme sert aux entrées et sorties de données.'
+        - 'Non : le rectangle est un traitement, sans branchement.'
+        - 'Non : le rectangle à double barre verticale appelle un sous-programme.'
+        explanation: 'Le point d''interrogation signale une question à laquelle on répond par oui ou par non : c''est un test, donc un losange à deux sorties.'
+      - kind: order
+        prompt: '**Étape 3.** Remettez les huit blocs de l''algorigramme dans l''ordre d''exécution, pour un cycle où la main reste présente.'
+        steps:
+        - Début_Boucle
+        - Lire_Capteur (première lecture)
+        - Présence_Main ? (premier test)
+        - Temporisation de 2 s
+        - Lire_Capteur (seconde lecture)
+        - Présence_Main ? (second test)
+        - Émission_Dose
+        - Fin_Boucle
+        explanation: 'Le capteur est lu une première fois ; si une main est détectée, on attend 2 s, puis on relit le capteur et on ne teste à nouveau qu''ensuite. La dose n''est émise qu''après ce second test.'
+      - kind: mcq
+        prompt: '**Étape 4.** Pourquoi le capteur est-il lu **deux** fois ?'
+        choices:
+        - Pour n'émettre la dose que si la main est toujours là au bout des 2 secondes
+        - Pour doubler la précision de la mesure du capteur
+        - Pour détecter deux mains différentes
+        - Pour laisser le temps à la pompe de se remplir
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : lire deux fois un capteur tout ou rien n''améliore en rien sa précision.'
+        - 'Non : le capteur ne distingue pas les mains, il détecte une présence.'
+        - 'Non : la temporisation est justifiée dans l''énoncé par la lutte contre le gaspillage.'
+        explanation: 'Un simple passage devant le capteur ne déclenche rien : la dose n''est délivrée que si la main est **encore** présente après la temporisation, ce qui évite le gaspillage.'
+      - kind: mcq
+        prompt: '**Étape 5.** Quelle structure algorithmique traduit l''enchaînement « RÉPÉTER … FIN RÉPÉTER » qui encadre tout le traitement ?'
+        choices:
+        - Une structure répétitive (le distributeur recommence indéfiniment)
+        - Une structure alternative
+        - Une structure linéaire
+        - Une boucle avec comptage
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la structure alternative s''écrit SI … ALORS … SINON et offre deux issues exclusives.'
+        - 'Non : une structure linéaire enchaîne les traitements sans jamais reboucler.'
+        - 'Non : une boucle avec comptage utilise un compteur N décrémenté ; ici, rien ne compte les cycles.'
+        explanation: 'Le distributeur reste en service : il reboucle sans fin sur la lecture du capteur. C''est une structure répétitive.'
+      - kind: mcq
+        prompt: '**Étape 6.** Que se passe-t-il si l''utilisateur retire sa main pendant la temporisation ?'
+        choices:
+        - Le second test échoue, aucune dose n'est émise et l'algorithme reboucle
+        - La dose est émise quand même, puisque la main a été détectée
+        - Le programme s'arrête définitivement
+        - La temporisation est relancée pour 2 secondes
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : l''émission de la dose est placée **après** le second test, et non après le premier.'
+        - 'Non : sortir d''un test n''arrête pas le programme ; la boucle continue.'
+        - 'Non : aucun bloc de l''algorigramme ne relance la temporisation.'
+        explanation: 'Le second « Présence_Main ? » répond non : on saute le bloc Émission_Dose et on repart au début de la boucle, prêt pour une nouvelle détection.'
+      tags:
+      - algorigramme
+      - algorithme
+  - id: info-transmission
+    title: Codage et transmission
+    icon: 🔌
+    description: Débit binaire, trames série (start, données, parité, stop), liaisons symétriques, protocoles et adressage réseau.
+    prerequisites:
+    - info-numeration
+    lesson: lessons/info-transmission.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: Que mesure le **débit binaire** d'une liaison ?
+      choices:
+      - Le nombre de bits transmis par seconde, en bit/s
+      - Le nombre d'octets stockés en mémoire
+      - La tension utilisée pour transmettre un 1 logique
+      - La longueur maximale du câble
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est une capacité de stockage, indépendante de la vitesse de transmission.'
+      - 'Non : la tension caractérise le **niveau logique**, pas la vitesse.'
+      - 'Non : la longueur du câble dépend du type de liaison, pas de son débit.'
+      explanation: 'Le débit binaire s''exprime en bit/s (parfois en bauds pour une liaison série simple) : 19 200 bit/s signifie 19 200 bits transmis chaque seconde.'
+      tags:
+      - transmission
+    - type: mcq
+      level: 1
+      prompt: Qu'est-ce qui distingue une liaison **série** d'une liaison **parallèle** ?
+      choices:
+      - En série, les bits sont envoyés l'un après l'autre sur un même conducteur
+      - En série, tous les bits d'un octet partent en même temps
+      - En série, on ne transmet que des nombres, jamais du texte
+      - En série, il n'y a pas besoin de masse commune
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est la liaison **parallèle**, qui utilise autant de fils que de bits.'
+      - 'Non : toute donnée, texte compris, est transmise sous forme de bits.'
+      - 'Non : une référence de potentiel commune est nécessaire dans les deux cas.'
+      explanation: 'La liaison série économise les conducteurs (un seul fil de données par sens) mais impose de repérer le début et la fin de chaque caractère.'
+      tags:
+      - transmission
+    - type: mcq
+      level: 1
+      prompt: Sur une liaison série asynchrone, à quoi sert le **bit de start** ?
+      choices:
+      - À signaler le début d'un caractère, en faisant passer la ligne de 1 à 0
+      - À indiquer le nombre de bits de la donnée qui suit
+      - À vérifier qu'aucune erreur ne s'est produite
+      - À séparer deux trames successives
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le format (nombre de bits) est fixé une fois pour toutes par la configuration de la liaison.'
+      - 'Non : c''est le rôle du bit de **parité**.'
+      - 'Non : c''est le rôle du ou des bits de **stop**.'
+      explanation: 'La ligne est au repos à l''état 1. Le front descendant du bit de start réveille le récepteur et lui donne le rythme pour lire les bits suivants.'
+      tags:
+      - transmission
+    - type: mcq
+      level: 1
+      prompt: Dans quel ordre les bits d'une donnée sont-ils émis sur une liaison série asynchrone ?
+      choices:
+      - Le bit de poids faible (D0) en tête, le bit de poids fort (D7) en dernier
+      - Le bit de poids fort en tête, le bit de poids faible en dernier
+      - Dans l'ordre des symboles hexadécimaux, de gauche à droite
+      - Dans un ordre défini au hasard par l'émetteur
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est l''inverse ; oublier ce détail conduit à lire les trames à l''envers.'
+      - 'Non : la liaison transmet des bits, pas des symboles hexadécimaux.'
+      - 'Non : l''ordre est imposé par le protocole, sinon aucune lecture ne serait possible.'
+      explanation: 'Poids faible en tête (lsb first). Pour relire un chronogramme, il faut donc **retourner** la suite des bits avant de calculer la valeur.'
+      tags:
+      - transmission
+    - type: mcq
+      level: 1
+      prompt: À quoi sert le **bit de parité** d'une trame série ?
+      choices:
+      - À détecter qu'un bit a été altéré pendant la transmission
+      - À corriger automatiquement les erreurs de transmission
+      - À augmenter le débit de la liaison
+      - À indiquer la fin du caractère transmis
+      answer: 0
+      feedback:
+      - null
+      - 'Non : un seul bit de parité permet de **détecter** une erreur, pas de la corriger.'
+      - 'Non : il ajoute au contraire un bit à transmettre, donc il ralentit un peu la liaison.'
+      - 'Non : la fin du caractère est marquée par le ou les bits de stop.'
+      explanation: 'Le bit de parité complète la donnée pour que le nombre total de « 1 » soit pair (parité paire) ou impair (parité impaire). Si le compte ne tombe pas juste à l''arrivée, le récepteur sait qu''un bit a été altéré.'
+      tags:
+      - transmission
+    - type: input
+      level: 2
+      prompt: Une liaison série transmet des caractères avec 1 bit de start, 8 bits de donnée, 1 bit de parité et 1 bit de stop. Combien de bits une trame comporte-t-elle ?
+      answer: '11'
+      numeric: true
+      tolerance: 0
+      unit: bits
+      explanation: '1 + 8 + 1 + 1 = 11 bits. Seuls 8 bits sur 11 sont utiles : l''encadrement coûte environ 27 % du débit.'
+      tags:
+      - transmission
+    - type: input
+      level: 2
+      prompt: Une trame de 11 bits est transmise à 19 200 bit/s. Quelle est sa durée, en microsecondes (arrondir à l'unité) ?
+      answer: '573'
+      numeric: true
+      tolerance: 5
+      unit: µs
+      explanation: 't = nombre de bits ÷ débit = 11 ÷ 19 200 = 5,73 × 10⁻⁴ s ≈ 573 µs.'
+      tags:
+      - transmission
+    - type: mcq
+      level: 2
+      prompt: La donnée à transmettre vaut 0011 0101 et la liaison utilise une **parité impaire**. Que vaut le bit de parité ?
+      choices:
+      - '1'
+      - '0'
+      - Il n'y a pas de bit de parité pour cette donnée
+      - Cela dépend du débit de la liaison
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la donnée contient déjà quatre « 1 », un nombre pair ; un bit de parité à 0 laisserait le total pair.'
+      - 'Non : dès que la liaison est configurée avec parité, le bit est présent pour tous les caractères.'
+      - 'Non : le bit de parité ne dépend que du nombre de « 1 » de la donnée.'
+      explanation: '0011 0101 contient quatre « 1 ». Pour que le total soit **impair**, le bit de parité doit valoir 1 : le compte passe à cinq.'
+      tags:
+      - transmission
+    - type: mcq
+      level: 2
+      prompt: La donnée à transmettre vaut 0011 0010 et la liaison utilise une **parité impaire**. Que vaut le bit de parité ?
+      choices:
+      - '0'
+      - '1'
+      - '2'
+      - On ne peut pas savoir sans connaître le caractère transmis
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la donnée contient déjà trois « 1 », un nombre impair ; ajouter un 1 rendrait le total pair.'
+      - 'Non : un bit ne peut valoir que 0 ou 1.'
+      - 'Non : seul le contenu binaire compte, et il est donné.'
+      explanation: '0011 0010 contient trois « 1 », donc déjà un nombre impair : le bit de parité vaut 0. Cette donnée est le code ASCII du caractère « 2 ».'
+      tags:
+      - transmission
+    - type: order
+      level: 2
+      prompt: Remettez dans l'ordre les éléments d'une trame série asynchrone avec parité.
+      steps:
+      - Ligne au repos, à l'état 1
+      - Bit de start, à l'état 0
+      - Les 8 bits de donnée, D0 (poids faible) en tête
+      - Le bit de parité
+      - Le bit de stop
+      - Retour de la ligne au repos
+      tags:
+      - transmission
+    - type: input
+      level: 2
+      prompt: Un technicien mesure à l'oscilloscope une durée de 4 µs pour un bit d'une trame DMX. Quelle est la vitesse de transmission, en bit/s ?
+      answer: '250000'
+      numeric: true
+      tolerance: 1000
+      unit: bit/s
+      explanation: 'v = 1 ÷ durée d''un bit = 1 ÷ (4 × 10⁻⁶) = 250 000 bit/s, valeur conforme à celle qu''impose le protocole DMX 512.'
+      tags:
+      - dmx
+    - type: mcq
+      level: 2
+      prompt: 'Quel est le format de chaque canal transmis par le protocole **DMX 512**, utilisé pour piloter les projecteurs de scène ?'
+      choices:
+      - 1 bit de start, 8 bits de donnée (poids faible en tête), 2 bits de stop
+      - 1 bit de start, 8 bits de donnée (poids fort en tête), 1 bit de stop
+      - 2 bits de start, 8 bits de donnée, 1 bit de parité
+      - 8 bits de donnée seuls, sans encadrement
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le DMX transmet le poids faible en premier et referme chaque canal par **deux** bits de stop.'
+      - 'Non : il n''y a qu''un seul bit de start, et le DMX n''utilise pas de bit de parité.'
+      - 'Non : la transmission est asynchrone : sans start ni stop, le récepteur ne pourrait pas se synchroniser.'
+      explanation: 'Chaque canal occupe donc 1 + 8 + 2 = 11 bits. Le protocole gère 512 canaux, dont la valeur va de 0 à 255, à 250 000 bit/s.'
+      tags:
+      - dmx
+    - type: mcq
+      level: 2
+      prompt: Combien de canaux le protocole DMX 512 gère-t-il, et combien de récepteurs peut-on piloter simultanément sur une liaison ?
+      choices:
+      - 512 canaux et 32 récepteurs au maximum
+      - 512 canaux et 512 récepteurs
+      - 255 canaux et 32 récepteurs
+      - 32 canaux et 512 récepteurs
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 512 est le nombre de **canaux** ; le nombre de récepteurs est bien plus faible.'
+      - 'Non : 255 est la valeur maximale d''un canal, pas le nombre de canaux.'
+      - 'Non : les deux nombres sont intervertis.'
+      explanation: 'Un seul émetteur (le pupitre) pilote jusqu''à 32 récepteurs, la liaison étant unidirectionnelle ; chacun des 512 canaux reçoit une valeur de 0 à 255.'
+      tags:
+      - dmx
+    - type: input
+      level: 2
+      prompt: Un canal DMX reçoit la valeur 128, la valeur maximale étant 255. Quelle intensité lumineuse cela représente-t-il, en pourcentage (arrondir à l'unité) ?
+      answer: '50'
+      numeric: true
+      tolerance: 1
+      unit: '%'
+      explanation: '128 ÷ 255 = 0,502, soit environ 50 %. Inversement, une couleur demandée à 20 % correspond à 0,20 × 255 ≈ 51.'
+      tags:
+      - dmx
+    - type: mcq
+      level: 3
+      prompt: Une perturbation de 1 V affecte simultanément les deux fils DATA+ et DATA− d'une **liaison symétrique**. Que devient-elle sur le signal différentiel reconstitué par le récepteur ?
+      choices:
+      - Elle disparaît, car elle est identique sur les deux fils et s'élimine par la différence
+      - Elle est doublée et apparaît à 2 V sur le signal reconstitué
+      - Elle est divisée par deux
+      - Elle décale le signal de 1 V vers le haut en permanence
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la soustraction ne peut pas doubler une perturbation commune aux deux fils.'
+      - 'Non : elle n''est pas seulement atténuée, elle est supprimée.'
+      - 'Non : le décalage commun disparaît entièrement dans la différence.'
+      explanation: '(U₊ + 1) − (U₋ + 1) = U₊ − U₋ : la perturbation, commune aux deux conducteurs, s''annule. Le signal utile est en plus doublé (± 5 V au lieu de 0 à 5 V), d''où une excellente immunité aux parasites.'
+      tags:
+      - transmission
+    - type: mcq
+      level: 2
+      prompt: Sur une liaison **RS-232**, quelle tension correspond au niveau logique 1 ?
+      choices:
+      - − 12 V
+      - + 12 V
+      - + 5 V
+      - 0 V
+      answer: 0
+      feedback:
+      - null
+      - 'Non : + 12 V correspond au niveau logique 0 ; la RS-232 utilise une logique inversée.'
+      - 'Non : + 5 V est le niveau haut d''une logique TTL, pas d''une liaison RS-232.'
+      - 'Non : 0 V n''est pas un niveau valide en RS-232, qui utilise des tensions symétriques.'
+      explanation: 'La RS-232 code le 1 par une tension négative et le 0 par une tension positive : pour relire un relevé d''oscilloscope, il faut inverser les niveaux **et** retourner l''ordre des bits (poids faible en tête).'
+      tags:
+      - transmission
+    - type: input
+      level: 3
+      prompt: Un lecteur de carte transmet 40 caractères ; chaque caractère occupe 8 bits de donnée, 1 bit de start et 1 bit de stop. Combien de bits sont transmis en tout ?
+      answer: '400'
+      numeric: true
+      tolerance: 0
+      unit: bits
+      explanation: 'Chaque caractère occupe 8 + 1 + 1 = 10 bits sur la liaison, donc 40 × 10 = 400 bits.'
+      tags:
+      - transmission
+    - type: input
+      level: 3
+      prompt: Ces 400 bits sont transmis à 9 600 bit/s. Quelle est la durée de la transmission, en millisecondes (arrondir au dixième) ?
+      answer: '41.7'
+      numeric: true
+      tolerance: 0.5
+      unit: ms
+      explanation: 't = 400 ÷ 9 600 = 0,041 7 s = 41,7 ms. Si le cahier des charges impose 50 ms au maximum, l''exigence est respectée avec une marge de 8 ms.'
+      tags:
+      - transmission
+    - type: mcq
+      level: 3
+      prompt: Le masque d'un réseau de télésurveillance est 255.255.252.0. Quel préfixe (notation CIDR) lui correspond ?
+      choices:
+      - /22
+      - /24
+      - /23
+      - /20
+      answer: 0
+      feedback:
+      - null
+      - 'Non : /24 correspond au masque 255.255.255.0.'
+      - 'Non : /23 correspond au masque 255.255.254.0.'
+      - 'Non : /20 correspond au masque 255.255.240.0.'
+      explanation: '252 s''écrit 1111 1100 : six bits à 1. Le masque compte donc 8 + 8 + 6 = 22 bits de partie réseau, d''où /22.'
+      tags:
+      - reseau
+    - type: mcq
+      level: 3
+      prompt: Un véhicule porte l'adresse IP 10.0.3.19 avec le masque 255.255.252.0. Quelle est l'adresse de **diffusion** (broadcast) de ce réseau ?
+      choices:
+      - 10.0.3.255
+      - 10.0.255.255
+      - 10.0.3.254
+      - 10.255.255.255
+      answer: 0
+      feedback:
+      - null
+      - 'Non : 10.0.255.255 serait la diffusion d''un réseau /16, alors que le masque impose /22.'
+      - 'Non : 10.0.3.254 est la plus grande adresse attribuable à une machine, juste avant la diffusion.'
+      - 'Non : 10.255.255.255 est la diffusion du réseau privé 10.0.0.0/8 tout entier.'
+      explanation: 'Le réseau est 10.0.0.0/22 ; l''adresse de diffusion s''obtient en mettant à 1 tous les bits de la partie hôte (10 bits), soit 10.0.3.255. Elle ne peut être donnée à aucune machine, puisqu''elle les désigne toutes à la fois.'
+      tags:
+      - reseau
+    - type: input
+      level: 3
+      prompt: Sur le réseau 10.0.0.0 avec le masque 255.255.252.0, combien de machines peut-on adresser ?
+      answer: '1022'
+      numeric: true
+      tolerance: 0
+      unit: hôtes
+      explanation: 'La partie hôte occupe 32 − 22 = 10 bits, soit 2¹⁰ = 1 024 combinaisons, moins l''adresse du réseau (10.0.0.0) et l''adresse de diffusion (10.0.3.255) : 1 022 machines.'
+      tags:
+      - reseau
+    - type: input
+      level: 2
+      prompt: Chaque bus d'un réseau urbain envoie au centre de régulation une trame de position toutes les 20 secondes. Combien de trames un bus envoie-t-il en une heure ?
+      answer: '180'
+      numeric: true
+      tolerance: 0
+      unit: trames
+      explanation: '3 600 s ÷ 20 s = 180 trames par heure et par véhicule. Avec une centaine de bus, le centre reçoit 18 000 trames par heure : le dimensionnement du réseau en dépend.'
+      tags:
+      - reseau
+    - type: match
+      level: 2
+      prompt: Associez chaque message échangé par un réseau de bus urbains au support de transmission utilisé.
+      pairs:
+      - left: Signaux de positionnement reçus par le bus
+        right: Liaison satellite (radio GPS)
+      - left: Trames de position envoyées au centre de régulation
+        right: Liaison GSM/GPRS
+      - left: Situation du réseau envoyée au serveur de l'application
+        right: Réseau Internet
+      - left: Prochains passages affichés sur le smartphone du client
+        right: Réseau 3G ou Wi-Fi
+      tags:
+      - reseau
+    - type: guided
+      level: 3
+      title: 'Le robot tondeuse : transmettre le taux de charge de la batterie'
+      prompt: 'Exercice complet : code ASCII, parité impaire, composition et durée d''une trame série.'
+      intro: 'Un robot tondeuse connecté affiche l''état de sa batterie sur un petit écran. Le microcontrôleur communique avec l''interface utilisateur par une **liaison série UART** dont la configuration est la suivante : **8 bits de donnée**, **1 bit de parité impaire**, **1 bit de stop**, à **19 200 bit/s**.
+
+
+        Pour un taux de charge de **25 %**, la carte n''envoie pas le nombre 25 : elle envoie les **codes ASCII** des caractères « 2 » puis « 5 ». Dans la table ASCII, les dix chiffres occupent la colonne de poids fort 3.
+
+        {{emoji:🤖}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quel est le code ASCII, en hexadécimal, du caractère « 2 » ?'
+        choices:
+        - (32)₁₆
+        - (02)₁₆
+        - (23)₁₆
+        - (20)₁₆
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le poids fort des chiffres vaut 3 ; (02)₁₆ est un caractère de commande.'
+        - 'Non : les deux symboles sont inversés ; on lit d''abord la colonne (3), puis la ligne (2).'
+        - 'Non : (20)₁₆ est le code de l''espace.'
+        explanation: 'Colonne 3, ligne 2 : « 2 » = (32)₁₆ = 50₍₁₀₎. De la même façon, « 0 » = (30)₁₆ et « 9 » = (39)₁₆.'
+      - kind: input
+        prompt: '**Étape 2.** Écrire ce code (32)₁₆ en binaire, sur un octet (avec ou sans espace).'
+        answer: '00110010'
+        accept:
+        - 0011 0010
+        - '110010'
+        numeric: false
+        explanation: 'Par blocs de 4 bits : 3 = 0011 et 2 = 0010, d''où 0011 0010. Vérification : 32 + 16 + 2 = 50.'
+      - kind: input
+        prompt: '**Étape 3.** Le caractère « 5 » a pour code (35)₁₆. Quelle est sa valeur en décimal ?'
+        answer: '53'
+        numeric: true
+        tolerance: 0
+        explanation: '3 × 16 + 5 = 48 + 5 = 53. En binaire : (0011 0101)₂, que l''on retrouve en additionnant 32 + 16 + 4 + 1.'
+      - kind: mcq
+        prompt: '**Étape 4.** La donnée 0011 0101 est transmise avec une parité **impaire**. Que vaut le bit de parité ?'
+        choices:
+        - '1'
+        - '0'
+        - '5'
+        - Il n'y en a pas, la parité ne concerne que les caractères de commande
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la donnée contient déjà quatre « 1 » ; avec un bit à 0, le total resterait pair.'
+        - 'Non : un bit ne peut valoir que 0 ou 1.'
+        - 'Non : la parité s''applique à tous les caractères transmis.'
+        explanation: '0011 0101 comporte quatre « 1 ». La parité impaire exige un nombre impair de « 1 » dans l''ensemble donnée + parité : le bit de parité vaut donc 1, ce qui porte le total à cinq.'
+      - kind: input
+        prompt: '**Étape 5.** Combien de bits la trame complète d''un caractère comporte-t-elle (start, donnée, parité, stop) ?'
+        answer: '11'
+        numeric: true
+        tolerance: 0
+        unit: bits
+        explanation: '1 bit de start + 8 bits de donnée + 1 bit de parité + 1 bit de stop = 11 bits.'
+      - kind: input
+        prompt: '**Étape 6.** Calculer la durée de cette trame à 19 200 bit/s, en microsecondes (arrondir à l''unité).'
+        answer: '573'
+        numeric: true
+        tolerance: 5
+        unit: µs
+        explanation: 't = 11 ÷ 19 200 = 5,73 × 10⁻⁴ s ≈ 573 µs.'
+      - kind: input
+        prompt: '**Étape 7.** En déduire la durée totale d''envoi de la donnée « 25 », en millisecondes (deux décimales).'
+        answer: '1.15'
+        numeric: true
+        tolerance: 0.03
+        unit: ms
+        explanation: 'Deux caractères, donc deux trames : 2 × 573 = 1 146 µs ≈ 1,15 ms. L''affichage se met à jour bien plus vite que l''œil ne peut le percevoir.'
+      tags:
+      - transmission
+      - ascii
+    - type: guided
+      level: 3
+      title: 'Les projecteurs de scène : la trame DMX 512'
+      prompt: 'Exercice complet : vitesse de transmission, durée d''une trame et valeurs des canaux.'
+      intro: 'Dans un théâtre, les projecteurs sont pilotés à distance par le protocole **DMX 512**. Un pupitre unique commande jusqu''à **32 récepteurs** et gère **512 canaux**, chacun recevant une valeur comprise **entre 0 et 255**.
+
+
+        La liaison est **symétrique** : trois fils (masse, DATA+ et DATA−), le récepteur reconstituant l''information par la différence U(DATA+) − U(DATA−). Chaque canal est transmis avec **1 bit de start, 8 bits de donnée (poids faible en tête) et 2 bits de stop**.
+
+
+        Le technicien relève à l''oscilloscope une durée de **4 µs** pour un bit, et lit la valeur **128** sur le canal affecté au bleu.
+
+        {{emoji:🎭}}'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Calculer la vitesse de transmission de la trame relevée, en bit/s.'
+        answer: '250000'
+        numeric: true
+        tolerance: 1000
+        unit: bit/s
+        explanation: 'v = 1 ÷ 4 µs = 1 ÷ (4 × 10⁻⁶) = 250 000 bit/s.'
+      - kind: mcq
+        prompt: '**Étape 2.** Le protocole DMX 512 fixe la vitesse à 250 000 bit/s. Que conclure du relevé ?'
+        choices:
+        - La vitesse mesurée est conforme au protocole
+        - La vitesse mesurée est deux fois trop faible
+        - La vitesse mesurée est deux fois trop élevée
+        - On ne peut pas conclure sans connaître le nombre de canaux
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le calcul donne exactement 250 000 bit/s, ni plus ni moins.'
+        - 'Non : la valeur mesurée coïncide avec la valeur imposée.'
+        - 'Non : la vitesse se déduit de la seule durée d''un bit ; le nombre de canaux n''intervient pas.'
+        explanation: '250 000 bit/s mesurés pour 250 000 bit/s exigés : la liaison est conforme, le défaut éventuel du projecteur est donc à chercher ailleurs.'
+      - kind: input
+        prompt: '**Étape 3.** Combien de bits chaque canal occupe-t-il sur la liaison ?'
+        answer: '11'
+        numeric: true
+        tolerance: 0
+        unit: bits
+        explanation: '1 bit de start + 8 bits de donnée + 2 bits de stop = 11 bits par canal, dont 8 seulement sont utiles.'
+      - kind: input
+        prompt: '**Étape 4.** En déduire la durée d''une trame complète de 512 canaux, en millisecondes (arrondir au dixième).'
+        answer: '22.5'
+        numeric: true
+        tolerance: 0.2
+        unit: ms
+        explanation: '512 × 11 = 5 632 bits ; t = 5 632 ÷ 250 000 = 0,022 528 s ≈ 22,5 ms. Les 512 canaux sont donc rafraîchis environ 44 fois par seconde, ce que l''œil perçoit comme continu.'
+      - kind: mcq
+        prompt: '**Étape 5.** Une perturbation de 1 V se superpose au même instant sur DATA+ et sur DATA−. Que devient-elle après la différence effectuée par le récepteur ?'
+        choices:
+        - Elle disparaît complètement
+        - Elle est doublée
+        - Elle inverse le signal utile
+        - Elle ne change rien tant qu'elle reste inférieure à 5 V
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la soustraction de deux perturbations identiques ne peut pas les additionner.'
+        - 'Non : le signe du signal utile est fixé par les niveaux logiques, pas par le parasite.'
+        - 'Non : la perturbation est éliminée, quelle que soit son amplitude, tant qu''elle affecte les deux fils de la même façon.'
+        explanation: '(U₊ + 1) − (U₋ + 1) = U₊ − U₋. C''est tout l''intérêt de la liaison symétrique dans un environnement bruité (gradateurs, moteurs de machinerie).'
+      - kind: input
+        prompt: '**Étape 6.** Le canal du bleu porte la valeur 128. Quelle intensité, en pourcentage, cela représente-t-il (maximum 255, arrondir à l''unité) ?'
+        answer: '50'
+        numeric: true
+        tolerance: 1
+        unit: '%'
+        explanation: '128 ÷ 255 = 0,502, soit 50 % : la valeur relevée est bien conforme au bleu à 50 % demandé.'
+      - kind: mcq
+        prompt: '**Étape 7.** Quelle valeur le pupitre doit-il envoyer sur le canal du rouge pour obtenir un rouge à 20 % ?'
+        choices:
+        - '51'
+        - '20'
+        - '128'
+        - '204'
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : 20 est le pourcentage demandé ; la valeur du canal se compte de 0 à 255.'
+        - 'Non : 128 correspond à environ 50 %.'
+        - 'Non : 204 correspond à 80 % ; tu as pris le complément.'
+        explanation: '0,20 × 255 = 51. Chaque canal est une fraction de 255 : 0 pour éteint, 255 pour l''intensité maximale.'
+      tags:
+      - dmx
+      - transmission

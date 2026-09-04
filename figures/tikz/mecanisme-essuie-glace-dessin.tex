@@ -1,0 +1,28 @@
+%% Essuie-glace : dessin d'ensemble (pièces numérotées, pièces coupées hachurées).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\input{_mecanisme-essuie-glace-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+% une apparence par pièce : 0 et 6 sont coupées (hachures), les autres sont vues de face
+\newcommand\piece[2]{\ifcase#1\relax
+  \hachures{#2}%                                     0 : platine
+  \or \draw[line width=0.6pt, line join=round, fill=white] #2;%   1 : manivelle
+  \or \draw[line width=0.6pt, line join=round, fill=white] #2;%   2 : bielle
+  \or \draw[line width=0.6pt, line join=round, fill=white] #2;%   3 : balancier
+  \or \draw[line width=0.6pt, line join=round, fill=white] #2;%   4 : bras
+  \or \draw[line width=0.6pt, line join=round, fill=white] #2;%   5 : balai
+  \or \hachuresb{#2}%                                6 : carter du motoréducteur
+  \fi}
+\newcommand\eglabels{%
+  \foreach \n/\pt/\lab in {0/{(1.9,-1.55)}/{(1.9,-2.75)}, 6/{(-1.3,-1.0)}/{(-2.3,-1.0)},
+                           1/{(0.4,0.19)}/{(0.15,1.15)}, 2/{(2.4,1.1)}/{(1.55,1.75)},
+                           3/{(4.17,1.3)}/{(5.0,1.0)}, 4/{(4.11,2.6)}/{(5.0,2.35)},
+                           5/{(5.05,3.06)}/{(5.9,3.5)}} {
+    \draw[line width=0.4pt] \pt -- \lab;
+    \node[fill=white, inner sep=1.5pt, font=\small\bfseries] at \lab {\n};
+  }}
+\essuieglace
+\repere{(-2.4,-2.6)}{x}{y}{1}
+\end{tikzpicture}
+\end{document}

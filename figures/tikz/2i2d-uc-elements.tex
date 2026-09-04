@@ -1,0 +1,64 @@
+%% Légende du diagramme des cas d'utilisation (uc) : les cinq éléments de base.
+%% Bandeau de cinq vignettes séparées par des filets gris : acteur humain, « chose »
+%% en interaction, cas d'utilisation, relation «extend», relation «include».
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  leg/.style={font=\scriptsize, align=center, text width=1.75cm, anchor=north, inner sep=1pt,
+              execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+  filet/.style={draw=black!30, line width=0.5pt},
+  trait/.style={line width=1pt, line cap=round, line join=round},
+  pointille/.style={-{Straight Barb[length=4pt,width=6pt]}, line width=0.9pt,
+                    dash pattern=on 3pt off 2pt},
+  ster/.style={font=\scriptsize, inner sep=2pt}]
+
+%% ---- macros de pictogrammes -----------------------------------------
+%% bonhomme filiforme centré en (#1,#2), couleur #3
+\newcommand\acteur[3]{%
+  \begin{scope}[shift={(#1,#2)}, trait, draw=#3]
+    \draw (0,0.42) circle (0.15);
+    \draw (0,0.27) -- (0,-0.12);
+    \draw (-0.28,0.12) -- (0.28,0.12);
+    \draw (-0.22,-0.5) -- (0,-0.12) -- (0.22,-0.5);
+  \end{scope}}
+%% petit cube en perspective cavalière centré en (#1,#2), couleur #3
+\newcommand\cube[3]{%
+  \begin{scope}[shift={(#1,#2)}, trait, draw=#3]
+    \draw[fill=#3!12] (-0.34,-0.4) rectangle (0.24,0.18);
+    \draw (-0.34,0.18) -- (-0.14,0.4) -- (0.44,0.4) -- (0.24,0.18);
+    \draw (0.44,0.4) -- (0.44,-0.18) -- (0.24,-0.4);
+  \end{scope}}
+
+%% ---- vignette 1 : acteur humain -------------------------------------
+\acteur{0}{1.05}{solideB}
+\node[leg] at (0,0.4) {Acteur humain};
+
+%% ---- vignette 2 : « chose » en interaction ---------------------------
+\cube{1.85}{1.05}{solideE}
+\node[leg] at (1.95,0.4) {« Chose » en interaction (bateau, énergie\dots)};
+
+%% ---- vignette 3 : cas d'utilisation ----------------------------------
+\draw[trait, draw=solideD, fill=solideD!12] (3.9,1.05) ellipse (0.95 and 0.42);
+\node[font=\scriptsize, align=center, text width=1.6cm] at (3.9,1.05) {Franchir la Loire};
+\node[leg] at (3.9,0.4) {Cas d'utilisation};
+
+%% ---- vignette 4 : «extend» -------------------------------------------
+\draw[pointille, solideD] (5.85,0.72) -- (5.85,1.42);
+\node[ster, anchor=west] at (5.95,1.07) {«extend»};
+\node[leg] at (6.05,0.4) {Fonction \textbf{non} indispensable};
+
+%% ---- vignette 5 : «include» ------------------------------------------
+\draw[pointille, solideD] (7.9,1.42) -- (7.9,0.72);
+\node[ster, anchor=west] at (8.0,1.07) {«include»};
+\node[leg] at (8.1,0.4) {Fonction \textbf{indispensable}};
+
+%% ---- filets de séparation --------------------------------------------
+\foreach \x in {0.95,2.9,4.95,7.0} { \draw[filet] (\x,-0.55) -- (\x,1.65); }
+
+%% ---- mention finale ---------------------------------------------------
+\draw[filet] (-0.95,-0.7) -- (9.2,-0.7);
+\node[font=\scriptsize, anchor=north west] at (-0.95,-0.8)
+     {acteurs \textbf{principaux} à gauche du système, acteurs \textbf{secondaires} à droite};
+\end{tikzpicture}
+\end{document}

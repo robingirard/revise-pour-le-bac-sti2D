@@ -1,0 +1,61 @@
+%% Extrait du diagramme des exigences (req) du pont transbordeur.
+%% Chaque exigence = une boîte à deux compartiments (stéréotype + nom / Id + Text).
+%% Liens : décomposition (cercle barré d'une croix, côté exigence générale) et «refine».
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cadre/.style={draw=black!70, line width=0.9pt},
+  lien/.style={line width=0.8pt, black!75},
+  raffine/.style={-{Triangle[length=5pt,width=4.5pt]}, line width=0.8pt, black!75,
+                  dash pattern=on 3pt off 2pt},
+  boite/.style={draw=solideB, line width=0.9pt, fill=white, text width=2.4cm, inner sep=3pt,
+                font=\scriptsize,
+                execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+  tete/.style={boite, align=center},
+  corps/.style={boite, align=left}]
+
+%% ---- macro « exigence » : \exig{nom TikZ}{x}{y}{stéréotype}{nom}{Id}{Text} ----
+\newcommand\exig[7]{%
+  \node[tete, anchor=north] (#1h) at (#2,#3) {\textit{#4}\\[1pt] \textbf{#5}};
+  \node[corps, anchor=north] (#1b) at (#1h.south) {Id = "#6"\\ Text = "#7"};}
+%% ---- macro « cercle barré » (décomposition) --------------------------
+\newcommand\decomp[2]{%
+  \draw[lien, fill=white] (#1,#2) circle (0.13);
+  \draw[lien] (#1-0.13,#2) -- (#1+0.13,#2) (#1,#2-0.13) -- (#1,#2+0.13);}
+
+%% ================== cadre à onglet ====================================
+\draw[cadre] (0,-0.35) rectangle (11.7,6.15);
+\draw[cadre] (0,5.7) -- (2.35,5.7) -- (2.6,5.93) -- (2.6,6.15);
+\node[font=\scriptsize, anchor=west, inner sep=3pt] at (0.1,5.92) {\texttt{req} [Paquet] Exigences};
+
+%% ================== les cinq exigences ================================
+\exig{r1}{1.6}{4.2}{«requirement»}{Franchissement de la Loire}{1}{Traverser la Loire à pied ou en busway}
+\exig{r11}{4.5}{5.4}{«requirement»}{Transport de véhicules et piétons}{1.1}{Charge utile de la nacelle : 100 tonnes}
+\exig{r111}{7.4}{5.4}{«functional Requirement»}{Traversée à pied}{1.1.1}{Deux cabines : 270 personnes}
+\exig{r112}{7.4}{2.5}{«functional Requirement»}{Traversée en busway}{1.1.2}{Un busway par traversée}
+\exig{r5}{10.3}{1.6}{«physical Requirement»}{Dimensions d'un busway}{5}{Largeur 2,55 m — hauteur 3,12 m — 150 personnes}
+
+%% ================== liens de décomposition ============================
+%% 1 --> 1.1 (le cercle barré est du côté de l'exigence générale « 1 »)
+\decomp{3.0}{3.5}
+\draw[lien] (3.13,3.5) -- (3.6,3.5) -- (3.6,4.7) -- (r11h.south west);
+%% 1.1 --> 1.1.1
+\decomp{5.9}{4.7}
+\draw[lien] (6.03,4.7) -- (r111h.south west);
+%% 1.1 --> 1.1.2
+\decomp{4.5}{2.35}
+\draw[lien] (4.5,2.48) -- (r11b.south);
+\draw[lien] (4.5,2.22) -- (4.5,1.8) -- (r112h.south west);
+
+%% ================== lien «refine» =====================================
+\draw[raffine] (r5h.north west) -- ++(-0.15,0.15) -- (r112b.south east);
+\node[font=\scriptsize, anchor=west, inner sep=2pt] at (9.2,1.35) {«refine»};
+
+%% ================== légende ===========================================
+\decomp{0.35}{-0.7}
+\node[font=\scriptsize, anchor=west] at (0.55,-0.7)
+     {: l'exigence générale se décompose en exigences plus détaillées —
+      «refine» : précise l'exigence pointée};
+\end{tikzpicture}
+\end{document}

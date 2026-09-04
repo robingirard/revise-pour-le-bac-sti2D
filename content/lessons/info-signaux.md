@@ -36,6 +36,14 @@ Un **convertisseur analogique-numérique** (CAN, en anglais **ADC** pour *Analog
 
 La conversion comporte deux temps : l'**échantillonnage** (prélever la valeur du signal à intervalles réguliers) puis la **quantification** (comparer la valeur prélevée à des paliers).
 
+{{fig:info-echantillonnage}}
+
+L'échantillonnage découpe le **temps** : les prélèvements sont espacés de la période d'échantillonnage $T_e$, et l'on en fait $f_e = 1 \div T_e$ par seconde. Le nombre d'échantillons doit être assez grand pour représenter fidèlement le signal de départ, mais pas trop pour que le fichier reste raisonnable.
+
+$$\text{nombre d'échantillons} = f_e \times \text{durée} \qquad \text{taille du fichier} = \text{nombre d'échantillons} \times n \text{ bits}$$
+
+Exemple : 2 s de signal échantillonné à 8 000 Hz donnent 16 000 échantillons ; codés sur 8 bits, ils occupent 16 000 octets, soit 16 ko.
+
 {{fig:info-can-quantum}}
 
 Le **quantum** $q$ est la variation minimale du signal d'entrée qui fait varier d'une unité la sortie numérique ; il s'exprime dans l'unité de la grandeur d'entrée, et $n$ est le nombre de bits du convertisseur.

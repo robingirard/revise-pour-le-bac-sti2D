@@ -1,0 +1,18 @@
+%% Benne basculante à vérin — graphe des liaisons (chaîne fermée à 4 classes).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  classe/.style={circle, minimum size=9mm, text=white, font=\small\bfseries, inner sep=0pt},
+  lien/.style={line width=0.8pt}, etiquette/.style={font=\small, fill=white, inner sep=1.5pt}]
+\node[classe, fill=black]   (E0) at (0,0)     {E0};
+\node[classe, fill=solideB] (E1) at (0,2.6)   {E1};
+\node[classe, fill=solideA] (E3) at (4.4,2.6) {E3};
+\node[classe, fill=solideE] (E2) at (4.4,0)   {E2};
+\draw[lien] (E0) -- node[etiquette, left]  {Pivot (C, $\vec{z}$)} (E1);
+\draw[lien] (E1) -- node[etiquette, above] {Pivot (P, $\vec{z}$)} (E3);
+\draw[lien] (E3) -- node[etiquette, right] {Pivot glissant (Q, $\vec{u}$)} (E2);
+\draw[lien] (E2) -- node[etiquette, below] {Pivot (O, $\vec{z}$)} (E0);
+\node[font=\small, black!70] at (2.2,1.3) {boucle fermée};
+\end{tikzpicture}
+\end{document}

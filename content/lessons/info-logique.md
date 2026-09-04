@@ -52,3 +52,21 @@ La sortie du **ET** n'est haute que sur les intervalles où les deux entrées so
 - En déduire l'équation logique.
 
 Exemple : un convecteur chauffe ($S = 1$) **uniquement** si le local est occupé ($a = 1$) et si la température de consigne n'est pas atteinte ($b = 0$). L'équation est $S = a \cdot \overline{b}$, soit, en langage C, S = a && !b.
+
+## D'un algorigramme aux équations logiques
+
+{{fig:info-algorigramme-mini-voiture}}
+
+Une mini-voiture pour enfants n'avance que sur une bande peinte au sol, repérée par deux capteurs infrarouges $g$ et $d$ (1 = bande vue). Elle s'arrête si elle sort **totalement** de la route et déclenche une alarme dès qu'elle en sort, même partiellement.
+
+| $g$ | $d$ | Arrêt | Alarme |
+|---|---|---|---|
+| 1 | 1 | 0 | 0 |
+| 1 | 0 | 0 | 1 |
+| 0 | 1 | 0 | 1 |
+| 0 | 0 | 1 | 1 |
+
+- Une seule ligne donne Arrêt = 1, celle où les deux capteurs valent 0 : $\text{Arrêt} = \overline{g} \cdot \overline{d}$.
+- Une seule ligne donne Alarme = 0, celle où les deux capteurs valent 1 : $\text{Alarme} = \overline{g} + \overline{d}$.
+
+Méthode générale : repérer la ligne (ou les lignes) qui donnent le résultat le plus rare, puis écrire l'équation à partir de celles-ci. Une sortie vraie sur **une seule** ligne s'écrit avec un ET ; une sortie fausse sur **une seule** ligne s'écrit avec un OU.

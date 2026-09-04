@@ -1,0 +1,29 @@
+%% Pompe à main : mêmes formes que le dessin d'ensemble, colorées par classe d'équivalence
+%% (E0 corps + axe, E1 levier, E2 bielle, E3 piston + joint).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\input{_mecanisme-pompe-a-main-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\newcommand\piece[2]{\ifcase#1\relax
+  \draw[line width=0.6pt, line join=round, fill=black!12, draw=black] #2;          % 0 → E0
+  \or \draw[line width=0.6pt, line join=round, fill=solideE!45, draw=solideE] #2;  % 1 → E1
+  \or \draw[line width=0.6pt, line join=round, fill=solideA!40, draw=solideA] #2;  % 2 → E2
+  \or \draw[line width=0.6pt, line join=round, fill=solideB!40, draw=solideB] #2;  % 3 → E3
+  \or \draw[line width=0.6pt, line join=round, fill=black!30, draw=black] #2;      % 4 → E0
+  \or \draw[line width=0.6pt, line join=round, fill=solideB!70, draw=solideB] #2;  % 5 → E3
+  \fi}
+\newcommand\pplabels{%
+  \node[fill=black!70, text=white, font=\small\bfseries, inner sep=2pt, rounded corners=1pt] at (5.5,3.6) {E0 = \{0, 4\}};
+  \draw[black!70, line width=0.5pt] (4.6,3.6) -- (3.25,3.6);
+  \node[fill=solideE, text=white, font=\small\bfseries, inner sep=2pt, rounded corners=1pt] at (5.7,8.3) {E1 = \{1\}};
+  \draw[solideE, line width=0.5pt] (5.7,8.05) -- (5.7,7.48);
+  \node[fill=solideA, text=white, font=\small\bfseries, inner sep=2pt, rounded corners=1pt] at (0.95,6.3) {E2 = \{2\}};
+  \draw[solideA, line width=0.5pt] (1.55,6.3) -- (2.16,6.3);
+  \node[fill=solideB, text=white, font=\small\bfseries, inner sep=2pt, rounded corners=1pt] at (0.45,1.4) {E3 = \{3, 5\}};
+  \draw[solideB, line width=0.5pt] (1.3,1.4) -- (1.8,1.4);
+}
+\pompeamain
+\repere{(5.4,0.9)}{x}{y}{1}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,25 @@
+%% Pompe à main : dessin d'ensemble en coupe, pièces numérotées (0 corps, 1 levier, 2 bielle,
+%% 3 piston, 4 axe du levier, 5 joint du piston).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\input{_mecanisme-pompe-a-main-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\newcommand\piece[2]{\ifcase#1\relax
+  \hachures{#2}                                                        % 0 corps (coupé)
+  \or \draw[line width=0.6pt, line join=round, fill=white] #2;         % 1 levier
+  \or \draw[line width=0.6pt, line join=round, fill=white] #2;         % 2 bielle
+  \or \hachuresb{#2}                                                   % 3 piston (coupé)
+  \or \draw[line width=0.6pt, line join=round, fill=black!20] #2;      % 4 axe
+  \or \draw[line width=0.6pt, line join=round, fill=black!45] #2;      % 5 joint
+  \fi}
+\newcommand\pplabels{%
+  \foreach \n/\pt/\lab in {0/{(3.25,3.6)}/{(4.3,3.6)}, 1/{(5.6,7.48)}/{(5.6,8.3)}, 2/{(2.44,6.3)}/{(3.3,6.3)},
+                           3/{(1.8,1.4)}/{(0.85,1.4)}, 4/{(4.3,7.4)}/{(4.55,8.3)}, 5/{(2.8,2.0)}/{(3.75,2.0)}} {
+    \draw[line width=0.4pt] \pt -- \lab;
+    \node[fill=white, inner sep=1.5pt, font=\small\bfseries] at \lab {\n};
+  }}
+\pompeamain
+\repere{(5.4,0.9)}{x}{y}{1}
+\end{tikzpicture}
+\end{document}

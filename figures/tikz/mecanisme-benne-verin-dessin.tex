@@ -1,0 +1,27 @@
+%% Benne basculante à vérin — dessin d'ensemble (coupe), pièces numérotées en noir.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\input{_mecanisme-benne-verin-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+% pièces coupées : hachures (sens alterné d'une pièce voisine à l'autre)
+\newcommand\piece[2]{\ifcase#1\relax
+  \hachures{#2}%        0 châssis
+  \or \hachuresb{#2}%   1 benne
+  \or \hachures{#2}%    2 corps de vérin
+  \else \hachures{#2}%  autres
+  \fi}
+% pièces non coupées (tige, axes, roues) : contour et fond blanc
+\newcommand\piecevue[2]{\draw[line width=0.6pt, line join=round, fill=white] #2;}
+\newcommand\bnlabels{%
+  \foreach \n/\pt/\lab in {0/{(0.75,2.15)}/{(0.75,2.85)}, 1/{(3.60,1.70)}/{(3.60,2.85)},
+                           2/{(3.19,0.84)}/{(1.75,0.68)}, 3/{(2.87,1.24)}/{(1.75,1.12)},
+                           4/{(5.66,1.16)}/{(6.35,0.95)}, 5/{(4.28,0.58)}/{(4.95,1.22)},
+                           6/{(2.40,1.53)}/{(2.40,2.05)}} {
+    \draw[line width=0.4pt] \lab -- \pt;
+    \node[fill=white, inner sep=1.5pt, font=\small\bfseries] at \lab {\n};
+  }}
+\benne
+\repere{(0.15,-1.25)}{x}{y}{1}
+\end{tikzpicture}
+\end{document}

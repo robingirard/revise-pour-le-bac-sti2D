@@ -1,0 +1,43 @@
+%% Schéma cinématique de la pompe à main (levier). Repère : x horizontal, y vertical (axe du cylindre),
+%% z vers l'observateur. Coordonnées en cm ; la boîte fixe ci-dessous sert à l'animation (bloc
+%% « animation: bbox » de content/mecanismes/pompe-a-main.yaml : mêmes valeurs).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{backgrounds}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm, solide/.style={line width=1.4pt, line cap=round, line join=round}]
+\useasboundingbox (1.0,0.3) rectangle (7.75,7.6);   % boîte fixe : sert à l'animation (cm → SVG)
+\colorlet{E0}{black}\colorlet{E1}{solideE}\colorlet{E2}{solideA}\colorlet{E3}{solideB}
+\coordinate (O) at (4.4,6.4);    % pivot levier / corps
+\coordinate (A) at (2.6,6.4);    % pivot levier / bielle
+\coordinate (B) at (2.6,3.8);    % pivot bielle / piston
+% Symboles normalisés (posés d'abord : les traits des classes passent en arrière-plan)
+\pic[s1=E1, s2=E0, liens=false, name=pO] at (O) {pivot bout};
+\pic[s1=E2, s2=E1, liens=false, name=pA] at (A) {pivot bout};
+\pic[s1=E2, s2=E3, liens=false, name=pB] at (B) {pivot bout};
+\pic[s1=E3, s2=E0, liens=false, rotate=90, name=gC] at (2.6,2.1) {glissiere face};  % cylindre, axe (B, y)
+\pic at (4.4,0.9) {bati};
+\begin{scope}[on background layer]
+  \draw[solide, E0] (O) -- (4.4,0.9) (4.4,2.6) -- (2.85,2.6);   % corps de pompe (bâti)
+  \draw[solide, E1] (1.9,6.4) -- (7.2,6.4) (7.2,6.05) -- (7.2,6.75);   % levier + poignée
+  \draw[solide, E2] (A) -- (B);                                  % bielle
+  \draw[solide, E3] (B) -- (2.6,2.6);                            % piston
+\end{scope}
+% Hachures du bâti le long des parois du cylindre
+\foreach \y in {1.7,1.9,2.1,2.3} { \draw[line width=0.5pt] (2.35,\y) -- (2.20,\y-0.15) (2.85,\y) -- (3.00,\y+0.15); }
+% Mouvements (teintes claires : jamais regroupées avec une classe)
+\draw[{Stealth[length=5pt]}-{Stealth[length=5pt]}, line width=0.7pt, solideE!60] ([shift=(-14:3.2)]O) arc (-14:14:3.2);
+\node[font=\small] at (6.5,7.35) {$\pm 25^\circ$};
+\draw[{Stealth[length=5pt]}-{Stealth[length=5pt]}, line width=0.7pt, solideB!60] (1.9,1.7) -- (1.9,2.8);
+\node[font=\small, left, inner sep=2pt] at (1.9,2.25) {$\vec{v}_{3/0}$};
+% Étiquettes (glyphes : jamais animées)
+\node[E0, font=\small\bfseries] at (4.78,4.4) {E0};
+\node[E1, font=\small\bfseries] at (3.5,6.78) {E1};
+\node[E2, font=\small\bfseries] at (3.0,5.2) {E2};
+\node[E3, font=\small\bfseries] at (2.1,3.15) {E3};
+\node[font=\small, below right=1pt] at (O) {O};
+\node[font=\small, above left=1pt] at (A) {A};
+\node[font=\small, above left=1pt] at (B) {B};
+\repere{(5.4,1.2)}{x}{y}{1}
+\end{tikzpicture}
+\end{document}

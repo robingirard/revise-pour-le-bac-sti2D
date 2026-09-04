@@ -235,6 +235,179 @@ units:
       - Écrire $F$ en remplaçant $k$ par la valeur trouvée
       - 'Vérifier en dérivant : on doit retrouver $f$'
       explanation: 'La condition initiale fixe la constante $k$ : parmi l''infinité de primitives (qui diffèrent d''une constante, p. 95), une seule passe par le point $(x_0\,;y_0)$.'
+    - type: guided
+      level: 3
+      title: 'Le remplissage d''un réservoir : du débit au volume'
+      prompt: 'Exercice complet : débit d''une pompe, primitive, volume écoulé et débit moyen.'
+      intro: 'Une pompe alimente un réservoir. Son débit, en litres par seconde, est modélisé pour $t\in[0\,;6]$ ($t$ en secondes) par
+
+
+        $$q(t)=0{,}5\,t^{2}-4t+10\qquad(q\text{ en }\mathrm{L}\cdot\mathrm{s}^{-1}).$$
+
+
+        On cherche le volume d''eau entré pendant ces $6$ secondes, puis le débit moyen de la pompe.
+
+
+        {{fig:guide-maths-aire-debit}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Le débit $q$ est positif sur $[0\,;6]$. Que représente l''aire du domaine compris entre la courbe de $q$, l''axe des abscisses et les droites d''équations $t=0$ et $t=6$ ?'
+        choices:
+        - Le volume d'eau, en litres, entré dans le réservoir entre $t=0$ et $t=6$ s
+        - Le débit moyen, en litres par seconde, sur $[0\,;6]$
+        - Le débit maximal atteint sur $[0\,;6]$
+        - La variation du débit entre $t=0$ et $t=6$ s
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Le débit moyen s''obtient en **divisant** cette aire par la durée $6$ s.'
+        - Le débit maximal se lit sur l'axe des ordonnées ; ce n'est pas une aire.
+        - 'La variation du débit est la différence $q(6)-q(0)$, pas une aire.'
+        explanation: 'Le débit est la vitesse de remplissage : le volume est la grandeur dont $q$ est la dérivée. L''aire cherchée vaut donc $Q(6)-Q(0)$, où $Q$ est une primitive de $q$ ; elle s''exprime en $\mathrm{L}\cdot\mathrm{s}^{-1}\times\mathrm{s}=\mathrm{L}$.'
+      - kind: mcq
+        prompt: '**Étape 2.** Quelles sont les primitives $Q$ de $q$ sur $[0\,;6]$ ?'
+        choices:
+        - $Q(t)=\dfrac{t^{3}}{6}-2t^{2}+10t+k,\ k\in\mathbb{R}$
+        - $Q(t)=\dfrac{t^{3}}{6}-4t^{2}+10t+k,\ k\in\mathbb{R}$
+        - $Q(t)=\dfrac{t^{3}}{6}-2t^{2}+10+k,\ k\in\mathbb{R}$
+        - $Q(t)=t-4+k,\ k\in\mathbb{R}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'La primitive de $-4t$ est $-4\times\dfrac{t^{2}}{2}=-2t^{2}$, et non $-4t^{2}$.'
+        - 'Le terme constant $10$ a pour primitive $10t$ : on ne le recopie pas tel quel.'
+        - C'est la dérivée $q'(t)=t-4$, pas une primitive.
+        explanation: 'Terme à terme : $0{,}5\times\dfrac{t^{3}}{3}=\dfrac{t^{3}}{6}$, $-4\times\dfrac{t^{2}}{2}=-2t^{2}$ et $10\mapsto10t$. Vérification en dérivant : $Q''(t)=\dfrac{3t^{2}}{6}-4t+10=0{,}5t^{2}-4t+10=q(t)$.'
+      - kind: input
+        prompt: '**Étape 3.** En prenant la primitive $Q$ telle que $Q(0)=0$, calculer le volume $V=Q(6)-Q(0)$ entré dans le réservoir.'
+        answer: '24'
+        numeric: true
+        tolerance: 0.5
+        unit: L
+        explanation: 'Avec $k=0$ : $Q(6)=\dfrac{216}{6}-2\times36+10\times6=36-72+60=24$ et $Q(0)=0$, donc $V=24$ L.'
+      - kind: input
+        prompt: '**Étape 4.** En déduire le débit moyen de la pompe sur les $6$ secondes.'
+        answer: '4'
+        numeric: true
+        tolerance: 0.05
+        unit: L/s
+        explanation: 'Le débit moyen est $\dfrac{V}{6}=\dfrac{24}{6}=4$ $\mathrm{L}\cdot\mathrm{s}^{-1}$ : c''est le débit constant qui délivrerait le même volume en $6$ s.'
+      - kind: input
+        prompt: '**Étape 5.** À quel instant $t$ le débit est-il minimal ?'
+        answer: '4'
+        numeric: true
+        tolerance: 0.05
+        unit: s
+        explanation: '$q''(t)=t-4$ est négative avant $t=4$ et positive après : $q$ décroît puis croît, le minimum est atteint en $t=4$ s.'
+      - kind: input
+        prompt: '**Étape 6.** Quelle est la valeur de ce débit minimal ?'
+        answer: '2'
+        numeric: true
+        tolerance: 0.05
+        unit: L/s
+        explanation: '$q(4)=0{,}5\times16-4\times4+10=8-16+10=2$ $\mathrm{L}\cdot\mathrm{s}^{-1}$. La pompe ne s''arrête donc jamais sur $[0\,;6]$, ce qui justifie que le débit reste positif.'
+      - kind: mcq
+        prompt: '**Étape 7.** Si la pompe avait conservé son débit initial $q(0)=10$ $\mathrm{L}\cdot\mathrm{s}^{-1}$ pendant les $6$ secondes, quel volume aurait-elle délivré ?'
+        choices:
+        - $60$ L, soit $2{,}5$ fois le volume réellement écoulé
+        - $60$ L, soit exactement le volume réellement écoulé
+        - $24$ L, le même volume
+        - $10$ L, puisque le débit vaut $10$ $\mathrm{L}\cdot\mathrm{s}^{-1}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Le volume réel n''est que de $24$ L : le débit diminue jusqu''à $2$ $\mathrm{L}\cdot\mathrm{s}^{-1}$ avant de remonter.'
+        - 'À débit constant, l''aire est celle d''un rectangle : $10\times6=60$ L.'
+        - 'Un débit est un volume **par seconde** : il faut le multiplier par la durée.'
+        explanation: 'À débit constant, le volume est l''aire du rectangle de hauteur $10$ et de largeur $6$, soit $60$ L. Le rapport $\dfrac{60}{24}=2{,}5$ mesure la perte due à la chute du débit.'
+    - type: guided
+      level: 3
+      title: Le freinage d'un chariot automatisé
+      prompt: 'Exercice complet : vitesse exponentielle, primitive avec condition initiale, distance et vitesse moyenne.'
+      intro: 'Un chariot automatisé freine à partir de l''instant $t=0$. Sa vitesse, en mètres par seconde, est modélisée pour $t\geqslant0$ ($t$ en secondes) par
+
+
+        $$v(t)=10\,\mathrm{e}^{-0{,}5t}\qquad(v\text{ en }\mathrm{m}\cdot\mathrm{s}^{-1}).$$
+
+
+        On note $d$ la distance parcourue depuis le début du freinage, en mètres ; $d$ est la primitive de $v$ qui vérifie $d(0)=0$.'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Quelle est la vitesse du chariot au début du freinage ?'
+        answer: '10'
+        numeric: true
+        tolerance: 0.05
+        unit: m/s
+        explanation: '$v(0)=10\,\mathrm{e}^{0}=10$ $\mathrm{m}\cdot\mathrm{s}^{-1}$, car $\mathrm{e}^{0}=1$.'
+      - kind: mcq
+        prompt: '**Étape 2.** Quelles sont les primitives de la fonction $t\mapsto\mathrm{e}^{-0{,}5t}$ sur $\mathbb{R}$ ?'
+        choices:
+        - $t\mapsto-2\,\mathrm{e}^{-0{,}5t}+k,\ k\in\mathbb{R}$
+        - $t\mapsto-0{,}5\,\mathrm{e}^{-0{,}5t}+k,\ k\in\mathbb{R}$
+        - $t\mapsto2\,\mathrm{e}^{-0{,}5t}+k,\ k\in\mathbb{R}$
+        - $t\mapsto\mathrm{e}^{-0{,}5t}+k,\ k\in\mathbb{R}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'On a multiplié par $a=-0{,}5$ au lieu de diviser : primitiver $\mathrm{e}^{at}$ donne $\dfrac{1}{a}\mathrm{e}^{at}$.'
+        - 'Erreur de signe : $\dfrac{1}{-0{,}5}=-2$, pas $+2$.'
+        - 'Seule $\mathrm{e}^{t}$ est sa propre primitive ; ici la dérivée de $\mathrm{e}^{-0{,}5t}$ vaut $-0{,}5\,\mathrm{e}^{-0{,}5t}$.'
+        explanation: 'Une primitive de $t\mapsto\mathrm{e}^{at}$ (avec $a\neq0$) est $t\mapsto\dfrac{1}{a}\mathrm{e}^{at}$, ici $\dfrac{1}{-0{,}5}=-2$. Vérification : $\left(-2\,\mathrm{e}^{-0{,}5t}\right)''=-2\times(-0{,}5)\,\mathrm{e}^{-0{,}5t}=\mathrm{e}^{-0{,}5t}$.'
+      - kind: mcq
+        prompt: '**Étape 3.** Quelle est l''expression de la distance $d$ parcourue depuis le début du freinage ?'
+        choices:
+        - $d(t)=20-20\,\mathrm{e}^{-0{,}5t}$
+        - $d(t)=-20\,\mathrm{e}^{-0{,}5t}$
+        - $d(t)=20\,\mathrm{e}^{-0{,}5t}-20$
+        - $d(t)=-5\,\mathrm{e}^{-0{,}5t}+5$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Il manque la constante : cette fonction vérifie $d(0)=-20\neq0$.'
+        - 'Signes inversés : cette fonction est négative, alors qu''une distance parcourue est positive et croissante.'
+        - 'On a divisé par $-2$ au lieu de multiplier : $10\times(-2)=-20$.'
+        explanation: 'Les primitives de $v$ sont $t\mapsto10\times(-2)\,\mathrm{e}^{-0{,}5t}+k=-20\,\mathrm{e}^{-0{,}5t}+k$. La condition $d(0)=-20+k=0$ donne $k=20$, d''où $d(t)=20-20\,\mathrm{e}^{-0{,}5t}$.'
+      - kind: input
+        prompt: '**Étape 4.** Quelle distance le chariot a-t-il parcourue au bout de $4$ secondes ? (arrondir à $0{,}01$)'
+        answer: '17.29'
+        numeric: true
+        tolerance: 0.05
+        unit: m
+        explanation: '$d(4)=20-20\,\mathrm{e}^{-2}\approx20-20\times0{,}1353\approx20-2{,}71\approx17{,}29$ m.'
+      - kind: input
+        prompt: '**Étape 5.** En déduire la vitesse moyenne du chariot sur $[0\,;4]$. (arrondir à $0{,}01$)'
+        answer: '4.32'
+        numeric: true
+        tolerance: 0.05
+        unit: m/s
+        explanation: 'La vitesse moyenne est $\dfrac{d(4)-d(0)}{4}=\dfrac{17{,}29}{4}\approx4{,}32$ $\mathrm{m}\cdot\mathrm{s}^{-1}$, bien inférieure à la vitesse initiale de $10$ $\mathrm{m}\cdot\mathrm{s}^{-1}$.'
+      - kind: input
+        prompt: '**Étape 6.** Quelle distance le chariot a-t-il parcourue au bout de $8$ secondes ? (arrondir à $0{,}01$)'
+        answer: '19.63'
+        numeric: true
+        tolerance: 0.05
+        unit: m
+        explanation: '$d(8)=20-20\,\mathrm{e}^{-4}\approx20-20\times0{,}0183\approx20-0{,}37\approx19{,}63$ m : en doublant la durée, on n''a gagné que $2{,}34$ m.'
+      - kind: mcq
+        prompt: '**Étape 7.** La distance parcourue peut-elle dépasser $20$ m ?'
+        choices:
+        - 'Non : $\mathrm{e}^{-0{,}5t}>0$, donc $d(t)<20$ pour tout $t\geqslant0$'
+        - 'Oui, dès que $t$ dépasse $10$ s'
+        - 'Oui, car $d$ est croissante et non bornée'
+        - 'Non, car $d$ finit par décroître'
+        answer:
+        - 0
+        feedback:
+        - null
+        - '$d(10)=20-20\,\mathrm{e}^{-5}\approx19{,}87$ m : toujours en dessous de $20$ m.'
+        - '$d$ est bien croissante, mais elle est majorée par $20$.'
+        - '$d''(t)=v(t)>0$ : la distance parcourue ne décroît jamais.'
+        explanation: 'Pour tout $t\geqslant0$, $\mathrm{e}^{-0{,}5t}>0$ donc $20\,\mathrm{e}^{-0{,}5t}>0$ et $d(t)=20-20\,\mathrm{e}^{-0{,}5t}<20$. La distance croît vers $20$ m sans jamais l''atteindre : c''est la distance d''arrêt théorique du chariot.'
   - id: maths-cercle-trigo
     title: Le cercle trigonométrique
     icon: ⭕
@@ -484,6 +657,115 @@ units:
         right: $\dfrac{\sqrt{3}}{2}$
       - left: $\sin\left(\dfrac{\pi}{2}\right)$
         right: $1$
+    - type: guided
+      level: 3
+      title: La came circulaire et la position du galet
+      prompt: 'Exercice complet : conversion, mesure principale et équations trigonométriques sur une came.'
+      intro: 'Le galet d''un mécanisme est entraîné par une came circulaire de centre $O$ et de rayon $R=4$ cm. Le point de contact $M$ est repéré par l''angle orienté $\theta=\left(\overrightarrow{OI},\overrightarrow{OM}\right)$, en radians ; ses coordonnées, en centimètres, sont
+
+
+        $$x(\theta)=4\cos(\theta)\qquad\text{et}\qquad y(\theta)=4\sin(\theta).$$
+
+
+        {{fig:guide-maths-came-cercle}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Le constructeur indique une position de réglage à $210^{\circ}$. Quelle est sa mesure en radians ?'
+        choices:
+        - $\dfrac{7\pi}{6}$ rad
+        - $\dfrac{5\pi}{6}$ rad
+        - $\dfrac{7\pi}{4}$ rad
+        - $\dfrac{210\pi}{180}$ rad
+        answer:
+        - 0
+        feedback:
+        - null
+        - '$\dfrac{5\pi}{6}$ rad correspond à $150^{\circ}$ ; ici $\dfrac{210}{180}=\dfrac{7}{6}$.'
+        - '$\dfrac{7\pi}{4}$ rad correspond à $315^{\circ}$.'
+        - 'Le calcul est juste, mais la fraction doit être simplifiée : $\dfrac{210}{180}=\dfrac{7}{6}$.'
+        explanation: 'On multiplie la mesure en degrés par $\dfrac{\pi}{180}$ : $210\times\dfrac{\pi}{180}=\dfrac{210\pi}{180}=\dfrac{7\pi}{6}$ rad.'
+      - kind: mcq
+        prompt: '**Étape 2.** Après plusieurs tours, le compteur d''angle affiche $\theta=\dfrac{25\pi}{6}$ rad. Quelle est la mesure principale de cet angle ?'
+        choices:
+        - $\dfrac{\pi}{6}$ rad
+        - $\dfrac{13\pi}{6}$ rad
+        - $-\dfrac{\pi}{6}$ rad
+        - $\dfrac{\pi}{3}$ rad
+        answer:
+        - 0
+        feedback:
+        - null
+        - '$\dfrac{13\pi}{6}$ est bien congru à $\dfrac{25\pi}{6}$, mais dépasse $\pi$ : il faut retirer encore $2\pi$.'
+        - 'Erreur de signe : $\dfrac{25\pi}{6}-4\pi=\dfrac{25\pi-24\pi}{6}=+\dfrac{\pi}{6}$.'
+        - '$\dfrac{\pi}{3}=\dfrac{2\pi}{6}$ n''est pas congru à $\dfrac{25\pi}{6}$ modulo $2\pi$.'
+        explanation: 'La mesure principale appartient à $\left]-\pi\,;\pi\right]$. On retire deux tours, soit $4\pi=\dfrac{24\pi}{6}$ : $\dfrac{25\pi}{6}-\dfrac{24\pi}{6}=\dfrac{\pi}{6}$ rad, c''est-à-dire $30^{\circ}$. Le galet a donc fait deux tours complets plus $30^{\circ}$.'
+      - kind: mcq
+        prompt: '**Étape 3.** Pour quelles valeurs de $\theta$ l''abscisse du point de contact vaut-elle $-2$ cm, c''est-à-dire $4\cos(\theta)=-2$ ?'
+        choices:
+        - $\theta=\dfrac{2\pi}{3}\ [2\pi]$ ou $\theta=-\dfrac{2\pi}{3}\ [2\pi]$
+        - $\theta=\dfrac{\pi}{3}\ [2\pi]$ ou $\theta=-\dfrac{\pi}{3}\ [2\pi]$
+        - $\theta=\dfrac{2\pi}{3}\ [2\pi]$ ou $\theta=\dfrac{\pi}{3}\ [2\pi]$
+        - $\theta=\dfrac{5\pi}{6}\ [2\pi]$ ou $\theta=-\dfrac{5\pi}{6}\ [2\pi]$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Ce sont les solutions de $\cos(\theta)=+\dfrac{1}{2}$ ; ici le cosinus est négatif.'
+        - 'Les deux solutions d''une équation en cosinus sont **opposées** : $\theta_0$ et $-\theta_0$.'
+        - '$\cos\left(\dfrac{5\pi}{6}\right)=-\dfrac{\sqrt{3}}{2}$, et non $-\dfrac{1}{2}$.'
+        explanation: '$4\cos(\theta)=-2$ équivaut à $\cos(\theta)=-\dfrac{1}{2}$. Sur le cercle, la droite d''équation $x=-\dfrac{1}{2}$ (en unités du cercle trigonométrique) le coupe en deux points symétriques par rapport à l''axe des abscisses, d''angles $\dfrac{2\pi}{3}$ et $-\dfrac{2\pi}{3}$ modulo $2\pi$.'
+      - kind: mcq
+        prompt: '**Étape 4.** Sur un tour complet, c''est-à-dire pour $\theta\in[0\,;2\pi[$, quelles sont les deux positions solutions ?'
+        choices:
+        - $\dfrac{2\pi}{3}$ et $\dfrac{4\pi}{3}$
+        - $\dfrac{2\pi}{3}$ et $-\dfrac{2\pi}{3}$
+        - $\dfrac{2\pi}{3}$ seulement
+        - $\dfrac{\pi}{3}$ et $\dfrac{5\pi}{3}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - '$-\dfrac{2\pi}{3}$ n''appartient pas à $[0\,;2\pi[$ : on lui ajoute un tour.'
+        - 'La droite $x=-\dfrac{1}{2}$ coupe le cercle en **deux** points : il y a deux positions par tour.'
+        - 'Ce sont les angles dont le cosinus vaut $+\dfrac{1}{2}$.'
+        explanation: '$-\dfrac{2\pi}{3}+2\pi=\dfrac{4\pi}{3}$. Sur un tour, le galet passe donc deux fois à l''abscisse $-2$ cm : en $\dfrac{2\pi}{3}$ ($120^{\circ}$) et en $\dfrac{4\pi}{3}$ ($240^{\circ}$).'
+      - kind: mcq
+        prompt: '**Étape 5.** Résoudre de même $4\sin(\theta)=2\sqrt{2}$, qui donne l''ordonnée $2\sqrt{2}$ cm.'
+        choices:
+        - $\theta=\dfrac{\pi}{4}\ [2\pi]$ ou $\theta=\dfrac{3\pi}{4}\ [2\pi]$
+        - $\theta=\dfrac{\pi}{4}\ [2\pi]$ ou $\theta=-\dfrac{\pi}{4}\ [2\pi]$
+        - $\theta=\dfrac{\pi}{4}\ [2\pi]$ ou $\theta=\dfrac{5\pi}{4}\ [2\pi]$
+        - $\theta=\dfrac{\pi}{3}\ [2\pi]$ ou $\theta=\dfrac{2\pi}{3}\ [2\pi]$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'C''est le schéma des équations en **cosinus** (solutions opposées) ; pour le sinus, les solutions sont $\theta_0$ et $\pi-\theta_0$.'
+        - '$\sin\left(\dfrac{5\pi}{4}\right)=-\dfrac{\sqrt{2}}{2}$ : ce point est sous l''axe des abscisses.'
+        - 'Ce sont les solutions de $\sin(\theta)=\dfrac{\sqrt{3}}{2}$.'
+        explanation: '$4\sin(\theta)=2\sqrt{2}$ équivaut à $\sin(\theta)=\dfrac{\sqrt{2}}{2}$. La droite d''équation $y=\dfrac{\sqrt{2}}{2}$ coupe le cercle en deux points symétriques par rapport à l''axe des ordonnées : $\dfrac{\pi}{4}$ et $\pi-\dfrac{\pi}{4}=\dfrac{3\pi}{4}$.'
+      - kind: input
+        prompt: '**Étape 6.** Quelle est l''ordonnée $y$ du point de contact pour $\theta=\dfrac{2\pi}{3}$ ? (arrondir à $0{,}01$)'
+        answer: '3.46'
+        numeric: true
+        tolerance: 0.05
+        unit: cm
+        explanation: 'Angles associés : $\sin\left(\dfrac{2\pi}{3}\right)=\sin\left(\pi-\dfrac{\pi}{3}\right)=\sin\left(\dfrac{\pi}{3}\right)=\dfrac{\sqrt{3}}{2}$. Donc $y=4\times\dfrac{\sqrt{3}}{2}=2\sqrt{3}\approx3{,}46$ cm.'
+      - kind: mcq
+        prompt: '**Étape 7.** Le galet est maintenant en $\theta=\dfrac{11\pi}{6}$. Quelle est son abscisse $x(\theta)$ ?'
+        choices:
+        - $x=2\sqrt{3}\approx3{,}46$ cm
+        - $x=-2\sqrt{3}\approx-3{,}46$ cm
+        - $x=2$ cm
+        - $x=2\sqrt{2}\approx2{,}83$ cm
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Signe : $\dfrac{11\pi}{6}$ est dans le quatrième quadrant (en bas à droite), où le cosinus est **positif**.'
+        - '$x=2$ cm correspondrait à $\cos(\theta)=\dfrac{1}{2}$, soit $\theta=\pm\dfrac{\pi}{3}$.'
+        - '$x=2\sqrt{2}$ cm correspondrait à $\cos(\theta)=\dfrac{\sqrt{2}}{2}$, soit $\theta=\pm\dfrac{\pi}{4}$.'
+        explanation: '$\dfrac{11\pi}{6}=-\dfrac{\pi}{6}\ [2\pi]$ et $\cos(-x)=\cos(x)$, donc $\cos\left(\dfrac{11\pi}{6}\right)=\cos\left(\dfrac{\pi}{6}\right)=\dfrac{\sqrt{3}}{2}$ et $x=4\times\dfrac{\sqrt{3}}{2}=2\sqrt{3}\approx3{,}46$ cm.'
   - id: maths-fonctions-trigo
     title: Fonctions trigonométriques
     icon: 〰️
@@ -829,6 +1111,108 @@ units:
         - L'amplitude est le maximum atteint, pas la moyenne.
         - 'Le signal est symétrique : il passe autant de temps au-dessus qu''en dessous de $0$.'
         explanation: '$100\pi T+\dfrac{\pi}{3}=2\pi+\dfrac{\pi}{3}$ et, d''après les angles associés (p. 99), $\sin\left(2\pi+\dfrac{\pi}{3}\right)=\sin\left(\dfrac{\pi}{3}\right)$ : donc $U(T)=U(0)$ et la valeur moyenne est nulle. C''est le cas de toute tension sinusoïdale sans composante continue.'
+    - type: guided
+      level: 3
+      title: Le signal d'un capteur de vibration
+      prompt: 'Exercice complet : amplitude, période, fréquence, variations et primitives d''un signal en sinus.'
+      intro: 'La tension délivrée par un capteur de vibration est modélisée, pour $t\geqslant0$ ($t$ en secondes), par
+
+
+        $$s(t)=2\sin\left(3t+\frac{5\pi}{6}\right)\qquad(s\text{ en volts}).$$
+
+
+        La figure ci-dessous rappelle le vocabulaire d''un signal sinusoïdal (amplitude, période, valeur à l''origine).
+
+
+        {{fig:maths-sinusoide}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Identifier l''amplitude $A$, la pulsation $\omega$ et la phase à l''origine $\varphi$.'
+        choices:
+        - $A=2$ V, $\omega=3$ rad$\cdot$s$^{-1}$, $\varphi=\dfrac{5\pi}{6}$ rad
+        - $A=3$ V, $\omega=2$ rad$\cdot$s$^{-1}$, $\varphi=\dfrac{5\pi}{6}$ rad
+        - $A=2$ V, $\omega=\dfrac{5\pi}{6}$ rad$\cdot$s$^{-1}$, $\varphi=3$ rad
+        - $A=2$ V, $\omega=\dfrac{2\pi}{3}$ rad$\cdot$s$^{-1}$, $\varphi=\dfrac{5\pi}{6}$ rad
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Inversion : dans $A\sin(\omega t+\varphi)$, l''amplitude $A$ est le facteur placé devant le sinus.'
+        - 'La pulsation est le coefficient **de $t$** ; la phase à l''origine est le terme constant.'
+        - '$\dfrac{2\pi}{3}$ est la période du signal, pas sa pulsation.'
+        explanation: 'Par identification avec $A\sin(\omega t+\varphi)$ : $A=2$ V, $\omega=3$ rad$\cdot$s$^{-1}$ et $\varphi=\dfrac{5\pi}{6}$ rad. Le signal oscille donc entre $-2$ V et $2$ V.'
+      - kind: input
+        prompt: '**Étape 2.** Calculer la période $T$ du signal. (arrondir à $0{,}01$)'
+        answer: '2.09'
+        numeric: true
+        tolerance: 0.05
+        unit: s
+        explanation: '$T=\dfrac{2\pi}{\omega}=\dfrac{2\pi}{3}\approx2{,}09$ s.'
+      - kind: input
+        prompt: '**Étape 3.** En déduire la fréquence $f$ du signal. (arrondir à $0{,}01$)'
+        answer: '0.48'
+        numeric: true
+        tolerance: 0.02
+        unit: Hz
+        explanation: '$f=\dfrac{1}{T}=\dfrac{3}{2\pi}\approx0{,}48$ Hz : le capteur délivre environ une oscillation toutes les deux secondes.'
+      - kind: input
+        prompt: '**Étape 4.** Calculer la tension délivrée à l''instant initial, $s(0)$.'
+        answer: '1'
+        numeric: true
+        tolerance: 0.05
+        unit: V
+        explanation: 'Angles associés : $\sin\left(\dfrac{5\pi}{6}\right)=\sin\left(\pi-\dfrac{\pi}{6}\right)=\sin\left(\dfrac{\pi}{6}\right)=\dfrac{1}{2}$, donc $s(0)=2\times\dfrac{1}{2}=1$ V.'
+      - kind: mcq
+        prompt: '**Étape 5.** Quelle est l''expression de la fonction dérivée $s''$ ?'
+        choices:
+        - $s'(t)=6\cos\left(3t+\dfrac{5\pi}{6}\right)$
+        - $s'(t)=2\cos\left(3t+\dfrac{5\pi}{6}\right)$
+        - $s'(t)=-6\cos\left(3t+\dfrac{5\pi}{6}\right)$
+        - $s'(t)=\dfrac{2}{3}\cos\left(3t+\dfrac{5\pi}{6}\right)$
+        answer:
+        - 0
+        feedback:
+        - null
+        - Il manque le facteur $\omega=3$ apporté par la dérivée de la fonction composée.
+        - 'Le signe $-$ apparaît en dérivant un **cosinus** ; ici on dérive un sinus.'
+        - On **multiplie** par $\omega$ pour dériver ; on divise par $\omega$ pour primitiver.
+        explanation: 'p. 102 : $\left(A\sin(\omega t+\varphi)\right)''=A\,\omega\cos(\omega t+\varphi)=2\times3\cos\left(3t+\dfrac{5\pi}{6}\right)=6\cos\left(3t+\dfrac{5\pi}{6}\right)$.'
+      - kind: mcq
+        prompt: '**Étape 6.** Quel est le tableau de variations de $s$ sur une période $\left[0\,;\dfrac{2\pi}{3}\right]$ ?'
+        choices:
+        - Décroissante de $1$ à $-2$ sur $\left[0\,;\dfrac{2\pi}{9}\right]$, croissante de $-2$ à $2$ sur $\left[\dfrac{2\pi}{9}\,;\dfrac{5\pi}{9}\right]$, puis décroissante de $2$ à $1$
+        - Croissante de $1$ à $2$, puis décroissante de $2$ à $-2$, puis croissante de $-2$ à $1$
+        - Décroissante de $2$ à $-2$, puis croissante de $-2$ à $2$
+        - Croissante de $-2$ à $2$ sur tout l'intervalle
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Au départ, l''angle $3t+\dfrac{5\pi}{6}$ vaut $\dfrac{5\pi}{6}$, où le cosinus est négatif : $s''(0)<0$, le signal commence par décroître.'
+        - 'La valeur initiale est $s(0)=1$ V, pas $2$ V : les extremums ne sont pas atteints aux bornes de l''intervalle.'
+        - La dérivée change deux fois de signe sur une période complète.
+        explanation: '$s''(t)=6\cos\left(3t+\dfrac{5\pi}{6}\right)$ ; quand $t$ parcourt $\left[0\,;\dfrac{2\pi}{3}\right]$, l''angle $3t+\dfrac{5\pi}{6}$ parcourt $\left[\dfrac{5\pi}{6}\,;\dfrac{17\pi}{6}\right]$. Le cosinus y est négatif, s''annule en $\dfrac{3\pi}{2}$ (soit $t=\dfrac{2\pi}{9}$), devient positif, s''annule en $\dfrac{5\pi}{2}$ (soit $t=\dfrac{5\pi}{9}$), puis redevient négatif. Valeurs : $s(0)=1$, $s\left(\dfrac{2\pi}{9}\right)=-2$, $s\left(\dfrac{5\pi}{9}\right)=2$ et $s\left(\dfrac{2\pi}{3}\right)=1$.'
+      - kind: input
+        prompt: '**Étape 7.** Combien d''oscillations complètes le signal effectue-t-il sur l''intervalle $[0\,;2\pi]$ ?'
+        answer: '3'
+        numeric: true
+        tolerance: 0.1
+        explanation: 'La période vaut $T=\dfrac{2\pi}{3}$ ; sur $[0\,;2\pi]$ il tient $\dfrac{2\pi}{2\pi/3}=3$ périodes entières.'
+      - kind: mcq
+        prompt: '**Étape 8.** Quelles sont les primitives $S$ de $s$ sur $[0\,;+\infty[$ ?'
+        choices:
+        - $S(t)=-\dfrac{2}{3}\cos\left(3t+\dfrac{5\pi}{6}\right)+k,\ k\in\mathbb{R}$
+        - $S(t)=\dfrac{2}{3}\cos\left(3t+\dfrac{5\pi}{6}\right)+k,\ k\in\mathbb{R}$
+        - $S(t)=-6\cos\left(3t+\dfrac{5\pi}{6}\right)+k,\ k\in\mathbb{R}$
+        - $S(t)=-\dfrac{2}{3}\sin\left(3t+\dfrac{5\pi}{6}\right)+k,\ k\in\mathbb{R}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Erreur de signe : primitiver un sinus fait apparaître $-\cos$.'
+        - On **divise** par $\omega=3$ pour primitiver ; multiplier par $3$ donnerait la dérivée.
+        - 'Primitiver un sinus donne un cosinus : la fonction ne peut pas rester un sinus.'
+        explanation: 'p. 102 : $F_s(t)=-\dfrac{A}{\omega}\cos(\omega t+\varphi)+k=-\dfrac{2}{3}\cos\left(3t+\dfrac{5\pi}{6}\right)+k$. Vérification en dérivant : $-\dfrac{2}{3}\times3\times\left(-\sin\left(3t+\dfrac{5\pi}{6}\right)\right)=2\sin\left(3t+\dfrac{5\pi}{6}\right)=s(t)$.'
   - id: maths-produit-scalaire
     title: Produit scalaire
     icon: 📐
@@ -1042,6 +1426,192 @@ units:
         right: $-\left\|\vec{u}\right\|\times\left\|\vec{v}\right\|$
       - left: $\vec{v}=\vec{u}$
         right: $\left\|\vec{u}\right\|^{2}$
+    - type: guided
+      level: 3
+      title: Le treuil d'une rampe de chargement
+      prompt: 'Exercice complet : travail du poids, de la réaction et de la traction sur un plan incliné.'
+      intro: 'Un chariot de masse $m=200$ kg est tiré **vers le haut** d''une rampe inclinée de $30^{\circ}$ sur l''horizontale, à vitesse constante, sur une distance $AB=12$ m. On prend $g=10$ N$\cdot$kg$^{-1}$ et on néglige les frottements. Trois forces s''exercent sur le chariot : son poids $\vec{P}$, la réaction normale $\vec{R}$ du plan et la traction $\vec{F}$ du câble, parallèle à la rampe et de même sens que le déplacement $\overrightarrow{AB}$.
+
+
+        On rappelle que le travail d''une force $\vec{F}$ sur le déplacement $\overrightarrow{AB}$ est le produit scalaire $W_{\vec{F}}=\vec{F}\cdot\overrightarrow{AB}$, exprimé en joules.
+
+
+        {{fig:guide-maths-travail-rampe}}'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Calculer la valeur du poids $P$ du chariot.'
+        answer: '2000'
+        numeric: true
+        tolerance: 1
+        unit: N
+        explanation: '$P=mg=200\times10=2000$ N.'
+      - kind: mcq
+        prompt: '**Étape 2.** Quelle est la mesure de l''angle formé par les vecteurs $\vec{P}$ et $\overrightarrow{AB}$ ?'
+        choices:
+        - $\dfrac{2\pi}{3}$ rad, soit $120^{\circ}$
+        - $\dfrac{\pi}{3}$ rad, soit $60^{\circ}$
+        - $\dfrac{\pi}{6}$ rad, soit $30^{\circ}$
+        - $\dfrac{\pi}{2}$ rad, soit $90^{\circ}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - '$\dfrac{\pi}{3}$ serait l''angle avec un déplacement dirigé vers le **bas** de la pente ; ici le chariot monte.'
+        - '$\dfrac{\pi}{6}$ rad ($30^{\circ}$) est l''inclinaison de la rampe, pas l''angle cherché.'
+        - L'angle droit est celui entre $\vec{R}$ et $\overrightarrow{AB}$.
+        explanation: 'Le poids est vertical et dirigé vers le bas ; le déplacement monte la pente, à $30^{\circ}$ au-dessus de l''horizontale. L''angle entre les deux vaut $90^{\circ}+30^{\circ}=120^{\circ}=\dfrac{2\pi}{3}$ rad.'
+      - kind: input
+        prompt: '**Étape 3.** Calculer le travail du poids $W_{\vec{P}}=\vec{P}\cdot\overrightarrow{AB}$ sur le trajet $AB$.'
+        answer: '-12000'
+        numeric: true
+        tolerance: 1
+        unit: J
+        explanation: '$W_{\vec{P}}=P\times AB\times\cos\left(\dfrac{2\pi}{3}\right)=2000\times12\times\left(-\dfrac{1}{2}\right)=-12\,000$ J. Le travail est **résistant** (négatif) puisque le chariot monte.'
+      - kind: mcq
+        prompt: '**Étape 4.** Que vaut le travail $W_{\vec{R}}$ de la réaction normale du plan ?'
+        choices:
+        - $0$ J, car $\vec{R}$ et $\overrightarrow{AB}$ sont orthogonaux
+        - $-12\,000$ J, comme le poids
+        - $2000\times12=24\,000$ J
+        - On ne peut pas conclure sans connaître la norme de $\vec{R}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'La réaction **normale** est perpendiculaire à la rampe, donc au déplacement : son travail est nul.'
+        - 'Ce serait le cas d''une force colinéaire à $\overrightarrow{AB}$ et de même sens.'
+        - 'La norme n''intervient pas : $\cos\left(\dfrac{\pi}{2}\right)=0$ annule le produit scalaire.'
+        explanation: '$\vec{R}$ est perpendiculaire à la rampe, donc à $\overrightarrow{AB}$ : $W_{\vec{R}}=\vec{R}\cdot\overrightarrow{AB}=\left\|\vec{R}\right\|\times AB\times\cos\left(\dfrac{\pi}{2}\right)=0$ J.'
+      - kind: mcq
+        prompt: '**Étape 5.** Le chariot monte à vitesse constante. Quelle relation le principe d''inertie impose-t-il entre les trois travaux ?'
+        choices:
+        - $W_{\vec{P}}+W_{\vec{R}}+W_{\vec{F}}=0$
+        - $W_{\vec{P}}=W_{\vec{R}}+W_{\vec{F}}$
+        - $W_{\vec{F}}=0$
+        - $W_{\vec{P}}+W_{\vec{R}}=2\,W_{\vec{F}}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Il faut déplacer $W_{\vec{P}}$ dans le même membre : la **somme** des trois travaux est nulle.'
+        - 'C''est le travail de la réaction **normale** qui est nul, pas celui de la traction.'
+        - Aucun facteur $2$ n'intervient dans le bilan.
+        explanation: 'Le mouvement étant rectiligne uniforme, la somme des forces est le vecteur nul ; en multipliant scalairement par $\overrightarrow{AB}$, la somme des travaux l''est aussi : $W_{\vec{P}}+W_{\vec{R}}+W_{\vec{F}}=0$.'
+      - kind: input
+        prompt: '**Étape 6.** En déduire le travail $W_{\vec{F}}$ de la force de traction.'
+        answer: '12000'
+        numeric: true
+        tolerance: 1
+        unit: J
+        explanation: 'Avec $W_{\vec{R}}=0$ : $W_{\vec{F}}=-W_{\vec{P}}=-(-12\,000)=+12\,000$ J. Le travail du câble est **moteur**, comme attendu pour une montée.'
+      - kind: input
+        prompt: '**Étape 7.** Sachant que $\vec{F}$ et $\overrightarrow{AB}$ sont colinéaires et de même sens, calculer la valeur de la force de traction.'
+        answer: '1000'
+        numeric: true
+        tolerance: 1
+        unit: N
+        explanation: 'Comme l''angle est nul, $W_{\vec{F}}=\left\|\vec{F}\right\|\times AB$, d''où $\left\|\vec{F}\right\|=\dfrac{12\,000}{12}=1000$ N. On retrouve le résultat de la statique : $\left\|\vec{F}\right\|=mg\sin(30^{\circ})=2000\times0{,}5=1000$ N.'
+    - type: guided
+      level: 3
+      title: 'Une ferme de charpente : angles et longueurs'
+      prompt: 'Exercice complet : produit scalaire en coordonnées, angle d''un triangle et théorème d''Al-Kashi.'
+      intro: 'Dans un repère orthonormé du plan (unité : le mètre), trois nœuds d''une ferme de charpente ont pour coordonnées
+
+
+        $$A(0\,;0),\qquad B(4\,;0),\qquad C(1\,;3).$$
+
+
+        Les barres de la structure sont les côtés du triangle $ABC$. On cherche l''angle $\widehat{BAC}$ au pied de la ferme, puis la longueur de la barre $[BC]$.
+
+
+        {{fig:guide-maths-triangle-repere}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelles sont les coordonnées des vecteurs $\overrightarrow{AB}$ et $\overrightarrow{AC}$ ?'
+        choices:
+        - $\overrightarrow{AB}\begin{pmatrix}4\\0\end{pmatrix}$ et $\overrightarrow{AC}\begin{pmatrix}1\\3\end{pmatrix}$
+        - $\overrightarrow{AB}\begin{pmatrix}0\\4\end{pmatrix}$ et $\overrightarrow{AC}\begin{pmatrix}3\\1\end{pmatrix}$
+        - $\overrightarrow{AB}\begin{pmatrix}-4\\0\end{pmatrix}$ et $\overrightarrow{AC}\begin{pmatrix}-1\\-3\end{pmatrix}$
+        - $\overrightarrow{AB}\begin{pmatrix}4\\0\end{pmatrix}$ et $\overrightarrow{AC}\begin{pmatrix}3\\1\end{pmatrix}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - Abscisses et ordonnées ont été échangées.
+        - 'Ce sont les coordonnées de $\overrightarrow{BA}$ et $\overrightarrow{CA}$ : on soustrait les coordonnées du point de **départ**.'
+        - 'Les coordonnées de $C$ sont $(1\,;3)$, pas $(3\,;1)$.'
+        explanation: 'Les coordonnées de $\overrightarrow{AB}$ sont $\begin{pmatrix}x_B-x_A\\y_B-y_A\end{pmatrix}=\begin{pmatrix}4\\0\end{pmatrix}$ et celles de $\overrightarrow{AC}$ sont $\begin{pmatrix}1\\3\end{pmatrix}$.'
+      - kind: input
+        prompt: '**Étape 2.** Calculer le produit scalaire $\overrightarrow{AB}\cdot\overrightarrow{AC}$.'
+        answer: '4'
+        numeric: true
+        tolerance: 0.01
+        explanation: 'Expression analytique : $\vec{u}\cdot\vec{v}=xx''+yy''=4\times1+0\times3=4$.'
+      - kind: mcq
+        prompt: '**Étape 3.** Quelle est la longueur $AC$ de la barre $[AC]$ ?'
+        choices:
+        - $\sqrt{10}\approx3{,}16$ m
+        - $10$ m
+        - $\sqrt{8}\approx2{,}83$ m
+        - $4$ m
+        answer:
+        - 0
+        feedback:
+        - null
+        - '$10$ est le carré de la longueur : il reste à prendre la racine carrée.'
+        - 'Erreur de calcul : $3^{2}=9$, donc $1+9=10$ et non $8$.'
+        - '$4$ m est la longueur $AB$, pas $AC$.'
+        explanation: '$AC=\left\|\overrightarrow{AC}\right\|=\sqrt{1^{2}+3^{2}}=\sqrt{10}\approx3{,}16$ m ; de même $AB=\sqrt{4^{2}+0^{2}}=4$ m.'
+      - kind: input
+        prompt: '**Étape 4.** En déduire $\cos\left(\widehat{BAC}\right)$. (arrondir à $0{,}01$)'
+        answer: '0.32'
+        numeric: true
+        tolerance: 0.02
+        explanation: 'La définition géométrique donne $\cos\left(\widehat{BAC}\right)=\dfrac{\overrightarrow{AB}\cdot\overrightarrow{AC}}{AB\times AC}=\dfrac{4}{4\sqrt{10}}=\dfrac{1}{\sqrt{10}}\approx0{,}32$.'
+      - kind: input
+        prompt: '**Étape 5.** Donner une mesure de l''angle $\widehat{BAC}$ en radians. (arrondir à $0{,}01$)'
+        answer: '1.25'
+        numeric: true
+        tolerance: 0.02
+        unit: rad
+        explanation: 'À la calculatrice (en mode radian), $\widehat{BAC}=\arccos\left(\dfrac{1}{\sqrt{10}}\right)\approx1{,}25$ rad, soit environ $71{,}6^{\circ}$.'
+      - kind: mcq
+        prompt: '**Étape 6.** Calculer la longueur $BC$ à l''aide du théorème d''Al-Kashi.'
+        choices:
+        - $BC=3\sqrt{2}\approx4{,}24$ m
+        - $BC=\sqrt{26}\approx5{,}10$ m
+        - $BC=18$ m
+        - $BC=\sqrt{34}\approx5{,}83$ m
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Le terme $-2\times AB\times AC\times\cos\left(\widehat{BAC}\right)=-8$ a été oublié : $16+10=26$.'
+        - '$18$ est la valeur de $BC^{2}$, pas celle de $BC$.'
+        - 'Le signe du terme d''Al-Kashi a été inversé : $16+10+8=34$.'
+        explanation: '$BC^{2}=AB^{2}+AC^{2}-2\times AB\times AC\times\cos\left(\widehat{BAC}\right)=16+10-2\times4\times\sqrt{10}\times\dfrac{1}{\sqrt{10}}=26-8=18$, donc $BC=\sqrt{18}=3\sqrt{2}\approx4{,}24$ m.'
+      - kind: input
+        prompt: '**Étape 7.** Vérifier ce résultat en calculant $\left\|\overrightarrow{BC}\right\|$ à partir des coordonnées. (arrondir à $0{,}01$)'
+        answer: '4.24'
+        numeric: true
+        tolerance: 0.05
+        unit: m
+        explanation: '$\overrightarrow{BC}\begin{pmatrix}1-4\\3-0\end{pmatrix}=\begin{pmatrix}-3\\3\end{pmatrix}$, donc $\left\|\overrightarrow{BC}\right\|=\sqrt{(-3)^{2}+3^{2}}=\sqrt{18}\approx4{,}24$ m : les deux méthodes concordent.'
+      - kind: mcq
+        prompt: '**Étape 8.** Deux autres barres de la ferme sont dirigées par $\vec{u}\begin{pmatrix}2\\3\end{pmatrix}$ et $\vec{v}\begin{pmatrix}-3\\2\end{pmatrix}$. Sont-elles perpendiculaires ?'
+        choices:
+        - 'Oui, car $\vec{u}\cdot\vec{v}=2\times(-3)+3\times2=0$'
+        - Non, car leurs coordonnées ne sont pas proportionnelles
+        - 'Non, car $\vec{u}\cdot\vec{v}=-6$'
+        - 'Oui, car $\vec{u}$ et $\vec{v}$ ont la même norme'
+        answer:
+        - 0
+        feedback:
+        - null
+        - La proportionnalité des coordonnées caractérise la **colinéarité**, pas l'orthogonalité.
+        - 'Le second terme $3\times2=6$ a été oublié : $-6+6=0$.'
+        - 'Les deux vecteurs ont bien la même norme $\sqrt{13}$, mais ce n''est pas ce qui prouve l''orthogonalité.'
+        explanation: 'Critère d''orthogonalité en repère orthonormé : $\vec{u}\cdot\vec{v}=xx''+yy''=2\times(-3)+3\times2=-6+6=0$, donc les deux barres sont perpendiculaires.'
   - id: maths-complexes
     title: Nombres complexes
     icon: 🌀
@@ -1314,3 +1884,114 @@ units:
         right: $\sqrt{2}\,\mathrm{e}^{i\frac{\pi}{4}}$
       - left: $\sqrt{3}+i$
         right: $2\,\mathrm{e}^{i\frac{\pi}{6}}$
+    - type: guided
+      level: 3
+      title: 'L''impédance d''un circuit RL : module, argument et forme exponentielle'
+      prompt: 'Exercice complet : impédance complexe d''un circuit RL, déphasage, tension et admittance.'
+      intro: 'En électricité, on associe à un dipôle son **impédance complexe** $Z$. Pour une bobine en série avec une résistance, elle s''écrit sous forme algébrique
+
+
+        $$Z=R+X\,i,$$
+
+
+        où $R=100$ $\Omega$ est la résistance et $X=100\sqrt{3}\approx173$ $\Omega$ la réactance de la bobine. Le module $\left|Z\right|$ est l''impédance du dipôle, en ohms, et $\arg(Z)$ est le déphasage entre la tension et le courant.
+
+
+        {{fig:guide-maths-impedance-complexe}}'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Calculer le module $\left|Z\right|$.'
+        answer: '200'
+        numeric: true
+        tolerance: 0.5
+        unit: Ω
+        explanation: '$\left|Z\right|=\sqrt{R^{2}+X^{2}}=\sqrt{100^{2}+\left(100\sqrt{3}\right)^{2}}=\sqrt{10\,000+30\,000}=\sqrt{40\,000}=200$ $\Omega$.'
+      - kind: mcq
+        prompt: '**Étape 2.** Déterminer un argument de $Z$.'
+        choices:
+        - $\arg(Z)=\dfrac{\pi}{3}\ [2\pi]$
+        - $\arg(Z)=\dfrac{\pi}{6}\ [2\pi]$
+        - $\arg(Z)=-\dfrac{\pi}{3}\ [2\pi]$
+        - $\arg(Z)=\dfrac{\pi}{4}\ [2\pi]$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Confusion sin/cos : ici $\cos(\theta)=\dfrac{1}{2}$ et $\sin(\theta)=\dfrac{\sqrt{3}}{2}$, ce qui donne $\dfrac{\pi}{3}$ et non $\dfrac{\pi}{6}$.'
+        - 'Erreur de signe : la partie imaginaire $100\sqrt{3}$ est positive, le point est dans le premier quadrant.'
+        - '$\dfrac{\pi}{4}$ correspondrait à $R=X$, ce qui n''est pas le cas ici.'
+        explanation: 'On divise par le module : $\cos(\theta)=\dfrac{100}{200}=\dfrac{1}{2}$ et $\sin(\theta)=\dfrac{100\sqrt{3}}{200}=\dfrac{\sqrt{3}}{2}$. Les valeurs remarquables donnent $\theta=\dfrac{\pi}{3}$.'
+      - kind: mcq
+        prompt: '**Étape 3.** En déduire la forme exponentielle de $Z$.'
+        choices:
+        - $Z=200\,\mathrm{e}^{i\frac{\pi}{3}}$
+        - $Z=200\,\mathrm{e}^{i\frac{\pi}{6}}$
+        - $Z=40\,000\,\mathrm{e}^{i\frac{\pi}{3}}$
+        - $Z=200\,\mathrm{e}^{-i\frac{\pi}{3}}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - L'argument déterminé à l'étape précédente est $\dfrac{\pi}{3}$.
+        - 'On a oublié la racine carrée : le module vaut $200$, pas $40\,000$.'
+        - 'Erreur de signe sur l''argument : $\dfrac{\pi}{3}$ est positif.'
+        explanation: 'Forme trigonométrique $Z=200\left(\cos\left(\dfrac{\pi}{3}\right)+i\sin\left(\dfrac{\pi}{3}\right)\right)$, d''où la forme exponentielle $Z=200\,\mathrm{e}^{i\frac{\pi}{3}}$.'
+      - kind: input
+        prompt: '**Étape 4.** Exprimer le déphasage $\arg(Z)$ en degrés.'
+        answer: '60'
+        numeric: true
+        tolerance: 0.5
+        unit: °
+        explanation: '$\dfrac{\pi}{3}\times\dfrac{180}{\pi}=60^{\circ}$ : la tension est en avance de $60^{\circ}$ sur le courant, comportement caractéristique d''un circuit inductif.'
+      - kind: mcq
+        prompt: '**Étape 5.** Le courant est décrit par le complexe $I=0{,}5$ (module $0{,}5$ A, argument nul). La tension vérifie $U=Z\times I$. Quelle est sa forme exponentielle ?'
+        choices:
+        - $U=100\,\mathrm{e}^{i\frac{\pi}{3}}$
+        - $U=400\,\mathrm{e}^{i\frac{\pi}{3}}$
+        - $U=100\,\mathrm{e}^{i\frac{\pi}{6}}$
+        - $U=200{,}5\,\mathrm{e}^{i\frac{\pi}{3}}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'On a divisé par $0{,}5$ au lieu de multiplier : $200\times0{,}5=100$.'
+        - 'Les arguments s''**ajoutent** : $\dfrac{\pi}{3}+0=\dfrac{\pi}{3}$.'
+        - Les modules se multiplient, ils ne s'additionnent pas.
+        explanation: 'Pour un produit, les modules se multiplient et les arguments s''ajoutent : $\left|U\right|=200\times0{,}5=100$ V et $\arg(U)=\dfrac{\pi}{3}+0=\dfrac{\pi}{3}$, donc $U=100\,\mathrm{e}^{i\frac{\pi}{3}}$.'
+      - kind: mcq
+        prompt: '**Étape 6.** Quelle est la forme algébrique de $U$ ?'
+        choices:
+        - $U=50+50\sqrt{3}\,i$
+        - $U=50\sqrt{3}+50i$
+        - $U=100+100\sqrt{3}\,i$
+        - $U=50-50\sqrt{3}\,i$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Confusion sin/cos : la partie réelle est $r\cos(\theta)=100\times\dfrac{1}{2}=50$.'
+        - 'C''est $2U$ : le module de $U$ vaut $100$, pas $200$.'
+        - 'Erreur de signe : $\sin\left(\dfrac{\pi}{3}\right)=+\dfrac{\sqrt{3}}{2}$.'
+        explanation: '$U=100\left(\cos\left(\dfrac{\pi}{3}\right)+i\sin\left(\dfrac{\pi}{3}\right)\right)=100\left(\dfrac{1}{2}+i\dfrac{\sqrt{3}}{2}\right)=50+50\sqrt{3}\,i\approx50+86{,}6\,i$.'
+      - kind: mcq
+        prompt: '**Étape 7.** L''admittance du dipôle est $\dfrac{1}{Z}$. Quelle est sa forme exponentielle ?'
+        choices:
+        - $\dfrac{1}{Z}=\dfrac{1}{200}\,\mathrm{e}^{-i\frac{\pi}{3}}$
+        - $\dfrac{1}{Z}=\dfrac{1}{200}\,\mathrm{e}^{i\frac{\pi}{3}}$
+        - $\dfrac{1}{Z}=200\,\mathrm{e}^{-i\frac{\pi}{3}}$
+        - $\dfrac{1}{Z}=-200\,\mathrm{e}^{i\frac{\pi}{3}}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'L''argument change de signe quand on passe à l''inverse : $\arg\left(\dfrac{1}{Z}\right)=-\arg(Z)$.'
+        - 'Le module doit être inversé : $\left|\dfrac{1}{Z}\right|=\dfrac{1}{\left|Z\right|}$.'
+        - L'inverse d'un nombre complexe n'est pas son opposé.
+        explanation: '$\dfrac{1}{Z}=\dfrac{1}{200\,\mathrm{e}^{i\frac{\pi}{3}}}=\dfrac{1}{200}\,\mathrm{e}^{-i\frac{\pi}{3}}$ : on inverse le module et on change le signe de l''argument.'
+      - kind: input
+        prompt: '**Étape 8.** Calculer le module de l''admittance, exprimé en **millisiemens** ($1$ S $=1000$ mS).'
+        answer: '5'
+        numeric: true
+        tolerance: 0.05
+        unit: mS
+        explanation: '$\left|\dfrac{1}{Z}\right|=\dfrac{1}{\left|Z\right|}=\dfrac{1}{200}=0{,}005$ S, soit $5$ mS.'

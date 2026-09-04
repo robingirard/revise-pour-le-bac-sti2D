@@ -1,0 +1,30 @@
+%% Essuie-glace : le même dessin d'ensemble, colorié par classe d'équivalence cinématique.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\input{_mecanisme-essuie-glace-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+% une couleur par classe : E0 = {0, 6} (bâti, gris), E1 = {1}, E2 = {2}, E3 = {3, 4, 5}
+\newcommand\piece[2]{\ifcase#1\relax
+  \draw[line width=0.6pt, line join=round, fill=black!12, draw=black] #2;%          0
+  \or \draw[line width=0.6pt, line join=round, fill=solideE!45, draw=solideE] #2;%  1
+  \or \draw[line width=0.6pt, line join=round, fill=solideA!45, draw=solideA] #2;%  2
+  \or \draw[line width=0.6pt, line join=round, fill=solideB!45, draw=solideB] #2;%  3
+  \or \draw[line width=0.6pt, line join=round, fill=solideB!45, draw=solideB] #2;%  4
+  \or \draw[line width=0.6pt, line join=round, fill=solideB!45, draw=solideB] #2;%  5
+  \or \draw[line width=0.6pt, line join=round, fill=black!12, draw=black] #2;%      6
+  \fi}
+\newcommand\eglabels{%
+  \node[fill=black, text=white, font=\small\bfseries, inner sep=2pt, rounded corners=1pt] at (1.9,-2.75) {E0 = \{0, 6\}};
+  \draw[black, line width=0.5pt] (1.9,-2.55) -- (1.9,-1.55);
+  \node[fill=solideE, text=white, font=\small\bfseries, inner sep=2pt, rounded corners=1pt] at (0.15,1.25) {E1 = \{1\}};
+  \draw[solideE, line width=0.5pt] (0.3,1.05) -- (0.45,0.19);
+  \node[fill=solideA, text=white, font=\small\bfseries, inner sep=2pt, rounded corners=1pt] at (1.35,1.95) {E2 = \{2\}};
+  \draw[solideA, line width=0.5pt] (1.75,1.75) -- (2.4,1.1);
+  \node[fill=solideB, text=white, font=\small\bfseries, inner sep=2pt, rounded corners=1pt] at (5.65,1.75) {E3 = \{3, 4, 5\}};
+  \draw[solideB, line width=0.5pt] (5.0,1.6) -- (4.17,1.2);
+}
+\essuieglace
+\repere{(-2.4,-2.6)}{x}{y}{1}
+\end{tikzpicture}
+\end{document}

@@ -316,6 +316,95 @@ units:
       - '$4{,}3 \times 10^{-5}$ reste minuscule devant 0,29 : l''aluminium conduit très bien la chaleur.'
       - Le verre isole mieux que les métaux, mais environ 33 fois moins bien que le polystyrène ($0{,}29 / 8{,}7 \times 10^{-3} \approx 33$).
       explanation: 'Plus $R_{\mathrm{th}}$ est élevée, meilleur est l''isolant : le polystyrène a la plus grande valeur du tableau, $0{,}29\ \mathrm{m^2\cdot K\cdot W^{-1}}$.'
+    - type: guided
+      level: 3
+      tags:
+      - mole
+      - masse-molaire
+      - concentration
+      title: La vitamine C du jus d'orange
+      intro: 'Les nutritionnistes recommandent un apport quotidien d''environ **110 mg** de vitamine C, de formule brute $\mathrm{C_6H_8O_6}$, pour un adulte.
+
+        Un jus d''orange du commerce contient de la vitamine C à la concentration molaire $C = 2{,}0 \times 10^{-3}$ mol·L⁻¹ ; un verre en contient 200 mL.
+
+        Données : $M(\mathrm{H}) = 1{,}0$ ; $M(\mathrm{C}) = 12{,}0$ ; $M(\mathrm{O}) = 16{,}0$ g·mol⁻¹.'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Calculer la masse molaire de la vitamine C.'
+        answer: 176
+        numeric: true
+        tolerance: 1
+        unit: g·mol⁻¹
+        explanation: '$M = 6 \times 12{,}0 + 8 \times 1{,}0 + 6 \times 16{,}0 = 72 + 8 + 96 = 176$ g·mol⁻¹. On additionne les masses molaires atomiques en respectant les indices de la formule brute.'
+      - kind: mcq
+        prompt: '**Étape 2.** Avant tout calcul, à combien de grammes correspondent les 110 mg d''apport quotidien ?'
+        choices:
+        - 0,110 g
+        - 110 g
+        - 1,10 g
+        - 0,0110 g
+        answer:
+        - 0
+        multiple: false
+        feedback:
+        - null
+        - 'Non : 110 g de vitamine C, ce serait plus d''un demi-verre de poudre. $1$ mg $= 10^{-3}$ g.'
+        - 'Non : cela reviendrait à diviser par 100 au lieu de 1 000.'
+        - 'Non : $0{,}0110$ g $= 11$ mg, dix fois trop peu.'
+        explanation: '$110$ mg $= 110 \times 10^{-3}$ g $= 0{,}110$ g. Les masses molaires étant en g·mol⁻¹, il faut travailler en grammes.'
+      - kind: input
+        prompt: '**Étape 3.** En déduire la quantité de matière de vitamine C correspondant à cet apport quotidien. Répondre en **millimole** (3 décimales).'
+        answer: 0,625
+        numeric: true
+        tolerance: 0.02
+        unit: mmol
+        explanation: '$n = \dfrac{m}{M} = \dfrac{0{,}110}{176} = 6{,}25 \times 10^{-4}$ mol $= 0{,}625$ mmol. Erreur classique : multiplier par $M$ au lieu de diviser.'
+      - kind: input
+        prompt: '**Étape 4.** Quel volume de jus d''orange faudrait-il boire pour absorber cette quantité de matière ? Répondre en millilitres (arrondir à l''unité).'
+        answer: 313
+        numeric: true
+        tolerance: 10
+        unit: mL
+        explanation: '$V = \dfrac{n}{C} = \dfrac{6{,}25 \times 10^{-4}}{2{,}0 \times 10^{-3}} = 0{,}3125$ L $= 313$ mL.'
+      - kind: mcq
+        prompt: '**Étape 5.** Combien de verres de 200 mL cela représente-t-il ?'
+        choices:
+        - Un peu plus d'un verre et demi, donc 2 verres en pratique
+        - Un demi-verre
+        - Trois verres
+        - Six verres
+        answer:
+        - 0
+        multiple: false
+        feedback:
+        - null
+        - 'Non : un demi-verre ne fait que 100 mL, soit un tiers de l''apport nécessaire.'
+        - 'Non : trois verres font 600 mL, presque le double du nécessaire.'
+        - 'Non : six verres feraient 1,2 L, près de quatre fois trop.'
+        explanation: '$\dfrac{313}{200} = 1{,}56$ : un verre et demi suffit tout juste, deux verres couvrent l''apport recommandé.'
+      - kind: input
+        prompt: '**Étape 6.** Calculer la concentration **massique** en vitamine C de ce jus d''orange. Répondre en mg·L⁻¹ (arrondir à l''unité).'
+        answer: 352
+        numeric: true
+        tolerance: 10
+        unit: mg·L⁻¹
+        explanation: '$C_m = C \times M = 2{,}0 \times 10^{-3} \times 176 = 0{,}352$ g·L⁻¹ $= 352$ mg·L⁻¹. Erreur classique : diviser par $M$ ; la relation $C = C_m/M$ se retourne en $C_m = C \times M$.'
+      - kind: mcq
+        prompt: '**Étape 7.** Vérification. Que retrouve-t-on en divisant l''apport quotidien (110 mg) par cette concentration massique (352 mg·L⁻¹) ?'
+        choices:
+        - Le volume de jus à boire, $0{,}31$ L, qui confirme le résultat de l'étape 4
+        - La masse molaire de la vitamine C
+        - La quantité de matière de vitamine C
+        - Le nombre de verres à boire
+        answer:
+        - 0
+        multiple: false
+        feedback:
+        - null
+        - 'Non : la masse molaire s''obtient à partir de la formule brute, pas d''un volume.'
+        - 'Non : une quantité de matière s''exprime en mol ; ici mg divisé par mg·L⁻¹ donne des litres.'
+        - 'Non : il faudrait encore diviser ce volume par 0,200 L pour obtenir un nombre de verres.'
+        explanation: '$\dfrac{110}{352} = 0{,}3125$ L, soit 313 mL : la voie « massique » et la voie « molaire » conduisent au même volume, ce qui valide les calculs.'
   - id: pc-energie-chimique
     title: Énergie chimique et sécurité incendie
     icon: 🔥
@@ -629,6 +718,102 @@ units:
       - Consommer du dioxygène caractérise une combustion, mais ne dit rien du sens de l'échange d'énergie.
       - 'Non : si l''eau produite absorbait l''énergie libérée, la transformation ne chaufferait pas — or une flamme chauffe.'
       explanation: '« Les combustions sont des transformations chimiques exothermiques » : elles **libèrent** de l''énergie, ce qui permet d''actionner des moteurs ou de chauffer de l''eau dans des chaudières.'
+    - type: guided
+      level: 3
+      tags:
+      - pouvoir-calorifique
+      - combustion
+      - alcool
+      title: 'Gaz de ville ou bioéthanol : lequel rejette le plus de CO₂ ?'
+      intro: 'On compare deux combustibles devant fournir la **même énergie de 150 MJ**, par exemple pour chauffer un logement une journée d''hiver.
+
+        Pouvoirs calorifiques inférieurs (PCI) : gaz de ville **50 MJ·kg⁻¹**, bioéthanol **30 MJ·kg⁻¹**. On considère que le gaz de ville ne contient que du méthane $\mathrm{CH_4}$ ; le bioéthanol est un **alcool à deux atomes de carbone**.
+
+        Données : $M(\mathrm{H}) = 1{,}0$ ; $M(\mathrm{C}) = 12{,}0$ ; $M(\mathrm{O}) = 16{,}0$ g·mol⁻¹.'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelle est la formule brute du bioéthanol ?'
+        choices:
+        - $\mathrm{C_2H_6O}$
+        - $\mathrm{C_2H_4}$
+        - $\mathrm{C_2H_6}$
+        - $\mathrm{CH_4O}$
+        answer:
+        - 0
+        multiple: false
+        feedback:
+        - null
+        - '$\mathrm{C_2H_4}$ est l''éthène, un alcène sans atome d''oxygène : ce n''est pas un alcool.'
+        - '$\mathrm{C_2H_6}$ est l''éthane, un alcane : il ne porte pas de groupe $-\mathrm{OH}$.'
+        - '$\mathrm{CH_4O}$ est le méthanol : il ne contient qu''un seul atome de carbone.'
+        explanation: 'Un alcool porte un groupe hydroxyle $-\mathrm{OH}$ ; avec deux carbones, c''est l''éthanol $\mathrm{CH_3-CH_2-OH}$, de formule brute $\mathrm{C_2H_6O}$.'
+      - kind: mcq
+        prompt: '**Étape 2.** Quelle est l''équation ajustée de la combustion **complète** du bioéthanol dans le dioxygène ?'
+        choices:
+        - $\mathrm{C_2H_6O} + 3\,\mathrm{O_2} \rightarrow 2\,\mathrm{CO_2} + 3\,\mathrm{H_2O}$
+        - $\mathrm{C_2H_6O} + 2\,\mathrm{O_2} \rightarrow 2\,\mathrm{CO_2} + 3\,\mathrm{H_2O}$
+        - $\mathrm{C_2H_6O} + 3\,\mathrm{O_2} \rightarrow 2\,\mathrm{CO} + 3\,\mathrm{H_2O}$
+        - $\mathrm{C_2H_6O} + \mathrm{O_2} \rightarrow 2\,\mathrm{CO_2} + \mathrm{H_2O}$
+        answer:
+        - 0
+        multiple: false
+        feedback:
+        - null
+        - 'Les oxygènes ne sont pas conservés : $1 + 2 \times 2 = 5$ à gauche contre $2 \times 2 + 3 = 7$ à droite.'
+        - 'Une combustion **complète** produit du dioxyde de carbone $\mathrm{CO_2}$ ; le monoxyde $\mathrm{CO}$ signe une combustion incomplète.'
+        - 'Les hydrogènes ne sont pas conservés : 6 à gauche, 2 à droite.'
+        explanation: '$\mathrm{C_2H_6O} + 3\,\mathrm{O_2} \rightarrow 2\,\mathrm{CO_2} + 3\,\mathrm{H_2O}$. Vérification : 2 C, 6 H et $1 + 6 = 7$ O de chaque côté.'
+      - kind: input
+        prompt: '**Étape 3.** Quelle masse de méthane faut-il brûler pour libérer 150 MJ ? (1 décimale)'
+        answer: 3,0
+        numeric: true
+        tolerance: 0.1
+        unit: kg
+        explanation: 'Le PCI est l''énergie libérée par la combustion d''un kilogramme de combustible : $m = \dfrac{E}{\mathrm{PCI}} = \dfrac{150}{50} = 3{,}0$ kg.'
+      - kind: input
+        prompt: '**Étape 4.** Même question pour le bioéthanol. (1 décimale)'
+        answer: 5,0
+        numeric: true
+        tolerance: 0.1
+        unit: kg
+        explanation: '$m = \dfrac{150}{30} = 5{,}0$ kg. Le bioéthanol ayant un PCI plus faible, il en faut 1,7 fois plus pour la même énergie.'
+      - kind: input
+        prompt: '**Étape 5.** La combustion complète du méthane s''écrit $\mathrm{CH_4} + 2\,\mathrm{O_2} \rightarrow \mathrm{CO_2} + 2\,\mathrm{H_2O}$ : chaque mole de méthane donne une mole de $\mathrm{CO_2}$. Calculer la quantité de dioxyde de carbone formée par les 3,0 kg de méthane. On donne $M(\mathrm{CH_4}) = 16{,}0$ g·mol⁻¹.'
+        answer: 187,5
+        numeric: true
+        tolerance: 5
+        unit: mol
+        explanation: '$n(\mathrm{CH_4}) = \dfrac{3\,000}{16{,}0} = 187{,}5$ mol, donc $n(\mathrm{CO_2}) = 187{,}5$ mol. Erreur classique : oublier de convertir les 3,0 kg en 3 000 g.'
+      - kind: input
+        prompt: '**Étape 6.** Chaque mole de bioéthanol donne **deux** moles de $\mathrm{CO_2}$ (étape 2). Calculer la quantité de dioxyde de carbone formée par les 5,0 kg de bioéthanol. Commencez par $M(\mathrm{C_2H_6O})$.'
+        answer: 217
+        numeric: true
+        tolerance: 5
+        unit: mol
+        explanation: '$M(\mathrm{C_2H_6O}) = 2 \times 12{,}0 + 6 \times 1{,}0 + 16{,}0 = 46{,}0$ g·mol⁻¹ ; $n = \dfrac{5\,000}{46{,}0} = 108{,}7$ mol, donc $n(\mathrm{CO_2}) = 2 \times 108{,}7 = 217$ mol. Erreur classique : oublier le coefficient 2 (on trouverait 109 mol).'
+      - kind: input
+        prompt: '**Étape 7.** Convertir cette quantité en masse de dioxyde de carbone. On donne $M(\mathrm{CO_2}) = 44{,}0$ g·mol⁻¹. Répondre en kilogrammes (1 décimale).'
+        answer: 9,6
+        numeric: true
+        tolerance: 0.3
+        unit: kg
+        explanation: '$m = n \times M = 217 \times 44{,}0 = 9\,565$ g $\approx 9{,}6$ kg. Le méthane, lui, en rejette $187{,}5 \times 44{,}0 = 8\,250$ g $= 8{,}3$ kg.'
+      - kind: mcq
+        prompt: '**Étape 8.** Conclusion : pour produire 150 MJ, lequel des deux combustibles rejette le plus de dioxyde de carbone ?'
+        choices:
+        - Le bioéthanol, avec 9,6 kg contre 8,3 kg, soit environ 16 % de plus
+        - Le méthane, parce que sa masse molaire est la plus faible
+        - Les deux en rejettent exactement la même masse
+        - Le bioéthanol, mais avec un écart de plus d'un facteur 2
+        answer:
+        - 0
+        multiple: false
+        feedback:
+        - null
+        - 'Une masse molaire faible donne bien plus de moles par kilogramme, mais il faut aussi tenir compte des 5,0 kg de bioéthanol et de ses **deux** $\mathrm{CO_2}$ par molécule.'
+        - 'Non : 217 mol contre 187,5 mol, l''écart est réel.'
+        - 'Non : $9{,}6/8{,}3 = 1{,}16$, soit 16 % de plus, pas le double.'
+        explanation: 'À énergie égale, le bioéthanol rejette environ 1,3 kg de $\mathrm{CO_2}$ de plus que le gaz de ville. Ce calcul ne porte que sur la combustion : il ne dit rien de l''origine du carbone ni du reste du cycle de vie des deux combustibles.'
   - id: pc-combustions
     title: Combustions et bilan de matière
     icon: ⛽
@@ -1408,3 +1593,137 @@ units:
       - La tension d'une pile dépend des deux couples utilisés, pas du pont salin.
       - 'Le circuit extérieur ne suffit pas : sans circulation d''ions, les charges s''accumulent dans chaque compartiment et tout s''arrête.'
       explanation: L'échange d'électrons n'est possible **que si** chaque compartiment vérifie l'électroneutralité des solutions (autant de charges positives que de charges négatives) ; c'est le pont salin, contenant des ions qui ne peuvent pas réagir, qui l'assure.
+    - type: guided
+      level: 3
+      tags:
+      - pile
+      - demi-equation
+      - oxydoreduction
+      title: La pile plomb-cuivre
+      intro: 'On fabrique une pile mettant en jeu les couples $\mathrm{Pb^{2+}/Pb}$ et $\mathrm{Cu^{2+}/Cu}$, répartis dans deux compartiments.
+
+        **Compartiment A** : une lame de cuivre de 200 g plonge dans 100 mL d''une solution de nitrate de cuivre II $(\mathrm{Cu^{2+}} + 2\,\mathrm{NO_3^-})$ de concentration $1{,}0$ mol·L⁻¹.
+
+        **Compartiment B** : une lame de plomb de 200 g plonge dans 100 mL d''une solution de nitrate de plomb II $(\mathrm{Pb^{2+}} + 2\,\mathrm{NO_3^-})$ de concentration $1{,}0$ mol·L⁻¹.
+
+        Les deux solutions sont reliées par un pont salin, les deux lames par un circuit extérieur. Lorsque la pile débite, ce sont les **ions cuivre II qui sont réduits**.
+
+        Données : $M(\mathrm{Cu}) = 63{,}5$ g·mol⁻¹ ; $M(\mathrm{Pb}) = 207$ g·mol⁻¹.
+
+        {{fig:guide-pile-plomb-cuivre}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Écrire la demi-équation de la réaction qui se produit sur la lame de cuivre.'
+        choices:
+        - $\mathrm{Cu^{2+}} + 2\,\mathrm{e^-} = \mathrm{Cu}$
+        - $\mathrm{Cu} = \mathrm{Cu^{2+}} + 2\,\mathrm{e^-}$
+        - $\mathrm{Cu^{2+}} + \mathrm{e^-} = \mathrm{Cu}$
+        - $\mathrm{Cu^{2+}} + \mathrm{Pb} = \mathrm{Cu} + \mathrm{Pb^{2+}}$
+        answer:
+        - 0
+        multiple: false
+        feedback:
+        - null
+        - 'C''est une **oxydation** (perte d''électrons) ; or l''énoncé indique que les ions cuivre II sont réduits.'
+        - 'Les charges ne sont pas équilibrées : $+2 - 1 = +1$ à gauche contre 0 à droite. Il faut 2 électrons.'
+        - 'C''est l''équation-bilan de la pile, pas une demi-équation : elle ne fait apparaître aucun électron.'
+        explanation: 'Une réduction est un **gain** d''électrons : $\mathrm{Cu^{2+}} + 2\,\mathrm{e^-} = \mathrm{Cu}$. Elle est équilibrée en atomes et en charges.'
+      - kind: mcq
+        prompt: '**Étape 2.** Écrire la demi-équation de la réaction qui se produit sur la lame de plomb.'
+        choices:
+        - $\mathrm{Pb} = \mathrm{Pb^{2+}} + 2\,\mathrm{e^-}$
+        - $\mathrm{Pb^{2+}} + 2\,\mathrm{e^-} = \mathrm{Pb}$
+        - $\mathrm{Pb} = \mathrm{Pb^{2+}} + \mathrm{e^-}$
+        - $\mathrm{Pb} + 2\,\mathrm{e^-} = \mathrm{Pb^{2+}}$
+        answer:
+        - 0
+        multiple: false
+        feedback:
+        - null
+        - 'C''est une réduction. Or, si le cuivre capte les électrons, c''est le plomb qui les cède.'
+        - 'Les charges ne sont pas équilibrées : 0 à gauche contre $+2 - 1 = +1$ à droite.'
+        - 'Non : un réducteur **cède** ses électrons, ils s''écrivent donc du côté des produits.'
+        explanation: 'Le plomb métallique est le réducteur du couple $\mathrm{Pb^{2+}/Pb}$ : il subit une oxydation, $\mathrm{Pb} = \mathrm{Pb^{2+}} + 2\,\mathrm{e^-}$.'
+      - kind: mcq
+        prompt: '**Étape 3.** En combinant les deux demi-équations, donner l''équation de la réaction globale de fonctionnement de la pile.'
+        choices:
+        - $\mathrm{Pb} + \mathrm{Cu^{2+}} \rightarrow \mathrm{Pb^{2+}} + \mathrm{Cu}$
+        - $\mathrm{Cu} + \mathrm{Pb^{2+}} \rightarrow \mathrm{Cu^{2+}} + \mathrm{Pb}$
+        - $\mathrm{Pb} + \mathrm{Cu} \rightarrow \mathrm{Pb^{2+}} + \mathrm{Cu^{2+}}$
+        - $\mathrm{Pb^{2+}} + \mathrm{Cu^{2+}} \rightarrow \mathrm{Pb} + \mathrm{Cu}$
+        answer:
+        - 0
+        multiple: false
+        feedback:
+        - null
+        - 'C''est le sens inverse : ici c''est le plomb qui s''oxyde et le cuivre qui se dépose.'
+        - 'Deux métaux ne peuvent pas s''oxyder tous les deux : il faut un oxydant pour capter les électrons.'
+        - 'Deux cations ne peuvent pas se réduire mutuellement : aucun des deux ne cède d''électrons.'
+        explanation: 'On additionne les deux demi-équations, les 2 électrons échangés s''éliminant : $\mathrm{Pb} + \mathrm{Cu^{2+}} \rightarrow \mathrm{Pb^{2+}} + \mathrm{Cu}$.'
+      - kind: mcq
+        prompt: '**Étape 4.** Quelle est la polarité de la pile et quel est le sens conventionnel du courant dans le circuit extérieur ?'
+        choices:
+        - 'La lame de cuivre est la borne + : le courant sort par le cuivre et les électrons circulent du plomb vers le cuivre'
+        - 'La lame de plomb est la borne + : le courant sort par le plomb'
+        - 'La lame de cuivre est la borne + et les électrons circulent du cuivre vers le plomb'
+        - 'Les deux lames sont équivalentes : la polarité dépend du sens de branchement du voltmètre'
+        answer:
+        - 0
+        multiple: false
+        feedback:
+        - null
+        - 'Non : la borne + est l''électrode où les électrons **arrivent**, c''est-à-dire celle où a lieu la réduction — la lame de cuivre.'
+        - 'La polarité est bonne, mais les électrons vont toujours de l''électrode où ils sont produits (le plomb) vers celle où ils sont consommés (le cuivre).'
+        - 'Non : la polarité est imposée par les réactions chimiques ; brancher le voltmètre à l''envers ne fait qu''afficher une valeur négative.'
+        explanation: Le plomb cède les électrons (borne −), ils traversent le circuit extérieur jusqu'au cuivre, où les ions $\mathrm{Cu^{2+}}$ les captent (borne +). Le courant conventionnel circule en sens inverse des électrons, donc du cuivre vers le plomb dans le circuit extérieur.
+      - kind: grid
+        prompt: '**Étape 5.** Pendant que la pile débite, comment évolue la masse de chaque lame ?'
+        rows:
+        - id: cuivre
+          label: Lame de cuivre (compartiment A)
+        - id: plomb
+          label: Lame de plomb (compartiment B)
+        cols:
+        - id: AUG
+          label: Sa masse augmente
+        - id: DIM
+          label: Sa masse diminue
+        answer:
+        - AUGcuivre
+        - DIMplomb
+        cellFeedback:
+          AUGcuivre: $\mathrm{Cu^{2+}} + 2\,\mathrm{e^-} = \mathrm{Cu}$ dépose du cuivre métallique sur la lame.
+          DIMplomb: $\mathrm{Pb} = \mathrm{Pb^{2+}} + 2\,\mathrm{e^-}$ fait passer le plomb en solution.
+          DIMcuivre: 'Non : le cuivre n''est pas consommé, il se forme.'
+          AUGplomb: 'Non : le plomb est le réducteur, il est consommé.'
+        explanation: La lame de cuivre s'épaissit (dépôt de cuivre métallique) tandis que la lame de plomb se dissout. C'est ce qui limite la durée de vie de la pile.
+      - kind: input
+        prompt: '**Étape 6.** Calculer la quantité de matière d''ions $\mathrm{Cu^{2+}}$ initialement présents dans le compartiment A. (2 décimales)'
+        answer: 0,10
+        numeric: true
+        tolerance: 0.005
+        unit: mol
+        explanation: '$n = C \times V = 1{,}0 \times 0{,}100 = 0{,}10$ mol. Erreur classique : oublier de convertir les 100 mL en 0,100 L (on trouverait 100 mol).'
+      - kind: input
+        prompt: '**Étape 7.** Si la pile fonctionne jusqu''à épuisement des ions cuivre II, quelle masse de cuivre se dépose sur la lame ? (2 décimales)'
+        answer: 6,35
+        numeric: true
+        tolerance: 0.2
+        unit: g
+        explanation: 'D''après la demi-équation, une mole d''ions $\mathrm{Cu^{2+}}$ donne une mole de cuivre : $m = n \times M = 0{,}10 \times 63{,}5 = 6{,}35$ g. Dans le même temps, la lame de plomb perd $0{,}10 \times 207 = 20{,}7$ g : les lames de 200 g sont loin d''être consommées, c''est bien la solution qui s''épuise la première.'
+      - kind: mcq
+        prompt: '**Étape 8.** Cette pile est-elle rechargeable ?'
+        choices:
+        - 'Non : c''est une pile, sa transformation chimique n''est pas réversible en pratique ; un accumulateur, lui, se recharge en imposant un courant de sens inverse'
+        - 'Oui : il suffit d''attendre, les espèces se reforment spontanément'
+        - 'Oui : toutes les piles se rechargent en les branchant sur un générateur'
+        - 'Non : aucune transformation d''oxydoréduction ne peut être inversée'
+        answer:
+        - 0
+        multiple: false
+        feedback:
+        - null
+        - 'Non : la réaction s''arrête à l''équilibre, elle ne repart pas d''elle-même dans l''autre sens.'
+        - 'Non : recharger une pile non conçue pour l''être est dangereux (échauffement, fuite, explosion).'
+        - 'Non : c''est justement le principe des **accumulateurs** (batteries de téléphone, de voiture), où la transformation est réversible.'
+        explanation: 'Une pile met en jeu une transformation non réversible : quand un réactif est épuisé, elle est usée et doit être recyclée. Un accumulateur se recharge en forçant le passage du courant en sens inverse, ce qui régénère les réactifs.'

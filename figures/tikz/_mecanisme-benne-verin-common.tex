@@ -1,0 +1,46 @@
+%% Dessin d'ensemble simplifié de la benne basculante à vérin (coupe dans le plan (x, y)).
+%% Inclus par mecanisme-benne-verin-dessin.tex et mecanisme-benne-verin-classes.tex, qui définissent
+%% \piece{N}{chemin} (pièce coupée : hachurée ou colorée), \piecevue{N}{chemin} (pièce non coupée :
+%% tige, axes, roues) et \bnlabels (les étiquettes propres à chaque vue).
+%% Cotes en cm. Points : C = (5,6 ; 1,2) axe de basculement ; O = (4,2 ; 0,5) pied du vérin ;
+%% P = (2,4 ; 1,5) attache de la tige sous la benne. Axe du vérin : u = (O -> P), 150,945°.
+\newcommand\benne{%
+  \begin{scope}[line width=0.6pt, line join=round]
+    % --- sol
+    \draw[line width=0.5pt, black!60] (0.05,0) -- (6.55,0);
+    % --- 0 : châssis du camion (longeron coupé, cabine, chapes) ; camion à l'arrêt
+    \piece{0}{(0.30,0.18) rectangle (6.25,0.50)}                              % longeron (coupé)
+    \piece{0}{(0.30,0.50) -- (0.95,0.50) -- (0.95,2.15) -- (0.55,2.15) -- (0.30,1.45) -- cycle}  % cabine
+    \piece{0}{(5.46,0.50) rectangle (5.74,1.20)}                              % chape de basculement (sur le châssis)
+    % --- 1 : benne (caisse coupée) + chape d'articulation arrière
+    \piece{1}{(1.0,2.60) -- (1.0,1.50) -- (5.6,1.50) -- (5.6,2.30) -- (5.42,2.30) -- (5.42,1.68) -- (1.18,1.68) -- (1.18,2.60) -- cycle}
+    \piece{1}{(5.42,1.20) rectangle (5.78,1.50)}                              % chape de la benne (descend jusqu'à C)
+    % --- 2 et 3 : le vérin hydraulique, dessiné dans son repère (origine O, axe x local = u)
+    \begin{scope}[shift={(4.2,0.5)}, rotate=150.945]
+      \piece{2}{(0,0) circle (0.19)}                                          % œil du pied de vérin
+      \piece{2}{(0.10,-0.20) rectangle (0.28,0.20)}                           % fond du corps
+      \piece{2}{(0.28,0.13) rectangle (1.50,0.20)}                            % paroi du corps (coupée)
+      \piece{2}{(0.28,-0.20) rectangle (1.50,-0.13)}
+      \piecevue{3}{(0.32,-0.13) rectangle (0.47,0.13)}                        % piston (non coupé)
+      \piecevue{3}{(0.47,-0.065) rectangle (2.0591,0.065)}                    % tige
+      \piecevue{3}{(2.0591,0) circle (0.16)}                                  % œil de la tige
+      \draw[dash pattern=on 5pt off 2pt on 1pt off 2pt, line width=0.35pt] (-0.35,0) -- (2.35,0);
+      \piecevue{5}{(0,0) circle (0.075)}                                      % axe du pied de vérin (en O)
+      \piecevue{6}{(2.0591,0) circle (0.075)}                                 % axe tige/benne (en P)
+    \end{scope}
+    % --- axe de basculement (en C)
+    \piecevue{4}{(5.6,1.2) circle (0.13)}
+    % --- roues (non coupées), solidaires du châssis : camion freiné
+    \piecevue{0}{(1.05,0.42) circle (0.42)}
+    \piecevue{0}{(1.05,0.42) circle (0.15)}
+    \piecevue{0}{(4.85,0.42) circle (0.42)}
+    \piecevue{0}{(4.85,0.42) circle (0.15)}
+    % --- points caractéristiques
+    \foreach \p/\n/\pos in {C/{(5.6,1.2)}/{}, O/{(4.2,0.5)}/{}, P/{(2.4,1.5)}/{}} {
+      \draw[blue, line width=0.5pt] \n ++(-0.13,0) -- ++(0.26,0) \n ++(0,-0.13) -- ++(0,0.26);
+    }
+    \node[blue, font=\small, inner sep=1pt] at (5.28,1.02) {C};
+    \node[blue, font=\small, inner sep=1pt] at (4.40,0.75) {O};
+    \node[blue, font=\small, inner sep=1pt] at (2.15,1.38) {P};
+    \bnlabels
+  \end{scope}}

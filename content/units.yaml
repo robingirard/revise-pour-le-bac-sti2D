@@ -217,6 +217,113 @@ units:
       - quatre
       numeric: true
       explanation: ddl + composantes transmissibles = 6, donc 6 − 2 = 4.
+    - type: guided
+      level: 3
+      title: 'Diffuseur de parfum : lire les liaisons et les efforts transmissibles'
+      intro: 'Un diffuseur automatique de parfum enfonce la tête d''un aérosol pour libérer une dose. Un moteur entraîne le **pignon 1**, qui attaque un réducteur formé des **pignons doubles 2 et 3** ; en sortie, la **came 4** pousse la **tête d''aérosol 5**.
+
+        Les arbres des pignons 1, 2, 3 et de la came 4 sont guidés en rotation dans le **bâti 0**, tous d''axe parallèle à z. La tête 5 ne peut que **coulisser suivant y** dans le bâti. La came 4 pousse la tête 5 par un simple contact en un point E, de normale y.
+
+        {{fig:guide-diffuseur-schema}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelle liaison modélise le guidage de l''arbre du pignon 2 (centre B) dans le bâti 0 ?'
+        choices:
+        - Une liaison pivot d'axe (B, z)
+        - Une liaison glissière d'axe (B, z)
+        - Une liaison pivot glissant d'axe (B, z)
+        - Un encastrement de centre B
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : une glissière n''autorise qu''une translation, or l''arbre du pignon tourne.'
+        - 'Non : l''arbre est retenu en translation le long de son axe par ses portées ; il ne lui reste que la rotation.'
+        - 'Non : un encastrement bloquerait tout, le pignon ne pourrait pas tourner.'
+        explanation: Guidage en rotation seul = liaison pivot, 1 degré de liberté (Rz). On la note L2/0.
+      - kind: grid
+        prompt: '**Étape 2.** La tête d''aérosol 5 ne peut que coulisser suivant y dans le bâti 0. Cochez ses mobilités par rapport au bâti.'
+        rows:
+        - id: x
+          label: x
+        - id: y
+          label: y
+        - id: z
+          label: z
+        cols:
+        - id: T
+          label: Translation
+        - id: R
+          label: Rotation
+        answer:
+        - Ty
+        cellFeedback:
+          Tx: le coulissement se fait suivant y, pas suivant x
+          Ty: 'c''est la seule mobilité : la tête s''enfonce suivant y'
+          Tz: le coulissement se fait suivant y, pas suivant z
+          Rx: la tête d'aérosol ne tourne pas dans son logement
+          Ry: la tête d'aérosol ne tourne pas sur elle-même
+          Rz: la tête d'aérosol ne tourne pas dans son logement
+        explanation: 'Une seule translation possible : la liaison L5/0 est une glissière de direction y, 1 degré de liberté.'
+      - kind: input
+        prompt: '**Étape 3.** Combien de composantes d''effort (forces + moments) cette glissière transmet-elle ?'
+        answer: '5'
+        accept:
+        - cinq
+        numeric: true
+        explanation: 6 − 1 = 5. La glissière transmet les deux forces X et Z et les trois moments L, M, N ; seule la force Y suivant la direction libre est nulle.
+      - kind: mcq
+        prompt: '**Étape 4.** La came 4 pousse la tête 5 par un contact en un seul point E, de normale y. Quelle est cette liaison ?'
+        choices:
+        - Une liaison ponctuelle de normale (E, y)
+        - Un appui plan de normale (E, y)
+        - Une liaison linéaire rectiligne de normale (E, y)
+        - Une liaison pivot d'axe (E, z)
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : un appui plan suppose un contact sur toute une surface plane, pas en un point.'
+        - 'Non : la linéaire rectiligne correspond à un contact sur une **ligne** droite (cylindre sur plan).'
+        - 'Non : il n''y a ici aucun arbre guidé en rotation, seulement un contact ponctuel.'
+        explanation: 'Contact en un point (sphère-plan) : liaison ponctuelle de normale (E, y), 5 degrés de liberté.'
+      - kind: mcq
+        prompt: '**Étape 5.** Que transmet cette liaison ponctuelle (contact parfait, sans frottement) ?'
+        choices:
+        - Une seule force, portée par la normale y
+        - Une force quelconque et un moment
+        - Trois composantes de force
+        - Rien du tout, puisqu'elle a 5 degrés de liberté
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : avec 5 mobilités il ne reste qu''une seule composante bloquée, donc aucun moment.'
+        - 'Non : les deux composantes tangentielles au plan de contact sont libres (pas de frottement).'
+        - 'Non : la mobilité bloquée (la translation suivant la normale) correspond justement à un effort transmis.'
+        explanation: 5 ddl + 1 composante transmissible = 6. La came ne peut que **pousser** la tête suivant y.
+      - kind: input
+        prompt: '**Étape 6.** Vérification : on additionne les degrés de liberté et les composantes d''effort transmissibles d''une même liaison. Que doit-on toujours trouver ?'
+        answer: '6'
+        accept:
+        - six
+        numeric: true
+        explanation: 'Mobilités et efforts transmissibles sont complémentaires : ddl + composantes = 6 pour toute liaison parfaite.'
+      - kind: mcq
+        prompt: '**Étape 7.** Sur un graphique du dossier technique, la liaison entre la tête 5 et le bâti 0 est nommée « pivot glissant L5/0 ». Que faut-il en penser ?'
+        choices:
+        - C'est une erreur du document, car la tête ne tourne pas sur elle-même
+        - C'est exact, un pivot glissant permet bien de coulisser
+        - C'est exact, car la tête coulisse et le pignon tourne
+        - Impossible de trancher sans connaître la forme du contact
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le pivot glissant permet aussi de **tourner** autour de l''axe (2 ddl) ; ici la rotation est empêchée.'
+        - 'Non : ce sont deux pièces différentes ; on décrit ici la seule liaison entre 5 et 0.'
+        - 'Non : l''énoncé précise que la tête ne fait que s''enfoncer suivant y, cela suffit à conclure.'
+        explanation: 'Une glissière a 1 ddl (Ty), un pivot glissant en a 2 (Ty et Ry). La tête d''aérosol ne tournant pas, la liaison correcte est la **glissière**. Vérifier le vocabulaire d''un document technique fait partie du travail de l''ingénieur.'
 - id: schema
   matiere: ingenierie
   title: Le schéma cinématique
@@ -281,6 +388,105 @@ units:
       - 'Non : toute pièce non déformable appartient à une classe.'
       - 'Non : seule l''absence de mouvement relatif compte.'
       explanation: 'Un encastrement n''autorise aucun mouvement relatif : les deux pièces forment un seul solide.'
+    - type: guided
+      level: 3
+      title: 'Suspension arrière d''une moto électrique : classes et graphe des liaisons'
+      intro: 'Sur une moto électrique, la roue arrière est portée par un **bras oscillant 2** articulé en D sur le **châssis 1**. Un combiné ressort-amortisseur relie le bras au châssis : sa **tige 3** est articulée en B sur le bras oscillant, son **corps 4** est articulé en C sur le châssis, et la tige coulisse dans le corps suivant l''axe (BC). L''axe de la roue arrière est en A, à l''extrémité du bras.
+
+        L''étude est plane, dans le plan (x, y) ; tous les axes d''articulation sont parallèles à z. Le ressort, pièce déformable, n''est pas représenté.
+
+        {{fig:guide-moto-suspension}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Combien de classes d''équivalence cinématique compte ce mécanisme ?'
+        choices:
+        - 4 classes
+        - 3 classes
+        - 5 classes
+        - 2 classes
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la tige et le corps de l''amortisseur bougent l''un par rapport à l''autre, c''est même leur raison d''être : ils ne peuvent pas former une seule classe.'
+        - 'Non : le ressort est une pièce **déformable**, on l''exclut des classes ; il reste quatre solides.'
+        - 'Non : le bras oscillant bouge par rapport au châssis, et le combiné se raccourcit : il y a bien plus de deux solides.'
+        explanation: 'Quatre solides indéformables sans mouvement relatif interne : châssis 1, bras oscillant 2, tige 3, corps 4.'
+      - kind: mcq
+        prompt: '**Étape 2.** Quelle liaison relie le bras oscillant 2 au châssis 1, en D ?'
+        choices:
+        - Une pivot d'axe (D, z)
+        - Une rotule de centre D
+        - Une glissière de direction x
+        - Un encastrement de centre D
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : une rotule laisserait trois rotations ; l''articulation est un axe, pas une bille.'
+        - 'Non : le bras pivote, il ne coulisse pas.'
+        - 'Non : si le bras était encastré, la suspension ne pourrait pas débattre.'
+        explanation: 'Articulation d''axe fixe : liaison pivot d''axe (D, z), 1 degré de liberté (Rz).'
+      - kind: mcq
+        prompt: '**Étape 3.** Dans cette étude plane, quelle liaison modélise le coulissement de la tige 3 dans le corps 4 ?'
+        choices:
+        - Une glissière de direction (BC)
+        - Une pivot d'axe (B, z)
+        - Un encastrement
+        - Un appui plan de normale (BC)
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la pivot en B relie la tige 3 au **bras 2** ; la liaison 3-4 est le coulissement interne de l''amortisseur.'
+        - 'Non : l''amortisseur doit pouvoir se raccourcir, sinon il n''amortirait rien.'
+        - 'Non : un appui plan laisserait la tige se déplacer dans deux directions et tourner ; le guidage est bien plus précis.'
+        explanation: 'La tige coulisse dans le corps suivant (BC) : glissière. En modèle spatial, on retiendrait plutôt une pivot glissant d''axe (BC), la rotation autour de (BC) n''ayant pas de sens dans une étude plane.'
+      - kind: order
+        prompt: '**Étape 4.** Remettez ces liaisons dans l''ordre où on les rencontre en parcourant la **boucle fermée** du mécanisme, en partant du châssis 1 et en passant d''abord par le bras oscillant 2.'
+        steps:
+        - 'Châssis 1 — Bras oscillant 2 : pivot d''axe (D, z)'
+        - 'Bras oscillant 2 — Tige 3 : pivot d''axe (B, z)'
+        - 'Tige 3 — Corps 4 : glissière de direction (BC)'
+        - 'Corps 4 — Châssis 1 : pivot d''axe (C, z)'
+        explanation: Le graphe des liaisons est un **cycle** à 4 sommets et 4 arêtes ; on revient au châssis, d'où le nom de chaîne fermée.
+      - kind: input
+        prompt: '**Étape 5.** Combien d''arêtes (de liaisons) le graphe de ce mécanisme comporte-t-il ?'
+        answer: '4'
+        accept:
+        - quatre
+        numeric: true
+        explanation: 4 classes et 4 liaisons formant une boucle unique. Un mécanisme plan à chaîne fermée de ce type possède une seule mobilité utile.
+      - kind: mcq
+        prompt: '**Étape 6.** Quel est le mouvement du bras oscillant 2 par rapport au châssis 1, et quelle est la trajectoire du point A ?'
+        choices:
+        - Une rotation autour de (D, z) ; A décrit un arc de cercle centré en D
+        - Une translation rectiligne verticale ; A décrit un segment de droite
+        - Un mouvement plan ; A décrit une courbe quelconque
+        - Une translation circulaire ; A décrit un cercle non centré en D
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le bras est articulé en D, il ne peut que tourner autour de cet axe.'
+        - 'Non : le bras a un point fixe (D) par rapport au châssis : c''est une rotation pure, pas un mouvement plan.'
+        - 'Non : en translation circulaire le solide garderait son orientation, ce qui n''est pas le cas du bras.'
+        explanation: 'Un solide qui tourne autour d''un axe fixe est en rotation : tous ses points décrivent des cercles centrés sur (D, z), dont le rayon vaut leur distance à D.'
+      - kind: mcq
+        prompt: '**Étape 7.** La roue arrière passe sur une bosse et remonte. Que se passe-t-il dans le combiné ?'
+        choices:
+        - La distance BC diminue, la tige 3 rentre dans le corps 4 et le ressort se comprime
+        - La distance BC augmente et le ressort se détend
+        - La distance BC ne change pas, seul le bras tourne
+        - Le corps 4 tourne autour de B
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la remontée de la roue rapproche B de C ; le combiné se raccourcit.'
+        - 'Non : la boucle est fermée : si le bras tourne autour de D, la distance BC est obligée de varier.'
+        - 'Non : le corps 4 est articulé en C sur le châssis, pas en B.'
+        explanation: 'Le débattement de la roue se traduit par la variation de la longueur BC : c''est ce raccourcissement qui comprime le ressort et alimente l''amortisseur.'
   - id: graphe
     title: Graphe des liaisons
     icon: 🕸️
@@ -518,6 +724,103 @@ units:
       - 'Non : « 5 fois moins vite » est la bonne formulation (1 ÷ 0,2 = 5).'
       - 'Non : un réducteur augmente le couple (5 fois, aux pertes près).'
       explanation: 'R < 1 : réducteur. ω sortie = 0,2 × ω entrée, et le couple est multiplié par 1 ÷ R = 5 (× η).'
+    - type: guided
+      level: 3
+      title: 'Machine à nettoyer les lunettes (1) : la rotation du rouleau'
+      intro: 'Un prototype nettoie la face avant des verres de lunettes avec un **rouleau 9** humidifié, porté par un chariot. Depuis l''arbre du moteur, le mouvement passe par un **engrenage** (pignon moteur 3, Z3 = 12 dents → roue réceptrice 4, Z4 = 72 dents), puis par un **renvoi d''angle conique** (pignon 7, Z7 = 20 dents → roue 8, Z8 = 20 dents) qui porte le rouleau.
+
+        **Données** : N moteur/chariot = 750 tr/min ; le cahier des charges impose N rouleau/chariot = 135 tr/min ; à vitesse nominale on mesure un couple C = 0,28 N·m sur le rouleau. Rendements de la chaîne : convertir η₁ = 0,89 ; adapter la vitesse η₂ = 0,85 ; transformer le mouvement η₃ = 0,70. Le moteur est donné pour 20 W.
+
+        {{fig:guide-boboptic-schema}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** À quoi sert le couple conique 7-8, puisque Z7 = Z8 = 20 dents ?'
+        choices:
+        - À renvoyer le mouvement à 90°, sans modifier la vitesse (rapport égal à 1)
+        - À diviser la vitesse par 20
+        - À transformer la rotation en translation
+        - À rendre la transmission irréversible
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le rapport vaut Z7 ÷ Z8 = 20 ÷ 20 = 1 : la vitesse est inchangée.'
+        - 'Non : les deux pièces tournent ; il s''agit d''une transmission, pas d''une transformation.'
+        - 'Non : c''est la roue et vis sans fin qui est irréversible, pas un engrenage conique.'
+        explanation: 'Un renvoi d''angle change la **direction** de l''axe de rotation ; avec des dentures égales, il ne change ni la vitesse ni le couple (aux pertes près).'
+      - kind: mcq
+        prompt: '**Étape 2.** Calculer le rapport de transmission r₁ = (Z3 ÷ Z4) × (Z7 ÷ Z8) entre l''arbre moteur et le rouleau.'
+        choices:
+        - 1 ÷ 6 ≈ 0,167
+        - '6'
+        - 1 ÷ 12
+        - 1 ÷ 3
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : c''est l''inverse. Le pignon menant a moins de dents que la roue menée : c''est un réducteur, r₁ < 1.'
+        - 'Non : le renvoi d''angle a un rapport de 1, il ne divise pas encore par 2.'
+        - 'Non : 12 ÷ 72 = 1/6, pas 1/3.'
+        explanation: r₁ = (12 ÷ 72) × (20 ÷ 20) = 1/6 × 1 = 1/6 ≈ 0,167.
+      - kind: input
+        prompt: '**Étape 3.** En déduire la vitesse de rotation du rouleau par rapport au chariot (en tr/min).'
+        answer: '125'
+        numeric: true
+        tolerance: 1
+        unit: tr/min
+        explanation: N rouleau = r₁ × N moteur = 750 ÷ 6 = 125 tr/min.
+      - kind: mcq
+        prompt: '**Étape 4.** Le cahier des charges impose 135 tr/min. Que conclure ?'
+        choices:
+        - 'L''exigence n''est pas respectée : il manque environ 7,4 % de vitesse'
+        - 'L''exigence est respectée, avec une marge d''environ 7 %'
+        - L'exigence est exactement respectée
+        - On ne peut pas conclure sans connaître le couple
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : 125 tr/min est **inférieur** aux 135 tr/min demandés, il n''y a aucune marge.'
+        - 'Non : 125 et 135 tr/min ne sont pas égaux, l''écart est de 10 tr/min.'
+        - 'Non : comparer deux vitesses de rotation ne demande pas de connaître le couple.'
+        explanation: (135 − 125) ÷ 135 = 7,4 %. Le nettoyage sera un peu moins efficace que prévu ; il faut revoir le moteur ou le rapport de transmission.
+      - kind: input
+        prompt: '**Étape 5.** À rapport de transmission inchangé, quelle vitesse le moteur devrait-il avoir pour atteindre les 135 tr/min exigés ? (en tr/min)'
+        answer: '810'
+        numeric: true
+        tolerance: 5
+        unit: tr/min
+        explanation: N moteur = 135 ÷ r₁ = 135 × 6 = 810 tr/min.
+      - kind: input
+        prompt: '**Étape 6.** Convertir la vitesse réelle du rouleau (125 tr/min) en rad/s (2 décimales).'
+        answer: '13.09'
+        numeric: true
+        tolerance: 0.1
+        unit: rad/s
+        explanation: ω = 2π × N ÷ 60 = 2π × 125 ÷ 60 = 13,09 rad/s.
+      - kind: input
+        prompt: '**Étape 7.** Calculer la puissance mécanique P s appliquée au rouleau, avec C = 0,28 N·m (1 décimale).'
+        answer: '3.7'
+        numeric: true
+        tolerance: 0.1
+        unit: W
+        explanation: P s = C × ω = 0,28 × 13,09 = 3,67 W ≈ 3,7 W.
+      - kind: mcq
+        prompt: '**Étape 8.** Rendement global η = η₁ × η₂ × η₃, puis puissance d''entrée P e = P s ÷ η. Que peut-on conclure sur le moteur de 20 W ?'
+        choices:
+        - η = 0,53 et P e = 6,9 W ; le moteur de 20 W convient largement
+        - η = 0,53 et P e = 1,9 W ; le moteur convient
+        - η = 2,44 et P e = 1,5 W ; le moteur convient
+        - η = 0,53 et P e = 6,9 W ; le moteur est insuffisant
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : tu as **multiplié** par le rendement au lieu de diviser. La puissance d''entrée est toujours supérieure à la puissance de sortie.'
+        - 'Non : les rendements se multiplient (0,89 × 0,85 × 0,70), ils ne s''additionnent pas ; un rendement est toujours inférieur à 1.'
+        - 'Non : 6,9 W est bien inférieur aux 20 W disponibles.'
+        explanation: η = 0,89 × 0,85 × 0,70 = 0,53 ; P e = 3,67 ÷ 0,53 = 6,9 W, soit environ un tiers de la puissance du moteur.
   - id: couple
     title: Couple, puissance, rendement
     icon: 🔋
@@ -591,6 +894,86 @@ units:
       - 'Non : la puissance dépend de la vitesse.'
       - 'Non : P est proportionnelle à ω, pas à ω².'
       explanation: 'P = C × ω : doubler ω double P.'
+    - type: guided
+      level: 3
+      title: 'Distributeur de savon sans contact : réduction, cadence et rendement'
+      intro: 'Un distributeur de savon détecte la main de l''utilisateur et délivre une dose. Le moteur électrique (N moteur = 3 517 tr/min) entraîne une **vis sans fin 1** (Z1 = 1 filet) qui attaque la **roue 2** (Z21 = 32 dents). Sur le même arbre que cette roue, un **pignon** (Z22 = 8 dents) entraîne la **roue excentrique 3** (Z3 = 48 dents). À chaque tour de la roue excentrique, le **piston 4** fait un aller-retour et pousse une dose de savon.
+
+        **Données** : puissance nécessaire au piston P piston = 0,13 W ; rendements : roue et vis sans fin η₁ = 0,8 ; engrenage η₂ = 0,9 ; liaison excentrique/piston η₃ = 0,7 ; liaison piston/corps η₄ = 0,9.
+
+        {{fig:guide-savon-cinematique}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Calculer le rapport de transmission global r = (Z1 ÷ Z21) × (Z22 ÷ Z3) entre le moteur et la roue excentrique.'
+        choices:
+        - 1 ÷ 192
+        - 1 ÷ 40
+        - 1 ÷ 6
+        - 1 ÷ 1 536
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : 1/40 reviendrait à écrire Z1 ÷ (Z21 + Z22). Les deux étages ne s''additionnent pas, leurs rapports se **multiplient**.'
+        - 'Non : 1/6 n''est que le second étage (8 ÷ 48) ; il faut y ajouter la réduction de la roue et vis sans fin.'
+        - 'Non : le second étage vaut 8 ÷ 48 = 1/6, et non 1/48.'
+        explanation: r = (1 ÷ 32) × (8 ÷ 48) = (1 ÷ 32) × (1 ÷ 6) = 1 ÷ 192. Une vis à 1 filet donne à elle seule une très forte réduction.
+      - kind: input
+        prompt: '**Étape 2.** En déduire la vitesse de rotation de la roue excentrique (en tr/min, 1 décimale).'
+        answer: '18.3'
+        numeric: true
+        tolerance: 0.3
+        unit: tr/min
+        explanation: N₃ = 3 517 ÷ 192 = 18,3 tr/min.
+      - kind: input
+        prompt: '**Étape 3.** Un tour de la roue excentrique = une dose. Quelle durée sépare deux doses si le moteur tourne en continu ? (en s, 1 décimale)'
+        answer: '3.3'
+        numeric: true
+        tolerance: 0.15
+        unit: s
+        explanation: T = 60 ÷ 18,3 = 3,3 s par tour.
+      - kind: input
+        prompt: '**Étape 4.** Calculer le rendement global de la chaîne η = η₁ × η₂ × η₃ × η₄ (2 décimales).'
+        answer: '0.45'
+        numeric: true
+        tolerance: 0.01
+        explanation: η = 0,8 × 0,9 × 0,7 × 0,9 = 0,4536 ≈ 0,45. Un rendement est sans unité.
+      - kind: input
+        prompt: '**Étape 5.** Quelle puissance le moteur doit-il fournir pour distribuer une dose ? (en W, 2 décimales)'
+        answer: '0.29'
+        numeric: true
+        tolerance: 0.01
+        unit: W
+        explanation: P moteur = P piston ÷ η = 0,13 ÷ 0,4536 = 0,287 W ≈ 0,29 W.
+      - kind: mcq
+        prompt: '**Étape 6.** Pourquoi le moteur doit-il fournir plus que les 0,13 W utiles au piston ?'
+        choices:
+        - Parce que chaque constituant dissipe une partie de la puissance (frottements), d'où un rendement inférieur à 1
+        - Parce que le moteur doit aussi recharger les piles
+        - Parce que la puissance se conserve, donc 0,13 W suffiraient
+        - Parce que la vitesse de rotation du moteur est élevée
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : les piles alimentent le moteur, l''inverse n''existe pas ici.'
+        - 'Non : la puissance **utile** est bien 0,13 W, mais il faut compenser les pertes en amont.'
+        - 'Non : la vitesse seule ne consomme rien ; ce sont les pertes des liaisons et des engrenages qui coûtent.'
+        explanation: 'P entrée = P sortie + pertes. Ici les pertes valent 0,287 − 0,13 = 0,157 W, soit plus de la moitié de la puissance absorbée : la liaison excentrique/piston (η₃ = 0,7) est le maillon le plus dissipatif.'
+      - kind: input
+        prompt: '**Étape 7.** Convertir la vitesse du moteur, 3 517 tr/min, en rad/s (arrondir à l''unité).'
+        answer: '368'
+        numeric: true
+        tolerance: 3
+        unit: rad/s
+        explanation: ω = 2π × 3 517 ÷ 60 = 368 rad/s.
+      - kind: input
+        prompt: '**Étape 8.** En déduire le couple que doit fournir le moteur, C = P ÷ ω, exprimé en **milli**newton-mètre (1 mN·m = 0,001 N·m ; 2 décimales).'
+        answer: '0.78'
+        numeric: true
+        tolerance: 0.05
+        unit: mN·m
+        explanation: C = 0,287 ÷ 368 = 7,8 × 10⁻⁴ N·m = 0,78 mN·m. Un très petit couple à très grande vitesse, converti par le réducteur en un couple 192 fois plus grand à basse vitesse.
   - id: transformation
     title: Transformer le mouvement
     icon: 🔁
@@ -1040,6 +1423,103 @@ units:
       - 'Non : ce serait le produit des composantes.'
       - 'Non : ce serait la moyenne.'
       explanation: ‖v‖ = √(3² + 4²) = √25 = 5 m/s.
+    - type: guided
+      level: 3
+      title: 'Machine à nettoyer les lunettes (2) : la translation du chariot'
+      intro: 'Sur le même prototype de nettoyage de lunettes, le rouleau est porté par un **chariot 1** qui balaie le verre. Le chariot porte un **pignon 5** (rayon primitif R = 10 mm) qui roule sans glisser sur une **crémaillère 6 fixée au bâti 10** : c''est ce qui fait avancer le chariot. Le pignon 5 est monté sur le même arbre que la roue réceptrice 4, laquelle tourne à 125 tr/min par rapport au chariot.
+
+        La mesure de la vitesse du chariot donne la courbe ci-dessous, que l''on modélise par un trapèze : accélération constante de t = 0,25 s à t = 0,50 s, palier à V = 0,125 m/s jusqu''à t = 1,25 s, puis freinage jusqu''à l''arrêt à t = 1,50 s.
+
+        {{fig:guide-boboptic-vitesse}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quel est le mouvement du chariot 1 par rapport au bâti 10 ?'
+        choices:
+        - Une translation rectiligne
+        - Une rotation autour de l'axe du pignon 5
+        - Une translation circulaire
+        - Un mouvement plan
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : c''est le pignon 5 qui tourne ; le chariot, lui, avance en ligne droite.'
+        - 'Non : les points du chariot décrivent des segments de droite, pas des arcs de cercle.'
+        - 'Non : le chariot ne change pas d''orientation, il n''y a donc pas de rotation associée.'
+        explanation: 'Tous les points du chariot ont la même trajectoire rectiligne et la même vitesse : translation rectiligne.'
+      - kind: mcq
+        prompt: '**Étape 2.** Pourquoi le pignon 5 tourne-t-il lui aussi à 125 tr/min par rapport au chariot ?'
+        choices:
+        - 'Parce qu''il est monté sur le même arbre que la roue 4 : ils forment une même classe d''équivalence'
+        - Parce que tous les pignons d'un mécanisme tournent à la même vitesse
+        - Parce qu'il a le même nombre de dents que la roue 4
+        - Parce que la crémaillère est fixe
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : chaque étage d''engrenage change la vitesse ; c''est le montage sur un arbre commun qui l''impose ici.'
+        - 'Non : le pignon 5 a 25 dents et la roue 4 en a 72 ; ils tournent pourtant à la même vitesse car ils sont solidaires.'
+        - 'Non : la crémaillère fixe explique l''avance du chariot, pas la vitesse de rotation du pignon.'
+        explanation: 'Deux pièces solidaires du même arbre n''ont aucun mouvement relatif : même classe d''équivalence, donc même vitesse de rotation.'
+      - kind: input
+        prompt: '**Étape 3.** Convertir 125 tr/min en rad/s (2 décimales).'
+        answer: '13.09'
+        numeric: true
+        tolerance: 0.1
+        unit: rad/s
+        explanation: ω = 2π × 125 ÷ 60 = 13,09 rad/s.
+      - kind: input
+        prompt: '**Étape 4.** Le pignon roule sans glisser sur la crémaillère fixe : la vitesse du chariot vaut V = ω × R, avec R = 10 mm = 0,010 m. Calculer V (en m/s, 3 décimales).'
+        answer: '0.131'
+        numeric: true
+        tolerance: 0.002
+        unit: m/s
+        explanation: V = 13,09 × 0,010 = 0,131 m/s. Attention à convertir le rayon en mètres et la vitesse angulaire en rad/s.
+      - kind: mcq
+        prompt: '**Étape 5.** La mesure donne un palier à 0,125 m/s. Quel est l''écart avec la valeur calculée, et que conclure ?'
+        choices:
+        - 'Environ 4,7 % : l''écart est faible, le modèle est validé'
+        - 'Environ 0,6 % : l''écart est négligeable'
+        - 'Environ 47 % : le modèle est à revoir entièrement'
+        - 'Environ 4,7 %, mais un modèle n''est acceptable que s''il donne exactement la mesure'
+        answer:
+        - 0
+        feedback:
+        - null
+        - '0,006 m/s est l''écart **absolu** ; rapporté à la mesure de 0,125 m/s, il vaut 4,7 %.'
+        - 'Non : erreur d''un facteur 10 ; (0,131 − 0,125) ÷ 0,125 = 0,047.'
+        - 'Non : un modèle cinématique parfait ignore frottements, glissements et jeux ; moins de 5 % d''écart est un très bon accord.'
+        explanation: (0,131 − 0,125) ÷ 0,125 = 4,7 %. L'écart s'explique par les frottements, un léger glissement et l'incertitude de lecture de la courbe.
+      - kind: input
+        prompt: '**Étape 6.** Pendant la phase d''accélération (de 0,25 s à 0,50 s), la vitesse passe de 0 à 0,125 m/s. Calculer l''accélération (en m/s², 2 décimales).'
+        answer: '0.5'
+        numeric: true
+        tolerance: 0.02
+        unit: m/s²
+        explanation: a = Δv ÷ Δt = 0,125 ÷ 0,25 = 0,50 m/s².
+      - kind: input
+        prompt: '**Étape 7.** La course du chariot est l''aire sous la courbe de vitesse, ici un trapèze de grande base 1,25 s (de 0,25 s à 1,50 s), de petite base 0,75 s (de 0,50 s à 1,25 s) et de hauteur 0,125 m/s. Calculer cette course (en m, 3 décimales).'
+        answer: '0.125'
+        numeric: true
+        tolerance: 0.005
+        unit: m
+        explanation: x = ½ × (1,25 + 0,75) × 0,125 = 0,125 m, soit 125 mm de balayage — l'ordre de grandeur d'un verre de lunettes et de son support.
+      - kind: mcq
+        prompt: '**Étape 8.** On remplace le pignon 5 par un pignon de rayon primitif 20 mm, à vitesse de rotation inchangée. Que devient la vitesse du chariot ?'
+        choices:
+        - Elle double (environ 0,262 m/s)
+        - Elle ne change pas
+        - Elle est divisée par deux
+        - Elle est multipliée par quatre
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : V = ω × R dépend directement du rayon primitif.'
+        - 'Non : un plus grand pignon parcourt plus de crémaillère par tour, donc va plus vite.'
+        - 'Non : V est proportionnelle à R, pas à R².'
+        explanation: 'V = ω × R : à ω constante, doubler R double V. En contrepartie, l''effort disponible sur la crémaillère est divisé par deux.'
   - id: acceleration
     title: Accélération et équations
     icon: 📈

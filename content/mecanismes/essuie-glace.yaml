@@ -1,0 +1,269 @@
+# Mécanisme : l'essuie-glace de voiture — quadrilatère articulé (système à quatre barres).
+# Géométrie du dessin et du schéma (cm) : O (0,0) axe moteur, A (0.8,0) maneton,
+# D (4,0) axe du balancier, B (4,2.2). Longueurs : manivelle 0,8 ; bielle 3,88 ;
+# balancier 2,2 ; bâti OD 4. Condition de Grashof : 0,8 + 3,88 = 4,68 ≤ 2,2 + 4 = 6,08,
+# et la plus courte barre (la manivelle) est reliée au bâti → manivelle-balancier :
+# la manivelle fait des tours complets, le balancier oscille de 43,6°.
+id: essuie-glace
+nom: Essuie-glace
+titre: L'essuie-glace (quadrilatère articulé)
+description: 'Mécanisme de transformation de mouvement : le motoréducteur fait tourner en continu une manivelle ; une bielle transmet ce mouvement à un balancier qui porte le bras et le balai, et qui oscille devant le pare-brise.
+
+  '
+repere: 'x : horizontal (le long de la platine) ; y : vertical ; z : axe des quatre pivots, vers l''observateur'
+figures:
+  dessin: mecanisme-essuie-glace-dessin
+  classes: mecanisme-essuie-glace-classes
+  graphe: mecanisme-essuie-glace-graphe
+  schema: mecanisme-essuie-glace-schema
+pieces:
+- num: 0
+  nom: platine (fixée à la carrosserie)
+- num: 1
+  nom: manivelle (plateau de sortie du motoréducteur)
+- num: 2
+  nom: bielle
+- num: 3
+  nom: balancier
+- num: 4
+  nom: bras d'essuie-glace
+- num: 5
+  nom: balai (lame de caoutchouc)
+- num: 6
+  nom: carter du motoréducteur
+classes:
+- id: E0
+  nom: bâti (carrosserie + platine + carter du moteur)
+  pieces:
+  - 0
+  - 6
+  couleur: black
+  bati: true
+  pourquoi: 'Le carter du motoréducteur 6 est boulonné sur la platine 0, elle-même fixée à la carrosserie : ces pièces ne bougent pas l''une par rapport à l''autre, c''est le solide de référence.'
+- id: E1
+  nom: manivelle
+  pieces:
+  - 1
+  couleur: solideE
+  pourquoi: La manivelle est calée sur l'arbre de sortie du motoréducteur et tourne autour de l'axe (O, z) du bâti.
+- id: E2
+  nom: bielle
+  pieces:
+  - 2
+  couleur: solideA
+  pourquoi: 'La bielle relie la manivelle au balancier : ses deux extrémités bougent, elle a un mouvement plan.'
+- id: E3
+  nom: balancier + bras + balai
+  pieces:
+  - 3
+  - 4
+  - 5
+  couleur: solideB
+  pourquoi: 'Le bras 4 est serré sur le balancier 3 (cannelures + écrou) et le balai 5 est clipsé sur le bras : ils oscillent ensemble d''un seul bloc autour de (D, z).'
+liaisons:
+- entre:
+  - E0
+  - E1
+  contact: cylindre-cylindre avec arrêt en translation (palier de sortie)
+  surfaces: l'arbre de sortie du motoréducteur tourne dans le palier du carter
+  liaison: pivot
+  point: O
+  axe: z
+  explication: 'La manivelle ne peut que tourner autour de l''axe (O, z) du bâti : pivot d''axe (O, z).'
+- entre:
+  - E1
+  - E2
+  contact: cylindre-cylindre avec arrêt en translation (maneton)
+  surfaces: la tête de bielle tourne autour du maneton de la manivelle
+  liaison: pivot
+  point: A
+  axe: z
+  explication: 'Articulation manivelle/bielle : pivot d''axe (A, z). Le point A décrit un cercle de centre O.'
+- entre:
+  - E2
+  - E3
+  contact: cylindre-cylindre avec arrêt en translation (rotule d'articulation)
+  surfaces: le pied de bielle tourne autour de l'axe porté par le balancier
+  liaison: pivot
+  point: B
+  axe: z
+  explication: 'Articulation bielle/balancier : pivot d''axe (B, z). Le point B décrit un arc de cercle de centre D.'
+- entre:
+  - E3
+  - E0
+  contact: cylindre-cylindre avec arrêt en translation (palier du bras)
+  surfaces: l'axe du balancier tourne dans le palier de la platine
+  liaison: pivot
+  point: D
+  axe: z
+  explication: 'Le balancier, le bras et le balai pivotent autour de l''axe (D, z) du bâti : pivot d''axe (D, z). C''est la quatrième liaison de la boucle fermée.'
+questions:
+- level: 2
+  type: mcq
+  prompt: 'Sur le schéma cinématique de l''essuie-glace, combien de liaisons **pivot** voit-on ?
+
+    {{fig:mecanisme-essuie-glace-schema}}'
+  choices:
+  - '4'
+  - '3'
+  - '2'
+  - '5'
+  answer: 0
+  explanation: 'Quatre pivots d''axe z : en O (bâti/manivelle), en A (manivelle/bielle), en B (bielle/balancier) et en D (balancier/bâti). Les quatre barres forment une boucle fermée.'
+  feedback:
+  - null
+  - 'Non : n''oublie pas le pivot en D, entre le balancier et le bâti ; le graphe des liaisons est une boucle fermée à quatre liaisons.'
+  - 'Non : compte les cercles du schéma : O, A, B et D.'
+  - 'Non : il y a quatre classes d''équivalence et quatre pivots, pas cinq.'
+- level: 2
+  type: mcq
+  prompt: 'Quel est le mouvement de la **manivelle (E1)** par rapport au **bâti (E0)** quand le moteur tourne ?
+
+    {{fig:mecanisme-essuie-glace-schema}}'
+  choices:
+  - Une rotation continue autour de l'axe (O, z)
+  - Une rotation alternative (va-et-vient) autour de (O, z)
+  - Une translation rectiligne alternative
+  - Un mouvement plan (translation + rotation)
+  answer: 0
+  explanation: 'La manivelle est calée sur l''arbre du motoréducteur : elle fait des tours complets dans le même sens autour de (O, z). C''est possible car c''est la plus courte des quatre barres (condition de Grashof).'
+  feedback:
+  - null
+  - 'Non : c''est le balancier (E3) qui fait un va-et-vient ; la manivelle, elle, fait des tours complets.'
+  - 'Non : aucune glissière dans ce mécanisme ; la manivelle est en liaison pivot avec le bâti.'
+  - 'Non : c''est la bielle (E2) qui a un mouvement plan ; la manivelle a un point fixe, O.'
+- level: 2
+  type: mcq
+  prompt: 'Quel est le mouvement du **balancier, du bras et du balai (E3)** par rapport au bâti ?
+
+    {{fig:mecanisme-essuie-glace-schema}}'
+  choices:
+  - Une rotation alternative (oscillation) autour de l'axe (D, z)
+  - Une rotation continue autour de (D, z)
+  - Une translation circulaire
+  - Un mouvement plan (translation + rotation)
+  answer: 0
+  explanation: 'E3 est en liaison pivot d''axe (D, z) avec le bâti, mais la bielle l''empêche de faire un tour complet : il oscille entre deux positions extrêmes (ici 43,6° d''amplitude), ce qui balaie le pare-brise.'
+  feedback:
+  - null
+  - 'Non : le balancier ne peut pas faire de tour complet, sinon le balai tournerait sans fin sur le pare-brise ; il oscille entre deux positions extrêmes.'
+  - 'Non : dans une translation circulaire le solide ne tourne pas ; ici le balai change d''orientation, il tourne autour de (D, z).'
+  - 'Non : E3 a un point fixe, D, donc son mouvement est une rotation, pas un mouvement plan.'
+- level: 3
+  type: mcq
+  prompt: Quel solide de l'essuie-glace a un **mouvement plan** (ni translation pure, ni rotation pure) par rapport au bâti ?
+  choices:
+  - La bielle (E2)
+  - La manivelle (E1)
+  - Le balancier et son balai (E3)
+  - La platine (E0)
+  answer: 0
+  explanation: 'La bielle n''a aucun point fixe : son extrémité A tourne autour de O, son extrémité B décrit un arc autour de D. Elle se déplace ET tourne : c''est un mouvement plan.'
+  feedback:
+  - null
+  - 'Non : la manivelle a un point fixe (O), c''est une rotation pure.'
+  - 'Non : le balancier a un point fixe (D), c''est une rotation (alternative) pure.'
+  - 'Non : la platine est le solide de référence, elle ne bouge pas.'
+- level: 3
+  type: mcq
+  prompt: 'Quelle est la trajectoire du point **B** (articulation bielle/balancier) dans le repère du bâti ?
+
+    {{fig:mecanisme-essuie-glace-schema}}'
+  choices:
+  - Un arc de cercle de centre D
+  - Un cercle complet de centre O
+  - Un segment de droite horizontal
+  - Une ellipse de centre D
+  answer: 0
+  explanation: 'B appartient au balancier, en liaison pivot d''axe (D, z) avec le bâti : il reste à 2,2 cm de D. Comme le balancier oscille, B ne décrit qu''un **arc** de ce cercle.'
+  feedback:
+  - null
+  - 'Non : c''est la trajectoire du point A, qui appartient à la manivelle ; B appartient au balancier, qui tourne autour de D.'
+  - 'Non : ce serait le cas d''un piston guidé par une glissière ; ici B est à distance constante de D.'
+  - 'Non : B reste à distance constante (2,2 cm) de D : la trajectoire est un arc de cercle, pas une ellipse.'
+- level: 3
+  type: mcq
+  prompt: 'À quoi sert le **quadrilatère articulé** O-A-B-D de l''essuie-glace ?
+
+    {{fig:mecanisme-essuie-glace-graphe}}'
+  choices:
+  - À transformer la rotation continue du moteur en oscillation du balai
+  - À transformer la rotation du moteur en translation du balai
+  - À multiplier la vitesse de rotation du moteur
+  - À bloquer le balai en position haute
+  answer: 0
+  explanation: 'C''est un mécanisme de transformation de mouvement : entrée = rotation continue de la manivelle, sortie = rotation alternative (oscillation) du balancier. Le moteur peut tourner toujours dans le même sens, ce qui est bien plus simple qu''un moteur qui changerait de sens à chaque passage.'
+  feedback:
+  - null
+  - 'Non : aucune glissière ici, les quatre liaisons sont des pivots ; le balai tourne, il ne translate pas.'
+  - 'Non : c''est le rôle d''un engrenage ou d''un système poulies-courroie, pas d''un quadrilatère articulé.'
+  - 'Non : le mécanisme sert à faire bouger le balai, pas à le bloquer.'
+- level: 3
+  type: mcq
+  prompt: 'Qu''est-ce qui différencie l''essuie-glace du système **bielle-manivelle** ?
+
+    {{fig:mecanisme-essuie-glace-graphe}}'
+  choices:
+  - La quatrième liaison est un pivot (balancier) au lieu d'une glissière (piston)
+  - Il n'y a pas de bielle dans l'essuie-glace
+  - La manivelle ne tourne pas dans l'essuie-glace
+  - L'essuie-glace compte trois classes d'équivalence au lieu de quatre
+  answer: 0
+  explanation: 'Les deux mécanismes ont le même début (bâti, manivelle, bielle). Dans le bielle-manivelle, la bielle pousse un piston guidé par une **glissière** : sortie en translation alternative. Dans l''essuie-glace, elle tire un balancier monté sur un **quatrième pivot** : sortie en rotation alternative.'
+  feedback:
+  - null
+  - 'Non : la bielle (E2) est bien là, c''est la pièce qui relie A à B.'
+  - 'Non : la manivelle tourne en continu dans les deux mécanismes ; c''est la sortie qui change.'
+  - 'Non : les deux mécanismes comptent quatre classes d''équivalence (E0 à E3).'
+- level: 3
+  type: mcq
+  skill: classes
+  prompt: 'Pourquoi le balai (5) est-il dans la **même** classe d''équivalence que le balancier (3) ?
+
+    {{fig:mecanisme-essuie-glace-classes}}'
+  choices:
+  - Parce que le bras qui les relie est serré sur le balancier et clipsé au balai : aucun mouvement relatif
+  - Parce qu'ils sont tous les deux en contact avec le pare-brise
+  - Parce qu'ils sont de la même couleur sur le dessin
+  - Parce qu'ils sont les deux pièces les plus légères
+  answer: 0
+  explanation: 'Une classe d''équivalence regroupe les pièces qui n''ont aucun mouvement relatif. Balancier 3, bras 4 et balai 5 sont assemblés de façon fixe : ils forment la classe E3, qui oscille d''un seul bloc autour de (D, z).'
+  feedback:
+  - null
+  - 'Non : seul le balai touche le pare-brise, et le contact avec l''extérieur ne définit pas une classe.'
+  - 'Non : c''est l''inverse — on les colore de la même couleur **parce qu''ils** sont dans la même classe.'
+  - 'Non : la masse et la taille ne comptent pas pour les classes d''équivalence, seul le mouvement relatif compte.'
+animation:
+  bbox:
+  - -1.9
+  - -2.15
+  - 5.6
+  - 3.4
+  border: 4
+  duration: 4
+  legende: 'La manivelle tourne en continu ; la bielle fait osciller le balancier qui porte le balai : c''est un système à quatre barres.'
+  classes:
+    E0:
+      motion: fixed
+    E1:
+      motion: rotate
+      center:
+      - 0
+      - 0
+      turns: 1
+    E2:
+      motion: coupler
+      crank: E1
+      a:
+      - 0.8
+      - 0
+      slider: E3
+      b:
+      - 4
+      - 2.2
+    E3:
+      motion: rocker
+      pivot:
+      - 4
+      - 0
+      coupler: E2

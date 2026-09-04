@@ -1,0 +1,73 @@
+%% Diagramme des cas d'utilisation (uc) du pont transbordeur de Nantes.
+%% Frontière du système = rectangle bleu ; acteurs à l'extérieur ; relations
+%% «extend» (fonction non indispensable) et «include» (fonction indispensable).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cadre/.style={draw=black!70, line width=0.9pt},
+  trait/.style={line width=1pt, line cap=round, line join=round},
+  cas/.style={draw=solideD, line width=1pt, fill=solideD!12},
+  txt/.style={font=\scriptsize, align=center, inner sep=1pt,
+              execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+  lien/.style={line width=0.8pt, black!75},
+  pointille/.style={-{Straight Barb[length=4pt,width=6pt]}, line width=0.9pt,
+                    dash pattern=on 3pt off 2pt, solideD},
+  ster/.style={font=\scriptsize, inner sep=2pt, anchor=west}]
+
+%% ---- macros de pictogrammes -----------------------------------------
+\newcommand\acteur[3]{%
+  \begin{scope}[shift={(#1,#2)}, trait, draw=#3]
+    \draw (0,0.42) circle (0.15); \draw (0,0.27) -- (0,-0.12);
+    \draw (-0.28,0.12) -- (0.28,0.12);
+    \draw (-0.22,-0.5) -- (0,-0.12) -- (0.22,-0.5);
+  \end{scope}}
+\newcommand\cube[3]{%
+  \begin{scope}[shift={(#1,#2)}, trait, draw=#3]
+    \draw[fill=#3!12] (-0.3,-0.3) rectangle (0.2,0.2);
+    \draw (-0.3,0.2) -- (-0.14,0.36) -- (0.36,0.36) -- (0.2,0.2);
+    \draw (0.36,0.36) -- (0.36,-0.14) -- (0.2,-0.3);
+  \end{scope}}
+
+%% ================== cadre à onglet ====================================
+\draw[cadre] (0,0) rectangle (9.4,5.5);
+\draw[cadre] (0,5.05) -- (3.55,5.05) -- (3.8,5.28) -- (3.8,5.5);
+\node[font=\scriptsize, anchor=west, inner sep=3pt] at (0.1,5.27)
+     {\texttt{uc} [Paquet] Utilisation principale};
+
+%% ================== frontière du système ==============================
+\draw[draw=solideB, line width=1pt, fill=solideB!7] (2.55,0.25) rectangle (6.85,4.75);
+\node[txt, text=solideB] at (4.7,4.5) {«useCaseModel»};
+\node[font=\small\bfseries, text=solideB] at (4.7,4.15) {Pont transbordeur};
+
+%% ================== les trois cas d'utilisation =======================
+\draw[cas] (4.7,3.35) ellipse (1.85 and 0.48);
+\node[txt, text width=3.3cm] at (4.7,3.35) {Déambuler sur la rue aérienne};
+\draw[cas] (4.7,2.05) ellipse (1.85 and 0.48);
+\node[txt, text width=3.3cm] at (4.7,2.05) {Franchir la Loire};
+\draw[cas] (4.7,0.85) ellipse (1.85 and 0.48);
+\node[txt, text width=3.3cm] at (4.7,0.85) {Permettre le passage de bateaux};
+
+%% ================== relations «extend» et «include» ===================
+\draw[pointille] (4.2,2.87) -- (4.2,2.53);
+\node[ster, text=solideD] at (4.3,2.7) {«extend»};
+\draw[pointille] (4.2,1.57) -- (4.2,1.33);
+\node[ster, text=solideD] at (4.3,1.45) {«include»};
+
+%% ================== acteurs principaux (à gauche) =====================
+\acteur{1.15}{3.5}{solideB}
+\node[txt, text width=1.9cm] at (1.15,2.75) {Utilisateur};
+\draw[lien] (1.4,3.25) -- (3.05,2.35);
+\cube{1.2}{1.35}{solideE}
+\node[txt, text width=1.9cm] at (1.2,0.75) {Busway};
+\draw[lien] (1.6,1.45) -- (3.05,1.8);
+
+%% ================== acteurs secondaires (à droite) ====================
+\cube{8.4}{3.6}{solideE}
+\node[txt, text width=1.9cm] at (8.45,3.0) {La Loire};
+\draw[lien] (8.15,3.4) -- (6.4,2.35);
+\cube{8.4}{1.35}{solideE}
+\node[txt, text width=1.9cm] at (8.45,0.75) {Bateaux};
+\draw[lien] (8.15,1.25) -- (6.4,1.0);
+\end{tikzpicture}
+\end{document}

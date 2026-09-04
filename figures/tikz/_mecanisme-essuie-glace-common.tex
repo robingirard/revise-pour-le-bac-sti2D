@@ -1,0 +1,49 @@
+%% Dessin d'ensemble simplifié de l'essuie-glace de voiture (système à quatre barres).
+%% Inclus par mecanisme-essuie-glace-dessin.tex (pièces numérotées, en noir) et
+%% mecanisme-essuie-glace-classes.tex (pièces colorées par classe d'équivalence) ;
+%% chacun définit \piece{<n° de pièce>}{<chemin>} (l'apparence d'une pièce) et \eglabels.
+%% Repère : x horizontal, y vertical, z vers l'observateur. Cotes en cm.
+%% Points caractéristiques : O (0,0) axe moteur, A (0.8,0) maneton de la manivelle,
+%% D (4,0) axe du balancier, B (4,2.2) articulation bielle/balancier.
+
+%% \barre{P}{Q}{demi-largeur} : chemin fermé du rectangle d'axe PQ (pas de rotation de repère,
+%% les quatre sommets sont construits avec la bibliothèque calc).
+\newcommand\barre[3]{($(#1)!#3!90:(#2)$) -- ($(#2)!#3!-90:(#1)$)
+                  -- ($(#2)!#3!90:(#1)$) -- ($(#1)!#3!-90:(#2)$) -- cycle}
+
+\newcommand\essuieglace{%
+  \begin{scope}[line width=0.6pt, line join=round]
+    \coordinate (O) at (0,0);    \coordinate (A) at (0.8,0);
+    \coordinate (D) at (4,0);    \coordinate (B) at (4,2.2);
+    \coordinate (T) at (4,3.05);
+    % ---- 0 : platine, boulonnée sur la carrosserie (semelle + montant du palier D)
+    \piece{0}{(-1.55,-2.05) rectangle (5.45,-1.55)}
+    \piece{0}{(3.42,-1.55) -- (3.42,-0.35) arc (180:0:0.58) -- (4.58,-1.55) -- cycle}
+    % ---- 6 : carter du motoréducteur + palier de l'arbre de sortie en O
+    \piece{6}{(-1.3,-1.55) rectangle (1.0,-0.42)}
+    \piece{6}{(O) circle (0.42)}
+    % ---- 3 : balancier (levier calé sur l'axe D)
+    \piece{3}{\barre{D}{B}{0.17cm}}
+    \piece{3}{(D) circle (0.3)}
+    \piece{3}{(B) circle (0.2)}
+    % ---- 4 : bras d'essuie-glace (prolonge le balancier au-delà de B)
+    \piece{4}{\barre{B}{T}{0.11cm}}
+    % ---- 5 : balai (monture + lame de caoutchouc), perpendiculaire au bras
+    \piece{5}{(2.95,2.93) rectangle (5.05,3.19)}
+    \piece{5}{(3.05,2.72) rectangle (4.95,2.93)}
+    % ---- 2 : bielle
+    \piece{2}{\barre{A}{B}{0.16cm}}
+    \piece{2}{(A) circle (0.2)}
+    \piece{2}{(B) circle (0.2)}
+    % ---- 1 : manivelle (plateau de sortie du motoréducteur) et son maneton en A
+    \piece{1}{\barre{O}{A}{0.19cm}}
+    \piece{1}{(O) circle (0.28)}
+    \piece{1}{(A) circle (0.14)}
+    % ---- points caractéristiques
+    \foreach \p/\n/\lab in {O/{(0,0)}/{(-0.62,0.30)}, A/{(0.8,0)}/{(1.10,0.48)},
+                            B/{(4,2.2)}/{(3.56,2.46)}, D/{(4,0)}/{(4.80,0.20)}} {
+      \draw[blue, line width=0.5pt] \n ++(-0.13,0) -- ++(0.26,0) \n ++(0,-0.13) -- ++(0,0.26);
+      \node[blue, font=\small, inner sep=1pt] at \lab {\p};
+    }
+    \eglabels
+  \end{scope}}

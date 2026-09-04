@@ -260,6 +260,97 @@ units:
       - 'Non : le moment change lui aussi de signe ; c''est le torseur **complet** qui est l''opposé.'
       - 'Non : le principe des actions mutuelles change les signes, il ne permute rien.'
       explanation: 'Principe des actions mutuelles : $\{\tau_{2 \rightarrow 1}\}_A = -\{\tau_{1 \rightarrow 2}\}_A$. Cette égalité n''est vraie que si les deux torseurs sont réduits **au même point**.'
+    - type: guided
+      level: 3
+      title: Le combiné ressort-amortisseur d'une moto électrique
+      intro: 'Sur une moto électrique, la roue arrière est portée par un **bras oscillant** articulé sur le châssis. Un **combiné ressort-amortisseur** relie le bras au châssis : la **tige 3** est articulée en $B$ sur le bras oscillant, le **corps 4** en $C$ sur le châssis. Le ressort entoure le combiné et travaille en **compression**.
+
+
+        **Données** : raideur du ressort $k = 100$ N/mm ; longueur libre 190 mm ; **précontrainte** réglée à 8 mm (le ressort est déjà écrasé de 8 mm, suspension détendue) ; course de l''amortisseur 75 mm ; entraxe $BC = 310$ mm. On relève sur le schéma que l''axe $(BC)$ fait un angle de 60° avec l''horizontale. Raideurs disponibles au catalogue : 80, 90, 100, 110 et 120 N/mm.
+
+        {{fig:guide-moto-suspension}}'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Un ressort exerce un effort $F = k \times x$, où $x$ est son écrasement. Calculer la norme de l''effort dû à la seule précontrainte.'
+        answer: '800'
+        numeric: true
+        tolerance: 5
+        unit: N
+        explanation: $F = 100 \times 8 = 800$ N. Attention aux unités cohérentes ($k$ en N/mm et $x$ en mm donnent bien des newtons).
+      - kind: mcq
+        prompt: '**Étape 2.** Comment modéliser les deux actions du ressort précontraint, sur le corps 4 en $C$ et sur la tige 3 en $B$ ?'
+        choices:
+        - deux forces de 800 N portées par l'axe $(BC)$, de sens opposés, dirigées vers l'**extérieur** du combiné
+        - deux forces de 800 N portées par $(BC)$, dirigées l'une vers l'autre
+        - deux forces verticales de 800 N dirigées vers le haut
+        - deux forces de 400 N perpendiculaires à l'axe $(BC)$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : ce serait un ressort **tendu**. Un ressort comprimé repousse ses deux appuis.'
+        - 'Non : le combiné est incliné à 60° ; ses efforts sont portés par son axe, pas par la verticale. Et deux forces de même sens ne s''équilibreraient pas.'
+        - 'Non : un ressort hélicoïdal de compression n''exerce d''effort que **suivant son axe**, et les 400 N sont seulement une projection.'
+        explanation: 'Le ressort est un solide soumis à deux forces : même support (l''axe $BC$), même norme (800 N), sens opposés. Comprimé, il pousse le corps 4 vers $C$ et la tige 3 vers $B$.'
+      - kind: mcq
+        prompt: '**Étape 3.** L''axe $(BC)$ fait 60° avec l''horizontale. Quelles sont les composantes horizontale et verticale de cet effort de 800 N ?'
+        choices:
+        - 400 N à l'horizontale et 693 N à la verticale
+        - 693 N à l'horizontale et 400 N à la verticale
+        - 800 N à la verticale et 0 N à l'horizontale
+        - 400 N à l'horizontale et 400 N à la verticale
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : les rôles du sinus et du cosinus sont inversés. L''angle est mesuré depuis l''**horizontale**, donc la composante horizontale utilise le cosinus.'
+        - 'Non : ce serait le cas d''un combiné vertical ; à 60°, une partie de l''effort est horizontale.'
+        - 'Non : les deux composantes ne sont égales que pour un angle de 45°.'
+        explanation: '$F_x = F \cos 60° = 800 \times 0{,}5 = 400$ N et $F_y = F \sin 60° = 800 \times 0{,}866 = 693$ N. Vérification par Pythagore : $\sqrt{400^2 + 693^2} = 800$ N.'
+      - kind: input
+        prompt: '**Étape 4.** L''amortisseur arrive en **butée** : toute sa course de 75 mm est consommée, en plus de la précontrainte de 8 mm. Quel effort le ressort exerce-t-il alors ?'
+        answer: '8300'
+        numeric: true
+        tolerance: 50
+        unit: N
+        explanation: $x = 8 + 75 = 83$ mm, donc $F = 100 \times 83 = 8\,300$ N, soit plus de 10 fois l'effort de précontrainte.
+      - kind: input
+        prompt: '**Étape 5.** On remplace le ressort par le plus raide du catalogue (120 N/mm), avec la même précontrainte de 8 mm. Quel est le nouvel effort de précontrainte ?'
+        answer: '960'
+        numeric: true
+        tolerance: 10
+        unit: N
+        explanation: $F = 120 \times 8 = 960$ N, soit 20 % de plus qu'avec le ressort de 100 N/mm.
+      - kind: mcq
+        prompt: '**Étape 6.** En roulant, la suspension **talonne** (elle arrive en butée sur les bosses). Que peut faire le constructeur ?'
+        choices:
+        - augmenter la raideur (110 ou 120 N/mm) ou augmenter la précontrainte
+        - diminuer la raideur (80 ou 90 N/mm) ou diminuer la précontrainte
+        - augmenter la raideur mais diminuer la précontrainte
+        - allonger l'entraxe $BC$ au-delà de 310 mm
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : assouplir la suspension augmenterait l''enfoncement, donc aggraverait le talonnage.'
+        - 'Non : diminuer la précontrainte augmente l''enfoncement au repos, ce qui rapproche encore de la butée.'
+        - 'Non : l''entraxe est imposé par la position des ancrages $B$ et $C$ sur la moto ; les deux seuls réglages sont le ressort et la précontrainte.'
+        explanation: Les deux leviers réduisent l'enfoncement à charge égale. Le prix à payer est un confort moindre.
+      - kind: mcq
+        prompt: '**Étape 7.** Que se passe-t-il si l''on exagère la précontrainte ?'
+        choices:
+        - la course utile devient trop faible et la roue arrière peut perdre le contact avec le sol
+        - l'amortisseur arrive en butée à la moindre bosse
+        - le ressort casse en traction
+        - la raideur du ressort diminue
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : c''est la conséquence d''une précontrainte **insuffisante**.'
+        - 'Non : rien n''indique une rupture ; le ressort travaille d''ailleurs en compression.'
+        - 'Non : la raideur est une caractéristique du ressort (100 N/mm) ; le réglage de précontrainte ne la modifie pas.'
+        explanation: 'Trop peu de précontrainte : risque de talonnage. Trop de précontrainte : la roue décolle sur les irrégularités et l''adhérence chute. Le réglage est un compromis.'
   - id: statique-pfs
     title: Le principe fondamental de la statique
     icon: ⚖️
@@ -507,6 +598,89 @@ units:
       - 'Non : 6 équations, c''est le cas général dans l''espace ; en plan il n''en reste que 3.'
       - 'Non : le PFS fournit toujours plusieurs équations scalaires.'
       explanation: 'Dans le plan $(x, y)$ : $\sum F_x = 0$, $\sum F_y = 0$ et $\sum M_z = 0$. On ne peut donc pas déterminer plus de 3 inconnues par isolement.'
+    - type: guided
+      level: 3
+      title: La trottinette électrique peut-elle gravir une pente de 14 % ?
+      intro: 'On vérifie qu''une trottinette électrique permet à son utilisateur de gravir une **pente de 14 %** à vitesse constante. Une pente de 14 % correspond à une élévation de 14 m pour 100 m parcourus **horizontalement**.
+
+
+        On isole l''ensemble $t$ = {usager + trottinette}, de masse $m = 75$ kg, en montée à vitesse constante, dans le repère lié à la pente $(\vec{u}, \vec{v})$ : $\vec{u}$ parallèle à la pente vers le haut, $\vec{v}$ perpendiculaire à la pente. Les actions extérieures sont le **poids** en $G$, l''action du sol sur la **roue avant motrice** en $A$ (traction $F_{tract}$ suivant $\vec{u}$ et réaction normale suivant $\vec{v}$) et l''action du sol sur la **roue arrière** en $B$ (réaction normale suivant $\vec{v}$). On néglige la résistance au roulement et les effets aérodynamiques. Roues de 8,5 pouces, soit 216 mm de diamètre ; $g = 9{,}81$ m/s².
+
+        {{fig:guide-trottinette-pente}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Comment traduire « pente de 14 % » en angle $\alpha$ ?'
+        choices:
+        - $\tan \alpha = 0{,}14$
+        - $\alpha = 14°$
+        - $\sin \alpha = 0{,}14$
+        - $\cos \alpha = 0{,}14$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : un pourcentage de pente n''est pas un angle en degrés. 14 % correspond à environ 8°.'
+        - 'Presque : le sinus rapporte la hauteur à la distance mesurée **le long de la pente**, alors que le pourcentage la rapporte à la distance **horizontale**. Pour de faibles pentes, les deux sont proches (0,1387 contre 0,14).'
+        - 'Non : le cosinus vaudrait presque 1 pour une pente aussi faible.'
+        explanation: 'Pente = hauteur ÷ distance horizontale = tangente de l''angle : $\tan \alpha = 14/100 = 0{,}14$.'
+      - kind: input
+        prompt: '**Étape 2.** Calculer l''angle $\alpha$ en degrés (2 décimales).'
+        answer: '7.97'
+        numeric: true
+        tolerance: 0.05
+        unit: °
+        explanation: $\alpha = \arctan(0{,}14) = 7{,}97°$, soit 0,139 rad.
+      - kind: mcq
+        prompt: '**Étape 3.** La trottinette monte à **vitesse constante**. Peut-on appliquer le principe fondamental de la statique ?'
+        choices:
+        - 'Oui, car l''accélération est nulle : la somme des forces extérieures et la somme des moments sont nulles'
+        - Non, le PFS ne s'applique qu'à un solide immobile
+        - Oui, mais uniquement l'équation des moments
+        - Non, il faut écrire $\sum \vec{F} = m \vec{a}$ avec $a \neq 0$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : c''est l''**accélération** qui doit être nulle, pas la vitesse. Un mouvement rectiligne uniforme est un cas d''équilibre.'
+        - 'Non : les deux équations (résultante et moment) restent valables.'
+        - 'Non : à vitesse constante $\vec{a} = \vec{0}$, donc $\sum \vec{F} = \vec{0}$.'
+        explanation: Vitesse constante en direction et en norme ⇒ accélération nulle ⇒ le PFS s'applique exactement comme à l'arrêt.
+      - kind: input
+        prompt: '**Étape 4.** L''équilibre projeté sur $\vec{u}$ donne $F_{tract} = m \, g \sin \alpha$. Calculer cet effort de traction (en N, arrondir à l''unité).'
+        answer: '102'
+        numeric: true
+        tolerance: 1.5
+        unit: N
+        explanation: $m g = 75 \times 9{,}81 = 735{,}75$ N ; $F_{tract} = 735{,}75 \times \sin 7{,}97° = 735{,}75 \times 0{,}1386 = 102$ N. Seule la composante du poids **parallèle** à la pente doit être vaincue.
+      - kind: input
+        prompt: '**Étape 5.** L''équilibre projeté sur $\vec{v}$ donne la somme des deux réactions normales, $R_{av} + R_{ar} = m \, g \cos \alpha$. Calculer cette somme (en N, arrondir à l''unité).'
+        answer: '729'
+        numeric: true
+        tolerance: 3
+        unit: N
+        explanation: $735{,}75 \times \cos 7{,}97° = 735{,}75 \times 0{,}9903 = 729$ N, à peine moins que le poids total (735,75 N) car la pente est faible.
+      - kind: input
+        prompt: '**Étape 6.** L''équilibre de la roue avant s''écrit $C_{mot} = F_{tract} \times \|OA\|$, où $\|OA\|$ est le rayon de la roue. Calculer le couple moteur nécessaire (en N·m, 1 décimale).'
+        answer: '11.0'
+        numeric: true
+        tolerance: 0.4
+        unit: N·m
+        explanation: 'Rayon $= 216/2 = 108$ mm $= 0{,}108$ m ; $C_{mot} = 102 \times 0{,}108 = 11{,}0$ N·m. Piège classique : utiliser le diamètre au lieu du rayon double le résultat.'
+      - kind: mcq
+        prompt: '**Étape 7.** On tient maintenant compte de la trottinette elle-même, soit 15 kg de plus (masse totale 90 kg). Que deviennent les résultats ?'
+        choices:
+        - $F_{tract} \approx 122$ N et $C_{mot} \approx 13{,}2$ N·m (tout est multiplié par 90/75 = 1,2)
+        - rien ne change, la masse de la trottinette est portée par les roues
+        - $F_{tract} \approx 122$ N mais le couple reste 11,0 N·m
+        - $F_{tract}$ et $C_{mot}$ sont multipliés par 1,44
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : c''est bien l''ensemble {usager + trottinette} qui est isolé ; toute masse ajoutée alourdit la composante du poids à vaincre.'
+        - 'Non : le couple est proportionnel à l''effort de traction, il augmente dans le même rapport.'
+        - 'Non : $F_{tract}$ est proportionnelle à $m$, pas à $m^2$ ; le facteur est 1,2 et non $1{,}2^2$.'
+        explanation: $F_{tract} = 90 \times 9{,}81 \times 0{,}1386 = 122$ N et $C_{mot} = 122 \times 0{,}108 = 13{,}2$ N·m. Négliger la masse du véhicule sous-estime de 20 % le couple à fournir.
   - id: rdm-sollicitations
     title: Poutres et sollicitations
     icon: 🏗️
@@ -768,6 +942,96 @@ units:
       - 'Non : en compression comme en traction, seul $N$ est non nul ; les deux se distinguent par le **signe** de $N$.'
       - 'Non : le cisaillement pur donnerait un effort tranchant $T_y$ **sans** moment de flexion ; ici $M_{fz}$ est présent.'
       explanation: Effort tranchant $T_y$ + moment de flexion $M_{fz}$ = **flexion**. La flexion provoque un fléchissement pouvant aller jusqu'à la rupture.
+    - type: guided
+      level: 3
+      title: 'Descente de charges : de la toiture-parking aux fondations'
+      intro: 'La toiture d''une gare de dépôt de bus sert de **parking** au personnel. La dalle en béton armé repose sur des **poutres**, elles-mêmes portées par des **poteaux**. On étudie un ensemble poteaux-poutre et la **zone d''influence** de dalle qu''il supporte, puis on vérifie ses fondations.
+
+
+        **Données** : superficie de la zone d''influence 348 m², épaisseur de la dalle 0,40 m ; charge d''exploitation (stationnement de véhicules légers) 2,5 kN/m² ; charge de neige 0,45 kN/m² ; poids volumique du béton armé 25 kN/m³ ; la charge se répartit également sur les **3 poteaux** ; chaque fondation standard est carrée de 0,80 m de côté ; le sol argileux admet une pression de 2 MPa (1 MPa = 1 000 kN/m²). On néglige le poids propre des poteaux, de la poutre et des fondations.
+
+        {{fig:guide-fondations-zone}}'
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Calculer la charge surfacique maximale $q_{ne}$ que doit supporter la toiture, dans le cas le plus défavorable (neige **et** stationnement).'
+        answer: '2.95'
+        numeric: true
+        tolerance: 0.02
+        unit: kN/m²
+        explanation: $q_{ne} = 2{,}5 + 0{,}45 = 2{,}95$ kN/m². Le cas le plus défavorable cumule les deux charges, il ne les moyenne pas.
+      - kind: input
+        prompt: '**Étape 2.** En déduire la charge totale $Q_{ne}$ (neige + exploitation) reçue par la zone d''influence de 348 m² (en kN, 1 décimale).'
+        answer: '1026.6'
+        numeric: true
+        tolerance: 5
+        unit: kN
+        explanation: $Q_{ne} = 2{,}95 \times 348 = 1\,026{,}6$ kN. Une charge surfacique (kN/m²) multipliée par une surface (m²) donne bien une force (kN).
+      - kind: input
+        prompt: '**Étape 3.** Calculer le poids propre $P_d$ de cette portion de dalle (volume × poids volumique), en kN.'
+        answer: '3480'
+        numeric: true
+        tolerance: 20
+        unit: kN
+        explanation: $V = 348 \times 0{,}40 = 139{,}2$ m³ ; $P_d = 25 \times 139{,}2 = 3\,480$ kN. Le poids propre du béton est ici plus de trois fois supérieur aux charges d'exploitation.
+      - kind: mcq
+        prompt: '**Étape 4.** Quelle charge totale $Q_T$ la dalle transmet-elle à l''ensemble poteaux-poutre ?'
+        choices:
+        - 4 506,6 kN, que l'on arrondira à 4 500 kN pour la suite
+        - 3 480 kN, seul le poids de la dalle descend jusqu'aux poteaux
+        - 1 026,6 kN, le poids propre de la dalle n'intervient pas
+        - 2 453,4 kN, il faut retrancher les charges d'exploitation
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : les véhicules et la neige pèsent aussi sur la structure, ils descendent avec le reste.'
+        - 'Non : la dalle pèse elle-même 3 480 kN, c''est même la part principale.'
+        - 'Non : toutes les charges s''**additionnent** dans une descente de charges, aucune ne se retranche.'
+        explanation: $Q_T = Q_{ne} + P_d = 1\,026{,}6 + 3\,480 = 4\,506{,}6$ kN. Une descente de charges consiste à cumuler, étage après étage, tout ce qui pèse au-dessus.
+      - kind: mcq
+        prompt: '**Étape 5.** À quelles sollicitations sont soumis respectivement la poutre et les poteaux ?'
+        choices:
+        - poutre en **flexion**, poteaux en **compression**
+        - poutre en compression, poteaux en flexion
+        - poutre en traction, poteaux en compression
+        - poutre en flexion, poteaux en traction
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : c''est l''inverse. La dalle charge la poutre **perpendiculairement** à sa ligne moyenne, elle fléchit.'
+        - 'Non : la poutre n''est pas tirée dans son axe ; elle est chargée transversalement, donc fléchie.'
+        - 'Non : les poteaux sont écrasés par la descente de charges, ils sont comprimés et non tendus.'
+        explanation: Charge transversale ⇒ flexion (avec cisaillement) pour la poutre ; charge dans l'axe et dirigée vers l'intérieur ⇒ compression pour les poteaux.
+      - kind: input
+        prompt: '**Étape 6.** La charge de 4 500 kN se répartit également sur les 3 poteaux. Quelle charge $Q_p$ chaque poteau transmet-il à sa fondation (en kN) ?'
+        answer: '1500'
+        numeric: true
+        tolerance: 10
+        unit: kN
+        explanation: $Q_p = 4\,500 / 3 = 1\,500$ kN par poteau.
+      - kind: input
+        prompt: '**Étape 7.** Chaque fondation standard est carrée de 0,80 m de côté. Calculer la pression $q_F$ exercée sous une fondation (en kN/m², arrondir à l''unité).'
+        answer: '2344'
+        numeric: true
+        tolerance: 15
+        unit: kN/m²
+        explanation: $S = 0{,}80 \times 0{,}80 = 0{,}64$ m² ; $q_F = 1\,500 / 0{,}64 = 2\,344$ kN/m², soit 2,34 MPa. C'est la même démarche que $\sigma = F/S$ en RDM, appliquée au contact sol-fondation.
+      - kind: mcq
+        prompt: '**Étape 8.** Le sol admet 2 MPa et l''on impose un coefficient de sécurité de 2. Que conclure, et quelle surface minimale faut-il donner à chaque dé de fondation ?'
+        choices:
+        - 2,34 MPa > 2 MPa, les fondations standard sont insuffisantes ; il faut $S \geq 1{,}5$ m², soit un carré de 1,23 m de côté
+        - 2,34 MPa < 2 MPa, les fondations standard conviennent
+        - insuffisantes ; il faut $S \geq 0{,}75$ m²
+        - insuffisantes ; il faut $S \geq 3{,}0$ m²
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : 2,34 est **supérieur** à 2 ; la fondation standard poinçonnerait le sol.'
+        - 'Non : c''est la surface obtenue **sans** coefficient de sécurité (1 500/2 000). Le coefficient 2 divise la pression admise par 2, donc double la surface.'
+        - 'Non : le coefficient de sécurité s''applique une seule fois : $S \geq 1\,500 / 1\,000 = 1{,}5$ m².'
+        explanation: 'Pression admise $= 2 / 2 = 1$ MPa $= 1\,000$ kN/m² ; $S \geq 1\,500 / 1\,000 = 1{,}5$ m², soit un côté de $\sqrt{1{,}5} = 1{,}23$ m. Il faut donc élargir les semelles : c''est le rôle des dés de fondation.'
   - id: rdm-hooke
     title: Loi de Hooke et dimensionnement
     icon: 📏

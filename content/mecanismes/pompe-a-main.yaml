@@ -1,0 +1,262 @@
+# Mécanisme : la pompe à main (pompe à eau de jardin, pompe à levier).
+# Même démarche que le bielle-manivelle, mais le mouvement d'entrée est une rotation ALTERNATIVE
+# (le levier oscille) et non une rotation continue.
+id: pompe-a-main
+nom: Système de pompe à main
+titre: La pompe à main
+description: 'Pompe à eau à levier : on fait osciller le levier (poignée), la bielle transmet le mouvement au piston qui monte et descend dans le cylindre du corps de pompe et aspire l''eau.
+
+  '
+repere: 'x : horizontal ; y : vertical (axe du cylindre) ; z : axe des pivots, vers l''observateur'
+figures:
+  dessin: mecanisme-pompe-a-main-dessin
+  classes: mecanisme-pompe-a-main-classes
+  graphe: mecanisme-pompe-a-main-graphe
+  schema: mecanisme-pompe-a-main-schema
+pieces:
+- num: 0
+  nom: corps de pompe (cylindre + bec verseur)
+- num: 1
+  nom: levier (poignée)
+- num: 2
+  nom: bielle
+- num: 3
+  nom: piston
+- num: 4
+  nom: axe du levier
+- num: 5
+  nom: joint du piston
+classes:
+- id: E0
+  nom: corps de pompe
+  pieces:
+  - 0
+  - 4
+  couleur: black
+  bati: true
+  pourquoi: 'L''axe 4 est chassé dans la chape du corps 0 : il ne bouge pas par rapport à lui. Le corps est posé au sol, c''est le solide de référence.'
+- id: E1
+  nom: levier
+  pieces:
+  - 1
+  couleur: solideE
+  pourquoi: Le levier tourne autour de l'axe (O, z) porté par le corps.
+- id: E2
+  nom: bielle
+  pieces:
+  - 2
+  couleur: solideA
+  pourquoi: 'La bielle relie le levier au piston : elle a un mouvement plan (elle bascule en même temps qu''elle descend).'
+- id: E3
+  nom: piston
+  pieces:
+  - 3
+  - 5
+  couleur: solideB
+  pourquoi: 'Le joint 5 est monté serré dans la gorge du piston 3 : il monte et descend avec lui dans le cylindre.'
+liaisons:
+- entre:
+  - E0
+  - E1
+  contact: cylindre-cylindre avec arrêt en translation (axe dans la chape)
+  surfaces: l'axe 4 du corps traverse le trou du levier
+  liaison: pivot
+  point: O
+  axe: z
+  explication: 'Le levier ne peut que tourner autour de l''axe (O, z) porté par le corps : pivot d''axe (O, z).'
+- entre:
+  - E1
+  - E2
+  contact: cylindre-cylindre avec arrêt en translation (axe d'articulation)
+  surfaces: la tête de bielle tourne autour de l'axe porté par le levier
+  liaison: pivot
+  point: A
+  axe: z
+  explication: 'Articulation levier/bielle : pivot d''axe (A, z). Sans elle, la bielle ne pourrait pas basculer quand le levier tourne.'
+- entre:
+  - E2
+  - E3
+  contact: cylindre-cylindre avec arrêt en translation (axe de tige)
+  surfaces: le pied de bielle tourne autour de l'axe en bout de tige du piston
+  liaison: pivot
+  point: B
+  axe: z
+  explication: 'Articulation bielle/piston : pivot d''axe (B, z).'
+- entre:
+  - E3
+  - E0
+  contact: cylindre-cylindre long (piston dans le cylindre), rotation bloquée par la bielle
+  surfaces: le piston coulisse dans le cylindre du corps
+  liaison: glissiere
+  point: B
+  axe: y
+  explication: 'Dans le plan du schéma, le piston ne fait que monter et descendre selon y : on le modélise par une glissière d''axe (B, y). (Vu en 3D, le contact cylindre-cylindre seul serait un pivot glissant ; c''est la bielle qui empêche la rotation.)'
+questions:
+- level: 2
+  type: mcq
+  prompt: 'Sur le schéma cinématique de la pompe à main, quelle liaison relie le **piston (E3)** au **corps de pompe (E0)** ?
+
+    {{fig:mecanisme-pompe-a-main-schema}}'
+  choices:
+  - Une glissière d'axe (B, y)
+  - Une glissière d'axe (B, x)
+  - Un pivot d'axe (B, z)
+  - Une rotule de centre B
+  answer: 0
+  explanation: 'Le rectangle traversé par la tige, dessiné le long du cylindre, est le symbole de la glissière ; son axe est celui du cylindre, la verticale (B, y).'
+  feedback:
+  - null
+  - 'Non : l''axe de la glissière est celui du cylindre, donc la verticale y, pas l''horizontale x.'
+  - 'Non : les pivots (cercles) sont en O, A et B entre le levier, la bielle et le piston ; ici le symbole est un rectangle.'
+  - 'Non : une rotule se dessine avec une sphère dans une coupelle ; ici c''est un rectangle, donc une glissière.'
+- level: 2
+  type: mcq
+  prompt: 'Quand on actionne la poignée, quel est le mouvement du **piston (3)** par rapport au **corps de pompe (0)** ?
+
+    {{fig:mecanisme-pompe-a-main-schema}}'
+  choices:
+  - Une translation rectiligne alternative selon y
+  - Une rotation autour de l'axe (B, z)
+  - Un mouvement plan (translation + rotation)
+  - Une rotation continue autour de (O, z)
+  answer: 0
+  explanation: 'La glissière d''axe (B, y) n''autorise qu''une translation verticale : le piston monte et descend, c''est un mouvement alternatif.'
+  feedback:
+  - null
+  - 'Non : le piston ne tourne pas, la glissière lui interdit toute rotation.'
+  - 'Non : c''est la bielle qui a un mouvement plan ; le piston est guidé par le cylindre.'
+  - 'Non : c''est le levier qui tourne autour de (O, z), et seulement de ±25°.'
+- level: 3
+  type: mcq
+  prompt: À quoi sert la **bielle (2)** dans la pompe à main ?
+  choices:
+  - À transmettre le mouvement du levier au piston en pivotant à ses deux extrémités
+  - À guider le piston dans le cylindre
+  - À assurer l'étanchéité entre le piston et le cylindre
+  - À bloquer le levier en position haute
+  answer: 0
+  explanation: 'Le point A du levier décrit un arc de cercle alors que le point B du piston reste sur la verticale : les deux pivots (A, z) et (B, z) permettent à la bielle de s''incliner pour raccorder ces deux trajectoires différentes.'
+  feedback:
+  - null
+  - 'Non : c''est le cylindre du corps qui guide le piston (liaison glissière).'
+  - 'Non : l''étanchéité est assurée par le joint 5, pas par la bielle.'
+  - 'Non : la bielle ne bloque rien, elle transmet le mouvement.'
+- level: 3
+  type: mcq
+  prompt: 'La pompe à main et le système bielle-manivelle ont le même graphe des liaisons (trois pivots et une glissière). Quelle est la **différence de fonctionnement** ?
+
+    {{fig:mecanisme-pompe-a-main-graphe}}'
+  choices:
+  - 'Le mouvement d''entrée est ici une rotation alternative (le levier oscille), au lieu d''une rotation continue'
+  - Il n'y a pas de bielle dans la pompe à main
+  - Le piston de la pompe tourne au lieu de translater
+  - La liaison entre la bielle et le piston est une glissière
+  answer: 0
+  explanation: 'Même modèle, usages différents : dans un moteur la manivelle fait des tours complets ; ici l''utilisateur fait osciller le levier de ±25°, donc le piston fait des allers-retours partiels.'
+  feedback:
+  - null
+  - 'Non : la bielle 2 est bien là, entre le levier et le piston.'
+  - 'Non : le piston translate dans le cylindre, comme dans un moteur.'
+  - 'Non : bielle et piston sont articulés par un pivot d''axe (B, z) ; la glissière est entre le piston et le corps.'
+- level: 2
+  type: mcq
+  skill: graphe
+  prompt: 'Combien de liaisons **pivot** apparaissent dans le graphe des liaisons de la pompe à main ?
+
+    {{fig:mecanisme-pompe-a-main-graphe}}'
+  choices:
+  - '3'
+  - '2'
+  - '4'
+  - '1'
+  answer: 0
+  explanation: 'Trois pivots d''axe z : en O (corps/levier), en A (levier/bielle) et en B (bielle/piston) ; la quatrième liaison est la glissière piston/corps.'
+  feedback:
+  - null
+  - 'Non : il y a un pivot en O, un en A et un en B.'
+  - 'Non : la quatrième liaison du graphe est la glissière (B, y) entre le piston et le corps.'
+  - 'Non : compte les traits étiquetés « Pivot » : il y en a trois.'
+- level: 3
+  type: mcq
+  skill: classes
+  prompt: 'Le levier 1 tourne autour de l''axe 4. Pourquoi l''axe 4 est-il quand même rangé dans la **même classe d''équivalence que le corps 0** ?
+
+    {{fig:mecanisme-pompe-a-main-classes}}'
+  choices:
+  - Parce qu'il est chassé dans la chape du corps et ne bouge pas par rapport à lui
+  - Parce qu'il touche le levier
+  - Parce qu'il est en acier comme le corps
+  - Parce que c'est la plus petite pièce du mécanisme
+  answer: 0
+  explanation: 'Une classe regroupe les pièces sans mouvement relatif : l''axe est immobile par rapport au corps, c''est le levier qui tourne autour de lui.'
+  feedback:
+  - null
+  - 'Non : le contact ne suffit pas ; c''est justement entre le levier et l''axe qu''il y a un mouvement relatif (le pivot).'
+  - 'Non : le matériau n''entre pas en compte dans les classes d''équivalence.'
+  - 'Non : la taille n''entre pas en compte ; seul le mouvement relatif compte.'
+- level: 3
+  type: mcq
+  prompt: 'Quelle est la trajectoire du point **A** (articulation levier/bielle) dans le repère du corps de pompe ?
+
+    {{fig:mecanisme-pompe-a-main-schema}}'
+  choices:
+  - Un arc de cercle de centre O
+  - Un segment de droite vertical
+  - Un cercle complet de centre O
+  - Un point fixe
+  answer: 0
+  explanation: 'A appartient au levier, en liaison pivot d''axe (O, z) avec le corps : il tourne autour de O, mais le levier n''oscille que de ±25°, donc A ne décrit qu''un arc.'
+  feedback:
+  - null
+  - 'Non : c''est la trajectoire du point B, guidé par la glissière du cylindre ; A tourne autour de O.'
+  - 'Non : la poignée ne fait pas le tour complet, elle oscille de ±25° : A décrit seulement un arc.'
+  - 'Non : seul le point O est fixe ; A s''éloigne et se rapproche du sol quand on pompe.'
+- level: 3
+  type: mcq
+  prompt: Le piston est un cylindre dans un cylindre. Pourquoi modélise-t-on quand même le contact piston/corps par une **glissière** et non par un **pivot glissant** ?
+  choices:
+  - Parce que la bielle et ses deux pivots empêchent le piston de tourner sur lui-même
+  - Parce que le piston est trop court pour tourner
+  - Parce que le joint colle le piston au cylindre
+  - Parce qu'une glissière et un pivot glissant sont la même liaison
+  answer: 0
+  explanation: 'Le contact cylindre-cylindre laisserait la rotation autour de y ; c''est la chaîne levier-bielle, qui travaille dans le plan (x, y), qui la bloque. Il ne reste que la translation : une glissière.'
+  feedback:
+  - null
+  - 'Non : la longueur du contact ne bloque pas la rotation autour de son axe.'
+  - 'Non : le joint assure l''étanchéité, il glisse le long du cylindre.'
+  - 'Non : le pivot glissant a 2 degrés de liberté (une translation et une rotation), la glissière une seule.'
+animation:
+  bbox:
+  - 1.0
+  - 0.3
+  - 7.75
+  - 7.6
+  border: 4
+  duration: 4
+  legende: Le levier oscille, la bielle transmet, le piston monte et descend dans le cylindre.
+  classes:
+    E0:
+      motion: fixed
+    E1:
+      motion: rotate
+      center:
+      - 4.4
+      - 6.4
+      amplitude: 25
+    E2:
+      motion: coupler
+      crank: E1
+      a:
+      - 2.6
+      - 6.4
+      slider: E3
+      b:
+      - 2.6
+      - 3.8
+    E3:
+      motion: slider
+      dir:
+      - 0
+      - 1
+      coupler: E2
