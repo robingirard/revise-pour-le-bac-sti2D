@@ -13,6 +13,14 @@ Le point **A** est le **centre** (ou point caractéristique) de la liaison ; le 
 
 {{table:symboles}}
 
+## Les symboles en perspective
+
+Les manuels et les sujets de bac utilisent aussi la représentation **en perspective** (3D) de la norme :
+elle montre d'un coup les surfaces en contact (cylindre dans un alésage, sphère dans une coupelle, prisme
+dans un fourreau…). Même code couleur : solide 1 en rouge, solide 2 en bleu.
+
+{{table:symboles3d}}
+
 ## Astuces pour ne pas confondre
 
 - **Pivot** vue de face : le rectangle est traversé par l'arbre **avec deux petits traits** (épaulements) qui bloquent la translation.

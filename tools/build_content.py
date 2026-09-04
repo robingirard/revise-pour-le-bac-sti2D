@@ -135,6 +135,15 @@ def sym_fig(liaison, vue):
     return f"liaison-{liaison['id']}-{vue}"
 
 
+def sym3d_fig(liaison):
+    return f"liaison-{liaison['id']}-3d"
+
+
+def has_3d(liaison):
+    """Le symbole en perspective n'existe que si sa figure a été dessinée (figures/tikz/liaison-<id>-3d.tex)."""
+    return (ROOT / "figures" / "build" / "svg" / f"{sym3d_fig(liaison)}.svg").exists()
+
+
 def distinct_views(liaison):
     """Vues dont le symbole est réellement différent (encastrement, rotule, appui plan : une seule)."""
     seen, out = set(), []
@@ -220,6 +229,10 @@ def lesson_tables(liaisons):
     t = {}
     t["symboles"] = "\n".join([row(["Liaison", "Vue (z, y)", "Vue (x, y)"]), row(["---"] * 3)] +
                               [row([l["designation"], by_plane(l, ("z", "y")), by_plane(l, ("x", "y"))]) for l in liaisons])
+    l3d = [l for l in liaisons if has_3d(l)]
+    t["symboles3d"] = ("\n".join([row(["Liaison", "Symbole en perspective", "Vue (z, y)"]), row(["---"] * 3)] +
+                                 [row([l["designation"], fig(sym3d_fig(l)), by_plane(l, ("z", "y"))]) for l in l3d])
+                       if l3d else "*(symboles en perspective : figures à venir)*")
     t["ddl"] = "\n".join([row(["Liaison", "Mobilités", "Nombre de ddl"]), row(["---"] * 3)] +
                          [row([l["designation"], fmt_ddl(l), str(nb_ddl(l))]) for l in liaisons])
     t["contacts"] = "\n".join([row(["Liaison", "Contact", "Surfaces de contact", "Exemples"]), row(["---"] * 4)] +
@@ -373,6 +386,47 @@ class Builder:
                          f"Quel symbole représente la liaison **{l['designation']}** dans une vue du plan **{plan_txt(s)}** ?",
                          fig(sym_fig(l, s["vue"])), distractors,
                          f"**{l['nom']}** : {l['reconnaitre'][s['vue']]}.", layout="grid", tags=[l["id"]])
+
+    def fb_symbole3d(self, L, D):
+        shown = f", dont le symbole en perspective est : {fig(sym3d_fig(D))}" if has_3d(D) else ""
+        return f"Tu as répondu **{D['nom']}**{shown} La bonne réponse est **{L['nom']}**."
+
+    def gen_symbole3d_vers_nom(self, skill):
+        for l in self.liaisons:
+            if not has_3d(l):
+                continue
+            iid = f"{skill}.symbole3d_vers_nom.{l['id']}"
+            self.mcq(iid, skill, lvl(2, l),
+                     "Quelle liaison est représentée par ce symbole **en perspective** ?\n" + fig(sym3d_fig(l)),
+                     l["nom"], self.liaison_choices(l, iid, lambda o, l=l: self.fb_symbole3d(l, o)),
+                     f"**{l['designation']}** : {l['contact_court']}. En vue selon l'axe, {low_first(l['reconnaitre']['bout'])}.", tags=[l["id"]])
+
+    def gen_nom_vers_symbole3d(self, skill):
+        for l in self.liaisons:
+            if not has_3d(l):
+                continue
+            iid = f"{skill}.nom_vers_symbole3d.{l['id']}"
+            distractors = [(fig(sym3d_fig(o)), self.fb_figure_de(o, "bout")) for o in self.others(l, 5, iid) if has_3d(o)][:3]
+            if len(distractors) < 3:
+                continue
+            self.mcq(iid, skill, lvl(3, l),
+                     f"Quel symbole **en perspective** représente la liaison **{l['designation']}** ?",
+                     fig(sym3d_fig(l)), distractors,
+                     f"**{l['nom']}** : {l['contact_court']}.", layout="grid", tags=[l["id"]])
+
+    def gen_match_symboles3d(self, skill):
+        groupes = [
+            ("3d-1", ["pivot", "glissiere", "rotule", "appui-plan"], 2),
+            ("3d-2", ["helicoidale", "pivot-glissant", "lineaire-annulaire", "ponctuelle"], 3),
+            ("3d-3", ["encastrement", "lineaire-rectiligne", "rotule", "glissiere"], 3),
+        ]
+        for gid, ids, level in groupes:
+            pairs = [{"left": self.by_id[i]["nom"], "right": fig(sym3d_fig(self.by_id[i]))}
+                     for i in ids if i in self.by_id and has_3d(self.by_id[i])]
+            if len(pairs) < 3:
+                continue
+            self.match(f"{skill}.match_symboles3d.{gid}", skill, level,
+                       "Associez chaque liaison à son symbole en perspective.", pairs, tags=ids)
 
     def gen_match_symboles(self, skill):
         groupes = [

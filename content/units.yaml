@@ -159,6 +159,9 @@ units:
     - gen: symbole_vers_nom
     - gen: nom_vers_symbole
     - gen: match_symboles
+    - gen: symbole3d_vers_nom
+    - gen: nom_vers_symbole3d
+    - gen: match_symboles3d
   - id: ddl
     title: Degrés de liberté
     icon: 🎚️
