@@ -1,0 +1,67 @@
+%% 2i2d-alimentation-ferry — synoptique de l'alimentation électrique du ferry-boat.
+%% Flux de puissance : grosses flèches solideD ; flux d'information : flèches fines solideB
+%% pointillées. Pastille verte « = » sur chaque liaison continue, pastille rouge « ~ » sur
+%% l'unique liaison alternative (la prise de quai).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  bloc/.style={draw=black!70, line width=0.8pt, rounded corners=3pt, fill=white,
+               text width=1.32cm, minimum height=0.7cm, inner sep=2pt,
+               align=center, font=\tiny},
+  puiss/.style={-{Stealth[length=5pt,width=5pt]}, line width=1.8pt, draw=solideD,
+                line join=round},
+  info/.style={-{Stealth[length=4pt]}, line width=0.7pt, draw=solideB,
+               dash pattern=on 2pt off 1.6pt, line join=round},
+  et/.style={font=\tiny, inner sep=1.5pt, align=center}]
+
+%% ---- pastille de nature de la tension -----------------------------------
+\newcommand\pastille[4]{\fill[#3] (#1,#2) circle (0.135);
+  \node[font=\tiny, text=white, inner sep=0pt] at (#1,#2) {#4};}
+
+%% ================= blocs =================================================
+\node[bloc] (pv)    at (0.75,3.30)  {16 panneaux photo\-voltaïques propulsion};
+\node[bloc] (quai)  at (0.75,1.05)  {Prise de quai};
+\node[bloc] (chg)   at (3.05,2.25)  {Chargeur propulsion};
+\node[bloc] (p1)    at (5.35,3.10)  {Parc 1\\(384 V)};
+\node[bloc] (p2)    at (5.35,1.50)  {Parc 2\\(384 V)};
+\node[bloc] (prop)  at (7.20,2.30)  {Propulsion (moteurs)};
+\node[bloc] (bms)   at (3.05,0.30)  {Battery Management System};
+\node[bloc] (vent)  at (3.05,-0.95) {Ventilateurs batteries};
+
+%% ================= flux de puissance =====================================
+\draw[puiss] (1.46,3.20) -- (2.34,2.58);
+\node[et, text=solideD, anchor=south west] at (1.62,3.02) {Énergie\\électrique};
+\pastille{1.90}{2.89}{solideE}{$=$}
+
+\draw[puiss] (1.46,1.15) -- (2.34,1.92);
+\node[et, text=solideA, anchor=north west] at (1.60,1.28) {réseau\\alternatif};
+\pastille{1.90}{1.535}{solideA}{$\sim$}
+
+\draw[line width=1.8pt, draw=solideD] (3.76,2.25) -- (4.85,2.25);
+\draw[puiss] (4.85,2.25) -- (4.85,2.75);
+\draw[puiss] (4.85,2.25) -- (4.85,1.85);
+\node[et, text=solideD, anchor=south] at (4.30,2.34) {Courant de charge};
+\pastille{4.24}{2.25}{solideE}{$=$}
+
+\draw[puiss] (6.04,3.10) -- (6.49,2.60);
+\draw[puiss] (6.04,1.50) -- (6.49,2.00);
+\pastille{6.30}{2.30}{solideE}{$=$}
+
+%% ================= flux d'information ====================================
+\draw[info] (3.76,0.30) -- (5.35,0.30) -- (5.35,1.15);
+\node[et, text=solideB, anchor=south] at (4.52,0.36) {Mesures $U$, $I$, température};
+\draw[{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.7pt, draw=solideB,
+      dash pattern=on 2pt off 1.6pt] (5.35,1.85) -- (5.35,2.75);
+
+\draw[info] (3.05,0.65) -- (3.05,1.90);
+\node[et, text=solideB, anchor=west] at (3.16,1.22) {Consignes $U$ et $I$\\(bus CAN)};
+
+\draw[info] (3.05,-0.05) -- (3.05,-0.60);
+\node[et, text=solideB, anchor=west] at (3.16,-0.33) {Commande ventilateurs};
+
+%% ================= légende ================================================
+\node[font=\scriptsize, anchor=north, text=black!65] at (4.0,-1.48)
+  {un seul point en alternatif : le raccordement au réseau du quai};
+\end{tikzpicture}
+\end{document}
