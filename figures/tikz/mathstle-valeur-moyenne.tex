@@ -1,0 +1,51 @@
+%% Valeur moyenne de f sur [a ; b] : c'est la hauteur mu du rectangle de base [a ; b]
+%% qui a exactement la même aire que le domaine sous la courbe. Même courbe et même
+%% repère que la figure « aire sous la courbe », pour lire les deux en série.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=0.8cm,y=0.8cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  rappel/.style={line width=0.6pt, dash pattern=on 3pt off 2pt, black!55},
+  grad/.style={font=\scriptsize, inner sep=0pt}]
+
+%% ---------------- domaine hachuré entre x = 1 et x = 4 ---------------------
+\hachures[black!45]{(1,0) -- (4,0) -- plot[domain=4:1, samples=40, smooth]
+                    (\x,{0.25*\x*\x+1}) -- cycle}
+
+%% ---------------- rectangle de même aire, de hauteur mu = 2,75 --------------
+\draw[solideE, line width=1.2pt, fill=solideE, fill opacity=0.15] (1,0) rectangle (4,2.75);
+\draw[solideE, line width=1.2pt, dash pattern=on 3pt off 2pt] (0,2.75) -- (1,2.75);
+\node[font=\small, text=solideE, anchor=east, xshift=-3pt] at (0,2.75) {$\mu$};
+
+%% ---------------- axes et graduations --------------------------------------
+\draw[axe] (-0.3,0) -- (6.3,0) node[anchor=north east, inner sep=3pt, font=\small] {$x$};
+\draw[axe] (0,-0.3) -- (0,6.3) node[anchor=south east, inner sep=3pt, font=\small] {$y$};
+\node[font=\small, anchor=north east, inner sep=2pt] at (-0.05,-0.05) {$O$};
+\foreach \xv in {1,2,3,4,5} { \draw[line width=0.5pt] (\xv,0.08) -- (\xv,-0.08); }
+\foreach \yv in {1,2,3,4,5} { \draw[line width=0.5pt] (0.08,\yv) -- (-0.08,\yv); }
+\foreach \xv in {2,3,5} { \node[grad, anchor=north, yshift=-3pt] at (\xv,0) {$\xv$}; }
+\foreach \yv in {1,5} { \node[grad, anchor=east, xshift=-3pt] at (0,\yv) {$\yv$}; }
+\node[font=\small, anchor=north, yshift=-3pt] at (1,0) {$a=1$};
+\node[font=\small, anchor=north, yshift=-3pt] at (4,0) {$b=4$};
+
+%% ---------------- la courbe et le point où elle coupe y = mu ---------------
+\draw[solideA, line width=1.3pt, line join=round]
+     plot[domain=0:4.4, samples=60, smooth] (\x,{0.25*\x*\x+1});
+\node[font=\small, text=solideA, anchor=south east, inner sep=2pt] at (4.35,5.9)
+     {$\mathcal{C}_{f}$};
+\draw[line width=0.9pt, fill=white] (2.6458,2.75) circle (2.4pt);
+
+%% ---------------- largeur du rectangle --------------------------------------
+\draw[{Stealth[length=5pt]}-{Stealth[length=5pt]}, black!55, line width=0.7pt]
+     (1,-0.9) -- (4,-0.9);
+\node[font=\scriptsize, text=black!60, fill=white, inner sep=1.5pt] at (2.5,-0.9)
+     {$b-a=3$};
+
+%% ---------------- conclusion --------------------------------------------------
+\node[font=\small, anchor=north] at (3,-1.15)
+     {$\mu\times(b-a)=\int_{a}^{b}f(x)\,\mathrm{d}x$};
+\node[font=\scriptsize, text=black!60, anchor=north] at (3,-1.75)
+     {même aire, mais un rectangle};
+\end{tikzpicture}
+\end{document}

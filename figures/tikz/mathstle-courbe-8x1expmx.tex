@@ -1,0 +1,43 @@
+%% Courbe de f(x) = (8x + 1) e^{-x} sur [0 ; 5]. La dérivée f'(x) = (7 - 8x) e^{-x}
+%% s'annule en changeant de signe en x = 7/8 : c'est le maximum de f, environ 3,33.
+%% En +infini, f tend vers 0 (croissances comparées) : l'axe des abscisses est asymptote.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1.35cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  rappel/.style={line width=0.6pt, dash pattern=on 3pt off 2pt, black!55},
+  grad/.style={font=\scriptsize, inner sep=0pt}]
+
+%% ---------------- asymptote : axe des abscisses prolongé -------------------
+\draw[rappel] (5,0) -- (5.6,0);
+\node[font=\scriptsize, text=black!60, anchor=north east, inner sep=1pt] at (5.6,-0.42)
+     {asymptote horizontale $y=0$};
+
+%% ---------------- axes et graduations --------------------------------------
+\draw[axe] (-0.15,0) -- (5.05,0);
+\node[font=\small, anchor=south east, inner sep=2pt] at (5.58,0.04) {$x$};
+\draw[axe] (0,-0.2) -- (0,4.3) node[anchor=south east, inner sep=3pt, font=\small] {$y$};
+\node[font=\small, anchor=north east, inner sep=2pt] at (-0.03,-0.03) {$O$};
+\foreach \xv in {1,2,3,4,5} {
+  \draw[line width=0.5pt] (\xv,0) -- ++(0,-0.07cm);
+  \node[grad, anchor=north, yshift=-3pt] at (\xv,0) {$\xv$};}
+\foreach \yv in {1,2,3,4} {
+  \draw[line width=0.5pt] (0,\yv) -- ++(-0.07cm,0);
+  \node[grad, anchor=east, xshift=-3pt] at (0,\yv) {$\yv$};}
+
+%% ---------------- la courbe -------------------------------------------------
+\draw[solideA, line width=1.3pt, line join=round]
+     plot[domain=0:5, samples=80, smooth] (\x,{(8*\x+1)*exp(-\x)});
+\node[font=\small, text=solideA, anchor=south west, inner sep=2pt] at (1.95,2.6)
+     {$\mathcal{C}_{f}$};
+
+%% ---------------- maximum en x = 7/8 ---------------------------------------
+\draw[rappel] (0,3.335) -- (0.875,3.335) -- (0.875,0);
+\fill (0.875,3.335) circle (2pt);
+\node[grad, anchor=south east, inner sep=2pt] at (-0.08,3.4) {$3{,}33$};
+\node[font=\scriptsize, anchor=north, yshift=-13pt] at (0.875,0) {$x=\dfrac{7}{8}=0{,}875$};
+\node[font=\scriptsize, text=solideE, anchor=west, inner sep=2pt] at (1.2,3.55)
+     {$f'$ s'annule en changeant de signe};
+\end{tikzpicture}
+\end{document}

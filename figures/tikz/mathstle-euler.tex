@@ -1,0 +1,58 @@
+%% Méthode d'Euler sur y' = y, y(0) = 1, avec le pas h = 0,25 : à chaque étape on suit
+%% la tangente pendant h, ce qui donne la ligne brisée bleue. L'exponentielle étant
+%% convexe, la ligne brisée reste sous la courbe : l'écart se cumule d'un pas à l'autre.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=5.5cm,y=1.7cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  rappel/.style={line width=0.6pt, dash pattern=on 3pt off 2pt, black!55},
+  grad/.style={font=\scriptsize, inner sep=0pt}]
+
+%% ---------------- verticales du pas ----------------------------------------
+\foreach \xv in {0.25,0.5,0.75,1} { \draw[rappel] (\xv,0) -- (\xv,{exp(\xv)}); }
+
+%% ---------------- axes et graduations ---------------------------------------
+\draw[axe] (-0.03,0) -- (1.22,0) node[anchor=north east, inner sep=3pt, font=\small] {$x$};
+\draw[axe] (0,-0.12) -- (0,3.2) node[anchor=south east, inner sep=3pt, font=\small] {$y$};
+\node[font=\small, anchor=north east, inner sep=2pt] at (-0.005,-0.02) {$O$};
+\foreach \xv/\lab in {0.25/{0{,}25}, 0.5/{0{,}5}, 0.75/{0{,}75}, 1/{1}} {
+  \draw[line width=0.5pt] (\xv,0) -- ++(0,-0.07cm);
+  \node[grad, anchor=north, yshift=-3pt] at (\xv,0) {$\lab$};}
+\foreach \yv in {1,2,3} {
+  \draw[line width=0.5pt] (0,\yv) -- ++(-0.07cm,0);
+  \node[grad, anchor=east, xshift=-3pt] at (0,\yv) {$\yv$};}
+
+%% ---------------- courbe exacte ---------------------------------------------
+\draw[solideA, line width=1.3pt, line join=round]
+     plot[domain=0:1.1, samples=60, smooth] (\x,{exp(\x)});
+\node[font=\small, text=solideA, anchor=west, inner sep=3pt] at (1.11,2.86)
+     {$y=\mathrm{e}^{x}$};
+
+%% ---------------- tangente en (0 ; 1), prolongée --------------------------
+\draw[rappel] (0.25,1.25) -- (0.62,1.62);
+\node[font=\scriptsize, text=black!60, anchor=north west, fill=white, inner sep=1.5pt]
+     at (0.6,1.56) {tangente};
+
+%% ---------------- ligne brisée d'Euler (h = 0,25) ---------------------------
+\draw[solideB, line width=1.3pt, line join=round]
+     (0,1) -- (0.25,1.25) -- (0.5,1.5625) -- (0.75,1.9531) -- (1,2.4414);
+\foreach \xv/\yv in {0/1, 0.25/1.25, 0.5/1.5625, 0.75/1.9531, 1/2.4414} {
+  \fill[solideB] (\xv,\yv) ++(-0.008,-0.026) rectangle ++(0.016,0.052);}
+
+%% ---------------- écart en x = 1 ---------------------------------------------
+\draw[solideE, line width=1pt, {Stealth[length=4pt]}-{Stealth[length=4pt]}]
+     (1,2.4414) -- (1,2.7183);
+\node[font=\scriptsize, text=solideE, anchor=south east, inner sep=2pt] at (1,2.79)
+     {écart $\approx0{,}28$};
+\draw[line width=0.5pt] (0,2.4414) -- ++(0.06cm,0);
+\draw[line width=0.5pt] (0,2.7183) -- ++(0.06cm,0);
+\node[grad, anchor=west, xshift=3pt] at (0,2.4414) {$2{,}44$};
+\node[grad, anchor=west, xshift=3pt] at (0,2.7183) {$2{,}72$};
+
+%% ---------------- le pas h ----------------------------------------------------
+\draw[{Stealth[length=4pt]}-{Stealth[length=4pt]}, black!55, line width=0.6pt]
+     (0,-0.25) -- (0.25,-0.25);
+\node[grad, text=black!60, anchor=north, yshift=-1pt] at (0.125,-0.25) {$h=0{,}25$};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,43 @@
+%% Dérivée d'une fonction composée : on lit le schéma de gauche à droite pour composer
+%% (x, puis u(x), puis v(u(x))) et de droite à gauche pour dériver — d'où le produit
+%% u'(x) x v'(u(x)) : on dérive la fonction extérieure, puis on multiplie par u'.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{positioning}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cadre/.style={rounded corners=3pt, draw, line width=1pt, minimum height=0.75cm,
+                minimum width=1.25cm, inner sep=4pt, font=\small, fill=white},
+  fleche/.style={-{Stealth[length=6pt]}, line width=0.9pt},
+  retour/.style={-{Stealth[length=6pt]}, line width=0.9pt, solideE,
+                 dash pattern=on 3pt off 2pt}]
+
+%% ---------------- les trois étages ----------------------------------------
+\node[cadre, draw=black!45, fill=black!8] (X) at (0,0) {$x$};
+\node[cadre, draw=solideB] (U) at (2.1,0) {$u(x)$};
+\node[cadre, draw=solideA] (V) at (4.35,0) {$v\left(u(x)\right)$};
+
+\draw[fleche] (X) -- node[above, font=\small, inner sep=3pt] {$u$} (U);
+\draw[fleche] (U) -- node[above, font=\small, inner sep=3pt] {$v$} (V);
+
+%% ---------------- retour : les deux facteurs de la dérivée -----------------
+\draw[retour] (U.south) to[bend left=32] (X.south);
+\node[font=\small, text=solideE, anchor=north, inner sep=1pt] at (1.05,-0.72) {$u'(x)$};
+\draw[retour] (V.south) to[bend left=28] (U.south);
+\node[font=\small, text=solideE, anchor=north, inner sep=1pt] at (3.2,-0.72)
+     {$v'\left(u(x)\right)$};
+
+%% ---------------- formule encadrée -----------------------------------------
+\node[draw=black!45, line width=0.5pt, rounded corners=2pt, fill=white, inner sep=4pt,
+      font=\small] (F) at (2.15,-1.65)
+     {$\left(v\circ u\right)'(x)=u'(x)\times v'\left(u(x)\right)$};
+\node[font=\scriptsize, text=black!60, anchor=north, align=center] at (2.15,-2.05)
+     {on dérive de l'extérieur vers l'intérieur, sans oublier $u'$};
+
+%% ---------------- trois exemples, colonne de droite ------------------------
+\node[anchor=north west, align=left, font=\scriptsize, inner sep=2pt] at (5.55,0.55)
+     {$\mathrm{e}^{u}\ \rightarrow\ u'\,\mathrm{e}^{u}$\\[5pt]
+      $\ln(u)\ \rightarrow\ \dfrac{u'}{u}$\\[5pt]
+      $u^{n}\ \rightarrow\ n\,u'\,u^{n-1}$};
+\end{tikzpicture}
+\end{document}

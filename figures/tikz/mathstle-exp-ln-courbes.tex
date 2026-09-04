@@ -1,0 +1,50 @@
+%% Exponentielle et logarithme : deux courbes symétriques par rapport à la droite y = x.
+%% Rouge : y = e^x, définie sur R, à valeurs strictement positives, asymptote horizontale
+%% l'axe des abscisses en -infini. Bleu : y = ln(x), définie sur ]0 ; +infini[, asymptote
+%% verticale l'axe des ordonnées en 0. Les points (0 ; 1) et (1 ; 0) se correspondent.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=0.92cm,y=0.92cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={line width=1.3pt, line join=round},
+  rappel/.style={line width=0.6pt, dash pattern=on 3pt off 2pt, black!55},
+  grad/.style={font=\scriptsize, inner sep=2pt},
+  note/.style={font=\scriptsize, text=black!60, fill=white, inner sep=1.5pt}]
+
+%% ---------------- droite y = x (axe de symétrie) --------------------------
+\draw[rappel] (-3,-3) -- (3,3);
+\node[font=\small, text=black!60, anchor=north west, inner sep=2pt] at (2.7,2.7) {$y=x$};
+
+%% ---------------- axes et graduations -------------------------------------
+\draw[axe] (-3.3,0) -- (3.5,0) node[anchor=south east, inner sep=3pt, font=\small] {$x$};
+\draw[axe] (0,-3.3) -- (0,3.5) node[anchor=south east, inner sep=3pt, font=\small] {$y$};
+\node[font=\small, anchor=north east, inner sep=2pt] at (-0.05,-0.05) {$O$};
+\foreach \xv in {-2,-1,1,2,3} { \draw[line width=0.5pt] (\xv,0.07) -- (\xv,-0.07); }
+\foreach \yv in {-2,-1,1,2,3} { \draw[line width=0.5pt] (0.07,\yv) -- (-0.07,\yv); }
+\foreach \xv in {-2,-1,2,3} { \node[grad, anchor=north] at (\xv,-0.09) {$\xv$}; }
+\foreach \yv in {-2,-1,2,3} { \node[grad, anchor=east] at (-0.09,\yv) {$\yv$}; }
+
+%% ---------------- les deux courbes ----------------------------------------
+\draw[courbe, solideA] plot[domain=-3:1.15, samples=60, smooth] (\x,{exp(\x)});
+\draw[courbe, solideB] plot[domain=0.05:3.2, samples=80, smooth] (\x,{ln(\x)});
+\node[font=\small, text=solideA, anchor=west, inner sep=2pt] at (1.22,3.05) {$y=\mathrm{e}^{x}$};
+\node[font=\small, text=solideB, anchor=west, inner sep=2pt] at (3.22,1.16) {$y=\ln(x)$};
+
+%% ---------------- points remarquables (l'étiquette tient lieu de graduation)
+\fill[solideA] (0,1) circle (2pt);
+\node[font=\small, anchor=east, inner sep=4pt] at (-0.08,1) {$(0\,;1)$};
+\fill[solideB] (1,0) circle (2pt);
+\node[font=\small, anchor=north west, inner sep=3pt, yshift=-8pt] at (1.02,-0.06) {$(1\,;0)$};
+
+%% ---------------- symétrie : (1 ; e) <-> (e ; 1) ---------------------------
+\fill (1,2.718) circle (1.6pt);
+\fill (2.718,1) circle (1.6pt);
+\draw[rappel, {Stealth[length=5pt]}-{Stealth[length=5pt]}] (1.08,2.65) -- (2.65,1.08);
+
+%% ---------------- asymptotes ------------------------------------------------
+\node[note, anchor=north, align=center] at (-1.9,-0.42) {asymptote horizontale\\de $\exp$};
+\node[font=\scriptsize, text=black!60, rotate=90, anchor=west, align=center]
+     at (0.95,-3.05) {asymptote verticale\\de $\ln$};
+\end{tikzpicture}
+\end{document}

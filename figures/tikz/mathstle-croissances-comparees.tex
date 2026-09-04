@@ -1,0 +1,48 @@
+%% Croissances comparées : x^3 (bleu) part plus vite que e^x (rouge), mais l'exponentielle
+%% repasse devant en x = 4,536 et ne se fait plus rattraper. Repère non orthonormé :
+%% 1,28 cm pour une unité en abscisse, 1 cm pour environ 30 unités en ordonnée.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1.28cm,y=0.033cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={line width=1.3pt, line join=round},
+  rappel/.style={line width=0.6pt, dash pattern=on 3pt off 2pt, black!55},
+  grad/.style={font=\scriptsize, inner sep=0pt}]
+
+%% ---------------- axes et graduations -------------------------------------
+\draw[axe] (-0.12,0) -- (5.35,0) node[anchor=south east, inner sep=3pt, font=\small] {$x$};
+\draw[axe] (0,-4) -- (0,162) node[anchor=south east, inner sep=3pt, font=\small] {$y$};
+\node[font=\small, anchor=north east, inner sep=2pt] at (-0.02,-1) {$O$};
+\foreach \xv in {1,2,3,4,5} {
+  \draw[line width=0.5pt] (\xv,0) -- ++(0,-0.07cm);
+  \node[grad, anchor=north, yshift=-3pt] at (\xv,0) {$\xv$};}
+\foreach \yv in {50,100,150} {
+  \draw[line width=0.5pt] (0,\yv) -- ++(-0.07cm,0);
+  \node[grad, anchor=east, xshift=-3pt] at (0,\yv) {$\yv$};}
+
+%% ---------------- les deux courbes ----------------------------------------
+\draw[courbe, solideB] plot[domain=0:5, samples=60, smooth] (\x,{\x*\x*\x});
+\draw[courbe, solideA] plot[domain=0:5, samples=80, smooth] (\x,{exp(\x)});
+\node[font=\small, text=solideA, anchor=west, inner sep=3pt] at (5,148.4) {$y=\mathrm{e}^{x}$};
+\node[font=\small, text=solideB, anchor=west, inner sep=3pt] at (5,125) {$y=x^{3}$};
+
+%% ---------------- second point d'intersection : x = 4,536 -----------------
+\draw[rappel] (4.536,0) -- (4.536,93.3);
+\fill (4.536,93.3) circle (2pt);
+\node[font=\scriptsize, anchor=south east, inner sep=3pt] at (4.49,95) {$x\approx4{,}5$};
+
+%% ---------------- accolade sous l'axe (tracée à la main, en cm) ------------
+\draw[black!55, line width=0.7pt, rounded corners=1.5pt]
+     (5.806cm,-0.38cm) -- (5.806cm,-0.54cm) -- (6.06cm,-0.54cm) -- (6.10cm,-0.64cm)
+     -- (6.14cm,-0.54cm) -- (6.4cm,-0.54cm) -- (6.4cm,-0.38cm);
+\node[font=\scriptsize, text=black!60, align=center, anchor=north] at (6.10cm,-0.68cm)
+     {au-delà, $\mathrm{e}^{x}$ dépasse $x^{3}$\\\textbf{définitivement}};
+
+%% ---------------- encadré des limites (zone libre en haut à gauche) --------
+\node[draw=black!45, line width=0.5pt, rounded corners=2pt, fill=white,
+      anchor=north west, align=left, inner sep=4pt, font=\small] at (0.16,158)
+     {$\displaystyle\lim_{x\to+\infty}\frac{\mathrm{e}^{x}}{x^{n}}=+\infty$\\[2pt]
+      $\displaystyle\lim_{x\to+\infty}x^{n}\mathrm{e}^{-x}=0$};
+\end{tikzpicture}
+\end{document}

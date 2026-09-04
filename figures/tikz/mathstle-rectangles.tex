@@ -1,0 +1,66 @@
+%% Méthode des rectangles (rectangles « à gauche ») pour approcher l'intégrale de e^{-x}
+%% sur [0 ; 1]. À gauche n = 4, à droite n = 10 : la fonction étant décroissante, les
+%% rectangles dépassent la courbe et la somme surestime l'intégrale ; l'écart diminue
+%% quand n augmente.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=2.9cm,y=2.5cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  rect/.style={solideB, line width=0.8pt, fill=solideB, fill opacity=0.12},
+  courbe/.style={solideA, line width=1.3pt, line join=round},
+  grad/.style={font=\scriptsize, inner sep=0pt}]
+
+\def\dx{1.45}   % décalage horizontal du second panneau (en unités d'abscisse)
+
+%% ================= panneau de gauche : n = 4 ==============================
+\begin{scope}
+  \foreach \i in {0,1,2,3} {
+    \pgfmathsetmacro\xa{\i*0.25}
+    \pgfmathsetmacro\ha{exp(-\xa)}
+    \draw[rect] (\xa,0) rectangle (\xa+0.25,\ha);}
+  \draw[axe] (-0.06,0) -- (1.18,0) node[anchor=south east, inner sep=2pt, font=\small] {$x$};
+  \draw[axe] (0,-0.05) -- (0,1.18);
+  \foreach \xv/\lab in {0.5/{0{,}5}, 1/{1}} {
+    \draw[line width=0.5pt] (\xv,0) -- ++(0,-0.06cm);
+    \node[grad, anchor=north, yshift=-3pt] at (\xv,0) {$\lab$};}
+  \draw[line width=0.5pt] (0,1) -- ++(-0.06cm,0);
+  \node[grad, anchor=east, xshift=-3pt] at (0,1) {$1$};
+  \node[font=\small, anchor=north east, inner sep=2pt] at (-0.01,-0.01) {$O$};
+  \draw[courbe] plot[domain=0:1.1, samples=60, smooth] (\x,{exp(-\x)});
+  \node[font=\small, text=solideA, anchor=south west, inner sep=2pt] at (0.72,0.49)
+       {$\mathcal{C}_{f}$};
+  \node[font=\small, anchor=south] at (0.55,1.2) {$n=4$ : $0{,}714$};
+  %% largeur d'un sous-intervalle
+  \draw[{Stealth[length=4pt]}-{Stealth[length=4pt]}, black!55, line width=0.6pt]
+       (0,-0.2) -- (0.25,-0.2);
+  \node[grad, text=black!60, anchor=west, xshift=2pt] at (0.25,-0.2) {$\Delta x=0{,}25$};
+\end{scope}
+
+%% ================= filet de séparation ====================================
+\draw[black!35, line width=0.4pt] (1.24,-0.2) -- (1.24,1.25);
+
+%% ================= panneau de droite : n = 10 =============================
+\begin{scope}[shift={(\dx,0)}]
+  \foreach \i in {0,...,9} {
+    \pgfmathsetmacro\xa{\i*0.1}
+    \pgfmathsetmacro\ha{exp(-\xa)}
+    \draw[rect] (\xa,0) rectangle (\xa+0.1,\ha);}
+  \draw[axe] (-0.06,0) -- (1.18,0) node[anchor=south east, inner sep=2pt, font=\small] {$x$};
+  \draw[axe] (0,-0.05) -- (0,1.18);
+  \foreach \xv/\lab in {0.5/{0{,}5}, 1/{1}} {
+    \draw[line width=0.5pt] (\xv,0) -- ++(0,-0.06cm);
+    \node[grad, anchor=north, yshift=-3pt] at (\xv,0) {$\lab$};}
+  \draw[line width=0.5pt] (0,1) -- ++(-0.06cm,0);
+  \node[grad, anchor=east, xshift=-3pt] at (0,1) {$1$};
+  \node[font=\small, anchor=north east, inner sep=2pt] at (-0.01,-0.01) {$O$};
+  \draw[courbe] plot[domain=0:1.1, samples=60, smooth] (\x,{exp(-\x)});
+  \node[font=\small, anchor=south] at (0.55,1.2) {$n=10$ : $0{,}664$};
+\end{scope}
+
+%% ================= valeur exacte ==========================================
+\node[font=\small, anchor=north] at (1.2,-0.33)
+     {valeur exacte $\displaystyle\int_{0}^{1}\mathrm{e}^{-x}\,\mathrm{d}x
+      =1-\mathrm{e}^{-1}\approx0{,}632$};
+\end{tikzpicture}
+\end{document}
