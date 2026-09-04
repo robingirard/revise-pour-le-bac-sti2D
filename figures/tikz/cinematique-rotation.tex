@@ -1,6 +1,6 @@
 %% Mouvement de rotation autour d'un axe fixe : hélice bipale tournant autour de O.
 %% Chaque point de la pale décrit un cercle centré sur l'axe ; la norme du vecteur
-%% vitesse croît proportionnellement au rayon (V = omega x R).
+%% vitesse croît proportionnellement au rayon (V = omega x R). omega et V dans le même sens (trigonométrique).
 \documentclass[tikz,border=4pt]{standalone}
 \usepackage{liaisons}
 \begin{document}
@@ -29,17 +29,18 @@
        (\ang:\r) -- ++({\ang+90}:{0.34*\r});
   \node[font=\small, anchor=north, inner sep=2.5pt] at (\ang:\r) {$\n$};
 }
-\node[font=\small, text=solideA, anchor=west] at (2.15,1.18) {$\vec{V}$};
+\node[font=\small, text=solideA, anchor=south west] at (2.05,1.05) {$\vec{V}$};
 
 % --- vitesse de rotation ----------------------------------------------
 \draw[-{Stealth[length=5pt]}, line width=1pt, solideE]
-     (125:0.62) arc (125:55:0.62);
-\node[font=\small, text=solideE] at (0,0.86) {$\omega$};
+     (-125:0.62) arc (-125:-55:0.62);
+\node[font=\small, text=solideE] at (0,-0.86) {$\omega$};
 
 % --- cote du rayon R (dans le repère de la pale) ----------------------
 \begin{scope}[rotate=\ang]
-  \draw[|<->|, line width=0.5pt, black!70] (0,-0.80) -- (2.2,-0.80);
-  \node[font=\small] at (1.1,-1.10) {$R$};
+  \draw[line width=0.4pt, black!70] (0,0.18) -- (0,0.95) (2.2,0.05) -- (2.2,0.95);
+  \draw[{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.6pt, black!80] (0,0.85) -- (2.2,0.85);
+  \node[font=\small, fill=white, inner sep=1pt] at (1.1,0.85) {$R$};
 \end{scope}
 
 % --- relation ---------------------------------------------------------

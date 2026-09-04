@@ -158,6 +158,16 @@ et ne sont jamais tirés dans une séance ordinaire : ils apparaissent sur l'éc
 carte « Exercices complets », lançables (`#/session/SKILL?item=ID`) quand la compétence est au niveau ≥ 2,
 sinon verrouillés avec le message « Atteins le niveau 2 pour débloquer ».
 
+### Symboles animés
+
+Les SVG `liaison-<id>-<vue>` dont le mouvement du solide 1 est visible dans la vue portent
+`data-anim="rot|rock|tx|ty"` et `style="--cx:…px;--cy:…px"` (centre A en unités utilisateur du
+SVG) ; les éléments du solide 1 (rouge) ont la classe `s1`. L'appli anime ces éléments
+(`transform-box: view-box; transform-origin: var(--cx) var(--cy)`) : rotation continue (`rot`),
+oscillation ±25° (`rock`), va-et-vient horizontal ou vertical de ±10 unités (`tx`, `ty`).
+Déclenchement : survol de la souris ou toucher sur la figure (bascule), et un bouton
+« ▶ Voir les liaisons bouger » dans les leçons qui anime toutes les figures de la page.
+
 ## 5. Leçon (Markdown restreint)
 
 Titres `#`/`##`/`###`, paragraphes, `**gras**`, `*italique*`, listes `- `, tableaux

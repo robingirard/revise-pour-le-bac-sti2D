@@ -11,10 +11,11 @@
 #   contact_court : le contact en trois mots ; reconnaitre : comment reconnaître le symbole (par vue) ;
 #   mobilites : pour chaque mobilité, pourquoi elle est autorisée ou bloquée (feedback des grilles) ;
 #   exemples : objets du quotidien (texte + pictogramme)
+#   symboles[].anim : mouvement du solide 1 visible dans cette vue (rot = rotation, rock = oscillation,
+#              tx/ty = translation, none) — sert à animer le symbole dans l'application
 #   symboles : les vues planes du tableau ; « pic » est le nom du symbole dans figures/tikz/liaisons.sty,
 #              « plan » les deux axes du plan de la vue (le 1er horizontal, le 2e vertical),
 #              « sens » = -1 si le 1er axe pointe vers la gauche (vue (z,y) : x vers l'observateur).
-
 liaisons:
 - id: encastrement
   nom: Encastrement
@@ -51,12 +52,14 @@ liaisons:
     - y
     sens: -1
     pic: encastrement
+    anim: none
   - vue: face
     plan:
     - x
     - y
     sens: 1
     pic: encastrement
+    anim: none
   contact_court: assemblage fixe (vis, soudure, colle, rivet)
   reconnaitre:
     bout: un trait avec un petit triangle plein à la jonction des deux pièces
@@ -106,12 +109,14 @@ liaisons:
     - y
     sens: -1
     pic: pivot bout
+    anim: rot
   - vue: face
     plan:
     - x
     - y
     sens: 1
     pic: pivot face
+    anim: none
   contact_court: cylindre long + épaulement
   reconnaitre:
     bout: un cercle simple (l'axe pointe vers vous)
@@ -160,12 +165,14 @@ liaisons:
     - y
     sens: -1
     pic: glissiere bout
+    anim: none
   - vue: face
     plan:
     - x
     - y
     sens: 1
     pic: glissiere face
+    anim: tx
   contact_court: deux plans (section rectangulaire)
   reconnaitre:
     bout: un carré avec une croix
@@ -222,12 +229,14 @@ liaisons:
     - y
     sens: -1
     pic: helicoidale bout
+    anim: rot
   - vue: face
     plan:
     - x
     - y
     sens: 1
     pic: helicoidale face
+    anim: tx
   contact_court: filetage dans taraudage
   reconnaitre:
     bout: un cercle avec une petite spirale à l'intérieur
@@ -274,12 +283,14 @@ liaisons:
     - y
     sens: -1
     pic: pivot glissant bout
+    anim: rot
   - vue: face
     plan:
     - x
     - y
     sens: 1
     pic: pivot glissant face
+    anim: tx
   contact_court: cylindre long, sans épaulement
   reconnaitre:
     bout: un cercle avec un point au centre
@@ -328,12 +339,14 @@ liaisons:
     - y
     sens: -1
     pic: rotule
+    anim: rot
   - vue: face
     plan:
     - x
     - y
     sens: 1
     pic: rotule
+    anim: rot
   contact_court: sphère dans une sphère creuse
   reconnaitre:
     bout: une sphère (cercle) dans une coupelle
@@ -380,12 +393,14 @@ liaisons:
     - y
     sens: -1
     pic: appui plan
+    anim: tx
   - vue: face
     plan:
     - x
     - y
     sens: 1
     pic: appui plan
+    anim: tx
   contact_court: plan sur plan
   reconnaitre:
     bout: deux traits parallèles collés (les deux plans en contact)
@@ -433,12 +448,14 @@ liaisons:
     - y
     sens: -1
     pic: lineaire rectiligne bout
+    anim: rock
   - vue: face
     plan:
     - x
     - y
     sens: 1
     pic: lineaire rectiligne face
+    anim: tx
   contact_court: cylindre sur plan (ligne)
   reconnaitre:
     bout: un coin (triangle) posé sur un plan
@@ -485,12 +502,14 @@ liaisons:
     - y
     sens: -1
     pic: lineaire annulaire face
+    anim: tx
   - vue: bout
     plan:
     - x
     - y
     sens: 1
     pic: lineaire annulaire bout
+    anim: rot
   contact_court: sphère dans un cylindre (cercle)
   reconnaitre:
     face: une sphère (cercle) dans un rectangle (le cylindre)
@@ -537,6 +556,7 @@ liaisons:
     - y
     sens: -1
     pic: ponctuelle bout
+    anim: rot
   - vue: face
     plan:
     - x
@@ -544,6 +564,7 @@ liaisons:
     sens: 1
     pic: ponctuelle face
     rotate: -90
+    anim: ty
   contact_court: sphère sur plan (point)
   reconnaitre:
     bout: deux cercles concentriques avec une croix (la sphère vue du dessus)

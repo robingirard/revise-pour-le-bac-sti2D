@@ -48,40 +48,6 @@ units:
       explanation: T = translation (déplacement en ligne droite), x = le long de l'axe x.
     - type: mcq
       level: 1
-      prompt: 'Que signifie **Ry** ?
-
-        {{fig:mobilite-Ry}}'
-      choices:
-      - Une rotation autour de l'axe y
-      - Une translation suivant l'axe y
-      - Une rotation autour de l'axe x
-      - Un moment autour de y
-      answer: 0
-      feedback:
-      - null
-      - 'Non : une translation se note **T** (flèche droite) ; **R** est une rotation (flèche courbe).'
-      - 'Non : la lettre après R indique l''axe : ici **y**.'
-      - 'Non : les mobilités décrivent des **mouvements**, pas des efforts.'
-      explanation: R = rotation, y = autour de l'axe y.
-    - type: mcq
-      level: 1
-      prompt: 'Une porte tourne sur ses gonds (axe vertical z). Quel est son **seul** degré de liberté par rapport au mur ?
-
-        {{emoji:🚪}}'
-      choices:
-      - Rz
-      - Tz
-      - Rx
-      - Ty
-      answer: 0
-      feedback:
-      - null
-      - 'Non : Tz serait une translation verticale, la porte ne monte pas et ne descend pas.'
-      - 'Non : Rx serait une rotation autour d''un axe horizontal, comme une trappe.'
-      - 'Non : Ty serait un déplacement en ligne droite, comme une porte coulissante.'
-      explanation: 'La porte ne peut que tourner autour de l''axe vertical des gonds : rotation Rz.'
-    - type: mcq
-      level: 1
       prompt: 'Un tiroir coulisse dans un meuble le long de l''axe x. Quel est son degré de liberté ?
 
         {{emoji:🗄️}}'
@@ -129,26 +95,6 @@ units:
       explanation: 'Chaque contact supprime des degrés de liberté : la liaison définit les mouvements qui restent possibles.'
     - type: grid
       level: 2
-      prompt: 'Un solide **libre** (sans contact) : cochez toutes ses mobilités.
-
-        {{fig:mobilites}}'
-      rows:
-      - x
-      - y
-      - z
-      cols:
-      - T
-      - R
-      answer:
-      - Tx
-      - Ty
-      - Tz
-      - Rx
-      - Ry
-      - Rz
-      explanation: 'Sans contact, rien n''est bloqué : les 6 mobilités sont possibles.'
-    - type: grid
-      level: 2
       prompt: 'Une **porte** sur ses gonds (axe vertical z) : cochez ses mobilités par rapport au mur.
 
         {{emoji:🚪}}'
@@ -191,21 +137,6 @@ units:
         Ry: le tiroir ne peut pas basculer
         Rz: le tiroir ne peut pas pivoter dans son logement
       explanation: 'Le tiroir ne fait que coulisser : translation Tx.'
-    - type: mcq
-      level: 2
-      prompt: Plus une liaison a de **surfaces de contact** qui bloquent des mouvements, …
-      choices:
-      - moins elle a de degrés de liberté
-      - plus elle a de degrés de liberté
-      - plus elle transmet de mouvements
-      - cela ne change rien
-      answer: 0
-      feedback:
-      - null
-      - 'Non : chaque contact **supprime** des mobilités, il ne peut pas en ajouter.'
-      - 'Non : une liaison transmet des **efforts**, et bloquer des mouvements en transmet davantage.'
-      - 'Non : c''est justement le contact qui définit les mouvements possibles.'
-      explanation: 'Chaque contact supprime des mobilités : les ddl diminuent.'
     - type: input
       level: 3
       prompt: Une liaison bloque 4 mobilités. Combien lui reste-t-il de degrés de liberté ?

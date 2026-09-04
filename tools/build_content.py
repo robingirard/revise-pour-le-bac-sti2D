@@ -330,15 +330,17 @@ class Builder:
 
     # --- feedbacks types ---------------------------------------------------------
     def fb_symbole(self, L, D, vue):
-        """On a répondu D au lieu de L devant le symbole de L (vue donnée)."""
-        return diff_feedback(L, D, f"Le symbole de la liaison {low_first(D['nom'])} serait {D['reconnaitre'][vue]} ; ici, {L['reconnaitre'][vue]} : c'est la liaison {low_first(L['nom'])}.")
+        """On a répondu D au lieu de L devant le symbole de L : court et visuel (symbole de D, puis bonne réponse)."""
+        dv = view_of(D, vue)["vue"]
+        return f"Tu as répondu **{D['nom']}**, dont le symbole est : {fig(sym_fig(D, dv))} La bonne réponse est **{L['nom']}**."
 
     def fb_figure_de(self, D, vue):
         """On a choisi la figure de D (symbole) à la place de celle attendue."""
-        return f"Non : ce symbole ({D['reconnaitre'][vue]}) est celui de la liaison {low_first(D['nom'])}."
+        return f"Ce symbole est celui de la liaison **{D['nom']}**."
 
     def fb_contact(self, L, D):
-        return diff_feedback(L, D, f"Le contact « {D['contact_court']} » donnerait une liaison {low_first(D['nom'])} ; ici le contact est « {L['contact_court']} » : liaison {low_first(L['nom'])}.")
+        return (f"Tu as répondu **{D['nom']}** : son contact ({D['contact_court']}) ressemble à {fig('contact-' + D['id'])} "
+                f"La bonne réponse est **{L['nom']}** ({L['contact_court']}).")
 
     def liaison_choices(self, L, key, fb):
         """3 liaisons distractrices avec leur feedback (fb(D) → texte)."""
@@ -357,7 +359,7 @@ class Builder:
                 self.mcq(iid, skill, lvl(1 if s["vue"] == "bout" else 2, l),
                          "Quelle liaison est représentée par ce symbole ?\n" + fig(sym_fig(l, s["vue"])),
                          l["nom"], self.liaison_choices(l, iid, lambda o, l=l, v=s["vue"]: self.fb_symbole(l, o, v)),
-                         f"C'est la liaison **{l['designation']}**{vue} : {l['reconnaitre'][s['vue']]}. {l['contact']}", tags=[l["id"]])
+                         f"**{l['designation']}**{vue} : {l['reconnaitre'][s['vue']]}.", tags=[l["id"]])
 
     def gen_nom_vers_symbole(self, skill):
         for l in self.liaisons:
@@ -370,7 +372,7 @@ class Builder:
                 self.mcq(iid, skill, lvl(2 if s["vue"] == "bout" else 3, l),
                          f"Quel symbole représente la liaison **{l['designation']}** dans une vue du plan **{plan_txt(s)}** ?",
                          fig(sym_fig(l, s["vue"])), distractors,
-                         f"{l['nom']} : {l['reconnaitre'][s['vue']]}. {l['contact']}", layout="grid", tags=[l["id"]])
+                         f"**{l['nom']}** : {l['reconnaitre'][s['vue']]}.", layout="grid", tags=[l["id"]])
 
     def gen_match_symboles(self, skill):
         groupes = [
@@ -432,7 +434,7 @@ class Builder:
             self.mcq(iid, skill, lvl(1, l),
                      f"Voici les surfaces en contact entre deux pièces (le contact est surligné en rouge). Quelle est la liaison ?\n{fig('contact-' + l['id'])}",
                      l["nom"], self.liaison_choices(l, iid, lambda o, l=l: self.fb_contact(l, o)),
-                     f"{l['contact_court']} → **{l['nom']}** : {l['contact']}", tags=[l["id"]])
+                     f"{l['contact_court']} → **{l['nom']}**.", tags=[l["id"]])
 
     def gen_nom_vers_contact_figure(self, skill):
         for l in self.liaisons:
@@ -535,16 +537,16 @@ class Builder:
         return same_axis + same_type
 
     def gen_mobilite_figure_vers_nom(self, skill):
-        for m in MOBS:
+        for m in ("Tx", "Ry", "Rz"):
             iid = f"{skill}.mobilite_figure_vers_nom.{m}"
-            distr = [(d, f"Non : {d} serait {MOB_LONG[d]} ; la figure montre {MOB_LONG[m]}.") for d in self.mob_distractors(m, iid)]
+            distr = [(d, f"Tu as répondu **{d}** ({MOB_LONG[d]}) : {fig('mobilite-' + d)} La figure montre **{m}**.") for d in self.mob_distractors(m, iid)]
             self.mcq(iid, skill, 1, f"Quelle mobilité est représentée sur cette figure ?\n{fig('mobilite-' + m + '-q')}",
                      m, distr, f"**{m}** : {MOB_LONG[m]}. {fig('mobilite-' + m)}", tags=["mobilites"])
 
     def gen_mobilite_nom_vers_figure(self, skill):
-        for m in MOBS:
+        for m in ("Tz", "Rx", "Ty"):
             iid = f"{skill}.mobilite_nom_vers_figure.{m}"
-            distr = [(fig("mobilite-" + d + "-q"), f"Non : cette figure montre {d}, {MOB_LONG[d]}.") for d in self.mob_distractors(m, iid)]
+            distr = [(fig("mobilite-" + d + "-q"), f"Cette figure montre **{d}** : {MOB_LONG[d]}.") for d in self.mob_distractors(m, iid)]
             self.mcq(iid, skill, 2, f"Quelle figure représente la mobilité **{m}** ?",
                      fig("mobilite-" + m + "-q"), distr, f"**{m}** : {MOB_LONG[m]}. {fig('mobilite-' + m)}", layout="grid", tags=["mobilites"])
 

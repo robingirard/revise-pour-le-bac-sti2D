@@ -92,6 +92,11 @@ def tikz_cell(sym):
             r"\end{tikzpicture}") % (h, v, sym["sens"], opts, sym["pic"])
 
 
+ANIMS = {}   # nom de figure → type d'animation (rot | rock | tx | ty), rempli par generate_symbol_sources
+RED = re.compile(r"rgb\(88\.2\d*%,\s*21\.5\d*%,\s*9\.8\d*%\)")   # solideA = RGB(225,55,25) en % (pdftocairo)
+CENTER_Y_PT = 2 + 1.3 * 72 / 2.54   # bord 2 pt + 1,3 cm : ordonnée du centre A dans les figures de symboles
+
+
 def generate_symbol_sources(liaisons):
     """Écrit un .tex par vue de chaque liaison + la planche. Retourne la liste des fichiers."""
     GEN.mkdir(parents=True, exist_ok=True)
@@ -105,6 +110,8 @@ def generate_symbol_sources(liaisons):
             path = GEN / f"liaison-{l['id']}-{sym['vue']}.tex"
             write_if_changed(path, src)
             files.append(path)
+            if sym.get("anim", "none") != "none":
+                ANIMS[path.stem] = sym["anim"]
         ddl = ", ".join(l["ddl"]) if l["ddl"] else "aucun"
         if l.get("ddl_lies"):
             ddl += " (liés)"
@@ -192,6 +199,13 @@ def postprocess_svg(text, prefix):
         text = text.replace(f'href="#{i}"', f'href="#{prefix}--{i}"')
         text = text.replace(f'url(#{i})', f'url(#{prefix}--{i})')
     text = text.replace("<svg ", f'<svg class="fig" role="img" data-fig="{prefix}" ', 1)
+    if prefix in ANIMS:
+        # symbole animable : le solide 1 (rouge) reçoit la classe s1, le centre A est donné en unités utilisateur
+        text = re.sub(r"<(path|circle|use)\b([^>]*)/>",
+                      lambda m: f'<{m.group(1)} class="s1"{m.group(2)}/>' if RED.search(m.group(2)) else m.group(0), text)
+        w = re.search(r'\bwidth="([\d.]+)pt"', text)
+        cx = float(w.group(1)) / 2 if w else 0
+        text = text.replace("<svg ", f'<svg data-anim="{ANIMS[prefix]}" style="--cx:{cx:.2f}px;--cy:{CENTER_Y_PT:.2f}px" ', 1)
     # arrondi des coordonnées des chemins (0,01 pt suffit) : divise la taille par ~1,5
     text = re.sub(r'\bd="([^"]*)"', lambda m: 'd="' + re.sub(r"-?\d+\.\d{3,}", lambda n: f"{float(n.group()):.2f}", m.group(1)) + '"', text)
     return text.strip()
