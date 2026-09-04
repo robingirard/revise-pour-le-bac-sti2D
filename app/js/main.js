@@ -10,12 +10,17 @@ import { EXERCISES } from './exercises/index.js';
 import { GRADE_LABELS } from './exercises/flashcard.js';
 import * as bilan from './bilan.js';
 import * as gl from './guided-logic.js';
+import * as home from './home.js';
 
 window.__RS_STARTED = true; // signale à index.html que le module a bien démarré
 
 const content = window.CONTENT;
 const figures = (content && content.figures) || {};
 let progress = store.load();
+function uiStorage() {
+  try { return globalThis.localStorage || null; } catch { return null; }
+}
+let ui = home.loadUiState(uiStorage()); // sections de l'accueil repliées ou non
 let session = null;      // séance en cours (perdue si la page est rechargée)
 let lastSummary = null;  // bilan de la dernière séance terminée
 
@@ -114,10 +119,56 @@ function renderHome(root) {
     dueCount > 0
       ? h('a', { class: 'btn btn-primary btn-block', href: '#/review' }, `Réviser (${dueCount})`)
       : h('div', { class: 'btn btn-block btn-muted', 'aria-disabled': 'true' }, 'Rien à réviser aujourd\'hui 🎉'),
-    ...content.units.map((unit) => renderUnit(unit, today)),
+    ...renderSubjectTree(today),
     renderAnnales(),
     bottomNav('home'),
   );
+}
+
+// ---------------------------------------------------------------- arbre par matière
+function renderSubjectTree(today) {
+  const groups = home.groupUnitsBySubject(content);
+  if (groups.length === 0) return [];
+  const sections = groups.map((g) => renderSubjectSection(g, today));
+  const chips = groups.length > 1
+    ? h('nav', { class: 'subject-chips', 'aria-label': 'Matières' }, ...groups.map((g) => h('button', {
+      class: 'subject-chip', type: 'button', onClick: () => {
+        const section = document.getElementById(`subject-${g.id}`);
+        if (!section) return;
+        if (!home.isExpanded(ui, g.id)) setSectionExpanded(section, g.id, true);
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      },
+    }, `${g.icon} ${g.label}`)))
+    : null;
+  return [chips, ...sections];
+}
+
+function setSectionExpanded(section, key, expanded) {
+  ui = home.toggleSection(ui, key, expanded);
+  home.saveUiState(ui, uiStorage());
+  const head = section.querySelector('.subject-head');
+  const body = section.querySelector('.subject-body');
+  if (head) head.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  if (body) body.hidden = !expanded;
+}
+
+function renderSubjectSection(group, today) {
+  const expanded = home.isExpanded(ui, group.id);
+  const reached = home.reachedCount(group, progress);
+  const bodyId = `subject-body-${group.id}`;
+  const section = h('section', { class: 'subject', id: `subject-${group.id}` });
+  const head = h('button', {
+    class: 'subject-head', type: 'button', 'aria-expanded': expanded ? 'true' : 'false', 'aria-controls': bodyId,
+    onClick: () => setSectionExpanded(section, group.id, !home.isExpanded(ui, group.id)),
+  },
+  h('span', { class: 'subject-icon' }, group.icon),
+  h('span', { class: 'subject-text' },
+    h('span', { class: 'subject-title' }, group.label),
+    h('span', { class: 'subject-summary' }, `${reached} / ${plural(group.skillCount, 'compétence', 'compétences')} au niveau ≥ 1`)),
+  h('span', { class: 'subject-chevron', 'aria-hidden': 'true' }, '▾'));
+  const body = h('div', { class: 'subject-body', id: bodyId, hidden: !expanded }, ...group.units.map((unit) => renderUnit(unit, today)));
+  section.append(head, body);
+  return section;
 }
 
 // ---------------------------------------------------------------- annales (SPEC §10)
@@ -388,15 +439,21 @@ function renderSummary(root) {
 function renderProgress(root) {
   const today = todayStr();
   const rows = [];
-  for (const unit of content.units) {
-    for (const skill of unit.skills || []) {
-      const st = { ...prog.newSkillState(), ...(progress.skills[skill.id] || {}) };
-      const c = sess.skillCounts(content, progress, skill.id, today);
-      const unlocked = prog.isUnlocked(skill, progress);
-      rows.push(h('tr', { class: unlocked ? '' : 'locked' },
-        h('td', {}, h('a', { href: `#/skill/${skill.id}` }, `${skill.icon || ''} ${skill.title}`)),
-        h('td', {}, unlocked ? `${st.level}/${prog.skillLevels(skill)}` : '🔒'),
-        h('td', {}, c.fresh), h('td', {}, c.due), h('td', {}, c.mastered), h('td', {}, c.total)));
+  const groups = home.groupUnitsBySubject(content);
+  for (const group of groups) {
+    if (groups.length > 1) {
+      rows.push(h('tr', { class: 'subhead' }, h('th', { colspan: 6, scope: 'colgroup' }, `${group.icon} ${group.label}`)));
+    }
+    for (const unit of group.units) {
+      for (const skill of unit.skills || []) {
+        const st = { ...prog.newSkillState(), ...(progress.skills[skill.id] || {}) };
+        const c = sess.skillCounts(content, progress, skill.id, today);
+        const unlocked = prog.isUnlocked(skill, progress);
+        rows.push(h('tr', { class: unlocked ? '' : 'locked' },
+          h('td', {}, h('a', { href: `#/skill/${skill.id}` }, `${skill.icon || ''} ${skill.title}`)),
+          h('td', {}, unlocked ? `${st.level}/${prog.skillLevels(skill)}` : '🔒'),
+          h('td', {}, c.fresh), h('td', {}, c.due), h('td', {}, c.mastered), h('td', {}, c.total)));
+      }
     }
   }
   const sessions = progress.history.length;
@@ -472,14 +529,20 @@ function renderBilan(root, query) {
     root.append(topbar({ back: '#/', title: 'Bilan' }), h('p', { class: 'error' }, error), bottomNav(null));
     return;
   }
-  const rows = b.skills.map((s) => h('tr', {},
-    h('td', {}, bilan.skillTitle(s.id, content)),
-    h('td', {}, `${s.level}/${bilan.skillLevelsOf(s.id, content)}`),
-    h('td', {}, s.sessions),
-    h('td', {}, s.acc != null ? `${s.acc} %` : '—'),
-    h('td', {}, `${s.seen}/${s.total}`),
-    h('td', {}, s.mastered),
-    h('td', {}, s.due)));
+  const rows = [];
+  for (const group of home.groupSkillRows(b.skills, content)) {
+    if (group.header) rows.push(h('tr', { class: 'subhead' }, h('th', { colspan: 7, scope: 'colgroup' }, `${group.icon} ${group.label}`)));
+    for (const s of group.rows) {
+      rows.push(h('tr', {},
+        h('td', {}, bilan.skillTitle(s.id, content)),
+        h('td', {}, `${s.level}/${bilan.skillLevelsOf(s.id, content)}`),
+        h('td', {}, s.sessions),
+        h('td', {}, s.acc != null ? `${s.acc} %` : '—'),
+        h('td', {}, `${s.seen}/${s.total}`),
+        h('td', {}, s.mastered),
+        h('td', {}, s.due)));
+    }
+  }
   const recent = b.recent.length
     ? h('ul', { class: 'bilan-recent' }, ...b.recent.map((s) => h('li', {}, `${bilan.formatDate(s.date)} · ${bilan.skillTitle(s.skill, content)} : ${s.correct}/${s.total}`)))
     : h('p', { class: 'muted' }, 'Aucune séance pour l\'instant.');

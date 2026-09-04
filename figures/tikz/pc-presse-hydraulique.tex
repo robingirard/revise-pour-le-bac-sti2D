@@ -1,0 +1,49 @@
+%% Presse hydraulique (leçon pc-fluides, « Deux applications »).
+%% Le liquide au repos transmet la MÊME pression P aux deux pistons :
+%% P = F1/S1 = F2/S2, donc un petit effort sur la petite section donne
+%% un grand effort sur la grande section. (Dénivellation supposée négligeable.)
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  vect/.style={-{Stealth[length=6pt]}, line width=1.3pt},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.7pt, solideD},
+  rayon/.style={-{Stealth[length=3.5pt]}, line width=0.5pt, solideB}]
+
+%% ------------------- le liquide (forme en U) --------------------------
+\fill[solideB!20]
+      (-2.6,2.2) -- (-2.6,0) -- (3.8,0) -- (3.8,1.2) -- (0.3,1.2)
+   -- (0.3,0.6) -- (-1.9,0.6) -- (-1.9,2.2) -- cycle;
+
+%% ------------------- la paroi du réservoir ----------------------------
+\draw[black!55, line width=1.1pt, line join=round]
+      (-2.6,2.6) -- (-2.6,0) -- (3.8,0) -- (3.8,1.8)
+      (0.3,1.8) -- (0.3,0.6) -- (-1.9,0.6) -- (-1.9,2.6);
+
+%% ------------------- pression identique en tout point ------------------
+\foreach \cx/\cy in {-0.9/0.28, 1.1/0.55, 2.9/0.55} {
+  \foreach \a in {0,90,180,270} { \draw[rayon] (\cx,\cy) -- ++(\a:0.3); }
+  \fill[solideB] (\cx,\cy) circle (0.05); }
+\node[font=\footnotesize, text=solideB!70!black, anchor=north] at (0.6,-0.22)
+     {$P$ : même pression en tout point du liquide};
+
+%% ------------------- piston étroit (gauche) ----------------------------
+\filldraw[fill=black!25, draw=black!60, line width=0.8pt] (-2.6,2.2) rectangle (-1.9,2.5);
+\draw[vect, solideA] (-2.25,3.85) -- (-2.25,2.58)
+     node[pos=0, anchor=south, inner sep=3pt, font=\small, text=solideA] {$\vec{F_1}$};
+\draw[cote] (-2.6,1.95) -- (-1.9,1.95);
+\node[font=\small, text=solideD, anchor=east, inner sep=4pt] at (-2.65,1.95) {$S_1$};
+
+%% ------------------- piston large (droite) -----------------------------
+\filldraw[fill=black!25, draw=black!60, line width=0.8pt] (0.3,1.2) rectangle (3.8,1.5);
+\draw[vect, solideE] (2.05,1.58) -- (2.05,3.85)
+     node[pos=1, anchor=south, inner sep=3pt, font=\small, text=solideE] {$\vec{F_2}$};
+\draw[cote] (0.3,0.95) -- (3.8,0.95);
+\node[font=\small, text=solideD, anchor=north, inner sep=2pt] at (2.05,0.92) {$S_2$};
+
+%% ------------------- relation -----------------------------------------
+\node[font=\footnotesize, anchor=north] at (0.6,-0.72)
+     {$P = \dfrac{F_1}{S_1} = \dfrac{F_2}{S_2}$ \qquad donc \qquad
+      $F_2 = F_1 \times \dfrac{S_2}{S_1}$};
+\end{tikzpicture}
+\end{document}

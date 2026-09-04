@@ -5,7 +5,8 @@
 \begin{document}
 \begin{tikzpicture}[x=1cm,y=1cm,
   axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
-  grad/.style={font=\scriptsize},
+  grad/.style={font=\scriptsize,
+    execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
   cote/.style={{Stealth[length=4.5pt]}-{Stealth[length=4.5pt]}, line width=1pt},
   guide/.style={black!45, dash pattern=on 2pt off 2pt, line width=0.6pt}]
 

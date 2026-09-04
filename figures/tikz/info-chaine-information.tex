@@ -6,7 +6,7 @@
 \begin{document}
 \begin{tikzpicture}[x=1cm,y=1cm,
   bloc/.style={draw=solideB, line width=1.2pt, rounded corners=4pt, fill=white,
-               minimum width=2.15cm, minimum height=1.9cm, inner sep=3pt,
+               minimum width=2.4cm, minimum height=1.9cm, inner sep=3pt,
                align=center, font=\scriptsize},
   fleche/.style={-{Stealth[length=6pt,width=5pt]}, line width=1.8pt, draw=solideB},
   bord/.style={font=\scriptsize, text width=1.75cm, inner sep=1pt,
@@ -14,8 +14,8 @@
 
 %% ---- les trois blocs (même largeur imposée) --------------------------
 \node[bloc] (acq) at (0,0)    {\textbf{ACQUÉRIR}\\[3pt] capteurs\\ boutons,\\ clavier};
-\node[bloc] (tra) at (2.55,0) {\textbf{TRAITER}\\[3pt] carte\\ Arduino\\ automate};
-\node[bloc] (com) at (5.1,0)  {\textbf{COMMUNIQUER}\\[3pt] voyants, écran\\ relais,\\ transistors\\ réseau};
+\node[bloc] (tra) at (2.8,0) {\textbf{TRAITER}\\[3pt] carte\\ Arduino\\ automate};
+\node[bloc] (com) at (5.6,0)  {\textbf{COMMUNIQUER}\\[3pt] voyants, écran\\ relais,\\ transistors\\ réseau};
 
 %% ---- cadre englobant -------------------------------------------------
 \node[draw=solideB!45, line width=0.8pt, rounded corners=7pt, dash pattern=on 3pt off 2pt,
@@ -28,9 +28,9 @@
 \draw[fleche] (tra) -- (com);
 
 %% ---- entrée et sortie ------------------------------------------------
-\draw[fleche] (-2.5,0) -- (acq.west);
-\node[bord, align=right, anchor=south east] at (-1.5,0.12) {Grandeurs physiques, consignes};
-\draw[fleche] (com.east) -- (7.6,0);
-\node[bord, align=left, anchor=south west] at (6.55,0.12) {Informations (ordres, messages)};
+\draw[fleche] (-2.7,0) -- (acq.west);
+\node[bord, align=right, anchor=south east] at (-1.62,0.12) {Grandeurs physiques, consignes};
+\draw[fleche] (com.east) -- (8.4,0);
+\node[bord, align=left, anchor=south west] at (7.22,0.12) {Informations (ordres, messages)};
 \end{tikzpicture}
 \end{document}

@@ -1,0 +1,68 @@
+%% pc-intensite-distance — décroissance de l'intensité acoustique avec la distance.
+%% Une source quasi ponctuelle rayonne dans un cône : à la distance r2 = 2 r1, la même puissance
+%% acoustique traverse une surface quatre fois plus grande, donc I est divisée par 4.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  rayon/.style={black!55, line width=0.5pt},
+  calotte/.style={solideB, line width=0.9pt, fill=solideB!22},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, solideD, line width=0.9pt},
+  rappel/.style={solideD, line width=0.4pt, dash pattern=on 1.5pt off 1.5pt},
+  txt/.style={font=\scriptsize},
+  pastille/.style={circle, fill=solideB, text=white, inner sep=0pt,
+                   minimum size=3.6mm, font=\scriptsize\bfseries}]
+
+\def\ra{1.70}   % r1
+\def\rb{3.40}   % r2 = 2 r1
+\def\ouv{25}    % demi-ouverture du cône (degrés)
+
+%% ---------------- l'enceinte (perspective cavalière) -----------------------
+\fill[black!8]  (-1.15,-0.50) rectangle (-0.45,0.50);
+\draw[line width=0.7pt] (-1.15,-0.50) rectangle (-0.45,0.50);
+\draw[line width=0.7pt, fill=black!14]
+  (-1.15,0.50) -- (-0.87,0.68) -- (-0.17,0.68) -- (-0.45,0.50) -- cycle;
+\draw[line width=0.7pt, fill=black!20]
+  (-0.45,0.50) -- (-0.17,0.68) -- (-0.17,-0.32) -- (-0.45,-0.50) -- cycle;
+\draw[line width=0.6pt] (-0.80,0.05) circle (0.22);
+\fill[black!45] (-0.80,0.05) circle (0.08);
+\node[txt, anchor=north] at (-0.72,-0.58) {source};
+
+%% ---------------- le cône de rayonnement -----------------------------------
+\foreach \a in {\ouv,13,-13,-\ouv} {
+  \draw[rayon] (0,0) -- (\a:{\rb+0.25}); }
+\fill (0,0) circle (1.2pt);
+
+%% ---------------- calotte 1 (petite) ---------------------------------------
+\draw[calotte] (-\ouv:\ra) arc (-\ouv:\ouv:\ra)
+   -- (\ouv:{\ra-0.11}) arc (\ouv:-\ouv:{\ra-0.11}) -- cycle;
+\node[pastille] at ({\ra*cos(\ouv)-0.30},{\ra*sin(\ouv)+0.28}) {1};
+
+%% ---------------- calotte 2 (grande, rim caché en pointillé) ---------------
+\draw[calotte] (-\ouv:\rb) arc (-\ouv:\ouv:\rb)
+   -- (\ouv:{\rb-0.11}) arc (\ouv:-\ouv:{\rb-0.11}) -- cycle;
+\draw[solideB, line width=0.7pt, dash pattern=on 2pt off 1.6pt]
+  ({\rb*cos(\ouv)},{\rb*sin(\ouv)}) arc[start angle=90, end angle=270,
+     x radius={0.30*\rb*sin(\ouv)}, y radius={\rb*sin(\ouv)}];
+\node[pastille] at ({\rb*cos(\ouv)-0.32},{\rb*sin(\ouv)+0.30}) {2};
+
+%% ---------------- surfaces ---------------------------------------------------
+\node[txt, anchor=west, text=solideB] at (0.75,1.28) {$S_1 = 4\pi r_1^{\,2}$};
+\node[txt, anchor=west, text=solideB] at (2.35,2.05) {$S_2 = 4\pi r_2^{\,2} = 4\,S_1$};
+\draw[solideB, line width=0.4pt] (1.25,1.22) -- ({\ra*cos(\ouv)-0.22},{\ra*sin(\ouv)+0.42});
+\draw[solideB, line width=0.4pt] (2.90,1.99) -- ({\rb*cos(\ouv)-0.24},{\rb*sin(\ouv)+0.45});
+
+%% ---------------- cotes r1 et r2 --------------------------------------------
+\draw[cote] (0,0) -- ({\ra-0.10},0)
+   node[midway, fill=white, inner sep=1pt, font=\small, text=solideD] {$r_1$};
+\draw[rappel] ({\rb-0.05},-1.62) -- ({\rb-0.05},-1.95);
+\draw[rappel] (0,-0.15) -- (0,-1.95);
+\draw[cote] (0,-1.88) -- ({\rb-0.05},-1.88)
+   node[midway, fill=white, inner sep=1pt, font=\small, text=solideD] {$r_2 = 2\,r_1$};
+
+%% ---------------- légende ----------------------------------------------------
+\node[txt, anchor=north, align=center] at (1.7,-2.15)
+  {la même puissance acoustique se répartit sur une surface\\
+   \textbf{4 fois plus grande} : $I$ est \textbf{divisée par 4}};
+\end{tikzpicture}
+\end{document}

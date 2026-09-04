@@ -1,0 +1,69 @@
+%% Loi de décroissance radioactive : N(t) = N0 exp(-ln2 . t / t(1/2)).
+%% Échelle des abscisses en demi-vies (1 unité = 1 t(1/2)), échelle des ordonnées en N0.
+%% Quatre vignettes (grille 4 x 4) montrent la population aux dates 0, t(1/2), 2 t(1/2), 3 t(1/2) :
+%% 16, 8, 4 puis 2 noyaux pères (orange) ; les autres pastilles sont les noyaux fils (bleu).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{decorations.pathreplacing}
+\begin{document}
+\begin{tikzpicture}[x=1.55cm, y=3.2cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={solideA, line width=1.3pt, line cap=round, line join=round},
+  guide/.style={black!45, line width=0.4pt, dash pattern=on 1.6pt off 1.6pt},
+  grad/.style={font=\scriptsize, inner sep=2pt},
+  tic/.style={line width=0.5pt}]
+
+%% ---------- Vignette de population : #1 centre, #2 nombre de noyaux pères -------
+\newcommand\vignette[2]{%
+  \begin{scope}[shift={#1}, x=1cm, y=1cm]
+    \draw[black!35, line width=0.5pt, fill=black!2, rounded corners=2pt]
+      (-0.42,-0.42) rectangle (0.42,0.42);
+    \foreach \r in {0,1,2,3} \foreach \c in {0,1,2,3} {
+      \pgfmathtruncatemacro\idx{4*\r+\c}
+      \ifnum\idx<#2\relax \def\coul{solideD}\else \def\coul{solideB}\fi
+      \fill[\coul] ({-0.285+0.19*\c},{0.285-0.19*\r}) circle (0.062);}
+  \end{scope}}
+
+%% ---------- Axes ----------------------------------------------------------------
+\draw[axe] (-0.12,0) -- (3.75,0)
+  node[anchor=north east, inner sep=3pt, font=\small] {$t$};
+\draw[axe] (0,-0.06) -- (0,1.16);
+\node[anchor=south west, inner sep=2pt, font=\small] at (0.04,1.10) {$N$ (noyaux pères)};
+
+%% ---------- Graduations et pointillés -------------------------------------------
+\foreach \v/\lab in {1/{$N_0$}, 0.5/{$N_0/2$}, 0.25/{$N_0/4$}, 0.125/{$N_0/8$}} {
+  \draw[guide] (0,\v) -- ({-ln(\v)/0.6931},\v);
+  \draw[tic] (-0.04,\v) -- (0.04,\v);
+  \node[grad, anchor=east] at (-0.05,\v) {\lab};}
+\node[grad, anchor=north east] at (-0.02,0) {$0$};
+\foreach \t/\lab in {1/{$t_{1/2}$}, 2/{$2\,t_{1/2}$}, 3/{$3\,t_{1/2}$}} {
+  \draw[guide] (\t,0) -- (\t,{exp(-0.6931*\t)});
+  \draw[tic] (\t,-0.015) -- (\t,0.015);
+  \node[grad, anchor=north] at (\t,-0.02) {\lab};}
+
+%% ---------- Courbe ---------------------------------------------------------------
+\draw[courbe] plot[domain=0:3.45, samples=70, smooth] (\x,{exp(-0.6931*\x)});
+\foreach \t in {0,1,2,3} { \fill[solideA] (\t,{exp(-0.6931*\t)}) circle (0.035cm); }
+
+%% ---------- Première « marche » : division par deux ------------------------------
+\draw[solideF, line width=0.7pt, decorate,
+      decoration={brace, amplitude=4pt, raise=2pt, mirror}] (1.06,1) -- (1.06,0.5);
+\node[font=\scriptsize, text=solideF, anchor=west, align=left, inner sep=5pt]
+  at (1.12,0.75) {à chaque $t_{1/2}$ : $\div\,2$};
+
+%% ---------- Vignettes de population ----------------------------------------------
+\foreach \t/\n in {0/16, 1/8, 2/4, 3/2} {
+  \draw[black!30, line width=0.4pt, dash pattern=on 1.4pt off 1.4pt]
+    (\t,{exp(-0.6931*\t)}) -- (\t,1.24);
+  \vignette{(\t,1.42)}{\n}
+  \node[grad, anchor=south, text=black!70] at (\t,1.58) {\n};}
+
+%% ---------- Légende ---------------------------------------------------------------
+\begin{scope}[x=1cm, y=1cm]
+  \fill[solideD] (0.55,-0.95) circle (0.062);
+  \node[font=\scriptsize, anchor=west, inner sep=3pt] at (0.63,-0.95) {noyau père $^{A}_{Z}\mathrm{X}$};
+  \fill[solideB] (3.05,-0.95) circle (0.062);
+  \node[font=\scriptsize, anchor=west, inner sep=3pt] at (3.13,-0.95) {noyau fils};
+\end{scope}
+\end{tikzpicture}
+\end{document}

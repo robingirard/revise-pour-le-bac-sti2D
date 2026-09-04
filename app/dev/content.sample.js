@@ -157,6 +157,27 @@
     { id: 'dem-input-1', skill: 'schema-demarche', type: 'input', level: 2, tags: ['serre-joint'], payload: {
       prompt: 'Combien de **classes d\'équivalence** compte le serre-joint étudié (E1 = {1, 2, 3}, E2 = {4}, E3 = {5, 6}, E4 = {7}) ?', answer: '4', numeric: true,
       explanation: 'E1 à E4 : quatre classes.' } },
+    // unités de démonstration physique-chimie et mathématiques (accueil par matière)
+    { id: 'pc-demo-1', skill: 'pc-demo', type: 'mcq', level: 1, tags: ['puissance'], payload: {
+      prompt: 'La puissance électrique reçue par un dipôle vaut :', choices: ['$P = U \\times I$', '$P = U / I$', '$P = U + I$', '$P = R \\times U$'], answer: [0],
+      feedback: [null, 'Non : la puissance est un produit, pas un quotient.', 'Non : on ne peut pas additionner une tension et une intensité.', 'Non : $R \\times U$ n\'est pas une puissance.'],
+      explanation: '$P$ en watt, $U$ en volt, $I$ en ampère.' } },
+    { id: 'pc-demo-2', skill: 'pc-demo', type: 'input', level: 1, tags: ['puissance'], payload: {
+      prompt: 'Un radiateur sous $U = 230$ V est traversé par $I = 4{,}0$ A. Puissance (en W) ?', answer: '920', numeric: true, tolerance: 1, unit: 'W', explanation: '$P = 230 \\times 4{,}0 = 920$ W.' } },
+    { id: 'pc-demo-3', skill: 'pc-demo', type: 'mcq', level: 2, tags: ['energie'], payload: {
+      prompt: 'Un appareil de 2 kW fonctionne 3 h. Énergie consommée ?', choices: ['6 kWh', '6 W', '0,67 kWh', '2 000 J'], answer: [0],
+      feedback: [null, 'Non : le watt est une unité de puissance, pas d\'énergie.', 'Non : on multiplie la puissance par la durée, on ne divise pas.', 'Non : 2 kW pendant 3 h représentent bien plus que 2 000 J.'],
+      explanation: '$E = P \\times t = 2 \\times 3 = 6$ kWh.' } },
+    { id: 'maths-demo-1', skill: 'maths-demo', type: 'mcq', level: 1, tags: ['primitives'], payload: {
+      prompt: 'Une primitive de $f(x) = 2x$ est :', choices: ['$F(x) = x^2$', '$F(x) = 2$', '$F(x) = x$', '$F(x) = 2x^2$'], answer: [0],
+      feedback: [null, 'Non : 2 est la dérivée de $2x$, pas une primitive.', 'Non : la dérivée de $x$ est 1, pas $2x$.', 'Non : la dérivée de $2x^2$ est $4x$.'],
+      explanation: 'On cherche $F$ telle que $F\' = f$ : $(x^2)\' = 2x$.' } },
+    { id: 'maths-demo-2', skill: 'maths-demo', type: 'input', level: 1, tags: ['trigo'], payload: {
+      prompt: 'Convertir $180°$ en radians (valeur de $\\pi$ arrondie à 0,01).', answer: '3.14', numeric: true, tolerance: 0.01, unit: 'rad', explanation: '$180° = \\pi$ rad $\\approx 3{,}14$ rad.' } },
+    { id: 'maths-demo-3', skill: 'maths-demo', type: 'mcq', level: 2, tags: ['trigo'], payload: {
+      prompt: '$\\cos\\left(\\dfrac{\\pi}{3}\\right)$ vaut :', choices: ['$\\dfrac{1}{2}$', '$\\dfrac{\\sqrt{3}}{2}$', '$0$', '$1$'], answer: [0],
+      feedback: [null, 'Non : $\\dfrac{\\sqrt{3}}{2}$ est $\\sin(\\pi/3)$ (ou $\\cos(\\pi/6)$).', 'Non : $\\cos$ s\'annule en $\\pi/2$.', 'Non : $\\cos$ vaut 1 en 0.'],
+      explanation: 'Valeur remarquable : $\\cos(\\pi/3) = 1/2$.' } },
   ];
 
   const byId = {};
@@ -171,6 +192,7 @@
     units: [
       {
         id: 'liaisons',
+        matiere: 'ingenierie',
         title: 'Les liaisons mécaniques',
         description: 'Reconnaître les 10 liaisons normalisées, leurs symboles et leurs degrés de liberté.',
         skills: [
@@ -256,6 +278,7 @@ Règle : **ddl + efforts transmissibles = 6**.`,
       },
       {
         id: 'schema',
+        matiere: 'ingenierie',
         title: 'Le schéma cinématique',
         description: 'Passer du mécanisme réel au schéma : classes d\'équivalence, graphe des liaisons, schéma.',
         skills: [
@@ -271,6 +294,18 @@ Règle : **ddl + efforts transmissibles = 6**.`,
             items: idsOf('schema-demarche'),
           },
         ],
+      },
+      {
+        id: 'pc-demo-unit', matiere: 'physique', title: 'Physique : énergie électrique (démo)',
+        description: 'Puissance et énergie électriques.',
+        skills: [{ id: 'pc-demo', title: 'Puissance électrique', icon: '⚡', description: 'P = U × I, énergie en kWh.', prerequisites: [], levels: 3,
+          lesson: `# Puissance électrique\nLa puissance reçue par un dipôle vaut $P = U \\times I$ ; l'énergie consommée pendant une durée $t$ vaut $E = P \\times t$.`, items: idsOf('pc-demo') }],
+      },
+      {
+        id: 'maths-demo-unit', matiere: 'maths', title: 'Mathématiques : analyse (démo)',
+        description: 'Primitives et trigonométrie.',
+        skills: [{ id: 'maths-demo', title: 'Primitives et angles', icon: '🧮', description: 'Primitives usuelles, radians, valeurs remarquables.', prerequisites: [], levels: 3,
+          lesson: `# Primitives\nUne primitive de $f$ est une fonction $F$ telle que $F' = f$. Exemple : $F(x) = \\dfrac{x^2}{2}$ est une primitive de $x$.`, items: idsOf('maths-demo') }],
       },
     ],
     items: byId,

@@ -1,0 +1,80 @@
+%% pc-familles-materiaux — les quatre familles de matériaux.
+%% Trois familles « simples » en haut (métalliques, organiques, minéraux) ; en bas
+%% les composites, reliés aux trois autres par une accolade : un composite assemble
+%% au moins deux matériaux non miscibles. Aucun chiffre (les densités sont dans la leçon).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\usetikzlibrary{shapes.geometric, positioning}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  carte/.style={rounded corners=2.5pt, line width=0.9pt},
+  titre/.style={font=\small\bfseries, anchor=north, align=center, inner sep=1pt},
+  ex/.style={font=\scriptsize, anchor=north, align=center, inner sep=1pt, text=black!70}]
+
+%% gabarit d'une cartouche : \cartefond{x}{y}{largeur}{hauteur}{couleur}
+\newcommand\cartefond[5]{\colorlet{fondcarte}{#5}%
+  \draw[carte, draw=#5, fill=fondcarte!6] (#1,#2) rectangle ++(#3,-#4);}
+
+%% ================= 1. matériaux métalliques (gris) =========================
+\cartefond{0}{0}{2.5}{2.5}{black!55}
+\node[titre, text=black!70] at (1.25,-0.12) {Métalliques};
+\begin{scope}[shift={(1.25,-1.08)}]           % icône : lingot
+  \fill[black!30] (-0.42,-0.25) rectangle (0.34,0.08);
+  \fill[black!16] (-0.42,0.08) -- (0.34,0.08) -- (0.50,0.28) -- (-0.26,0.28) -- cycle;
+  \fill[black!45] (0.34,-0.25) -- (0.50,-0.05) -- (0.50,0.28) -- (0.34,0.08) -- cycle;
+  \draw[black!60, line width=0.6pt, line join=round]
+    (-0.42,-0.25) -- (0.34,-0.25) -- (0.50,-0.05) -- (0.50,0.28) -- (-0.26,0.28) -- (-0.42,0.08) -- cycle;
+  \draw[black!60, line width=0.6pt] (-0.42,0.08) -- (0.34,0.08) -- (0.34,-0.25)
+                                    (0.34,0.08) -- (0.50,0.28);
+\end{scope}
+\node[ex] at (1.25,-1.60) {fer, or\\alliages : bronze, laiton};
+
+%% ================= 2. matériaux organiques (vert) ==========================
+\cartefond{2.78}{0}{2.5}{2.5}{solideE}
+\node[titre, text=solideE] at (4.03,-0.12) {Organiques};
+\begin{scope}[shift={(4.03,-1.08)}]           % icône : feuille + granulés
+  \draw[solideE, line width=0.7pt, fill=solideE!25, line join=round]
+    (-0.50,-0.12) .. controls (-0.30,0.36) and (0.10,0.40) .. (0.28,0.14)
+                  .. controls (0.05,-0.08) and (-0.25,-0.26) .. (-0.50,-0.12);
+  \draw[solideE, line width=0.5pt]
+    (-0.50,-0.12) .. controls (-0.20,0.02) and (0.05,0.08) .. (0.28,0.14);
+  \foreach \p in {(0.42,-0.16),(0.20,-0.30),(0.50,-0.32)} \fill[solideE!60] \p circle (0.075);
+\end{scope}
+\node[ex] at (4.03,-1.60) {bois, papier\\plastiques};
+
+%% ================= 3. matériaux minéraux (bleu) ============================
+\cartefond{5.56}{0}{2.5}{2.5}{solideB}
+\node[titre, text=solideB] at (6.81,-0.12) {Minéraux};
+\begin{scope}[shift={(6.81,-1.08)}]           % icône : cristal taillé
+  \draw[solideB, fill=solideB!18, line width=0.7pt, line join=round]
+    (0,0.36) -- (0.36,0.10) -- (0.24,-0.30) -- (-0.24,-0.30) -- (-0.36,0.10) -- cycle;
+  \draw[solideB, line width=0.45pt]
+    (-0.36,0.10) -- (-0.18,0.16) -- (0,0.36) (-0.18,0.16) -- (0.18,0.16) -- (0.36,0.10)
+    (0.18,0.16) -- (0,0.36) (-0.18,0.16) -- (-0.24,-0.30) (0.18,0.16) -- (0.24,-0.30);
+\end{scope}
+\node[ex] at (6.81,-1.60) {roches, verre\\céramique, diamant};
+
+%% ================= accolade vers la quatrième famille ======================
+\draw[line width=0.8pt, black!55, rounded corners=2pt]
+  (0.15,-2.62) -- (0.15,-2.76) -- (3.90,-2.76) -- (4.03,-2.94) -- (4.16,-2.76)
+  -- (7.91,-2.76) -- (7.91,-2.62);
+\draw[-{Stealth[length=6pt]}, line width=0.9pt, black!55] (4.03,-2.98) -- (4.03,-3.98);
+\node[font=\scriptsize\itshape, text=black!75, fill=white, inner sep=2pt]
+  at (4.03,-3.48) {assemblage d'au moins deux familles};
+
+%% ================= 4. matériaux composites (violet) ========================
+\cartefond{1.00}{-4.02}{6.06}{1.70}{solideF}
+\begin{scope}[shift={(1.75,-4.87)}]           % icône : fibres croisées dans une matrice
+  \begin{scope}
+    \clip (-0.50,-0.32) rectangle (0.50,0.32);
+    \fill[solideF!8] (-0.50,-0.32) rectangle (0.50,0.32);
+    \foreach \i in {-1.1,-0.95,...,1.0} \draw[solideF!70, line width=0.6pt] (\i,-0.7) -- (\i+0.7,0.7);
+    \foreach \i in {-1.1,-0.95,...,1.0} \draw[solideD!85, line width=0.6pt] (\i,0.7) -- (\i+0.7,-0.7);
+  \end{scope}
+  \draw[solideF, line width=0.7pt] (-0.50,-0.32) rectangle (0.50,0.32);
+\end{scope}
+\node[titre, anchor=north west, text=solideF] at (2.45,-4.18) {Composites};
+\node[ex, anchor=north west, align=left, text width=4.5cm] at (2.45,-4.70)
+  {au moins \textbf{deux matériaux non miscibles} :\\béton armé, fibre de carbone};
+\end{tikzpicture}
+\end{document}

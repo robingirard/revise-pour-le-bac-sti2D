@@ -1,0 +1,67 @@
+%% Paroi traversée par un flux thermique, en perspective cavalière (fuyante à 30°).
+%% Face avant = surface S (hachurée) ; épaisseur e visible en haut et à droite ;
+%% zone chaude à gauche, zone froide à droite ; flux Phi orienté du chaud vers le froid.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+    arete/.style={line width=0.7pt, black!70, line join=round},
+    cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.6pt, black!75},
+    fin/.style={-{Stealth[length=5pt]}, line width=1pt, solideD},
+    ambiance/.style={font=\small\bfseries},
+    unites/.style={font=\scriptsize, align=center}]
+
+%% ---------- Géométrie : face avant 2,6 x 2,4 ; fuyante (0,55 ; 0,32) --------------
+\def\Lm{2.6}\def\Hm{2.4}\def\fx{0.55}\def\fy{0.32}
+
+%% ---------- Ambiances chaude (gauche) et froide (droite) --------------------------
+\fill[solideA!8] (-2.35,0) rectangle (0,\Hm);
+\fill[solideB!8] (3.15,0) rectangle (5.45,\Hm);
+\node[ambiance, text=solideA, anchor=north] at (-1.18,\Hm-0.05) {CHAUD};
+\node[ambiance, text=solideB, anchor=north] at (4.30,\Hm-0.05) {FROID};
+\node[font=\small, text=solideA, anchor=north] at (-1.18,1.85) {$T_{\text{chaud}}$};
+\node[font=\small, text=solideB, anchor=north] at (4.30,1.85) {$T_{\text{froid}}$};
+
+%% ---------- Petit thermomètre du côté chaud ---------------------------------------
+\begin{scope}[shift={(-2.00,0.45)}]
+  \fill[solideA] (0,0.10) circle (0.17);
+  \fill[solideA!85] (-0.075,0.10) rectangle (0.075,0.85);
+  \draw[line width=0.6pt, black!70] (-0.075,0.10) -- (-0.075,0.82) arc (180:0:0.075)
+        -- (0.075,0.10);
+  \draw[line width=0.6pt, black!70] ([shift={(63:0.17)}]0,0.10) arc (63:-243:0.17);
+  \foreach \y in {0.35,0.50,0.65} \draw[line width=0.4pt, black!60] (0.075,\y) -- (0.20,\y);
+\end{scope}
+
+%% ---------- La paroi : face avant hachurée + faces vues en perspective ------------
+\fill[black!12] (\Lm,0) -- (\Lm,\Hm) -- (\Lm+\fx,\Hm+\fy) -- (\Lm+\fx,\fy) -- cycle;
+\fill[black!8]  (0,\Hm) -- (\Lm,\Hm) -- (\Lm+\fx,\Hm+\fy) -- (\fx,\Hm+\fy) -- cycle;
+\draw[arete] (\Lm,0) -- (\Lm,\Hm) -- (\Lm+\fx,\Hm+\fy) -- (\Lm+\fx,\fy) -- cycle;
+\draw[arete] (0,\Hm) -- (\Lm,\Hm) -- (\Lm+\fx,\Hm+\fy) -- (\fx,\Hm+\fy) -- cycle;
+\hachures[draw=black!30]{(0,0) rectangle (\Lm,\Hm)}
+
+%% ---------- Cotes de la face (S) et de l'épaisseur (e) ----------------------------
+\draw[cote] (0.18,0.26) -- (\Lm-0.18,0.26);
+\draw[cote] (0.26,0.18) -- (0.26,\Hm-0.18);
+\node[font=\small, fill=white, inner sep=2pt] at (1.30,0.72)
+  {surface $S$};
+\draw[cote] (1.35,\Hm+0.16) -- (1.35+\fx,\Hm+0.16+\fy);
+\node[font=\small, anchor=south east, inner sep=1pt] at (1.62,\Hm+0.30) {$e$};
+\node[draw=black!70, line width=0.6pt, fill=white, inner sep=2.5pt, font=\small]
+  at (1.30,1.95) {$R_{\text{th}}$};
+
+%% ---------- Le flux thermique -----------------------------------------------------
+\draw[fin] (-0.55,2.00) -- (3.70,2.00);
+\draw[fin] (-0.55,0.55) -- (3.70,0.55);
+\draw[-{Stealth[length=9pt, width=8pt]}, line width=3.4pt, solideD]
+     (-1.30,1.32) -- (4.15,1.32);
+\node[font=\small\bfseries, text=solideD, anchor=south, inner sep=3pt] at (3.55,1.45) {$\Phi$};
+
+%% ---------- Relation et unités ----------------------------------------------------
+\node[draw=black!70, line width=0.7pt, rounded corners=3pt, fill=black!3,
+      font=\small, inner sep=5pt, anchor=north] at (1.55,-0.45)
+  {$\Phi = \dfrac{S \times (T_{\text{chaud}} - T_{\text{froid}})}{R_{\text{th}}}$};
+\node[unites, anchor=north] at (1.55,-1.90)
+  {$\Phi$ en W ; $S$ en m$^2$ ; $T_{\text{chaud}}$ et $T_{\text{froid}}$ en K ou en $^\circ$C ;\\
+   $R_{\text{th}}$ en m$^2\cdot$K$\cdot$W$^{-1}$};
+\end{tikzpicture}
+\end{document}

@@ -107,6 +107,16 @@ try {
   await evaluate('(() => { const d = document.querySelector("details.lesson"); if (d) d.open = true; const h = [...document.querySelectorAll(".lesson-body h2")].find((e) => /KaTeX/.test(e.textContent)); if (h) h.scrollIntoView(); })()');
   await sleep(200); await shot('81-math-lesson', true);
   await shot('82-code-lesson', true);
+  // Accueil par matière : sections dépliées puis une section repliée (état mémorisé)
+  await goto('#/'); await evaluate('localStorage.removeItem("revise-sti2d.ui.v1")'); await reload(); await shot('90-home-matieres', true);
+  await click('.subject-head', 0); await sleep(200); await shot('91-home-collapsed', true);
+  await reload();
+  const stillCollapsed = await evaluate('document.querySelector(".subject-head").getAttribute("aria-expanded")');
+  if (stillCollapsed !== 'false') throw new Error(`section non mémorisée repliée (aria-expanded=${stillCollapsed})`);
+  await click('.subject-chip', 0); await sleep(200);
+  const reopened = await evaluate('document.querySelector(".subject-head").getAttribute("aria-expanded")');
+  if (reopened !== 'true') throw new Error('la puce ne déplie pas la section');
+  await evaluate('localStorage.removeItem("revise-sti2d.ui.v1")');
   const errors = await evaluate('document.querySelectorAll(".error").length');
   console.log('OK — captures dans', OUT, '; éléments .error visibles :', errors);
 } finally {

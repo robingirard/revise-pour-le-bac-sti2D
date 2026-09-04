@@ -1,0 +1,54 @@
+%% Exercice guidé : passerelle piétonne. Tablier AB articulé en A sur un pilier,
+%% suspendu en B par un tirant acier vertical accroché à une potence.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  force/.style={-{Stealth[length=6pt]}, line width=1.2pt, solideA},
+  inconnue/.style={-{Stealth[length=6pt]}, line width=0.9pt, solideF},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.7pt, solideD},
+  attache/.style={line width=0.4pt, draw=black!45},
+  axe/.style={-{Stealth[length=4.5pt]}, line width=0.6pt, solideF}]
+
+\coordinate (A) at (0,0);
+\coordinate (B) at (4.4,0);
+\coordinate (M) at (2.2,0);
+
+% --- pilier maçonné et articulation en A -------------------------------
+\hachures{(-0.62,-1.15) rectangle (0.62,-0.55)}
+\draw[line width=1pt, draw=solideE, fill=solideE!12] (0,-0.02) -- (-0.4,-0.55) -- (0.4,-0.55) -- cycle;
+
+% --- potence ancrée en haut à droite ------------------------------------
+\hachures{(4.15,2.05) -- (5.4,2.05) -- (5.4,-0.55) -- (5.05,-0.55) -- (5.05,1.75) -- (4.15,1.75) -- cycle}
+
+% --- tirant acier -------------------------------------------------------
+\draw[line width=1.4pt, solideA] (B) -- (4.4,1.75);
+\node[font=\small, anchor=east, inner sep=3pt] at (4.3,1.35) {$\ell = 2\,500$ mm};
+\node[font=\small, anchor=east, inner sep=3pt] at (4.3,0.85) {$d = 8$ mm};
+
+% --- tablier ------------------------------------------------------------
+\draw[line width=3pt, solideB, line cap=round] (A) -- (B);
+\foreach \p/\n/\a in {A/A/{north east}, B/B/{north west}}
+  { \fill (\p) circle (1.8pt); \node[font=\small, anchor=\a, inner sep=4pt] at (\p) {$\n$}; }
+\fill (M) circle (1.6pt);
+
+% --- charge appliquée au milieu ------------------------------------------
+\draw[force] (M) -- ++(0,-0.95) node[anchor=west, inner sep=3pt, font=\small, text=solideA] {$\vec{P}$};
+
+% --- réactions inconnues --------------------------------------------------
+\draw[inconnue] (0,0.08) -- (0,0.95) node[anchor=south, inner sep=2pt, font=\small, text=solideF] {$\vec{F_A}$};
+\draw[inconnue] (4.62,0.08) -- (4.62,0.95) node[anchor=south, inner sep=2pt, font=\small, text=solideF] {$\vec{F_B}$};
+
+% --- cotes -----------------------------------------------------------------
+\draw[attache] (M) ++(0,-1.05) -- (2.2,-1.7)  (B) -- (4.4,-2.1);
+\draw[attache] (0,-1.18) -- (0,-2.1);
+\draw[cote] (0,-1.55) -- (2.2,-1.55);
+\node[font=\small, text=solideD, anchor=north, inner sep=2pt] at (1.1,-1.57) {$2{,}00$ m};
+\draw[cote] (0,-2.0) -- (4.4,-2.0);
+\node[font=\small, text=solideD, anchor=north, inner sep=2pt] at (2.2,-2.02) {$L = 4{,}00$ m};
+
+% --- repère ----------------------------------------------------------------
+\draw[axe] (-1.35,-1.4) -- ++(0.6,0) node[anchor=north, inner sep=1.5pt, font=\small] {$\vec{x}$};
+\draw[axe] (-1.35,-1.4) -- ++(0,0.6) node[anchor=east, inner sep=1.5pt, font=\small] {$\vec{y}$};
+\end{tikzpicture}
+\end{document}

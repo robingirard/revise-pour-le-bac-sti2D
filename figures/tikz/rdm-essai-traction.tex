@@ -1,0 +1,51 @@
+%% Essai de traction : courbe contrainte-déformation d'un acier doux.
+%% Partie linéaire (domaine élastique, pente E), limite élastique Re,
+%% palier plastique, limite à la rupture Rr, puis rupture.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.7pt},
+  courbe/.style={line width=1.6pt, solideB, line cap=round, line join=round},
+  rappel/.style={line width=0.5pt, dash pattern=on 3pt off 2pt, black!60},
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.7pt, solideD}]
+
+% --- axes --------------------------------------------------------------
+\draw[axe] (0,0) -- (0,3.75);
+\draw[axe] (0,0) -- (5.3,0);
+\node[font=\small, anchor=north east, inner sep=2pt] at (0,0) {$0$};
+\node[font=\small, anchor=north east, inner sep=3pt] at (5.35,-0.1)
+     {Déformation $\varepsilon = \Delta L / L$};
+\node[font=\small, anchor=south west, align=left, inner sep=2pt] at (-0.35,3.8)
+     {Contrainte $\sigma = F / S$};
+
+% --- repères Re et Rr ---------------------------------------------------
+\draw[rappel] (0,2.2) -- (1.0,2.2);
+\draw[rappel] (0,3.15) -- (3.5,3.15) (3.5,3.15) -- (3.5,0);
+\node[font=\small, anchor=east, inner sep=3pt] at (0,2.2) {$R_e$};
+\node[font=\small, anchor=east, inner sep=3pt] at (0,3.15) {$R_r$};
+
+% --- la courbe ---------------------------------------------------------
+\draw[courbe] (0,0) -- (1.0,2.2)
+  .. controls (1.08,2.42) and (1.18,2.0) .. (1.32,1.98)
+  .. controls (1.55,1.95) and (1.62,2.06) .. (1.85,2.14)
+  .. controls (2.55,2.62) and (2.95,3.05) .. (3.5,3.15)
+  .. controls (3.95,3.22) and (4.25,3.0) .. (4.55,2.62);
+\draw[line width=1.2pt, solideA] (4.45,2.72) -- (4.72,2.5) (4.45,2.5) -- (4.72,2.72);
+\node[font=\small, text=solideA, anchor=west, inner sep=3pt] at (4.7,2.5) {Rupture};
+
+% --- module de Young : pente de la partie linéaire ---------------------
+\draw[line width=0.6pt, black!60] (0.34,0.75) -- (0.68,0.75) -- (0.68,1.5);
+\node[font=\small, anchor=north west, inner sep=1pt] at (0.7,1.42) {$E$};
+\node[font=\small, anchor=south west, inner sep=2pt, rotate=65] at (0.22,0.5) {$\sigma = E \cdot \varepsilon$};
+
+% --- zones élastique et plastique --------------------------------------
+\draw[cote] (0.03,-0.95) -- (1.0,-0.95);
+\draw[cote] (1.0,-0.95) -- (4.6,-0.95);
+\draw[rappel] (1.0,2.2) -- (1.0,-1.05);
+\draw[rappel] (4.6,-0.75) -- (4.6,-1.05);
+\draw[line width=0.4pt, black!45] (0.5,-1.0) -- (0.5,-1.5);
+\node[font=\small, text=solideD, anchor=north, inner sep=3pt] at (0.5,-1.5) {Zone élastique};
+\node[font=\small, text=solideD, anchor=north, inner sep=3pt] at (2.85,-1.0) {Zone de déformation plastique};
+\end{tikzpicture}
+\end{document}

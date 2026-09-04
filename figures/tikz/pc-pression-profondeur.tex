@@ -11,26 +11,26 @@
 
 \def\rx{1.4}     % demi-largeur du cylindre
 \def\ry{0.35}    % demi-hauteur des ellipses (perspective)
-\def\hc{4.2}     % hauteur de la colonne de liquide
+\def\hc{3.95}     % hauteur de la colonne de liquide
 
 %% ------------------- la colonne de liquide ----------------------------
 \path[fill=solideB!20]
-      (-\rx,\hc) arc (180:360:\rx and \ry) -- (\rx,0) arc (0:-180:\rx and \ry) -- cycle;
+      (-\rx,\hc) arc (180:360:{\rx} and {\ry}) -- (\rx,0) arc (0:-180:{\rx} and {\ry}) -- cycle;
 \draw[solideB, line width=1pt] (-\rx,\hc) -- (-\rx,0) (\rx,\hc) -- (\rx,0);
-\draw[solideB, line width=1pt] (\rx,0) arc (0:-180:\rx and \ry);
+\draw[solideB, line width=1pt] (\rx,0) arc (0:-180:{\rx} and {\ry});
 \draw[solideB, line width=0.6pt, dash pattern=on 2pt off 2pt]
-      (-\rx,0) arc (180:0:\rx and \ry);
-\draw[solideB, line width=1pt] (0,\hc) ellipse (\rx and \ry);
+      (-\rx,0) arc (180:0:{\rx} and {\ry});
+\draw[solideB, line width=1pt] (0,\hc) ellipse ({\rx} and {\ry});
 
 %% ------------------- étiquettes ---------------------------------------
-\node[font=\small, anchor=south] at (0,\hc+0.72) {AIR};
-\node[font=\footnotesize, anchor=south, text=black!70] at (0,\hc+0.42)
+\node[font=\small, anchor=south] at (0,\hc+0.66) {AIR};
+\node[font=\footnotesize, anchor=south, text=black!70] at (0,\hc+0.38)
      {$P = P_{\text{atm}}$ à la surface libre};
 \node[font=\small, text=solideB!70!black, anchor=west] at (-0.55,2.25) {LIQUIDE};
 \node[font=\small, text=solideB!70!black, anchor=west] at (-0.55,1.85) {$\rho_{\text{liquide}}$};
 
 %% ------------------- plans horizontaux B/B' et A ----------------------
-\def\zB{3.10}
+\def\zB{2.95}
 \def\zA{0.80}
 \draw[plan] (-\rx-0.15,\zB) -- (2.75,\zB);
 \draw[plan] (-\rx-0.15,\zA) -- (2.75,\zA);
