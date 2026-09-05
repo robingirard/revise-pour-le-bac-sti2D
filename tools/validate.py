@@ -3,7 +3,8 @@
 
 Invariants vérifiés :
   - liaisons : identifiants uniques, mobilités/efforts valides, ddl + efforts indépendants = 6,
-    complémentarité mobilité ↔ effort sur chaque axe, symboles existants dans liaisons.sty ;
+    complémentarité mobilité ↔ effort sur chaque axe, symboles existants dans liaisons.sty,
+    animation attendue sur chaque symbole compilé (data-anim et data-axial) ;
   - mécanismes : chaque pièce dans exactement une classe, liaisons entre classes existantes ;
   - arbre de compétences : prérequis existants et sans cycle, leçons présentes, générateurs connus.
 Sortie non nulle en cas d'erreur.  Usage : python3 tools/validate.py
@@ -21,6 +22,7 @@ from build_content import GENERATORS, fig_refs  # noqa: E402
 
 CONTENT = ROOT / "content"
 STY = ROOT / "figures" / "tikz" / "liaisons.sty"
+SVGDIR = ROOT / "figures" / "build" / "svg"
 DIST = ROOT / "dist" / "content.json"
 DDL = {"Tx", "Ty", "Tz", "Rx", "Ry", "Rz"}
 EFF = {"X", "Y", "Z", "L", "M", "N"}
@@ -95,6 +97,30 @@ def check_liaisons(liaisons):
         if missing:
             err(f"{p} : mobilites incomplet, manque {sorted(missing)}")
     return set(ids)
+
+
+def check_animations(liaisons):
+    """Vérifie que chaque symbole compilé porte l'animation attendue : le mouvement visible dans le
+    plan de la vue (data-anim) et, quand la translation le long de l'axe de visée est un ddl, la
+    pulsation de profondeur (data-axial). Sans cette dernière, le pivot et le pivot glissant
+    s'animent exactement de la même façon en vue de bout."""
+    for l in liaisons:
+        for s in l["symboles"]:
+            svg = SVGDIR / f"liaison-{l['id']}-{s['vue']}.svg"
+            if not svg.exists():
+                continue   # figure pas encore compilée : « make figures » s'en charge
+            tag = re.search(r"<svg\b[^>]*>", svg.read_text(encoding="utf-8"))
+            attrs = tag.group(0) if tag else ""
+            def attr(name, defaut=None):
+                m = re.search(rf'{name}="([^"]+)"', attrs)
+                return m.group(1) if m else defaut
+            visee = ({"x", "y", "z"} - set(s["plan"])).pop()
+            axial = ("lie" if l.get("ddl_lies") else "libre") if f"T{visee}" in l["ddl"] else None
+            p = f"liaison {l['id']} ({s['vue']})"
+            if attr("data-axial") != axial:
+                err(f"{p} : data-axial = {attr('data-axial')!r}, attendu {axial!r} — relancez « make figures »")
+            if attr("data-anim", "none") != s.get("anim", "none"):
+                err(f"{p} : data-anim = {attr('data-anim')!r}, attendu {s.get('anim', 'none')!r} — relancez « make figures »")
 
 
 def check_mecanismes(mecanismes, liaison_ids):
@@ -220,6 +246,7 @@ def check_dist():
 def main():
     liaisons = load(CONTENT / "liaisons.yaml")["liaisons"]
     ids = check_liaisons(liaisons)
+    check_animations(liaisons)
     mecanismes = [load(p) for p in sorted((CONTENT / "mecanismes").glob("*.yaml"))]
     check_mecanismes(mecanismes, ids)
     units = load(CONTENT / "units.yaml")

@@ -1,4 +1,5 @@
 // Banc d'animation : capture des figures animées données (ids séparés par des virgules) à quatre instants.
+// Couvre les schémas cinématiques (data-mech, animés en JS) et les symboles de liaison (data-anim, animés en CSS).
 // Usage : node app/dev/mech-bench.mjs mecanisme-pompe-a-main-schema,transmission-poulies <dossier de sortie>
 // Construit un site minimal (liens symboliques vers dist/) autour de dev/mech-bench.html, puis lance Chrome headless.
 import fs from 'node:fs';

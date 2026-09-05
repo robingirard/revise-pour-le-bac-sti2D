@@ -92,7 +92,9 @@ def tikz_cell(sym):
             r"\end{tikzpicture}") % (h, v, sym["sens"], opts, sym["pic"])
 
 
-ANIMS = {}   # nom de figure → type d'animation (rot | rock | tx | ty), rempli par generate_symbol_sources
+ANIMS = {}   # nom de figure → mouvement dans le plan de la vue (rot | rock | tx | ty), rempli par generate_symbol_sources
+AXIAL = {}   # nom de figure → translation le long de l'axe de visée (libre | lie) : invisible dans le plan,
+             # rendue par une pulsation d'échelle (le solide 1 vient vers l'observateur)
 RED = re.compile(r"rgb\(88\.2\d*%,\s*21\.5\d*%,\s*9\.8\d*%\)")   # solideA = RGB(225,55,25) en % (pdftocairo)
 CENTER_Y_PT = 2 + 1.3 * 72 / 2.54   # bord 2 pt + 1,3 cm : ordonnée du centre A dans les figures de symboles
 
@@ -139,6 +141,12 @@ def generate_symbol_sources(liaisons):
             files.append(path)
             if sym.get("anim", "none") != "none":
                 ANIMS[path.stem] = sym["anim"]
+            # la translation le long de l'axe de visée (celui qui n'est pas dans le plan de la vue) est
+            # dirigée vers l'observateur : aucun mouvement du plan ne peut la montrer (c'est ce qui rendait
+            # le pivot et le pivot glissant identiques en vue de bout)
+            visee = ({"x", "y", "z"} - set(sym["plan"])).pop()
+            if f"T{visee}" in l["ddl"]:
+                AXIAL[path.stem] = "lie" if l.get("ddl_lies") else "libre"
         ddl = ", ".join(l["ddl"]) if l["ddl"] else "aucun"
         if l.get("ddl_lies"):
             ddl += " (liés)"
@@ -238,7 +246,7 @@ def postprocess_svg(text, prefix):
             return m.group(0)
         text = re.sub(r"<(path|circle)\b([^>]*)/>", wrap, text)   # pas les glyphes (<use>) : les étiquettes restent fixes
         text = text.replace("<svg ", f'<svg data-mech="{prefix}" ', 1)
-    if prefix in ANIMS:
+    if prefix in ANIMS or prefix in AXIAL:
         # symbole animable : le solide 1 (rouge) reçoit la classe s1, le centre A est donné en unités utilisateur
         # chaque élément rouge est enveloppé dans un groupe (un transform CSS sur l'élément lui-même
         # écraserait son attribut transform et le déplacerait) ; c'est le groupe qui est animé
@@ -246,7 +254,9 @@ def postprocess_svg(text, prefix):
                       lambda m: f'<g class="s1"><{m.group(1)}{m.group(2)}/></g>' if RED.search(m.group(2)) else m.group(0), text)
         w = re.search(r'\bwidth="([\d.]+)pt"', text)
         cx = float(w.group(1)) / 2 if w else 0
-        text = text.replace("<svg ", f'<svg data-anim="{ANIMS[prefix]}" style="--cx:{cx:.2f}px;--cy:{CENTER_Y_PT:.2f}px" ', 1)
+        axial = f' data-axial="{AXIAL[prefix]}"' if prefix in AXIAL else ""
+        text = text.replace("<svg ", f'<svg data-anim="{ANIMS.get(prefix, "none")}"{axial}'
+                            f' style="--cx:{cx:.2f}px;--cy:{CENTER_Y_PT:.2f}px" ', 1)
     # arrondi des coordonnées des chemins (0,01 pt suffit) : divise la taille par ~1,5
     text = re.sub(r'\bd="([^"]*)"', lambda m: 'd="' + re.sub(r"-?\d+\.\d{3,}", lambda n: f"{float(n.group()):.2f}", m.group(1)) + '"', text)
     return text.strip()

@@ -412,17 +412,35 @@ figure.fig-lazy { display: block; margin: 10px auto; }
 .offline-box { display: flex; flex-direction: column; gap: 8px; }
 .offline-bar { height: 8px; }
 
-/* ---- symboles de liaison animés (svg[data-anim], solide 1 = .s1 ; voir anim.js) ---- */
+/* ---- symboles de liaison animés (svg[data-anim], solide 1 = .s1 ; voir anim.js) ----
+   Deux mouvements se superposent : celui qui se voit dans le plan de la vue (data-anim) et,
+   quand la liaison autorise une translation le long de l'axe de visée, un va-et-vient en profondeur
+   (data-axial) : le solide 1 grossit en venant vers l'observateur. Sans lui, le pivot et le pivot
+   glissant s'animaient de la même façon en vue de bout (leur seule différence, la translation, est
+   dirigée vers l'œil).
+   data-axial="libre" : rotation et translation indépendantes, leurs périodes se décalent (2,1 s
+   contre 3 s) ; data-axial="lie" (hélicoïdale) : un aller-retour par tour, toujours en phase.
+   Les keyframes emploient les propriétés rotate/translate/scale et non transform : deux animations
+   sur le même élément se composent alors au lieu de s'écraser. */
 svg[data-anim] { cursor: pointer; }
 svg[data-anim] .s1 { transform-box: view-box; transform-origin: var(--cx, 50%) var(--cy, 50%); }
-svg[data-anim="rot"]:hover .s1, svg[data-anim="rot"].playing .s1, .playing-all svg[data-anim="rot"] .s1 { animation: fig-rot 3s linear infinite; }
-svg[data-anim="rock"]:hover .s1, svg[data-anim="rock"].playing .s1, .playing-all svg[data-anim="rock"] .s1 { animation: fig-rock 1.2s ease-in-out infinite alternate; }
-svg[data-anim="tx"]:hover .s1, svg[data-anim="tx"].playing .s1, .playing-all svg[data-anim="tx"] .s1 { animation: fig-tx 1.6s ease-in-out infinite alternate; }
-svg[data-anim="ty"]:hover .s1, svg[data-anim="ty"].playing .s1, .playing-all svg[data-anim="ty"] .s1 { animation: fig-ty 1.6s ease-in-out infinite alternate; }
-@keyframes fig-rot { to { transform: rotate(360deg); } }
-@keyframes fig-rock { from { transform: rotate(-25deg); } to { transform: rotate(25deg); } }
-@keyframes fig-tx { from { transform: translateX(-10px); } to { transform: translateX(10px); } }
-@keyframes fig-ty { from { transform: translateY(-10px); } to { transform: translateY(10px); } }
+svg[data-anim="rot"] { --fig-plan: fig-rot 3s linear infinite; }
+svg[data-anim="rock"] { --fig-plan: fig-rock 1.2s ease-in-out infinite alternate; }
+svg[data-anim="tx"] { --fig-plan: fig-tx 1.6s ease-in-out infinite alternate; }
+svg[data-anim="ty"] { --fig-plan: fig-ty 1.6s ease-in-out infinite alternate; }
+svg[data-axial="libre"] { --fig-axial: fig-push 2.1s ease-in-out infinite alternate; }
+svg[data-axial="lie"] { --fig-axial: fig-push 1.5s ease-in-out infinite alternate; }
+svg[data-anim]:hover .s1, svg[data-anim].playing .s1, .playing-all svg[data-anim] .s1 {
+  animation: var(--fig-plan, none), var(--fig-axial, none);
+}
+@keyframes fig-rot { to { rotate: 360deg; } }
+@keyframes fig-rock { from { rotate: -25deg; } to { rotate: 25deg; } }
+@keyframes fig-tx { from { translate: -10px 0; } to { translate: 10px 0; } }
+@keyframes fig-ty { from { translate: 0 -10px; } to { translate: 0 10px; } }
+/* fig-push : la translation le long de l'axe de visée, rendue par un effet de profondeur —
+   le solide 1 grossit et se fonce en venant vers l'observateur, rapetisse et pâlit en s'éloignant
+   (l'échelle seule est illisible sur les symboles où le solide 1 se réduit à une tige) */
+@keyframes fig-push { from { scale: 0.8; opacity: 0.4; } to { scale: 1.28; opacity: 1; } }
 .fig-anim { position: relative; }
 .fig-anim::after {
   content: '▶'; position: absolute; right: 2px; bottom: 2px; width: 15px; height: 15px; line-height: 15px;
