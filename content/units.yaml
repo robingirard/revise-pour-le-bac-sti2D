@@ -10,6 +10,7 @@ units:
     icon: 🧭
     description: Translations, rotations et degrés de liberté.
     prerequisites: []
+    levels: 2   # 14 exercices : trois niveaux feraient revoir chacun six fois
     lesson: lessons/mobilites.md
     items:
     - type: mcq
@@ -145,6 +146,172 @@ units:
       - deux
       numeric: true
       explanation: 6 mobilités au total − 4 bloquées = 2 ddl.
+    - type: mcq
+      level: 1
+      prompt: 'La roue avant d''un vélo tourne sur son axe, horizontal et dirigé suivant y. Quelle est sa mobilité par rapport à la fourche ?
+
+        {{emoji:🚲}}'
+      choices:
+      - Ry
+      - Ty
+      - Rz
+      - Rx
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la roue ne se déplace pas le long de son axe, elle tourne autour. Une translation se note T, une rotation R.'
+      - 'Non : z est l''axe vertical ; tourner autour de z ferait pivoter la roue comme un guidon.'
+      - 'Non : x est l''axe d''avancement ; tourner autour de x ferait basculer la roue sur le côté.'
+      explanation: 'La roue tourne autour de son axe y : rotation Ry. C''est le seul mouvement que le roulement lui laisse.'
+    - type: mcq
+      level: 1
+      prompt: 'Une cabine d''ascenseur monte et descend dans sa cage, suivant l''axe vertical z. Quelle est sa mobilité ?
+
+        {{emoji:🛗}}'
+      choices:
+      - Tz
+      - Rz
+      - Tx
+      - Ty
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la cabine ne pivote pas sur elle-même, elle monte en ligne droite : c''est une translation (T).'
+      - 'Non : x est horizontal ; la cabine ne se déplace pas latéralement, ses guides l''en empêchent.'
+      - 'Non : y est horizontal ; la cabine ne se déplace pas latéralement, ses guides l''en empêchent.'
+      explanation: 'La cabine se déplace en ligne droite le long de la verticale z : translation Tz.'
+    - type: mcq
+      level: 1
+      prompt: 'Un portail coulissant se déplace le long de son rail, dirigé suivant y. Quelle est sa mobilité par rapport au mur ?'
+      choices:
+      - Ty
+      - Ry
+      - Tx
+      - Tz
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le portail ne tourne pas autour du rail, il glisse le long : c''est une translation.'
+      - 'Non : x est perpendiculaire au rail ; le portail ne s''écarte pas du mur.'
+      - 'Non : z est la verticale ; le portail ne monte pas, il repose sur son rail.'
+      explanation: 'Le portail glisse en ligne droite le long de son rail y : translation Ty. Comparez avec un portail battant, qui lui tourne (Rz).'
+    - type: mcq
+      level: 1
+      prompt: 'On abaisse la poignée d''une porte. Elle tourne autour d''un axe horizontal x, perpendiculaire au plan de la porte. Quelle est sa mobilité ?
+
+        {{emoji:🚪}}'
+      choices:
+      - Rx
+      - Rz
+      - Tx
+      - Ry
+      answer: 0
+      feedback:
+      - null
+      - 'Non : z est l''axe vertical des gonds, autour duquel tourne la **porte**, pas la poignée.'
+      - 'Non : la poignée ne s''enfonce pas dans la porte, elle pivote : c''est une rotation (R).'
+      - 'Non : y est dans le plan de la porte ; tourner autour de y arracherait la poignée.'
+      explanation: 'La poignée pivote autour de son axe de montage x : rotation Rx. La porte, elle, tourne autour de la verticale z de ses gonds.'
+    - type: mcq
+      level: 1
+      prompt: 'Le plateau d''un four à micro-ondes tourne sur son entraîneur, autour de la verticale z. Quelle est sa mobilité par rapport au four ?'
+      choices:
+      - Rz
+      - Tz
+      - Rx
+      - Ry
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le plateau ne monte pas, il tourne : une translation se note T, une rotation R.'
+      - 'Non : x est horizontal ; tourner autour de x renverserait le plateau.'
+      - 'Non : y est horizontal ; tourner autour de y renverserait le plateau.'
+      explanation: 'Le plateau tourne autour de l''axe vertical z de son entraîneur : rotation Rz.'
+    - type: mcq
+      level: 2
+      prompt: 'Le siège d''une balançoire pend au bout de ses deux cordes et oscille d''avant en arrière. Les cordes sont accrochées à une barre horizontale dirigée suivant y. Quelle mobilité le siège a-t-il par rapport au portique ?'
+      choices:
+      - Ry
+      - Tx
+      - Rz
+      - Tz
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le siège avance et recule, mais il le fait en décrivant un arc de cercle : c''est bien une rotation autour de la barre.'
+      - 'Non : z est la verticale ; le siège ne tourne pas sur lui-même comme un tourniquet.'
+      - 'Non : le siège monte un peu en s''écartant, mais ce n''est pas un mouvement libre suivant z : il suit l''arc imposé par les cordes.'
+      explanation: 'Le siège tourne autour de la barre horizontale y : rotation Ry. Le va-et-vient d''avant en arrière est l''arc de cercle décrit par cette rotation.'
+    - type: grid
+      level: 2
+      prompt: 'Une **souris d''ordinateur** posée sur un tapis horizontal (plan x-y, verticale z) : cochez ses mobilités par rapport au tapis.
+
+        {{emoji:🖱️}}'
+      rows:
+      - x
+      - y
+      - z
+      cols:
+      - T
+      - R
+      answer:
+      - Tx
+      - Ty
+      - Rz
+      cellFeedback:
+        Tx: 'la souris glisse sur le tapis suivant x'
+        Ty: 'la souris glisse sur le tapis suivant y'
+        Tz: le tapis l'empêche de s'enfoncer, et on ne la soulève pas
+        Rx: la souris ne bascule pas sur le côté, elle reste à plat
+        Ry: la souris ne bascule pas d'avant en arrière, elle reste à plat
+        Rz: 'on peut la faire pivoter à plat sur le tapis'
+      explanation: 'Un objet posé à plat sur un plan garde trois mobilités : les deux translations du plan (Tx, Ty) et la rotation autour de la normale (Rz). C''est exactement ce que laisse un appui plan.'
+    - type: grid
+      level: 2
+      prompt: 'Un **tabouret de bar** dont l''assise monte en tournant sur sa vis centrale, d''axe vertical z : cochez les mobilités de l''assise par rapport au pied.
+
+        {{emoji:🪑}}'
+      rows:
+      - x
+      - y
+      - z
+      cols:
+      - T
+      - R
+      answer:
+      - Tz
+      - Rz
+      cellFeedback:
+        Tx: l'assise ne se déplace pas latéralement, la vis la retient
+        Ty: l'assise ne se déplace pas latéralement, la vis la retient
+        Tz: 'l''assise monte et descend le long de la vis'
+        Rx: l'assise ne bascule pas, elle reste horizontale
+        Ry: l'assise ne bascule pas, elle reste horizontale
+        Rz: 'on fait tourner l''assise autour de la vis'
+      explanation: 'L''assise monte (Tz) en tournant (Rz) : deux mobilités visibles. Attention, elles ne sont pas indépendantes — un tour de vis correspond toujours à la même montée.'
+    - type: mcq
+      level: 3
+      prompt: 'Une vis se visse dans son écrou, d''axe z : elle tourne (Rz) **et** avance (Tz). Combien de degrés de liberté indépendants cela fait-il ?'
+      choices:
+      - 'Un seul : les deux mouvements sont liés'
+      - 'Deux : une translation et une rotation'
+      - 'Zéro : la vis est bloquée'
+      - 'Trois : Tz, Rz et le serrage'
+      answer: 0
+      feedback:
+      - null
+      - 'Non : ce serait vrai si l''on pouvait tourner sans avancer, comme un pivot glissant. Ici le filetage impose l''un par l''autre.'
+      - 'Non : la vis bouge — simplement, ses deux mouvements n''en font qu''un.'
+      - 'Non : le serrage est un effort, pas une mobilité ; et Tz et Rz ne comptent que pour un.'
+      explanation: 'Le filetage **lie** la rotation et la translation : un tour correspond à une avance égale au pas. On observe deux mouvements, mais on ne peut en choisir qu''un — c''est un seul degré de liberté. C''est ce qui distingue l''hélicoïdale du pivot glissant, où les deux sont libres.'
+    - type: input
+      level: 3
+      prompt: 'Un fauteuil de bureau à roulettes roule sur le sol dans les deux directions du plan, pivote sur son axe vertical, et son assise monte ou descend sur son vérin. Combien de degrés de liberté a-t-il par rapport au sol ?'
+      answer: '4'
+      accept:
+      - quatre
+      numeric: true
+      explanation: 'Deux translations dans le plan du sol, la rotation autour de la verticale, et la montée de l''assise : 2 + 1 + 1 = 4 degrés de liberté. Il en reste donc 2 bloqués — les deux basculements, que le fauteuil ne fait pas (heureusement).'
     generators:
     - gen: mobilite_figure_vers_nom
     - gen: mobilite_nom_vers_figure
@@ -1205,6 +1372,7 @@ units:
     description: Référentiel, trajectoires, translation, rotation, mouvement plan.
     prerequisites:
     - mobilites
+    levels: 2   # 8 exercices : trois niveaux feraient revoir chacun six fois
     lesson: lessons/mouvements.md
     items:
     - type: mcq
@@ -1335,6 +1503,170 @@ units:
       - 'Non : plus on s''éloigne de l''axe, plus on va vite.'
       - 'Non : la vitesse est proportionnelle à R, pas à R².'
       explanation: 'V = ω × R : rayon double, vitesse double (même vitesse angulaire pour tous les points).'
+    - type: mcq
+      level: 1
+      prompt: 'L''aiguille des minutes d''une horloge murale, par rapport au cadran, est en :
+
+        {{emoji:🕐}}'
+      choices:
+      - Rotation
+      - Translation rectiligne
+      - Translation circulaire
+      - Mouvement plan
+      answer: 0
+      feedback:
+      - null
+      - 'Non : ses points ne suivent pas des droites, ils tournent.'
+      - 'Non : en translation, l''aiguille garderait la même orientation ; ici elle pivote sur elle-même.'
+      - 'Non : un mouvement plan combine rotation et translation ; l''aiguille ne fait que tourner autour de son axe.'
+      explanation: 'Tous les points de l''aiguille décrivent des cercles concentriques centrés sur l''axe des aiguilles : c''est une rotation. Le point le plus éloigné du centre est aussi le plus rapide.'
+    - type: mcq
+      level: 1
+      prompt: 'Une cabine d''ascenseur, par rapport à sa cage, est en :
+
+        {{emoji:🛗}}'
+      choices:
+      - Translation rectiligne
+      - Rotation
+      - Translation circulaire
+      - Mouvement plan
+      answer: 0
+      feedback:
+      - null
+      - 'Non : rien ne tourne, la cabine monte tout droit.'
+      - 'Non : la trajectoire est une droite verticale, pas un arc de cercle.'
+      - 'Non : la cabine garde son orientation et ne tourne pas ; il n''y a que la translation.'
+      explanation: 'Tous les points de la cabine décrivent le même segment vertical : translation rectiligne.'
+    - type: mcq
+      level: 1
+      prompt: 'Une valise posée sur un tapis roulant d''aéroport, par rapport au sol, est en :
+
+        {{emoji:🧳}}'
+      choices:
+      - Translation rectiligne
+      - Rotation
+      - Translation circulaire
+      - Mouvement plan
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la valise ne pivote pas, elle est simplement transportée.'
+      - 'Non : le tapis est droit, la trajectoire aussi.'
+      - 'Non : il faudrait que la valise tourne en plus d''avancer ; elle garde son orientation.'
+      explanation: 'La valise garde son orientation et tous ses points suivent des segments parallèles : translation rectiligne. Ce sont les rouleaux sous le tapis qui, eux, sont en rotation.'
+    - type: mcq
+      level: 1
+      prompt: 'Une pale d''éolienne, par rapport au mât, est en :'
+      choices:
+      - Rotation
+      - Translation circulaire
+      - Translation rectiligne
+      - Mouvement plan
+      answer: 0
+      feedback:
+      - null
+      - 'Non : la pale change d''orientation en tournant ; en translation circulaire, elle resterait toujours parallèle à elle-même.'
+      - 'Non : ses points décrivent des cercles, pas des droites.'
+      - 'Non : le rotor la maintient sur son axe ; il n''y a pas de translation en plus.'
+      explanation: 'La pale tourne autour de l''axe du rotor : rotation. Le bout de pale, le plus éloigné de l''axe, va bien plus vite que le pied.'
+    - type: mcq
+      level: 2
+      prompt: 'Un passager assis dans un train qui roule. Quelle est sa trajectoire **par rapport au wagon** ?
+
+        {{emoji:🚆}}'
+      choices:
+      - Un point
+      - Une droite
+      - Un cercle
+      - Une courbe quelconque
+      answer: 0
+      feedback:
+      - null
+      - 'Non : c''est sa trajectoire par rapport à la voie, pas par rapport au wagon dans lequel il ne bouge pas.'
+      - 'Non : rien ne le fait tourner par rapport au wagon.'
+      - 'Non : il est immobile dans le wagon ; sa trajectoire s''y réduit à un point.'
+      explanation: 'Assis, le passager ne bouge pas par rapport au wagon : sa trajectoire y est réduite à un point. Par rapport à la voie, en revanche, c''est une droite. Une trajectoire n''a de sens qu''une fois le référentiel précisé.'
+    - type: mcq
+      level: 2
+      prompt: 'Le corps d''une pédale de vélo reste toujours horizontal pendant que le pédalier tourne. Par rapport au cadre, la pédale est en :
+
+        {{emoji:🚴}}'
+      choices:
+      - Translation circulaire
+      - Rotation
+      - Translation rectiligne
+      - Mouvement plan
+      answer: 0
+      feedback:
+      - null
+      - 'Non : en rotation la pédale se retournerait à chaque tour ; ici elle garde son orientation.'
+      - 'Non : ses points décrivent des cercles, pas des droites.'
+      - 'Non : puisqu''elle ne tourne pas sur elle-même, il n''y a pas de rotation à combiner : c''est une translation.'
+      explanation: 'Tous les points de la pédale décrivent des cercles de même rayon, mais non concentriques, et la pédale garde son orientation : translation circulaire. C''est le même mouvement qu''une nacelle de grande roue.'
+    - type: mcq
+      level: 2
+      prompt: 'Un balai d''essuie-glace, par rapport au pare-brise, est en :'
+      choices:
+      - Rotation
+      - Translation circulaire
+      - Translation rectiligne
+      - Mouvement plan
+      answer: 0
+      feedback:
+      - null
+      - 'Non : le balai s''incline en balayant ; en translation circulaire, il resterait parallèle à lui-même.'
+      - 'Non : il décrit un secteur de cercle, pas une droite.'
+      - 'Non : son axe est fixe sur la carrosserie ; il n''y a pas de translation en plus de la rotation.'
+      explanation: 'Le balai tourne autour de son axe de fixation, d''un côté puis de l''autre : c''est une rotation, simplement alternée.'
+    - type: mcq
+      level: 2
+      prompt: 'Une roue de voiture qui roule sans glisser, **par rapport à la route**, est en :
+
+        {{emoji:🚗}}'
+      choices:
+      - Mouvement plan
+      - Rotation
+      - Translation rectiligne
+      - Translation circulaire
+      answer: 0
+      feedback:
+      - null
+      - 'Non : par rapport à la **carrosserie** c''est une rotation ; par rapport à la route, la roue avance en plus de tourner.'
+      - 'Non : la roue tourne, elle ne se contente pas d''avancer.'
+      - 'Non : la roue change d''orientation en permanence, ce n''est pas une translation.'
+      explanation: 'Par rapport à la route, la roue avance **et** tourne : c''est un mouvement plan. Changez de référentiel et le mouvement change de nature — par rapport à la carrosserie, ce n''est qu''une rotation.'
+    - type: mcq
+      level: 3
+      prompt: 'Une échelle glisse : son pied s''écarte du mur sur le sol pendant que son sommet descend le long du mur. Par rapport au sol, l''échelle est en :
+
+        {{emoji:🪜}}'
+      choices:
+      - Mouvement plan
+      - Translation rectiligne
+      - Rotation
+      - Translation circulaire
+      answer: 0
+      feedback:
+      - null
+      - 'Non : l''échelle se redresse et se couche au fil du glissement, donc elle tourne aussi.'
+      - 'Non : il n''existe aucun point fixe autour duquel tout tournerait ; le pied et le sommet vont dans des directions différentes.'
+      - 'Non : l''échelle change d''orientation, ce qui exclut toute translation.'
+      explanation: 'L''échelle se déplace **et** s''incline, sans point fixe : c''est un mouvement plan, comme la bielle d''un bielle-manivelle. Deux points suffisent à s''en convaincre : le pied file sur le sol, le sommet le long du mur.'
+    - type: mcq
+      level: 3
+      prompt: 'Toujours l''échelle qui glisse contre le mur. Quels points ont une trajectoire **rectiligne** par rapport au sol ?'
+      choices:
+      - Le pied et le sommet seulement
+      - Tous les points de l'échelle
+      - Aucun point
+      - Le milieu de l'échelle seulement
+      answer: 0
+      feedback:
+      - null
+      - 'Non : dans un mouvement plan, les points n''ont pas tous la même trajectoire — c''est justement ce qui le distingue d''une translation.'
+      - 'Non : le pied reste sur le sol et le sommet contre le mur : leurs trajectoires sont bien deux droites.'
+      - 'Non : le milieu décrit un arc de cercle ; ce sont les deux extrémités qui vont droit.'
+      explanation: 'Le pied suit le sol, le sommet suit le mur : deux droites. Les autres points décrivent des courbes — le milieu, lui, décrit un arc de cercle centré sur le coin. Dans un mouvement plan, chaque point a sa propre trajectoire.'
   - id: vitesses
     title: Les vitesses
     icon: ⏱️

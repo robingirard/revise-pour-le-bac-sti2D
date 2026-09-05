@@ -42,7 +42,7 @@ MOBILITE_TEMPLATE = r"""%% Engendré par generators/figures.py — ne pas modifi
 \newcommand\axe[4]{%%
   \begin{scope}[rotate=#1]
     \draw[dashed, line width=0.5pt] (0,0) -- (2.5,0);
-    \draw[-{Stealth[length=6pt]}, line width=0.6pt] (2.5,0) -- (3.2,0) node[pos=1, anchor=180+#1, inner sep=2pt, font=\small] {$\vec{#2}$};
+    \draw[-{Stealth[length=6pt]}, line width=0.6pt] (2.5,0) -- (3.2,0) node[pos=1, anchor=180+#1, inner sep=2pt, font=\large] {$\vec{#2}$};
     \ifnum#3=1 \draw[-{Stealth[length=8pt]}, line width=2.2pt, trans] (0.6,0.16) -- (2.0,0.16) node[pos=1, anchor=270+#1, inner sep=3pt, font=\bfseries, text=trans] {%(labelT)s}; \fi
     \ifnum#4=1 \draw[-{Stealth[length=8pt]}, line width=2pt, rot] (2.05,-0.5) arc (-90:190:0.16 and 0.5) node[pos=1, anchor=90+#1, inner sep=4pt, font=\bfseries, text=rot] {%(labelR)s}; \fi
   \end{scope}}
