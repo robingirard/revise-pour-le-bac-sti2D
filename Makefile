@@ -1,14 +1,16 @@
-# Révise STI2D — tout se reconstruit avec « make ».
-#   make            → figures + contenu + copie de l'application dans dist/
+# Révise STI2D — paquet de contenu. La logique vit dans le moteur (revise-core) ; ce fichier ne
+# fait que l'appeler. CORE dit où le trouver : à côté par défaut, sinon « make CORE=… ».
+#   make            → figures + contenu + application assemblée dans dist/
 #   make figures    → compile les figures TikZ (figures/build/svg)
-#   make content    → génère dist/content.json et dist/content.js, copie app/
-#   make check      → vérifie les sources pédagogiques, le contenu construit et les droits
-#   make droits     → le détail de la comparaison aux transcriptions du manuel
-#   make test       → tests unitaires de l'application (node --test)
+#   make content    → engendre dist/content.js et ses paquets d'unité
+#   make check      → vérifie le contenu construit et les droits
+#   make droits     → le détail de la comparaison aux transcriptions des manuels
+#   make test       → tests unitaires du moteur
 #   make serve      → serveur local sur http://localhost:8000/
 #   make planche    → ouvre la planche récapitulative des liaisons (PDF)
-#   make deploy     → publie dist/ sur la branche gh-pages (GitHub Pages)
+#   make deploy     → publie dist/ sur la branche gh-pages
 #   make clean      → supprime figures/build et dist
+CORE ?= ../revise-core
 PY ?= python3
 
 .PHONY: all figures content check droits test serve planche deploy clean
@@ -16,29 +18,29 @@ PY ?= python3
 all: content
 
 figures:
-	$(PY) tools/build_figures.py
+	$(PY) $(CORE)/revise/build_figures.py
 
 content: figures
-	$(PY) tools/build_content.py
+	$(PY) $(CORE)/revise/build_content.py
 
 check:
-	$(PY) tools/validate.py
-	$(PY) tools/check_droits.py
+	$(PY) $(CORE)/revise/validate.py
+	$(PY) $(CORE)/revise/check_droits.py
 
 droits:
-	$(PY) tools/check_droits.py --tout --montrer 400
+	$(PY) $(CORE)/revise/check_droits.py --tout --montrer 400
 
 test:
-	cd app && node --test tests/*.test.mjs
+	$(MAKE) -C $(CORE) test
 
 serve: content
-	$(PY) tools/serve.py
+	$(PY) $(CORE)/revise/serve.py
 
 planche: figures
 	open figures/build/pdf/planche-liaisons.pdf
 
 deploy: content
-	tools/deploy.sh
+	$(CORE)/revise/deploy.sh
 
 clean:
 	rm -rf figures/build dist
