@@ -16,6 +16,10 @@ licence: CC BY 4.0
 auteur: Robin Girard
 contact: robin.girard@minesparis.psl.eu
 
+# Version publiée du paquet. Chaque version mineure garde son lien permanent sur le site : un
+# lien donné à une classe continue d'ouvrir la version sur laquelle le travail a été fait.
+version: "1.0"
+
 # Version de revise-core que ce paquet sait consommer. La construction échoue si le moteur
 # présent ne la satisfait pas, plutôt que de produire un site subtilement cassé.
 moteur: ">=1.0 <2"
