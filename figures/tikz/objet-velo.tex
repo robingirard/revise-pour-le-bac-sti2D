@@ -1,0 +1,46 @@
+%% Vélo dans une côte, de profil. Le repère est INCLINÉ : il suit la pente, comme celui qu'on
+%% attache à la route et non à la feuille. y monte le long de la pente, x lui est perpendiculaire,
+%% z sort de la feuille. La roue avant ① tourne autour de son axe (sortant), le vélo entier ②
+%% avance le long de la pente — ni l'un ni l'autre ne se lit sans regarder l'inclinaison.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\input{_objets-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm, rotate=18]
+
+% --- la route : le bâti, en gris, pour que le bleu reste au vélo et le rouge à la roue
+\draw[line width=1.6pt, line cap=round, black!55] (-0.7,-0.05) -- (6.2,-0.05);
+\foreach \h in {-0.45,0.05,...,5.9} { \draw[objet/fin] (\h,-0.05) -- ++(-0.3,-0.32); }
+
+% --- les deux roues
+\def\rr{0.78}
+\coordinate (av) at (4.5,\rr);
+\coordinate (ar) at (1.3,\rr);
+\draw[objet/piece, fill=white] (av) circle (\rr);
+\draw[objet/piece, fill=white] (ar) circle (\rr);
+\foreach \a in {0,60,120} {
+  \draw[objet/fin] ($(av)+(\a:\rr)$) -- ($(av)+(\a+180:\rr)$);
+  \draw[objet/fin] ($(ar)+(\a:\rr)$) -- ($(ar)+(\a+180:\rr)$);
+}
+\fill[solideA] (av) circle (0.11);
+\fill[solideA] (ar) circle (0.11);
+
+% --- le cadre : mobile par rapport à la route, donc rouge comme les roues.
+% La couleur dit mobile ou fixe, pas « la pièce dont on parle » : ce sont les pastilles qui désignent.
+\coordinate (ped) at (2.75,0.72);
+\coordinate (sel) at (2.15,2.05);
+\coordinate (gui) at (3.95,2.15);
+\draw[objet/piece] (ar) -- (sel) -- (ped) -- cycle;
+\draw[objet/piece] (sel) -- (gui) -- (ped);
+\draw[objet/piece] (gui) -- (av);
+\draw[objet/piece] ($(sel)+(-0.32,0.16)$) -- ($(sel)+(0.3,0.16)$);
+\draw[objet/piece] ($(gui)+(-0.28,0.2)$) -- ($(gui)+(0.28,0.2)$);
+
+% --- repère incliné : il suit la pente (le dessin entier est déjà tourné de 18°)
+\repereXYZ{(0.15,3.15)}{90/y, 0/x, 210/z}
+
+\numero{(5.35,2.4)}{($(av)+(35:\rr)$)}{1}
+\numero{(3.0,3.5)}{(sel)}{2}   % à l'écart du repère, qu'elle recouvrait
+
+\end{tikzpicture}
+\end{document}

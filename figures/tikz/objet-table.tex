@@ -1,0 +1,43 @@
+%% Un livre et un ballon posés sur une table, en perspective. Repère : y vertical, le plateau
+%% est le plan (x, z). Les deux pièces ont PLUSIEURS mobilités, et pas le même nombre : le livre
+%% ① glisse dans les deux directions du plateau et pivote à plat (appui plan, 3), le ballon ②
+%% peut en plus rouler dans toutes les directions (ponctuelle, 5). Le nombre de cases à cocher
+%% ne se devine pas : il se lit sur le contact.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\input{_objets-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+\coordinate (prof) at (28:1.05);   % calc n'accepte pas une macro ici
+
+% --- le plateau de la table : le bâti
+\draw[objet/bati, fill=solideB!5]
+  (0,0) -- (5.4,0) -- ($(5.4,0)+(prof)$) -- ($(0,0)+(prof)$) -- cycle;
+\draw[objet/bati] (0.25,0) -- (0.25,-1.15);
+\draw[objet/bati] (5.15,0) -- (5.15,-1.15);
+
+% --- le livre, posé à plat : il glisse et pivote sur le plateau
+% dessiné en volume : à plat il ne se distinguait pas du plateau
+\coordinate (li) at (0.85,0.12);
+\draw[objet/piece, fill=solideA!8]
+  (li) -- ++(1.55,0) -- ++(28:0.78) -- ++(-1.55,0) -- cycle;
+\draw[objet/piece, fill=solideA!14]
+  (li) -- ++(1.55,0) -- ++(0,0.34) -- ++(-1.55,0) -- cycle;
+\draw[objet/piece] ($(li)+(1.55,0.34)$) -- ++(28:0.78);
+% la tranche : trois traits fins, pour qu'on lise « livre » et non « boîte »
+\foreach \d in {0.10,0.17,0.24} { \draw[objet/fin] ($(li)+(0.06,\d)$) -- ++(1.43,0); }
+
+% --- le ballon, posé dessus : il roule en plus de glisser
+\coordinate (ba) at (4.05,0.85);
+\draw[objet/piece, fill=white] (ba) circle (0.55);
+\draw[objet/fin] ($(ba)+(-0.55,0)$) arc (180:360:0.55 and 0.2);
+
+% --- repère : y vertical, le plateau est le plan (x, z)
+\repereXYZ{(6.35,0.35)}{90/y, 0/x, 28/z}
+
+\numero{(0.55,2.05)}{($(li)+(0.75,0.5)$)}{1}
+\numero{(5.55,2.25)}{($(ba)+(0.35,0.42)$)}{2}
+
+\end{tikzpicture}
+\end{document}

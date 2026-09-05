@@ -1,0 +1,41 @@
+%% Meuble à tiroir, en perspective. Repère : y vertical (et non z — c'est le piège utile),
+%% x le long de la façade, z sortant vers l'observateur. Le tiroir ① coulisse vers l'observateur,
+%% son galet de guidage ② tourne autour d'un axe transversal.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\input{_objets-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+\coordinate (sort) at (210:0.95);   % calc n'accepte pas une macro ici
+
+% --- le meuble : façade dans le plan de la feuille, ouverture évidée
+\draw[objet/bati] (0,0) rectangle (3.4,2.9);
+\draw[objet/bati] (0.28,0.5) rectangle (3.12,2.15);
+
+% --- le tiroir, sorti vers l'observateur suivant z
+\coordinate (fa) at ($(0.28,0.5)+(sort)$);
+\coordinate (fb) at ($(3.12,0.5)+(sort)$);
+\coordinate (fc) at ($(3.12,2.15)+(sort)$);
+\coordinate (fd) at ($(0.28,2.15)+(sort)$);
+\draw[objet/piece, fill=solideA!7] (fa) -- (fb) -- (fc) -- (fd) -- cycle;
+\draw[objet/piece] (0.28,0.5) -- (fa);
+\draw[objet/piece] (3.12,0.5) -- (fb);
+\draw[objet/piece] (3.12,2.15) -- (fc);
+
+% --- la poignée du tiroir
+\draw[objet/piece] ($(1.35,1.32)+(sort)$) -- ($(2.05,1.32)+(sort)$);
+
+% --- le galet de guidage, sous le tiroir, sur son rail
+\coordinate (gal) at ($(2.55,0.24)+(sort)$);
+\draw[objet/piece, fill=white] (gal) circle (0.24);
+\draw[objet/bati] ($(gal)+(-1.6,-0.26)$) -- ($(gal)+(0.7,-0.26)$);   % le rail est du meuble : fixe
+
+% --- repère : y vertical, x le long de la façade, z sortant vers l'observateur
+\repereXYZ{(4.65,0.6)}{90/y, 0/x, 210/z}
+
+\numero{(1.15,3.55)}{($(1.7,2.15)+(sort)$)}{1}
+\numero{(3.75,-0.75)}{(gal)}{2}
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,33 @@
+%% Vis dans son écrou, axe incliné. Le repère suit l'axe de la vis : z le long de l'axe, y et x
+%% perpendiculaires. On VOIT deux mouvements — la vis tourne et elle avance — mais le filetage les
+%% lie : un tour vaut une avance d'un pas. Deux mobilités observées, un seul degré de liberté.
+%% C'est le seul exercice de la compétence auquel on ne peut pas répondre en comptant les flèches.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\input{_objets-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm, rotate=26]
+
+% --- l'écrou, tenu par le bâti
+\draw[objet/bati, fill=solideB!8] (2.6,-0.62) rectangle (3.9,0.62);
+\draw[line width=1.6pt, line cap=round, black!55] (2.6,-0.62) -- (2.6,-1.05) -- (3.9,-1.05) -- (3.9,-0.62);
+\foreach \h in {2.7,3.0,...,3.85} { \draw[objet/fin] (\h,-1.05) -- ++(-0.28,-0.3); }
+
+% --- la tige filetée : le filetage dessiné en dents de scie, c'est lui qui lie les deux mouvements
+\draw[objet/piece] (0.15,0.28) -- (4.7,0.28);
+\draw[objet/piece] (0.15,-0.28) -- (4.7,-0.28);
+\foreach \h in {0.35,0.75,...,4.5} {
+  \draw[objet/piece, line width=1.1pt] (\h,-0.28) -- ++(0.2,0.56);
+}
+
+% --- la tête de vis
+\draw[objet/piece, fill=solideA!12] (-0.35,-0.5) rectangle (0.15,0.5);
+
+% --- repère : z le long de l'axe de la vis, donc incliné comme elle
+\repereXYZ{(1.0,1.75)}{0/z, 90/y, 210/x}
+
+\numero{(0.35,-1.5)}{(0.6,-0.28)}{1}
+\numero{(4.55,1.5)}{(3.25,0.62)}{2}
+
+\end{tikzpicture}
+\end{document}

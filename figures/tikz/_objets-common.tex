@@ -1,0 +1,38 @@
+%% _objets-common.tex — outils communs aux figures « objet du quotidien avec son repère ».
+%%
+%% Ces figures servent des exercices où l'axe ne doit PAS être donné dans l'énoncé : l'élève lit
+%% l'orientation du repère sur le dessin. D'où deux exigences :
+%%   - le repère porte ses TROIS axes, dans une orientation qui change d'une figure à l'autre
+%%     (si le vertical était toujours z, « vertical → z » redeviendrait un réflexe) ;
+%%   - tout est en \large : à 390 px de large sur un téléphone, \small est illisible.
+%%
+%% Le \repere de liaisons.sty ne convient pas ici : deux axes seulement, et en \small.
+%%
+%% RÈGLE DE COULEUR, et elle est stricte : la couleur dit **mobile ou fixe** par rapport au
+%% référentiel de l'exercice, jamais « la pièce dont on parle ». Le bâti — sol, route, mur, meuble,
+%% tapis, plateau, support — est en solideB (bleu) ou en gris ; TOUT ce qui peut bouger par rapport
+%% à lui est en solideA (rouge), même quand plusieurs pièces bougent. Ce sont les pastilles ① ② qui
+%% désignent la pièce interrogée, c'est leur seule raison d'être. Colorer « la pièce ① » en rouge et
+%% « la pièce ② » en bleu induirait en erreur une fois sur deux l'élève qui a appris que le rouge
+%% bouge — le cas s'est produit sur le vélo, dont le cadre était bleu alors qu'il roule.
+
+%% \repereXYZ[longueur]{point}{angle/label, angle/label, angle/label}
+%% Trois flèches depuis un même point, chacune à l'angle voulu. L'axe « qui sort de la feuille »
+%% se dessine comme les autres, en diagonale, à la manière des perspectives du cours.
+\newcommand\repereXYZ[3][0.95]{%
+  \foreach \ang/\lab in {#3} {%
+    \draw[-{Stealth[length=6pt]}, line width=0.8pt] #2 -- ++(\ang:#1)
+      node[pos=1, anchor={\ang+180}, inner sep=3pt, font=\large] {$\vec{\lab}$};%
+  }}
+
+%% \numero{point du repère}{point visé sur le dessin}{n} — pastille noire reliée à la pièce.
+\newcommand\numero[3]{%
+  \draw[line width=0.5pt, black!55] #1 -- #2;
+  \node[circle, fill=black, text=white, inner sep=2pt, font=\large\bfseries] at #1 {#3};}
+
+%% Épaisseurs : le dessin doit tenir à la taille d'un téléphone, donc peu de traits et des traits gras.
+\tikzset{
+  objet/piece/.style={line width=1.6pt, line cap=round, line join=round, draw=solideA},
+  objet/bati/.style={line width=1.6pt, line cap=round, line join=round, draw=solideB},
+  objet/fin/.style={line width=0.7pt, line cap=round, draw=black!55},
+}

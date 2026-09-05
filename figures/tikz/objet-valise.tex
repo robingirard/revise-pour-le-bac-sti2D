@@ -1,0 +1,42 @@
+%% Valise à roulettes qu'on traîne sur le quai, en perspective. Repère : z vertical, x le sens
+%% de la marche, y transversal. La valise ① a deux mobilités — elle avance et pivote autour de la
+%% verticale pour tourner — alors que sa roulette ② n'en a qu'une. Deux nombres différents sur le
+%% même dessin.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\input{_objets-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+% --- le sol : le bâti
+\draw[line width=1.6pt, line cap=round, black!55] (-0.8,0) -- (5.6,0);
+\foreach \h in {-0.6,-0.1,...,5.3} { \draw[objet/fin] (\h,0) -- ++(-0.3,-0.32); }
+
+% --- la caisse, inclinée comme on la traîne
+\begin{scope}[rotate around={-14:(1.9,0.3)}]
+  \coordinate (ca) at (1.15,0.3);
+  \coordinate (cb) at (2.65,0.3);
+  \coordinate (cc) at (2.65,2.5);
+  \coordinate (cd) at (1.15,2.5);
+  \draw[objet/piece, fill=solideA!7] (ca) -- (cb) -- (cc) -- (cd) -- cycle;
+  % la profondeur en déplacements relatifs : dans un scope tourné, un point nommé du dehors
+  % serait ajouté sans son orientation
+  \draw[objet/piece] (cb) -- ++(30:0.75) coordinate (pb) -- ++(0,2.2) coordinate (pc) -- (cc);
+  \draw[objet/piece] (pc) -- ++(-1.5,0);
+  \draw[objet/piece] (cd) -- ++(30:0.75);
+  % la poignée télescopique
+  \draw[objet/piece] ($(cd)+(0.28,0)$) -- ($(cd)+(0.28,1.15)$) -- ($(cc)+(-0.28,1.15)$) -- ($(cc)+(-0.28,0)$);
+  % la roulette, au pied
+  \coordinate (ro) at ($(ca)+(0.3,-0.18)$);
+  \draw[objet/piece, fill=white] (ro) circle (0.28);
+  \fill[solideA] (ro) circle (0.07);
+\end{scope}
+
+% --- repère : y vertical, x le sens de la marche, z transversal
+\repereXYZ{(4.85,0.9)}{90/z, 0/x, 30/y}
+
+\numero{(0.45,2.75)}{(1.35,2.15)}{1}
+\numero{(0.55,-0.95)}{(ro)}{2}
+
+\end{tikzpicture}
+\end{document}

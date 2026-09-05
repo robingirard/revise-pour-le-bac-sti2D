@@ -10,7 +10,7 @@ units:
     icon: 🧭
     description: Translations, rotations et degrés de liberté.
     prerequisites: []
-    levels: 2   # 14 exercices : trois niveaux feraient revoir chacun six fois
+    levels: 2   # 21 exercices écrits : trois niveaux feraient revoir chacun trop souvent
     lesson: lessons/mobilites.md
     items:
     - type: mcq
@@ -49,23 +49,6 @@ units:
       explanation: T = translation (déplacement en ligne droite), x = le long de l'axe x.
     - type: mcq
       level: 1
-      prompt: 'Un tiroir coulisse dans un meuble le long de l''axe x. Quel est son degré de liberté ?
-
-        {{emoji:🗄️}}'
-      choices:
-      - Tx
-      - Rx
-      - Ty
-      - Tz
-      answer: 0
-      feedback:
-      - null
-      - 'Non : le tiroir ne tourne pas, il se déplace en ligne droite : c''est une translation (T).'
-      - 'Non : le tiroir se déplace le long de l''axe x, pas de l''axe y.'
-      - 'Non : le tiroir se déplace le long de l''axe x, pas de l''axe z.'
-      explanation: 'Le tiroir se déplace en ligne droite le long de x : translation Tx.'
-    - type: mcq
-      level: 1
       prompt: Qu'appelle-t-on les **degrés de liberté** (ddl) d'une liaison ?
       choices:
       - Les mouvements relatifs indépendants encore possibles entre les deux pièces
@@ -94,50 +77,6 @@ units:
       - 'Non : souder est un cas particulier (encastrement) ; la plupart des liaisons laissent des mouvements.'
       - 'Non : on parle de mécanique, donc de mouvements et d''efforts.'
       explanation: 'Chaque contact supprime des degrés de liberté : la liaison définit les mouvements qui restent possibles.'
-    - type: grid
-      level: 2
-      prompt: 'Une **porte** sur ses gonds (axe vertical z) : cochez ses mobilités par rapport au mur.
-
-        {{emoji:🚪}}'
-      rows:
-      - x
-      - y
-      - z
-      cols:
-      - T
-      - R
-      answer:
-      - Rz
-      cellFeedback:
-        Tx: 'la porte ne peut pas se déplacer en ligne droite : les gonds la retiennent'
-        Ty: 'la porte ne peut pas se déplacer en ligne droite : les gonds la retiennent'
-        Tz: 'la porte ne monte pas : les gonds la portent'
-        Rx: la porte ne bascule pas autour d'un axe horizontal
-        Ry: la porte ne bascule pas autour d'un axe horizontal
-        Rz: 'la porte tourne autour de l''axe vertical des gonds : c''est sa seule mobilité'
-      explanation: Seule la rotation autour de l'axe des gonds (z) est possible.
-    - type: grid
-      level: 2
-      prompt: 'Un **tiroir** dans son meuble (axe x) : cochez ses mobilités.
-
-        {{emoji:🗄️}}'
-      rows:
-      - x
-      - y
-      - z
-      cols:
-      - T
-      - R
-      answer:
-      - Tx
-      cellFeedback:
-        Tx: 'le tiroir coulisse le long de x : c''est sa seule mobilité'
-        Ty: les glissières empêchent tout déplacement latéral
-        Tz: 'le tiroir ne monte pas : il repose sur ses glissières'
-        Rx: le tiroir ne peut pas tourner dans son logement
-        Ry: le tiroir ne peut pas basculer
-        Rz: le tiroir ne peut pas pivoter dans son logement
-      explanation: 'Le tiroir ne fait que coulisser : translation Tx.'
     - type: input
       level: 3
       prompt: Une liaison bloque 4 mobilités. Combien lui reste-t-il de degrés de liberté ?
@@ -146,164 +85,6 @@ units:
       - deux
       numeric: true
       explanation: 6 mobilités au total − 4 bloquées = 2 ddl.
-    - type: mcq
-      level: 1
-      prompt: 'La roue avant d''un vélo tourne sur son axe, horizontal et dirigé suivant y. Quelle est sa mobilité par rapport à la fourche ?
-
-        {{emoji:🚲}}'
-      choices:
-      - Ry
-      - Ty
-      - Rz
-      - Rx
-      answer: 0
-      feedback:
-      - null
-      - 'Non : la roue ne se déplace pas le long de son axe, elle tourne autour. Une translation se note T, une rotation R.'
-      - 'Non : z est l''axe vertical ; tourner autour de z ferait pivoter la roue comme un guidon.'
-      - 'Non : x est l''axe d''avancement ; tourner autour de x ferait basculer la roue sur le côté.'
-      explanation: 'La roue tourne autour de son axe y : rotation Ry. C''est le seul mouvement que le roulement lui laisse.'
-    - type: mcq
-      level: 1
-      prompt: 'Une cabine d''ascenseur monte et descend dans sa cage, suivant l''axe vertical z. Quelle est sa mobilité ?
-
-        {{emoji:🛗}}'
-      choices:
-      - Tz
-      - Rz
-      - Tx
-      - Ty
-      answer: 0
-      feedback:
-      - null
-      - 'Non : la cabine ne pivote pas sur elle-même, elle monte en ligne droite : c''est une translation (T).'
-      - 'Non : x est horizontal ; la cabine ne se déplace pas latéralement, ses guides l''en empêchent.'
-      - 'Non : y est horizontal ; la cabine ne se déplace pas latéralement, ses guides l''en empêchent.'
-      explanation: 'La cabine se déplace en ligne droite le long de la verticale z : translation Tz.'
-    - type: mcq
-      level: 1
-      prompt: 'Un portail coulissant se déplace le long de son rail, dirigé suivant y. Quelle est sa mobilité par rapport au mur ?'
-      choices:
-      - Ty
-      - Ry
-      - Tx
-      - Tz
-      answer: 0
-      feedback:
-      - null
-      - 'Non : le portail ne tourne pas autour du rail, il glisse le long : c''est une translation.'
-      - 'Non : x est perpendiculaire au rail ; le portail ne s''écarte pas du mur.'
-      - 'Non : z est la verticale ; le portail ne monte pas, il repose sur son rail.'
-      explanation: 'Le portail glisse en ligne droite le long de son rail y : translation Ty. Comparez avec un portail battant, qui lui tourne (Rz).'
-    - type: mcq
-      level: 1
-      prompt: 'On abaisse la poignée d''une porte. Elle tourne autour d''un axe horizontal x, perpendiculaire au plan de la porte. Quelle est sa mobilité ?
-
-        {{emoji:🚪}}'
-      choices:
-      - Rx
-      - Rz
-      - Tx
-      - Ry
-      answer: 0
-      feedback:
-      - null
-      - 'Non : z est l''axe vertical des gonds, autour duquel tourne la **porte**, pas la poignée.'
-      - 'Non : la poignée ne s''enfonce pas dans la porte, elle pivote : c''est une rotation (R).'
-      - 'Non : y est dans le plan de la porte ; tourner autour de y arracherait la poignée.'
-      explanation: 'La poignée pivote autour de son axe de montage x : rotation Rx. La porte, elle, tourne autour de la verticale z de ses gonds.'
-    - type: mcq
-      level: 1
-      prompt: 'Le plateau d''un four à micro-ondes tourne sur son entraîneur, autour de la verticale z. Quelle est sa mobilité par rapport au four ?'
-      choices:
-      - Rz
-      - Tz
-      - Rx
-      - Ry
-      answer: 0
-      feedback:
-      - null
-      - 'Non : le plateau ne monte pas, il tourne : une translation se note T, une rotation R.'
-      - 'Non : x est horizontal ; tourner autour de x renverserait le plateau.'
-      - 'Non : y est horizontal ; tourner autour de y renverserait le plateau.'
-      explanation: 'Le plateau tourne autour de l''axe vertical z de son entraîneur : rotation Rz.'
-    - type: mcq
-      level: 2
-      prompt: 'Le siège d''une balançoire pend au bout de ses deux cordes et oscille d''avant en arrière. Les cordes sont accrochées à une barre horizontale dirigée suivant y. Quelle mobilité le siège a-t-il par rapport au portique ?'
-      choices:
-      - Ry
-      - Tx
-      - Rz
-      - Tz
-      answer: 0
-      feedback:
-      - null
-      - 'Non : le siège avance et recule, mais il le fait en décrivant un arc de cercle : c''est bien une rotation autour de la barre.'
-      - 'Non : z est la verticale ; le siège ne tourne pas sur lui-même comme un tourniquet.'
-      - 'Non : le siège monte un peu en s''écartant, mais ce n''est pas un mouvement libre suivant z : il suit l''arc imposé par les cordes.'
-      explanation: 'Le siège tourne autour de la barre horizontale y : rotation Ry. Le va-et-vient d''avant en arrière est l''arc de cercle décrit par cette rotation.'
-    - type: grid
-      level: 2
-      prompt: 'Une **souris d''ordinateur** posée sur un tapis horizontal (plan x-y, verticale z) : cochez ses mobilités par rapport au tapis.
-
-        {{emoji:🖱️}}'
-      rows:
-      - x
-      - y
-      - z
-      cols:
-      - T
-      - R
-      answer:
-      - Tx
-      - Ty
-      - Rz
-      cellFeedback:
-        Tx: 'la souris glisse sur le tapis suivant x'
-        Ty: 'la souris glisse sur le tapis suivant y'
-        Tz: le tapis l'empêche de s'enfoncer, et on ne la soulève pas
-        Rx: la souris ne bascule pas sur le côté, elle reste à plat
-        Ry: la souris ne bascule pas d'avant en arrière, elle reste à plat
-        Rz: 'on peut la faire pivoter à plat sur le tapis'
-      explanation: 'Un objet posé à plat sur un plan garde trois mobilités : les deux translations du plan (Tx, Ty) et la rotation autour de la normale (Rz). C''est exactement ce que laisse un appui plan.'
-    - type: grid
-      level: 2
-      prompt: 'Un **tabouret de bar** dont l''assise monte en tournant sur sa vis centrale, d''axe vertical z : cochez les mobilités de l''assise par rapport au pied.
-
-        {{emoji:🪑}}'
-      rows:
-      - x
-      - y
-      - z
-      cols:
-      - T
-      - R
-      answer:
-      - Tz
-      - Rz
-      cellFeedback:
-        Tx: l'assise ne se déplace pas latéralement, la vis la retient
-        Ty: l'assise ne se déplace pas latéralement, la vis la retient
-        Tz: 'l''assise monte et descend le long de la vis'
-        Rx: l'assise ne bascule pas, elle reste horizontale
-        Ry: l'assise ne bascule pas, elle reste horizontale
-        Rz: 'on fait tourner l''assise autour de la vis'
-      explanation: 'L''assise monte (Tz) en tournant (Rz) : deux mobilités visibles. Attention, elles ne sont pas indépendantes — un tour de vis correspond toujours à la même montée.'
-    - type: mcq
-      level: 3
-      prompt: 'Une vis se visse dans son écrou, d''axe z : elle tourne (Rz) **et** avance (Tz). Combien de degrés de liberté indépendants cela fait-il ?'
-      choices:
-      - 'Un seul : les deux mouvements sont liés'
-      - 'Deux : une translation et une rotation'
-      - 'Zéro : la vis est bloquée'
-      - 'Trois : Tz, Rz et le serrage'
-      answer: 0
-      feedback:
-      - null
-      - 'Non : ce serait vrai si l''on pouvait tourner sans avancer, comme un pivot glissant. Ici le filetage impose l''un par l''autre.'
-      - 'Non : la vis bouge — simplement, ses deux mouvements n''en font qu''un.'
-      - 'Non : le serrage est un effort, pas une mobilité ; et Tz et Rz ne comptent que pour un.'
-      explanation: 'Le filetage **lie** la rotation et la translation : un tour correspond à une avance égale au pas. On observe deux mouvements, mais on ne peut en choisir qu''un — c''est un seul degré de liberté. C''est ce qui distingue l''hélicoïdale du pivot glissant, où les deux sont libres.'
     - type: input
       level: 3
       prompt: 'Un fauteuil de bureau à roulettes roule sur le sol dans les deux directions du plan, pivote sur son axe vertical, et son assise monte ou descend sur son vérin. Combien de degrés de liberté a-t-il par rapport au sol ?'
@@ -312,6 +93,342 @@ units:
       - quatre
       numeric: true
       explanation: 'Deux translations dans le plan du sol, la rotation autour de la verticale, et la montée de l''assise : 2 + 1 + 1 = 4 degrés de liberté. Il en reste donc 2 bloqués — les deux basculements, que le fauteuil ne fait pas (heureusement).'
+    - type: mcq
+      level: 2
+      prompt: 'Sur cette figure, quelle est la mobilité du **vantail** (pièce ①) par rapport au cadre ?
+
+        {{fig:objet-porte}}'
+      choices:
+      - Rz
+      - Rx
+      - Ry
+      - Tz
+      answer: 0
+      feedback:
+      - null
+      - 'Non : sur cette figure, x sort du vantail. C''est autour de cet axe que tourne la poignée, pas le vantail.'
+      - 'Non : sur cette figure, y longe le mur. Tourner autour de y coucherait la porte à plat.'
+      - 'Non : le vantail ne monte pas le long de ses gonds, il pivote autour d''eux.'
+      explanation: 'La ligne des gonds est verticale, et sur cette figure la verticale est **z** : le vantail tourne autour de z, donc **Rz**. Lisez le repère avant de répondre — d''une figure à l''autre, la verticale n''est pas le même axe.'
+      tags:
+      - mobilites
+    - type: mcq
+      level: 2
+      prompt: 'Même porte, autre pièce : quelle est la mobilité de la **poignée** (pièce ②) par rapport au vantail ?
+
+        {{fig:objet-porte}}'
+      choices:
+      - Rx
+      - Rz
+      - Ry
+      - Tx
+      answer: 0
+      feedback:
+      - null
+      - 'Non : z est la verticale sur cette figure, c''est l''axe des gonds. La poignée ne tourne pas autour de la ligne des gonds.'
+      - 'Non : y longe le mur. La béquille ne tourne pas autour de cet axe.'
+      - 'Non : on abaisse la poignée, on ne la tire pas vers soi.'
+      explanation: 'La béquille tourne autour d''un axe perpendiculaire au vantail. Sur cette figure, c''est **x** qui sort du vantail : **Rx**. Le même objet donne donc deux réponses différentes selon la pièce regardée.'
+      tags:
+      - mobilites
+    - type: mcq
+      level: 2
+      prompt: 'Sur cette figure, quelle est la mobilité du **tiroir** (pièce ①) par rapport au meuble ?
+
+        {{fig:objet-tiroir}}'
+      choices:
+      - Tz
+      - Tx
+      - Ty
+      - Rz
+      answer: 0
+      feedback:
+      - null
+      - 'Non : sur cette figure, x longe la façade. Le tiroir ne se déplace pas latéralement, ses glissières l''en empêchent.'
+      - 'Non : attention au repère, ici y est la **verticale**. Le tiroir ne monte pas.'
+      - 'Non : le tiroir ne pivote pas, il sort en ligne droite.'
+      explanation: 'Le tiroir sort vers l''observateur, et sur cette figure c''est **z** qui pointe vers vous : **Tz**. Le repère de cette figure n''a pas la même orientation que celui de la porte — ici la verticale est y.'
+      tags:
+      - mobilites
+    - type: mcq
+      level: 3
+      prompt: 'Même meuble : le **galet** de guidage (pièce ②) roule sous le tiroir. Quelle est sa mobilité par rapport au tiroir ?
+
+        {{fig:objet-tiroir}}'
+      choices:
+      - Rx
+      - Rz
+      - Ry
+      - Tz
+      answer: 0
+      feedback:
+      - null
+      - 'Non : z est la direction dans laquelle le tiroir sort. Le galet ne tourne pas autour de la direction dans laquelle il avance, il tournerait sur place.'
+      - 'Non : y est la verticale sur cette figure. Une rotation autour de y ferait pivoter le galet à plat, comme une roulette de chaise.'
+      - 'Non : le galet est monté sur son axe ; il tourne, il ne coulisse pas.'
+      explanation: 'Un galet qui roule tourne autour d''un axe **perpendiculaire à son déplacement** et horizontal. Le tiroir sort suivant z, la verticale est y : il reste **x**, donc **Rx**.'
+      tags:
+      - mobilites
+    - type: mcq
+      level: 2
+      prompt: 'Sur cette figure, quelle est la mobilité de la **roue avant** (pièce ①) par rapport au cadre du vélo ?
+
+        {{fig:objet-velo}}'
+      choices:
+      - Rz
+      - Rx
+      - Ry
+      - Tx
+      answer: 0
+      feedback:
+      - null
+      - 'Non : sur cette figure, x suit la pente. La roue ne tourne pas autour de la direction de la route.'
+      - 'Non : y est perpendiculaire à la route. Tourner autour de y, ce serait braquer le guidon, pas faire rouler la roue.'
+      - 'Non : la roue tourne sur son axe ; c''est le vélo entier qui avance.'
+      explanation: 'L''axe de la roue est perpendiculaire au plan du dessin, et sur cette figure c''est **z** : **Rz**. Notez que le repère est **incliné** — il suit la pente, pas les bords de l''image.'
+      tags:
+      - mobilites
+    - type: grid
+      level: 3
+      prompt: 'Même vélo : cochez les mobilités du **vélo entier** (pièce ②) par rapport à la route.
+
+        {{fig:objet-velo}}'
+      rows:
+      - x
+      - y
+      - z
+      cols:
+      - T
+      - R
+      answer:
+      - Tx
+      - Ry
+      cellFeedback:
+        Tx: 'le vélo avance le long de la pente, et sur cette figure c''est x qui la suit'
+        Ty: 'y est perpendiculaire à la route : le vélo ne décolle pas'
+        Tz: z sort de l'image ; le vélo ne se déplace pas de côté, ses roues l'en empêchent
+        Rx: tourner autour de x coucherait le vélo sur le flanc
+        Ry: 'en braquant, le vélo pivote autour de la perpendiculaire à la route : c''est y ici'
+        Rz: z est l'axe des roues ; le vélo entier ne fait pas de roue arrière ici
+      explanation: 'Un vélo qui roule sur une route a **deux** mobilités : il avance (Tx sur cette figure) et il tourne (Ry, autour de la perpendiculaire à la route). Le repère étant incliné, ni l''un ni l''autre ne se devine sans le regarder.'
+      tags:
+      - mobilites
+    - type: grid
+      level: 3
+      prompt: 'Cochez les mobilités de la **souris** (pièce ①) par rapport à son tapis.
+
+        {{fig:objet-souris}}'
+      rows:
+      - x
+      - y
+      - z
+      cols:
+      - T
+      - R
+      answer:
+      - Ty
+      - Tz
+      - Rx
+      cellFeedback:
+        Tx: 'attention au repère : ici x est la **normale** au tapis. La souris ne s''enfonce pas et on ne la soulève pas'
+        Ty: la souris glisse sur le tapis suivant y
+        Tz: la souris glisse aussi suivant z, l'autre direction du tapis
+        Rx: 'on peut la faire pivoter à plat : c''est la rotation autour de la normale, donc x ici'
+        Ry: la souris ne bascule pas sur le côté, elle reste à plat
+        Rz: la souris ne bascule pas d'avant en arrière, elle reste à plat
+      explanation: 'Un objet posé à plat garde **trois** mobilités : les deux translations du plan et la rotation autour de la normale. Sur cette figure la normale est **x** — et non z comme on l''attend d''ordinaire : Ty, Tz et Rx.'
+      tags:
+      - mobilites
+    - type: mcq
+      level: 2
+      prompt: 'Même souris : quelle est la mobilité de la **molette** (pièce ②) par rapport au boîtier ?
+
+        {{fig:objet-souris}}'
+      choices:
+      - Rz
+      - Rx
+      - Ry
+      - Ty
+      answer: 0
+      feedback:
+      - null
+      - 'Non : x est la normale au tapis sur cette figure. Tourner autour de x ferait pivoter la souris à plat, pas rouler la molette.'
+      - 'Non : y va vers l''avant de la souris. La molette ne tourne pas autour de cet axe.'
+      - 'Non : la molette tourne sur son axe, elle ne se déplace pas.'
+      explanation: 'La molette roule sous le doigt : son axe est transversal, en travers de la souris. Sur cette figure c''est **z** : **Rz**.'
+      tags:
+      - mobilites
+    - type: grid
+      level: 2
+      prompt: 'Cochez les mobilités de la **valise** (pièce ①) par rapport au sol, telle qu''on la traîne.
+
+        {{fig:objet-valise}}'
+      rows:
+      - x
+      - y
+      - z
+      cols:
+      - T
+      - R
+      answer:
+      - Tx
+      - Rz
+      cellFeedback:
+        Tx: 'la valise avance dans le sens de la marche, et sur cette figure c''est x'
+        Ty: y est transversal ; la valise ne dérape pas de côté sur ses roulettes
+        Tz: 'z est la verticale ici : la valise ne décolle pas du sol'
+        Rx: tourner autour de x coucherait la valise sur le flanc
+        Ry: 'on l''incline pour la traîner, mais une fois inclinée elle garde cette position : ce n''est pas une mobilité de la marche'
+        Rz: 'pour changer de direction, on la fait pivoter autour de la verticale, c''est-à-dire z ici'
+      explanation: 'On la traîne (Tx) et on la fait tourner pour changer de direction (Rz) : **deux** mobilités. La verticale est z sur cette figure — mais elle était y sur celle du tiroir.'
+      tags:
+      - mobilites
+    - type: mcq
+      level: 3
+      prompt: 'Même valise : quelle est la mobilité de la **roulette** (pièce ②) par rapport à la caisse ?
+
+        {{fig:objet-valise}}'
+      choices:
+      - Ry
+      - Rz
+      - Rx
+      - Tx
+      answer: 0
+      feedback:
+      - null
+      - 'Non : z est la verticale sur cette figure. Une rotation autour de z ferait pivoter la roulette à plat, comme sur un chariot de supermarché.'
+      - 'Non : x est le sens de la marche. Une roue ne tourne pas autour de la direction dans laquelle elle roule.'
+      - 'Non : la roulette est montée sur son axe, elle ne coulisse pas.'
+      explanation: 'La roulette tourne autour d''un axe **transversal** et horizontal. La marche se fait suivant x, la verticale est z : il reste **y**, donc **Ry**.'
+      tags:
+      - mobilites
+    - type: grid
+      level: 2
+      prompt: 'Cochez les mouvements que l''on **observe** sur la vis (pièce ①) quand on la visse dans son écrou.
+
+        {{fig:objet-vis}}'
+      rows:
+      - x
+      - y
+      - z
+      cols:
+      - T
+      - R
+      answer:
+      - Tz
+      - Rz
+      cellFeedback:
+        Tz: 'la vis avance le long de son axe, et sur cette figure l''axe de la vis est z'
+        Rz: la vis tourne autour de ce même axe
+        Tx: x est perpendiculaire à la vis ; elle ne se déplace pas de côté dans son écrou
+        Ty: y est perpendiculaire à la vis ; elle ne se déplace pas de côté dans son écrou
+        Rx: la vis ne bascule pas dans son écrou, le filetage la guide
+        Ry: la vis ne bascule pas dans son écrou, le filetage la guide
+      explanation: 'On observe **deux** mouvements, tous deux le long de l''axe de la vis, ici incliné et nommé z : elle tourne (Rz) et elle avance (Tz). Attention à la question suivante : deux mouvements ne font pas toujours deux degrés de liberté.'
+      tags:
+      - mobilites
+    - type: mcq
+      level: 3
+      prompt: 'On vient de voir que la vis tourne **et** avance. Combien de degrés de liberté **indépendants** cela lui fait-il par rapport à l''écrou ?
+
+        {{fig:objet-vis}}'
+      choices:
+      - Un seul
+      - Deux
+      - Trois
+      - Aucun
+      answer: 0
+      feedback:
+      - null
+      - 'Non : ce serait vrai si l''on pouvait tourner sans avancer, ou avancer sans tourner. Le filetage l''interdit.'
+      - 'Non : la vis ne peut ni se décaler ni basculer dans son écrou.'
+      - 'Non : la vis bouge bel et bien, elle se visse.'
+      explanation: 'Le filetage **lie** la rotation et l''avance : un tour vaut exactement un pas. On observe deux mouvements, mais on n''en choisit qu''un — l''autre suit. C''est **un seul** degré de liberté, et c''est ce qui distingue la liaison hélicoïdale du pivot glissant, où les deux sont libres. Compter les flèches ne suffit donc pas.'
+      tags:
+      - mobilites
+    - type: grid
+      level: 3
+      prompt: 'Cochez les mobilités du **livre** (pièce ①) posé à plat, par rapport au plateau.
+
+        {{fig:objet-table}}'
+      rows:
+      - x
+      - y
+      - z
+      cols:
+      - T
+      - R
+      answer:
+      - Tx
+      - Tz
+      - Ry
+      cellFeedback:
+        Tx: le livre glisse sur le plateau suivant x
+        Tz: le livre glisse aussi suivant z, l'autre direction du plateau
+        Ty: 'y est la verticale ici : le plateau empêche le livre de descendre, et on ne le soulève pas'
+        Ry: 'on peut le faire pivoter à plat : rotation autour de la normale au plateau, donc y'
+        Rx: le livre ne se soulève pas par un bord, il reste à plat
+        Rz: le livre ne se soulève pas par un bord, il reste à plat
+      explanation: 'Posé à plat, le livre garde **trois** mobilités : les deux translations du plateau et la rotation autour de la normale. C''est ce que laisse un **appui plan**.'
+      tags:
+      - mobilites
+    - type: grid
+      level: 3
+      prompt: 'Même table : cochez les mobilités du **ballon** (pièce ②) posé sur le plateau.
+
+        {{fig:objet-table}}'
+      rows:
+      - x
+      - y
+      - z
+      cols:
+      - T
+      - R
+      answer:
+      - Tx
+      - Tz
+      - Rx
+      - Ry
+      - Rz
+      cellFeedback:
+        Tx: le ballon roule ou glisse sur le plateau suivant x
+        Tz: le ballon roule ou glisse aussi suivant z
+        Ty: 'la seule chose que le plateau interdit : le ballon ne s''enfonce pas'
+        Rx: 'posé en un seul point, le ballon tourne autour de n''importe quel axe, y compris x'
+        Ry: il pivote aussi sur place, autour de la verticale
+        Rz: 'et il tourne autour de z : rien ne l''en empêche'
+      explanation: 'Le ballon ne touche le plateau qu''en **un point** : il garde **cinq** mobilités, tout sauf s''enfoncer. C''est la liaison **ponctuelle**. Comparez avec le livre, posé à plat, qui n''en garde que trois : le nombre de cases dépend du contact, pas de l''objet.'
+      tags:
+      - mobilites
+    - type: grid
+      level: 3
+      prompt: 'On **soulève** le livre (pièce ①) et on le tient en l''air. Cochez ses mobilités par rapport à la table.
+
+        {{fig:objet-table}}'
+      rows:
+      - x
+      - y
+      - z
+      cols:
+      - T
+      - R
+      answer:
+      - Tx
+      - Ty
+      - Tz
+      - Rx
+      - Ry
+      - Rz
+      cellFeedback:
+        Tx: rien ne le retient dans le plan
+        Ty: 'plus rien ne le porte : il peut monter et descendre, ce qu''il ne pouvait pas posé'
+        Tz: rien ne le retient dans le plan
+        Rx: en l'air, il bascule dans toutes les directions
+        Ry: en l'air, il bascule dans toutes les directions
+        Rz: en l'air, il bascule dans toutes les directions
+      explanation: 'Sans contact, plus aucune mobilité n''est bloquée : un solide libre en garde **six**. Le contact avec le plateau en retirait trois — c''est tout le rôle d''une liaison.'
+      tags:
+      - mobilites
     generators:
     - gen: mobilite_figure_vers_nom
     - gen: mobilite_nom_vers_figure

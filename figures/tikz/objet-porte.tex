@@ -1,0 +1,41 @@
+%% Porte entrebâillée dans son cadre, en perspective. Repère : z vertical, y le long du mur,
+%% x sortant du vantail (vers l'observateur). Le vantail ① tourne autour de la ligne des gonds
+%% (verticale), la poignée ② autour d'un axe perpendiculaire au vantail — deux réponses
+%% différentes sur le même objet, et aucune n'est écrite dans l'énoncé.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\input{_objets-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+% --- le cadre, dans le plan de la feuille
+\draw[objet/bati] (0,0) rectangle (2.6,4.4);
+
+% --- le vantail, entrebâillé : décalé vers l'observateur suivant x
+\coordinate (ouv) at (210:0.55);   % calc n'accepte pas une macro ici
+\coordinate (hb) at (0,0);
+\coordinate (ht) at (0,4.4);
+\coordinate (lb) at ($(2.3,0)+(ouv)$);
+\coordinate (lt) at ($(2.3,4.4)+(ouv)$);
+\draw[objet/piece, fill=solideA!7] (hb) -- (ht) -- (lt) -- (lb) -- cycle;
+
+% --- les gonds, sur la ligne d'axe
+\foreach \y in {0.7,3.7} {
+  \draw[objet/piece] (0,\y) -- ++(0.001,0);
+  \fill[solideA] (-0.09,\y-0.16) rectangle (0.09,\y+0.16);
+}
+\draw[objet/fin, dashed] (0,-0.45) -- (0,4.85);
+
+% --- la poignée : une béquille perpendiculaire au vantail, avec sa rosace
+\coordinate (poi) at ($(1.95,2.05)+(ouv)$);
+\fill[solideA] (poi) circle (0.16);
+\draw[objet/piece] (poi) -- ++(210:0.7);
+
+% --- repère : z vertical, y le long du mur, x sortant vers l'observateur
+\repereXYZ{(4.35,0.75)}{90/z, 0/y, 210/x}
+
+\numero{(3.15,3.95)}{($(1.1,4.4)+(ouv)$)}{1}
+\numero{(3.15,1.95)}{(poi)}{2}
+
+\end{tikzpicture}
+\end{document}

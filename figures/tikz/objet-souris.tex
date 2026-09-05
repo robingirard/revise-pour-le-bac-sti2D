@@ -1,0 +1,33 @@
+%% Souris sur son tapis, vue de dessus. Repère inhabituel à dessein : la normale au tapis est x
+%% (et non z), le plan du tapis est donc (y, z). La souris ① garde trois mobilités — elle glisse
+%% dans les deux directions du tapis et pivote sur elle-même — tandis que la molette ② n'en a
+%% qu'une. Le nombre de cases à cocher n'est pas devinable sans lire le repère.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\input{_objets-common}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+
+% --- le tapis : le bâti, dans le plan de la feuille
+\draw[objet/bati, fill=solideB!5] (0,0) rectangle (4.6,3.4);
+
+% --- la souris, vue de dessus : un galbe simple
+\coordinate (so) at (2.3,1.7);
+\draw[objet/piece, fill=white]
+  ($(so)+(-0.62,-1.0)$) .. controls ($(so)+(-0.82,0.1)$) and ($(so)+(-0.5,0.85)$) ..
+  ($(so)+(0,0.98)$) .. controls ($(so)+(0.5,0.85)$) and ($(so)+(0.82,0.1)$) ..
+  ($(so)+(0.62,-1.0)$) .. controls ($(so)+(0.3,-1.22)$) and ($(so)+(-0.3,-1.22)$) .. cycle;
+\draw[objet/piece] ($(so)+(0,0.98)$) -- ($(so)+(0,0.16)$);
+
+% --- la molette, entre les deux boutons
+\coordinate (mo) at ($(so)+(0,0.52)$);
+\draw[objet/piece, fill=solideA!25] ($(mo)+(-0.1,-0.2)$) rectangle ($(mo)+(0.1,0.2)$);
+
+% --- repère : x sort du tapis (vers l'observateur), y et z sont dans le plan du tapis
+\repereXYZ{(5.9,0.55)}{210/x, 90/y, 0/z}
+
+\numero{(0.75,-0.85)}{($(so)+(-0.45,-0.85)$)}{1}
+\numero{(5.15,3.15)}{(mo)}{2}
+
+\end{tikzpicture}
+\end{document}

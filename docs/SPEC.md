@@ -222,6 +222,27 @@ lecture ; la `legende` est affichée sous la figure pendant la lecture. Dans le 
 différente de la pièce (`solideA!60`) pour ne pas être regroupées avec elle, et les étiquettes restent
 des glyphes (jamais animés).
 
+## 4 bis. Rédiger un exercice qui mesure quelque chose
+
+Trois règles tirées de l'usage, que les vérifications automatiques ne peuvent pas attraper.
+
+**L'énoncé ne dit pas ce que la figure doit faire lire.** « Une poignée de porte tourne autour de
+l'axe *x* : quelle est sa mobilité ? » se résout par appariement — « tourne » plus « x » — sans
+jamais regarder le dessin. L'axe doit être **sur la figure**, dans un repère ; l'énoncé ne nomme
+que la pièce concernée. Test à s'appliquer : *que pourrait-on répondre sans la figure ?* Si la
+réponse est « tout », l'énoncé en dit trop.
+
+**Le même objet donne des réponses différentes selon la pièce.** Le vantail d'une porte tourne
+autour de ses gonds, sa poignée autour d'un axe perpendiculaire. Sans cela, l'élève apprend
+« porte = telle réponse » au lieu de la compétence.
+
+**Ce qui est constant devient un réflexe.** Si le repère est orienté pareil sur toutes les
+figures, « vertical = z » remplace le raisonnement : on n'a fait que déplacer la facilité. Faire
+varier ce qui n'a pas de raison d'être constant.
+
+Une compétence doit par ailleurs porter assez d'exercices pour ses niveaux : `validate.py` avertit
+au-delà de trois passages du même exercice sur un parcours complet (voir §7).
+
 ## 5. Leçon (Markdown restreint)
 
 Titres `#`/`##`/`###`, paragraphes, `**gras**`, `*italique*`, listes `- `, tableaux
