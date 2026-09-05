@@ -4,7 +4,7 @@
 19 unités, 84 compétences, 2 058 exercices dont 80 exercices complets guidés, 296 figures, 7 mécanismes animés
 (serre-joint, étau, bielle-manivelle, pompe à main, essuie-glace, benne à vérin, cric losange), 6 figures de
 transmission animées, symboles des 10 liaisons en perspective (3D), 13 annales.
-Site : https://robingirard.github.io/revise-pour-le-bac-sti2D/
+Site : https://www.robingirard.eu/Revise.html — l'application en https://www.robingirard.eu/assets/revise/sti2d/v1.0/index.html
 
 Unités : ingénierie (liaisons, schéma cinématique, transmission, cinématique, statique-RDM, information 1re+Tle,
 2I2D Tle : analyse fonctionnelle, énergie électrique, bâtiment, structures-matériaux), physique-chimie (électricité,

@@ -8,7 +8,7 @@
 #   make test       → tests unitaires du moteur
 #   make serve      → serveur local sur http://localhost:8000/
 #   make planche    → ouvre la planche récapitulative des liaisons (PDF)
-#   make deploy     → publie dist/ sur la branche gh-pages
+#   make deploy     → publie sur le site (robingirard.eu), versions figées
 #   make clean      → supprime figures/build et dist
 CORE ?= ../revise-core
 PY ?= python3
@@ -40,7 +40,7 @@ planche: figures
 	open figures/build/pdf/planche-liaisons.pdf
 
 deploy: content
-	$(CORE)/revise/deploy.sh
+	$(PY) $(CORE)/revise/publish.py
 
 clean:
 	rm -rf figures/build dist

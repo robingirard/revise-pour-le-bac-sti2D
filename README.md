@@ -3,7 +3,7 @@
 Entraînement au baccalauréat STI2D : **ingénierie et 2I2D**, **physique-chimie**, **mathématiques**.
 Répétition espacée, progression par compétences, figures et mécanismes animés.
 
-**[Ouvrir l'application](https://robingirard.github.io/revise-pour-le-bac-sti2D/)** — elle tourne
+**[Ouvrir l'application](https://www.robingirard.eu/assets/revise/sti2d/v1.0/index.html)** — elle tourne
 entièrement dans le navigateur, fonctionne hors connexion une fois chargée, et **n'envoie rien
 nulle part** : la progression reste sur l'appareil de l'élève.
 
@@ -38,7 +38,7 @@ make serve      # http://localhost:8000/
 make check      # invariants du contenu, et contrôle des droits
 make test       # tests du moteur
 make droits     # le détail de la comparaison aux transcriptions des manuels
-make deploy     # publication sur GitHub Pages
+make deploy     # publication sur robingirard.eu, en version figée
 ```
 
 Prérequis : TeX Live avec `lualatex` et TikZ ; Poppler (`pdftocairo`) ; Python 3 avec PyYAML ;
