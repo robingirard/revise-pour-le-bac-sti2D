@@ -3,6 +3,7 @@
 #   make figures    → compile les figures TikZ (figures/build/svg)
 #   make content    → génère dist/content.json et dist/content.js, copie app/
 #   make check      → vérifie les sources pédagogiques et le contenu construit
+#   make droits     → compare le contenu publié aux transcriptions du manuel (droits d'auteur)
 #   make test       → tests unitaires de l'application (node --test)
 #   make serve      → serveur local sur http://localhost:8000/
 #   make planche    → ouvre la planche récapitulative des liaisons (PDF)
@@ -10,7 +11,7 @@
 #   make clean      → supprime figures/build et dist
 PY ?= python3
 
-.PHONY: all figures content check test serve planche deploy clean
+.PHONY: all figures content check droits test serve planche deploy clean
 
 all: content
 
@@ -22,6 +23,9 @@ content: figures
 
 check:
 	$(PY) tools/validate.py
+
+droits:
+	$(PY) tools/check_droits.py
 
 test:
 	cd app && node --test tests/*.test.mjs
