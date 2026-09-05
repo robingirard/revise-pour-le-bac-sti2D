@@ -965,3 +965,4 @@ def charger(racine, donnees, load_yaml):
 
     return {"builder": Builder(liaisons, mecanismes), "tables": lesson_tables(liaisons), "animations": animations}
 from generators.verifications import verifier  # noqa: E402,F401  (le moteur le cherche sur ce module)
+from generators.figures import figures  # noqa: E402,F401  (idem, pour la compilation des figures)
