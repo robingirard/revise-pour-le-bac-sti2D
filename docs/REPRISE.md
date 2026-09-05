@@ -10,6 +10,12 @@ Unités : ingénierie (liaisons, schéma cinématique, transmission, cinématiqu
 2I2D Tle : analyse fonctionnelle, énergie électrique, bâtiment, structures-matériaux), physique-chimie (électricité,
 thermique, chimie, ondes, mécanique, compléments Tle), maths (1re ; Tle spécialité PCM ; Tle enseignement commun).
 
+## Où va le projet
+`docs/PLAN-V2.md` — plan arrêté le 5 sept. 2026 : moteur et contenu dans deux dépôts, contenu
+découpé par matière et chargé à la demande, profils d'élèves avec carte d'identité exportable,
+retours par mail, index sur robingirard.eu, bibliothèque de figures partagée. L'ordre de travail
+est en §7. Rien n'est encore fait.
+
 ## Comment vérifier / publier
 1. Pour chaque unité : `python3 tools/check_unit.py content/units/<fichier> docs/figures-todo-<fiche>.md`.
 2. `make content` (échoue tant qu'une figure référencée manque) → `make check` → `make test`.
