@@ -412,6 +412,34 @@ figure.fig-lazy { display: block; margin: 10px auto; }
 .offline-box { display: flex; flex-direction: column; gap: 8px; }
 .offline-bar { height: 8px; }
 
+/* ---- profils : qui travaille sur cet appareil ---- */
+.profil-chip {
+  margin-left: auto; display: flex; align-items: center; gap: 6px; text-decoration: none;
+  color: var(--text); background: var(--card); border: 1px solid var(--border);
+  border-radius: 999px; padding: 4px 10px 4px 6px; font-size: 0.85rem; max-width: 45%;
+}
+.profil-chip .profil-nom { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.profil-emoji { font-size: 1.1em; line-height: 1; }
+.profil-emoji.big { font-size: 1.7em; }
+.profils { display: flex; flex-direction: column; gap: 10px; }
+.profil-liste { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.profil-item {
+  display: flex; align-items: center; gap: 4px; background: var(--card);
+  border: 1px solid var(--border); border-radius: 12px; padding: 4px 8px 4px 4px; box-shadow: var(--shadow);
+}
+.profil-item.courant { border-color: var(--primary); }
+.profil-choix {
+  flex: 1; display: flex; align-items: center; gap: 12px; background: none; border: 0;
+  padding: 10px; text-align: left; font: inherit; color: inherit; cursor: pointer; border-radius: 10px;
+}
+.profil-texte { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.profil-texte strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.profil-actif { color: var(--primary); margin-left: auto; }
+.text-input-court { width: 3.5rem; text-align: center; flex: none; }
+.file-input { font-size: 0.9rem; }
+.row-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.json-area-inline { word-break: break-all; }
+
 /* ---- symboles de liaison animés (svg[data-anim], solide 1 = .s1 ; voir anim.js) ----
    Un symbole superpose jusqu'à quatre mouvements, un par « canal », chacun porté par une propriété
    CSS différente pour qu'ils se composent au lieu de s'écraser :

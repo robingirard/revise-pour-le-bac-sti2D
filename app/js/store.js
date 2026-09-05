@@ -1,8 +1,32 @@
 // store.js — persistance de la progression dans localStorage (voir docs/SPEC.md §8)
+//
+// Une progression par profil depuis l'étape 2 du plan V2 : `use()` dit lequel travaille, et
+// `load` / `save` / `reset` suivent. Sans profil actif, tout se passe sous l'ancienne clé —
+// c'est ce qui permet à l'application de tourner avant que la migration ait eu lieu, et aux
+// tests de continuer à travailler sur le format d'origine.
 import { DEFAULT_DAILY_GOAL } from './progression.js';
 
 export const STORAGE_KEY = 'revise-sti2d.progress.v1';
+export const PREFIXE_PROFIL = 'revise.progres.';
 export const VERSION = 1;
+
+let profilActif = null;
+
+/** Clé de la progression d'un profil (l'ancienne clé quand il n'y en a pas). */
+export function progressKey(profileId) {
+  return profileId ? `${PREFIXE_PROFIL}${profileId}.v1` : STORAGE_KEY;
+}
+
+/** Choisit le profil dont on lit et écrit la progression ; null revient à l'ancienne clé. */
+export function use(profileId) {
+  profilActif = profileId || null;
+  return profilActif;
+}
+
+/** La clé réellement utilisée par load/save/reset — utile aux tests et au diagnostic. */
+export function activeKey() {
+  return progressKey(profilActif);
+}
 
 export function emptyProgress() {
   return {
@@ -44,7 +68,7 @@ function defaultStorage() {
 
 export function load(storage = defaultStorage()) {
   try {
-    const raw = storage && storage.getItem(STORAGE_KEY);
+    const raw = storage && storage.getItem(activeKey());
     return raw ? migrate(JSON.parse(raw)) : emptyProgress();
   } catch {
     return emptyProgress();
@@ -54,7 +78,7 @@ export function load(storage = defaultStorage()) {
 export function save(progress, storage = defaultStorage()) {
   try {
     if (!storage) return false;
-    storage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    storage.setItem(activeKey(), JSON.stringify(progress));
     return true;
   } catch {
     return false;
@@ -63,7 +87,7 @@ export function save(progress, storage = defaultStorage()) {
 
 export function reset(storage = defaultStorage()) {
   try {
-    if (storage) storage.removeItem(STORAGE_KEY);
+    if (storage) storage.removeItem(activeKey());
   } catch {
     /* ignoré */
   }

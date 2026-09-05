@@ -13,6 +13,8 @@ import * as gl from './guided-logic.js';
 import * as home from './home.js';
 import * as figs from './figures.js';
 import * as packs from './packs.js';
+import * as profiles from './profiles.js';
+import * as carte from './carte.js';
 import * as anim from './anim.js';
 import * as mech from './mech-anim.js';
 
@@ -23,6 +25,10 @@ const figures = (content && content.figures) || {};
 figs.configure({ index: (content && content.figureIndex) || null }); // figures chargées à la demande
 packs.configure({ content });   // énoncés et leçons chargés unité par unité (voir packs.js)
 mech.configure({ animations: (content && content.animations) || {} }); // schémas cinématiques animés
+// Plusieurs élèves peuvent se partager un navigateur : la progression vit sous un profil.
+// migrate() reprend l'ancienne clé unique au premier lancement — la progression réelle n'est jamais perdue.
+profiles.migrate(todayStr());
+store.use(profiles.current());
 let progress = store.load();
 function uiStorage() {
   try { return globalThis.localStorage || null; } catch { return null; }
@@ -72,6 +78,8 @@ function route() {
       case 'progress': renderProgress(root); break;
       case 'bilan': renderBilan(root, query); break;
       case 'settings': renderSettings(root); break;
+      case 'profils': renderProfils(root); break;
+      case 'carte': renderCarteRecue(root, query); break;
       default: renderHome(root);
     }
     figs.hydrate(root);
@@ -92,10 +100,19 @@ function renderContentError(root, err) {
 }
 
 // ---------------------------------------------------------------- composants
-function topbar({ back = null, title = '' } = {}) {
+function topbar({ back = null, title = '', droite = null } = {}) {
   return h('header', { class: 'topbar' },
     back ? h('a', { class: 'icon-btn', href: back, 'aria-label': 'Retour' }, '←') : null,
-    h('h1', {}, title));
+    h('h1', {}, title),
+    droite);
+}
+
+/** Pastille du profil courant : qui travaille, et de quoi changer d'élève en un geste. */
+function pastilleProfil() {
+  const moi = profiles.currentProfile();
+  return h('a', { class: 'profil-chip', href: '#/profils', 'aria-label': 'Changer de profil' },
+    h('span', { class: 'profil-emoji' }, moi ? moi.emoji || '🙂' : '👤'),
+    h('span', { class: 'profil-nom' }, moi ? moi.nom : 'Profil'));
 }
 
 function bottomNav(active) {
@@ -137,7 +154,7 @@ function renderHome(root) {
   const goal = progress.settings.dailyGoal || prog.DEFAULT_DAILY_GOAL;
   const dueCount = sess.countDue(content, progress, today);
   root.append(
-    topbar({ title: content.title || 'Révise STI2D' }),
+    topbar({ title: content.title || 'Révise STI2D', droite: pastilleProfil() }),
     h('section', { class: 'stats' },
       h('div', { class: 'stat' }, h('span', { class: 'stat-value' }, `🔥 ${streak}`), h('span', { class: 'stat-label' }, plural(streak, 'jour de série', 'jours de série').replace(/^\d+ /, ''))),
       h('div', { class: 'stat stat-wide' },
@@ -457,6 +474,7 @@ function finishSession() {
   progress.streak = prog.updateStreak(progress.streak, today);
   progress.history.push({ date: today, kind: session.kind, skill: session.skillId, correct: result.correct, total: result.total, xp });
   store.save(progress);
+  profiles.touch(profiles.current(), today);   // « dernière séance » de la liste des profils
   lastSummary = { kind: session.kind, skill, skillState, result, xp, passed, leveledUp };
   session = null;
   navigate('#/summary');
@@ -624,6 +642,131 @@ function renderBilan(root, query) {
   root.append(...parts.filter(Boolean)); // Element.append(null) écrirait « null »
 }
 
+// ---------------------------------------------------------------- profils
+/** Bascule sur un profil : la progression change, la séance en cours n'a plus de sens. */
+function changerDeProfil(id) {
+  profiles.setCurrent(id);
+  store.use(id);
+  progress = store.load();
+  // Le bilan destiné au parent affiche « progress.settings.name » : avec des profils, c'est le nom
+  // du profil qui fait foi, sinon un même appareil enverrait deux bilans au même prénom.
+  const moi = profiles.currentProfile();
+  if (moi && progress.settings.name !== moi.nom) {
+    progress.settings.name = moi.nom;
+    store.save(progress);
+  }
+  session = null;
+  lastSummary = null;
+  navigate('#/');
+}
+
+function renderProfils(root) {
+  const liste = profiles.list();
+  const courant = profiles.current();
+  const msg = h('p', { class: 'muted small' });
+
+  const nomInput = h('input', { class: 'text-input', type: 'text', maxlength: 40, placeholder: 'Prénom', 'aria-label': 'Prénom du nouveau profil' });
+  const emojiInput = h('input', { class: 'text-input text-input-court', type: 'text', maxlength: 2, placeholder: '🙂', 'aria-label': 'Emoji du profil' });
+  const creer = h('button', { class: 'btn btn-primary', type: 'button', onClick: () => {
+    try {
+      // Le tout premier profil hérite du travail déjà fait : sans profil, la progression vivait sous
+      // l'ancienne clé, et la créer ne doit pas donner l'impression d'avoir tout perdu.
+      const premier = profiles.list().length === 0;
+      const dejaTravaille = premier && (progress.xp > 0 || Object.keys(progress.items || {}).length > 0);
+      const p = profiles.create({ nom: nomInput.value, emoji: emojiInput.value });
+      if (dejaTravaille) {
+        store.use(p.id);
+        store.save(progress);
+      }
+      changerDeProfil(p.id);
+    } catch (err) {
+      msg.textContent = err.message;
+      msg.className = 'error small';
+    }
+  } }, 'Créer');
+
+  const fichier = h('input', { type: 'file', accept: 'application/json,.json', class: 'file-input', 'aria-label': 'Fichier de carte d\'identité' });
+  fichier.addEventListener('change', async () => {
+    const f = fichier.files && fichier.files[0];
+    if (!f) return;
+    try {
+      const { profil, progres } = carte.parse(await f.text());
+      const p = profiles.create({ nom: (profil && profil.nom) || 'Élève', emoji: profil && profil.emoji });
+      store.use(p.id);
+      store.save(store.migrate(progres));
+      changerDeProfil(p.id);
+    } catch (err) {
+      msg.textContent = err.message;
+      msg.className = 'error small';
+    }
+  });
+
+  root.append(
+    topbar({ back: '#/', title: 'Qui travaille ?' }),
+    h('section', { class: 'profils' },
+      liste.length === 0
+        ? h('p', { class: 'muted' }, 'Aucun profil pour l\'instant : la progression est enregistrée telle quelle sur cet appareil. Crée un profil pour que plusieurs élèves puissent se partager le navigateur.')
+        : h('ul', { class: 'profil-liste' }, ...liste.map((pf) => h('li', { class: `profil-item${pf.id === courant ? ' courant' : ''}` },
+            h('button', { class: 'profil-choix', type: 'button', onClick: () => changerDeProfil(pf.id) },
+              h('span', { class: 'profil-emoji big' }, pf.emoji || '🙂'),
+              h('span', { class: 'profil-texte' },
+                h('strong', {}, pf.nom),
+                h('span', { class: 'muted small' }, pf.vu ? `dernière séance le ${new Date(pf.vu).toLocaleDateString('fr-FR')}` : 'jamais utilisé')),
+              pf.id === courant ? h('span', { class: 'profil-actif' }, '✔') : null),
+            h('button', { class: 'icon-btn', type: 'button', 'aria-label': `Renommer ${pf.nom}`, onClick: () => {
+              const nom = prompt('Nouveau prénom :', pf.nom);
+              if (nom == null) return;
+              try {
+                profiles.rename(pf.id, { nom });
+                if (pf.id === profiles.current()) changerDeProfil(pf.id); else route();
+              } catch (err) {
+                msg.textContent = err.message;
+                msg.className = 'error small';
+              }
+            } }, '✏️'),
+            h('button', { class: 'icon-btn', type: 'button', 'aria-label': `Supprimer ${pf.nom}`, onClick: () => {
+              if (!confirm(`Supprimer le profil « ${pf.nom} » ? Sa progression sera définitivement effacée.`)) return;
+              profiles.remove(pf.id);
+              store.use(profiles.current());
+              progress = store.load();
+              route();
+            } }, '🗑')))),
+      h('h2', {}, 'Nouveau profil'),
+      h('div', { class: 'input-row' }, emojiInput, nomInput, creer),
+      h('h2', {}, 'Reprendre une carte d\'identité'),
+      h('p', { class: 'muted small' }, 'Le fichier exporté depuis un autre appareil, dans les réglages.'),
+      fichier, msg),
+    bottomNav(null));
+}
+
+/** Carte reçue par lien (#/carte?d=…) : on demande toujours avant d'écrire quoi que ce soit. */
+function renderCarteRecue(root, query) {
+  root.append(topbar({ back: '#/', title: 'Carte d\'identité' }));
+  const zone = h('section', { class: 'settings' }, h('p', { class: 'muted' }, 'Lecture de la carte…'));
+  root.append(zone, bottomNav(null));
+  carte.depuisLien(query.get('d') || '').then((c) => {
+    const profil = c && c.profil;
+    const progres = c && c.progres;
+    if (!progres) throw new Error('Ce lien ne contient aucune progression.');
+    const nom = (profil && profil.nom) || 'Élève';
+    const nbSkills = Object.keys((progres && progres.skills) || {}).length;
+    clear(zone);
+    zone.append(
+      h('p', {}, `Cette carte est celle de ${nom} : ${plural(nbSkills, 'compétence travaillée', 'compétences travaillées')}.`),
+      h('button', { class: 'btn btn-primary btn-block', type: 'button', onClick: () => {
+        const p = profiles.create({ nom, emoji: profil && profil.emoji });
+        store.use(p.id);
+        store.save(store.migrate(progres));
+        changerDeProfil(p.id);
+      } }, `Créer le profil de ${nom} sur cet appareil`),
+      h('a', { class: 'btn btn-block', href: '#/' }, 'Ne rien faire'));
+  }).catch((err) => {
+    clear(zone);
+    zone.append(h('p', { class: 'error' }, err && err.message ? err.message : 'Lien illisible.'),
+      h('a', { class: 'btn', href: '#/' }, 'Accueil'));
+  });
+}
+
 // ---------------------------------------------------------------- réglages
 function renderSettings(root) {
   const goalInput = h('input', { class: 'text-input', type: 'number', min: 10, max: 500, step: 10, value: progress.settings.dailyGoal || prog.DEFAULT_DAILY_GOAL, 'aria-label': 'Objectif quotidien en XP' });
@@ -677,20 +820,79 @@ function renderSettings(root) {
     }
   } }, 'Tout remettre à zéro');
 
+  // ---- carte d'identité : le format d'échange entre appareils (voir carte.js)
+  const monProfil = profiles.currentProfile() || { nom: progress.settings.name || 'Élève', emoji: '🙂' };
+  const carteMsg = h('p', { class: 'muted small' });
+  const telechargerBtn = h('button', { class: 'btn', type: 'button', onClick: () => {
+    const c = carte.build(monProfil, progress, todayStr());
+    const blob = new Blob([carte.toJson(c)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = h('a', { href: url, download: carte.nomDeFichier(c) });
+    document.body.append(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    carteMsg.textContent = 'Carte téléchargée. Envoie-la-toi par mail ou AirDrop, puis importe-la sur l\'autre appareil.';
+    carteMsg.className = 'ok-text small';
+  } }, '⬇ Télécharger ma carte');
+  const lienBtn = h('button', { class: 'btn', type: 'button', onClick: async () => {
+    const c = carte.build(monProfil, progress, todayStr());
+    const base = location.origin + location.pathname;
+    const { url, octets, tient } = await carte.versLien(c, base);
+    if (!tient) {
+      // au-delà, l'URL casse selon les messageries : le fichier est le seul transport fiable
+      carteMsg.textContent = `Trop de progression pour un lien (${Math.round(octets / 1024)} ko) : utilise le fichier.`;
+      carteMsg.className = 'muted small';
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      carteMsg.textContent = `Lien copié (${Math.round(octets / 1024)} ko). Ouvre-le sur l'autre appareil.`;
+      carteMsg.className = 'ok-text small';
+    } catch {
+      carteMsg.textContent = url;
+      carteMsg.className = 'muted small json-area-inline';
+    }
+  } }, '🔗 Copier un lien');
+  const importFichier = h('input', { type: 'file', accept: 'application/json,.json', class: 'file-input', 'aria-label': 'Carte d\'identité à importer' });
+  importFichier.addEventListener('change', async () => {
+    const f = importFichier.files && importFichier.files[0];
+    if (!f) return;
+    try {
+      const { progres } = carte.parse(await f.text());
+      progress = store.migrate(progres);
+      store.save(progress);
+      carteMsg.textContent = 'Carte importée dans le profil courant ✔';
+      carteMsg.className = 'ok-text small';
+      exportArea.value = store.exportJson(progress);
+    } catch (err) {
+      carteMsg.textContent = err.message;
+      carteMsg.className = 'error small';
+    }
+  });
+
   const offline = renderOfflineFigures();
 
   root.append(
     topbar({ back: '#/', title: 'Réglages' }),
     h('section', { class: 'settings' },
-      h('h2', {}, 'Prénom'),
-      h('p', { class: 'muted small' }, 'Utilisé dans le bilan partagé avec un parent.'),
-      h('div', { class: 'input-row' }, nameInput),
+      profiles.current() ? null : h('h2', {}, 'Prénom'),
+      profiles.current() ? null : h('p', { class: 'muted small' }, 'Utilisé dans le bilan partagé avec un parent.'),
+      profiles.current() ? null : h('div', { class: 'input-row' }, nameInput),
       h('h2', {}, 'Objectif quotidien'),
       h('div', { class: 'input-row' }, goalInput, h('span', { class: 'unit' }, 'XP / jour')),
       h('h2', {}, 'Mode découverte'),
       h('label', { class: 'toggle-row' }, unlockInput, h('span', {}, 'Tout déverrouiller (pour explorer toutes les compétences sans respecter les prérequis).')),
-      h('h2', {}, 'Exporter la progression'),
-      h('p', { class: 'muted small' }, 'Copie ce texte pour le sauvegarder ou le transférer sur un autre appareil.'),
+      h('h2', {}, 'Profils'),
+      h('p', { class: 'muted small' }, 'Plusieurs élèves peuvent se partager cet appareil : chacun garde sa progression.'),
+      h('a', { class: 'btn btn-block', href: '#/profils' }, `${monProfil.emoji || '🙂'} ${monProfil.nom} — changer de profil`),
+      profiles.current() ? h('p', { class: 'muted small' }, 'C\'est ce prénom qui apparaît dans le bilan partagé avec un parent : renomme le profil pour le changer.') : null,
+      h('h2', {}, 'Carte d\'identité'),
+      h('p', { class: 'muted small' }, 'Tout ce que tu as travaillé, dans toutes les matières, dans un seul fichier. Rien n\'est envoyé : la carte reste sur tes appareils.'),
+      h('div', { class: 'row-buttons' }, telechargerBtn, lienBtn),
+      importFichier, carteMsg,
+      h('h2', {}, 'Exporter au format texte'),
+      h('p', { class: 'muted small' }, 'Le même contenu, à copier-coller.'),
       exportArea, h('div', { class: 'row-right' }, copyBtn),
       h('h2', {}, 'Importer une progression'),
       importArea, h('div', { class: 'row-right' }, importBtn), importMsg,
