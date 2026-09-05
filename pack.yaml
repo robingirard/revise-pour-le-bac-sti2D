@@ -5,7 +5,7 @@
 # c'est ce fichier qui lui dit quoi construire, et avec quelle version de moteur.
 
 id: sti2d
-titre: Révise STI2D
+titre: Revise STI2D
 niveau: Terminale STI2D (et rappels de 1re)
 matieres: [ingenierie, physique, maths]
 description: >-

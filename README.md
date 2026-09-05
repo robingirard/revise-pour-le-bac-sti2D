@@ -1,4 +1,4 @@
-# Révise STI2D — le contenu
+# Revise STI2D — le contenu
 
 Entraînement au baccalauréat STI2D : **ingénierie et 2I2D**, **physique-chimie**, **mathématiques**.
 Répétition espacée, progression par compétences, figures et mécanismes animés.
