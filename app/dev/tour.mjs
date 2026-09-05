@@ -2,6 +2,7 @@
 // accueil, chaque compétence (leçon dépliée), un exercice de chaque type avec sa correction,
 // puis une séance complète jouée par le solveur. Sert à vérifier visuellement le vrai contenu.
 // Usage : node app/dev/tour.mjs [dossier_dist] [dossier_de_sortie]   (Google Chrome requis)
+import fs from 'node:fs';
 import path from 'node:path';
 import { launch, SOLVER, sleep } from './browser.mjs';
 
@@ -13,8 +14,13 @@ const today = new Date().toISOString().slice(0, 10);
 
 try {
   await b.goto('#/');
-  const skills = JSON.parse(await b.evaluate('JSON.stringify(window.CONTENT.units.flatMap((u) => u.skills.map((s) => ({ id: s.id, items: s.items }))))'));
-  const items = JSON.parse(await b.evaluate('JSON.stringify(Object.values(window.CONTENT.items).map((i) => ({ id: i.id, type: i.type, skill: i.skill, layout: i.payload.layout, labels: !!i.payload.labels, tags: i.tags || [] })))'));
+  // Le contenu complet vient de content.json : l'index chargé par l'application ne porte plus les
+  // énoncés (ils arrivent unité par unité), et c'est justement ce parcours qui vérifie qu'ils arrivent.
+  const complet = JSON.parse(fs.readFileSync(path.join(DIR, 'content.json'), 'utf8'));
+  const skills = complet.units.flatMap((u) => u.skills.map((s) => ({ id: s.id, items: s.items })));
+  const skillOf = new Map(skills.flatMap((s) => s.items.map((id) => [id, s.id])));
+  const items = Object.entries(complet.items).map(([id, i]) => ({
+    id, type: i.type, skill: skillOf.get(id), layout: i.payload.layout, labels: !!i.payload.labels, tags: i.tags || [] }));
   // progression : tout déverrouillé (niveau 1), aucune carte vue
   await b.evaluate(`localStorage.setItem('revise-sti2d.progress.v1', JSON.stringify({ version: 1, xp: 42, streak: { count: 2, last: '${today}' }, history: [],
     settings: { dailyGoal: 30 }, items: {}, skills: ${JSON.stringify(Object.fromEntries(skills.map((s) => [s.id, { level: 1, progress: 0.5, sessions: 2, xp: 20 }])))} }))`);
@@ -84,9 +90,13 @@ try {
   const link = await b.evaluate(`(() => { const a = document.querySelector('.bilan-card a[href^="mailto:"]'); const body = decodeURIComponent(a.getAttribute('href').split('body=')[1] || ''); const i = body.indexOf('#/bilan?d='); return i < 0 ? null : body.slice(i).trim(); })()`);
   await b.goto(link.slice(link.indexOf('#'))); await b.shot('52-bilan-recu', true);
   // QCM répondu faux exprès (un item avec feedback si possible), grille fausse exprès
-  const mcqFb = await b.evaluate(`(() => { const it = Object.values(window.CONTENT.items).find((i) => i.type === 'mcq' && i.payload.layout !== 'grid' && Array.isArray(i.payload.feedback) && i.payload.feedback.some(Boolean)) || Object.values(window.CONTENT.items).find((i) => i.type === 'mcq' && i.payload.layout !== 'grid'); return it ? JSON.stringify({ id: it.id, skill: it.skill }) : null; })()`);
-  if (mcqFb) {
-    const it = JSON.parse(mcqFb);
+  // choisi depuis content.json : l'énoncé n'est dans la page qu'une fois l'unité ouverte
+  const avecFb = (id) => { const pl = complet.items[id].payload;
+    return Array.isArray(pl.feedback) && pl.feedback.some(Boolean); };
+  const mcqPlats = items.filter((i) => i.type === 'mcq' && i.layout !== 'grid');
+  const choisi = mcqPlats.find((i) => avecFb(i.id)) || mcqPlats[0];
+  if (choisi) {
+    const it = { id: choisi.id, skill: choisi.skill };
     await b.goto(`#/session/${it.skill}?item=${encodeURIComponent(it.id)}&seed=1`);
     await b.evaluate(`(() => { const it = window.CONTENT.items[${JSON.stringify(it.id)}]; const plain = (s) => String(s).replace(/\\*\\*|\\*/g, '').replace(/\\s+/g, ' ').trim();
       const ok = new Set(it.payload.answer.map((i) => plain(it.payload.choices[i])));

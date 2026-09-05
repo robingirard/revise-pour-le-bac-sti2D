@@ -16,6 +16,7 @@ import json
 import random
 import re
 import shutil
+import unicodedata
 import sys
 import zlib
 from pathlib import Path
@@ -1320,9 +1321,89 @@ def write_dist(content):
         index[fid] = {"w": float(w.group(1)) if w else 0, "h": float(h.group(1)) if h else 0, "bytes": len(svg.encode("utf-8"))}
     (figdir / "index.json").write_text(json.dumps(index, separators=(",", ":")), encoding="utf-8")
     light = dict(content, figures={}, figureIndex=index)
-    text = json.dumps(light, ensure_ascii=False, separators=(",", ":"))
-    (DIST / "content.json").write_text(text, encoding="utf-8")
-    (DIST / "content.js").write_text("window.CONTENT = " + text + ";\n", encoding="utf-8")
+    # content.json reste entier : c'est ce que lisent validate.py et les scripts de vérification.
+    (DIST / "content.json").write_text(json.dumps(light, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    write_content_js(light)
+
+
+def normalize_answer(s):
+    """Même normalisation que normalizeAnswer() de app/js/answers.js (accents, espaces, virgule)."""
+    s = unicodedata.normalize("NFD", str(s).strip().lower())
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    return re.sub(r"\s+", "", s).replace(",", ".")
+
+
+def tag_labels(light):
+    """Libellé lisible d'un tag : le choix de QCM qui porte ce nom (« pivot-glissant » → « Pivot
+    glissant »). Calculé ici parce que l'application ne charge plus tous les exercices : bilan.js le
+    déduisait en les parcourant tous, ce qui n'est plus possible."""
+    out = {}
+    for it in light["items"].values():
+        if it["type"] != "mcq":
+            continue
+        for tag in it.get("tags") or []:
+            if tag in out:
+                continue
+            wanted = normalize_answer(tag.replace("-", " "))
+            for c in (it["payload"].get("choices") or []):
+                if isinstance(c, str) and normalize_answer(c) == wanted:
+                    out[tag] = c
+                    break
+    return out
+
+
+def write_content_js(light):
+    """Écrit l'index (`content.js`) et un paquet par unité (`content/<unite>.js`).
+
+    Tout tenait dans un seul fichier de 2,5 Mo qu'il fallait charger avant d'afficher quoi que ce
+    soit : ouvrir une leçon de maths faisait payer l'ingénierie et la physique. L'index ne garde
+    désormais que ce dont l'application a besoin **avant** d'ouvrir une unité — de quoi dessiner
+    l'accueil et la carte de progression, et composer une séance : la compétence, le type, le niveau
+    et les tags de chaque exercice. Les énoncés et les leçons arrivent unité par unité, à la demande.
+    """
+    packdir = DIST / "content"
+    packdir.mkdir(exist_ok=True)
+    connus = {u["id"] for u in light["units"]}
+    for old in packdir.glob("*.js"):
+        if old.stem not in connus:
+            old.unlink()
+
+    unites, places = [], set()
+    for unit in light["units"]:
+        items, lessons, skills = {}, {}, []
+        for skill in unit["skills"]:
+            skills.append({k: v for k, v in skill.items() if k != "lesson"})
+            if skill.get("lesson"):
+                lessons[skill["id"]] = skill["lesson"]
+            for iid in skill["items"]:
+                items[iid] = light["items"][iid]
+                places.add(iid)
+        unites.append(dict(unit, skills=skills))
+        pack = json.dumps({"items": items, "lessons": lessons}, ensure_ascii=False, separators=(",", ":"))
+        (packdir / f"{unit['id']}.js").write_text(
+            f"window.REVISE_UNIT({json.dumps(unit['id'])}, {pack});\n", encoding="utf-8")
+
+    # liste lue par le service worker pour remplir le cache en arrière-plan (voir app/sw.js)
+    (packdir / "liste.json").write_text(
+        json.dumps([u["id"] for u in light["units"]], separators=(",", ":")), encoding="utf-8")
+
+    perdus = set(light["items"]) - places
+    if perdus:   # un exercice qu'aucune compétence ne liste ne serait plus jamais chargé
+        sys.exit(f"{len(perdus)} exercice(s) hors de toute compétence : {sorted(perdus)[:3]}")
+
+    # Fiche d'index d'un exercice : le strict nécessaire à la composition d'une séance et au bilan.
+    # Ni « id » ni « skill » : l'un est la clé, l'autre est déjà dans skill.items — l'application les
+    # recolle au démarrage (packs.js), ce qui épargne 115 ko de chaînes répétées.
+    fiches = {}
+    for iid, it in light["items"].items():
+        fiche = {"type": it["type"], "level": it.get("level", 1)}
+        if it.get("tags"):
+            fiche["tags"] = it["tags"]
+        fiches[iid] = fiche
+    index = dict(light, units=unites, items=fiches, tagLabels=tag_labels(light))
+    (DIST / "content.js").write_text(
+        "window.CONTENT = " + json.dumps(index, ensure_ascii=False, separators=(",", ":")) + ";\n",
+        encoding="utf-8")
 
 
 def stats(content):

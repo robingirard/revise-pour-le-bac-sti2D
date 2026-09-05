@@ -1,6 +1,6 @@
 // sw.js — service worker : cache-first pour l'enveloppe de l'appli et le contenu.
 // Incrémenter VERSION à chaque mise en ligne pour forcer la mise à jour chez les utilisateurs.
-const VERSION = '2026-09-05.3';
+const VERSION = '2026-09-05.4';
 const CACHE = `revise-sti2d-${VERSION}`;
 const ASSETS = [
   './', './index.html', './manifest.webmanifest', './content.js', './css/app.css',
@@ -15,7 +15,7 @@ const ASSETS = [
 ];
 
 // Fichiers facultatifs (absents dans certaines versions) : mis en cache s'ils existent, sans faire échouer l'installation.
-const OPTIONAL = ['./figures/index.json'];
+const OPTIONAL = ['./figures/index.json', './content/liste.json'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -26,11 +26,33 @@ self.addEventListener('install', (event) => {
 });
 // Les figures (./figures/<id>.svg) sont mises en cache au fil des consultations par le gestionnaire fetch ci-dessous.
 
+/**
+ * Les paquets d'unité (./content/<unité>.js) ne sont pas préchargés à l'installation : ils y
+ * remettraient les 2,5 Mo qu'on vient d'éviter avant le premier affichage. Ils entrent dans le cache
+ * au fil des consultations (gestionnaire fetch), et ce remplissage de fond, lancé après l'activation,
+ * finit de garnir le cache pour que l'application reste utilisable hors ligne en entier.
+ */
+async function remplirPaquets() {
+  try {
+    const cache = await caches.open(CACHE);
+    const res = await fetch('./content/liste.json');
+    if (!res || !res.ok) return;
+    for (const id of await res.json()) {
+      const url = `./content/${id}.js`;
+      if (await cache.match(url)) continue;
+      await cache.add(url).catch(() => null);
+    }
+  } catch {
+    /* hors ligne : ce sera pour la prochaine ouverture */
+  }
+}
+
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
       .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
-      .then(() => self.clients.claim()),
+      .then(() => self.clients.claim())
+      .then(() => remplirPaquets()),
   );
 });
 

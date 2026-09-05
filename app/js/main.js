@@ -12,6 +12,7 @@ import * as bilan from './bilan.js';
 import * as gl from './guided-logic.js';
 import * as home from './home.js';
 import * as figs from './figures.js';
+import * as packs from './packs.js';
 import * as anim from './anim.js';
 import * as mech from './mech-anim.js';
 
@@ -20,6 +21,7 @@ window.__RS_STARTED = true; // signale à index.html que le module a bien démar
 const content = window.CONTENT;
 const figures = (content && content.figures) || {};
 figs.configure({ index: (content && content.figureIndex) || null }); // figures chargées à la demande
+packs.configure({ content });   // énoncés et leçons chargés unité par unité (voir packs.js)
 mech.configure({ animations: (content && content.animations) || {} }); // schémas cinématiques animés
 let progress = store.load();
 function uiStorage() {
@@ -50,6 +52,16 @@ function route() {
   }
   const { path, query } = parseHash();
   const [screen, arg] = path;
+  // Les écrans d'une compétence ont besoin de son unité : on l'attend plutôt que d'afficher un
+  // écran à moitié vide (les autres écrans se contentent de l'index).
+  if ((screen === 'skill' || screen === 'session') && arg) {
+    const unite = packs.unitOf(arg);
+    if (unite && !packs.isLoaded(unite)) {
+      root.append(topbar({ back: '#/', title: '' }), h('p', { class: 'muted' }, 'Chargement du contenu…'));
+      packs.load(unite).then(() => route(), (err) => renderContentError(root, err));
+      return;
+    }
+  }
   try {
     switch (screen) {
       case undefined: renderHome(root); break;
@@ -67,6 +79,16 @@ function route() {
     console.error(err);
     root.append(h('p', { class: 'error' }, `Erreur : ${err.message}`), h('a', { class: 'btn', href: '#/' }, 'Accueil'));
   }
+}
+
+/** Le contenu d'une unité n'a pas pu être chargé (hors ligne au premier passage, fichier absent). */
+function renderContentError(root, err) {
+  clear(root);
+  root.append(
+    topbar({ back: '#/', title: 'Contenu indisponible' }),
+    h('p', { class: 'error' }, err && err.message ? err.message : 'Contenu introuvable.'),
+    h('p', { class: 'muted' }, 'Cette partie n\'a pas encore été ouverte sur cet appareil : reconnecte-toi une fois pour la télécharger.'),
+    h('a', { class: 'btn', href: '#/' }, 'Accueil'));
 }
 
 // ---------------------------------------------------------------- composants
@@ -237,6 +259,7 @@ function renderSkill(root, skillId) {
   const levels = prog.skillLevels(skill);
   const unlocked = prog.isUnlocked(skill, progress);
   const counts = sess.skillCounts(content, progress, skillId, today);
+  const lesson = packs.lessonOf(skillId);
   const stat = (label, value) => h('div', { class: 'count' }, h('span', { class: 'count-value' }, value), h('span', { class: 'count-label' }, label));
 
   root.append(
@@ -250,11 +273,11 @@ function renderSkill(root, skillId) {
     ),
     h('section', { class: 'counts' },
       stat('nouveaux', counts.fresh), stat('à revoir', counts.due), stat('maîtrisés', counts.mastered), stat('exercices', counts.total)),
-    skill.lesson
+    lesson
       ? h('details', { class: 'lesson', open: st.sessions === 0 }, h('summary', {}, '📖 Leçon'),
           h('div', { class: 'lesson-tools' },
             h('button', { class: 'btn btn-small lesson-anim-btn', type: 'button', hidden: true, 'aria-pressed': 'false' }, anim.lessonButtonLabel(false))),
-          h('div', { class: 'lesson-body', html: renderLesson(skill.lesson, figures) }))
+          h('div', { class: 'lesson-body', html: renderLesson(lesson, figures) }))
       : null,
     renderCompletsCard(skill, st) || document.createDocumentFragment(), // null → « null » affiché sinon
     !unlocked
@@ -328,7 +351,7 @@ function prefetchSessionFigures(s) {
   const ids = [];
   for (const q of s.queue) {
     const it = content.items[q && q.id ? q.id : q];
-    if (it) ids.push(...figs.figureIdsOf(it.payload));
+    if (it && it.payload) ids.push(...figs.figureIdsOf(it.payload));   // fiche seule : rien à précharger
   }
   figs.prefetch(ids);
 }
@@ -336,6 +359,14 @@ function prefetchSessionFigures(s) {
 function renderSessionScreen(root) {
   clear(root);
   const itemId = sess.currentItemId(session);
+  // Une séance de révision traverse plusieurs unités : on attend l'énoncé de l'exercice affiché,
+  // et on va chercher les suivants pendant qu'il répond.
+  if (itemId && !packs.hasPayload(itemId)) {
+    root.append(h('p', { class: 'muted' }, 'Chargement de l\'exercice…'));
+    packs.loadForItems([itemId]).then(() => route(), (err) => renderContentError(root, err));
+    return;
+  }
+  packs.loadForItems(session.queue.slice(session.index + 1, session.index + 4)).catch(() => {});
   const item = content.items[itemId];
   const total = session.queue.length;
   const skill = session.skillId ? sess.findSkill(content, session.skillId) : null;

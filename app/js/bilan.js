@@ -115,13 +115,20 @@ export function bilanUrl(bilan, base = null) {
 
 // ---- libellés lisibles
 
-/** Nom lisible d'un tag : titre de compétence, sinon libellé trouvé dans un QCM, sinon tag embelli. */
+/**
+ * Nom lisible d'un tag : titre de compétence, sinon libellé calculé au build (`tagLabels`), sinon
+ * libellé trouvé dans un QCM déjà chargé, sinon tag embelli. La table du build est là parce que
+ * l'application ne charge plus tous les exercices : le parcours ci-dessous ne voit que les unités
+ * déjà ouvertes.
+ */
 export function tagLabel(tag, content) {
   const skill = content ? findSkill(content, tag) : null;
   if (skill) return skill.title;
+  const connu = content && content.tagLabels && content.tagLabels[tag];
+  if (connu) return connu;
   const wanted = normalizeAnswer(String(tag).replace(/-/g, ' '));
   for (const item of Object.values((content && content.items) || {})) {
-    if (item.type !== 'mcq' || !(item.tags || []).includes(tag)) continue;
+    if (item.type !== 'mcq' || !item.payload || !(item.tags || []).includes(tag)) continue;
     const hit = (item.payload.choices || []).find((c) => typeof c === 'string' && normalizeAnswer(c) === wanted);
     if (hit) return hit;
   }
