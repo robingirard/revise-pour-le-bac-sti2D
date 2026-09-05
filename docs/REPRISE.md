@@ -10,6 +10,15 @@ Unités : ingénierie (liaisons, schéma cinématique, transmission, cinématiqu
 2I2D Tle : analyse fonctionnelle, énergie électrique, bâtiment, structures-matériaux), physique-chimie (électricité,
 thermique, chimie, ondes, mécanique, compléments Tle), maths (1re ; Tle spécialité PCM ; Tle enseignement commun).
 
+## Où en est la publication (6 sept. 2026)
+Une seule adresse publique : **https://www.robingirard.eu/Revise.html**, l'application en
+`assets/revise/sti2d/v1.0/`. `make deploy` y publie via `publish.py` du moteur ; la branche
+`gh-pages` a été supprimée et l'ancienne adresse GitHub ne répond plus.
+
+Deux dépôts : le **moteur** `revise-core` (GitLab persee, MIT) et ce **paquet de contenu**
+(GitHub, CC BY). À décider : déplacer le paquet sur GitLab sous un nom sans « pour-le-bac »
+— Robin doit créer le projet vide, le reste suit.
+
 ## Où va le projet
 `docs/PLAN-V2.md` — plan arrêté le 5 sept. 2026 : moteur et contenu dans deux dépôts, contenu
 découpé par matière et chargé à la demande, profils d'élèves avec carte d'identité exportable,
