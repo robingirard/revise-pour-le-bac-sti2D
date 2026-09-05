@@ -1,6 +1,6 @@
 # Plan V2 — un moteur, des paquets de contenu, un index public
 
-État : plan arrêté le 5 septembre 2026, rien n'est encore fait. Décisions prises avec Robin :
+État au 6 septembre 2026 : étapes 1 et 2 faites et publiées, étape 3 en cours. Décisions prises avec Robin :
 **deux dépôts dès maintenant** (moteur / contenu), **mémoire locale + carte d'identité exportable**
 (pas de serveur), **la bibliothèque de figures élargit `bachelor_intro_to_energy_figures`**.
 
@@ -79,14 +79,13 @@ des paquets. C'est le prix de pouvoir donner le moteur à quelqu'un d'autre — 
 
 ### Ce qui doit être tranché avant de découper
 
-- **Licence et droits.** Le dépôt actuel n'a aucun fichier `LICENSE`, alors que le site annonce
-  déjà MIT + CC BY 4.0 pour les autres outils. À ajouter des deux côtés.
-- **Droits d'auteur du contenu.** `docs/notes/` (transcriptions des deux manuels) est ignoré par git
-  pour cette raison — mais le dépôt est public (GitHub Pages le sert). Avant d'en faire un paquet
-  affiché comme réutilisable, il faut **une passe de relecture** : aucun énoncé ne doit être repris
-  d'un manuel, les annales sont référencées par lien et non recopiées. C'est déjà la règle suivie
-  (les guidés tirés d'annales ont été réécrits avec d'autres valeurs) ; il s'agit de le vérifier et
-  de l'écrire noir sur blanc dans le paquet.
+- ✅ **Licence et droits.** Fait le 6 sept. : `LICENSE` explique le partage fichier par fichier
+  (contenu en CC BY 4.0, générateurs en MIT, moteur en MIT dans son dépôt), dit ce qui n'est pas
+  couvert (manuels, annales) et comment la vérification des droits l'empêche de dériver.
+- ✅ **Droits d'auteur du contenu.** Fait le 5 sept. : `tools/check_droits.py` compare le contenu
+  publié aux transcriptions et fait échouer `make check` sur toute reprise non examinée. Treize
+  passages propres aux manuels ont été réécrits ; les formulations standard, que le droit d'auteur
+  ne protège pas, sont admises une à une dans `content/droits-admis.yaml`.
 
 ---
 
@@ -204,9 +203,9 @@ fichiers.
 
 | # | Étape | Pourquoi d'abord | Débloque |
 |---|---|---|---|
-| 1 | **Découper `content.js` par unité** (§2.1) | Purement interne, aucun risque, gain immédiat sur le téléphone | la notion de paquet |
-| 2 | **Profils + carte d'identité** (§3) | Ne dépend de rien, et c'est le besoin le plus concret (deux élèves, deux machines) | l'usage par d'autres que son fils |
-| 3 | **Sortir le moteur** (§1) : `revise-core` + `revise-sti2d` comme paquet, générateurs devenus greffon, licences | C'est la grosse pièce ; les étapes 1 et 2 la rendent mécanique | un deuxième paquet, l'open source |
+| 1 | ✅ **Découper `content.js` par unité** (§2.1) — *fait le 5 sept. : index 2 590 → 274 ko* | Purement interne, aucun risque, gain immédiat sur le téléphone | la notion de paquet |
+| 2 | ✅ **Profils + carte d'identité** (§3) — *fait le 5 sept. ; le lien compacte les chapitres refermés* | Ne dépend de rien, et c'est le besoin le plus concret (deux élèves, deux machines) | l'usage par d'autres que son fils |
+| 3 | 🔨 **Sortir le moteur** (§1) : `revise-core` + `revise-sti2d` comme paquet, générateurs devenus greffon, licences | C'est la grosse pièce ; les étapes 1 et 2 la rendent mécanique | un deuxième paquet, l'open source |
 | 4 | **Retours par mail** (§5) + page « Comment c'est fait » | Court, et il vaut mieux qu'il soit là **avant** que le public arrive | la boucle de correction |
 | 5 | **Publication et index sur le site** (§4) | Dernier maillon : ce qui rend le reste visible | les niveaux et matières suivants |
 | 6 | **Bibliothèque de figures** (§6) | Indépendante du reste, peut se faire en parallèle ou plus tard | la réutilisation hors révise |

@@ -1,0 +1,49 @@
+# Licences
+
+Ce dépôt mélange du contenu pédagogique et du code. Le partage se fait fichier par fichier,
+pas en bloc.
+
+## Le contenu — CC BY 4.0
+
+Les unités et les exercices (`content/units.yaml`, `content/units/`), les leçons
+(`content/lessons/`), les données des liaisons et des mécanismes (`content/liaisons.yaml`,
+`content/mecanismes/`), les sources TikZ des figures (`figures/tikz/`) et les figures compilées.
+Texte complet dans `LICENSE-CC-BY-4.0.txt`, récupéré tel quel sur creativecommons.org.
+
+Autrement dit : servez-vous-en pour vos propres cours, traduisez-les, découpez-les, corrigez-les.
+Citez simplement la provenance — Robin Girard, MINES Paris — PSL, www.robingirard.eu
+
+## Le code — licence MIT
+
+Les générateurs d'exercices propres à ce paquet (`generators/`) et les scripts de construction
+qui y restent. Texte complet dans `LICENSE-MIT.txt`.
+
+Le **moteur** de l'application ne vit pas ici : c'est un dépôt séparé, `revise-core`, sous licence
+MIT également.
+
+## Ce qui n'est PAS couvert
+
+**Les manuels scolaires.** Ce dépôt ne redistribue aucun texte de manuel. Les transcriptions qui
+ont servi à écrire le contenu vivent dans `docs/notes/`, **exclu de git** (voir `.gitignore`), et
+les pages scannées ne sont pas dans le dépôt du tout.
+
+Le contenu publié est écrit à partir de ces transcriptions, pas recopié : `tools/check_droits.py`
+compare ce qui part en ligne aux transcriptions et **fait échouer la construction** dès qu'une
+reprise littérale n'a pas été examinée. Les formulations admises — définitions, énoncés de lois,
+tableaux de valeurs, tournures que la discipline impose, qu'aucun droit d'auteur ne protège — sont
+listées une à une dans `content/droits-admis.yaml`, avec l'endroit où elles apparaissent.
+
+**Les annales.** Les sujets d'examen officiels sont **référencés par lien** vers leur source
+(eduscol, APMEP), jamais recopiés. Les exercices qui s'en inspirent sont réécrits avec d'autres
+valeurs et d'autres énoncés.
+
+**Les marques et les études de cas** citées à titre d'exemple appartiennent à leurs propriétaires.
+
+## Comment c'est fait, et pourquoi ça se critique
+
+L'essentiel de ce contenu a été écrit **avec Claude**, sous relecture. Cela vaut pour la justesse
+scientifique comme pour l'ergonomie : une erreur de physique, un énoncé ambigu, une figure fausse,
+un enchaînement pénible sur téléphone sont tous des défauts possibles, et attendus.
+
+La critique des utilisateurs est le mécanisme de correction prévu, pas un service après-vente.
+Si un exercice vous paraît faux, c'est une contribution : écrivez à robin.girard@minesparis.psl.eu.

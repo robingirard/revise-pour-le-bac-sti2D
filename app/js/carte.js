@@ -13,9 +13,10 @@
 //     envoyé au serveur : les résultats scolaires d'un mineur ne quittent pas l'appareil, même
 //     quand le lien transite par une messagerie. Il a en revanche une limite de taille (LIMITE_LIEN).
 //
-// D'où une asymétrie assumée entre les deux : **le fichier garde tout**, c'est l'archive et rien
-// ne l'oblige à être court ; **le lien compacte les chapitres refermés** (voir compacter()), parce
-// que c'est là, et là seulement, que la taille décide si le transport marche ou non.
+// D'où une asymétrie assumée entre les deux : **le fichier garde tout**, en clair — c'est l'archive,
+// elle doit rester compréhensible dans dix ans sans l'application, et rien ne l'oblige à être
+// courte. **Le lien, lui, compacte les chapitres refermés** (voir compacter()), parce que c'est là,
+// et là seulement, que la taille décide si le transport marche ou non.
 
 import { MASTERED_INTERVAL } from './scheduler.js';
 import { addDays, isValidDay } from './dates.js';
@@ -173,6 +174,18 @@ export function etendre(progres) {
   }
   return { ...progres, items };
 }
+
+// Pourquoi les identifiants restent en clair, dans le fichier comme dans le lien
+//
+// La question « et si on n'échangeait qu'une clé courte, ou un numéro ? » se repose naturellement :
+// les identifiants pèsent 60 ko bruts pour 2 058 exercices, contre 15 ko d'empreintes. Mesuré
+// **après compression**, le gain disparaît : 13 891 octets gzippés pour les identifiants contre
+// 10 159 pour des empreintes, parce que gzip avale les longs préfixes communs (`liaisons.
+// symbole_vers_nom.…`) alors qu'une empreinte est incompressible. Diviser la taille brute par
+// quatre ne divise la compressée que par 1,4, et sur une carte réaliste (300 vus, deux tiers
+// maîtrisés) les empreintes font même 79 octets de **plus**. Le seul schéma réellement plus petit
+// serait un rang dans l'index du contenu (~260 octets d'identité) — écarté : un rang change dès
+// qu'un exercice est ajouté ou retiré, et invaliderait toutes les cartes déjà émises.
 
 // ---- lien : gzip (quand le navigateur sait le faire) puis base64url, dans le fragment
 
