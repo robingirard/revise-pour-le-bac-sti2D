@@ -413,30 +413,43 @@ figure.fig-lazy { display: block; margin: 10px auto; }
 .offline-bar { height: 8px; }
 
 /* ---- symboles de liaison animés (svg[data-anim], solide 1 = .s1 ; voir anim.js) ----
-   Deux mouvements se superposent : celui qui se voit dans le plan de la vue (data-anim) et,
-   quand la liaison autorise une translation le long de l'axe de visée, un va-et-vient en profondeur
-   (data-axial) : le solide 1 grossit en venant vers l'observateur. Sans lui, le pivot et le pivot
-   glissant s'animaient de la même façon en vue de bout (leur seule différence, la translation, est
-   dirigée vers l'œil).
-   data-axial="libre" : rotation et translation indépendantes, leurs périodes se décalent (2,1 s
-   contre 3 s) ; data-axial="lie" (hélicoïdale) : un aller-retour par tour, toujours en phase.
-   Les keyframes emploient les propriétés rotate/translate/scale et non transform : deux animations
-   sur le même élément se composent alors au lieu de s'écraser. */
+   Un symbole superpose jusqu'à quatre mouvements, un par « canal », chacun porté par une propriété
+   CSS différente pour qu'ils se composent au lieu de s'écraser :
+     rotation dans le plan de la vue  → rotate     (rot, rock)
+     glissement dans le plan          → translate  (tx, ty, wander = les deux)
+     translation le long de l'axe de visée → scale (data-axial : elle est dirigée vers l'œil, on la
+       rend en profondeur — le solide 1 grossit et devient vif en s'approchant, rapetisse et pâlit
+       en s'éloignant ; « libre » = 2,1 s contre 3 s pour la rotation, les deux se décalent ;
+       « lie » = 1,5 s, hélicoïdale, un aller-retour par tour, toujours en phase)
+     bascule hors du plan             → transform  (tilt : le solide s'écrase, il sort de la feuille)
+   Sans ces canaux, les symboles voisins s'animaient à l'identique : pivot / pivot glissant /
+   hélicoïdale en vue de bout (leur différence est dirigée vers l'œil), puis pivot / rotule /
+   ponctuelle (tous en rotation simple). data-anim est une liste de mots, d'où les sélecteurs ~=. */
 svg[data-anim] { cursor: pointer; }
 svg[data-anim] .s1 { transform-box: view-box; transform-origin: var(--cx, 50%) var(--cy, 50%); }
-svg[data-anim="rot"] { --fig-plan: fig-rot 3s linear infinite; }
-svg[data-anim="rock"] { --fig-plan: fig-rock 1.2s ease-in-out infinite alternate; }
-svg[data-anim="tx"] { --fig-plan: fig-tx 1.6s ease-in-out infinite alternate; }
-svg[data-anim="ty"] { --fig-plan: fig-ty 1.6s ease-in-out infinite alternate; }
-svg[data-axial="libre"] { --fig-axial: fig-push 2.1s ease-in-out infinite alternate; }
-svg[data-axial="lie"] { --fig-axial: fig-push 1.5s ease-in-out infinite alternate; }
+svg[data-anim~="rot"] { --fig-turn: fig-rot 3s linear infinite; }
+svg[data-anim~="rock"] { --fig-turn: fig-rock 1.2s ease-in-out infinite alternate; }
+svg[data-anim~="tx"] { --fig-slide: fig-tx 1.6s ease-in-out infinite alternate; }
+svg[data-anim~="ty"] { --fig-slide: fig-ty 1.6s ease-in-out infinite alternate; }
+svg[data-anim~="wander"] { --fig-slide: fig-wander 4.4s ease-in-out infinite; }
+svg[data-anim~="tilt"] { --fig-tilt: fig-tilt 2.4s ease-in-out infinite alternate; }
+svg[data-axial="libre"] { --fig-depth: fig-push 2.1s ease-in-out infinite alternate; }
+svg[data-axial="lie"] { --fig-depth: fig-push 1.5s ease-in-out infinite alternate; }
 svg[data-anim]:hover .s1, svg[data-anim].playing .s1, .playing-all svg[data-anim] .s1 {
-  animation: var(--fig-plan, none), var(--fig-axial, none);
+  animation: var(--fig-turn, none), var(--fig-slide, none), var(--fig-depth, none), var(--fig-tilt, none);
 }
 @keyframes fig-rot { to { rotate: 360deg; } }
 @keyframes fig-rock { from { rotate: -25deg; } to { rotate: 25deg; } }
 @keyframes fig-tx { from { translate: -10px 0; } to { translate: 10px 0; } }
 @keyframes fig-ty { from { translate: 0 -10px; } to { translate: 0 10px; } }
+/* fig-wander : les deux translations du plan à la fois (ponctuelle) — la bille se promène sur le plan */
+@keyframes fig-wander {
+  0%, 100% { translate: 0 0; } 25% { translate: 7px -4px; }
+  50% { translate: 0 -7px; } 75% { translate: -7px -3px; }
+}
+/* fig-tilt : le solide bascule hors de la feuille — sa hauteur apparente diminue (raccourci) ;
+   sur transform, pour se composer avec rotate/translate/scale sans les écraser */
+@keyframes fig-tilt { from { transform: scaleY(1); } to { transform: scaleY(0.72); } }
 /* fig-push : la translation le long de l'axe de visée, rendue par un effet de profondeur —
    le solide 1 grossit et se fonce en venant vers l'observateur, rapetisse et pâlit en s'éloignant
    (l'échelle seule est illisible sur les symboles où le solide 1 se réduit à une tige) */

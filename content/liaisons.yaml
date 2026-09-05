@@ -11,8 +11,14 @@
 #   contact_court : le contact en trois mots ; reconnaitre : comment reconnaître le symbole (par vue) ;
 #   mobilites : pour chaque mobilité, pourquoi elle est autorisée ou bloquée (feedback des grilles) ;
 #   exemples : objets du quotidien (texte + pictogramme)
-#   symboles[].anim : mouvement du solide 1 visible dans cette vue (rot = rotation, rock = oscillation,
-#              tx/ty = translation, none) — sert à animer le symbole dans l'application
+#   symboles[].anim : mouvements du solide 1 visibles dans cette vue (un seul, ou une liste) — sert à
+#              animer le symbole dans l'application. Un mouvement par « canal » indépendant :
+#              rot / rock (rotation dans le plan de la vue) ; tx / ty / wander (translation dans le
+#              plan, wander = les deux) ; tilt (le solide bascule hors du plan : il s'y écrase).
+#              « none » = rien de visible. La translation le long de l'axe de visée n'est PAS listée :
+#              elle est déduite des ddl par build_figures.py (data-axial).
+#              tilt ne se met que si la bascule se voit : une rotation autour de l'axe de révolution
+#              du solide (pivot vu de face) ne montre rien.
 #   symboles : les vues planes du tableau ; « pic » est le nom du symbole dans figures/tikz/liaisons.sty,
 #              « plan » les deux axes du plan de la vue (le 1er horizontal, le 2e vertical),
 #              « sens » = -1 si le 1er axe pointe vers la gauche (vue (z,y) : x vers l'observateur).
@@ -339,14 +345,14 @@ liaisons:
     - y
     sens: -1
     pic: rotule
-    anim: rot
+    anim: [rot, tilt]
   - vue: face
     plan:
     - x
     - y
     sens: 1
     pic: rotule
-    anim: rot
+    anim: [rot, tilt]
   contact_court: sphère dans une sphère creuse
   reconnaitre:
     bout: une sphère (cercle) dans une coupelle
@@ -393,14 +399,14 @@ liaisons:
     - y
     sens: -1
     pic: appui plan
-    anim: tx
+    anim: [tx, tilt]
   - vue: face
     plan:
     - x
     - y
     sens: 1
     pic: appui plan
-    anim: tx
+    anim: [tx, tilt]
   contact_court: plan sur plan
   reconnaitre:
     bout: deux traits parallèles collés (les deux plans en contact)
@@ -448,14 +454,14 @@ liaisons:
     - y
     sens: -1
     pic: lineaire rectiligne bout
-    anim: rock
+    anim: [rock, tilt]
   - vue: face
     plan:
     - x
     - y
     sens: 1
     pic: lineaire rectiligne face
-    anim: tx
+    anim: [tx, tilt]
   contact_court: cylindre sur plan (ligne)
   reconnaitre:
     bout: un coin (triangle) posé sur un plan
@@ -502,14 +508,14 @@ liaisons:
     - y
     sens: -1
     pic: lineaire annulaire face
-    anim: tx
+    anim: [tx, tilt]
   - vue: bout
     plan:
     - x
     - y
     sens: 1
     pic: lineaire annulaire bout
-    anim: rot
+    anim: [rot, tilt]
   contact_court: sphère dans un cylindre (cercle)
   reconnaitre:
     face: une sphère (cercle) dans un rectangle (le cylindre)
@@ -556,7 +562,7 @@ liaisons:
     - y
     sens: -1
     pic: ponctuelle bout
-    anim: rot
+    anim: [rot, wander, tilt]
   - vue: face
     plan:
     - x
@@ -564,7 +570,7 @@ liaisons:
     sens: 1
     pic: ponctuelle face
     rotate: -90
-    anim: ty
+    anim: [ty, tilt]
   contact_court: sphère sur plan (point)
   reconnaitre:
     bout: deux cercles concentriques avec une croix (la sphère vue du dessus)

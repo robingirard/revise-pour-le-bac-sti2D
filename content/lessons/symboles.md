@@ -26,17 +26,32 @@ dans un fourreau…). Même code couleur : solide 1 en rouge, solide 2 en bleu.
 Touche un symbole (ou survole-le à la souris) pour l'animer : le solide 1, en **rouge**, fait alors
 un mouvement que la liaison autorise.
 
-Attention à la **vue selon l'axe** : une translation le long de l'axe est dirigée **vers toi**, elle
-ne peut pas se dessiner dans le plan de la feuille. On la montre donc par un effet de **profondeur** :
-quand le solide rouge **grossit et devient vif**, il vient vers toi ; quand il **rapetisse et pâlit**,
-il s'éloigne. D'où quatre animations à bien distinguer, alors que les symboles se ressemblent :
+Un dessin est plat, mais la liaison, elle, bouge dans l'espace. L'animation utilise donc **quatre
+indices**, qui peuvent se combiner — compte-les, ils donnent les degrés de liberté :
 
-- **Pivot** : il tourne, sans jamais changer de taille → une seule rotation, aucune translation.
-- **Glissière** : il va et vient en profondeur, sans jamais tourner → une seule translation.
-- **Pivot glissant** : il tourne **et** va et vient, chacun à son rythme → les deux mouvements sont
-  indépendants (2 ddl).
+| ce que fait le solide rouge | ce que ça veut dire |
+|---|---|
+| il **tourne** dans la feuille | rotation autour de l'axe qui pointe vers toi |
+| il **glisse** dans la feuille | translation dans le plan du dessin |
+| il **grossit et devient vif**, puis rapetisse et pâlit | translation **vers toi** : elle est dirigée le long de l'axe de visée, on ne peut pas la dessiner autrement |
+| il **s'écrase** (il se raccourcit) | il **bascule hors de la feuille** : il peut sortir du plan |
+
+Vues selon l'axe, plusieurs symboles se ressemblent beaucoup : c'est l'animation qui les sépare.
+
+- **Pivot** : il tourne, et rien d'autre → 1 ddl.
+- **Glissière** : il va et vient en profondeur, sans tourner → 1 ddl.
 - **Hélicoïdale** : il tourne et avance **ensemble**, un aller-retour par tour → les deux mouvements
-  sont liés, comme une vis dans son écrou : elle n'avance que parce qu'elle tourne (1 seul ddl).
+  sont liés, comme une vis dans son écrou : elle n'avance que parce qu'elle tourne → 1 ddl.
+- **Pivot glissant** : il tourne **et** va et vient, chacun à son rythme → 2 mouvements indépendants.
+- **Rotule** : il tourne **et s'écrase** → il tourne aussi hors de la feuille, dans toutes les
+  directions → 3 rotations.
+- **Ponctuelle** : il tourne, s'écrase **et se promène** sur le plan → il ne lui manque que la
+  translation qui l'enfoncerait dans le plan → 5 ddl.
+
+Deux réserves honnêtes : vue **de face**, un arbre qui tourne autour de son propre axe ne montre
+rien du tout (le pivot y semble donc figé comme un encastrement, et la glissière, l'hélicoïdale et
+le pivot glissant s'y ressemblent). C'est le **symbole** qui tranche alors — épaulements, filetage —
+et c'est la vue selon l'axe qu'il faut regarder pour voir bouger.
 
 ## Astuces pour ne pas confondre
 

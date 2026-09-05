@@ -99,11 +99,49 @@ def check_liaisons(liaisons):
     return set(ids)
 
 
+MOUVEMENTS = {"rot", "rock", "tx", "ty", "wander", "tilt"}
+# Vues où deux liaisons s'animent forcément pareil : leur seule différence est une rotation autour
+# de l'axe de révolution du solide, qui ne se voit pas de profil (arbre qui tourne sur lui-même).
+# Le symbole, lui, les distingue (épaulements, filetage, contact) — c'est ce que dit la leçon.
+AMBIGUITES_ADMISES = {("pivot", "face"), ("helicoidale", "face"), ("pivot-glissant", "face"),
+                      ("lineaire-rectiligne", "face")}
+
+
 def check_animations(liaisons):
-    """Vérifie que chaque symbole compilé porte l'animation attendue : le mouvement visible dans le
-    plan de la vue (data-anim) et, quand la translation le long de l'axe de visée est un ddl, la
-    pulsation de profondeur (data-axial). Sans cette dernière, le pivot et le pivot glissant
-    s'animent exactement de la même façon en vue de bout."""
+    """Vérifie les animations des symboles : chaque mouvement déclaré doit correspondre à un ddl
+    réel, deux liaisons ne doivent pas s'animer à l'identique dans une même vue, et le symbole
+    compilé doit porter les attributs attendus (data-anim, data-axial)."""
+    vues = {}
+    for l in liaisons:
+        for s in l["symboles"]:
+            anim = s.get("anim", "none")
+            anim = anim if isinstance(anim, list) else ([] if anim == "none" else [anim])
+            p = f"liaison {l['id']} ({s['vue']})"
+            bad = set(anim) - MOUVEMENTS
+            if bad:
+                err(f"{p} : mouvements inconnus {bad}")
+            h, v = s["plan"]                          # axes du plan de la vue
+            visee = ({"x", "y", "z"} - set(s["plan"])).pop()
+            # un mouvement ne se déclare que s'il correspond à une mobilité de la liaison
+            attendus = {
+                "rot": f"R{visee}" in l["ddl"], "rock": f"R{visee}" in l["ddl"],
+                "tx": f"T{h}" in l["ddl"], "ty": f"T{v}" in l["ddl"],
+                "wander": f"T{h}" in l["ddl"] and f"T{v}" in l["ddl"],
+                "tilt": bool({f"R{h}", f"R{v}"} & set(l["ddl"])),
+            }
+            for m in anim:
+                if m in attendus and not attendus[m]:
+                    err(f"{p} : mouvement « {m} » sans mobilité correspondante (ddl : {l['ddl']})")
+            axial = ("lie" if l.get("ddl_lies") else "libre") if f"T{visee}" in l["ddl"] else None
+            cle = (s["vue"], " ".join(sorted(anim)), axial)
+            if cle in vues and (l["id"], s["vue"]) not in AMBIGUITES_ADMISES:
+                warn(f"{p} : même animation que {vues[cle]} — les deux liaisons sont indistinguables")
+            vues[cle] = f"{l['id']} ({s['vue']})"
+    check_animations_svg(liaisons)
+
+
+def check_animations_svg(liaisons):
+    """Les attributs du SVG compilé doivent refléter le YAML (sinon : « make figures » à relancer)."""
     for l in liaisons:
         for s in l["symboles"]:
             svg = SVGDIR / f"liaison-{l['id']}-{s['vue']}.svg"
@@ -116,11 +154,13 @@ def check_animations(liaisons):
                 return m.group(1) if m else defaut
             visee = ({"x", "y", "z"} - set(s["plan"])).pop()
             axial = ("lie" if l.get("ddl_lies") else "libre") if f"T{visee}" in l["ddl"] else None
+            anim = s.get("anim", "none")
+            anim = " ".join(anim) if isinstance(anim, list) else anim
             p = f"liaison {l['id']} ({s['vue']})"
             if attr("data-axial") != axial:
                 err(f"{p} : data-axial = {attr('data-axial')!r}, attendu {axial!r} — relancez « make figures »")
-            if attr("data-anim", "none") != s.get("anim", "none"):
-                err(f"{p} : data-anim = {attr('data-anim')!r}, attendu {s.get('anim', 'none')!r} — relancez « make figures »")
+            if attr("data-anim", "none") != anim:
+                err(f"{p} : data-anim = {attr('data-anim')!r}, attendu {anim!r} — relancez « make figures »")
 
 
 def check_mecanismes(mecanismes, liaison_ids):

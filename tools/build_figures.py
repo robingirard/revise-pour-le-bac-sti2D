@@ -92,7 +92,8 @@ def tikz_cell(sym):
             r"\end{tikzpicture}") % (h, v, sym["sens"], opts, sym["pic"])
 
 
-ANIMS = {}   # nom de figure → mouvement dans le plan de la vue (rot | rock | tx | ty), rempli par generate_symbol_sources
+ANIMS = {}   # nom de figure → mouvements visibles dans la vue, séparés par des espaces
+             # (rot | rock : rotation ; tx | ty | wander : translation ; tilt : bascule hors du plan)
 AXIAL = {}   # nom de figure → translation le long de l'axe de visée (libre | lie) : invisible dans le plan,
              # rendue par une pulsation d'échelle (le solide 1 vient vers l'observateur)
 RED = re.compile(r"rgb\(88\.2\d*%,\s*21\.5\d*%,\s*9\.8\d*%\)")   # solideA = RGB(225,55,25) en % (pdftocairo)
@@ -139,8 +140,10 @@ def generate_symbol_sources(liaisons):
             path = GEN / f"liaison-{l['id']}-{sym['vue']}.tex"
             write_if_changed(path, src)
             files.append(path)
-            if sym.get("anim", "none") != "none":
-                ANIMS[path.stem] = sym["anim"]
+            anim = sym.get("anim", "none")
+            anim = " ".join(anim) if isinstance(anim, list) else anim
+            if anim != "none":
+                ANIMS[path.stem] = anim
             # la translation le long de l'axe de visée (celui qui n'est pas dans le plan de la vue) est
             # dirigée vers l'observateur : aucun mouvement du plan ne peut la montrer (c'est ce qui rendait
             # le pivot et le pivot glissant identiques en vue de bout)
