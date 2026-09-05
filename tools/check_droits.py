@@ -6,12 +6,16 @@ c'est le contenu **publié** qu'il faut contrôler, pas les notes. Ce script com
 `dist/content.json` (exactement ce qui part en ligne : énoncés, choix, corrections, leçons) aux
 transcriptions locales, et signale toute reprise littérale longue.
 
-Deux niveaux, parce qu'ils n'ont pas la même gravité :
+Trois niveaux :
 
-  GRAVE       la reprise tombe dans un passage que la transcription donne entre guillemets « … »,
-              c'est-à-dire du texte du livre cité mot pour mot. Sortie en erreur.
-  À VÉRIFIER  la reprise tombe ailleurs dans la transcription du livre. Souvent anodin (une
-              définition standard, une formule, un terme de métier), parfois non : à lire.
+  ERREUR      la reprise tombe dans un passage que la transcription donne entre guillemets « … »
+              (du texte du livre mot pour mot), ou atteint seize mots — longueur à laquelle la
+              coïncidence n'est plus crédible — et n'est pas dans `content/droits-admis.yaml`.
+  ADMIS       même chose, mais la formulation figure dans ce fichier : une définition, un énoncé de
+              loi, une tournure que la discipline impose. Le droit d'auteur protège une expression
+              originale, pas la seule façon de dire une chose. Comptées, pas signalées.
+  À VÉRIFIER  la reprise tombe ailleurs dans la transcription du livre. Le plus souvent anodin ;
+              affichée pour mémoire, elle ne fait pas échouer.
 
 Les sections où les agents ont écrit **nos** propositions (« Propositions pour l'application »,
 « Idée d'exercice complet », « Figures à redessiner », « Remarques ») sont exclues de la
@@ -38,6 +42,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist" / "content.json"
 NOTES = ROOT / "docs" / "notes"
+ADMIS = ROOT / "content" / "droits-admis.yaml"
 
 # Sections des notes qui transcrivent le livre (le reste, ce sont nos propositions).
 SECTIONS_LIVRE = ("contenu", "exercices du livre", "liste des exercices", "exercices", "plan")
@@ -149,11 +154,28 @@ def reprises(ms, table, n):
     return out
 
 
+def charger_admis(chemin):
+    """Formulations jugées non protégeables (voir l'en-tête du fichier)."""
+    if not chemin.exists():
+        return []
+    import yaml
+    return (yaml.safe_load(chemin.read_text(encoding="utf-8")) or {}).get("extraits", []) or []
+
+
+def est_admis(extrait, admis):
+    """Admis si l'extrait est contenu dans une formulation admise (mot à mot, bords compris) :
+    raccourcir une reprise reste admis, l'allonger est signalé."""
+    e = f" {extrait} "
+    return any(e in f" {a} " for a in admis)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--mots", type=int, default=8, help="longueur minimale d'une reprise (défaut : 8 mots)")
     ap.add_argument("--notes", type=Path, default=NOTES)
+    ap.add_argument("--long", type=int, default=16, help="longueur à partir de laquelle une reprise compte même hors guillemets")
     ap.add_argument("--montrer", type=int, default=20, help="nombre de reprises affichées par niveau")
+    ap.add_argument("--tout", action="store_true", help="détailler aussi les reprises courtes hors guillemets")
     args = ap.parse_args()
 
     if not DIST.exists():
@@ -167,18 +189,31 @@ def main():
     content = json.loads(DIST.read_text(encoding="utf-8"))
     textes = textes_publies(content)
 
-    graves, verifier = [], []
+    admis = charger_admis(ADMIS)
+    graves, verifier, tolerees = [], [], 0
     for origine, texte in textes:
         for extrait, fichier, cite in reprises(mots(texte), table, args.mots):
-            (graves if cite else verifier).append((len(extrait.split()), origine, extrait, fichier))
+            n = len(extrait.split())
+            # une reprise compte si le transcripteur l'a mise entre guillemets (texte du livre) ou
+            # si elle atteint seize mots, longueur à laquelle la coïncidence n'est plus crédible
+            if not (cite or n >= args.long):
+                verifier.append((n, origine, extrait, fichier))
+            elif est_admis(extrait, admis):
+                tolerees += 1
+            else:
+                graves.append((n, origine, extrait, fichier))
 
     fichiers = len(list(args.notes.glob("*.md")))
     print(f"{len(textes)} textes publiés comparés à {fichiers} transcriptions "
           f"({len(table)} suites de {args.mots} mots issues du livre)")
+    print(f"{tolerees} reprises admises ({len(admis)} formulations dans {ADMIS.name})")
 
-    for titre, lot in (("GRAVE — texte du livre cité mot pour mot", graves),
-                       ("À VÉRIFIER — reprise de la transcription du livre", verifier)):
+    for titre, lot in (("ERREUR — texte du livre, non admis", graves),
+                       ("À VÉRIFIER — reprise courte de la transcription du livre", verifier)):
         if not lot:
+            continue
+        if lot is verifier and not args.tout:      # bruit inutile dans « make check »
+            print(f"\n{titre} : {len(lot)} (détail avec « make droits »)")
             continue
         print(f"\n{titre} : {len(lot)}")
         for n, origine, extrait, fichier in sorted(lot, reverse=True)[:args.montrer]:
@@ -188,10 +223,11 @@ def main():
             print(f"  … et {len(lot) - args.montrer} autres")
 
     if graves:
-        print("\nÀ corriger avant toute publication : réécrire ces passages.")
+        print("\nÀ trancher avant publication : réécrire ces passages, ou les ajouter à "
+              f"{ADMIS.name} s'ils relèvent de la formulation scolaire obligée.")
         return 1
-    print("\nAucune citation littérale du manuel dans le contenu publié."
-          + (f" {len(verifier)} reprise(s) à relire." if verifier else ""))
+    print("\nAucune reprise non admise du manuel dans le contenu publié."
+          + (f" {len(verifier)} reprise(s) hors guillemets, pour mémoire." if verifier else ""))
     return 0
 
 

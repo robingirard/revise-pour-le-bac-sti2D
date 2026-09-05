@@ -320,7 +320,7 @@ units:
       - req
     - type: input
       level: 2
-      prompt: 'L''exigence « 12 » du pont transbordeur indique : « La hauteur libre sous le tablier doit mesurer au moins 55 m au-dessus du niveau de la Loire à marée haute ». Quelle est cette hauteur minimale, en mètres ?'
+      prompt: 'Une exigence du pont transbordeur impose un tirant d''air minimal de 55 m entre la Loire à marée haute et le dessous du tablier. Quelle hauteur libre, en mètres, faut-il donc garantir ?'
       answer: '55'
       numeric: true
       tolerance: 0
@@ -1638,7 +1638,7 @@ units:
       - camera-dome
     - type: input
       level: 3
-      prompt: 'Le démarrage du moteur étant progressif, la caméra se déplace à la vitesse **moyenne** de 430 °·s⁻¹. Quel temps met-elle pour balayer les 90° qui séparent la billetterie du bar ? (2 décimales)'
+      prompt: 'La caméra tourne à 430 °·s⁻¹ en **moyenne**, démarrage progressif compris. Combien de temps lui faut-il pour parcourir les 90° qui séparent la billetterie du bar ? (2 décimales)'
       answer: '0.21'
       numeric: true
       tolerance: 0.02

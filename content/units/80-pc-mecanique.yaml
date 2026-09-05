@@ -164,7 +164,7 @@ units:
       - 'Non : la masse intervient dans le poids, pas dans la définition du frottement solide-solide donnée par le cours.'
       - 'Non : c''est le frottement entre un **fluide** et un solide qui dépend de la vitesse (f = k × v ou f = k × v²).'
       - 'Non : la viscosité η caractérise un **fluide** ; ici les deux corps en contact sont des solides.'
-      explanation: '« La valeur de la force de frottement entre solides dépend des caractéristiques des solides en contact et des dimensions de la surface de contact. » Exemples : mâchoire sur un disque de frein, semelle sur la route.'
+      explanation: 'Deux choses comptent : la nature des deux solides qui se touchent, et l''étendue de leur zone de contact. Exemples : mâchoire sur un disque de frein, semelle sur la route.'
       tags:
       - frottements
     - type: mcq
@@ -1417,7 +1417,7 @@ units:
       level: 3
       prompt: Pourquoi les châteaux d'eau sont-ils placés en hauteur ?
       choices:
-      - Parce que la pression au robinet est proportionnelle à la dénivellation entre le niveau d'eau du château d'eau et l'habitation
+      - Parce que la pression au robinet dépend de la hauteur d'eau qui le surplombe
       - Parce que la pression ne dépend que de la masse d'eau stockée dans le réservoir
       - Parce que la pression augmente avec l'aire de la surface libre du réservoir
       - Parce que l'eau y est en mouvement, ce qui augmente la pression
@@ -1427,7 +1427,7 @@ units:
       - 'Non : ΔP = ρ g h ne fait pas intervenir la masse d''eau stockée, mais la masse volumique et la dénivellation.'
       - 'Non : l''aire de la surface libre n''apparaît pas dans ΔP = ρ g h.'
       - 'Non : l''hydrostatique concerne au contraire les fluides **au repos**.'
-      explanation: 'La pression de l''eau fournie au robinet est proportionnelle à la dénivellation entre le niveau d''eau dans le château d''eau et celui dans l''habitation : c''est pour cette raison qu''on le place en hauteur.'
+      explanation: 'Ce qui fixe la pression au robinet, c''est la hauteur d''eau située au-dessus de lui — d''où l''intérêt de percher le réservoir. Ni le volume stocké ni la forme du réservoir n''interviennent.'
       tags:
       - hydrostatique
     - type: mcq

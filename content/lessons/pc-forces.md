@@ -38,7 +38,7 @@ Dans toute l'unité on prend **$g = 9{,}81\ \mathrm{N\cdot kg^{-1}}$**. *(Le man
 
 Toute **force de frottement s'oppose au mouvement** : elle a la **même direction que le vecteur vitesse**, mais un **sens opposé**.
 
-- **Entre deux solides** : sa valeur dépend des **caractéristiques des solides en contact** et des **dimensions de la surface de contact**.
+- **Entre deux solides** : deux choses la fixent — la **nature des deux surfaces** qui se touchent et l'**étendue de leur zone de contact**.
 - **Entre un fluide et un solide** : sa valeur dépend de la **viscosité $\eta$** du fluide, ainsi que de la forme, de la vitesse et de l'état de surface du solide. À **faible** vitesse $f = k\,v$ ; à vitesse **élevée** $f = k\,v^2$.
 
 ## Projeter un vecteur force sur les axes

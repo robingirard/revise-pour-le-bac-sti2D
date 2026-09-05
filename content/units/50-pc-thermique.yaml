@@ -998,7 +998,7 @@ units:
       - 'Non : c''est une **différence** de températures ; l''écart de 19 °C à 4 °C vaut 15 °C, soit exactement 15 K.'
       - 'Non : $\Phi$ est une puissance en watts, on n''y ajoute pas une température.'
       - 'Non : aucun facteur correctif n''est nécessaire.'
-      explanation: « Il est inutile de convertir les températures de °C en kelvin (K) car la valeur de leur différence est identique si la même unité est choisie pour les deux températures » (Tle, p. 139).
+      explanation: 'Inutile : un écart de température garde la même valeur en °C et en K. La seule règle est d''exprimer les deux températures dans la même unité.'
       tags:
       - flux
     - type: input

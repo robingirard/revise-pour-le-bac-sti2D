@@ -1,0 +1,476 @@
+# Formulations admises — reprises littérales jugées non protégeables.
+#
+# `tools/check_droits.py` compare le contenu publié aux transcriptions du manuel et signale deux
+# sortes de reprises mot pour mot : celles qui tombent dans un passage que le transcripteur a mis
+# entre guillemets (donc du livre littéralement), et celles de seize mots ou plus, où la coïncidence
+# cesse d'être fortuite.
+#
+# Toutes ne posent pas problème. Le droit d'auteur protège une **expression originale**, pas une
+# définition scolaire, pas l'énoncé d'une loi physique, pas un tableau de valeurs, pas une tournure
+# que la discipline impose. « Le vecteur vitesse est toujours tangent à la trajectoire » ne se dit
+# pas de dix façons ; la phrase n'appartient à personne. Les valeurs de conductivité de l'ardoise ou
+# du plâtre non plus.
+#
+# Ce fichier liste les reprises examinées et jugées de cette nature (décision de Robin, 5 sept.
+# 2026). Ce qui en est absent fait échouer « make check » : le contrôle continue donc d'attraper
+# toute NOUVELLE reprise, en particulier celles qui seraient propres à ces manuels — une étude de
+# cas, un énoncé d'exercice, une remarque didactique, un exemple rédigé. Treize passages de cette
+# sorte ont été réécrits le 5 septembre plutôt qu'admis ici : phrase du château d'eau, remarque sur
+# la conversion en kelvin, consignes de prévention et de détection, exigence du pont transbordeur,
+# exercice de la caméra, frottement entre solides, conclusion sur l'isolation, capteur de pluie,
+# pergola bioclimatique, apport en vitamine C.
+#
+# Les extraits sont normalisés (minuscules, sans accents ni ponctuation) : c'est la forme comparée.
+# Une reprise est admise si elle est **contenue** dans l'un d'eux — raccourcir un passage reste
+# admis, l'allonger est signalé. Le commentaire donne où la reprise apparaît et pourquoi elle a été
+# relevée.
+#
+# Engendré une fois par tools/check_droits.py ; se relit et s'édite à la main.
+
+extraits:
+  # pc-oxydoreduction.hca16d74d (39 mots)
+  - "pour limiter la corrosion de certains metaux on peut les combiner avec d autres entites chimiques pour former des alliages par exemple les aciers inoxydables a base de fer de chrome et de carbone resistent bien a la corrosion"
+  # leçon statique-actions (38 mots)
+  - "on appelle action mecanique toute cause physique capable de maintenir un solide en equilibre de deplacer un solide ou de modifier son mouvement de deformer un solide une action mecanique a toujours une origine et une cible on"
+  # 2i2d-bat-eclairage.h4dee639f (38 mots)
+  - "une source lumineuse est un convertisseur d energie dont la grandeur d entree est la puissance electrique qui s exprime en watt w et la grandeur de sortie est le flux lumineux qui s exprime en lumen lm"
+  # pc-oxydoreduction.h6231ffa5 (33 mots)
+  - "protection cathodique par anode sacrificielle on peut placer un metal sur un autre a proteger il sera oxyde a sa place par exemple pour proteger une canalisation on place un morceau de zinc"
+  # leçon pc-dynamique (30 mots)
+  - "dans le referentiel terrestre la resultante des forces appliquee a un systeme assimile a un point est egale au produit de sa masse par le vecteur acceleration de son centre"
+  # 2i2d-bat-acoustique.hbe99a8f1 (29 mots)
+  - "l isolation acoustique traite de l energie transmise par la paroi en la reduisant le plus possible les parties absorbees et reflechies sont du domaine de la correction acoustique"
+  # pc-combustions.ha2ed81e2 (28 mots)
+  - "le monoxyde de carbone est tres dangereux car etant incolore et inodore il est indetectable par l etre humain alors qu il s agit d un gaz mortel"
+  # leçon pc-energie-chimique (28 mots)
+  - "le pouvoir calorifique d un combustible est l energie thermique liberee lors de la combustion d un kilogramme de combustible il s exprime donc en joule par kilogramme"
+  # 2i2d-bat-acoustique.h1bdd016b (27 mots)
+  - "est sensible a des pressions allant de 0 00002 pa a 20 pa soit un rapport de 1 a 1 000 000 pour ramener cette large echelle"
+  # 2i2d-bat-eclairage.hed3264f2 (27 mots)
+  - "le flux lumineux est la quantite d energie emise par une source sous forme de rayonnements visibles dans toutes les directions par unite de temps symbole unite"
+  # pc-ondes-bases.hd5bdb033 (26 mots)
+  - "l energie de l onde incidente est egale a la somme des energies des ondes reflechie absorbee et transmise i i r i a i t"
+  # pc-flux-isolation.h7d0c98dc (26 mots)
+  - "m k w ardoise 0 003 bois de charpente 0 333 air peu ventile 0 130 laine de verre 5 400 plaque de platre 0 040"
+  # pc-matiere.h8666525f (26 mots)
+  - "materiau attirable par un aimant dans ce cas il doit contenir les elements fer fe cobalt co ou nickel ni ou la plupart de leurs alliages"
+  # leçon pc-son (25 mots)
+  - "air 0 c air 20 c eau 20 c glace 0 c acier 20 c m s 330 340 1 500 3 200 6 000"
+  # leçon 2i2d-materiaux-familles (25 mots)
+  - "fonte fer carbone entre 2 1 et 5 de carbone acier fer carbone moins de 2 1 de carbone bronze cuivre etain laiton cuivre zinc"
+  # 2i2d-bat-acoustique.hb7aff9d5 (25 mots)
+  - "l energie transmise qui traverse la paroi l energie absorbee par la paroi et dissipee en chaleur l energie reflechie vers le local d origine"
+  # leçon 2i2d-structure (25 mots)
+  - "les mouvements rotation translation circulaire mouvement plan les liaisons pivot glissiere rotule sphere plan les trajectoires segment de droite arc de cercle cercle courbe quelconque"
+  # pc-temperature-chaleur.h8b286b14 (citée)
+  - "tout transfert thermique s effectue du corps le plus chaud vers le corps le plus froid jusqu a ce que l equilibre thermique soit atteint"
+  # pc-matiere.h5925db5c (25 mots)
+  - "traduit la capacite d un materiau a resister au passage du courant electrique plus elle est faible plus le materiau est un bon conducteur electrique"
+  # pc-oxydoreduction.he167c18c (25 mots)
+  - "un oxydant capte au moins un electron tandis qu un reducteur en cede au moins un l oxydant subit une reduction en devenant un reducteur"
+  # pc-oxydoreduction.he1c58cc9 (24 mots)
+  - "hormis les huit metaux nobles or platine iridium etc les autres metaux sont sensibles aux reactions d oxydation se produisant dans l air humide"
+  # pc-ondes-bases.haf467a81 (24 mots)
+  - "l onde porteuse est modulee en amplitude en frequence etc selon un code donne entre emetteur et recepteur par un signal modulant voix musique"
+  # leçon pc-forces (24 mots)
+  - "le principe d inertie un systeme mecanique est soit immobile soit anime d un mouvement rectiligne uniforme si la somme vectorielle des forces exterieures"
+  # 2i2d-energie-batteries.h821ca3cf (24 mots)
+  - "lorsqu une batterie se decharge la tension a ses bornes diminue en fonction du type de batterie la courbe est plus ou moins aplatie"
+  # leçon pc-flux-isolation (23 mots)
+  - "ardoise 0 003 bois de charpente 0 333 air peu ventile 0 130 laine de verre 5 400 plaque de platre 0 040"
+  # 2i2d-blocs.hf48f472a (23 mots)
+  - "block panneaux photovoltaiques propulsion dimensions 1 635 m 0 984 m modele cenit 220 puissance crete 220 wc par panneau rendement 13 8"
+  # pc-oxydoreduction.h903b5959 (23 mots)
+  - "l aluminium apres oxydation se recouvre d alumine formant une couche protectrice car l alumine ne s oxyde pas dans l air humide"
+  # leçon 2i2d-structures-porteuses (23 mots)
+  - "on pondere les charges c est a dire qu on augmente leur valeur en les multipliant par un coefficient defini par une norme"
+  # leçon 2i2d-chaines (22 mots)
+  - "composants alimenter batterie pile reseau electrique reservoir distribuer transistor distributeur pneumatique contacteur relais convertir moteur electrique pompe verin pneumatique compresseur transmettre engrenages"
+  # 2i2d-blocs.h34902178 (22 mots)
+  - "est un diagramme structurel il decrit les echanges matiere energie information entre les blocs de meme niveau grace aux ports de flux"
+  # 2i2d-structure.hc2c40c05 (22 mots)
+  - "est une figure spatiale ou plane qui permet d analyser les mouvements des elements du systeme les uns par rapport aux autres"
+  # leçon pc-son (22 mots)
+  - "l energie d une onde sonore ou ultrasonore se propage uniquement dans la matiere sans deplacement de celle ci a une celerite"
+  # pc-temperature-chaleur.h9596a5b7 (citée)
+  - "l energie est transportee par des mouvements de la matiere au sein d un gaz ou d un liquide l eau chaude"
+  # 2i2d-chaines.hf34c66d6 (22 mots)
+  - "la facon dont l energie ou la puissance est distribuee convertie et transmise aux differents composants de facon a realiser une action"
+  # pc-travail-energie.ha25c8b77 (21 mots)
+  - "au moins une force exerce un travail resistant l energie mecanique du systeme ne peut que diminuer au cours du temps"
+  # leçon 2i2d-chaines (21 mots)
+  - "la facon dont les informations issues du systeme ou de l exterieur sont acquises traitees et communiquees sous forme d ordres"
+  # 2i2d-bat-eclairage.hed3264f2 (21 mots)
+  - "la quantite d energie emise par une source sous forme de rayonnements visibles dans toutes les directions par unite de temps"
+  # leçon pc-fluides (citée)
+  - "les actions mecaniques de contact exercees par un fluide ou un solide sur une surface sont modelisees par des forces pressantes"
+  # pc-energie-chimique.hda0b0da1 (citée)
+  - "sans la presence simultanee de ces trois composantes une combustion ne peut pas avoir lieu c est le triangle du feu"
+  # leçon info-algo (20 mots)
+  - "debut allumer la del branchee sur la broche 2 attendre 1 seconde eteindre la del attendre 1 seconde recommencer fin"
+  # leçon pc-puissance-electrique (citée)
+  - "electricite sur de longues distances on utilise des lignes a haute tension dans lesquelles on diminue l intensite du courant"
+  # leçon pc-oxydoreduction (20 mots)
+  - "et l equation bilan sont equilibrees en atomes et en charges aucun electron ne doit apparaitre dans l equation bilan"
+  # pc-temperature-chaleur.h4c1b9fa2 (citée)
+  - "l energie est transportee par des ondes electromagnetiques le plus souvent invisibles infrarouges cela ne necessite pas de milieu materiel"
+  # 2i2d-bat-eclairage.h64cfba5a (20 mots)
+  - "l intensite lumineuse definit l importance du flux lumineux emis dans une direction donnee par une source ponctuelle symbole unite"
+  # leçon pc-ondes-bases (20 mots)
+  - "la propagation d une onde s accompagne d un transfert d energie sans deplacement de matiere la vitesse de propagation"
+  # 2i2d-cas-exigences.h998303f1 (20 mots)
+  - "le cahier des charges est le document ou dossier de documents qui definit ce que l utilisateur attend du produit"
+  # pc-changements-etat.h4e22e87b (citée)
+  - "le nombre d entites chimiques ne variant pas au cours d un changement d etat physique la masse se conserve"
+  # pc-changements-etat.h94377926 (citée)
+  - "pour un corps pur lors des changements d etat physique la temperature demeure constante nous observons un palier de temperature"
+  # leçon pc-oxydoreduction (20 mots)
+  - "une pile met en jeu deux couples oxydant reducteur dans deux compartiments separes l echange d electrons se fait par"
+  # leçon 2i2d-structures-porteuses (20 mots)
+  - "verticale permanente poids propre verticale variable charges d exploitation utilisateurs stockages neige horizontale variable vent seisme pression de l eau"
+  # leçon rdm-hooke (19 mots)
+  - "a retenir la longevite et le bon fonctionnement des mecanismes imposent que les pieces restent dans le domaine elastique"
+  # leçon pc-travail-energie (19 mots)
+  - "e c e c mathrm b e c mathrm a sum w mathrm a to mathrm b vec f"
+  # pc-temperature-chaleur.h71ebc2bf (citée)
+  - "en sciences tout calcul thermodynamique s effectue en prenant comme unite du systeme international de temperature le kelvin k"
+  # pc-oxydoreduction.h6bd957aa (19 mots)
+  - "est assure par un pont salin contenant des ions ne pouvant pas reagir dans l un ou l autre"
+  # pc-energie-chimique.h4e9f81a1 (19 mots)
+  - "est l energie thermique liberee lors de la combustion d un kilogramme de combustible il s exprime donc en"
+  # pc-radioactivite.heec35e55 (citée)
+  - "est la demi vie duree au bout de laquelle la quantite d un meme radionucleide est divisee par deux"
+  # leçon pc-combustions (19 mots)
+  - "incolore et inodore il est indetectable par l etre humain alors qu il s agit d un gaz mortel"
+  # leçon pc-ondes-em (19 mots)
+  - "ir de 0 8 m a 1 mm ondes radiofrequences de 1 mm a 10 km et au dela"
+  # pc-temperature-chaleur.he4f406d0 (citée)
+  - "l ecart de temperature qu il soit exprime en degres celsius ou en kelvin a exactement la meme valeur"
+  # 2i2d-bat-eclairage.hf70c8086 (19 mots)
+  - "l efficacite lumineuse ou rendement lumineux d une source est le quotient de son flux lumineux par sa puissance"
+  # leçon pc-ondes-bases (19 mots)
+  - "l energie de l onde incidente est egale a la somme des energies des ondes reflechie absorbee et transmise"
+  # leçon 2i2d-bat-eclairage (19 mots)
+  - "performance indice de rendu des couleurs efficacite lumineuse temperature de couleur l economie puissance absorbee duree de vie cout"
+  # leçon 2i2d-bat-parois (citée)
+  - "represente la capacite d un materiau a s opposer au flux de chaleur en prenant en compte son epaisseur"
+  # pc-forces.h72a1dcec (19 mots)
+  - "soumis a des forces qui se compensent est soit immobile soit anime d un mouvement rectiligne uniforme et reciproquement"
+  # info-transmission.h93ecc2ba (18 mots)
+  - "1 bit de start 8 bits de donnee 1 bit de parite 1 bit de stop 11 bits"
+  # 2i2d-energie-chaine.hd8274c88 (18 mots)
+  - "alimenter distribuer convertir transmettre agir les ordres issus de la chaine d information arrivent sur le bloc distribuer"
+  # leçon statique-actions (18 mots)
+  - "de contact exercees par un solide sur un autre par l intermediaire de leurs surfaces de contact les"
+  # leçon pc-fluides (citée)
+  - "de la pression relative est l air au niveau de la mer a 15 c soit 1 013"
+  # leçon pc-energie-puissance (citée)
+  - "elle se convertit sous differentes formes dont l energie utile et l energie thermique perdue dans l environnement"
+  # 2i2d-chaines.h5b713f1b (18 mots)
+  - "fissile thermique nucleaire 75 fossile gaz 5 charbon 4 petrole 1 10 renouvelable hydraulique 12 eolien et autres"
+  # 2i2d-energie-schemas.h5692d8a9 (18 mots)
+  - "grace au dispositif d auto maintien bobine km1 associee a ses contacts km1 le moteur continue a tourner"
+  # 2i2d-energie-schemas.h5e682601 (18 mots)
+  - "hacheur un hacheur permet a partir d une source continue exemple batterie de fournir une tension continue variable"
+  # 2i2d-bat-acoustique.h57ca4652 (18 mots)
+  - "l oreille humaine percoit les sons dont la frequence est comprise entre 20 hz et 20 000 hz"
+  # leçon pc-dynamique (citée)
+  - "la distance la plus courte entre l axe de rotation et la droite d action de la force"
+  # leçon info-signaux (citée)
+  - "la duree au bout de laquelle le signal se repete elle s exprime en secondes s la frequence"
+  # 2i2d-energie-batteries.h43e3eb8f (18 mots)
+  - "quantite d energie qui a ete dechargee de la batterie elle est donnee en pourcentage de sa capacite"
+  # leçon pc-energie-chimique (citée)
+  - "sans la presence simultanee de ces trois composantes une combustion ne peut pas avoir lieu c est le"
+  # pc-dynamique.hdc47ded7 (citée)
+  - "si aucune intersection n existe entre les deux caracteristiques le moteur ne peut pas supporter la charge imposee"
+  # pc-temperature-chaleur.h2f517714 (citée)
+  - "tant que l etat physique d un corps pur n est pas modifie il faut appliquer la relation"
+  # leçon pc-temperature-chaleur (citée)
+  - "tout transfert thermique s effectue du corps le plus chaud vers le corps le plus froid jusqu a"
+  # info-chaine.h625ebaba (citée)
+  - "un signal numerique se compose d une suite d informations logiques 0 et 1 qui representent des nombres"
+  # leçon info-logique (citée)
+  - "dans la plupart des systemes une action est conditionnee par un evenement ou une combinaison d evenements"
+  # leçon 2i2d-cas-exigences (17 mots)
+  - "dossier de documents qui definit ce que l utilisateur attend du produit en termes de fonctions et"
+  # leçon pc-son (17 mots)
+  - "et la reception de l echo permet de calculer la distance entre l emetteur et l obstacle"
+  # pc-signaux-spectres.heb0162f5 (17 mots)
+  - "filtrer les harmoniques d amplitude tres faible pour limiter la largeur de la bande de frequences emise"
+  # 2i2d-energie-batteries.h10246601 (17 mots)
+  - "la capacite d une batterie est la quantite d energie electrique qu elle est capable de restituer"
+  # 2i2d-bat-parois.h1aa3d042 (citée)
+  - "la resistance thermique totale du mur est egale a la somme des resistances thermiques de chaque materiau"
+  # pc-dynamique.h0ac46007 (citée)
+  - "le moment d un couple de forces est independant de la position de l axe de rotation"
+  # leçon pc-ondes-em (17 mots)
+  - "le rayonnement ultraviolet est tres souvent nocif pour la peau et les yeux d ou les protections"
+  # leçon 2i2d-bat-acoustique (17 mots)
+  - "le son est une sensation auditive produite par une variation rapide de la pression de l air"
+  # pc-oxydoreduction.hef416b78 (17 mots)
+  - "les electrons liberes par cette oxydation transitent dans le circuit exterieur pour parvenir dans l autre compartiment"
+  # leçon pc-puissance-electrique (17 mots)
+  - "puissance en watt w tension en volt v intensite en ampere a en regime variable on distingue"
+  # leçon pc-temperature-chaleur (17 mots)
+  - "q m times c times delta theta m times c times theta text finale theta text initiale"
+  # pc-travail-energie.hfc5e6e05 (17 mots)
+  - "son energie cinetique ne change pas mais son altitude augmente donc son energie potentielle de pesanteur augmente"
+  # pc-ondes-em.he34700d1 (citée)
+  - "une led blanche est en regle generale l association d une led bleue et d un luminophore"
+  # leçon pc-ondes-em (17 mots)
+  - "uv de 10 nm a 0 4 m visible de 0 4 m a 0 8 m"
+  # leçon pc-flux-isolation (17 mots)
+  - "w m k 0 25 1 3 0 09 0 16 0 95 1 1 epaisseur usuelle"
+  # pc-flux-isolation.h12f896db (16 mots)
+  - "au passage du flux thermique plus la paroi est isolante plus sa resistance thermique est elevee"
+  # 2i2d-energie-schemas.h6f15f59b (16 mots)
+  - "en cas de court circuit ou de surcharge le fusible fond et ouvre le circuit electrique"
+  # 2i2d-bat-confort.hbc9929a8 (16 mots)
+  - "est d eviter l instabilite du comportement du mecanisme en limitant les phases d ouverture fermeture"
+  # leçon pc-travail-energie (16 mots)
+  - "exercant le meme travail celle qui le fait en moins de temps est la plus puissante"
+  # leçon 2i2d-energie-schemas (16 mots)
+  - "fusible en cas de court circuit ou de surcharge le fusible fond et ouvre le circuit"
+  # pc-temperature-chaleur.h5cf3db92 (citée)
+  - "l energie est transportee de proche en proche sans deplacement de matiere dans un milieu materiel"
+  # pc-ondes-bases.h42d3abb8 (16 mots)
+  - "la propagation d une onde s accompagne d un transfert d energie sans deplacement de matiere"
+  # 2i2d-cas-exigences.hd0b55420 (16 mots)
+  - "le diagramme des cas d utilisation presente les interactions entre le systeme et son environnement il"
+  # pc-energie-chimique.h94a9c71a (citée)
+  - "le pouvoir calorifique superieur comprend par rapport au pouvoir calorifique inferieur un pourcentage d energie supplementaire"
+  # leçon pc-ondes-em (16 mots)
+  - "rayons gamma de 1 fm a 10 pm rayons x de 10 pm a 10 nm"
+  # leçon pc-sinusoidal-transport (16 mots)
+  - "tension efficace v intensite efficace a dephasage de par rapport a ou rad pulsation rad s"
+  # leçon 2i2d-cas-exigences (16 mots)
+  - "trait plein termine par un cercle barre d une croix du cote de l exigence generale"
+  # 2i2d-cas-exigences.hfb2538ce (16 mots)
+  - "un compromis capacite intermediaire pour un cout intermediaire avec l avantage de laisser passer les bateaux"
+  # pc-radioactivite.h3e44e986 (citée)
+  - "un noyau pere se desintegre en un noyau fils en emettant un noyau d helium 4"
+  # pc-dynamique.h570bd7ed (citée)
+  - "le point de fonctionnement d un ensemble moteur charge se situe a l intersection des"
+  # pc-tension-intensite.h0ddb4d6f (citée)
+  - "les lois des mailles et des n uds peuvent s appliquer pour les valeurs efficaces"
+  # pc-matiere.hc81cfecd (citée)
+  - "six electrons de valence il lui en reste quatre qui forment deux doublets non liants"
+  # leçon pc-energie-puissance (citée)
+  - "thermique toujours du corps le plus chaud vers le corps le plus froid par rayonnement"
+  # leçon info-algo (citée)
+  - "d executer dans un ordre determine un nombre fini d operations elementaires appelees instructions"
+  # pc-energie-chimique.h553a1b1c (citée)
+  - "dans le but d empecher la presence simultanee des trois composantes provoquant la combustion"
+  # pc-forces.h19e84b5a (citée)
+  - "des caracteristiques des solides en contact et des dimensions de la surface de contact"
+  # 2i2d-bat-confort.h770ae429 (citée)
+  - "la chaleur massique d un materiau caracterise sa capacite de stockage d energie thermique"
+  # pc-radioactivite.he3948e85 (citée)
+  - "peut etre emis si le noyau fils trop excite se desexcite en l emettant"
+  # leçon info-algo (citée)
+  - "une constante est une donnee qui ne change pas au cours du programme on"
+  # leçon info-algo (citée)
+  - "une variable est le nom donne a un espace de stockage d une donnee"
+  # leçon pc-lumiere-energie (citée)
+  - "a retenir dans le modele corpusculaire la lumiere est un flux de photons"
+  # leçon info-chaine (citée)
+  - "compare en permanence ce qu il fait a ce qu il doit faire"
+  # leçon info-numeration (citée)
+  - "dans un nombre binaire la valeur d un bit appelee poids depend de"
+  # pc-temperature-chaleur.h8b286b14 (citée)
+  - "du corps le plus chaud vers le corps le plus froid jusqu a"
+  # 2i2d-structure.he04db6dc (citée)
+  - "etant progressif la camera se deplace a la vitesse moyenne de 430 s"
+  # pc-fluides.hd1634a27 (citée)
+  - "l air au niveau de la mer a 15 c soit 1 013"
+  # info-chaine.h4fdf6693 (citée)
+  - "la voie a si la voie b est a 1 ou a 0"
+  # leçon info-algo (citée)
+  - "modelise l evolution de l etat d une machine en fonction des evenements"
+  # mouvements.hac1ef5d1 (citée)
+  - "un solide est en rotation par rapport a un solide de reference si"
+  # leçon pc-tension-intensite (citée)
+  - "valeurs efficaces et uniquement si les recepteurs se limitent a des dipoles ohmiques"
+  # pc-dynamique.h570bd7ed (citée)
+  - "a l intersection des caracteristiques du moteur et de la charge imposee"
+  # leçon pc-fluides (citée)
+  - "avec un barometre dans l air et un manometre dans un liquide"
+  # leçon info-logique (citée)
+  - "en fonction du temps l etat logique des sorties en fonction de"
+  # info-signaux.h137d87b5 (citée)
+  - "est la valeur de la tension continue qui produirait le meme effet"
+  # pc-temperature-chaleur.h5cf3db92 (citée)
+  - "l energie est transportee de proche en proche sans deplacement de matiere"
+  # pc-combustions.h96c1e22e (citée)
+  - "le carburant sp95 e10 contient 10 d ethanol limitant les rejets en"
+  # pc-energie-puissance.hfcb5a802 (citée)
+  - "toujours du corps le plus chaud vers le corps le plus froid"
+  # leçon pc-energie-chimique (citée)
+  - "dans le but d empecher la presence simultanee des trois composantes"
+  # pc-lumiere-energie.h2121c052 (citée)
+  - "dans le modele corpusculaire la lumiere est un flux de photons"
+  # leçon pc-lumiere-energie (citée)
+  - "de masse nulle se deplacant a la celerite de la lumiere"
+  # 2i2d-cas-exigences.hfb2538ce (citée)
+  - "deux cabines fermees permettent le passage simultane de 270 personnes exigence"
+  # leçon pc-lumiere-energie (citée)
+  - "electron perd l energie correspondante et passe a un niveau inferieur"
+  # info-chaine.h63b99780 (citée)
+  - "la grandeur de l information ne peut prendre que deux valeurs"
+  # leçon info-numeration (citée)
+  - "la plus petite unite d information manipulable par une machine numerique"
+  # 2i2d-cas-exigences.hfb2538ce (citée)
+  - "la ville de nantes confrontee a la saturation de son peripherique"
+  # 2i2d-bat-parois.hcfaab3c3 (citée)
+  - "le flux de chaleur va toujours du chaud vers le froid"
+  # leçon info-chaine (citée)
+  - "les deux tetes sont decalees d une demi dent donc les"
+  # leçon pc-tension-intensite (citée)
+  - "les lois des mailles et des n uds peuvent s appliquer"
+  # pc-acido-basique.he18f0974 (citée)
+  - "parfois a des milliers de kilometres de leur point d emission"
+  # leçon info-signaux (citée)
+  - "plus le signal numerise est fidele au signal analogique de depart"
+  # leçon info-algo (citée)
+  - "represente les echanges de messages entre les acteurs et le systeme"
+  # 2i2d-cas-exigences.hfb2538ce (citée)
+  - "une ligne de transport en commun passe par le pont a"
+  # pc-temperature-chaleur.h06dbb969 (citée)
+  - "augmente au sein d un corps alors sa temperature augmente"
+  # info-chaine.h2ca045f4 (citée)
+  - "ce qu il fait a ce qu il doit faire"
+  # pc-energie-chimique.h5b23c989 (citée)
+  - "d actionner des moteurs ou de chauffer de l eau"
+  # 2i2d-cas-exigences.hf087cb35 (citée)
+  - "deux cabines fermees permettent le passage simultane de 270 personnes"
+  # leçon pc-lumiere-energie (citée)
+  - "electron absorbe son energie et passe a un niveau superieur"
+  # schema-2d.complet.serre-joint (citée)
+  - "en position des pieces pendant le sechage de la colle"
+  # leçon pc-dynamique (citée)
+  - "est independant de la position de l axe de rotation"
+  # pc-fluides.hf9a1e5be (citée)
+  - "l unite officielle de la pression est le pascal pa"
+  # info-signaux.h55985f95 (citée)
+  - "la duree au bout de laquelle le signal se repete"
+  # leçon info-algo (citée)
+  - "la transformation des flux d entree en flux de sortie"
+  # info-numeration.hc602544b (citée)
+  - "le poids d un bit croit d une puissance de"
+  # info-signaux.h92e4adae (citée)
+  - "le quantum s exprime dans l unite de la grandeur"
+  # pc-lumiere-energie.hb0510e99 (citée)
+  - "perd l energie correspondante et passe a un niveau inferieur"
+  # 2i2d-energie-batteries.h67518eaf (citée)
+  - "propulsion est fournie par deux parcs de batteries nickel cadmium"
+  # leçon info-numeration (citée)
+  - "que certains bits d un octet on applique un masque"
+  # pc-tension-intensite.h0ddb4d6f (citée)
+  - "uniquement si les recepteurs se limitent a des dipoles ohmiques"
+  # leçon info-chaine (citée)
+  - "a donner une mesure proche de la valeur vraie"
+  # info-numeration.h47d85965 (citée)
+  - "ascii est code sur 8 bits donc sur 2"
+  # mouvements.h774b515a (citée)
+  - "dans le mouvement de s par rapport a s0"
+  # leçon info-signaux (citée)
+  - "est la variation minimale du signal d entree qui"
+  # leçon pc-temperature-chaleur (citée)
+  - "impossible de refroidir un corps jusqu a 0 k"
+  # leçon transmission (citée)
+  - "irreversible la roue ne peut pas entrainer la vis"
+  # leçon pc-fluides (citée)
+  - "la pression absolue est le vide de pression nulle"
+  # leçon info-numeration (citée)
+  - "le code ascii american standard code for information interchange"
+  # pc-acido-basique.he18f0974 (citée)
+  - "le dioxyde de soufre et les oxydes d azote"
+  # leçon pc-dynamique (citée)
+  - "le moteur ne peut pas supporter la charge imposee"
+  # pc-dynamique.h570bd7ed (citée)
+  - "le point de fonctionnement d un ensemble moteur charge"
+  # leçon vitesses (citée)
+  - "le vecteur vitesse est toujours tangent a la trajectoire"
+  # leçon pc-sinusoidal-transport (citée)
+  - "les risques d electrisation voire d electrocution dependent de"
+  # 2i2d-structures-porteuses.hec95a16c (citée)
+  - "lineaire en fonction de la position de la nacelle"
+  # pc-temperature-chaleur.h4c1b9fa2 (citée)
+  - "ne necessite pas de milieu materiel pour se propager"
+  # leçon pc-travail-energie (citée)
+  - "quand une force travaille elle transfere de l energie"
+  # leçon info-signaux (citée)
+  - "au niveau haut par rapport a la periode"
+  # pc-son.h36a89c7f (citée)
+  - "dans une installation industrielle maintenue a 20 c"
+  # info-signaux.he274ab5b (citée)
+  - "de l etat haut a l etat bas"
+  # pc-changements-etat.h161492a8 (citée)
+  - "de l etat solide a l etat gazeux"
+  # leçon pc-sinusoidal-transport (citée)
+  - "de la duree de passage dans le corps"
+  # pc-dynamique.h0ac46007 (citée)
+  - "de la position de l axe de rotation"
+  # leçon pc-temperature-chaleur (citée)
+  - "de proche en proche sans deplacement de matiere"
+  # leçon mouvements (citée)
+  - "decrivent des cercles concentriques centres sur l axe"
+  # leçon pc-radioactivite (citée)
+  - "demi vie duree au bout de laquelle la"
+  # info-chaine.hf2225c01 (citée)
+  - "detecte le passage des dents d une couronne"
+  # info-chaine.hb3cd7d7e (citée)
+  - "deux etats stables dont les changements d etat"
+  # leçon pc-signaux-spectres (citée)
+  - "duree au bout de laquelle le signal se"
+  # leçon info-numeration (citée)
+  - "en allant de la droite vers la gauche"
+  # leçon transformation (citée)
+  - "en general irreversible l ecrou ne peut pas"
+  # leçon pc-dynamique (citée)
+  - "en rotation tourne a la meme vitesse angulaire"
+  # pc-dynamique.h94c020e1 (citée)
+  - "entre l axe de rotation et le point"
+  # leçon info-numeration (citée)
+  - "est code sur 8 bits donc sur 2"
+  # pc-dynamique.h0ac46007 (citée)
+  - "exerce de part et d autre deux forces"
+  # pc-temperature-chaleur.h06dbb969 (citée)
+  - "l agitation des constituants microscopiques atomes ions molecules"
+  # pc-temperature-chaleur.h5cf3db92 (citée)
+  - "l energie est transportee par des ondes electromagnetiques"
+  # pc-ondes-bases.h8811085f (citée)
+  - "la frequence est l inverse de la periode"
+  # pc-fluides.hdd38bf85 (citée)
+  - "la pression absolue de l air dans le"
+  # leçon pc-fluides (citée)
+  - "la pression est la meme en tout point"
+  # transmission.h8dbd38ba (citée)
+  - "la roue ne peut pas entrainer la vis"
+  # pc-puissance-electrique.h429e2fc8 (citée)
+  - "la somme des energies recues par les recepteurs"
+  # info-signaux.h92e4adae (citée)
+  - "la variation minimale du signal d entree qui"
+  # leçon info-signaux (citée)
+  - "la vitesse des moteurs a courant continu la"
+  # leçon pc-combustions (citée)
+  - "le carburant sp95 e10 contient 10 d ethanol"
+  # leçon pc-lumiere-energie (citée)
+  - "les energies mises en jeu etant tres faibles"
+  # pc-tension-intensite.h0ddb4d6f (citée)
+  - "les lois des mailles et des n uds"
+  # leçon pc-fluides (citée)
+  - "meme plan horizontal et augmente avec la profondeur"
+  # leçon pc-puissance-electrique (citée)
+  - "ne pas laisser les appareils en veille et"
+  # pc-changements-etat.h92babb07 (citée)
+  - "on en deduit les autres tres facilement exemple"
+  # leçon pc-dynamique (citée)
+  - "point de fonctionnement d un ensemble moteur charge"
+  # 2i2d-bat-confort.hbc9929a8 (citée)
+  - "pourcentage de surface recouverte de gouttes d eau"
+  # leçon info-signaux (citée)
+  - "s exprime dans l unite de la grandeur"
+  # leçon info-algo (citée)
+  - "un algorithme est un ensemble de regles operatoires"

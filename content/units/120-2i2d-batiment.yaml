@@ -83,7 +83,7 @@ units:
       - 'Non : $R = e/\lambda$ — augmenter $\lambda$ **diminue** la résistance.'
       - 'Non : $e$ est au numérateur ; diminuer l''épaisseur réduit la résistance.'
       - 'Non : la surface n''intervient pas dans $R$, qui est la résistance d''**un mètre carré** de paroi.'
-      explanation: '« Pour perdre moins d''énergie, il faut choisir un matériau isolant ayant une faible conductivité thermique et/ou augmenter l''épaisseur de la paroi isolante » (Tle, p. 284).'
+      explanation: 'Puisque $R = e / \lambda$, on augmente $R$ en prenant un matériau moins conducteur (petit $\lambda$), en posant plus épais (grand $e$), ou les deux. La surface de la paroi, elle, n''entre pas dans $R$.'
       tags:
       - resistance
     - type: input
@@ -1102,7 +1102,7 @@ units:
       - 'Non : c''est le rôle de panneaux photovoltaïques, que l''on peut ajouter mais qui ne sont pas la fonction de la pergola.'
       - 'Non : elle ne fait pas partie de l''enveloppe isolante ; elle agit sur les **apports solaires**.'
       - 'Non : la ventilation mécanique est assurée par la VMC.'
-      explanation: '« Une pergola bioclimatique est une pergola à lames orientables qui permet de moduler l''ensoleillement sur une terrasse et dans la maison » et, lames fermées, de protéger de la pluie (1re, p. 179). C''est une protection solaire **mobile** : elle bloque le soleil d''été et le laisse entrer en hiver.'
+      explanation: 'Ses lames pivotent : on dose l''ensoleillement de la terrasse et des pièces qui donnent dessus, et on s''abrite de la pluie en les fermant. C''est une protection solaire **mobile** — elle arrête le soleil d''été et laisse passer celui d''hiver, ce qu''un débord de toiture fixe ne sait pas faire.'
       tags:
       - confort
     - type: match
@@ -1208,7 +1208,7 @@ units:
         - 'Non : l''énoncé parle de **condensation sur le capteur**, pas de neige sur les lames.'
         - 'Non : sa puissance ne concerne que le capteur, pas l''ambiance.'
         - 'Non : la résistance chauffe le capteur, pas la terrasse.'
-        explanation: '« En cas de pluie faible, de la condensation peut se former sur le capteur de pluie, ce qui perturbe son fonctionnement ; pour éviter ce problème, une résistance chauffante est activée » (1re, p. 179). Elle est donc utile dans les zones intermédiaires, entre $S_1$ et $S_3$.'
+        explanation: 'Sous une pluie faible, le capteur se couvre de condensation et se met à mal détecter ; une résistance chauffante le sèche pour éviter cela. Elle sert donc dans les zones intermédiaires, entre $S_1$ et $S_3$.'
       - kind: input
         prompt: '**Étape 6.** Les seuils $S_1$, $S_2$ et $S_3$ correspondent à 10 %, 20 % et 30 % de surface mouillée, pour $N_p$ = 138, 258 et 359. Quel est l''écart de $N_p$ entre les seuils $S_2$ et $S_3$ ?'
         answer: '101'

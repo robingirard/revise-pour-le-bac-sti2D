@@ -49,7 +49,7 @@ Plus le liquide est **dense**, plus la différence de pression est grande pour l
 
 ## Deux applications
 
-**Le château d'eau.** La pression de l'eau au robinet est **proportionnelle à la dénivellation** entre le niveau d'eau du château d'eau et l'habitation : c'est pour cela qu'on le place en hauteur. Dans l'eau, $10\ \mathrm{m}$ de profondeur valent environ $1\ \mathrm{bar}$ de plus.
+**Le château d'eau.** Ce qui fixe la pression au robinet, c'est la **hauteur d'eau située au-dessus** de lui — d'où l'intérêt de percher le réservoir. Dans l'eau, $10\ \mathrm{m}$ de profondeur valent environ $1\ \mathrm{bar}$ de plus.
 
 **La presse hydraulique.** Le liquide au repos transmet la même pression aux deux pistons ; comme $F = P \times S$, un **petit** effort sur le **petit** piston donne un **grand** effort sur le **grand** piston.
 

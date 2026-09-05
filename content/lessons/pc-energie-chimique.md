@@ -31,8 +31,8 @@ Donc **PCS > PCI**. Pour le gaz naturel : PCI = 50,1 et PCS = 55,5, soit $\dfrac
 
 ## Prévention et protection
 
-**Prévention** (éviter l'accident) : **entretien régulier des installations**, conduits d'évacuation ou d'aération toujours dégagés, ventilations, mises aux normes au fil du temps.
-**Protection** (limiter les conséquences) : **détecteurs de monoxyde de carbone** — gaz **inodore, incolore et mortel** — et **détecteurs de fumée**, qui se déclenchent au début d'un incendie.
+**Prévention** (agir avant l'accident) : **entretenir les installations**, garder dégagés les conduits d'évacuation et d'aération, maintenir les ventilations, tenir le tout aux normes.
+**Protection** (limiter les conséquences) : un **détecteur de monoxyde de carbone** — un gaz qu'on ne voit ni ne sent, et qui tue — et un **détecteur de fumée**, qui alerte dès le début d'un incendie.
 
 ## Les cinq classes d'extincteurs
 

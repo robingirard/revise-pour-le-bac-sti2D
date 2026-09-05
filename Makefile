@@ -2,8 +2,8 @@
 #   make            → figures + contenu + copie de l'application dans dist/
 #   make figures    → compile les figures TikZ (figures/build/svg)
 #   make content    → génère dist/content.json et dist/content.js, copie app/
-#   make check      → vérifie les sources pédagogiques et le contenu construit
-#   make droits     → compare le contenu publié aux transcriptions du manuel (droits d'auteur)
+#   make check      → vérifie les sources pédagogiques, le contenu construit et les droits
+#   make droits     → le détail de la comparaison aux transcriptions du manuel
 #   make test       → tests unitaires de l'application (node --test)
 #   make serve      → serveur local sur http://localhost:8000/
 #   make planche    → ouvre la planche récapitulative des liaisons (PDF)
@@ -23,9 +23,10 @@ content: figures
 
 check:
 	$(PY) tools/validate.py
+	$(PY) tools/check_droits.py
 
 droits:
-	$(PY) tools/check_droits.py
+	$(PY) tools/check_droits.py --tout --montrer 400
 
 test:
 	cd app && node --test tests/*.test.mjs

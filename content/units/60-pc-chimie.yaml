@@ -323,7 +323,7 @@ units:
       - masse-molaire
       - concentration
       title: La vitamine C du jus d'orange
-      intro: 'Les nutritionnistes recommandent un apport quotidien d''environ **110 mg** de vitamine C, de formule brute $\mathrm{C_6H_8O_6}$, pour un adulte.
+      intro: 'Un adulte a besoin d''environ **110 mg** de vitamine C par jour. Sa formule brute est $\mathrm{C_6H_8O_6}$.
 
         Un jus d''orange du commerce contient de la vitamine C à la concentration molaire $C = 2{,}0 \times 10^{-3}$ mol·L⁻¹ ; un verre en contient 200 mL.
 
@@ -532,7 +532,7 @@ units:
       - Le gaz mortel à détecter est le **monoxyde** de carbone CO, pas le dioxyde de carbone.
       - 'Le dioxygène est présent partout dans l''air : le détecter n''a pas d''intérêt ici.'
       - Le détecteur de fumée se déclenche au début d'un incendie, mais il ne détecte pas le monoxyde de carbone, qui n'est ni visible ni odorant.
-      explanation: Pour protéger les personnes exposées, il faut installer des **détecteurs de monoxyde de carbone** (gaz inodore, incolore et mortel) et/ou des **détecteurs de fumée**, qui se déclenchent au début d'un incendie provoquant l'apparition de fumées.
+      explanation: 'Deux dangers, deux détecteurs : le **monoxyde de carbone**, qu''on ne voit ni ne sent et qui tue, et la **fumée**, qui signale l''incendie dès son début. Le dioxyde de carbone, lui, n''est pas le gaz redouté d''une combustion incomplète.'
     - type: grid
       level: 1
       tags:
@@ -660,7 +660,7 @@ units:
       level: 2
       tags:
       - securite
-      prompt: Quelle mesure de **prévention** (et non de protection) le cours recommande-t-il pour éviter un accident lié à une combustion ?
+      prompt: Laquelle de ces mesures relève de la **prévention**, et non de la protection, face au risque lié à une combustion ?
       choices:
       - 'Entretenir régulièrement les installations : conduits d''évacuation et ventilations toujours dégagés, mises aux normes'
       - Installer un détecteur de fumée dans chaque pièce
@@ -672,7 +672,7 @@ units:
       - Un détecteur de fumée **protège** les personnes une fois l'incendie déclaré ; il n'empêche pas l'accident de se produire.
       - 'L''extincteur sert à **combattre** un feu déjà déclaré : c''est de la protection, pas de la prévention.'
       - 'Très dangereux : le monoxyde de carbone est **inodore**, on ne peut pas compter sur son odeur.'
-      explanation: 'Prévention : « il est indispensable de procéder à l''entretien régulier des installations (conduits d''évacuation ou d''aération toujours dégagés, ventilations, etc.), nécessairement mises aux normes au fil du temps ».'
+      explanation: 'Prévenir, c''est agir avant l''accident : entretenir les installations, garder les conduits et les ventilations dégagés, tenir le tout aux normes. Un détecteur ou un extincteur, eux, servent une fois l''accident commencé — c''est de la protection.'
     - type: input
       level: 3
       tags:
