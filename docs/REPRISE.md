@@ -1,7 +1,7 @@
-# Reprise du travail (état au 6 sept. 2026, fin de la 5e session)
+# Reprise du travail (état au 6 sept. 2026, fin de la 6e session)
 
-## Publié (6 sept. 2026)
-19 unités, 84 compétences, 2 081 exercices dont 81 exercices complets guidés, 303 figures, 7 mécanismes animés
+## Publié (6 sept. 2026, 2e publication du jour)
+19 unités, 85 compétences, 2 108 exercices dont 82 exercices complets guidés, 329 figures, 7 mécanismes animés
 (serre-joint, étau, bielle-manivelle, pompe à main, essuie-glace, benne à vérin, cric losange), 6 figures de
 transmission animées, symboles des 10 liaisons en perspective (3D), 13 annales.
 Site : https://www.robingirard.eu/Revise.html — l'application en https://www.robingirard.eu/assets/revise/sti2d/v1.0/index.html
