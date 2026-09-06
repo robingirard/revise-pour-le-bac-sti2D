@@ -1,7 +1,7 @@
-# Reprise du travail (état au 4 sept. 2026, fin de la 3e session)
+# Reprise du travail (état au 6 sept. 2026, fin de la 5e session)
 
-## Publié (gh-pages, 5 sept. 2026)
-19 unités, 84 compétences, 2 058 exercices dont 80 exercices complets guidés, 296 figures, 7 mécanismes animés
+## Publié (6 sept. 2026)
+19 unités, 84 compétences, 2 081 exercices dont 81 exercices complets guidés, 303 figures, 7 mécanismes animés
 (serre-joint, étau, bielle-manivelle, pompe à main, essuie-glace, benne à vérin, cric losange), 6 figures de
 transmission animées, symboles des 10 liaisons en perspective (3D), 13 annales.
 Site : https://www.robingirard.eu/Revise.html — l'application en https://www.robingirard.eu/assets/revise/sti2d/v1.0/index.html
@@ -29,13 +29,42 @@ est en §7. Rien n'est encore fait.
 1. Pour chaque unité : `python3 tools/check_unit.py content/units/<fichier> docs/figures-todo-<fiche>.md`.
 2. `make content` (échoue tant qu'une figure référencée manque) → `make check` → `make test`.
 3. Animations : `node app/dev/mech-bench.mjs <ids de figures séparés par des virgules> <dossier>` (4 captures).
-4. `node app/dev/tour.mjs dist <dossier>` (captures de l'appli), incrémenter `VERSION` dans `app/sw.js`,
-   `git commit`, `make deploy`, vérifier le site (content.js, une figure, sw.js).
+4. `node app/dev/tour.mjs dist <dossier>` (captures de l'appli, signale les éléments `.error`).
+   Ciblé : `node app/dev/shot-items.mjs dist <dossier> "<compétence>::<id d'exercice>"` ;
+   grilles : `node app/dev/grid-fit.mjs dist` ; formules : `node app/dev/math-overflow.mjs dist`.
+   **Ces scripts écrivent la progression dans localStorage puis rechargent : sans le `reload()`,
+   les compétences restent verrouillées et on capture la leçon au lieu de l'exercice.**
+5. Incrémenter `VERSION` dans `revise-core/app/sw.js`, `git commit`, `make deploy`.
+   Une **correction** se republie avec `publish.py --force` (réécrit v1.0) : passer à une v1.1
+   laisserait les téléphones déjà installés sur l'ancienne version.
+6. Côté site (`~/Documents/Recherche/robingirarddoteu`) : reconstruire avec
+   `export PATH="/opt/homebrew/opt/ruby@3.3/bin:$PATH"` puis `bundle _2.3.19_ exec jekyll build`
+   (le `bundle` du système échoue), relire le diff, commiter, pousser.
+7. **Vérifier sur l'adresse publique, pas seulement sur `dist/`.** Le 6 sept., KaTeX n'était jamais
+   parti en ligne (`vendor/` du `.gitignore` du site) : toutes les formules s'affichaient en code
+   source et le service worker ne s'installait plus, alors que tout était juste en local.
+   `publish.py` s'arrête maintenant si le site ignore un fichier publié, mais un chargement de
+   `https://www.robingirard.eu/assets/revise/sti2d/v1.0/` en Chrome headless (compter `.katex`
+   contre `span.math`) reste la vérification qui tranche.
 
 ## Notes et archive
 - `docs/notes/` (gitignoré, local) : 25 notes (transcriptions des manuels + `maths-tle-programme.md` : programme
   officiel de la spécialité, épreuve, annales APMEP). Index `docs/notes/README.md`.
 - `../scans/` : pages des deux manuels ; pages non scannées 88-93 et 126-127 = corrigés seulement.
+
+## Fait à la 5e session (6 sept. 2026)
+- **Grilles** : les en-têtes de lignes/colonnes passent par `renderRich` (en maths, une ligne de grille
+  est une formule — elles s'affichaient en code source). Le code de case n'est plus écrit dans le tableau
+  sauf s'il est bref (mobilités `Tx`, efforts `X`) ; il sert au commentaire d'erreur, où la case se nomme
+  sinon « ligne → colonne ». CSS resserré avec `hyphens: auto` (jamais `overflow-wrap: anywhere`, qui coupe
+  en plein mot). 39 grilles sur 79 débordaient d'un écran de téléphone, il en reste 2
+  (`pc-puissance-electrique`, `pc-dynamique`, à 4 colonnes : elles défilent).
+- **Renvois au manuel** : 377 supprimés dans toutes les matières et 74 passages sortis des guillemets
+  (la formulation reste, elle n'est plus présentée comme une citation). Les seuls « livre » restants sont
+  l'objet posé sur la table en statique. 29 exercices changent d'identifiant (leur **énoncé** nommait le
+  manuel) — rappel : l'id se calcule sur `type + prompt`, réécrire une correction ou une leçon ne coûte
+  aucune progression.
+- **KaTeX publié** : voir le point 7 ci-dessus.
 
 ## Idées suivantes
 - Retours d'usage du fils : longueur des séances, difficulté, figures trop larges sur mobile (quelques diagrammes
