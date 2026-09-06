@@ -98,6 +98,22 @@ elle l'insère directement. Le service worker met en cache les figures au fur et
 un bouton des Réglages « Préparer le mode hors-ligne » télécharge toutes les figures listées
 dans `index.json` (avec une barre de progression).
 
+### 3.1 Figures muettes : l'énoncé ne donne pas la réponse
+
+Règle de rédaction : **une figure d'énoncé ne doit jamais porter la réponse** — ni la formule
+que l'exercice demande de retrouver, ni le résultat déjà calculé, ni la ligne du tableau qu'il
+faut reconstituer. Dans la source TikZ, ce qui donne la réponse est enveloppé dans `\rappel{…}`
+(macro définie par `figures/tikz/liaisons.sty`). `build_figures.py` compile alors deux SVG :
+
+- `nom` — la figure complète, `\rappel` affiche son contenu : c'est la version des **leçons**
+  et des **explications** (après réponse) ;
+- `nom-muet` — engendré automatiquement, `\rappel` n'affiche rien : c'est la version des
+  **énoncés** (`prompt`, `intro` d'un exercice guidé).
+
+Quand la figure entière *est* la réponse (tableau des convertisseurs, courbe dont la légende
+numérote les étapes qu'on demande d'ordonner), on ne la muselle pas : on la déplace de
+l'énoncé vers l'`explanation`, où elle sert de correction visuelle.
+
 ## 4. Types d'exercices (payloads)
 
 Un « texte riche » (`rich`) est une chaîne pouvant contenir :
@@ -224,7 +240,7 @@ des glyphes (jamais animés).
 
 ## 4 bis. Rédiger un exercice qui mesure quelque chose
 
-Trois règles tirées de l'usage, que les vérifications automatiques ne peuvent pas attraper.
+Quatre règles tirées de l'usage, que les vérifications automatiques ne peuvent pas attraper.
 
 **L'énoncé ne dit pas ce que la figure doit faire lire.** « Une poignée de porte tourne autour de
 l'axe *x* : quelle est sa mobilité ? » se résout par appariement — « tourne » plus « x » — sans
@@ -239,6 +255,14 @@ autour de ses gonds, sa poignée autour d'un axe perpendiculaire. Sans cela, l'�
 **Ce qui est constant devient un réflexe.** Si le repère est orienté pareil sur toutes les
 figures, « vertical = z » remplace le raisonnement : on n'a fait que déplacer la facilité. Faire
 varier ce qui n'a pas de raison d'être constant.
+
+**La figure ne donne pas non plus la réponse.** Symétrique de la règle précédente : un schéma de
+chaîne de puissance qui porte $\eta = \eta_1 \times \eta_2 \times \eta_3$ répond tout seul à
+« comment obtient-on le rendement global ? », et une figure du produit scalaire qui porte
+$\vec{u}\cdot\vec{v} = \|\vec{u}\|\,\|\vec{v}\|\cos\theta$ répond à « quelle est la
+définition géométrique ? ». La formule, le résultat déjà calculé et le tableau à reconstituer
+vont dans `\rappel{…}` : l'énoncé prend la variante `nom-muet`, la leçon et l'`explanation`
+gardent la figure complète (§3.1).
 
 Une compétence doit par ailleurs porter assez d'exercices pour ses niveaux : `validate.py` avertit
 au-delà de trois passages du même exercice sur un parcours complet (voir §7).

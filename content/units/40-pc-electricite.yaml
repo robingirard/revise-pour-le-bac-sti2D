@@ -144,7 +144,7 @@ units:
       level: 2
       prompt: 'Quelle est l''expression du **rendement** $\eta$ d''un convertisseur d''énergie ?
 
-        {{fig:pc-bilan-convertisseur}}'
+        {{fig:pc-bilan-convertisseur-muet}}'
       choices:
       - $\eta = E_{\text{utile}} / E_{\text{reçue}}$
       - $\eta = E_{\text{reçue}} / E_{\text{utile}}$

@@ -27,7 +27,7 @@
 \draw[solideD, line width=1pt] plot[domain=-0.50:0.65, samples=70, smooth]
      (\x,{1.35+0.13*sin(deg((\x+0.50)*2*pi/0.2875))});
 \draw[-{Stealth[length=5pt]}, solideD, line width=1pt] (0.65,1.35) -- (0.85,1.35);
-\node[font=\scriptsize, text=solideD, anchor=south] at (0.05,1.56) {photon $E = h\nu$};
+\node[font=\scriptsize, text=solideD, anchor=south] at (0.05,1.56) {photon\rappel{ $E = h\nu$}};
 
 %% saut de l'électron (disque noir : l'électron)
 \draw[-{Stealth[length=6pt]}, line width=1.2pt, solideA] (1.15,0.62) -- (1.15,2.08);
@@ -56,11 +56,11 @@
   {\textbf{Énergie perdue}\\(thermique, rayonnante)};
 
 %% ======================= relations ========================================
-\node[draw=black!70, line width=0.7pt, rounded corners=3pt, fill=black!3,
+\rappel{\node[draw=black!70, line width=0.7pt, rounded corners=3pt, fill=black!3,
       font=\small, inner sep=5pt, anchor=north, align=center] at (5.20,0.32)
   {$P_{\text{lumineuse}} = P_{\text{surf}} \times S$\\[3pt]
    $r = \dfrac{P_{\max}}{P_{\text{surf}} \times S}$};
 \node[note, anchor=north] at (5.20,-1.20)
-  {$P$ en W ; $P_{\text{surf}}$ en W$\cdot$m$^{-2}$ ;\\ $S$ en m$^2$ ; $r$ sans unité};
+  {$P$ en W ; $P_{\text{surf}}$ en W$\cdot$m$^{-2}$ ;\\ $S$ en m$^2$ ; $r$ sans unité};}
 \end{tikzpicture}
 \end{document}

@@ -15,6 +15,11 @@
 \RequirePackage{amsmath}
 \usetikzlibrary{calc,arrows.meta,patterns}
 
+%% \rappel{…} : ce qui donne la réponse (formule encadrée, valeur déjà calculée, ligne
+%% de tableau à retrouver). Rendu tel quel dans la figure complète, effacé dans la variante
+%% « nom-muet » qu'engendre build_figures.py et qu'on met dans les énoncés.
+\newcommand{\rappel}[1]{#1}
+
 \definecolor{solideA}{RGB}{225,55,25}
 \definecolor{solideB}{RGB}{45,75,205}
 \definecolor{solideC}{RGB}{225,105,180}

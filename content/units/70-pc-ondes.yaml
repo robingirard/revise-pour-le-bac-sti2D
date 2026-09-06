@@ -98,7 +98,7 @@ units:
       level: 1
       prompt: 'Quelle relation lie la longueur d''onde λ, la célérité v, la période T et la fréquence f ?
 
-        {{fig:pc-onde-periode-longueur}}'
+        {{fig:pc-onde-periode-longueur-muet}}'
       choices:
       - λ = v × T = v / f
       - λ = v × f = v / T
@@ -134,7 +134,7 @@ units:
       level: 1
       prompt: 'Une onde passe d''un milieu A à un milieu B. Comment son énergie se répartit-elle ?
 
-        {{fig:pc-reflexion-transmission}}'
+        {{fig:pc-reflexion-transmission-muet}}'
       choices:
       - 'Elle est en partie réfléchie dans A, absorbée dans B et transmise après B : I = I r + I a + I t.'
       - 'Elle est intégralement transmise dans B : I = I t.'
@@ -269,7 +269,7 @@ units:
       level: 3
       prompt: 'Une onde arrive sur une paroi. On mesure I r = 0,30 I et I a = 0,50 I. Quelle est la part transmise I t ?
 
-        {{fig:pc-reflexion-transmission}}'
+        {{fig:pc-reflexion-transmission-muet}}'
       choices:
       - I t = 0,20 I
       - I t = 0,80 I
@@ -1244,7 +1244,7 @@ units:
       level: 1
       prompt: 'Quelle est l''expression de l''énergie E d''un photon de fréquence ν ?
 
-        {{fig:pc-photon-panneau}}'
+        {{fig:pc-photon-panneau-muet}}'
       choices:
       - E = h × ν, avec h = 6,63 × 10⁻³⁴ J·s
       - E = h / ν, avec h = 6,63 × 10⁻³⁴ J·s
@@ -1479,7 +1479,7 @@ units:
 
         **Constantes** : h = 6,63 × 10⁻³⁴ J·s ; c = 3,00 × 10⁸ m·s⁻¹ ; 1,0 eV = 1,6 × 10⁻¹⁹ J.
 
-        {{fig:pc-photon-panneau}}'
+        {{fig:pc-photon-panneau-muet}}'
       steps:
       - kind: mcq
         prompt: '**Étape 1.** Dans le modèle corpusculaire, comment décrit-on le rayonnement reçu par le panneau ?'

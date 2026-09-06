@@ -161,7 +161,7 @@ units:
       level: 2
       prompt: 'Qu''est-ce qui caractérise un **couple** ?
 
-        {{fig:statique-couple}}'
+        {{fig:statique-couple-muet}}'
       choices:
       - un ensemble de forces dont la somme vectorielle est **nulle**, mais qui fait tourner la pièce
       - une force unique appliquée loin de l'axe
@@ -420,7 +420,7 @@ units:
       level: 1
       prompt: 'Un solide est en équilibre sous l''action de **3 forces**. Quelles sont les deux conditions ?
 
-        {{fig:statique-trois-forces}}'
+        {{fig:statique-trois-forces-muet}}'
       choices:
       - les 3 supports se coupent en un point et la somme vectorielle des 3 forces est nulle
       - les 3 supports sont parallèles et la somme des intensités est nulle
@@ -501,7 +501,7 @@ units:
       level: 2
       prompt: 'Dans la méthode graphique, qu''appelle-t-on le **dynamique** ?
 
-        {{fig:statique-trois-forces}}'
+        {{fig:statique-trois-forces-muet}}'
       choices:
       - le polygone obtenu en mettant les forces bout à bout ; il doit se **fermer**
       - le point où se coupent les supports des forces

@@ -639,9 +639,7 @@ units:
       - chaine-energie
     - type: mcq
       level: 2
-      prompt: 'Sur un lien de puissance **électrique en courant continu**, quelles sont les grandeurs de flux et d''effort ?
-
-        {{fig:2i2d-flux-effort}}'
+      prompt: 'Sur un lien de puissance **électrique en courant continu**, quelles sont les grandeurs de flux et d''effort ?'
       choices:
       - 'Flux : intensité $I$ (A) ; effort : tension $U$ (V) ; $P = U \times I$'
       - 'Flux : tension $U$ (V) ; effort : intensité $I$ (A) ; $P = U \times I$'
@@ -653,7 +651,9 @@ units:
       - 'Non : les deux grandeurs sont inversées. Ce qui « coule » dans un conducteur, ce sont les charges : l''**intensité** est le flux.'
       - 'Non : la puissance est le **produit** du flux par l''effort, pas l''une des deux grandeurs.'
       - 'Non : ces grandeurs n''apparaissent pas dans le tableau des liens de puissance.'
-      explanation: 'Tableau effort/flux : électrique continu → flux $I$ (A), effort $U$ (V), $P = U \times I$ (W).'
+      explanation: 'Tableau effort/flux : électrique continu → flux $I$ (A), effort $U$ (V), $P = U \times I$ (W).
+
+        {{fig:2i2d-flux-effort}}'
       tags:
       - flux-effort
     - type: mcq
@@ -760,7 +760,7 @@ units:
       level: 2
       prompt: 'Ce moteur absorbe 10 000 W et la roue motrice restitue 6 000 W. Quel est le rendement global de la chaîne d''énergie ? (2 décimales, sans unité)
 
-        {{fig:2i2d-rendements-cascade}}'
+        {{fig:2i2d-rendements-cascade-muet}}'
       answer: '0.6'
       numeric: true
       tolerance: 0.02
@@ -799,7 +799,7 @@ units:
       level: 3
       prompt: 'Le trolleybus reçoit 9,7 MJ·km⁻¹. Le réseau de **distribution** a un rendement $\eta = 0{,}97$. Quelle énergie faut-il en **entrée** de ce réseau de distribution ? (1 décimale)
 
-        {{fig:2i2d-rendements-cascade}}'
+        {{fig:2i2d-rendements-cascade-muet}}'
       answer: '10.0'
       numeric: true
       tolerance: 0.15
@@ -868,7 +868,7 @@ units:
 
         **Autobus** : 42 L de gazole pour 100 km ; pouvoir calorifique du gazole 38 080 kJ·L⁻¹ ; $\eta_{\text{raffinage}} = 0{,}94$, soit **17,0 MJ·km⁻¹** d''énergie primaire ; émissions **1 409 g Eq CO₂/km**.
 
-        {{fig:2i2d-rendements-cascade}}'
+        {{fig:2i2d-rendements-cascade-muet}}'
       steps:
       - kind: input
         prompt: '**Étape 1.** Vérifier la consommation du trolleybus : convertir 2,7 kWh·km⁻¹ en MJ·km⁻¹ (2 décimales).'
@@ -1776,7 +1776,7 @@ units:
       level: 1
       prompt: 'Quelle est la fonction d''un **vérin double effet** ?
 
-        {{fig:2i2d-verin-double-effet}}'
+        {{fig:2i2d-verin-double-effet-muet}}'
       choices:
       - Convertir une puissance hydraulique (débit, pression) en puissance mécanique (force, vitesse de translation)
       - Stocker du fluide sous pression
@@ -1982,7 +1982,7 @@ units:
       level: 2
       prompt: 'Un vérin a une section de piston $S = 20$ cm² et il est alimenté sous une pression $p = 60$ bar. Quelle force développe-t-il ?
 
-        {{fig:2i2d-verin-double-effet}}'
+        {{fig:2i2d-verin-double-effet-muet}}'
       answer: '12000'
       numeric: true
       tolerance: 100

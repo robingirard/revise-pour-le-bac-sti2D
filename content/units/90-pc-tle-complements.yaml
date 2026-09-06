@@ -442,9 +442,7 @@ units:
     items:
     - type: mcq
       level: 1
-      prompt: 'Dans un générateur électrochimique, à quelle électrode a lieu l''**oxydation** ?
-
-        {{fig:pc-pile-accumulateur}}'
+      prompt: 'Dans un générateur électrochimique, à quelle électrode a lieu l''**oxydation** ?'
       choices:
       - À l'anode
       - À la cathode
@@ -456,7 +454,9 @@ units:
       - 'Non : à la cathode a lieu la **réduction**. Moyen mnémotechnique : anode/oxydation (les deux voyelles), cathode/réduction (les deux consonnes).'
       - 'Non : le pont salin n''est pas une électrode ; il assure la neutralité électrique de chaque compartiment.'
       - 'Non : c''est toujours vrai — l''oxydation a toujours lieu à l''anode et la réduction à la cathode, en décharge comme en recharge.'
-      explanation: 'Anode : oxydation, $\mathrm{red_1} = \mathrm{ox_1} + n_1\,e^-$. Cathode : réduction, $\mathrm{ox_2} + n_2\,e^- = \mathrm{red_2}$.'
+      explanation: 'Anode : oxydation, $\mathrm{red_1} = \mathrm{ox_1} + n_1\,e^-$. Cathode : réduction, $\mathrm{ox_2} + n_2\,e^- = \mathrm{red_2}$.
+
+        {{fig:pc-pile-accumulateur}}'
       tags:
       - electrodes
     - type: mcq
@@ -495,9 +495,7 @@ units:
       - accumulateur
     - type: mcq
       level: 1
-      prompt: 'Quels sont les deux réactifs d''une **pile à combustible** ?
-
-        {{fig:pc-pile-combustible}}'
+      prompt: 'Quels sont les deux réactifs d''une **pile à combustible** ?'
       choices:
       - Le dihydrogène $\mathrm{H_2}$ et le dioxygène $\mathrm{O_2}$
       - Le dihydrogène $\mathrm{H_2}$ et l'eau $\mathrm{H_2O}$
@@ -509,7 +507,9 @@ units:
       - 'Non : l''eau est le **produit** de la réaction, pas un réactif.'
       - 'Non : $\mathrm{Pb}$ et $\mathrm{PbO_2}$ sont les électrodes d''un **accumulateur au plomb**.'
       - 'Non : $\mathrm{Zn}$ et $\mathrm{Cu}$ interviennent dans la **pile Daniell**.'
-      explanation: $2\,\mathrm{H_2} + \mathrm{O_2} \rightarrow 2\,\mathrm{H_2O}$. Les couples sont $\mathrm{O_2}/\mathrm{H_2O}$ et $\mathrm{H^+}/\mathrm{H_2}$ ; le seul produit est de l'eau.
+      explanation: '$2\,\mathrm{H_2} + \mathrm{O_2} \rightarrow 2\,\mathrm{H_2O}$. Les couples sont $\mathrm{O_2}/\mathrm{H_2O}$ et $\mathrm{H^+}/\mathrm{H_2}$ ; le seul produit est de l''eau.
+
+        {{fig:pc-pile-combustible}}'
       tags:
       - pile-combustible
     - type: mcq
@@ -565,9 +565,7 @@ units:
       - electrodes
     - type: mcq
       level: 2
-      prompt: 'Lors de la **décharge** d''un accumulateur au plomb, quelle demi-équation a lieu à l''électrode de $\mathrm{PbO_2}$ (borne ⊕) ?
-
-        {{fig:pc-pile-accumulateur}}'
+      prompt: 'Lors de la **décharge** d''un accumulateur au plomb, quelle demi-équation a lieu à l''électrode de $\mathrm{PbO_2}$ (borne ⊕) ?'
       choices:
       - $\mathrm{PbO_2} + 4\,\mathrm{H^+} + 2\,e^- = \mathrm{Pb^{2+}} + 2\,\mathrm{H_2O}$ (réduction)
       - $\mathrm{Pb^{2+}} + 2\,\mathrm{H_2O} = \mathrm{PbO_2} + 4\,\mathrm{H^+} + 2\,e^-$ (oxydation)
@@ -579,7 +577,9 @@ units:
       - 'C''est la demi-équation de la **recharge** à cette même électrode : les polarités ne changent pas, mais le sens de la réaction s''inverse.'
       - C'est ce qui se passe à l'**autre** électrode (Pb, borne ⊖) pendant la décharge.
       - C'est ce qui se passe à l'électrode Pb (borne ⊖) pendant la **recharge**.
-      explanation: 'En décharge, l''électrode $\mathrm{PbO_2}$ (⊕) est le siège d''une **réduction** : $\mathrm{PbO_2} + 4\,\mathrm{H^+} + 2\,e^- = \mathrm{Pb^{2+}} + 2\,\mathrm{H_2O}$ ; l''électrode Pb (⊖) est le siège d''une oxydation : $\mathrm{Pb} = \mathrm{Pb^{2+}} + 2\,e^-$.'
+      explanation: 'En décharge, l''électrode $\mathrm{PbO_2}$ (⊕) est le siège d''une **réduction** : $\mathrm{PbO_2} + 4\,\mathrm{H^+} + 2\,e^- = \mathrm{Pb^{2+}} + 2\,\mathrm{H_2O}$ ; l''électrode Pb (⊖) est le siège d''une oxydation : $\mathrm{Pb} = \mathrm{Pb^{2+}} + 2\,e^-$.
+
+        {{fig:pc-pile-accumulateur}}'
       tags:
       - accumulateur
     - type: grid

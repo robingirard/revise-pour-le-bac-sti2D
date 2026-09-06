@@ -1,0 +1,111 @@
+%% Bac de rétention en tôle pliée (exercice guidé de la compétence « Dérivation »).
+%% À gauche : la plaque carrée de 30 cm de côté, les quatre carrés de coin de côté x hachurés
+%% (ils sont découpés) et les quatre plis en tirets. À droite : le bac obtenu, sans couvercle,
+%% en perspective cavalière — hauteur x ; le côté du fond (30 - 2x) est dans \rappel :
+%% c'est ce que l'exercice guidé demande de trouver, la variante muette le laisse en blanc.
+%% Aucune expression du volume n'est écrite : c'est la réponse attendue de l'élève.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cote/.style={{Stealth[length=4pt]}-{Stealth[length=4pt]}, line width=0.6pt, black!75},
+  attache/.style={line width=0.4pt, black!55},
+  pli/.style={line width=0.8pt, dash pattern=on 3pt off 2pt, solideB},
+  etiq/.style={font=\small},
+  petit/.style={font=\scriptsize, text=black!65},
+  titre/.style={font=\scriptsize\bfseries, align=center}]
+
+\def\S{4.2}     % côté de la plaque
+\def\c{0.85}    % côté du carré de coin
+
+%% ==================== (a) la plaque à plat ==============================
+%% fond du bac (carré central) et bandes qui seront relevées
+\fill[solideE!12] (\c,\c) rectangle (\S-\c,\S-\c);
+\fill[solideD!12] (\c,0) rectangle (\S-\c,\c);
+\fill[solideD!12] (\c,\S-\c) rectangle (\S-\c,\S);
+\fill[solideD!12] (0,\c) rectangle (\c,\S-\c);
+\fill[solideD!12] (\S-\c,\c) rectangle (\S,\S-\c);
+
+%% les quatre carrés de coin : découpés
+\hachures[draw=solideA!70]{(0,0) rectangle (\c,\c)}
+\hachures[draw=solideA!70]{(\S-\c,0) rectangle (\S,\c)}
+\hachures[draw=solideA!70]{(0,\S-\c) rectangle (\c,\S)}
+\hachures[draw=solideA!70]{(\S-\c,\S-\c) rectangle (\S,\S)}
+
+%% contour de la plaque et lignes de pli
+\draw[line width=0.9pt, line join=round] (0,0) rectangle (\S,\S);
+\draw[pli] (\c,0) -- (\c,\S)  (\S-\c,0) -- (\S-\c,\S)
+           (0,\c) -- (\S,\c)  (0,\S-\c) -- (\S,\S-\c);
+
+%% cote du côté de la plaque
+\draw[attache] (0,0) -- (0,-0.72);
+\draw[attache] (\S,0) -- (\S,-0.72);
+\draw[cote] (0,-0.55) -- (\S,-0.55);
+\node[etiq, fill=white, inner sep=1.5pt] at (\S/2,-0.55) {$30$ cm};
+
+%% cote du carré de coin (en haut à gauche)
+\draw[attache] (0,\S) -- (0,\S+0.62);
+\draw[attache] (\c,\S) -- (\c,\S+0.62);
+\draw[cote] (0,\S+0.45) -- (\c,\S+0.45);
+\node[etiq, text=solideA, anchor=south, inner sep=2pt] at (\c/2,\S+0.52) {$x$};
+
+%% cote du même carré, en hauteur (en bas à gauche)
+\draw[attache] (0,0) -- (-0.62,0);
+\draw[attache] (0,\c) -- (-0.62,\c);
+\draw[cote] (-0.45,0) -- (-0.45,\c);
+\node[etiq, text=solideA, anchor=east, inner sep=2pt] at (-0.52,\c/2) {$x$};
+
+\node[titre, anchor=north] at (\S/2,-1.05) {(a) la plaque découpée};
+\node[petit, anchor=north, align=center] at (\S/2,-1.42)
+  {carrés hachurés : découpés\\ tirets : lignes de pli};
+
+%% ==================== (b) le bac obtenu =================================
+\begin{scope}[shift={(6.6,0.75)}]
+  \def\b{3.0}       % côté du fond
+  \def\h{1.0}       % hauteur (= x)
+  \def\dx{0.85}     % fuyante
+  \def\dy{0.55}
+
+  \coordinate (F1) at (0,0);
+  \coordinate (F2) at (\b,0);
+  \coordinate (F3) at (\b+\dx,\dy);
+  \coordinate (F4) at (\dx,\dy);
+  \coordinate (T1) at (0,\h);
+  \coordinate (T2) at (\b,\h);
+  \coordinate (T3) at (\b+\dx,\h+\dy);
+  \coordinate (T4) at (\dx,\h+\dy);
+
+  %% intérieur : le fond, puis les deux parois du fond de la vue
+  \filldraw[fill=solideE!18, draw=black!65, line width=0.7pt, line join=round]
+     (F1) -- (F2) -- (F3) -- (F4) -- cycle;
+  \filldraw[fill=solideD!10, draw=black!65, line width=0.7pt, line join=round]
+     (F1) -- (F4) -- (T4) -- (T1) -- cycle;
+  \filldraw[fill=solideD!10, draw=black!65, line width=0.7pt, line join=round]
+     (F4) -- (F3) -- (T3) -- (T4) -- cycle;
+  %% extérieur : paroi avant, puis paroi droite
+  \filldraw[fill=solideD!25, draw=black!75, line width=0.8pt, line join=round]
+     (F1) -- (F2) -- (T2) -- (T1) -- cycle;
+  \filldraw[fill=solideD!20, draw=black!75, line width=0.8pt, line join=round]
+     (F2) -- (F3) -- (T3) -- (T2) -- cycle;
+  %% bord supérieur (le bac est ouvert)
+  \draw[line width=0.8pt, line join=round] (T1) -- (T2) -- (T3) -- (T4) -- cycle;
+
+  %% cote de la hauteur
+  \draw[attache] (T2) -- ++(0.95,0);
+  \draw[attache] (F2) -- ++(0.95,0);
+  \draw[cote] (\b+0.78,0) -- (\b+0.78,\h);
+  \node[etiq, text=solideA, anchor=west, inner sep=2pt] at (\b+0.84,\h/2) {$x$};
+
+  %% cote du côté du fond
+  \draw[attache] (F1) -- (0,-0.72);
+  \draw[attache] (F2) -- (\b,-0.72);
+  \draw[cote] (0,-0.55) -- (\b,-0.55);
+  \node[etiq, fill=white, inner sep=1.5pt] at (\b/2,-0.55) {\rappel{$30-2x$}};
+
+  %% les deux légendes sont alignées sur celles de la plaque (décalage de la scène : 0,75)
+  \node[titre, anchor=north] at (\b/2,-1.80) {(b) le bac, sans couvercle};
+  \node[petit, anchor=north, align=center] at (\b/2,-2.17)
+    {le fond est un carré,\\ les quatre bandes sont relevées};
+\end{scope}
+\end{tikzpicture}
+\end{document}

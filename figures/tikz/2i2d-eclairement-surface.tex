@@ -21,8 +21,8 @@
 \draw[fleche] (5.94,0) -- (6.38,0);
 \node[txt, anchor=west] at (6.42,0) {$E = 120$ lx\\ éclairement};
 \node[txt, text=solideD, anchor=south, font=\tiny] at (4.10,0.34) {$\varphi = 2\,000$ lm};
-\node[txt, anchor=north, font=\scriptsize] at (2.88,-0.52) {$\varphi = \eta \times P$};
-\node[txt, anchor=north, font=\scriptsize] at (5.14,-0.52) {$E = \varphi \,/\, S$};
+\rappel{\node[txt, anchor=north, font=\scriptsize] at (2.88,-0.52) {$\varphi = \eta \times P$};}
+\rappel{\node[txt, anchor=north, font=\scriptsize] at (5.14,-0.52) {$E = \varphi \,/\, S$};}
 
 %% ================= partie basse : coupe du local ============================
 \def\yp{-1.42}   % sous-face du plafond
@@ -37,8 +37,8 @@
 %% plan de travail
 \fill[black!16] (0.20,\yt-0.15) rectangle (4.90,\yt);
 \draw[line width=0.6pt, black!70] (0.20,\yt-0.15) rectangle (4.90,\yt);
-\node[txt, anchor=south, fill=white, inner sep=1.5pt] at (2.55,\yt+0.06)
-  {$E = \varphi_{\text{total}} / S$};
+\rappel{\node[txt, anchor=south, fill=white, inner sep=1.5pt] at (2.55,\yt+0.06)
+  {$E = \varphi_{\text{total}} / S$};}
 \draw[cote] (0.20,\yt-0.30) -- (4.90,\yt-0.30);
 \node[txt, anchor=north, inner sep=2pt] at (2.55,\yt-0.30) {plan de travail, surface $S$};
 

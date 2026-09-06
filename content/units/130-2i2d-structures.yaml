@@ -1085,7 +1085,7 @@ units:
       prompt: 'Une tour risque de **basculer** sous l''effet du vent. Autour de quoi tourne-t-elle ?
 
 
-        {{fig:2i2d-basculement}}'
+        {{fig:2i2d-basculement-muet}}'
       choices:
       - Autour de l'appui situé du côté opposé au vent, qui joue le rôle d'arête de basculement
       - Autour de son centre de gravité $G$
@@ -1122,7 +1122,7 @@ units:
       prompt: 'Quelle est la condition de non-basculement d''une structure ?
 
 
-        {{fig:2i2d-basculement}}'
+        {{fig:2i2d-basculement-muet}}'
       choices:
       - Le moment stabilisateur (dû au poids) doit être supérieur au moment renversant (dû au vent)
       - Le poids doit être supérieur à la force du vent
@@ -1142,7 +1142,7 @@ units:
       prompt: 'Une tour de 40,70 m pèse **55 kN**, son centre de gravité $G$ étant à **4 m** de l''arête de basculement $A$. Le vent agit horizontalement au sommet, à **40,70 m** du sol. Calculer la force de vent $F_b$ qui provoquerait le basculement (arrondir au dixième).
 
 
-        {{fig:2i2d-basculement}}'
+        {{fig:2i2d-basculement-muet}}'
       answer: '5.4'
       numeric: true
       tolerance: 0.2

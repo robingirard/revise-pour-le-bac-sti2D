@@ -1,0 +1,84 @@
+%% maths-nombre-derive — construction du nombre dérivé f'(a) comme limite du taux
+%% d'accroissement. Courbe C_f de f(x) = 0,20 x^2 + 0,40 ; A d'abscisse a = 1,2 et
+%% M d'abscisse a + h = 3,4.
+%%   - sécante (AM) en trait fin bleu : sa pente est le taux d'accroissement ;
+%%   - tangente en A en trait épais rouge : sa pente est le nombre dérivé ;
+%%   - le triangle rectangle A-P-M porte les deux cotes h et f(a+h) - f(a) ;
+%%   - la flèche en tirets rappelle que M glisse vers A quand h tend vers 0.
+%% Les DEUX formules (taux d'accroissement et nombre dérivé) sont dans l'encadré sous
+%% la figure, enveloppé de \rappel : la variante « maths-nombre-derive-muet » ne montre
+%% que la construction géométrique (à utiliser dans les énoncés).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1.25cm,y=1.05cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={line width=1.3pt, line join=round, black!80},
+  secante/.style={solideB, line width=0.7pt},
+  tangente/.style={solideA, line width=1.6pt},
+  cote/.style={solideE, line width=0.9pt},
+  pointille/.style={line width=0.5pt, dash pattern=on 3pt off 2pt, black!50},
+  etiq/.style={font=\small, inner sep=2pt}]
+
+%% ---------------- la fonction et les deux abscisses -----------------------
+\def\aa{1.2}      % abscisse de A
+\def\hh{2.2}      % accroissement h
+\def\fa{0.688}    % f(a)
+\def\fah{2.712}   % f(a+h)
+\def\ps{0.92}     % pente de la sécante (AM)
+\def\pt{0.48}     % pente de la tangente en A
+
+%% ---------------- axes -----------------------------------------------------
+\draw[axe] (-0.45,0) -- (4.35,0) node[anchor=north east, inner sep=3pt, font=\small] {$x$};
+\draw[axe] (0,-0.35) -- (0,3.95) node[anchor=south east, inner sep=3pt, font=\small] {$y$};
+\node[etiq, anchor=north east] at (-0.03,-0.03) {$O$};
+
+%% ---------------- la courbe ------------------------------------------------
+\draw[courbe] plot[domain=-0.35:4.05, samples=90, smooth] (\x,{0.20*\x*\x+0.40});
+\node[font=\small, text=black!80, anchor=west, inner sep=3pt] at (4.05,3.7) {$\mathcal{C}_f$};
+
+%% ---------------- traits de rappel vers les axes ---------------------------
+\draw[pointille] (\aa,0) -- (\aa,\fa) -- (0,\fa);
+\draw[pointille] (\aa+\hh,0) -- (\aa+\hh,\fah) -- (0,\fah);
+\node[etiq, anchor=north] at (\aa,-0.04) {$a$};
+\node[etiq, anchor=north] at (\aa+\hh,-0.04) {$a+h$};
+\node[etiq, anchor=east] at (-0.05,\fa) {$f(a)$};
+\node[etiq, anchor=east] at (-0.05,\fah) {$f(a+h)$};
+
+%% ---------------- sécante (AM) et tangente en A ----------------------------
+\draw[secante] (0.35,{\fa+\ps*(0.35-\aa)}) -- (3.95,{\fa+\ps*(3.95-\aa)});
+\node[font=\small, text=solideB, anchor=south east, inner sep=2pt, rotate=41]
+     at (2.95,{\fa+\ps*(2.95-\aa)}) {sécante $(AM)$};
+\draw[tangente] (-0.3,{\fa+\pt*(-0.3-\aa)}) -- (2.95,{\fa+\pt*(2.95-\aa)});
+\node[font=\small, text=solideA, anchor=north east, inner sep=2pt, rotate=24]
+     at (2.92,{\fa+\pt*(2.92-\aa)-0.02}) {tangente en $A$};
+
+%% ---------------- triangle du taux d'accroissement -------------------------
+\draw[cote] (\aa,\fa) -- (\aa+\hh,\fa);
+\draw[cote] (\aa+\hh,\fa) -- (\aa+\hh,\fah);
+\draw[line width=0.5pt, black!60] (\aa+\hh-0.16,\fa) -- (\aa+\hh-0.16,\fa+0.14) -- (\aa+\hh,\fa+0.14);
+\node[font=\small, text=solideE, anchor=north, inner sep=3pt] at ({\aa+\hh/2},\fa) {$h$};
+\node[font=\small, text=solideE, anchor=west, inner sep=3pt] at (\aa+\hh,{(\fa+\fah)/2})
+     {$f(a+h)-f(a)$};
+
+%% ---------------- points A et M --------------------------------------------
+\fill[solideA] (\aa,\fa) circle (2pt);
+\node[etiq, anchor=south east] at (\aa,\fa) {$A$};
+\fill[solideB] (\aa+\hh,\fah) circle (2pt);
+\node[etiq, anchor=south west, inner sep=3pt] at (\aa+\hh,\fah) {$M$};
+
+%% ---------------- M glisse vers A (sous l'axe, pour ne rien recouvrir) -----
+\draw[-{Stealth[length=6pt]}, line width=0.7pt, black!55, dash pattern=on 3pt off 2pt]
+     (\aa+\hh,-0.42) to[bend left=22] (\aa+0.08,-0.42);
+\node[font=\small, text=black!60, anchor=north, inner sep=2pt] at (2.3,-0.86)
+     {quand $h\to0$, $M$ glisse vers $A$ le long de $\mathcal{C}_f$};
+
+%% ---------------- ce que l'exercice demande de retrouver -------------------
+\rappel{\node[draw=black!45, fill=black!3, rounded corners=3pt, line width=0.5pt,
+      inner sep=5pt, anchor=north, align=center, font=\small] at (2.0,-1.42)
+     {pente de la sécante $(AM)$ $=$ taux d'accroissement :\\[2pt]
+      $\dfrac{f(a+h)-f(a)}{h}$\\[5pt]
+      pente de la tangente en $A$ $=$ nombre dérivé :\\[2pt]
+      $f'(a)=\displaystyle\lim_{h\to0}\dfrac{f(a+h)-f(a)}{h}$};}
+\end{tikzpicture}
+\end{document}

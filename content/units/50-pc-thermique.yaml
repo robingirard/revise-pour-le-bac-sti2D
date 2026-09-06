@@ -571,17 +571,16 @@ units:
       - chaleur-latente
     - type: order
       level: 1
-      prompt: 'Remettez dans l''ordre les **cinq étapes** du chauffage d''une masse $m$ d''un corps pur initialement solide.
-
-
-        {{fig:pc-courbe-chauffage-eau}}'
+      prompt: 'Remettez dans l''ordre les **cinq étapes** du chauffage d''une masse $m$ d''un corps pur initialement solide.'
       steps:
       - '❶ Échauffement du solide : $Q_1 = m\,c_{\text{solide}}\,(\theta_{\text{Fusion}} - \theta_1)$'
       - '❷ Palier de fusion : $Q_2 = m\,L_{\text{Fusion}}$'
       - '❸ Échauffement du liquide : $Q_3 = m\,c_{\text{liquide}}\,(\theta_{\text{Ébullition}} - \theta_{\text{Fusion}})$'
       - '❹ Palier d''ébullition : $Q_4 = m\,L_{\text{Vaporisation}}$'
       - '❺ Échauffement du gaz : $Q_5 = m\,c_{\text{gaz}}\,(\theta_2 - \theta_{\text{Ébullition}})$'
-      explanation: L'ordre est solide → fusion → liquide → ébullition → gaz. L'énergie totale vaut $Q = Q_1 + Q_2 + Q_3 + Q_4 + Q_5$.
+      explanation: 'L''ordre est solide → fusion → liquide → ébullition → gaz. L''énergie totale vaut $Q = Q_1 + Q_2 + Q_3 + Q_4 + Q_5$.
+
+        {{fig:pc-courbe-chauffage-eau}}'
       tags:
       - bilan
     - type: grid
@@ -898,7 +897,7 @@ units:
       prompt: 'Le **flux thermique** $\Phi$ à travers une paroi est un débit d''énergie. Dans quelle unité s''exprime-t-il ?
 
 
-        {{fig:pc-mur-flux-thermique}}'
+        {{fig:pc-mur-flux-thermique-muet}}'
       choices:
       - Le watt (W)
       - Le joule (J)
@@ -969,7 +968,7 @@ units:
       prompt: 'Quelle relation donne le flux thermique traversant une paroi ?
 
 
-        {{fig:pc-mur-flux-thermique}}'
+        {{fig:pc-mur-flux-thermique-muet}}'
       choices:
       - $\Phi = \dfrac{S \times (T_{\text{chaud}} - T_{\text{froid}})}{R_{\text{th}}}$
       - $\Phi = S \times (T_{\text{chaud}} - T_{\text{froid}}) \times R_{\text{th}}$
@@ -1043,7 +1042,7 @@ units:
       prompt: 'Un mur de parpaing de surface $S = 10$ m² et de résistance thermique $R_{\text{th}} = 0{,}21$ m²·K·W⁻¹ sépare un intérieur à 20 °C d''un extérieur à 5 °C. Calculer le flux thermique $\Phi$.
 
 
-        {{fig:pc-mur-flux-thermique}}'
+        {{fig:pc-mur-flux-thermique-muet}}'
       answer: '714'
       numeric: true
       tolerance: 6
@@ -1056,7 +1055,7 @@ units:
       prompt: 'Une paroi **composite** est faite de plusieurs couches accolées. Comment obtient-on sa résistance thermique globale ?
 
 
-        {{fig:pc-resistances-serie}}'
+        {{fig:pc-resistances-serie-muet}}'
       choices:
       - On additionne les résistances thermiques des couches
       - On additionne les conductivités thermiques des couches
@@ -1073,17 +1072,16 @@ units:
       - isolation
     - type: order
       level: 2
-      prompt: 'Ordonnez les cinq couches du toit de combles aménagés, de l''**extérieur** vers l''**intérieur** (résistances thermiques en m²·K·W⁻¹).
-
-
-        {{fig:pc-resistances-serie}}'
+      prompt: 'Ordonnez les cinq couches du toit de combles aménagés, de l''**extérieur** vers l''**intérieur** (résistances thermiques en m²·K·W⁻¹).'
       steps:
       - Ardoise (0,003)
       - Bois de charpente (0,333)
       - Air peu ventilé (0,130)
       - Laine de verre (5,400)
       - Plaque de plâtre (0,040)
-      explanation: 'La somme vaut $0{,}003 + 0{,}333 + 0{,}130 + 5{,}400 + 0{,}040 = 5{,}906$ m²·K·W⁻¹ : la laine de verre apporte à elle seule plus de 91 % de la résistance thermique.'
+      explanation: 'La somme vaut $0{,}003 + 0{,}333 + 0{,}130 + 5{,}400 + 0{,}040 = 5{,}906$ m²·K·W⁻¹ : la laine de verre apporte à elle seule plus de 91 % de la résistance thermique.
+
+        {{fig:pc-resistances-serie}}'
       tags:
       - isolation
     - type: input
@@ -1091,7 +1089,7 @@ units:
       prompt: 'Calculer la résistance thermique totale d''un mètre carré de ce toit de combles aménagés : ardoise 0,003 ; bois de charpente 0,333 ; air peu ventilé 0,130 ; laine de verre 5,400 ; plaque de plâtre 0,040 (en m²·K·W⁻¹).
 
 
-        {{fig:pc-resistances-serie}}'
+        {{fig:pc-resistances-serie-muet}}'
       answer: '5.906'
       numeric: true
       tolerance: 0.01
@@ -1195,7 +1193,7 @@ units:
         L''intérieur est maintenu à **19 °C**, l''extérieur est à **4 °C**. Le chauffage est assuré par un **convecteur électrique** (dipôle purement résistif) alimenté sous $U = 230$ V.
 
 
-        {{fig:pc-resistances-serie}}'
+        {{fig:pc-resistances-serie-muet}}'
       steps:
       - kind: mcq
         prompt: '**Étape 1.** La toiture est une paroi composite de cinq couches accolées. Comment calcule-t-on sa résistance thermique globale ?'

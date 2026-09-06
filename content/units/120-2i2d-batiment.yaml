@@ -124,7 +124,7 @@ units:
       prompt: 'Un mur est composé de plusieurs couches de matériaux accolées. Comment obtient-on sa résistance thermique totale ?
 
 
-        {{fig:pc-resistances-serie}}'
+        {{fig:pc-resistances-serie-muet}}'
       choices:
       - On additionne les résistances thermiques de chaque couche
       - On additionne les conductivités thermiques de chaque couche
@@ -204,7 +204,7 @@ units:
       prompt: 'Le flux de chaleur surfacique s''écrit $\varphi = \lambda \times \dfrac{\Delta T}{e}$. Quelle est son unité ?
 
 
-        {{fig:pc-mur-flux-thermique}}'
+        {{fig:pc-mur-flux-thermique-muet}}'
       choices:
       - W/m²
       - W
@@ -371,7 +371,7 @@ units:
       prompt: 'Quelle relation donne le flux thermique $\Phi$ traversant une paroi de surface $S$ ?
 
 
-        {{fig:2i2d-coefficient-u}}'
+        {{fig:2i2d-coefficient-u-muet}}'
       choices:
       - $\Phi = U \times S \times \Delta T$
       - $\Phi = \dfrac{U \times S}{\Delta T}$
@@ -1351,7 +1351,7 @@ units:
       prompt: 'Une onde sonore rencontre une paroi. En combien de parts son énergie incidente se divise-t-elle ?
 
 
-        {{fig:pc-reflexion-transmission}}'
+        {{fig:pc-reflexion-transmission-muet}}'
       choices:
       - Trois — l'énergie transmise, l'énergie absorbée et l'énergie réfléchie
       - Deux — l'énergie réfléchie et l'énergie transmise
@@ -1371,7 +1371,7 @@ units:
       prompt: 'Un acousticien veut réduire le bruit qui passe d''un logement à l''autre à travers un mur. Sur quelle part de l''énergie agit-il, et de quel domaine relève son action ?
 
 
-        {{fig:pc-reflexion-transmission}}'
+        {{fig:pc-reflexion-transmission-muet}}'
       choices:
       - Sur l'énergie **transmise**, qu'il cherche à réduire — c'est l'isolation acoustique
       - Sur l'énergie **absorbée**, qu'il cherche à réduire — c'est l'isolation acoustique
@@ -1555,7 +1555,7 @@ units:
       prompt: 'Remettez dans l''ordre le parcours de l''énergie sonore, de la source au local voisin.
 
 
-        {{fig:pc-reflexion-transmission}}'
+        {{fig:pc-reflexion-transmission-muet}}'
       steps:
       - Un corps vibre et met en mouvement les molécules d'air voisines
       - L'onde acoustique se propage dans l'air à 340 m/s et atteint la paroi
@@ -1651,7 +1651,7 @@ units:
       prompt: 'Quelle est l''unité de l''**éclairement lumineux** $E$ ?
 
 
-        {{fig:2i2d-eclairement-surface}}'
+        {{fig:2i2d-eclairement-surface-muet}}'
       choices:
       - Le lux (lx), avec 1 lux = 1 lumen par mètre carré
       - Le lumen (lm)
@@ -1671,7 +1671,7 @@ units:
       prompt: 'Une source lumineuse se lit comme un **convertisseur d''énergie**. Quelles sont ses grandeurs d''entrée et de sortie ?
 
 
-        {{fig:2i2d-eclairement-surface}}'
+        {{fig:2i2d-eclairement-surface-muet}}'
       choices:
       - Entrée — la puissance électrique en watt ; sortie — le flux lumineux en lumen
       - Entrée — le flux lumineux en lumen ; sortie — la puissance électrique en watt
@@ -1728,7 +1728,7 @@ units:
       prompt: 'Un atelier de $S = 200$ m² est éclairé par un ensemble de luminaires émettant au total $\varphi = 24\,000$ lm. Calculer l''éclairement moyen $E$.
 
 
-        {{fig:2i2d-eclairement-surface}}'
+        {{fig:2i2d-eclairement-surface-muet}}'
       answer: '120'
       numeric: true
       tolerance: 2
@@ -1939,7 +1939,7 @@ units:
         On comparera avec des lampes à **incandescence** d''efficacité $\eta = 15$ lm/W, et l''on retiendra une durée d''utilisation de **2 000 heures par an**.
 
 
-        {{fig:2i2d-eclairement-surface}}'
+        {{fig:2i2d-eclairement-surface-muet}}'
       steps:
       - kind: mcq
         prompt: '**Étape 1.** Quelle relation lie l''éclairement $E$, le flux lumineux total $\varphi$ et la surface $S$ ?'

@@ -66,6 +66,33 @@ est en §7. Rien n'est encore fait.
   aucune progression.
 - **KaTeX publié** : voir le point 7 ci-dessus.
 
+## Fait à la 6e session (6 sept. 2026) — l'énoncé ne donne plus la réponse
+
+Retour de Robin : « sur les chaînes de rendement, tu donnes le résultat avec le schéma ; pareil en maths
+pour la formule du produit scalaire — c'est trop facile ».
+
+- **Figures muettes (moteur 1.1.0)** : dans une source TikZ, `\rappel{…}` enveloppe ce qui donne la réponse ;
+  `build_figures.py` compile en plus `nom-muet`, où `\rappel` n'affiche rien. La figure complète reste pour
+  les **leçons** et les **explications**, la muette va dans les **énoncés**. `\rappel` est défini par
+  `figures/tikz/liaisons.sty`. Voir `docs/SPEC.md` §3.1 et la 4e règle du §4 bis.
+- **19 figures muselées** : chaîne de rendements en cascade, bilan d'un convertisseur, coefficient U, flux à
+  travers une paroi, résistances en série, double périodicité d'une onde, réflexion/transmission, photon,
+  produit scalaire, Al-Kashi, sinusoïde, statique (trois forces, couple), basculement, associations de
+  batteries et de cellules PV, orientation des panneaux, vérin double effet, éclairement.
+- **7 exercices** dont la figure *était* la réponse (tableau des convertisseurs, courbe de chauffage dont la
+  légende numérote les étapes à ordonner, demi-équations des piles) : la figure passe de l'énoncé à
+  l'`explanation`, où elle sert de correction visuelle.
+- **Nouvelle compétence `maths-derivee` (« Dérivation », 23 exercices)** en tête de l'unité maths 1re — il
+  manquait la dérivée, pourtant prérequis des primitives (`maths-primitives` en dépend désormais). Nombre
+  dérivé, tangente, dérivées usuelles, produit/quotient, composées, signe de $f'$ et variations, extremums,
+  applications techniques, exercice guidé d'optimisation. Leçon `content/lessons/maths-derivee.md`,
+  figures `maths-nombre-derive`, `maths-tangente-variations`, `guide-maths-bac-tole`.
+- **Positionner avant de calculer (angles)** : 4 exercices ajoutés en tête de `maths-cercle-trigo` —
+  association mesure ↔ point repéré par une lettre (`maths-cercle-reperage`), grille mesure ↔ quadrant
+  (`maths-cercle-quadrants-muet`), signe de $\cos$/$\sin$ ↔ quadrant, remise en ordre dans le sens direct.
+- Une soixantaine d'exercices changent d'identifiant (leur énoncé perd la référence de figure) : leur
+  progression repart de zéro, ce qui est sans conséquence sur le reste.
+
 ## Idées suivantes
 - Retours d'usage du fils : longueur des séances, difficulté, figures trop larges sur mobile (quelques diagrammes
   SysML et le treillis dépassent 8 cm : à resserrer si gênant).

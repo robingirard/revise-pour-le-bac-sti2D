@@ -1,0 +1,35 @@
+%% maths-cercle-reperage — cercle trigonométrique « muet » : huit points repérés
+%% seulement par une lettre (A à H), sans aucune mesure d'angle écrite.
+%% Positions choisies : A = 30°, H = 60°, B = 90°, C = 135°, D = 180°, E = 225°,
+%% F = 270°, G = 315° (soit pi/6, pi/3, pi/2, 3pi/4, pi, 5pi/4, 3pi/2, 7pi/4).
+%% Sert aux exercices « quel point correspond à l'angle 2pi/3 ? » : la figure ne doit
+%% donc donner AUCUNE valeur : tout y est déjà « muet », rien à cacher.
+%% Le rayon vers chaque point est tracé en trait fin pour que la direction se lise bien ;
+%% B est confondu avec J (angle droit) : l'étiquette J reste à l'intérieur du cercle.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=2cm,y=2cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  rayon/.style={line width=0.5pt, black!45},
+  lettre/.style={font=\small, inner sep=1pt}]
+
+%% ---------------- repère et cercle ------------------------------------
+\draw[axe] (-1.12,0) -- (1.12,0);
+\draw[axe] (0,-1.12) -- (0,1.12);
+\draw[line width=1.1pt, solideE] (0,0) circle (1);
+\node[font=\small, anchor=north east, inner sep=1pt, fill=white] at (-0.02,-0.02) {$O$};
+
+%% ---------------- les huit points, rayon + pastille + lettre ----------
+%% \angl / lettre
+\foreach \angl/\lab in {30/A, 60/H, 90/B, 135/C, 180/D, 225/E, 270/F, 315/G} {
+  \draw[rayon] (0,0) -- (\angl:1);
+  \fill[solideA] (\angl:1) circle (2.1pt);
+  \node[lettre, text=solideA] at (\angl:1.23) {$\lab$};}
+
+%% ---------------- points de référence I et J --------------------------
+\fill (1,0) circle (1.8pt);
+\node[font=\small, anchor=north east, inner sep=3pt] at (1,0) {$I$};
+\node[font=\small, anchor=north east, inner sep=3pt] at (0,1) {$J$};
+\end{tikzpicture}
+\end{document}

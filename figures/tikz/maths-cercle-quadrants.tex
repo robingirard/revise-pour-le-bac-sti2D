@@ -1,0 +1,53 @@
+%% maths-cercle-quadrants — les quatre quadrants du cercle trigonométrique.
+%% Chaque quart de disque est légèrement teinté et numéroté I, II, III, IV dans le sens
+%% direct (antihoraire), rappelé par la flèche courbe « + » autour de O ; l'abscisse d'un point
+%% du cercle est son cosinus, son ordonnée son sinus (axes annotés).
+%% Les quatre étiquettes de signes (cos > 0 / sin < 0 …) sont enveloppées de \rappel :
+%% la variante « maths-cercle-quadrants-muet » ne montre que les quadrants nus, pour
+%% demander à l'élève dans quel quadrant tombe un angle donné, et quels signes en découlent.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=2cm,y=2cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  sens/.style={-{Stealth[length=6pt]}, line width=0.8pt},
+  num/.style={font=\large, text=black!55},
+  signe/.style={font=\scriptsize, align=center, inner sep=3pt, line width=0.5pt,
+                fill=white, rounded corners=2pt}]
+
+%% ---------------- les quatre quarts de disque teintés ------------------
+%% \angle de départ / couleur / numéro
+\foreach \dep/\coul/\num in {0/solideE/I, 90/solideB/II, 180/solideF/III, 270/solideD/IV} {
+  \fill[\coul!12] (0,0) -- (\dep:1) arc (\dep:\dep+90:1) -- cycle;
+  \node[num] at (\dep+45:0.72) {\num};}
+
+%% ---------------- repère et cercle -------------------------------------
+\draw[axe] (-1.18,0) -- (1.22,0)
+     node[anchor=south east, inner sep=3pt, font=\small, text=black!60] {$\cos$};
+\draw[axe] (0,-1.18) -- (0,1.22)
+     node[anchor=north west, inner sep=3pt, font=\small, text=black!60] {$\sin$};
+\draw[line width=1.1pt, black!75] (0,0) circle (1);
+\node[font=\small, anchor=north east, inner sep=1pt, fill=white] at (-0.02,-0.02) {$O$};
+\fill (1,0) circle (1.7pt);
+\node[font=\small, anchor=north east, inner sep=3pt] at (1,0) {$I$};
+\fill (0,1) circle (1.7pt);
+\node[font=\small, anchor=north east, inner sep=3pt] at (0,1) {$J$};
+
+%% ---------------- sens direct (flèche courbe autour de l'origine) ------
+\draw[sens] (8:0.40) arc (8:102:0.40);
+\node[font=\small, inner sep=1pt] at (-16:0.44) {$+$};
+
+%% ---------------- signes de cos et sin, quadrant par quadrant ----------
+%% C'est la réponse : effacé dans la variante muette.
+\rappel{
+\node[signe, draw=solideE, anchor=south west] at (0.86,0.86)
+     {$\cos>0$\\ $\sin>0$};
+\node[signe, draw=solideB, anchor=south east] at (-0.86,0.86)
+     {$\cos<0$\\ $\sin>0$};
+\node[signe, draw=solideF, anchor=north east] at (-0.86,-0.86)
+     {$\cos<0$\\ $\sin<0$};
+\node[signe, draw=solideD, anchor=north west] at (0.86,-0.86)
+     {$\cos>0$\\ $\sin<0$};
+}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,90 @@
+%% maths-tangente-variations — de la courbe au tableau de variations.
+%% En haut : la courbe de f(x) = x^3 - 3x, ses deux tangentes horizontales (rouge) au
+%% maximum local (-1 ; 2) et au minimum local (1 ; -2), et trois flèches posées SUR la
+%% courbe (vert = f monte, orange = f descend) qui montrent le sens de variation, donc
+%% le signe de la pente, sans l'écrire.
+%% En bas : le tableau de variations correspondant (ligne x, ligne signe de f'(x), ligne
+%% variations de f), entièrement enveloppé de \rappel. La variante
+%% « maths-tangente-variations-muet » ne montre donc que la courbe : c'est elle qu'on met
+%% dans un énoncé « construis le tableau de variations de f ».
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  trait/.style={line width=0.5pt, draw=black!45},
+  bord/.style={line width=0.9pt, draw=black!65},
+  cell/.style={font=\small, inner sep=1pt},
+  fleche/.style={-{Stealth[length=5pt]}, line width=0.9pt, draw=black!70}]
+
+%% ======================= 1. la courbe =====================================
+\begin{scope}[xshift=3.3cm, yshift=3.15cm, x=1cm, y=0.355cm,
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={line width=1.2pt, line join=round, black!80},
+  tang/.style={solideA, line width=1.6pt},
+  monte/.style={solideE, line width=1.8pt, line join=round, -{Stealth[length=6pt]}},
+  descend/.style={solideD, line width=1.8pt, line join=round, -{Stealth[length=6pt]}},
+  grad/.style={font=\scriptsize, inner sep=0pt}]
+
+  %% axes et graduations
+  \draw[axe] (-2.55,0) -- (2.6,0) node[anchor=north east, inner sep=3pt, font=\small] {$x$};
+  \draw[axe] (0,-4.5) -- (0,4.6) node[anchor=south east, inner sep=2pt, font=\small] {$y$};
+  \node[font=\small, anchor=north east, inner sep=1pt] at (-0.04,-0.15) {$O$};
+  \foreach \xv in {-2,-1,1,2} {
+    \draw[line width=0.5pt] (\xv,0) -- ++(0,-0.07cm);
+    \node[grad, anchor=north, yshift=-3pt] at (\xv,0) {$\xv$};}
+  \foreach \yv in {-2,2} {
+    \draw[line width=0.5pt] (0,\yv) -- ++(-0.07cm,0);
+    \node[grad, anchor=east, xshift=-3pt] at (0,\yv) {$\yv$};}
+
+  %% la courbe f(x) = x^3 - 3x
+  \draw[courbe] plot[domain=-2.15:2.15, samples=90, smooth] (\x,{\x*\x*\x-3*\x});
+  \node[font=\small, text=black!80, anchor=west, inner sep=3pt] at (2.15,3.5) {$\mathcal{C}_f$};
+
+  %% sens de variation lu sur la courbe : flèches posées sur la courbe elle-même
+  \draw[monte]   plot[domain=-2.05:-1.20, samples=25, smooth] (\x,{\x*\x*\x-3*\x});
+  \draw[descend] plot[domain=-0.80: 0.80, samples=30, smooth] (\x,{\x*\x*\x-3*\x});
+  \draw[monte]   plot[domain= 1.20: 2.05, samples=25, smooth] (\x,{\x*\x*\x-3*\x});
+
+  %% tangentes horizontales aux deux extremums
+  \draw[tang] (-1.75,2) -- (-0.25,2);
+  \draw[tang] ( 0.25,-2) -- ( 1.75,-2);
+  \fill[solideA] (-1,2) circle (2pt);
+  \fill[solideA] ( 1,-2) circle (2pt);
+  \node[font=\scriptsize, text=solideA, anchor=south east, inner sep=2pt, align=center]
+       at (-0.30,2.30) {tangente horizontale};
+  \node[font=\scriptsize, text=solideA, anchor=north west, inner sep=2pt, align=center]
+       at (0.30,-2.30) {tangente horizontale};
+\end{scope}
+
+%% ======================= 2. le tableau de variations ======================
+%% Tout ce bloc donne la réponse : il disparaît dans la variante muette.
+\rappel{
+\node[font=\small, text=black!70, anchor=south] at (3.3,1.02)
+     {tableau de variations de $f$};
+\fill[black!4] (0,0.85) rectangle (1.15,-1.55);
+\draw[trait] (0,0.30) -- (6.6,0.30);
+\draw[trait] (0,-0.30) -- (6.6,-0.30);
+\draw[trait] (1.15,0.85) -- (1.15,-1.55);
+\draw[bord] (0,0.85) rectangle (6.6,-1.55);
+\draw[trait] (2.90,0.30) -- (2.90,-1.55);
+\draw[trait] (4.80,0.30) -- (4.80,-1.55);
+\node[cell] at (0.575,0.575) {$x$};
+\node[cell] at (0.575,0.00)  {$f'(x)$};
+\node[cell] at (0.575,-0.925){$f(x)$};
+\node[cell] at (1.45,0.575) {$-\infty$};
+\node[cell] at (2.90,0.575) {$-1$};
+\node[cell] at (4.80,0.575) {$1$};
+\node[cell] at (6.30,0.575) {$+\infty$};
+\node[cell, text=solideE] at (2.05,0.00) {$+$};
+\node[cell, text=solideD] at (3.85,0.00) {$-$};
+\node[cell, text=solideE] at (5.70,0.00) {$+$};
+\node[cell, fill=white, inner sep=2pt] at (2.90,0.00) {$0$};
+\node[cell, fill=white, inner sep=2pt] at (4.80,0.00) {$0$};
+\draw[fleche, draw=solideE] (1.45,-1.30) -- (2.62,-0.60);
+\draw[fleche, draw=solideD] (3.18,-0.60) -- (4.52,-1.30);
+\draw[fleche, draw=solideE] (5.08,-1.30) -- (6.30,-0.60);
+\node[cell, fill=white, inner sep=2pt] at (2.90,-0.55) {$2$};
+\node[cell, fill=white, inner sep=2pt] at (4.80,-1.33) {$-2$};
+}
+\end{tikzpicture}
+\end{document}

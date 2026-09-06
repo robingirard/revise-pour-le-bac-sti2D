@@ -196,10 +196,7 @@ units:
       - protection
     - type: mcq
       level: 1
-      prompt: 'Un **onduleur** convertit :
-
-
-        {{fig:2i2d-convertisseurs}}'
+      prompt: 'Un **onduleur** convertit :'
       choices:
       - du continu (=) en alternatif (~)
       - de l'alternatif (~) en continu (=)
@@ -211,15 +208,14 @@ units:
       - 'Non : c''est le **redresseur** (convertisseur alternatif/continu).'
       - 'Non : c''est le **hacheur**.'
       - 'Non : c''est le **variateur** (ou gradateur).'
-      explanation: 'Onduleur : `=` → `~`. Exemple : les panneaux solaires délivrent du courant continu, il faut un onduleur avant de réinjecter l''énergie sur le réseau.'
+      explanation: 'Onduleur : `=` → `~`. Exemple : les panneaux solaires délivrent du courant continu, il faut un onduleur avant de réinjecter l''énergie sur le réseau.
+
+        {{fig:2i2d-convertisseurs}}'
       tags:
       - convertisseurs
     - type: mcq
       level: 2
-      prompt: 'Pour faire varier la vitesse d''un moteur à courant continu alimenté par une batterie, quel convertisseur place-t-on entre les deux ?
-
-
-        {{fig:2i2d-convertisseurs}}'
+      prompt: 'Pour faire varier la vitesse d''un moteur à courant continu alimenté par une batterie, quel convertisseur place-t-on entre les deux ?'
       choices:
       - Un hacheur
       - Un onduleur
@@ -231,15 +227,14 @@ units:
       - 'Non : l''onduleur fabriquerait de l''alternatif, dont un moteur à courant continu n''a que faire.'
       - 'Non : le redresseur part d''une source alternative ; ici la source est déjà continue.'
       - 'Non : un transformateur ne fonctionne qu''en **alternatif** ; il ne transforme pas une tension continue.'
-      explanation: 'Hacheur : `=` → `=`. Un hacheur permet, à partir d''une source continue (exemple : batterie), de fournir une tension continue variable. C''est le convertisseur des scooters, vélos et voitures électriques.'
+      explanation: 'Hacheur : `=` → `=`. Un hacheur permet, à partir d''une source continue (exemple : batterie), de fournir une tension continue variable. C''est le convertisseur des scooters, vélos et voitures électriques.
+
+        {{fig:2i2d-convertisseurs}}'
       tags:
       - convertisseurs
     - type: match
       level: 2
-      prompt: 'Associez chaque convertisseur à la conversion qu''il réalise (`=` continu, `~` alternatif).
-
-
-        {{fig:2i2d-convertisseurs}}'
+      prompt: 'Associez chaque convertisseur à la conversion qu''il réalise (`=` continu, `~` alternatif).'
       pairs:
       - left: Onduleur
         right: '`=` → `~`'
@@ -265,7 +260,9 @@ units:
       - 'Non : la prise du réseau fournit de l''**alternatif** (230 V, 50 Hz).'
       - 'Non : un variateur travaille de l''alternatif vers l''alternatif ; il ne charge pas une batterie.'
       - 'Non : appliquer directement une tension alternative à un accumulateur le détruirait.'
-      explanation: 'Chaîne d''un chargeur : réseau `~` → **redresseur** `~`→`=` → régulation de la tension et du courant de charge → batterie. Sur le ferry-boat de Marseille, c''est le rôle du bloc « Chargeur Propulsion » entre la prise de quai et les parcs de batteries.'
+      explanation: 'Chaîne d''un chargeur : réseau `~` → **redresseur** `~`→`=` → régulation de la tension et du courant de charge → batterie. Sur le ferry-boat de Marseille, c''est le rôle du bloc « Chargeur Propulsion » entre la prise de quai et les parcs de batteries.
+
+        {{fig:2i2d-convertisseurs}}'
       tags:
       - convertisseurs
     - type: mcq
@@ -511,7 +508,7 @@ units:
       prompt: 'Le **rendement** $\eta$ d''un maillon de la chaîne de puissance :
 
 
-        {{fig:pc-bilan-convertisseur}}'
+        {{fig:pc-bilan-convertisseur-muet}}'
       choices:
       - est sans unité et compris entre 0 et 1
       - s'exprime en watts (W)
@@ -531,7 +528,7 @@ units:
       prompt: 'Comment obtient-on le rendement **global** d''une chaîne de puissance formée de plusieurs maillons ?
 
 
-        {{fig:2i2d-rendements-cascade}}'
+        {{fig:2i2d-rendements-cascade-muet}}'
       choices:
       - En multipliant les rendements des maillons
       - En additionnant les rendements des maillons
@@ -551,7 +548,7 @@ units:
       prompt: 'Une chaîne de traction comporte un hacheur de rendement $\eta_1 = 0{,}95$ et un moteur à courant continu de rendement $\eta_2 = 0{,}85$. Calculer le rendement global (3 décimales).
 
 
-        {{fig:2i2d-rendements-cascade}}'
+        {{fig:2i2d-rendements-cascade-muet}}'
       answer: '0.8075'
       numeric: true
       tolerance: 0.005
@@ -651,7 +648,7 @@ units:
       prompt: 'Le trolleybus reçoit 9,7 MJ·km⁻¹ à ses lignes aériennes. Les rendements de la distribution et de l''acheminement valent $\eta_{\text{alimentation}} = 0{,}97$ et $\eta_{\text{transport}} = 0{,}95$. Quelle énergie faut-il injecter en **entrée** du réseau de transport ? (arrondir au dixième)
 
 
-        {{fig:2i2d-rendements-cascade}}'
+        {{fig:2i2d-rendements-cascade-muet}}'
       answer: '10.5'
       numeric: true
       tolerance: 0.2
@@ -718,7 +715,7 @@ units:
         **Émissions** : trolleybus 92 g Eq CO₂·km⁻¹ ; autobus 1 409 g Eq CO₂·km⁻¹.
 
 
-        {{fig:2i2d-rendements-cascade}}'
+        {{fig:2i2d-rendements-cascade-muet}}'
       steps:
       - kind: input
         prompt: '**Étape 1.** Convertir la consommation du trolleybus (2,7 kWh·km⁻¹) en mégajoules par kilomètre.'
@@ -869,7 +866,7 @@ units:
       prompt: 'Quel est l''effet d''une association de batteries **en série** ?
 
 
-        {{fig:2i2d-batterie-associations}}'
+        {{fig:2i2d-batterie-associations-muet}}'
       choices:
       - Les tensions s'additionnent, la capacité en Ah ne change pas
       - Les capacités s'additionnent, la tension ne change pas
@@ -889,7 +886,7 @@ units:
       prompt: 'Quatre modules de batterie 12 V / 7 Ah sont branchés **en parallèle**. Quelles sont les caractéristiques du pack ?
 
 
-        {{fig:2i2d-batterie-associations}}'
+        {{fig:2i2d-batterie-associations-muet}}'
       choices:
       - 12 V et 28 Ah
       - 48 V et 7 Ah
@@ -909,7 +906,7 @@ units:
       prompt: 'Quatre modules 12 V / 7 Ah sont montés **en série**. Quelle est la tension du pack ?
 
 
-        {{fig:2i2d-batterie-associations}}'
+        {{fig:2i2d-batterie-associations-muet}}'
       answer: '48'
       numeric: true
       tolerance: 0.5
@@ -922,7 +919,7 @@ units:
       prompt: 'Les mêmes quatre modules 12 V / 7 Ah sont montés **deux branches de deux éléments en série, mises en parallèle**. Quelle est la capacité du pack ?
 
 
-        {{fig:2i2d-batterie-associations}}'
+        {{fig:2i2d-batterie-associations-muet}}'
       answer: '14'
       numeric: true
       tolerance: 0.5
@@ -935,7 +932,7 @@ units:
       prompt: 'Les quatre mêmes modules 12 V / 7 Ah donnent 336 Wh en série, 336 Wh en parallèle et 336 Wh en série-parallèle. Que faut-il en conclure ?
 
 
-        {{fig:2i2d-batterie-associations}}'
+        {{fig:2i2d-batterie-associations-muet}}'
       choices:
       - Le branchement fixe le couple (tension, capacité) mais pas l'énergie stockée, qui ne dépend que des éléments
       - Le branchement en série stocke plus d'énergie car la tension est plus élevée
@@ -1157,7 +1154,7 @@ units:
         **Besoins journaliers** (mai à août, 18 h de service) : 51 192 Wh/jour en mode écoconduite, 73 008 Wh/jour sans écoconduite.
 
 
-        {{fig:2i2d-batterie-associations}}'
+        {{fig:2i2d-batterie-associations-muet}}'
       steps:
       - kind: mcq
         prompt: '**Étape 1.** Combien d''éléments faut-il par parc, et selon quel câblage, pour obtenir 384 V ?'
@@ -1252,7 +1249,7 @@ units:
       prompt: 'Dans quelle unité s''exprime l''**irradiance** (puissance surfacique) reçue par un panneau ?
 
 
-        {{fig:2i2d-pv-orientation}}'
+        {{fig:2i2d-pv-orientation-muet}}'
       choices:
       - W·m⁻²
       - W
@@ -1326,7 +1323,7 @@ units:
       prompt: 'Un panneau CENIT 220 de surface 1,609 m² délivre 220 Wc sous une irradiance de 1 000 W·m⁻². Calculer son rendement, en pourcentage (arrondir au dixième).
 
 
-        {{fig:2i2d-pv-orientation}}'
+        {{fig:2i2d-pv-orientation-muet}}'
       answer: '13.7'
       numeric: true
       tolerance: 0.4
@@ -1349,7 +1346,7 @@ units:
       prompt: 'Quatre cellules photovoltaïques identiques (18 V ; 5,56 A) sont associées **en série**. Que deviennent la tension et le courant ?
 
 
-        {{fig:2i2d-pv-associations}}'
+        {{fig:2i2d-pv-associations-muet}}'
       choices:
       - La tension est multipliée par 4, le courant ne change pas
       - Le courant est multiplié par 4, la tension ne change pas
@@ -1369,7 +1366,7 @@ units:
       prompt: 'Quatre cellules (18 V ; 5,56 A) sont associées **en parallèle**. Quel est le courant total du panneau ? (2 décimales)
 
 
-        {{fig:2i2d-pv-associations}}'
+        {{fig:2i2d-pv-associations-muet}}'
       answer: '22.24'
       numeric: true
       tolerance: 0.1
@@ -1382,7 +1379,7 @@ units:
       prompt: 'Deux branches de deux cellules (18 V ; 5,56 A) en série sont mises en parallèle. Quelle est la tension du panneau ?
 
 
-        {{fig:2i2d-pv-associations}}'
+        {{fig:2i2d-pv-associations-muet}}'
       answer: '36'
       numeric: true
       tolerance: 0.5
@@ -1395,7 +1392,7 @@ units:
       prompt: 'Ces quatre mêmes cellules délivrent environ 400 W qu''elles soient montées en série, en parallèle ou en série-parallèle. Pourquoi ?
 
 
-        {{fig:2i2d-pv-associations}}'
+        {{fig:2i2d-pv-associations-muet}}'
       choices:
       - Le branchement modifie le couple ($U$, $I$) mais pas leur produit, qui reste la somme des puissances des cellules
       - La puissance est maximale en série, car la tension y est la plus grande
@@ -1452,7 +1449,7 @@ units:
       prompt: 'Quelle influence l''**orientation** et l''**inclinaison** ont-elles sur la production d''un panneau ?
 
 
-        {{fig:2i2d-pv-orientation}}'
+        {{fig:2i2d-pv-orientation-muet}}'
       choices:
       - Elles fixent l'angle d'incidence du rayonnement ; la production est maximale quand les rayons arrivent perpendiculairement au panneau
       - Elles n'ont aucune influence, seule la puissance crête compte

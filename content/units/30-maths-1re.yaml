@@ -1,4 +1,5 @@
-# Mathématiques 1re STI2D — primitives, trigonométrie, produit scalaire, nombres complexes.
+# Mathématiques 1re STI2D — dérivation, primitives, trigonométrie, produit scalaire, nombres complexes.
+# La compétence « Dérivation » ouvre l'unité : elle est le prérequis des primitives.
 # Source : docs/notes/maths-1re-cours.md (livre « Objectif Bac » 1re/Tle STI2D, p. 95-109).
 # Les coquilles du manuel signalées dans la note (signes du tableau de variations du cosinus
 # p. 101, condition « n ≠ 1 » p. 96, membre central de (u+v)·(u−v) p. 105) sont corrigées ici.
@@ -8,11 +9,450 @@ units:
   title: 'Mathématiques : analyse et géométrie'
   description: Primitives, cercle trigonométrique, fonctions sinusoïdales, produit scalaire et nombres complexes — les outils mathématiques de la 1re STI2D.
   skills:
+  - id: maths-derivee
+    title: Dérivation
+    icon: 📈
+    description: Nombre dérivé, tangente, dérivées usuelles, opérations, signe de la dérivée et tableau de variations.
+    prerequisites: []
+    lesson: lessons/maths-derivee.md
+    items:
+    - type: mcq
+      level: 1
+      prompt: 'Soit $f$ une fonction dérivable en un réel $a$. Le nombre dérivé $f''(a)$ est :'
+      choices:
+      - la limite, quand $h$ tend vers $0$, du quotient $\dfrac{f(a+h)-f(a)}{h}$
+      - la valeur du quotient $\dfrac{f(a+h)-f(a)}{h}$ pour $h=1$
+      - l'image $f(a)$
+      - la limite de $f(x)$ quand $x$ tend vers $a$
+      answer: 0
+      feedback:
+      - null
+      - Ce quotient est le taux d'accroissement entre $a$ et $a+1$ ; on obtient le nombre dérivé en faisant tendre $h$ vers $0$.
+      - $f(a)$ est l'ordonnée d'un point de la courbe, ce n'est pas une pente.
+      - Cette limite vaut $f(a)$ lorsque $f$ est continue en $a$ ; elle ne renseigne pas sur l'inclinaison de la courbe.
+      explanation: 'Le taux d''accroissement de $f$ entre $a$ et $a+h$ est $\dfrac{f(a+h)-f(a)}{h}$. Lorsque ce quotient admet une limite finie $\ell$ quand $h$ tend vers $0$, on dit que $f$ est dérivable en $a$ et on note $f''(a)=\ell$.'
+    - type: mcq
+      level: 1
+      prompt: 'Sur la figure, $A$ est le point de la courbe d''abscisse $a$ et $M$ un point mobile de la même courbe. Vers quoi tend le coefficient directeur de la sécante $(AM)$ lorsque $M$ se rapproche de $A$ ?
+
+
+        {{fig:maths-nombre-derive-muet}}'
+      choices:
+      - Vers le coefficient directeur de la tangente à la courbe en $A$, c'est-à-dire $f'(a)$
+      - Vers $f(a)$, l'ordonnée du point $A$
+      - Vers $0$, puisque le numérateur et le dénominateur tendent tous deux vers $0$
+      - Vers $a$, l'abscisse du point $A$
+      answer: 0
+      feedback:
+      - null
+      - L'ordonnée du point $A$ ne dépend pas de l'inclinaison de la sécante ; ce sont deux informations différentes.
+      - Un quotient de deux quantités qui tendent vers $0$ n'a aucune raison de tendre vers $0$ ; ici il tend vers une valeur finie non nulle.
+      - L'abscisse repère la position du point sur l'axe horizontal, elle ne mesure aucune pente.
+      explanation: 'Le coefficient directeur de la sécante $(AM)$ est le taux d''accroissement de $f$ entre les abscisses de $A$ et de $M$. Quand $M$ se rapproche de $A$, la sécante pivote autour de $A$ et vient se confondre avec la tangente en $A$ ; sa pente tend donc vers $f''(a)$. Autrement dit, $f''(a)$ est le coefficient directeur de la tangente.'
+    - type: mcq
+      level: 1
+      prompt: Sur $\left]0\,;+\infty\right[$, quelle est la dérivée de la fonction racine carrée ?
+      choices:
+      - $\dfrac{1}{2\sqrt{x}}$
+      - $\dfrac{1}{\sqrt{x}}$
+      - $2\sqrt{x}$
+      - $\dfrac{\sqrt{x}}{2}$
+      answer: 0
+      feedback:
+      - null
+      - Il manque le facteur $2$ au dénominateur.
+      - C'est le double de la fonction de départ, pas sa dérivée.
+      - Le $2$ ne divise pas la fonction ; il apparaît au dénominateur, devant $\sqrt{x}$.
+      explanation: 'Sur $\left]0\,;+\infty\right[$, $\left(\sqrt{x}\right)''=\dfrac{1}{2\sqrt{x}}$. La fonction racine carrée est définie en $0$ mais **n''y est pas dérivable** : sa courbe y admet une tangente verticale.'
+    - type: match
+      level: 1
+      prompt: Associer chaque fonction usuelle à sa dérivée.
+      pairs:
+      - left: $x^{3}$
+        right: $3x^{2}$
+      - left: $\sqrt{x}$
+        right: $\dfrac{1}{2\sqrt{x}}$
+      - left: $\dfrac{1}{x}$
+        right: $-\dfrac{1}{x^{2}}$
+      - left: $\mathrm{e}^{x}$
+        right: $\mathrm{e}^{x}$
+      - left: $\cos(x)$
+        right: $-\sin(x)$
+      - left: $\sin(x)$
+        right: $\cos(x)$
+    - type: mcq
+      level: 1
+      prompt: Soit $f$ une fonction dérivable en $a$ et $\mathcal{C}$ sa courbe représentative. Quelle est l'équation de la tangente à $\mathcal{C}$ au point d'abscisse $a$ ?
+      choices:
+      - $y=f'(a)(x-a)+f(a)$
+      - $y=f(a)(x-a)+f'(a)$
+      - $y=f'(a)x+f(a)$
+      - $y=f'(a)(x+a)-f(a)$
+      answer: 0
+      feedback:
+      - null
+      - Les rôles sont échangés ; c'est le nombre dérivé $f'(a)$ qui donne le coefficient directeur de la tangente.
+      - Le coefficient directeur est correct, mais cette droite ne passe pas par le point de contact dès que $a\neq0$.
+      - Deux signes sont faux ; la droite obtenue ne touche pas la courbe au point d'abscisse $a$.
+      explanation: 'La tangente passe par le point $A\big(a\,;f(a)\big)$ et a pour coefficient directeur $f''(a)$. Une droite de coefficient directeur $m$ passant par $A$ a pour équation $y=m(x-a)+f(a)$, d''où $y=f''(a)(x-a)+f(a)$.'
+    - type: mcq
+      level: 2
+      prompt: Soit $f$ la fonction définie sur $\mathbb{R}$ par $f(x)=x^{2}$. Quelle est l'équation réduite de la tangente à sa courbe au point d'abscisse $2$ ?
+      choices:
+      - $y=4x-4$
+      - $y=4x+4$
+      - $y=2x$
+      - $y=4x$
+      answer: 0
+      feedback:
+      - null
+      - Erreur de signe sur le terme constant ; cette droite passe par le point de coordonnées $(2\,;12)$, qui n'est pas sur la courbe.
+      - On a confondu la fonction dérivée $f'(x)=2x$ avec le nombre dérivé $f'(2)$.
+      - Le terme constant a été oublié ; cette droite ne passe pas par le point de contact de coordonnées $(2\,;4)$.
+      explanation: '$f(2)=4$ et $f''(x)=2x$, donc $f''(2)=4$. La tangente a pour équation $y=4(x-2)+4$, soit $y=4x-8+4=4x-4$. Vérification : pour $x=2$, $y=4$.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre la méthode pour déterminer l'équation réduite de la tangente à la courbe de $f$ au point d'abscisse $a$.
+      steps:
+      - Vérifier que $f$ est dérivable en $a$
+      - Calculer l'expression de la fonction dérivée $f'$
+      - Calculer les deux nombres $f(a)$ et $f'(a)$
+      - Reporter $a$, $f(a)$ et $f'(a)$ dans l'équation de la tangente
+      - Développer et réduire pour obtenir la forme $y=mx+p$
+      - Vérifier que le point de contact appartient bien à la droite trouvée
+      explanation: 'Deux ingrédients seulement sont nécessaires : $f''(a)$ donne la pente, $f(a)$ garantit que la droite touche la courbe au bon endroit. La vérification finale (remplacer $x$ par $a$ et retrouver $f(a)$) détecte la plupart des erreurs de calcul.'
+    - type: mcq
+      level: 2
+      prompt: Soit $u$ et $v$ deux fonctions dérivables sur un intervalle $I$. Quelle est la dérivée du produit $uv$ ?
+      choices:
+      - $(uv)'=u'v+uv'$
+      - $(uv)'=u'v'$
+      - $(uv)'=u'v-uv'$
+      - $(uv)'=u'v'+uv$
+      answer: 0
+      feedback:
+      - null
+      - 'La dérivée d''un produit n''est pas le produit des dérivées. Contre-exemple : avec $u(x)=v(x)=x$, $\left(x^{2}\right)''=2x$ alors que $u''v''=1$.'
+      - Le signe moins appartient à la formule du **quotient**, pas à celle du produit.
+      - Chacun des deux termes ne doit comporter qu'une seule dérivée.
+      explanation: '$(uv)''=u''v+uv''$ : on dérive un facteur à la fois, en laissant l''autre intact, puis on ajoute les deux résultats.'
+    - type: mcq
+      level: 2
+      prompt: Soit $u$ et $v$ deux fonctions dérivables sur un intervalle $I$, avec $v$ ne s'annulant pas sur $I$. Quelle est la dérivée du quotient $\dfrac{u}{v}$ ?
+      choices:
+      - $\left(\dfrac{u}{v}\right)'=\dfrac{u'v-uv'}{v^{2}}$
+      - $\left(\dfrac{u}{v}\right)'=\dfrac{u'}{v'}$
+      - $\left(\dfrac{u}{v}\right)'=\dfrac{uv'-u'v}{v^{2}}$
+      - $\left(\dfrac{u}{v}\right)'=\dfrac{u'v-uv'}{v}$
+      answer: 0
+      feedback:
+      - null
+      - 'La dérivée d''un quotient n''est pas le quotient des dérivées. Contre-exemple : sur $\left]0\,;+\infty\right[$, $\dfrac{x^{2}}{x}=x$ a pour dérivée $1$, alors que $\dfrac{2x}{1}=2x$.'
+      - Les deux termes du numérateur sont dans l'ordre inverse ; on commence par $u'v$.
+      - Le dénominateur est $v^{2}$, pas $v$.
+      explanation: 'La formule est $\left(\dfrac{u}{v}\right)''=\dfrac{u''v-uv''}{v^{2}}$. L''ordre du numérateur est essentiel puisque la soustraction n''est pas commutative.'
+    - type: mcq
+      level: 2
+      prompt: Quelle est la dérivée de la fonction $f$ définie sur $\mathbb{R}$ par $f(x)=(3x+1)\left(x^{2}-2\right)$ ?
+      choices:
+      - $f'(x)=9x^{2}+2x-6$
+      - $f'(x)=6x$
+      - $f'(x)=9x^{2}+2x+6$
+      - $f'(x)=(3x+1)\times2x$
+      answer: 0
+      feedback:
+      - null
+      - C'est le produit des dérivées $3\times2x$ ; la formule du produit comporte deux termes.
+      - 'Erreur de signe : $3\times(-2)=-6$, donc le terme constant est négatif.'
+      - On a oublié de dériver le premier facteur ; il manque le terme $3\left(x^{2}-2\right)$.
+      explanation: 'Avec $u(x)=3x+1$, $u''(x)=3$, $v(x)=x^{2}-2$ et $v''(x)=2x$ : $f''(x)=3\left(x^{2}-2\right)+(3x+1)\times2x=3x^{2}-6+6x^{2}+2x=9x^{2}+2x-6$.'
+    - type: mcq
+      level: 2
+      prompt: Quelle est la dérivée de la fonction $f$ définie sur $\left]-3\,;+\infty\right[$ par $f(x)=\dfrac{2x-1}{x+3}$ ?
+      choices:
+      - $f'(x)=\dfrac{7}{(x+3)^{2}}$
+      - $f'(x)=\dfrac{5}{(x+3)^{2}}$
+      - $f'(x)=-\dfrac{7}{(x+3)^{2}}$
+      - $f'(x)=2$
+      answer: 0
+      feedback:
+      - null
+      - 'Erreur de signe en développant : $-(2x-1)=-2x+1$, donc le numérateur vaut $2x+6-2x+1=7$.'
+      - Les deux termes du numérateur ont été écrits dans l'ordre inverse.
+      - C'est le quotient des dérivées ; la dérivation d'un quotient ne fonctionne pas ainsi.
+      explanation: 'Avec $u(x)=2x-1$, $u''(x)=2$, $v(x)=x+3$ et $v''(x)=1$ : $f''(x)=\dfrac{2(x+3)-(2x-1)\times1}{(x+3)^{2}}=\dfrac{2x+6-2x+1}{(x+3)^{2}}=\dfrac{7}{(x+3)^{2}}$. Cette dérivée est strictement positive, donc $f$ est croissante sur cet intervalle.'
+    - type: mcq
+      level: 2
+      prompt: Quelle est la dérivée de la fonction $f$ définie sur $\mathbb{R}$ par $f(x)=\mathrm{e}^{-3x+1}$ ?
+      choices:
+      - $f'(x)=-3\,\mathrm{e}^{-3x+1}$
+      - $f'(x)=\mathrm{e}^{-3x+1}$
+      - $f'(x)=(-3x+1)\,\mathrm{e}^{-3x+1}$
+      - $f'(x)=-\dfrac{1}{3}\,\mathrm{e}^{-3x+1}$
+      answer: 0
+      feedback:
+      - null
+      - Seule la fonction $x\mapsto\mathrm{e}^{x}$ est sa propre dérivée ; ici l'exposant n'est pas $x$.
+      - Le facteur qui sort est le coefficient de $x$ dans l'exposant, pas l'exposant tout entier.
+      - Diviser par $-3$ correspondrait à une primitive, pas à une dérivée.
+      explanation: 'Pour tous réels $a$ et $b$, $\left(\mathrm{e}^{ax+b}\right)''=a\,\mathrm{e}^{ax+b}$. Ici $a=-3$, donc $f''(x)=-3\,\mathrm{e}^{-3x+1}$. Cette dérivée est strictement négative, donc $f$ est décroissante sur $\mathbb{R}$.'
+    - type: mcq
+      level: 2
+      prompt: Une tension alternative, en volts, est modélisée pour $t\geqslant0$ ($t$ en secondes) par $u(t)=12\cos(100t+0{,}5)$. Quelle est sa dérivée ?
+      choices:
+      - $u'(t)=-1\,200\sin(100t+0{,}5)$
+      - $u'(t)=-12\sin(100t+0{,}5)$
+      - $u'(t)=1\,200\sin(100t+0{,}5)$
+      - $u'(t)=-1\,200\cos(100t+0{,}5)$
+      answer: 0
+      feedback:
+      - null
+      - Le coefficient $100$ placé devant $t$ dans l'argument doit apparaître en facteur.
+      - Il manque le signe moins que fait apparaître la dérivation du cosinus.
+      - La dérivée du cosinus est un sinus, et non un cosinus.
+      explanation: 'Pour tous réels $\omega$ et $\varphi$, $\left(\cos(\omega t+\varphi)\right)''=-\omega\sin(\omega t+\varphi)$. Ici $\omega=100$ et le facteur $12$ se conserve, d''où $u''(t)=12\times(-100)\sin(100t+0{,}5)=-1\,200\sin(100t+0{,}5)$.'
+    - type: mcq
+      level: 1
+      prompt: Soit $f$ une fonction dérivable sur un intervalle $I$. Quelle affirmation permet de déterminer le sens de variation de $f$ sur $I$ ?
+      choices:
+      - Si $f'$ est positive sur $I$ alors $f$ est croissante sur $I$, et si $f'$ est négative sur $I$ alors $f$ est décroissante sur $I$
+      - Si $f$ est positive sur $I$ alors $f$ est croissante sur $I$
+      - Si $f'$ est croissante sur $I$ alors $f$ est croissante sur $I$
+      - Si $f'$ est positive sur $I$ alors $f$ est décroissante sur $I$
+      answer: 0
+      feedback:
+      - null
+      - 'Le signe de $f$ situe la courbe par rapport à l''axe des abscisses, il ne dit rien de son sens de variation. Contre-exemple : $x\mapsto\dfrac{1}{x}$ est positive et décroissante sur $\left]0\,;+\infty\right[$.'
+      - 'Confusion entre le **signe** de $f''$ et ses **variations**. Contre-exemple : $f(x)=x^{2}-4x$ a pour dérivée $f''(x)=2x-4$, qui est croissante, alors que $f$ décroît sur $\left]-\infty\,;2\right]$.'
+      - Le sens est inversé ; une tangente de pente positive fait monter la courbe.
+      explanation: 'Le sens de variation de $f$ est donné par le **signe** de $f''$, jamais par ses variations. En un extremum situé à l''intérieur de l''intervalle, la tangente est horizontale et $f''$ s''annule en changeant de signe.
+
+
+        {{fig:maths-tangente-variations}}'
+    - type: grid
+      level: 2
+      prompt: Pour chaque fonction, cocher son sens de variation sur l'intervalle indiqué.
+      rows:
+      - id: carre
+        label: $x\mapsto x^{2}$ sur $\left]0\,;+\infty\right[$
+      - id: racine
+        label: $x\mapsto\sqrt{x}$ sur $\left]0\,;+\infty\right[$
+      - id: inverse
+        label: $x\mapsto\dfrac{1}{x}$ sur $\left]0\,;+\infty\right[$
+      - id: expo
+        label: $x\mapsto\mathrm{e}^{-2x}$ sur $\mathbb{R}$
+      - id: affine
+        label: $x\mapsto-3x+7$ sur $\mathbb{R}$
+      cols:
+      - id: C
+        label: Croissante
+      - id: D
+        label: Décroissante
+      answer:
+      - Ccarre
+      - Cracine
+      - Dinverse
+      - Dexpo
+      - Daffine
+      cellFeedback:
+        Dcarre: 'sur $\left]0\,;+\infty\right[$, la dérivée $2x$ est strictement positive'
+        Dracine: 'la dérivée $\dfrac{1}{2\sqrt{x}}$ est strictement positive'
+        Cinverse: 'la dérivée $-\dfrac{1}{x^{2}}$ est strictement négative'
+        Cexpo: 'la dérivée $-2\,\mathrm{e}^{-2x}$ est strictement négative, car une exponentielle est toujours positive'
+        Caffine: 'la dérivée est la constante $-3$, qui est négative'
+      explanation: 'Le réflexe est le même pour les cinq lignes, calculer la dérivée puis en lire le signe. Attention à la fonction carré, décroissante sur $\left]-\infty\,;0\right]$ mais croissante sur $\left]0\,;+\infty\right[$ ; un sens de variation ne se donne jamais sans préciser l''intervalle.'
+    - type: mcq
+      level: 3
+      prompt: Soit $f$ une fonction dérivable sur $\mathbb{R}$ et $a$ un réel tel que $f'(a)=0$. Que peut-on en conclure ?
+      choices:
+      - Rien, tant qu'on n'a pas étudié le signe de $f'$ de part et d'autre de $a$
+      - $f$ admet un maximum en $a$
+      - $f$ admet un extremum en $a$
+      - $f$ est constante au voisinage de $a$
+      answer: 0
+      feedback:
+      - null
+      - Même si $f'$ change de signe en $a$, ce peut être un minimum et non un maximum.
+      - 'Contre-exemple : $f(x)=x^{3}$ vérifie $f''(0)=0$, pourtant $f$ est strictement croissante sur $\mathbb{R}$ et n''admet aucun extremum.'
+      - Une fonction constante a une dérivée nulle sur tout un intervalle, pas seulement en un point isolé.
+      explanation: 'S''annuler ne suffit pas. La fonction $f$ admet un extremum en $a$ si et seulement si $f''$ s''annule **en changeant de signe** en $a$. La tangente y est alors horizontale, mais une tangente horizontale peut aussi être un simple palier, comme pour $x\mapsto x^{3}$ en $0$.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre les étapes d'une étude du sens de variation d'une fonction $f$ sur un intervalle.
+      steps:
+      - Déterminer l'intervalle d'étude et vérifier que $f$ y est dérivable
+      - Calculer l'expression de $f'(x)$
+      - Factoriser $f'(x)$ ou résoudre l'équation $f'(x)=0$
+      - Déterminer le signe de $f'(x)$ sur l'intervalle
+      - Reporter ce signe dans la première ligne du tableau de variations
+      - Tracer les flèches et calculer les valeurs de $f$ aux bornes et aux extremums
+      explanation: 'Le tableau de variations comporte trois lignes, les valeurs de $x$, le signe de $f''(x)$, puis les variations de $f$. Les flèches ne se tracent qu''une fois le signe de la dérivée établi.'
+    - type: input
+      level: 2
+      prompt: Soit $f$ la fonction définie sur $\mathbb{R}$ par $f(x)=x^{3}-3x$. Calculer le nombre dérivé $f'(2)$.
+      answer: '9'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$f''(x)=3x^{2}-3$, donc $f''(2)=3\times4-3=12-3=9$. La tangente au point d''abscisse $2$ a donc pour coefficient directeur $9$.'
+    - type: input
+      level: 2
+      prompt: Soit $f$ la fonction définie sur $\mathbb{R}$ par $f(x)=x^{2}-4x+1$. Quel est le coefficient directeur de la tangente à sa courbe au point d'abscisse $3$ ?
+      answer: '2'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$f''(x)=2x-4$, donc $f''(3)=6-4=2$. Le coefficient directeur de la tangente au point d''abscisse $a$ est le nombre dérivé $f''(a)$.'
+    - type: input
+      level: 3
+      prompt: La fonction $f$ définie sur $\mathbb{R}$ par $f(x)=-2x^{2}+12x-7$ admet un maximum. En quelle valeur de $x$ est-il atteint ?
+      answer: '3'
+      numeric: true
+      tolerance: 0.01
+      explanation: '$f''(x)=-4x+12$ s''annule pour $x=3$ ; elle est positive avant $3$ et négative après, donc $f$ croît puis décroît. Le maximum est atteint en $x=3$ et vaut $f(3)=-18+36-7=11$.'
+    - type: input
+      level: 3
+      prompt: La position d'un chariot sur son rail, en mètres, est donnée pour $t\in\left[0\,;3\right]$ ($t$ en secondes) par $x(t)=0{,}5t^{3}-2t^{2}+3t$. Calculer sa vitesse à l'instant $t=2$ s.
+      answer: '1'
+      numeric: true
+      tolerance: 0.02
+      unit: m/s
+      explanation: 'La vitesse est la dérivée de la position par rapport au temps : $v(t)=x''(t)=1{,}5t^{2}-4t+3$. Donc $v(2)=1{,}5\times4-8+3=6-8+3=1$ $\mathrm{m}\cdot\mathrm{s}^{-1}$.'
+    - type: mcq
+      level: 2
+      prompt: La charge électrique $q$, en coulombs, ayant traversé une section de conducteur depuis l'instant $t=0$ est une fonction dérivable du temps. Que représente sa dérivée $q'(t)$ ?
+      choices:
+      - L'intensité du courant à l'instant $t$, en ampères
+      - La tension aux bornes du conducteur, en volts
+      - La charge accumulée depuis $t=0$, en coulombs
+      - La puissance dissipée dans le conducteur, en watts
+      answer: 0
+      feedback:
+      - null
+      - La tension est liée au champ électrique et à la résistance, pas au taux de variation de la charge.
+      - La charge accumulée est $q(t)$ elle-même, pas sa dérivée.
+      - La puissance est le produit de la tension par l'intensité ; ce n'est pas une dérivée de la charge.
+      explanation: 'L''intensité est le débit de charge : $i(t)=\dfrac{\mathrm{d}q}{\mathrm{d}t}=q''(t)$. L''unité le confirme, puisque $1$ A $=1$ $\mathrm{C}\cdot\mathrm{s}^{-1}$. C''est le même schéma que la vitesse, dérivée de la position.'
+    - type: guided
+      level: 3
+      title: Le bac de rétention en tôle pliée
+      prompt: 'Exercice complet : mise en équation, dérivée d''un polynôme, signe de la dérivée et optimisation d''un volume.'
+      intro: 'Un atelier fabrique des bacs de rétention sans couvercle. Il part d''une plaque carrée de $30$ cm de côté, découpe aux quatre coins un carré de côté $x$ (en centimètres), puis relève les quatre bandes restantes pour former les parois.
+
+
+        On cherche la valeur de $x$ qui donne le bac de plus grand volume.
+
+
+        {{fig:guide-maths-bac-tole-muet}}'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quelle est l''expression du volume $V(x)$ du bac, en centimètres cubes ?'
+        choices:
+        - $V(x)=x(30-2x)^{2}$
+        - $V(x)=x(30-x)^{2}$
+        - $V(x)=(30-2x)^{2}$
+        - $V(x)=30x^{2}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - On retire un carré de côté $x$ **à chaque extrémité** du côté de la plaque, soit $2x$ en tout.
+        - 'C''est l''aire du fond du bac : le facteur correspondant à la hauteur manque.'
+        - Avec cette expression, le côté du fond ne diminuerait pas quand $x$ augmente, ce qui est impossible.
+        explanation: 'Une fois les bords relevés, la hauteur du bac vaut $x$ et le fond est un carré de côté $30-2x$, puisqu''on a retiré $x$ de chaque côté. Le volume est donc $V(x)=x(30-2x)^{2}$.'
+      - kind: mcq
+        prompt: '**Étape 2.** Sur quel intervalle la variable $x$ peut-elle varier pour que le bac existe ?'
+        choices:
+        - $\left]0\,;15\right[$
+        - $\left]0\,;30\right[$
+        - $\left[0\,;15\right]$
+        - $\left]0\,;7{,}5\right[$
+        answer:
+        - 0
+        feedback:
+        - null
+        - Pour $x\geqslant15$, le côté du fond serait nul ou négatif.
+        - 'Les deux bornes doivent être exclues : en $x=0$ le bac n''a pas de hauteur, en $x=15$ il n''a plus de fond.'
+        - Rien n'interdit de découper des carrés de plus de $7{,}5$ cm ; la seule contrainte porte sur le côté du fond.
+        explanation: 'Il faut à la fois $x>0$ (hauteur non nulle) et $30-2x>0$ (fond non vide), c''est-à-dire $x<15$. D''où $x\in\left]0\,;15\right[$.'
+      - kind: mcq
+        prompt: '**Étape 3.** Quelle est la forme développée de $V(x)$ ?'
+        choices:
+        - $V(x)=4x^{3}-120x^{2}+900x$
+        - $V(x)=4x^{3}+120x^{2}+900x$
+        - $V(x)=x^{3}-60x^{2}+900x$
+        - $V(x)=4x^{3}-120x^{2}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Erreur de signe : dans l''identité remarquable, le double produit est retranché.'
+        - 'Le facteur $2$ a été oublié : $(2x)^{2}=4x^{2}$ et $2\times30\times2x=120x$.'
+        - Le terme $900x$ a été perdu en distribuant le facteur $x$.
+        explanation: '$(30-2x)^{2}=900-120x+4x^{2}$, donc $V(x)=x\left(900-120x+4x^{2}\right)=900x-120x^{2}+4x^{3}$.'
+      - kind: mcq
+        prompt: '**Étape 4.** Quelle est l''expression factorisée de $V''(x)$ ?'
+        choices:
+        - $V'(x)=12(x-5)(x-15)$
+        - $V'(x)=12x^{2}-240x$
+        - $V'(x)=12(x+5)(x+15)$
+        - $V'(x)=3(x-5)(x-15)$
+        answer:
+        - 0
+        feedback:
+        - null
+        - La dérivée du terme $900x$ a été oubliée.
+        - 'Erreur de signe : une racine égale à $5$ correspond au facteur $x-5$, pas $x+5$.'
+        - 'Le coefficient dominant de $V''$ vaut $12$ : en développant, $3(x-5)(x-15)$ donnerait $3x^{2}$.'
+        explanation: '$V''(x)=12x^{2}-240x+900=12\left(x^{2}-20x+75\right)$. Les racines de $x^{2}-20x+75$ sont $5$ et $15$ (leur somme vaut $20$ et leur produit $75$), d''où $V''(x)=12(x-5)(x-15)$.'
+      - kind: mcq
+        prompt: '**Étape 5.** Quel est le signe de $V''(x)$ sur $\left]0\,;15\right[$ ?'
+        choices:
+        - Positive sur $\left]0\,;5\right[$, nulle en $5$, négative sur $\left]5\,;15\right[$
+        - Toujours positive
+        - Toujours négative
+        - Négative puis positive, avec un changement en $x=5$
+        answer:
+        - 0
+        feedback:
+        - null
+        - Le volume serait alors maximal en $x=15$, valeur pour laquelle le bac n'a plus de fond.
+        - Le volume part de presque rien pour de petites valeurs de $x$ et commence par augmenter.
+        - 'Avant $5$, les deux facteurs $x-5$ et $x-15$ sont négatifs : leur produit est positif.'
+        explanation: 'Sur $\left]0\,;15\right[$, le facteur $x-15$ est strictement négatif. Le signe de $V''$ est donc l''opposé de celui de $x-5$ : positif avant $5$, nul en $5$, négatif après. Le volume croît puis décroît.'
+      - kind: input
+        prompt: '**Étape 6.** Quelle valeur de $x$ rend le volume maximal ?'
+        answer: '5'
+        numeric: true
+        tolerance: 0.05
+        unit: cm
+        explanation: 'La dérivée change de signe en $x=5$, en passant du positif au négatif : le volume y atteint son maximum.'
+      - kind: input
+        prompt: '**Étape 7.** Quel est ce volume maximal ?'
+        answer: '2000'
+        numeric: true
+        tolerance: 1
+        unit: cm³
+        explanation: '$V(5)=5\times(30-10)^{2}=5\times400=2\,000$ cm³, soit $2$ litres. Le bac mesure alors $20$ cm de côté et $5$ cm de hauteur.'
+      - kind: mcq
+        prompt: '**Étape 8.** Pour simplifier le réglage de la machine, l''atelier envisage de découper des carrés de $7$ cm de côté. Quelle en serait la conséquence ?'
+        choices:
+        - Le volume tomberait à $1\,792$ cm³, soit une perte d'environ $10\ \%$
+        - Le volume serait inchangé, car $7$ cm est proche de $5$ cm
+        - Le volume tomberait à $1\,792$ cm³, soit une perte d'environ $30\ \%$
+        - Le bac ne pourrait plus être fabriqué
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Le volume dépend bien de $x$ : il passe de $2\,000$ cm³ à $1\,792$ cm³.'
+        - 'La perte relative vaut $\dfrac{2\,000-1\,792}{2\,000}=0{,}104$, soit environ $10\ \%$.'
+        - '$7$ appartient à $\left]0\,;15\right[$ : le bac existe, il est seulement moins volumineux.'
+        explanation: '$V(7)=7\times(30-14)^{2}=7\times256=1\,792$ cm³, soit $208$ cm³ de moins, environ $10\ \%$. Au voisinage d''un maximum la courbe est plate : s''écarter de $2$ cm de l''optimum coûte peu, ce qui laisse une marge au bureau des méthodes.'
   - id: maths-primitives
     title: Primitives
     icon: 🧮
     description: Définition, tableau des primitives usuelles, fonctions composées et condition initiale.
-    prerequisites: []
+    prerequisites:
+    - maths-derivee
     lesson: lessons/maths-primitives.md
     items:
     - type: mcq
@@ -415,6 +855,103 @@ units:
     prerequisites: []
     lesson: lessons/maths-cercle-trigo.md
     items:
+    - type: match
+      level: 1
+      prompt: 'Sur ce cercle trigonométrique, huit points sont repérés par une lettre. Associer chaque mesure d''angle au point où elle se place.
+
+
+        {{fig:maths-cercle-reperage}}'
+      pairs:
+      - left: $\dfrac{\pi}{6}$
+        right: le point $A$
+      - left: $\dfrac{\pi}{3}$
+        right: le point $H$
+      - left: $\dfrac{3\pi}{4}$
+        right: le point $C$
+      - left: $\pi$
+        right: le point $D$
+      - left: $\dfrac{3\pi}{2}$
+        right: le point $F$
+      - left: $-\dfrac{\pi}{4}$
+        right: le point $G$
+      explanation: 'On tourne depuis $I$ dans le sens direct (sens inverse des aiguilles d''une montre) : $\dfrac{\pi}{6}$ est un sixième de demi-tour, donc $30^{\circ}$ ; $\dfrac{3\pi}{4}$ vaut $135^{\circ}$ ; $\dfrac{3\pi}{2}$ est trois quarts de tour, en bas du cercle. Une mesure **négative** se lit dans l''autre sens : $-\dfrac{\pi}{4}$, c''est $45^{\circ}$ **sous** l''axe des abscisses, au même endroit que $\dfrac{7\pi}{4}$.'
+      tags:
+      - reperage
+    - type: grid
+      level: 1
+      prompt: 'Placer d''abord, calculer ensuite : pour chaque mesure, cocher le quadrant du cercle trigonométrique où se trouve son point image.
+
+
+        {{fig:maths-cercle-quadrants-muet}}'
+      rows:
+      - id: a
+        label: $\dfrac{2\pi}{3}$
+      - id: b
+        label: $\dfrac{5\pi}{4}$
+      - id: c
+        label: $-\dfrac{\pi}{3}$
+      - id: d
+        label: $\dfrac{7\pi}{6}$
+      - id: e
+        label: $\dfrac{5\pi}{3}$
+      cols:
+      - id: I
+        label: I
+      - id: II
+        label: II
+      - id: III
+        label: III
+      - id: IV
+        label: IV
+      answer:
+      - IIa
+      - IIIb
+      - IVc
+      - IIId
+      - IVe
+      cellFeedback:
+        Ia: '$\dfrac{2\pi}{3}=120^{\circ}$ dépasse le quart de tour, on est déjà passé au-dessus de l''axe vertical'
+        IIIa: '$\dfrac{2\pi}{3}$ vaut $120^{\circ}$, moins qu''un demi-tour ; le point est encore au-dessus de l''axe horizontal'
+        IIb: '$\dfrac{5\pi}{4}=225^{\circ}$ dépasse le demi-tour, le point est passé sous l''axe horizontal'
+        Ic: 'une mesure négative se compte dans le sens **indirect** : on descend sous l''axe des abscisses'
+        IIIc: '$-\dfrac{\pi}{3}$, c''est $60^{\circ}$ vers le bas depuis $I$, on ne va pas jusqu''au demi-tour'
+        IId: '$\dfrac{7\pi}{6}=210^{\circ}$ est un peu plus qu''un demi-tour'
+        IIIe: '$\dfrac{5\pi}{3}=300^{\circ}$ est au-delà des trois quarts de tour, on est remonté vers $I$'
+      explanation: 'Repère utile : le quadrant I va de $0$ à $\dfrac{\pi}{2}$, le II jusqu''à $\pi$, le III jusqu''à $\dfrac{3\pi}{2}$ et le IV jusqu''à $2\pi$. Placer le point **avant** de chercher $\cos$ et $\sin$ évite les erreurs de signe : le quadrant donne déjà les deux signes.
+
+
+        {{fig:maths-cercle-quadrants}}'
+      tags:
+      - reperage
+    - type: mcq
+      level: 2
+      prompt: Un réel $x$ vérifie $\cos(x)<0$ et $\sin(x)>0$. Où se trouve son point image sur le cercle trigonométrique ?
+      choices:
+      - Dans le quadrant II, entre $\dfrac{\pi}{2}$ et $\pi$
+      - Dans le quadrant I, entre $0$ et $\dfrac{\pi}{2}$
+      - Dans le quadrant III, entre $\pi$ et $\dfrac{3\pi}{2}$
+      - Dans le quadrant IV, entre $\dfrac{3\pi}{2}$ et $2\pi$
+      answer: 0
+      feedback:
+      - null
+      - 'Dans le quadrant I les deux coordonnées sont positives : $\cos(x)>0$.'
+      - 'Dans le quadrant III les deux coordonnées sont négatives : $\sin(x)$ le serait aussi.'
+      - 'Dans le quadrant IV, $\cos(x)>0$ et $\sin(x)<0$ : les deux signes sont inversés.'
+      explanation: 'Le cosinus est l''**abscisse** du point image et le sinus son **ordonnée**. Abscisse négative et ordonnée positive : c''est le coin en haut à gauche du repère, donc le quadrant II.'
+      tags:
+      - reperage
+    - type: order
+      level: 2
+      prompt: Ranger ces mesures dans l'ordre où on rencontre leurs points images en partant de $I$ et en tournant dans le **sens direct**.
+      steps:
+      - $\dfrac{\pi}{6}$
+      - $\dfrac{\pi}{2}$
+      - $\dfrac{3\pi}{4}$
+      - $\pi$
+      - $\dfrac{5\pi}{3}$
+      explanation: 'Tourner dans le sens direct, c''est faire croître la mesure : il suffit de ranger les fractions dans l''ordre croissant. En degrés : $30^{\circ}$, $90^{\circ}$, $135^{\circ}$, $180^{\circ}$, $300^{\circ}$.'
+      tags:
+      - reperage
     - type: mcq
       level: 1
       prompt: 'La mesure en radians de l''angle orienté $\left(\overrightarrow{OI},\overrightarrow{OM}\right)$ est :
@@ -824,7 +1361,7 @@ units:
       prompt: 'Dans l''écriture $u(t)=A\cos(\omega t+\varphi)$ (avec $A>0$), que représente $A$ ?
 
 
-        {{fig:maths-sinusoide}}'
+        {{fig:maths-sinusoide-muet}}'
       choices:
       - 'l''amplitude : le maximum de $u$ vaut $A$ et son minimum $-A$'
       - la période de $u$
@@ -1021,7 +1558,7 @@ units:
         On étudie ce signal avec les outils des chapitres 1 (primitives), 2 (cercle trigonométrique) et 3 (fonctions trigonométriques).
 
 
-        {{fig:maths-sinusoide}}'
+        {{fig:maths-sinusoide-muet}}'
       steps:
       - kind: mcq
         prompt: '**Étape 1.** Identifier l''amplitude $A$, la pulsation $\omega$ et la phase à l''origine $\varphi$.'
@@ -1124,7 +1661,7 @@ units:
         La figure ci-dessous rappelle le vocabulaire d''un signal sinusoïdal (amplitude, période, valeur à l''origine).
 
 
-        {{fig:maths-sinusoide}}'
+        {{fig:maths-sinusoide-muet}}'
       steps:
       - kind: mcq
         prompt: '**Étape 1.** Identifier l''amplitude $A$, la pulsation $\omega$ et la phase à l''origine $\varphi$.'
@@ -1225,7 +1762,7 @@ units:
       prompt: 'Soit $\vec{u}$ et $\vec{v}$ deux vecteurs non nuls du plan formant un angle de mesure $\theta$. La définition **géométrique** du produit scalaire est :
 
 
-        {{fig:maths-produit-scalaire-angle}}'
+        {{fig:maths-produit-scalaire-angle-muet}}'
       choices:
       - $\vec{u}\cdot\vec{v}=\left\|\vec{u}\right\|\times\left\|\vec{v}\right\|\times\cos(\theta)$
       - $\vec{u}\cdot\vec{v}=\left\|\vec{u}\right\|\times\left\|\vec{v}\right\|\times\sin(\theta)$
@@ -1376,7 +1913,7 @@ units:
       prompt: 'Théorème d''Al-Kashi dans le triangle $ABC$, avec $a=BC$, $b=AC$ et $c=AB$ :
 
 
-        {{fig:maths-al-kashi}}'
+        {{fig:maths-al-kashi-muet}}'
       choices:
       - $a^{2}=b^{2}+c^{2}-2bc\cos(\hat{A})$
       - $a^{2}=b^{2}+c^{2}+2bc\cos(\hat{A})$
