@@ -32,7 +32,7 @@ $$\lambda = v \times T = \frac{v}{f} \qquad\text{avec}\qquad f = \frac{1}{T}$$
 
 Attention : on **divise** par la fréquence, on ne multiplie pas. Le contrôle des unités tranche : $\mathrm{m\cdot s^{-1}} \times \mathrm{s} = \mathrm{m}$ et $\mathrm{m\cdot s^{-1}} / \mathrm{s^{-1}} = \mathrm{m}$, alors que $\mathrm{m\cdot s^{-1}} \times \mathrm{Hz} = \mathrm{m\cdot s^{-2}}$ n'est pas une longueur.
 
-*Notation* : le livre écrit $f$ dans les chapitres sur les ondes et le son, et $\nu$ (lettre grecque « nu ») dans celui sur les ondes électromagnétiques. C'est **la même grandeur**, la fréquence en hertz. Ne pas confondre $\nu$ (fréquence) et $v$ (célérité).
+*Notation* : on écrit $f$ pour les ondes et le son, et $\nu$ (lettre grecque « nu ») pour les ondes électromagnétiques. C'est **la même grandeur**, la fréquence en hertz. Ne pas confondre $\nu$ (fréquence) et $v$ (célérité).
 
 ## Transmission, réflexion et absorption
 

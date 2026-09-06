@@ -127,7 +127,7 @@ questions:
   - Le piston (3)
   - Le bâti (0)
   answer: 0
-  explanation: 'La bielle tourne ET se déplace : son mouvement est la somme d''une translation et d''une rotation (manuel p. 31).'
+  explanation: 'La bielle tourne ET se déplace : son mouvement est la somme d''une translation et d''une rotation.'
   feedback:
   - null
   - 'Non : la manivelle est en rotation pure autour de (O, z).'

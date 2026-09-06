@@ -303,7 +303,7 @@ units:
         SUPt: si les trois supports étaient confondus, il n'y aurait aucune construction à faire
         CONt: c'est la première condition du théorème des 3 forces
         TRIt: c'est la traduction graphique de la somme vectorielle nulle
-      explanation: '2 forces : même support, même intensité, sens opposés. 3 forces : supports concourants **et** dynamique fermé (manuel Tle, p. 270).'
+      explanation: '2 forces : même support, même intensité, sens opposés. 3 forces : supports concourants **et** dynamique fermé.'
       tags:
       - trois-forces
     - type: match
@@ -482,7 +482,7 @@ units:
       - 'Non : individuel et collectif sont deux sortes de **bâtiments** ; il manque toute la catégorie des ouvrages d''art.'
       - 'Non : c''est un classement par **matériau**, pas par destination de l''ouvrage.'
       - 'Non : superstructure et infrastructure sont les deux **parties** d''une même structure, la visible et l''enterrée.'
-      explanation: Le manuel distingue les **bâtiments** (individuels ou collectifs) et les **ouvrages d'aménagement du territoire** (ponts, barrages…).
+      explanation: On distingue les **bâtiments** (individuels ou collectifs) et les **ouvrages d'aménagement du territoire** (ponts, barrages…).
       tags:
       - structures
     - type: mcq
@@ -555,7 +555,7 @@ units:
         HVne: la neige pèse, elle ne pousse pas horizontalement
         HVve: le vent, comme le séisme ou la pression de l'eau, agit horizontalement et par épisodes
         VVve: le vent pousse **horizontalement** sur les façades
-      explanation: 'Tableau du manuel (Tle, p. 272) : verticale permanente → poids propre ; verticale variable → exploitation, neige ; horizontale variable → vent, séisme, pression de l''eau.'
+      explanation: 'Tableau des actions : verticale permanente → poids propre ; verticale variable → exploitation, neige ; horizontale variable → vent, séisme, pression de l''eau.'
       tags:
       - actions
     - type: mcq
@@ -712,7 +712,7 @@ units:
         TRAfi: 'l''appui simple **fixe** bloque la translation : il n''y a pas de rouleaux'
         ROTen: 'un encastrement bloque tout, y compris la rotation : c''est une liaison complète'
         TRAen: un encastrement ne laisse glisser l'élément dans aucune direction
-      explanation: 'Manuel Tle p. 272-273 : appui simple glissant → rotation + translation ; appui simple fixe → rotation seule ; encastrement → aucun degré de liberté.'
+      explanation: 'Appui simple glissant → rotation + translation ; appui simple fixe → rotation seule ; encastrement → aucun degré de liberté.'
       tags:
       - appuis
     - type: mcq
@@ -1420,7 +1420,7 @@ units:
       - 'Non : c''est la définition d''un **alliage** (l''acier, par exemple).'
       - 'Non : c''est la définition d''un **nanomatériau**.'
       - 'Non : c''est la définition d''un matériau **organique**.'
-      explanation: 'Composite = au moins deux matériaux **non miscibles** assemblés. Exemples du manuel : béton armé (béton + aciers), raquette de tennis (fibre de verre + résine polyester), brique alimentaire (carton + plastique + aluminium).'
+      explanation: 'Composite = au moins deux matériaux **non miscibles** assemblés. Exemples : béton armé (béton + aciers), raquette de tennis (fibre de verre + résine polyester), brique alimentaire (carton + plastique + aluminium).'
       tags:
       - familles
     - type: mcq
@@ -1454,7 +1454,7 @@ units:
       - 'Non : la légèreté est une propriété (masse volumique faible), pas une définition d''échelle.'
       - 'Non : l''usinage est un procédé de fabrication ; le nanomatériau se définit par sa structure.'
       - 'Non : l''épaisseur d''un film plastique reste des milliers de fois supérieure au nanomètre.'
-      explanation: 'Exemples du manuel : nanoparticules d''oxyde de cérium ajoutées au diesel pour améliorer les performances, membranes de polymères nanostructurées pour purifier l''eau.'
+      explanation: 'Exemples : nanoparticules d''oxyde de cérium ajoutées au diesel pour améliorer les performances, membranes de polymères nanostructurées pour purifier l''eau.'
       tags:
       - familles
     - type: mcq
@@ -1493,7 +1493,7 @@ units:
       - plastiques
     - type: mcq
       level: 1
-      prompt: Quelles propriétés générales le manuel attribue-t-il aux matières plastiques ?
+      prompt: Quelles propriétés générales attribue-t-on aux matières plastiques ?
       choices:
       - Elles ne laissent pas passer le courant électrique, elles sont légères et généralement étanches
       - Elles conduisent bien le courant et la chaleur
@@ -1518,7 +1518,7 @@ units:
       - Alliage d'aluminium (2 700)
       - Acier (7 800)
       - Bronze (8 900)
-      explanation: 'Tableau du manuel, p. 279. Deux repères à retenir : l''aluminium est environ **trois fois** plus léger que l''acier, et les fibres de carbone **quatre fois** plus légères.'
+      explanation: 'Deux repères à retenir : l''aluminium est environ **trois fois** plus léger que l''acier, et les fibres de carbone **quatre fois** plus légères.'
       tags:
       - proprietes
     - type: input
@@ -1590,7 +1590,7 @@ units:
       - proprietes
     - type: order
       level: 2
-      prompt: Classez ces matériaux du **moins sensible** au **plus sensible** à la corrosion, selon l'échelle du manuel.
+      prompt: Classez ces matériaux du **moins sensible** au **plus sensible** à la corrosion.
       steps:
       - Or
       - Aluminium
@@ -1598,12 +1598,12 @@ units:
       - Cuivre
       - Zinc
       - Acier
-      explanation: 'Échelle du manuel, p. 279. L''aluminium doit sa bonne place à sa **passivation** : il se recouvre spontanément d''une couche d''alumine qui protège le métal sous-jacent. À l''autre bout, l''acier ordinaire rouille dès qu''il n''est pas protégé.'
+      explanation: 'L''aluminium doit sa bonne place à sa **passivation** : il se recouvre spontanément d''une couche d''alumine qui protège le métal sous-jacent. À l''autre bout, l''acier ordinaire rouille dès qu''il n''est pas protégé.'
       tags:
       - corrosion
     - type: mcq
       level: 2
-      prompt: D'après l'échelle de corrosion du manuel, quel matériau est le **plus sensible** à la corrosion ?
+      prompt: Sur l'échelle de résistance à la corrosion, quel matériau est le **plus sensible** ?
       choices:
       - L'acier
       - L'or
@@ -1615,7 +1615,7 @@ units:
       - 'Non : l''or est à l''autre extrémité de l''échelle, c''est le moins sensible.'
       - 'Non : l''acier inoxydable résiste bien, il est classé en troisième position du côté « moins sensible ».'
       - 'Non : le zinc est en avant-dernière position — on l''utilise d''ailleurs pour **protéger** l''acier (galvanisation).'
-      explanation: 'Ordre du manuel : Or → Aluminium → Acier inoxydable → Cuivre → Zinc → **Acier**. C''est bien pour cela qu''une charpente métallique reçoit systématiquement un traitement de surface.'
+      explanation: 'Ordre à retenir : Or → Aluminium → Acier inoxydable → Cuivre → Zinc → **Acier**. C''est bien pour cela qu''une charpente métallique reçoit systématiquement un traitement de surface.'
       tags:
       - corrosion
     - type: match
@@ -1683,7 +1683,7 @@ units:
       - 'Non : partir d''un bloc plein gaspille énormément de matière et de temps d''usinage. On usine ensuite seulement les portées fonctionnelles.'
       - 'Non : l''aluminium est un **métal**, pas un thermoplastique. L''injection concerne les granulés de plastique.'
       - 'Non : le soudage assemble des pièces, il ne crée pas une forme complexe d''un seul tenant.'
-      explanation: 'Le moulage est le procédé des « formes complexes » d''après le manuel. En pratique on moule d''abord, puis on **usine** les quelques surfaces qui demandent de la précision : c''est l''enchaînement typique de procédés.'
+      explanation: 'Le moulage est le procédé des **formes complexes**. En pratique on moule d''abord, puis on **usine** les quelques surfaces qui demandent de la précision : c''est l''enchaînement typique de procédés.'
       tags:
       - procedes
     - type: mcq
@@ -1700,7 +1700,7 @@ units:
       - 'Non : l''acier est bien plus rigide ($E = 200\,000$ N/mm²) ; c''est justement cette rigidité qu''on ne veut pas ici.'
       - 'Non : on sait parfaitement fabriquer des tubes d''acier de cette taille, on en faisait autrefois.'
       - 'Non : l''acier se recycle très bien ; c''est plutôt le composite qui pose problème en fin de vie.'
-      explanation: 'Exemple du manuel : le composite fibre de verre + résine polyester donne des cadres « plus souples et plus légers » que l''acier. C''est un cas typique où le meilleur matériau n''est pas le plus résistant, mais celui dont le **compromis** de propriétés convient à l''usage.'
+      explanation: 'Exemple : le composite fibre de verre + résine polyester donne des cadres plus souples et plus légers que l''acier. C''est un cas typique où le meilleur matériau n''est pas le plus résistant, mais celui dont le **compromis** de propriétés convient à l''usage.'
       tags:
       - familles
   - id: 2i2d-materiaux-choix
@@ -1713,7 +1713,7 @@ units:
     items:
     - type: mcq
       level: 1
-      prompt: 'Le choix d''un matériau repose sur cinq familles de critères. Laquelle de ces listes est celle du manuel ?'
+      prompt: 'Le choix d''un matériau repose sur cinq familles de critères. Laquelle de ces listes est la bonne ?'
       choices:
       - Mécaniques, physico-chimiques, de mise en œuvre, économiques, écologiques
       - Mécaniques, thermiques, électriques, optiques, acoustiques
@@ -1767,7 +1767,7 @@ units:
       - indices
     - type: mcq
       level: 2
-      prompt: 'Sur l''échelle de notation du manuel (0 à 5), à quoi correspond la note **4** ?'
+      prompt: 'Sur une échelle de notation de 0 à 5, à quoi correspond la note **4** ?'
       choices:
       - Bon
       - Excellent
@@ -1815,7 +1815,7 @@ units:
       - null
       - 'Non : cette propriété-là s''appelle l''**homogénéité**.'
       - 'Non : tous les matériaux se déforment sous charge, au moins élastiquement.'
-      - 'Non : l''isotropie concerne ici les propriétés **mécaniques** ; la formulation exacte du manuel parle bien de directions.'
+      - 'Non : l''isotropie concerne ici les propriétés **mécaniques** ; la définition parle bien de directions.'
       explanation: 'Deux hypothèses distinctes de la RDM : **isotrope** = mêmes propriétés dans toutes les directions ; **homogène** = même composition en tout point. Ne pas les confondre.'
       tags:
       - comportement
@@ -1867,7 +1867,7 @@ units:
       answer: 0
       feedback:
       - null
-      - 'Non : « se déformer beaucoup sous une faible contrainte » est la définition même d''un matériau **peu** rigide.'
+      - 'Non : se déformer beaucoup sous une faible contrainte, c''est la définition même d''un matériau **peu** rigide.'
       - 'Non : le rapport des deux modules est de plus de 26 000.'
       - 'Non : les deux valeurs sont en N/mm², parfaitement comparables.'
       explanation: 'Le module d''élasticité longitudinale $E$ est la **pente** de la courbe dans le domaine élastique. Plus $E$ est grand, plus le matériau est rigide, c''est-à-dire plus il faut de contrainte pour obtenir la même déformation.'
@@ -1941,7 +1941,7 @@ units:
       - 'Non : même avec de l''air ordinaire, le résultat serait le même ; c''est l''**immobilité** qui compte.'
       - 'Non : la variation de $\lambda$ avec la température est bien trop faible pour expliquer cet écart.'
       - 'Non : le verre conduit la chaleur ; c''est la lame d''air qui fait l''essentiel de l''isolation.'
-      explanation: 'Le manuel le formule ainsi : le pouvoir d''isolation vient du matériau **mais aussi de la forme** qu''on lui donne. Emprisonner l''air l''empêche de convecter ; le laisser circuler favorise au contraire la dissipation.'
+      explanation: 'Le pouvoir d''isolation vient du matériau **mais aussi de la forme** qu''on lui donne. Emprisonner l''air l''empêche de convecter ; le laisser circuler favorise au contraire la dissipation.'
       tags:
       - thermique
     - type: order
@@ -1961,7 +1961,7 @@ units:
       - cycle-vie
     - type: match
       level: 2
-      prompt: 'Associez chaque situation à l''impact environnemental que lui attribue le manuel.'
+      prompt: 'Associez chaque situation à son principal impact environnemental.'
       pairs:
       - left: Extraction du bois
         right: déforestation
@@ -2009,8 +2009,8 @@ units:
       - null
       - 'Non : il y aurait réutilisation si la bouteille était lavée puis **remplie de nouveau**, sans être détruite (bouteilles consignées).'
       - 'Non : la valorisation énergétique consiste à **brûler** le matériau pour récupérer de la chaleur.'
-      - 'Non : le verre est justement l''exemple de recyclage cité par le manuel.'
-      explanation: 'Recyclage : « à partir d''un matériau usagé, on crée de la matière qui va entrer dans la constitution d''un produit ». La différence avec la réutilisation tient à ce que l''objet est **détruit** en tant qu''objet.'
+      - 'Non : le verre est justement l''exemple type du recyclage.'
+      explanation: 'Recyclage : à partir d''un matériau usagé, on crée de la matière qui entre dans la constitution d''un nouveau produit. La différence avec la réutilisation tient à ce que l''objet est **détruit** en tant qu''objet.'
       tags:
       - cycle-vie
     - type: mcq
@@ -2052,7 +2052,7 @@ units:
       feedback:
       - null
       - 'Non : la condition $\sigma \leq R_e$ est une **inégalité stricte à respecter**, et l''on applique même en général un coefficient de sécurité qui rend le critère plus sévère encore.'
-      - 'Non : le critère du manuel est bien $\sigma_{\max} \leq R_e$ ; dépasser $R_e$, c''est entrer dans le domaine plastique.'
+      - 'Non : le critère est bien $\sigma_{\max} \leq R_e$ ; dépasser $R_e$, c''est entrer dans le domaine plastique.'
       - 'Non : $\sigma = N/A$ — réduire $A$ **augmente** la contrainte.'
       explanation: '$240 > 235$ : la barre plastifierait. Le profilé suivant, 250 × 250 ($A = 9\,291$ mm²), donne $\sigma = 1\,750\,000/9\,291 \approx 188$ MPa, cette fois inférieur à $R_e$.'
       tags:
@@ -2126,7 +2126,7 @@ units:
         feedback:
         - null
         - 'Non : « très proche » ne veut rien dire en dimensionnement. La condition est une inégalité, et elle n''est pas satisfaite.'
-        - 'Non : le critère du manuel est $\sigma_{\max} \leq R_e$, la limite **élastique**.'
+        - 'Non : le critère est $\sigma_{\max} \leq R_e$, la limite **élastique**.'
         - 'Non : la condition de résistance se vérifie indépendamment du critère de déformation ; ici elle suffit déjà à écarter le profilé.'
         explanation: 'Dépasser $R_e$, c''est faire entrer la barre dans le domaine **plastique** : elle resterait déformée après déchargement. Le profilé 180 × 180 est encore pire (270 MPa).'
       - kind: input

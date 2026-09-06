@@ -14,7 +14,7 @@ $\Phi$ en W, $S$ en m², les températures en K **ou** en °C, $R_{\text{th}}$ e
 
 {{fig:pc-mur-flux-thermique}}
 
-*Analogie électrique* : $\Phi$ joue le rôle de l'intensité, l'écart de température celui de la tension, $R_{\text{th}}$ celui de la résistance — d'où l'écriture $\Phi = \Delta T / R$ lorsque $R = \dfrac{e}{\lambda\,S}$ est la résistance de la paroi **entière** (en K·W⁻¹). Dans ce chapitre, on suit la convention du livre : $R_{\text{th}}$ est la résistance de **1 m²** de paroi, et la surface apparaît au numérateur.
+*Analogie électrique* : $\Phi$ joue le rôle de l'intensité, l'écart de température celui de la tension, $R_{\text{th}}$ celui de la résistance — d'où l'écriture $\Phi = \Delta T / R$ lorsque $R = \dfrac{e}{\lambda\,S}$ est la résistance de la paroi **entière** (en K·W⁻¹). Dans ce chapitre, on suit la convention usuelle du bâtiment : $R_{\text{th}}$ est la résistance de **1 m²** de paroi, et la surface apparaît au numérateur.
 
 ## Résistance thermique d'une paroi homogène
 
@@ -50,6 +50,6 @@ $$R_{\text{th, paroi}} = \sum_{\text{matériaux}} \frac{e_{\text{matériau}}}{\l
 
 *(RT 2005 : 130 kWh·m⁻²·an⁻¹ ; « basse énergie » : 40 à 80 kWh·m⁻²·an⁻¹ ; « très basse énergie » : moins de 15 kWh·m⁻²·an⁻¹.)*
 
-Le toit précédent (5,906 m²·K·W⁻¹) respecte la **RT 2005** mais **pas** les deux autres niveaux. *Attention* : le livre note ces exigences $R_{\max}$ alors qu'il s'agit de valeurs **minimales** à atteindre ; il faut lire $R_{\min}$.
+Le toit précédent (5,906 m²·K·W⁻¹) respecte la **RT 2005** mais **pas** les deux autres niveaux. *Attention* : ces exigences sont souvent notées $R_{\max}$ alors qu'il s'agit de valeurs **minimales** à atteindre ; il faut lire $R_{\min}$.
 
 {{fig:pc-isolation-niveaux}}

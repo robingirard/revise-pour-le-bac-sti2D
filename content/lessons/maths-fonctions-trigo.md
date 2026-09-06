@@ -22,7 +22,7 @@ On en déduit deux règles de primitives : $f'\times(\sin\circ f)$ a pour primit
 
 **Cosinus.** Sur $[-\pi\,;0]$, $\sin(x)\leqslant0$ donc $\cos'(x)=-\sin(x)\geqslant0$ : le cosinus **croît** de $-1$ à $1$. Sur $[0\,;\pi]$, $\cos'(x)\leqslant0$ : il **décroît** de $1$ à $-1$.
 
-*Attention :* le tableau imprimé p. 101 du manuel donne la ligne des signes « $-$ puis $+$ », ce qui contredit sa propre ligne de variations. Le signe correct est $+$ puis $-$.
+*Attention :* on trouve parfois un tableau dont la ligne des signes donne « $-$ puis $+$ », ce qui contredit sa propre ligne de variations. Le signe correct est $+$ puis $-$.
 
 **Sinus.** $\sin'=\cos$, donc le sinus décroît sur $\left[-\pi\,;-\dfrac{\pi}{2}\right]$ (de $0$ à $-1$), croît sur $\left[-\dfrac{\pi}{2}\,;\dfrac{\pi}{2}\right]$ (de $-1$ à $1$), puis décroît sur $\left[\dfrac{\pi}{2}\,;\pi\right]$ (de $1$ à $0$).
 

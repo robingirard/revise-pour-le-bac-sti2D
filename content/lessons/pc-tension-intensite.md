@@ -29,7 +29,7 @@ Si $U_{\text{moy}} = 0$ V, la tension est dite **sinusoïdale alternative**.
 **230 V** ($\pm\ 10$ %) et de fréquence **50 Hz** (donc $T = 20$ ms). Son amplitude vaut
 $U_m = 230 \times \sqrt{2} \approx 325$ V : l'amplitude est toujours **plus grande** que la valeur efficace.
 
-Deux relations très utiles pour exploiter un oscillogramme (elles ne figurent pas dans le livre, mais elles
+Deux relations très utiles pour exploiter un oscillogramme (elles ne sont pas au programme, mais elles
 se lisent directement sur la courbe) :
 
 $U_{\text{moy}} = \dfrac{U_{\max} + U_{\min}}{2}$ et $U_m = \dfrac{U_{\max} - U_{\min}}{2}$

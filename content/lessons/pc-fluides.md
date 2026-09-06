@@ -26,7 +26,7 @@ Piège classique : une surface donnée en cm² doit être convertie, $1\ \mathrm
 
 $$P_{\text{relative}} = P_{\text{absolue}} - 1\,013 \qquad (\text{pressions en hPa})$$
 
-*Exemple du manuel* : un manomètre de pneu indique **2,4 bars, soit 240 kPa** ; c'est une pression **relative**. La pression **absolue** vaut donc $2\,400 + 1\,013 = 3\,413\ \mathrm{hPa}$, soit environ **3 400 hPa**.
+*Exemple* : un manomètre de pneu indique **2,4 bars, soit 240 kPa** ; c'est une pression **relative**. La pression **absolue** vaut donc $2\,400 + 1\,013 = 3\,413\ \mathrm{hPa}$, soit environ **3 400 hPa**.
 
 ## Le principe fondamental de l'hydrostatique
 
@@ -38,7 +38,7 @@ $$\Delta P = P_\mathrm{A} - P_\mathrm{B} = \rho_{\text{liquide}} \times g \times
 
 $\Delta P$ en **pascal (Pa)**, $\rho$ en $\mathrm{kg\cdot m^{-3}}$, $g = 9{,}81\ \mathrm{m\cdot s^{-2}}$, $h = z_\mathrm{B} - z_\mathrm{A}$ = dénivellation en **mètres** (A est le point le plus profond).
 
-Mesures du manuel pour une **même dénivellation de 50 cm** :
+Mesures pour une **même dénivellation de 50 cm** :
 
 | Liquide | Eau | Huile d'arachide | Éthanol |
 |---|---|---|---|

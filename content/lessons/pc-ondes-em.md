@@ -56,4 +56,4 @@ Un **corps chauffé** (Soleil, filament de tungstène) émet un rayonnement **co
 3. comparer aux bornes du tableau ci-dessus ;
 4. **vérifier la cohérence** : une valeur entre 400 et 800 nm est visible, au-delà c'est de l'infrarouge, en deçà de l'ultraviolet.
 
-*Remarque de lecture* : sur la figure du livre, le repère « 300 THz » est placé près de la frontière visible/infrarouge, alors que $\lambda = c/\nu = 1{,}0$ µm est déjà **dans l'infrarouge**. Les repères de fréquence de cette figure sont des **ordres de grandeur**, pas les valeurs exactes des frontières.
+*Remarque de lecture* : sur les spectres imprimés, le repère « 300 THz » est souvent placé près de la frontière visible/infrarouge, alors que $\lambda = c/\nu = 1{,}0$ µm est déjà **dans l'infrarouge**. Les repères de fréquence de cette figure sont des **ordres de grandeur**, pas les valeurs exactes des frontières.

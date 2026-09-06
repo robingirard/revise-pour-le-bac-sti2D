@@ -488,7 +488,7 @@ units:
       - 'Non : l''air est un gaz, c''est le milieu où le son est le plus lent des quatre.'
       - 'Non : dans l''eau (liquide) le son va plus vite que dans l''air, mais moins vite que dans un solide.'
       - 'Non : la glace est un solide, donc rapide (3 200 m·s⁻¹), mais l''acier l''est encore plus.'
-      explanation: 'Le son se propage de plus en plus vite quand l''état de la matière est successivement gazeux, liquide, puis solide : air 340, eau 1 500, glace 3 200, acier 6 000 m·s⁻¹ (valeurs du livre).'
+      explanation: 'Le son se propage de plus en plus vite quand l''état de la matière est successivement gazeux, liquide, puis solide : air 340, eau 1 500, glace 3 200, acier 6 000 m·s⁻¹.'
       tags:
       - son-celerite
     - type: mcq
@@ -576,7 +576,7 @@ units:
       - ultrasons
     - type: order
       level: 2
-      prompt: Classer ces milieux par célérité du son **croissante**, d'après le tableau du livre.
+      prompt: Classer ces milieux par célérité du son **croissante**.
       steps:
       - Air (0 °C) — 330 m·s⁻¹
       - Air (20 °C) — 340 m·s⁻¹
@@ -907,7 +907,7 @@ units:
       - 'Non : ν (la lettre grecque « nu ») est bien une **fréquence**, en hertz. La célérité se note v ou c.'
       - 'Non : les deux se mesurent en hertz. La confusion vient seulement de la ressemblance entre ν et v.'
       - 'Non : la relation est la même partout ; seule la valeur de la célérité change selon le milieu.'
-      explanation: 'Attention au piège d''écriture : ν (nu) est une fréquence, v est une célérité. Le livre utilise f aux chapitres sur les ondes et le son, ν au chapitre sur les ondes électromagnétiques : c''est la même grandeur.'
+      explanation: 'Attention au piège d''écriture : ν (nu) est une fréquence, v est une célérité. On utilise f pour les ondes et le son, ν pour les ondes électromagnétiques : c''est la même grandeur.'
       tags:
       - notations
     - type: mcq
@@ -1093,7 +1093,7 @@ units:
       - risques-lumiere
     - type: mcq
       level: 3
-      prompt: Quels risques le livre associe-t-il au rayonnement **ultraviolet**, et quelles protections cite-t-il ?
+      prompt: Quels risques associe-t-on au rayonnement **ultraviolet**, et quelles protections utilise-t-on ?
       choices:
       - Il est nocif pour la peau et les yeux ; on se protège par de la crème solaire et des lunettes de soleil.
       - Il échauffe la peau ; on se protège en portant des vêtements clairs.
@@ -1110,7 +1110,7 @@ units:
       - risques-lumiere
     - type: input
       level: 3
-      prompt: Sur le spectre du livre, le repère « 300 THz » est placé au voisinage de la frontière visible / infrarouge. Calculer la longueur d'onde correspondante, en micromètres (c = 3,0 × 10⁸ m·s⁻¹ ; 1 THz = 10¹² Hz).
+      prompt: Sur les spectres imprimés, le repère « 300 THz » est souvent placé au voisinage de la frontière visible / infrarouge. Calculer la longueur d'onde correspondante, en micromètres (c = 3,0 × 10⁸ m·s⁻¹ ; 1 THz = 10¹² Hz).
       answer: '1'
       numeric: true
       tolerance: 0.05

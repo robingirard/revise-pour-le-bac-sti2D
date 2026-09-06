@@ -8,7 +8,7 @@ $$Q = I \times t$$
 
 avec $Q$ en ampères-heures (Ah), $I$ en ampères (A) et $t$ en **heures**. Une batterie de 7 Ah délivre 7 A pendant 1 h, ou 3,5 A pendant 2 h.
 
-*Précision importante* : l'ampère-heure mesure une charge, **pas une énergie** (le manuel écrit « quantité d'énergie », c'est une formulation à corriger). L'énergie s'obtient en multipliant par la tension :
+*Précision importante* : l'ampère-heure mesure une charge, **pas une énergie** (on lit parfois « quantité d'énergie » : formulation à corriger). L'énergie s'obtient en multipliant par la tension :
 
 $$E = U \times Q$$
 

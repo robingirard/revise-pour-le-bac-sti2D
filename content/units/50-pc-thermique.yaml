@@ -31,7 +31,7 @@ units:
       - 'Non, c''est l''inverse : plus les constituants s''agitent, plus la température est élevée. Refroidir un corps, c''est ralentir cette agitation.'
       - 'Non : chauffer un corps ne change pas le nombre d''atomes qu''il contient, donc pas sa masse.'
       - 'Non : la question porte sur la **température**, seule grandeur reliée directement à l''agitation microscopique.'
-      explanation: « Lorsque l'agitation des constituants microscopiques augmente au sein d'un corps, alors sa température augmente » (1re, p. 23).
+      explanation: Lorsque l'agitation des constituants microscopiques augmente au sein d'un corps, alors sa température augmente.
       tags:
       - temperature
     - type: mcq
@@ -48,7 +48,7 @@ units:
       - 'Non : le degré Celsius est l''unité d''usage courant, mais l''unité du système international est le kelvin.'
       - 'Non : le degré Fahrenheit n''est utilisé que dans quelques pays, dont les États-Unis.'
       - 'Non : le joule est l''unité d''**énergie**, pas de température.'
-      explanation: « En sciences, tout calcul thermodynamique s'effectue en prenant comme unité du système international de température le kelvin (K) » (1re, p. 23).
+      explanation: En sciences, tout calcul thermodynamique s'effectue en prenant comme unité du système international de température le kelvin (K).
       tags:
       - temperature
     - type: input
@@ -78,7 +78,7 @@ units:
       - 'Non : spontanément, l''énergie ne remonte jamais du froid vers le chaud.'
       - 'Non : la masse intervient dans la **quantité** d''énergie échangée (Q = m × c × Δθ), pas dans le **sens** du transfert.'
       - 'Non : le transfert a un sens unique tant que les températures diffèrent ; il s''arrête quand les deux corps sont à la même température.'
-      explanation: « Tout transfert thermique s'effectue du corps le plus chaud vers le corps le plus froid jusqu'à ce que l'équilibre thermique soit atteint » (1re, p. 23).
+      explanation: Tout transfert thermique s'effectue du corps le plus chaud vers le corps le plus froid jusqu'à ce que l'équilibre thermique soit atteint.
       tags:
       - transfert
     - type: mcq
@@ -98,7 +98,7 @@ units:
       - 'Non : le métal de la poignée ne se déplace pas ! La convection concerne les **gaz** et les **liquides**.'
       - 'Non : le rayonnement n''a pas besoin de milieu matériel ; ici l''énergie chemine dans la matière solide de la casserole.'
       - 'Non : au contraire, les métaux sont d''excellents conducteurs thermiques.'
-      explanation: 'Conduction : « l''énergie est transportée de proche en proche, sans déplacement de matière dans un milieu matériel », par agitation des particules (1re, p. 23).'
+      explanation: 'Conduction : l''énergie est transportée de proche en proche, sans déplacement de matière dans un milieu matériel, par agitation des particules.'
       tags:
       - transfert
     - type: mcq
@@ -118,7 +118,7 @@ units:
       - 'Non : la conduction se fait **sans** déplacement de matière ; ici c''est l''eau elle-même qui circule.'
       - 'Non : le rayonnement se propage sans milieu matériel (infrarouges) ; il n''explique pas ce courant d''eau.'
       - 'Non : la sublimation est un **changement d''état** (solide → gaz), pas un mode de transfert.'
-      explanation: 'Convection : « l''énergie est transportée par des mouvements de la matière au sein d''un gaz ou d''un liquide ». L''eau chaude, moins dense, monte (1re, p. 23-24).'
+      explanation: 'Convection : l''énergie est transportée par des mouvements de la matière au sein d''un gaz ou d''un liquide. L''eau chaude, moins dense, monte.'
       tags:
       - transfert
     - type: mcq
@@ -135,7 +135,7 @@ units:
       - 'Non : la conduction se fait « dans un milieu matériel », par agitation des particules de proche en proche.'
       - 'Non : la convection suppose un gaz ou un liquide qui se déplace, donc de la matière.'
       - 'Non : c''est précisément par rayonnement que le Soleil chauffe la Terre à travers le vide.'
-      explanation: 'Rayonnement : « l''énergie est transportée par des ondes électromagnétiques, le plus souvent invisibles (infrarouges). Cela ne nécessite pas de milieu matériel » (1re, p. 24).'
+      explanation: 'Rayonnement : l''énergie est transportée par des ondes électromagnétiques, le plus souvent invisibles (infrarouges). Cela ne nécessite pas de milieu matériel.'
       tags:
       - transfert
     - type: grid
@@ -167,7 +167,7 @@ units:
         DEPconv: la convection transporte l'énergie **par** le mouvement de la matière
         MATray: 'le rayonnement traverse le vide : aucun milieu matériel n''est nécessaire'
         DEPray: le rayonnement transporte des ondes électromagnétiques, pas de la matière
-      explanation: 'Conduction : milieu matériel, sans déplacement de matière. Convection : milieu matériel (gaz ou liquide), avec déplacement de matière. Rayonnement : ni l''un ni l''autre (1re, p. 23-24).'
+      explanation: 'Conduction : milieu matériel, sans déplacement de matière. Convection : milieu matériel (gaz ou liquide), avec déplacement de matière. Rayonnement : ni l''un ni l''autre.'
       tags:
       - transfert
     - type: mcq
@@ -184,7 +184,7 @@ units:
       - 'Non : J·kg⁻¹ est l''unité de l''énergie massique de changement d''état $L$ (et du pouvoir calorifique) : il y manque le « par kelvin ».'
       - 'Non : le joule seul est une énergie ; $c$ est une énergie **par kilogramme et par kelvin**.'
       - 'Non : le watt est une puissance.'
-      explanation: Dans $Q = m \times c \times \Delta\theta$, avec $Q$ en J, $m$ en kg et $\Delta\theta$ en K (ou en °C), $c$ s'exprime en J·kg⁻¹·K⁻¹ (1re, p. 24).
+      explanation: Dans $Q = m \times c \times \Delta\theta$, avec $Q$ en J, $m$ en kg et $\Delta\theta$ en K (ou en °C), $c$ s'exprime en J·kg⁻¹·K⁻¹.
       tags:
       - chaleur-massique
     - type: mcq
@@ -201,7 +201,7 @@ units:
       - 'Non : tu as oublié la **masse**. Chauffer 10 kg d''eau demande dix fois plus d''énergie que chauffer 1 kg.'
       - 'Non : c''est l''**écart** $\Delta\theta = \theta_{\text{finale}} - \theta_{\text{initiale}}$ qui intervient, pas la température finale seule.'
       - 'Non : $Q = m \times L$ s''utilise **pendant** un changement d''état, à température constante.'
-      explanation: « Tant que l'état physique d'un corps pur n'est pas modifié, il faut appliquer la relation $Q = m \times c \times \Delta\theta$ » (1re, p. 27).
+      explanation: Tant que l'état physique d'un corps pur n'est pas modifié, il faut appliquer la relation $Q = m \times c \times \Delta\theta$.
       tags:
       - chaleur-massique
     - type: mcq
@@ -218,7 +218,7 @@ units:
       - 'Non : c''est une **différence** de températures. 50 °C − 20 °C = 30 °C et 323,15 K − 293,15 K = 30 K : le même nombre.'
       - 'Non : $Q$ est une énergie en joules, on n''y ajoute pas une température.'
       - 'Non : la masse n''a rien à voir avec le choix de l''échelle de température.'
-      explanation: « L'écart de température, qu'il soit exprimé en degrés Celsius ou en kelvin, a exactement la même valeur » (1re, p. 24). En revanche, une température **absolue** (et non un écart) doit être en K.
+      explanation: L'écart de température, qu'il soit exprimé en degrés Celsius ou en kelvin, a exactement la même valeur. En revanche, une température **absolue** (et non un écart) doit être en K.
       tags:
       - temperature
     - type: input
@@ -269,7 +269,7 @@ units:
       - 'Non : c''est la **pièce** qui reçoit de l''énergie ; pour l''eau, l''énergie échangée est négative.'
       - 'Non : le transfert a bien lieu, du corps chaud (l''eau) vers le corps froid (l''air de la pièce).'
       - 'Non : le signe indique le **sens** du transfert, c''est une information essentielle.'
-      explanation: 'Si $\theta_{\text{finale}} < \theta_{\text{initiale}}$, alors $\Delta\theta < 0$ donc $Q = m\,c\,\Delta\theta < 0$ : le corps **cède** de l''énergie (1re, p. 24).'
+      explanation: 'Si $\theta_{\text{finale}} < \theta_{\text{initiale}}$, alors $\Delta\theta < 0$ donc $Q = m\,c\,\Delta\theta < 0$ : le corps **cède** de l''énergie.'
       tags:
       - chaleur-massique
     - type: input
@@ -297,7 +297,7 @@ units:
       - null
       - 'Non : à énergie et masse égales, $\Delta\theta = Q / (m\,c)$ est d''autant plus **grand** que $c$ est **petit**. Or $c$ est plus petit pour la glace.'
       - 'Non : les capacités thermiques massiques valent 2,1 et 4,2, elles diffèrent d''un facteur 2.'
-      - 'Non : kJ·kg⁻¹·K⁻¹ et kJ·kg⁻¹·°C⁻¹ ont la **même valeur numérique**, puisqu''un écart de 1 K vaut un écart de 1 °C (1re, p. 28).'
+      - 'Non : kJ·kg⁻¹·K⁻¹ et kJ·kg⁻¹·°C⁻¹ ont la **même valeur numérique**, puisqu''un écart de 1 K vaut un écart de 1 °C.'
       explanation: '$\Delta\theta = \dfrac{Q}{m \times c}$ : $c$ deux fois plus petit ⇒ élévation de température deux fois plus grande. L''eau liquide est un excellent « réservoir » de chaleur, ce qui explique son emploi dans les circuits de chauffage.'
       tags:
       - chaleur-massique
@@ -452,7 +452,7 @@ units:
       - 'Non : la solidification est le passage **liquide → solide**, le sens inverse.'
       - 'Non : la vaporisation est le passage **liquide → gaz**.'
       - 'Non : la sublimation est le passage direct **solide → gaz**.'
-      explanation: Sur le diagramme, la flèche bleue solide → liquide porte le nom **fusion** (1re, p. 26). Pour l'eau, elle a lieu à 0 °C sous pression atmosphérique normale.
+      explanation: Sur le diagramme, la flèche bleue solide → liquide porte le nom **fusion**. Pour l'eau, elle a lieu à 0 °C sous pression atmosphérique normale.
       tags:
       - changement-etat
     - type: mcq
@@ -472,7 +472,7 @@ units:
       - 'Non : la condensation (liquéfaction) est le passage **gaz → liquide**, le sens inverse.'
       - 'Non : la fusion est le passage solide → liquide.'
       - 'Non : la sublimation part du **solide**, pas du liquide.'
-      explanation: 'Liquide → gaz : **vaporisation** (100 °C pour l''eau sous pression atmosphérique normale, 1re, p. 26).'
+      explanation: 'Liquide → gaz : **vaporisation** (100 °C pour l''eau sous pression atmosphérique normale).'
       tags:
       - changement-etat
     - type: mcq
@@ -489,10 +489,10 @@ units:
       answer: 0
       feedback:
       - null
-      - 'Non : le livre appelle « condensation » le passage **gaz → solide**, c''est-à-dire le sens inverse.'
+      - 'Non : le mot « condensation » désigne aussi le passage **gaz → solide**, c''est-à-dire le sens inverse.'
       - 'Non : la vaporisation part du **liquide**.'
       - 'Non : la fusion mène du solide au **liquide**, pas au gaz.'
-      explanation: Sur le diagramme p. 26, la flèche bleue montante solide → gaz porte le nom **sublimation** ; la flèche rouge en sens inverse porte le nom **condensation**.
+      explanation: Sur le diagramme des changements d'état, la flèche bleue montante solide → gaz porte le nom **sublimation** ; la flèche rouge en sens inverse porte le nom **condensation**.
       tags:
       - changement-etat
     - type: mcq
@@ -512,7 +512,7 @@ units:
       - 'Non : la vaporisation est le passage liquide → gaz, le sens inverse.'
       - 'Non : la sublimation est le passage solide → gaz.'
       - 'Non : la solidification est le passage **liquide → solide** ; ici la vapeur devient liquide, pas solide.'
-      explanation: 'Gaz → liquide : le livre écrit « **Condensation (Liquéfaction)** » (p. 26). Attention, il emploie le même mot « condensation » pour le passage gaz → solide : c''est une source d''erreur fréquente.'
+      explanation: 'Gaz → liquide : on écrit **condensation (liquéfaction)**. Attention, le même mot « condensation » sert pour le passage gaz → solide : c''est une source d''erreur fréquente.'
       tags:
       - changement-etat
     - type: mcq
@@ -532,7 +532,7 @@ units:
       - 'Non : les portions **montantes** de la courbe correspondent à l''échauffement sans changement d''état ; pendant le changement d''état, la courbe est horizontale.'
       - 'Non : le corps continue de **recevoir** de l''énergie ; simplement, cette énergie ne sert pas à élever la température.'
       - 'Non : la courbe est un palier bien net, pas une oscillation.'
-      explanation: « Pour un corps pur, lors des changements d'état physique, la température demeure constante (nous observons un palier de température) » (1re, p. 26). L'énergie reçue sert à modifier l'énergie potentielle microscopique, pas l'agitation.
+      explanation: Pour un corps pur, lors des changements d'état physique, la température demeure constante (nous observons un palier de température). L'énergie reçue sert à modifier l'énergie potentielle microscopique, pas l'agitation.
       tags:
       - changement-etat
     - type: mcq
@@ -549,7 +549,7 @@ units:
       - 'Non : fondre de la glace ne crée pas de matière ; on retrouve exactement la même masse d''eau liquide.'
       - 'Non : dans un récipient fermé, la vapeur formée a la même masse que le liquide disparu.'
       - 'Non : c''est le **volume** qui change (l''eau et les alcools sont d''ailleurs des contre-exemples : leur volume solide est plus grand que leur volume liquide).'
-      explanation: « Le nombre d'entités chimiques ne variant pas au cours d'un changement d'état physique, la masse se conserve » (1re, p. 26).
+      explanation: Le nombre d'entités chimiques ne variant pas au cours d'un changement d'état physique, la masse se conserve.
       tags:
       - changement-etat
     - type: mcq
@@ -566,7 +566,7 @@ units:
       - 'Non : J·kg⁻¹·K⁻¹ est l''unité de la **capacité thermique massique** $c$. Il n''y a pas de « par kelvin » dans $L$, puisque la température ne varie pas !'
       - 'Non : le joule seul est une énergie ; $L$ est une énergie **par kilogramme**.'
       - 'Non : le kelvin est une température.'
-      explanation: Dans $Q_p = m \times L$, avec $Q_p$ en J et $m$ en kg, $L$ est en J·kg⁻¹ (1re, p. 27). Le livre tabule les valeurs de l'eau en kJ·kg⁻¹.
+      explanation: Dans $Q_p = m \times L$, avec $Q_p$ en J et $m$ en kg, $L$ est en J·kg⁻¹. Les valeurs de l'eau sont tabulées en kJ·kg⁻¹.
       tags:
       - chaleur-latente
     - type: order
@@ -581,7 +581,7 @@ units:
       - '❸ Échauffement du liquide : $Q_3 = m\,c_{\text{liquide}}\,(\theta_{\text{Ébullition}} - \theta_{\text{Fusion}})$'
       - '❹ Palier d''ébullition : $Q_4 = m\,L_{\text{Vaporisation}}$'
       - '❺ Échauffement du gaz : $Q_5 = m\,c_{\text{gaz}}\,(\theta_2 - \theta_{\text{Ébullition}})$'
-      explanation: L'ordre est solide → fusion → liquide → ébullition → gaz (1re, p. 28). L'énergie totale vaut $Q = Q_1 + Q_2 + Q_3 + Q_4 + Q_5$.
+      explanation: L'ordre est solide → fusion → liquide → ébullition → gaz. L'énergie totale vaut $Q = Q_1 + Q_2 + Q_3 + Q_4 + Q_5$.
       tags:
       - bilan
     - type: grid
@@ -618,7 +618,7 @@ units:
         Ll: 'l''eau liquide s''échauffe sans changer d''état : c''est m × c × Δθ qu''il faut employer'
         Cv: 'pendant la vaporisation, la température reste à 100 °C : il faut m × L'
         Lv: 'la vaporisation se produit à température constante : Q = m × L_vaporisation'
-      explanation: 'Règle du livre (p. 27) : tant que l''état physique n''est pas modifié, $Q = m\,c\,\Delta\theta$ ; **pendant** un changement d''état, $Q_p = m\,L$.'
+      explanation: 'Règle à retenir : tant que l''état physique n''est pas modifié, $Q = m\,c\,\Delta\theta$ ; **pendant** un changement d''état, $Q_p = m\,L$.'
       tags:
       - bilan
     - type: mcq
@@ -635,7 +635,7 @@ units:
       - 'Non : elles ne sont pas équivalentes. $c$ et $L$ n''ont même pas la même unité (J·kg⁻¹·K⁻¹ contre J·kg⁻¹).'
       - 'Non : le calcul donne exactement zéro, puisque la température de départ et d''arrivée sont toutes deux 0 °C.'
       - 'Non : faire fondre 1 kg de glace coûte 334 kJ, ce qui est loin d''être négligeable.'
-      explanation: 'Pendant un palier, $\Delta\theta = 0$ : la relation $m\,c\,\Delta\theta$ donne 0 et il faut lui substituer $Q_p = m \times L$ (1re, p. 27).'
+      explanation: 'Pendant un palier, $\Delta\theta = 0$ : la relation $m\,c\,\Delta\theta$ donne 0 et il faut lui substituer $Q_p = m \times L$.'
       tags:
       - chaleur-latente
     - type: input
@@ -647,7 +647,7 @@ units:
       numeric: true
       tolerance: 1
       unit: kJ
-      explanation: '$Q_p = m \times L_{\text{fusion}} = 0{,}50 \times 334 = 167$ kJ. $Q_p > 0$ : la fusion est **endothermique**, la glace reçoit de l''énergie et l''état final est plus désordonné (1re, p. 27).'
+      explanation: '$Q_p = m \times L_{\text{fusion}} = 0{,}50 \times 334 = 167$ kJ. $Q_p > 0$ : la fusion est **endothermique**, la glace reçoit de l''énergie et l''état final est plus désordonné.'
       tags:
       - chaleur-latente
     - type: input
@@ -688,7 +688,7 @@ units:
       - 'Non : la solidification est le changement d''état **inverse** de la fusion ; l''eau **cède** de l''énergie, donc $Q_p < 0$.'
       - 'Non : il faut bel et bien retirer de l''énergie à l''eau pour la geler.'
       - 'Non : on change le signe, on ne prend pas l''inverse.'
-      explanation: '« On en déduit les autres très facilement (exemple : $L_{\text{solidification}} = -L_{\text{fusion}}$) » (1re, p. 27). La solidification est **exothermique** : état final plus ordonné.'
+      explanation: 'On en déduit les autres très facilement (exemple : $L_{\text{solidification}} = -L_{\text{fusion}}$). La solidification est **exothermique** : état final plus ordonné.'
       tags:
       - chaleur-latente
     - type: mcq
@@ -705,7 +705,7 @@ units:
       - 'Non : pour fondre, la glace **reçoit** de l''énergie ; l''état final (liquide) est plus désordonné : transformation endothermique.'
       - 'Non : la vaporisation demande 2 260 kJ par kilogramme : c''est endothermique.'
       - 'Non : la sublimation mène à l''état le plus désordonné (gaz) : elle est endothermique.'
-      explanation: '$Q_p$ est négative « lorsque le corps pur cède de l''énergie (transformation exothermique, avec un état final plus ordonné) » (1re, p. 27). Gaz → liquide : l''état final est plus ordonné.'
+      explanation: '$Q_p$ est négative lorsque le corps pur cède de l''énergie (transformation exothermique, avec un état final plus ordonné). Gaz → liquide : l''état final est plus ordonné.'
       tags:
       - changement-etat
     - type: mcq
@@ -722,7 +722,7 @@ units:
       - 'Non : à 20 °C on est **au-dessus** de la température de fusion (−39 °C), le mercure a déjà fondu.'
       - 'Non : il faudrait dépasser 357 °C pour le vaporiser.'
       - 'Non : la coexistence de deux états n''a lieu que **pendant** un palier, donc à −39 °C exactement pour la fusion.'
-      explanation: 'Entre la température de fusion (−39 °C) et celle d''ébullition (357 °C), le corps pur est **liquide** : c''est le cas du mercure à 20 °C (1re, p. 26).'
+      explanation: 'Entre la température de fusion (−39 °C) et celle d''ébullition (357 °C), le corps pur est **liquide** : c''est le cas du mercure à 20 °C.'
       tags:
       - changement-etat
     - type: input
@@ -749,7 +749,7 @@ units:
       numeric: true
       tolerance: 20
       unit: kJ
-      explanation: $Q_1 = 1{,}0 \times 2{,}1 \times 20 = 42$ ; $Q_2 = 1{,}0 \times 334 = 334$ ; $Q_3 = 1{,}0 \times 4{,}2 \times 100 = 420$ ; $Q_4 = 1{,}0 \times 2\,260 = 2\,260$ ; $Q_5 = 1{,}0 \times 2{,}0 \times 20 = 40$ (en kJ). Total $Q = 3\,096$ kJ, soit environ 3,10 MJ (1re, p. 27).
+      explanation: $Q_1 = 1{,}0 \times 2{,}1 \times 20 = 42$ ; $Q_2 = 1{,}0 \times 334 = 334$ ; $Q_3 = 1{,}0 \times 4{,}2 \times 100 = 420$ ; $Q_4 = 1{,}0 \times 2\,260 = 2\,260$ ; $Q_5 = 1{,}0 \times 2{,}0 \times 20 = 40$ (en kJ). Total $Q = 3\,096$ kJ, soit environ 3,10 MJ.
       tags:
       - bilan
     - type: mcq
@@ -771,7 +771,7 @@ units:
       - bilan
     - type: mcq
       level: 3
-      prompt: Le tableau du livre donne, pour l'eau, $L_{\text{fusion}} = 334$ kJ·kg⁻¹, $L_{\text{vaporisation}} = 2{,}26 \times 10^{3}$ kJ·kg⁻¹ et $L_{\text{sublimation}} = 2{,}83 \times 10^{3}$ kJ·kg⁻¹. Or $334 + 2\,260 = 2\,594$ kJ·kg⁻¹, et non 2 830. Qu'en conclure ?
+      prompt: Un tableau donne, pour l'eau, $L_{\text{fusion}} = 334$ kJ·kg⁻¹, $L_{\text{vaporisation}} = 2{,}26 \times 10^{3}$ kJ·kg⁻¹ et $L_{\text{sublimation}} = 2{,}83 \times 10^{3}$ kJ·kg⁻¹. Or $334 + 2\,260 = 2\,594$ kJ·kg⁻¹, et non 2 830. Qu'en conclure ?
       choices:
       - 'Les trois valeurs ne sont pas données à la même température : elles ne sont pas mutuellement cohérentes'
       - 'Le tableau est juste : la sublimation coûte forcément plus que la somme des deux autres'
@@ -910,7 +910,7 @@ units:
       - 'Non : le joule est une **énergie**. Le flux est une énergie **par seconde**, donc une puissance.'
       - 'Non : le kWh est aussi une énergie (1 kWh = 3,6 × 10⁶ J), pas une puissance.'
       - 'Non : m²·K·W⁻¹ est l''unité de la **résistance thermique** $R_{\text{th}}$.'
-      explanation: '$\Phi = \dfrac{E}{\Delta t}$ : un débit d''énergie, « donc il s''agit d''une puissance exprimée en watt (W) » (Tle, p. 139).'
+      explanation: '$\Phi = \dfrac{E}{\Delta t}$ : un débit d''énergie, donc il s''agit d''une puissance exprimée en watt (W).'
       tags:
       - flux
     - type: mcq
@@ -927,7 +927,7 @@ units:
       - 'Non : W·m⁻¹·K⁻¹ est l''unité de la **conductivité thermique** $\lambda$, la grandeur du matériau, pas de la paroi.'
       - 'Non : W·m⁻² est une densité surfacique de flux.'
       - 'Non : l''ohm est l''unité de la résistance **électrique**. La résistance thermique lui ressemble par ses lois (association en série) mais pas par son unité.'
-      explanation: '$R_{\text{th}} = \dfrac{e}{\lambda}$ avec $e$ en m et $\lambda$ en W·m⁻¹·K⁻¹ : $R_{\text{th}}$ est en **m²·K·W⁻¹** (Tle, p. 139-140).'
+      explanation: '$R_{\text{th}} = \dfrac{e}{\lambda}$ avec $e$ en m et $\lambda$ en W·m⁻¹·K⁻¹ : $R_{\text{th}}$ est en **m²·K·W⁻¹**.'
       tags:
       - resistance-thermique
     - type: mcq
@@ -944,7 +944,7 @@ units:
       - 'Non : m²·K·W⁻¹ est l''unité de la **résistance** thermique $R_{\text{th}}$, qui dépend en plus de l''épaisseur.'
       - 'Non : J·kg⁻¹·K⁻¹ est l''unité de la capacité thermique massique $c$.'
       - 'Non : le watt est l''unité du flux thermique $\Phi$.'
-      explanation: '$\lambda$ s''exprime en **W·m⁻¹·K⁻¹**. Le livre l''écrit tantôt W·K⁻¹·m⁻¹ (texte), tantôt W·m⁻¹·K⁻¹ (tableau) : les deux écritures sont équivalentes.'
+      explanation: '$\lambda$ s''exprime en **W·m⁻¹·K⁻¹**. On l''écrit tantôt W·K⁻¹·m⁻¹, tantôt W·m⁻¹·K⁻¹ : les deux écritures sont équivalentes.'
       tags:
       - resistance-thermique
     - type: mcq
@@ -961,7 +961,7 @@ units:
       - 'Non : une petite $R_{\text{th}}$ laisse passer beaucoup d''énergie, c''est le comportement d''un **conducteur**.'
       - 'Non : un bon isolant a une **faible** conductivité (laine de verre, moquette), un conducteur une conductivité élevée (carrelage, verre).'
       - 'Non : isoler sert précisément à **réduire** le flux thermique.'
-      explanation: $R_{\text{th}}$ « quantifie l'opposition du matériau au passage du flux thermique. Plus la paroi est isolante, plus sa résistance thermique est élevée » (Tle, p. 139).
+      explanation: $R_{\text{th}}$ quantifie l'opposition du matériau au passage du flux thermique. Plus la paroi est isolante, plus sa résistance thermique est élevée.
       tags:
       - isolation
     - type: mcq
@@ -981,7 +981,7 @@ units:
       - 'Non : la résistance est **au dénominateur**. Avec ta formule, mieux on isole (plus $R_{\text{th}}$ est grande), plus on perdrait d''énergie : absurde.'
       - 'Non : la formule est **inversée**. Un grand écart de température doit **augmenter** le flux, pas le diminuer.'
       - 'Non : $R_{\text{th}}$ ne peut pas être au numérateur ; c''est elle qui **freine** le flux.'
-      explanation: '$\Phi$ augmente avec la surface $S$ et avec l''écart de température, et diminue quand $R_{\text{th}}$ augmente (Tle, p. 139). Analogie : $\Phi$ ↔ intensité, écart de température ↔ tension, $R_{\text{th}}$ ↔ résistance.'
+      explanation: '$\Phi$ augmente avec la surface $S$ et avec l''écart de température, et diminue quand $R_{\text{th}}$ augmente. Analogie : $\Phi$ ↔ intensité, écart de température ↔ tension, $R_{\text{th}}$ ↔ résistance.'
       tags:
       - flux
     - type: mcq
@@ -1018,7 +1018,7 @@ units:
       numeric: true
       tolerance: 0.01
       unit: m²·K·W⁻¹
-      explanation: '$R_{\text{th}} = \dfrac{0{,}200}{0{,}95} = 0{,}21$ m²·K·W⁻¹ (Tle, tableau p. 140-141). Un mur de 20 cm de parpaing isole donc quatre fois moins bien qu''un simple parquet stratifié de 12 mm ($R_{\text{th}} = 7{,}5 \times 10^{-2}$) : le parpaing est un matériau **porteur**, pas un isolant.'
+      explanation: '$R_{\text{th}} = \dfrac{0{,}200}{0{,}95} = 0{,}21$ m²·K·W⁻¹. Un mur de 20 cm de parpaing isole donc quatre fois moins bien qu''un simple parquet stratifié de 12 mm ($R_{\text{th}} = 7{,}5 \times 10^{-2}$) : le parpaing est un matériau **porteur**, pas un isolant.'
       tags:
       - resistance-thermique
     - type: mcq
@@ -1035,7 +1035,7 @@ units:
       - 'Non : une **grande** conductivité signifie que le matériau conduit bien l''énergie, donc qu''il isole mal.'
       - 'Non : à épaisseur égale, $R_{\text{th}} = e/\lambda$ ne dépend plus que de $\lambda$.'
       - 'Non : l''énoncé impose la même épaisseur ; c''est bien $\lambda$ qui départage.'
-      explanation: '$R_{\text{th}} = e/\lambda$ : à épaisseur égale, le plus petit $\lambda$ donne la plus grande résistance thermique. Avec les épaisseurs usuelles du livre, moquette 4,0 mm → $4{,}4 \times 10^{-2}$ et carrelage 10 mm → $7{,}7 \times 10^{-3}$ m²·K·W⁻¹.'
+      explanation: '$R_{\text{th}} = e/\lambda$ : à épaisseur égale, le plus petit $\lambda$ donne la plus grande résistance thermique. Avec les épaisseurs usuelles, moquette 4,0 mm → $4{,}4 \times 10^{-2}$ et carrelage 10 mm → $7{,}7 \times 10^{-3}$ m²·K·W⁻¹.'
       tags:
       - isolation
     - type: input
@@ -1068,7 +1068,7 @@ units:
       - 'Non : les conductivités ne s''additionnent pas ; il faut d''abord convertir chaque couche en résistance $e/\lambda$.'
       - 'Non : chaque couche ajoute son obstacle, même les plus minces ; on les somme toutes.'
       - 'Non : c''est la règle des résistances électriques en **parallèle** ; ici les couches sont en **série**, traversées par le même flux.'
-      explanation: '$R_{\text{th, paroi}} = \sum \dfrac{e_{\text{matériau}}}{\lambda_{\text{matériau}}}$ : les résistances thermiques de couches accolées s''ajoutent, comme des résistances électriques en série (Tle, p. 140-141).'
+      explanation: '$R_{\text{th, paroi}} = \sum \dfrac{e_{\text{matériau}}}{\lambda_{\text{matériau}}}$ : les résistances thermiques de couches accolées s''ajoutent, comme des résistances électriques en série.'
       tags:
       - isolation
     - type: order
@@ -1083,7 +1083,7 @@ units:
       - Air peu ventilé (0,130)
       - Laine de verre (5,400)
       - Plaque de plâtre (0,040)
-      explanation: 'La somme vaut $0{,}003 + 0{,}333 + 0{,}130 + 5{,}400 + 0{,}040 = 5{,}906$ m²·K·W⁻¹ : la laine de verre apporte à elle seule plus de 91 % de la résistance thermique (Tle, p. 140).'
+      explanation: 'La somme vaut $0{,}003 + 0{,}333 + 0{,}130 + 5{,}400 + 0{,}040 = 5{,}906$ m²·K·W⁻¹ : la laine de verre apporte à elle seule plus de 91 % de la résistance thermique.'
       tags:
       - isolation
     - type: input
@@ -1096,7 +1096,7 @@ units:
       numeric: true
       tolerance: 0.01
       unit: m²·K·W⁻¹
-      explanation: $R_{\text{th}} = 0{,}003 + 0{,}333 + 0{,}130 + 5{,}400 + 0{,}040 = 5{,}906$ m²·K·W⁻¹ (Tle, p. 140).
+      explanation: $R_{\text{th}} = 0{,}003 + 0{,}333 + 0{,}130 + 5{,}400 + 0{,}040 = 5{,}906$ m²·K·W⁻¹.
       tags:
       - isolation
     - type: mcq
@@ -1163,7 +1163,7 @@ units:
       - 'Non : 5,906 est inférieur aux 6,7 m²·K·W⁻¹ exigés pour le niveau « basse énergie ».'
       - 'Non : 5,906 dépasse bien les 5,0 m²·K·W⁻¹ de la RT 2005.'
       - 'Non : 5,906 < 6,7, le niveau « basse énergie » n''est pas atteint.'
-      explanation: 'Seule la RT 2005 est satisfaite (Tle, p. 140-141). Attention : le tableau du livre note ces exigences $R_{\max}$ alors qu''il s''agit de valeurs **minimales** à atteindre — il faudrait lire $R_{\min}$.'
+      explanation: 'Seule la RT 2005 est satisfaite. Attention : ces exigences sont souvent notées $R_{\max}$ alors qu''il s''agit de valeurs **minimales** à atteindre — il faudrait lire $R_{\min}$.'
       tags:
       - isolation
     - type: mcq
@@ -1179,8 +1179,8 @@ units:
       - null
       - 'Non : la surface du toit n''est pas systématiquement la plus grande ; c''est l''écart de température et le mode de transfert (convection de l''air chaud) qui commandent.'
       - 'Non : l''ardoise n''apporte que 0,003 m²·K·W⁻¹ sur 5,906, soit 0,05 % de la résistance du toit : c''est négligeable.'
-      - 'Non : le tableau du livre fixe aussi des exigences pour le plancher (2,0 / 3,3 / 6,7) et pour la façade (2,2 / 3,3 / 6,7).'
-      explanation: 'Par convection, l''air chaud monte : la température sous le toit est plus élevée que dans le reste du logement, ce qui augmente $(T_{\text{chaud}} - T_{\text{froid}})$ et donc le flux. D''où l''exigence renforcée sur $R_{\text{th}}$ du toit (Tle, p. 141).'
+      - 'Non : la réglementation fixe aussi des exigences pour le plancher (2,0 / 3,3 / 6,7) et pour la façade (2,2 / 3,3 / 6,7).'
+      explanation: 'Par convection, l''air chaud monte : la température sous le toit est plus élevée que dans le reste du logement, ce qui augmente $(T_{\text{chaud}} - T_{\text{froid}})$ et donc le flux. D''où l''exigence renforcée sur $R_{\text{th}}$ du toit.'
       tags:
       - isolation
     - type: guided
@@ -1211,7 +1211,7 @@ units:
         - 'Non : les conductivités ne s''additionnent pas ; ici, ce sont déjà des résistances thermiques qui sont fournies.'
         - 'Non : même faibles, les autres couches ajoutent 0,506 m²·K·W⁻¹ au total, soit 8,6 % de la résistance.'
         - 'Non : les couches sont traversées par le **même** flux (association en série) : leurs résistances s''ajoutent, elles ne se moyennent pas.'
-        explanation: '$R_{\text{th, paroi}} = \sum \dfrac{e}{\lambda}$ : les couches accolées sont en série (Tle, p. 140-141).'
+        explanation: '$R_{\text{th, paroi}} = \sum \dfrac{e}{\lambda}$ : les couches accolées sont en série.'
       - kind: input
         prompt: '**Étape 2.** Calculer la résistance thermique $R_{\text{th}}$ de 1 m² de toiture.'
         answer: '5.906'
@@ -1240,7 +1240,7 @@ units:
         - 'Non : 5,906 < 6,7, le niveau « basse énergie » n''est pas atteint.'
         - 'Non : 5,906 > 5,0, la RT 2005 est bien respectée.'
         - 'Non : c''est l''inverse — plus le niveau est ambitieux, plus la résistance exigée est grande.'
-        explanation: 5,906 > 5,0 (RT 2005) ✔ ; 5,906 < 6,7 (« basse énergie ») ✘ ; 5,906 < 10 (« très basse énergie ») ✘ (Tle, p. 141).
+        explanation: 5,906 > 5,0 (RT 2005) ✔ ; 5,906 < 6,7 (« basse énergie ») ✘ ; 5,906 < 10 (« très basse énergie ») ✘.
       - kind: input
         prompt: '**Étape 5.** Quelle résistance thermique **supplémentaire** faut-il ajouter pour atteindre le niveau « basse énergie » (6,7 m²·K·W⁻¹) ?'
         answer: '0.794'

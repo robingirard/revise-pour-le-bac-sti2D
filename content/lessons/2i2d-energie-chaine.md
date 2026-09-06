@@ -31,7 +31,7 @@ Sur chaque lien de puissance circulent deux grandeurs : une grandeur d'**effort*
 | Mécanique (rotation) | Couple $C$ (N·m) | Vitesse angulaire $\omega$ (rad·s⁻¹) | $P = C \times \omega$ |
 | Hydraulique | Pression $p$ (Pa) | Débit $Q$ (m³·s⁻¹) | $P = p \times Q$ |
 
-*Attention* : $\omega$ est une **vitesse angulaire** en rad·s⁻¹ (le manuel l'appelle « fréquence de rotation »). Le manuel donne aussi une ligne « thermique » avec un flux en W·K⁻¹ : cette grandeur est un flux d'**entropie**, pas un flux thermique — un flux thermique est une puissance, en watts.
+*Attention* : $\omega$ est une **vitesse angulaire** en rad·s⁻¹ (on l'appelle parfois « fréquence de rotation »). On rencontre aussi une ligne « thermique » avec un flux en W·K⁻¹ : cette grandeur est un flux d'**entropie**, pas un flux thermique — un flux thermique est une puissance, en watts.
 
 ## Rendement d'un maillon
 

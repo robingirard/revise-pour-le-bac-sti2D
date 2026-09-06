@@ -657,7 +657,7 @@ units:
       - 'Non : le métal se déforme très peu, ces pièces sont des solides ; ce sont les pièces **déformables** qu''on exclut.'
       - 'Non : le bâti (fixe) est une classe comme les autres.'
       - 'Non : la taille ne compte pas ; une petite goupille fait partie d''une classe.'
-      explanation: 'Une pièce déformable n''a pas un mouvement de solide : on l''exclut (manuel p. 33, étape 2).'
+      explanation: 'Une pièce déformable n''a pas un mouvement de solide : on l''exclut (étape 2 de la démarche).'
     - type: mcq
       level: 1
       prompt: 'Deux pièces **vissées l''une sur l''autre** (encastrement) appartiennent :
@@ -788,7 +788,7 @@ units:
     items:
     - type: order
       level: 1
-      prompt: Remettez dans l'ordre les **5 étapes** de la démarche pour réaliser un schéma cinématique (manuel p. 33).
+      prompt: Remettez dans l'ordre les **5 étapes** de la démarche pour réaliser un schéma cinématique.
       steps:
       - Étudier le dessin d'ensemble pour comprendre le fonctionnement
       - Identifier les classes d'équivalence (une couleur par classe)
@@ -831,7 +831,7 @@ units:
       - Par des numéros de pièces
       - On ne les distingue pas
       answer: 0
-      explanation: On respecte les couleurs choisies pour les classes d'équivalence (manuel p. 33, étape 5).
+      explanation: On respecte les couleurs choisies pour les classes d'équivalence (étape 5 de la démarche).
       feedback:
       - null
       - 'Non : l''épaisseur du trait ne code rien ; ce sont les couleurs des classes.'
@@ -846,7 +846,7 @@ units:
       - Toujours au centre de la feuille
       - Au milieu de la pièce la plus grande
       answer: 0
-      explanation: 'Le schéma respecte la position des centres des liaisons : c''est ce qui permet ensuite d''étudier les mouvements (manuel p. 33, étape 5).'
+      explanation: 'Le schéma respecte la position des centres des liaisons : c''est ce qui permet ensuite d''étudier les mouvements (étape 5 de la démarche).'
       feedback:
       - null
       - 'Non : le schéma doit permettre d''étudier les mouvements, il respecte les positions réelles.'

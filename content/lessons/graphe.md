@@ -20,7 +20,7 @@ la **liaison** (nom, centre, axe). Le **graphe des liaisons** résume tout :
 
 {{fig:mecanisme-bielle-manivelle-graphe}}
 
-## La démarche complète (manuel p. 33)
+## La démarche complète
 
 1. **Étudier** le dessin d'ensemble pour comprendre le fonctionnement.
 2. **Identifier les classes d'équivalence** (une couleur par classe, pièces déformables exclues).

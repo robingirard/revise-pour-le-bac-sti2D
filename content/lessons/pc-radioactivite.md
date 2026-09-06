@@ -12,7 +12,7 @@ un **noyau fils** plus stable en émettant un rayonnement. La radioactivité est
 
 {{fig:pc-desintegrations}}
 
-| Type | Particule émise | Exemple du livre |
+| Type | Particule émise | Exemple |
 |---|---|---|
 | **α** | noyau d'hélium 4, $^{4}_{2}\mathrm{He}$ | le noyau fils perd 2 protons et 2 neutrons |
 | **β⁻** | un **électron** | $^{14}_{6}\mathrm{C} \rightarrow {}^{14}_{7}\mathrm{N} + {}^{0}_{-1}\mathrm{e}$ |
@@ -43,7 +43,7 @@ Après $1\,t_{1/2}$ il reste $N_0/2$ ; après $2\,t_{1/2}$, $N_0/4$ ; après $3\
 par 2 à chaque demi-vie, on ne soustrait pas. Demi-vies : $^{3}_{1}\mathrm{H}$ 12,32 ans ;
 $^{14}_{6}\mathrm{C}$ 5 730 ans ; $^{235}_{92}\mathrm{U}$ 7,038 × 10⁸ ans.
 
-*Attention aux unités* : $t_{1/2}$ et $\tau$ sont des **durées**, $\lambda$ est en s⁻¹. Le livre écrit
+*Attention aux unités* : $t_{1/2}$ et $\tau$ sont des **durées**, $\lambda$ est en s⁻¹. On lit parfois
 « τ exprimée en s⁻¹ » : c'est une coquille, $\tau = t_{1/2}/\ln 2$ est bien une durée.
 
 ## Fission, fusion et énergie libérée

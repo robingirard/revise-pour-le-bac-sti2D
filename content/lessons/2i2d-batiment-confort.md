@@ -6,12 +6,12 @@ Isoler ne suffit pas : un bâtiment doit aussi **stocker**, **amortir** et **ré
 
 ## Chaleur sensible et chaleur latente
 
-- **Chaleur sensible** : la part de la chaleur échangée qui **fait varier la température**. Exemple du livre : chauffer l'eau de 0 °C à 100 °C demande **419 kJ/kg**.
+- **Chaleur sensible** : la part de la chaleur échangée qui **fait varier la température**. Exemple : chauffer l'eau de 0 °C à 100 °C demande **419 kJ/kg**.
 - **Chaleur latente** : la part qui **fait changer d'état** le système, à température constante. Exemple : vaporiser cette eau demande **2 257 kJ/kg**, soit plus de cinq fois plus.
 
 $$Q = m \times C \times (T_{\text{finale}} - T_{\text{initiale}})$$
 
-$Q$ en joules, $m$ en kg, $C$ la **chaleur massique** en **J/(kg·K)**, les deux températures dans la même unité (°C ou K). La chaleur massique « caractérise la capacité de stockage d'énergie thermique » d'un matériau.
+$Q$ en joules, $m$ en kg, $C$ la **chaleur massique** en **J/(kg·K)**, les deux températures dans la même unité (°C ou K). La chaleur massique caractérise la capacité de stockage d'énergie thermique d'un matériau.
 
 Rappel de conversion : $T\,(\text{K}) = \theta\,(^\circ\text{C}) + 273{,}15$. Mais une **variation** de température s'exprime indifféremment en °C ou en K : passer de 5 °C à 20 °C, c'est +15 °C **ou** +15 K.
 
@@ -61,7 +61,7 @@ $\Delta L$ et $L_0$ en m, $\alpha$ le coefficient de dilatation linéaire en °C
 | Plancher | 2,0 | 3,3 | 6,7 |
 | Façade | 2,2 | 3,3 | 6,7 |
 
-*(Consommations associées : 130 kWh·m⁻²·an⁻¹ ; 40 à 80 ; moins de 15.)* Ce sont des valeurs **minimales à atteindre**, même si le livre les note $R_{\max}$.
+*(Consommations associées : 130 kWh·m⁻²·an⁻¹ ; 40 à 80 ; moins de 15.)* Ce sont des valeurs **minimales à atteindre**, même si on les note souvent $R_{\max}$, ce qui prête à confusion.
 
 {{fig:pc-isolation-niveaux}}
 

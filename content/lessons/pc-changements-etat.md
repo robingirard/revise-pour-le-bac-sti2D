@@ -11,7 +11,7 @@
 | Solide → Gaz | **Sublimation** | endothermique |
 | Gaz → Solide | **Condensation** | exothermique |
 
-*Piège de vocabulaire* : le livre emploie le mot « condensation » pour **deux** transformations différentes (gaz → liquide et gaz → solide) ; précisez toujours l'état d'arrivée.
+*Piège de vocabulaire* : le mot « condensation » sert pour pour **deux** transformations différentes (gaz → liquide et gaz → solide) ; précisez toujours l'état d'arrivée.
 
 {{fig:pc-etats-matiere}}
 

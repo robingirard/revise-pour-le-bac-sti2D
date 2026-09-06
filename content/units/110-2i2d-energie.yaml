@@ -35,7 +35,7 @@ units:
       - 'Non : le moteur est un **cercle unique** contenant la lettre M et le signe ~.'
       - 'Non : la lampe est un cercle **barré d''une croix** (×).'
       - 'Non : le transistor est un cercle à trois bornes repérées B, C et E.'
-      explanation: Deux cercles sécants (les deux enroulements couplés) = **transformateur**, dont la fonction est de modifier la tension d'alimentation (Tle, p. 256).
+      explanation: Deux cercles sécants (les deux enroulements couplés) = **transformateur**, dont la fonction est de modifier la tension d'alimentation.
       tags:
       - symboles
     - type: mcq
@@ -55,7 +55,7 @@ units:
       - 'Non : la lampe convertit l''énergie électrique en énergie **lumineuse**.'
       - 'Non : la DEL émet de la lumière ; elle ne tourne pas.'
       - 'Non : la résistance s''oppose au passage du courant et dissipe de l''énergie sous forme thermique.'
-      explanation: Le moteur est le convertisseur électrique → mécanique de rotation ; c'est le bloc **CONVERTIR** de la chaîne de puissance (Tle, p. 256).
+      explanation: Le moteur est le convertisseur électrique → mécanique de rotation ; c'est le bloc **CONVERTIR** de la chaîne de puissance.
       tags:
       - symboles
     - type: match
@@ -88,7 +88,7 @@ units:
       - 'Non : une résistance variable se repère par une flèche oblique traversant le symbole, quelle que soit la norme.'
       - 'Non : la puissance admissible d''une résistance ne se lit pas sur son symbole mais dans sa référence.'
       - 'Non : c''est bien le **même** composant, dessiné selon deux conventions différentes.'
-      explanation: Le livre donne les deux tracés pour le même composant (Tle, p. 257). Sur un dossier technique français, on attend le **rectangle**.
+      explanation: Les deux tracés se rencontrent pour le même composant. Sur un dossier technique français, on attend le **rectangle**.
       tags:
       - symboles
     - type: mcq
@@ -108,7 +108,7 @@ units:
       - 'Non : ce serait un bouton poussoir de **marche**. Un arrêt d''urgence doit couper, donc il est fermé au repos.'
       - 'Non : c''est le rôle du **fusible** ou du disjoncteur magnéto-thermique, qui agissent sans intervention humaine.'
       - 'Non : c''est le rôle du disjoncteur **différentiel**.'
-      explanation: L'arrêt d'urgence est un contact **normalement fermé** (NF) commandé manuellement (Tle, p. 257). Toute rupture du fil de sa boucle provoque aussi l'arrêt — c'est un choix de sécurité.
+      explanation: L'arrêt d'urgence est un contact **normalement fermé** (NF) commandé manuellement. Toute rupture du fil de sa boucle provoque aussi l'arrêt — c'est un choix de sécurité.
       tags:
       - protection
     - type: mcq
@@ -128,7 +128,7 @@ units:
       - 'Non : un fusible ne régule rien, il **coupe** définitivement quand le courant dépasse son calibre.'
       - 'Non : un fusible est à usage unique, il faut le remplacer. C''est un **disjoncteur** qui se réarme.'
       - 'Non : les courants de fuite sont l''affaire du disjoncteur **différentiel**.'
-      explanation: « En cas de court-circuit, ou de surcharge, le fusible fond et ouvre le circuit électrique » (Tle, p. 257). Le fusible protège le **matériel**, pas les personnes.
+      explanation: En cas de court-circuit, ou de surcharge, le fusible fond et ouvre le circuit électrique. Le fusible protège le **matériel**, pas les personnes.
       tags:
       - protection
     - type: mcq
@@ -145,7 +145,7 @@ units:
       - 'Non : c''est le critère du disjoncteur **magnéto-thermique** (surcharge) ou du fusible.'
       - 'Non : un différentiel ne surveille pas la tension mais l''**écart** entre les courants aller et retour.'
       - 'Non : la surveillance thermique est celle du relais thermique ou du magnéto-thermique.'
-      explanation: 'Le tore du différentiel compare le courant de la phase et celui du neutre. S''ils diffèrent, c''est qu''une partie du courant **fuit** ailleurs (par exemple à travers un corps humain) : le disjoncteur ouvre. Il protège donc les **personnes** (Tle, p. 257).'
+      explanation: 'Le tore du différentiel compare le courant de la phase et celui du neutre. S''ils diffèrent, c''est qu''une partie du courant **fuit** ailleurs (par exemple à travers un corps humain) : le disjoncteur ouvre. Il protège donc les **personnes**.'
       tags:
       - protection
     - type: mcq
@@ -162,7 +162,7 @@ units:
       - 'Non : il assure **deux** protections, dont la protection contre les surcharges prolongées.'
       - 'Non : les défauts d''isolement (courants de fuite) relèvent du disjoncteur différentiel.'
       - 'Non : les surtensions relèvent des parafoudres.'
-      explanation: 'Deux déclencheurs dans un même boîtier : un **bilame** qui s''échauffe lentement (surcharge) et une **bobine** qui agit instantanément (court-circuit) — Tle, p. 257.'
+      explanation: 'Deux déclencheurs dans un même boîtier : un **bilame** qui s''échauffe lentement (surcharge) et une **bobine** qui agit instantanément (court-circuit).'
       tags:
       - protection
     - type: grid
@@ -211,7 +211,7 @@ units:
       - 'Non : c''est le **redresseur** (convertisseur alternatif/continu).'
       - 'Non : c''est le **hacheur**.'
       - 'Non : c''est le **variateur** (ou gradateur).'
-      explanation: 'Onduleur : `=` → `~`. Exemple du livre (Tle, p. 260) : les panneaux solaires délivrent du courant continu, il faut un onduleur avant de réinjecter l''énergie sur le réseau.'
+      explanation: 'Onduleur : `=` → `~`. Exemple : les panneaux solaires délivrent du courant continu, il faut un onduleur avant de réinjecter l''énergie sur le réseau.'
       tags:
       - convertisseurs
     - type: mcq
@@ -231,7 +231,7 @@ units:
       - 'Non : l''onduleur fabriquerait de l''alternatif, dont un moteur à courant continu n''a que faire.'
       - 'Non : le redresseur part d''une source alternative ; ici la source est déjà continue.'
       - 'Non : un transformateur ne fonctionne qu''en **alternatif** ; il ne transforme pas une tension continue.'
-      explanation: 'Hacheur : `=` → `=`. « Un hacheur permet, à partir d''une source continue (exemple : batterie), de fournir une tension continue variable » (Tle, p. 260). C''est le convertisseur des scooters, vélos et voitures électriques.'
+      explanation: 'Hacheur : `=` → `=`. Un hacheur permet, à partir d''une source continue (exemple : batterie), de fournir une tension continue variable. C''est le convertisseur des scooters, vélos et voitures électriques.'
       tags:
       - convertisseurs
     - type: match
@@ -285,7 +285,7 @@ units:
       - 'Non : c''est l''inverse. Les gros courants passent par le circuit de **puissance**.'
       - 'Non : la commande est alimentée en **24 V** par le transformateur T1 (400 V / 24 V, 50 VA).'
       - 'Non : les deux circuits sont bien réellement câblés, souvent avec des sections de fil très différentes.'
-      explanation: 'Circuit de puissance : réseau 3 × 400 V → sectionneur Q0 → contacts KM1 → relais thermique F4 → moteur M3. Circuit de commande : F2 → transformateur T1 → F3 → F4 → S2 → S1 // KM1 → bobine KM1 (Tle, p. 258). Séparer les deux permet de commander de fortes puissances avec des boutons en très basse tension.'
+      explanation: 'Circuit de puissance : réseau 3 × 400 V → sectionneur Q0 → contacts KM1 → relais thermique F4 → moteur M3. Circuit de commande : F2 → transformateur T1 → F3 → F4 → S2 → S1 // KM1 → bobine KM1. Séparer les deux permet de commander de fortes puissances avec des boutons en très basse tension.'
       tags:
       - schema-puissance
     - type: mcq
@@ -305,7 +305,7 @@ units:
       - 'Non : le contact KM1 branché **en parallèle** de S1 s''est fermé au démarrage et maintient la bobine alimentée.'
       - 'Non : aucun redémarrage automatique n''est prévu dans ce schéma (ce serait d''ailleurs dangereux).'
       - 'Non : F4 est un relais thermique, il ne déclenche qu''en cas de surcharge prolongée du moteur.'
-      explanation: Réponse du livre (Tle, p. 258) — « Grâce au dispositif d'auto-maintien (bobine KM1 associée à ses contacts KM1), le moteur continue à tourner. » On arrête le moteur en appuyant sur S2, qui ouvre la boucle.
+      explanation: Grâce au dispositif d'auto-maintien (la bobine KM1 et ses propres contacts KM1), le moteur continue à tourner. On l'arrête en appuyant sur S2, qui ouvre la boucle.
       tags:
       - schema-puissance
     - type: mcq
@@ -325,7 +325,7 @@ units:
       - 'Non : si Q0 est ouvert, ni la puissance ni la commande ne sont alimentées.'
       - 'Non : S2 est le bouton d''**arrêt** (contact normalement fermé) ; appuyer dessus ouvre la boucle de commande.'
       - 'Non : S2 arrête le moteur, il ne le démarre pas.'
-      explanation: Réponse du livre (Tle, p. 258) — « Il faut que le sectionneur à fusibles Q0 soit fermé et il faut appuyer sur le bouton poussoir S1. »
+      explanation: Il faut que le sectionneur à fusibles Q0 soit fermé, puis appuyer sur le bouton poussoir S1.
       tags:
       - schema-puissance
     - type: order
@@ -340,7 +340,7 @@ units:
       - Contacts de puissance du contacteur KM1
       - Relais thermique F4
       - Moteur triphasé M3
-      explanation: 'Ordre du schéma p. 258. Retenir la logique : d''abord **isoler et protéger** (Q0, F1), puis **distribuer** (KM1), puis **surveiller** (F4), enfin **convertir** (M3).'
+      explanation: 'Ordre de lecture du schéma. Retenir la logique : d''abord **isoler et protéger** (Q0, F1), puis **distribuer** (KM1), puis **surveiller** (F4), enfin **convertir** (M3).'
       tags:
       - schema-puissance
     - type: input
@@ -387,7 +387,7 @@ units:
       - 'Non : un panneau photovoltaïque délivre du **continu**, pas de l''alternatif, et le réseau est alternatif.'
       - 'Non : un hacheur reste de `=` vers `=` ; il ne peut pas produire la tension alternative du réseau.'
       - 'Non : le panneau ne produit pas d''alternatif, donc pas de transformateur en sortie directe.'
-      explanation: Un module photovoltaïque est un générateur de **courant continu**. L'onduleur (`=` → `~`) fabrique une tension alternative synchronisée sur le réseau (Tle, p. 260). C'est exactement la fonction du bloc onduleur d'une installation en autoconsommation.
+      explanation: Un module photovoltaïque est un générateur de **courant continu**. L'onduleur (`=` → `~`) fabrique une tension alternative synchronisée sur le réseau. C'est exactement la fonction du bloc onduleur d'une installation en autoconsommation.
       tags:
       - convertisseurs
   - id: 2i2d-energie-chaine
@@ -410,7 +410,7 @@ units:
       - CONVERTIR
       - TRANSMETTRE
       - AGIR
-      explanation: 'Ordre du cours (Tle, p. 244) : Alimenter → Distribuer → Convertir → Transmettre → Agir. Les **ordres** issus de la chaîne d''information arrivent sur le bloc **Distribuer**.'
+      explanation: 'Ordre du cours : Alimenter → Distribuer → Convertir → Transmettre → Agir. Les **ordres** issus de la chaîne d''information arrivent sur le bloc **Distribuer**.'
       tags:
       - chaine-energie
     - type: match
@@ -449,7 +449,7 @@ units:
       - 'Non : le bloc ALIMENTER fournit l''énergie (batterie, réseau) ; il n''est pas piloté par la commande.'
       - 'Non : le bloc AGIR est le dernier maillon, celui qui agit sur la matière d''œuvre.'
       - 'Non : TRANSMETTRE adapte vitesse et effort (réducteur), il ne reçoit pas d''ordre.'
-      explanation: C'est le préactionneur (contacteur, transistor, distributeur) du bloc **DISTRIBUER** qui reçoit l'ordre et laisse ou non passer la puissance vers le convertisseur (Tle, p. 244-245).
+      explanation: C'est le préactionneur (contacteur, transistor, distributeur) du bloc **DISTRIBUER** qui reçoit l'ordre et laisse ou non passer la puissance vers le convertisseur.
       tags:
       - chaine-energie
     - type: mcq
@@ -469,7 +469,7 @@ units:
       - 'Non : l''effort est la tension et le flux l''intensité, et la puissance est un **produit**, jamais une somme.'
       - 'Non : la puissance est justement le **produit** des deux grandeurs portées par le lien, elle n''en est pas une.'
       - 'Non : la résistance est une constante du composant, pas une grandeur de lien.'
-      explanation: 'Sur tout lien de puissance, effort × flux = puissance (W). En continu : $P = U \times I$ (Tle, p. 245 et p. 265).'
+      explanation: 'Sur tout lien de puissance, effort × flux = puissance (W). En continu : $P = U \times I$.'
       tags:
       - puissance
     - type: match
@@ -493,7 +493,7 @@ units:
       numeric: true
       tolerance: 2
       unit: W
-      explanation: '$P = C \times \omega = 5{,}0 \times 100 = 500$ W (Tle, p. 265). Attention : $\omega$ doit être en **rad·s⁻¹**, jamais en tours par minute.'
+      explanation: '$P = C \times \omega = 5{,}0 \times 100 = 500$ W. Attention : $\omega$ doit être en **rad·s⁻¹**, jamais en tours par minute.'
       tags:
       - puissance
     - type: input
@@ -522,7 +522,7 @@ units:
       - null
       - 'Non : le rendement est un **rapport** de deux puissances : les watts se simplifient.'
       - 'Non : on peut le calculer avec des énergies, mais c''est un rapport : le joule se simplifie.'
-      - 'Non : 1 est « la meilleure valeur possible (inatteignable en pratique) » (Tle, p. 266) ; un rendement supérieur à 1 signifierait créer de l''énergie.'
+      - 'Non : 1 est la meilleure valeur possible, inatteignable en pratique ; un rendement supérieur à 1 signifierait créer de l''énergie.'
       explanation: $\eta = \dfrac{P_{\text{sortie}}}{P_{\text{entrée}}} = \dfrac{E_{\text{sortie}}}{E_{\text{entrée}}}$, sans unité, entre 0 et 1. On l'exprime souvent en pourcentage.
       tags:
       - rendement
@@ -543,7 +543,7 @@ units:
       - 'Non : additionner donnerait vite un rendement supérieur à 1, ce qui est impossible.'
       - 'Non : la moyenne de 0,90 et 0,80 vaut 0,85 ; or la chaîne ne restitue que 72 % de l''énergie fournie.'
       - 'Non : chaque maillon prélève sa part de pertes, même les meilleurs. Le résultat est toujours **inférieur** au plus petit des rendements.'
-      explanation: '$\eta_{\text{global}} = \eta_1 \times \eta_2 \times \dots \times \eta_n$ (Tle, p. 266). C''est une conséquence directe de la définition : la sortie du maillon 1 est l''entrée du maillon 2.'
+      explanation: '$\eta_{\text{global}} = \eta_1 \times \eta_2 \times \dots \times \eta_n$. C''est une conséquence directe de la définition : la sortie du maillon 1 est l''entrée du maillon 2.'
       tags:
       - rendement
     - type: input
@@ -633,7 +633,7 @@ units:
       - 'Non : c''est l''inverse. La chaîne d''information manipule des signaux de faible puissance.'
       - 'Non : le lien **Ordres** relie précisément les deux chaînes.'
       - 'Non : tout système qui agit possède une chaîne d''énergie, qu''elle soit électrique, hydraulique ou thermique.'
-      explanation: 'Chaîne d''information : ACQUÉRIR → TRAITER → COMMUNIQUER (capteur, carte à microcontrôleur, voyant). Chaîne d''énergie : ALIMENTER → DISTRIBUER → CONVERTIR → TRANSMETTRE → AGIR (Tle, p. 244-246). Les ordres vont de la première vers le bloc DISTRIBUER de la seconde.'
+      explanation: 'Chaîne d''information : ACQUÉRIR → TRAITER → COMMUNIQUER (capteur, carte à microcontrôleur, voyant). Chaîne d''énergie : ALIMENTER → DISTRIBUER → CONVERTIR → TRANSMETTRE → AGIR. Les ordres vont de la première vers le bloc DISTRIBUER de la seconde.'
       tags:
       - chaine-energie
     - type: input
@@ -643,7 +643,7 @@ units:
       numeric: true
       tolerance: 0.05
       unit: MJ·km⁻¹
-      explanation: $2{,}7 \times 3{,}6 = 9{,}72$ MJ·km⁻¹, valeur portée sur le diagramme de flux du livre (arrondie à 9,7 MJ·km⁻¹). Le kilowattheure et le mégajoule mesurent la même grandeur, l'énergie.
+      explanation: $2{,}7 \times 3{,}6 = 9{,}72$ MJ·km⁻¹, valeur portée sur le diagramme de flux (arrondie à 9,7 MJ·km⁻¹). Le kilowattheure et le mégajoule mesurent la même grandeur, l'énergie.
       tags:
       - bilan
     - type: input
@@ -688,7 +688,7 @@ units:
       - bilan
     - type: mcq
       level: 3
-      prompt: Le tableau effort/flux du manuel donne, pour le domaine **thermique**, « température $T$ en K » et « flux thermique $S$ en W/K ». Pourquoi cette ligne est-elle fautive ?
+      prompt: Un tableau effort/flux donne, pour le domaine **thermique**, « température $T$ en K » et « flux thermique $S$ en W/K ». Pourquoi cette ligne est-elle fautive ?
       choices:
       - Un flux thermique est une puissance et se mesure en watts ; la grandeur en W·K⁻¹ notée $S$ est un flux d'**entropie**
       - La température devrait être exprimée en degrés Celsius
@@ -700,7 +700,7 @@ units:
       - 'Non : dans un produit effort × flux, la température doit être **absolue**, donc en kelvins.'
       - 'Non : K × W·K⁻¹ = W, le produit est bien homogène à une puissance ; c''est le **nom** de la grandeur qui est faux.'
       - 'Non : le couple existe bien, mais le flux conjugué de la température est le flux d''entropie.'
-      explanation: 'Dans l''unité de physique, le flux thermique $\Phi$ est défini en **watts** ($\Phi = E/\Delta t$). Une grandeur en W·K⁻¹ est un flux d''entropie. Le produit $T \times S$ donne bien des watts, mais l''appellation « flux thermique » du manuel (p. 265) est incorrecte : à signaler, pas à recopier.'
+      explanation: 'Dans l''unité de physique, le flux thermique $\Phi$ est défini en **watts** ($\Phi = E/\Delta t$). Une grandeur en W·K⁻¹ est un flux d''entropie. Le produit $T \times S$ donne bien des watts, mais l''appellation « flux thermique » est alors incorrecte : à signaler, pas à recopier.'
       tags:
       - puissance
     - type: guided
@@ -726,7 +726,7 @@ units:
         numeric: true
         tolerance: 0.05
         unit: MJ·km⁻¹
-        explanation: '$2{,}7 \times 3{,}6 = 9{,}72$ MJ·km⁻¹. Le diagramme de flux du livre porte la valeur arrondie **9,7 MJ·km⁻¹**, que l''on utilisera dans la suite.'
+        explanation: '$2{,}7 \times 3{,}6 = 9{,}72$ MJ·km⁻¹. Le diagramme de flux porte la valeur arrondie **9,7 MJ·km⁻¹**, que l''on utilisera dans la suite.'
       - kind: input
         prompt: '**Étape 2.** Calculer l''énergie électrique en **sortie** du réseau de transport (c''est-à-dire en entrée de la distribution), sachant que $\eta_{\text{alimentation}} = 0{,}97$. (arrondir au dixième)'
         answer: '10.0'
@@ -814,7 +814,7 @@ units:
       - 'Non : le wattheure mesure l''**énergie** stockée, obtenue par $E = U \times Q$.'
       - 'Non : le watt mesure une puissance, c''est-à-dire un débit d''énergie.'
       - 'Non : le volt mesure la tension nominale, une autre caractéristique de la batterie.'
-      explanation: 'La capacité s''exprime en ampères-heures : $Q = I \times t$ avec $I$ en A et $t$ en heures (Tle, p. 261). Une batterie de 7 Ah délivre 7 A pendant 1 h, ou 3,5 A pendant 2 h.'
+      explanation: 'La capacité s''exprime en ampères-heures : $Q = I \times t$ avec $I$ en A et $t$ en heures. Une batterie de 7 Ah délivre 7 A pendant 1 h, ou 3,5 A pendant 2 h.'
       tags:
       - capacite
     - type: input
@@ -824,7 +824,7 @@ units:
       numeric: true
       tolerance: 0.05
       unit: h
-      explanation: '$Q = I \times t$ donc $t = \dfrac{Q}{I} = \dfrac{7}{3{,}5} = 2$ h (exemple du livre, Tle, p. 261). Attention : le temps doit être exprimé en **heures**, pas en secondes.'
+      explanation: '$Q = I \times t$ donc $t = \dfrac{Q}{I} = \dfrac{7}{3{,}5} = 2$ h. Attention : le temps doit être exprimé en **heures**, pas en secondes.'
       tags:
       - capacite
     - type: input
@@ -851,7 +851,7 @@ units:
       - 'Non : $U \times I$ donne une **puissance** en watts, pas une énergie.'
       - 'Non : la capacité $Q$ contient déjà un temps (Ah) ; la multiplier encore par une durée n''a pas de sens.'
       - 'Non : une énergie stockée ne peut pas diminuer quand la capacité augmente.'
-      explanation: '$E = U \times Q$ (Tle, p. 261) : des volts multipliés par des ampères-heures donnent bien des wattheures. Exemple : 12 V × 7 Ah = 84 Wh.'
+      explanation: '$E = U \times Q$ : des volts multipliés par des ampères-heures donnent bien des wattheures. Exemple : 12 V × 7 Ah = 84 Wh.'
       tags:
       - energie
     - type: input
@@ -861,7 +861,7 @@ units:
       numeric: true
       tolerance: 1
       unit: Wh
-      explanation: $E = U \times Q = 12 \times 7 = 84$ Wh (Tle, p. 261-262). C'est environ 0,084 kWh, de quoi alimenter une lampe LED de 8 W pendant une dizaine d'heures.
+      explanation: $E = U \times Q = 12 \times 7 = 84$ Wh. C'est environ 0,084 kWh, de quoi alimenter une lampe LED de 8 W pendant une dizaine d'heures.
       tags:
       - energie
     - type: mcq
@@ -881,7 +881,7 @@ units:
       - 'Non : c''est l''effet du montage en **parallèle**.'
       - 'Non : on ne peut pas tout additionner, sinon l''énergie du pack serait multipliée par le carré du nombre d''éléments.'
       - 'Non : le montage en série sert précisément à obtenir une tension plus élevée.'
-      explanation: 'En série, on relie le pôle + d''un élément au pôle − du suivant : les tensions s''ajoutent, le même courant traverse tous les éléments donc la capacité reste celle d''un élément (Tle, p. 260-261).'
+      explanation: 'En série, on relie le pôle + d''un élément au pôle − du suivant : les tensions s''ajoutent, le même courant traverse tous les éléments donc la capacité reste celle d''un élément.'
       tags:
       - associations
     - type: mcq
@@ -901,7 +901,7 @@ units:
       - 'Non : c''est le résultat du branchement **en série**.'
       - 'Non : on ne peut pas additionner à la fois les tensions et les capacités, sinon l''énergie serait multipliée par 16 au lieu de 4.'
       - 'Non : en parallèle, la tension reste à 12 V mais les capacités **s''additionnent** : 4 × 7 = 28 Ah.'
-      explanation: 'En parallèle : $U = 12$ V, $Q = 4 \times 7 = 28$ Ah. L''énergie vaut $E = 12 \times 28 = 336$ Wh (Tle, p. 262).'
+      explanation: 'En parallèle : $U = 12$ V, $Q = 4 \times 7 = 28$ Ah. L''énergie vaut $E = 12 \times 28 = 336$ Wh.'
       tags:
       - associations
     - type: input
@@ -927,7 +927,7 @@ units:
       numeric: true
       tolerance: 0.5
       unit: Ah
-      explanation: 'Chaque branche : 2 éléments en série → 24 V et 7 Ah. Les deux branches en parallèle → 24 V et $2 \times 7 = 14$ Ah. Énergie : $24 \times 14 = 336$ Wh, encore une fois la même (Tle, p. 262).'
+      explanation: 'Chaque branche : 2 éléments en série → 24 V et 7 Ah. Les deux branches en parallèle → 24 V et $2 \times 7 = 14$ Ah. Énergie : $24 \times 14 = 336$ Wh, encore une fois la même.'
       tags:
       - associations
     - type: mcq
@@ -967,7 +967,7 @@ units:
       - 'Non : c''est une idéalisation. Aucune batterie réelle ne conserve exactement sa tension.'
       - 'Non : une batterie ne peut pas se recharger toute seule en débitant.'
       - 'Non : la décharge est monotone ; c''est sa **pente** qui varie selon la technologie.'
-      explanation: « Lorsqu'une batterie se décharge, la tension à ses bornes diminue. En fonction du type de batterie, la courbe est plus ou moins aplatie » (Tle, p. 262).
+      explanation: Lorsqu'une batterie se décharge, la tension à ses bornes diminue. En fonction du type de batterie, la courbe est plus ou moins aplatie.
       tags:
       - decharge
     - type: mcq
@@ -1004,7 +1004,7 @@ units:
       - 'Non : l''énergie restante, c''est l''**état de charge** (SoC). Le DoD en est le complément.'
       - 'Non : c''est la **tension de coupure**.'
       - 'Non : c''est la **tension nominale**.'
-      explanation: « La profondeur de décharge (DoD) est la quantité d'énergie qui a été déchargée de la batterie. Elle est donnée en pourcentage de sa capacité » (Tle, p. 263). SoC + DoD = 100 %.
+      explanation: La profondeur de décharge (DoD) est la quantité d'énergie qui a été déchargée de la batterie. Elle est donnée en pourcentage de sa capacité. SoC + DoD = 100 %.
       tags:
       - dod
     - type: match
@@ -1035,7 +1035,7 @@ units:
       - 'Non : une décharge profonde ne rend pas la recharge impossible, elle **abrège la durée de vie** de l''élément.'
       - 'Non : la tension chute mais ne s''inverse pas.'
       - 'Non : la capacité d''un élément dégradé **diminue** au fil des cycles.'
-      explanation: « Il ne faut pas décharger la batterie au-delà d'un certain seuil pour éviter la survenue de certains phénomènes chimiques qui altèrent de façon irréversible la batterie » (Tle, p. 263). D'où la **tension de coupure** programmée dans le système.
+      explanation: Il ne faut pas décharger la batterie au-delà d'un certain seuil pour éviter la survenue de certains phénomènes chimiques qui altèrent de façon irréversible la batterie. D'où la **tension de coupure** programmée dans le système.
       tags:
       - dod
     - type: mcq
@@ -1052,7 +1052,7 @@ units:
       - 'Non : la masse d''un accumulateur ne varie pas de façon mesurable avec sa charge.'
       - 'Non : la résistance interne renseigne sur le **vieillissement**, pas sur l''état de charge instantané.'
       - 'Non : le nombre de cycles renseigne sur l''usure, pas sur la charge restante.'
-      explanation: 'Deux méthodes citées par le cours (Tle, p. 263) : lire la **tension** aux bornes pendant le fonctionnement, ou utiliser un **compteur de coulombs** qui intègre les charges injectées et soutirées. C''est la fonction du *Battery Management System*.'
+      explanation: 'Deux méthodes citées par le cours : lire la **tension** aux bornes pendant le fonctionnement, ou utiliser un **compteur de coulombs** qui intègre les charges injectées et soutirées. C''est la fonction du *Battery Management System*.'
       tags:
       - dod
     - type: input
@@ -1127,7 +1127,7 @@ units:
       - dimensionnement
     - type: mcq
       level: 3
-      prompt: Le manuel écrit que « la capacité d'une batterie est la quantité d'**énergie** électrique qu'elle est capable de restituer », puis donne $Q = I \times t$ en ampères-heures. Où est le problème ?
+      prompt: On définit parfois la capacité d'une batterie comme la quantité d'**énergie** électrique qu'elle est capable de restituer, puis on donne $Q = I \times t$ en ampères-heures. Où est le problème ?
       choices:
       - La capacité en Ah est une quantité de **charge**, pas une énergie ; l'énergie s'en déduit par $E = U \times Q$, en Wh
       - Il faudrait écrire $Q = I / t$
@@ -1139,7 +1139,7 @@ units:
       - 'Non : une capacité de 7 Ah signifie bien 7 A pendant 1 h, donc $Q = I \times t$.'
       - 'Non : le joule mesure une énergie ; la capacité mesure une charge (1 Ah = 3 600 C).'
       - 'Non : deux batteries de 7 Ah, l''une en 12 V, l''autre en 48 V, ne stockent pas la même énergie (84 Wh contre 336 Wh).'
-      explanation: 'Ampère-heure = ampère × heure = **charge électrique**. La formule $E = U \times Q$ donnée juste après par le manuel le confirme : si $Q$ était déjà une énergie, on ne la multiplierait pas par une tension. Formulation à corriger dans une copie.'
+      explanation: 'Ampère-heure = ampère × heure = **charge électrique**. La formule $E = U \times Q$, donnée juste après, le confirme : si $Q$ était déjà une énergie, on ne la multiplierait pas par une tension. Formulation à corriger dans une copie.'
       tags:
       - capacite
     - type: guided
@@ -1173,7 +1173,7 @@ units:
         - 'Non : le nombre est bon, mais un câblage en parallèle laisserait le parc à 6 V et n''augmenterait que la capacité.'
         - 'Non : vous avez sans doute divisé par la tension des batteries de service (24 V) ; la propulsion est en 384 V.'
         - 'Non : 16 est le nombre de panneaux photovoltaïques de propulsion, pas le nombre d''éléments.'
-        explanation: '$384 / 6 = 64$ éléments **en série**. Seule l''association série additionne les tensions (Tle, p. 261).'
+        explanation: '$384 / 6 = 64$ éléments **en série**. Seule l''association série additionne les tensions.'
       - kind: input
         prompt: '**Étape 2.** Calculer l''énergie stockée par un élément (6 V, 136 Ah).'
         answer: '816'
@@ -1298,7 +1298,7 @@ units:
       - 'Non : c''est le réseau qui est alternatif à 50 Hz ; c''est justement pour cela qu''il faut un onduleur.'
       - 'Non : un panneau ne produit pas d''alternatif du tout.'
       - 'Non : un panneau éclairé délivre une tension même à vide, sans aucun convertisseur.'
-      explanation: 'Un module photovoltaïque est un générateur de **courant continu**. D''où la chaîne : panneaux `=` → onduleur `=`→`~` → réseau (Tle, p. 260).'
+      explanation: 'Un module photovoltaïque est un générateur de **courant continu**. D''où la chaîne : panneaux `=` → onduleur `=`→`~` → réseau.'
       tags:
       - irradiance
     - type: input
@@ -1361,7 +1361,7 @@ units:
       - 'Non : c''est l''effet du branchement en **parallèle**.'
       - 'Non : sinon la puissance serait multipliée par 16 alors qu''il n''y a que 4 cellules.'
       - 'Non : associer des cellules sert justement à obtenir un couple (U, I) utilisable.'
-      explanation: 'En série, les tensions s''additionnent et le courant reste identique : $U = 4 \times 18 = 72$ V, $I = 5{,}56$ A (Tle, p. 260).'
+      explanation: 'En série, les tensions s''additionnent et le courant reste identique : $U = 4 \times 18 = 72$ V, $I = 5{,}56$ A.'
       tags:
       - associations-pv
     - type: input
@@ -1374,7 +1374,7 @@ units:
       numeric: true
       tolerance: 0.1
       unit: A
-      explanation: 'En parallèle, les courants s''additionnent : $I = 4 \times 5{,}56 = 22{,}24$ A ; la tension reste $U = 18$ V. Le manuel arrondit à 22,2 A.'
+      explanation: 'En parallèle, les courants s''additionnent : $I = 4 \times 5{,}56 = 22{,}24$ A ; la tension reste $U = 18$ V. On arrondit souvent à 22,2 A.'
       tags:
       - associations-pv
     - type: input
@@ -1400,22 +1400,22 @@ units:
       - Le branchement modifie le couple ($U$, $I$) mais pas leur produit, qui reste la somme des puissances des cellules
       - La puissance est maximale en série, car la tension y est la plus grande
       - La puissance est maximale en parallèle, car le courant y est le plus grand
-      - Le calcul du manuel est faux
+      - Le calcul du corrigé est faux
       answer: 0
       feedback:
       - null
       - 'Non : en série la tension vaut bien 72 V, mais le courant reste 5,56 A : $72 \times 5{,}56 = 400{,}3$ W.'
       - 'Non : en parallèle le courant vaut 22,24 A, mais la tension reste 18 V : $18 \times 22{,}24 = 400{,}3$ W.'
       - 'Non : les trois calculs sont corrects et donnent le même résultat.'
-      explanation: 'Chaque cellule fournit $18 \times 5{,}56 = 100{,}1$ W ; quatre cellules fournissent 400,3 W quel que soit le câblage. On choisit le branchement pour **adapter la tension** au convertisseur qui suit (Tle, p. 260-261).'
+      explanation: 'Chaque cellule fournit $18 \times 5{,}56 = 100{,}1$ W ; quatre cellules fournissent 400,3 W quel que soit le câblage. On choisit le branchement pour **adapter la tension** au convertisseur qui suit.'
       tags:
       - associations-pv
     - type: mcq
       level: 3
-      prompt: Le manuel écrit $I = 4 \times 5{,}56 = 22{,}2$ A puis $P = 18 \times 22{,}2 = 400$ W. Or $18 \times 22{,}2 = 399{,}6$. Que faut-il en penser ?
+      prompt: Un corrigé écrit $I = 4 \times 5{,}56 = 22{,}2$ A puis $P = 18 \times 22{,}2 = 400$ W. Or $18 \times 22{,}2 = 399{,}6$. Que faut-il en penser ?
       choices:
       - C'est un arrondi intermédiaire ; sans arrondir, $4 \times 5{,}56 = 22{,}24$ A et $P = 400{,}3$ W, donc « 400 W » est correct à l'arrondi près
-      - Le manuel s'est trompé, la puissance vaut réellement 399,6 W
+      - Le corrigé s'est trompé, la puissance vaut réellement 399,6 W
       - Il manque une cellule dans le calcul
       - La puissance dépend réellement du branchement
       answer: 0

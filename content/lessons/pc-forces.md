@@ -21,7 +21,7 @@ $$P = m \times g$$
 | $m$ | masse du système | kilogramme (kg) |
 | $g$ | intensité de la pesanteur | $\mathrm{N\cdot kg^{-1}}$ (ou $\mathrm{m\cdot s^{-2}}$) |
 
-Dans toute l'unité on prend **$g = 9{,}81\ \mathrm{N\cdot kg^{-1}}$**. *(Le manuel écrit tantôt $9{,}8$, tantôt $9{,}81$ ; l'écart est inférieur à 0,2 %.)*
+Dans toute l'unité on prend **$g = 9{,}81\ \mathrm{N\cdot kg^{-1}}$**. *(On écrit tantôt $9{,}8$, tantôt $9{,}81$ ; l'écart est inférieur à 0,2 %.)*
 
 **Ne jamais confondre** la **masse** (en kg, elle ne change pas) et le **poids** (en N, il dépend de $g$).
 

@@ -68,7 +68,7 @@ moteurs à courant continu indépendants (repère 25 de la nomenclature, quantit
 | 1 — panoramique | chape 8, poulie 14, axe d'articulation 6, collecteur tournant 24 | pivot $(O, \vec{z})$, roulements 5 |
 | 2 — site | module caméra 27, chape 10, roue dentée 13 | pivot $(A, \vec{y})$, roulements 9 |
 
-*Piège de vocabulaire du manuel* : la **rotation horizontale** (panoramique) se fait autour de
+*Piège de vocabulaire* : la **rotation horizontale** (panoramique) se fait autour de
 l'axe **vertical** $z$, et la **rotation verticale** (site) autour de l'axe **horizontal** $y$. Le
 mouvement est nommé d'après la direction dans laquelle la visée balaie, non d'après son axe.
 

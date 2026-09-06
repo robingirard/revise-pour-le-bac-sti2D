@@ -48,4 +48,4 @@ Quantité de matière : $n = \dfrac{m}{M}$ (mol). Concentration massique : $C_m 
 
 **Exemple.** 10,0 g de $\mathrm{NaCl}$ ($M = 58{,}5\ \mathrm{g\cdot mol^{-1}}$) dans 500 mL de solution : $C_m = \dfrac{10{,}0}{0{,}500} = 20{,}0\ \mathrm{g\cdot L^{-1}}$, puis $C = \dfrac{20{,}0}{58{,}5} = 0{,}342\ \mathrm{mol\cdot L^{-1}}$.
 
-*Le manuel imprime 0,343 mol·L⁻¹ : le calcul exact donne 0,3418…, soit **0,342** à trois chiffres significatifs.* Erreur classique : oublier de convertir le volume en litres (500 mL = 0,500 L).
+*On lit parfois 0,343 mol·L⁻¹ : le calcul exact donne 0,3418…, soit **0,342** à trois chiffres significatifs.* Erreur classique : oublier de convertir le volume en litres (500 mL = 0,500 L).

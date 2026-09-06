@@ -80,7 +80,7 @@ units:
       - 'C''est l''inverse : le cuivre, très bon conducteur thermique, a $R_{\mathrm{th}} = 2{,}6 \times 10^{-5}\ \mathrm{m^2\cdot K\cdot W^{-1}}$, une valeur minuscule.'
       - 'Non : la conduction **électrique** est décrite par la résistivité $\rho$, en $\Omega\cdot\mathrm{m}$.'
       - 'Non : la dilatation thermique est une autre propriété du matériau.'
-      explanation: '« Plus $R_{\mathrm{th}}$ est élevée, plus le matériau est un bon isolant thermique. » Pour 1,0 cm d''épaisseur : polystyrène 0,29 ; verre $8{,}7 \times 10^{-3}$ ; cuivre $2{,}6 \times 10^{-5}\ \mathrm{m^2\cdot K\cdot W^{-1}}$.'
+      explanation: 'Plus $R_{\mathrm{th}}$ est élevée, plus le matériau est un bon isolant thermique. Pour 1,0 cm d''épaisseur : polystyrène 0,29 ; verre $8{,}7 \times 10^{-3}$ ; cuivre $2{,}6 \times 10^{-5}\ \mathrm{m^2\cdot K\cdot W^{-1}}$.'
     - type: mcq
       level: 1
       tags:
@@ -98,7 +98,7 @@ units:
       - 'Non : le cuivre, l''aluminium et le zinc sont des métaux **non magnétiques** — un aimant ne les attire pas.'
       - 'Non : ce sont les éléments de base des matériaux organiques, non magnétiques.'
       - 'Non : ce sont des métaux nobles, non magnétiques (ils résistent en revanche très bien à la corrosion).'
-      explanation: 'Propriété magnétique : « matériau attirable par un aimant ; dans ce cas, il doit contenir les éléments fer (Fe), cobalt (Co) ou nickel (Ni), ou la plupart de leurs alliages ».'
+      explanation: 'Propriété magnétique : matériau attirable par un aimant ; dans ce cas, il doit contenir les éléments fer (Fe), cobalt (Co) ou nickel (Ni), ou la plupart de leurs alliages.'
     - type: grid
       level: 1
       tags:
@@ -277,7 +277,7 @@ units:
       numeric: true
       tolerance: 0.002
       unit: mol·L⁻¹
-      explanation: '$C = \dfrac{C_m}{M} = \dfrac{20{,}0}{58{,}5} = 0{,}3418\ldots \approx 0{,}342$ mol·L⁻¹. **Attention** : le manuel imprime 0,343 mol·L⁻¹, ce qui est une erreur d''arrondi (le dernier chiffre est faux). Erreur classique de l''élève : multiplier au lieu de diviser ($20{,}0 \times 58{,}5 = 1\,170$).'
+      explanation: '$C = \dfrac{C_m}{M} = \dfrac{20{,}0}{58{,}5} = 0{,}3418\ldots \approx 0{,}342$ mol·L⁻¹. **Attention** : on lit parfois 0,343 mol·L⁻¹, ce qui est une erreur d''arrondi (le dernier chiffre est faux). Erreur classique de l''élève : multiplier au lieu de diviser ($20{,}0 \times 58{,}5 = 1\,170$).'
     - type: input
       level: 3
       tags:
@@ -618,7 +618,7 @@ units:
       - 'Non : c''est justement ce que fait la combustion elle-même. L''extincteur cherche au contraire à l''arrêter.'
       - 'Non : l''énergie d''activation a déjà été fournie, le feu a démarré. L''extincteur supprime l''une des trois composantes.'
       - 'Non : refroidir peut aider (extincteur à eau), mais ce n''est pas le principe commun, et certainement pas jusqu''à 0 °C.'
-      explanation: Les cinq types d'extincteurs sont employés selon leur contenu (eau, CO₂, poudre, mousse) « dans le but d'empêcher la présence simultanée des trois composantes provoquant la combustion ».
+      explanation: Les cinq types d'extincteurs sont employés selon leur contenu (eau, CO₂, poudre, mousse) dans le but d'empêcher la présence simultanée des trois composantes provoquant la combustion.
     - type: mcq
       level: 2
       tags:
@@ -717,7 +717,7 @@ units:
       - L'énergie d'activation est l'énergie qu'il faut **fournir** pour amorcer la combustion ; ce n'est pas ce qui rend la transformation exothermique.
       - Consommer du dioxygène caractérise une combustion, mais ne dit rien du sens de l'échange d'énergie.
       - 'Non : si l''eau produite absorbait l''énergie libérée, la transformation ne chaufferait pas — or une flamme chauffe.'
-      explanation: '« Les combustions sont des transformations chimiques exothermiques » : elles **libèrent** de l''énergie, ce qui permet d''actionner des moteurs ou de chauffer de l''eau dans des chaudières.'
+      explanation: 'Les combustions sont des transformations chimiques exothermiques : elles **libèrent** de l''énergie, ce qui permet d''actionner des moteurs ou de chauffer de l''eau dans des chaudières.'
     - type: guided
       level: 3
       tags:
@@ -871,7 +871,7 @@ units:
       - null
       - 'Non : ni les alcanes ni les alcènes ne contiennent d''oxygène — ce sont des **hydrocarbures**.'
       - 'Non : à nombre d''atomes de carbone égal, l''alcène a **deux hydrogènes de moins** que l''alcane ($2n$ contre $2n+2$).'
-      - Le cours précise « une **seule** liaison double C=C et des liaisons simples ».
+      - Le cours précise une **seule** liaison double C=C et des liaisons simples.
       explanation: 'Alcène : une seule liaison double $\mathrm{C}=\mathrm{C}$ et des liaisons simples, formule $\mathrm{C_nH_{2n}}$ — éthène $\mathrm{C_2H_4}$, propène $\mathrm{C_3H_6}$.'
     - type: mcq
       level: 1
@@ -941,7 +941,7 @@ units:
       - 'C''est l''inverse : le CO est **inodore**, ce qui le rend indétectable sans appareil.'
       - Le CO est **incolore** ; c'est précisément ce qui empêche de le repérer.
       - C'est le **dioxyde** de carbone $\mathrm{CO_2}$ qui est cité comme gaz à effet de serre. Le danger du CO est sa toxicité immédiate.
-      explanation: « Le monoxyde de carbone est très dangereux car, étant incolore et inodore, il est indétectable par l'être humain, alors qu'il s'agit d'un gaz mortel. » D'où l'obligation d'un détecteur de CO.
+      explanation: Le monoxyde de carbone est très dangereux car, étant incolore et inodore, il est indétectable par l'être humain, alors qu'il s'agit d'un gaz mortel. D'où l'obligation d'un détecteur de CO.
     - type: mcq
       level: 1
       tags:
@@ -959,7 +959,7 @@ units:
       - Le nombre 95 est l'**indice d'octane** du carburant, pas la proportion d'éthanol.
       - 'Le « 10 » de E10 se lit directement : 10 %, et non 1 %.'
       - Aucun carburant courant de ce type ne contient la moitié d'éthanol.
-      explanation: « Le carburant SP95-E10 contient 10 % d'éthanol, limitant les rejets en $\mathrm{CO_2}$. »
+      explanation: Le carburant SP95-E10 contient 10 % d'éthanol, limitant les rejets en $\mathrm{CO_2}$.
     - type: grid
       level: 1
       tags:
@@ -1350,7 +1350,7 @@ units:
       - 'Ce sont justement les trois exemples d''oxydation donnés par le cours : $\mathrm{Fe} = \mathrm{Fe^{2+}} + 2\,\mathrm{e^-}$, $\mathrm{Zn} = \mathrm{Zn^{2+}} + 2\,\mathrm{e^-}$, $\mathrm{Al} = \mathrm{Al^{3+}} + 3\,\mathrm{e^-}$.'
       - 'La peinture est une **protection** ajoutée : elle ne rend pas le métal noble.'
       - 'Non : le fer est le premier concerné par la corrosion (la rouille).'
-      explanation: « Hormis les huit métaux nobles (or, platine, iridium, etc.), les autres métaux sont sensibles aux réactions d'oxydation se produisant dans l'air humide. »
+      explanation: Hormis les huit métaux nobles (or, platine, iridium, etc.), les autres métaux sont sensibles aux réactions d'oxydation se produisant dans l'air humide.
     - type: grid
       level: 1
       tags:
@@ -1436,7 +1436,7 @@ units:
       - 'Non : ce sont les électrons **libérés par l''oxydation du zinc** qui partent vers le cuivre. Et le sens conventionnel du courant est toujours **opposé** à celui des électrons.'
       - 'Non : le pont salin fait circuler des **ions**, pas des électrons ; l''échange d''électrons se fait par le circuit extérieur.'
       - Sans déplacement d'électrons dans le circuit extérieur, il n'y aurait aucun courant électrique.
-      explanation: '« Les électrons libérés par cette oxydation transitent dans le circuit extérieur pour parvenir dans l''autre compartiment » : ils vont donc de la lame de **zinc** vers la lame de **cuivre**. Le courant $I$, de sens conventionnel opposé, circule du cuivre vers le zinc dans le circuit extérieur.'
+      explanation: 'Les électrons libérés par cette oxydation transitent dans le circuit extérieur pour parvenir dans l''autre compartiment : ils vont donc de la lame de **zinc** vers la lame de **cuivre**. Le courant $I$, de sens conventionnel opposé, circule du cuivre vers le zinc dans le circuit extérieur.'
     - type: input
       level: 2
       tags:
@@ -1447,7 +1447,7 @@ units:
       numeric: true
       tolerance: 0.05
       unit: V
-      explanation: La pile Daniell (couples $\mathrm{Zn^{2+}/Zn}$ et $\mathrm{Cu^{2+}/Cu}$) a « une tension électrique de 1,1 V en théorie » entre ses bornes.
+      explanation: La pile Daniell (couples $\mathrm{Zn^{2+}/Zn}$ et $\mathrm{Cu^{2+}/Cu}$) a une tension électrique de 1,1 V en théorie entre ses bornes.
     - type: input
       level: 2
       tags:
@@ -1475,7 +1475,7 @@ units:
       - 'La passivation, c''est la couche d''oxyde formée par le métal **lui-même** : l''alumine sur l''aluminium.'
       - Le placage isole le métal du dioxygène de l'air ; aucun métal n'y est « sacrifié » par oxydation.
       - Un alliage (acier inoxydable, laiton) modifie la composition du métal, il n'ajoute pas de métal sacrifié.
-      explanation: 'Protection cathodique par **anode sacrificielle** : « on peut placer un métal sur un autre à protéger. Il sera oxydé à sa place. Par exemple, pour protéger une canalisation, on place un morceau de zinc. »'
+      explanation: 'Protection cathodique par **anode sacrificielle** : on peut placer un métal sur un autre à protéger. Il sera oxydé à sa place. Par exemple, pour protéger une canalisation, on place un morceau de zinc.'
     - type: mcq
       level: 2
       tags:
@@ -1493,7 +1493,7 @@ units:
       - 'Non : les métaux nobles cités sont l''or, le platine, l''iridium, etc. L''aluminium s''oxyde bien, selon $\mathrm{Al} = \mathrm{Al^{3+}} + 3\,\mathrm{e^-}$.'
       - 'Non : la peinture est une autre méthode de protection ; l''aluminium nu résiste déjà bien.'
       - 'Faux : le cours écrit $\mathrm{Al} = \mathrm{Al^{3+}} + 3\,\mathrm{e^-}$, soit **trois** électrons cédés.'
-      explanation: 'Passivation : « l''aluminium, après oxydation, se recouvre d''alumine, formant une couche protectrice car l''alumine ne s''oxyde pas dans l''air humide ».'
+      explanation: 'Passivation : l''aluminium, après oxydation, se recouvre d''alumine, formant une couche protectrice car l''alumine ne s''oxyde pas dans l''air humide.'
     - type: mcq
       level: 2
       tags:
@@ -1511,7 +1511,7 @@ units:
       - 'Non : les métaux nobles sont l''or, le platine, l''iridium, etc., et ils sont bien plus rares et coûteux.'
       - 'Non : l''anode sacrificielle est une pièce séparée, ajoutée sur l''ouvrage à protéger (le morceau de zinc sur une canalisation).'
       - 'Faux : les aciers inoxydables sont bien « à base de fer ».'
-      explanation: « Pour limiter la corrosion de certains métaux, on peut les combiner avec d'autres entités chimiques pour former des alliages. Par exemple, les aciers inoxydables, à base de fer, de chrome et de carbone, résistent bien à la corrosion. »
+      explanation: Pour limiter la corrosion de certains métaux, on peut les combiner avec d'autres entités chimiques pour former des alliages. Par exemple, les aciers inoxydables, à base de fer, de chrome et de carbone, résistent bien à la corrosion.
     - type: mcq
       level: 3
       tags:

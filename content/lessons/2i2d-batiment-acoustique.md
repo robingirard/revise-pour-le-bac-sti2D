@@ -69,7 +69,7 @@ Après l'arrêt de la source, le son continue de rebondir sur les parois. Le **t
 
 $$T_R = 0{,}16 \times \frac{V}{A}$$
 
-$T_R$ en secondes, $V$ le volume du local en m³, $A$ l'**aire d'absorption équivalente** en m². *(Relation classique de l'acoustique des salles ; elle ne figure pas dans le manuel.)*
+$T_R$ en secondes, $V$ le volume du local en m³, $A$ l'**aire d'absorption équivalente** en m². *(Relation classique de l'acoustique des salles, donnée ici en complément du programme.)*
 
 {{fig:2i2d-reverberation-salle}}
 

@@ -25,7 +25,7 @@ units:
       - 'Non : 6 est le numéro atomique $Z$, c''est-à-dire le nombre de **protons**.'
       - 'Non : 14 est le nombre de masse $A$, c''est-à-dire le nombre total de **nucléons** (protons + neutrons).'
       - 'Non : on soustrait, on n''additionne pas. Le nombre de neutrons vaut $A - Z$, pas $A + Z$.'
-      explanation: 'Le nombre de neutrons vaut $A - Z = 14 - 6 = 8$. Le livre l''écrit ainsi : $^{14}_{6}\mathrm{C}$, 6 protons / 8 neutrons.'
+      explanation: 'Le nombre de neutrons vaut $A - Z = 14 - 6 = 8$. On l''écrit ainsi : $^{14}_{6}\mathrm{C}$, 6 protons / 8 neutrons.'
       tags:
       - noyau
     - type: mcq
@@ -317,7 +317,7 @@ units:
       - 'Non : $\tau$ est **plus grande** que $t_{1/2}$, car on divise par $\ln 2 = 0{,}693 < 1$ (soit $\tau \approx 1{,}44\,t_{1/2}$). Au bout de $\tau$ il reste $N_0/e \approx 37$ % des noyaux, et non 50 %.'
       - 'Non : c''est l''expression de la **constante radioactive** $\lambda = \ln 2 / t_{1/2}$, en an⁻¹ ; $\tau$ en est l''inverse. Et $\lambda$ n''est pas un nombre de désintégrations : celui-ci dépend aussi du nombre de noyaux présents.'
       - 'Non : $\tau = t_{1/2}/\ln 2$, et diviser par 0,693 **augmente** la valeur. La demi-vie n''est pas non plus « la moitié d''une durée de vie ».'
-      explanation: '$\tau = t_{1/2}/\ln 2 = 5\,730/0{,}693 = 8\,268$ ans. Attention : le livre écrit « τ exprimée en s⁻¹ », c''est une coquille — cette relation donne bien une **durée**. C''est $\lambda = 1/\tau$ qui s''exprime en s⁻¹ (ou an⁻¹).'
+      explanation: '$\tau = t_{1/2}/\ln 2 = 5\,730/0{,}693 = 8\,268$ ans. Attention : on lit parfois « τ exprimée en s⁻¹ », c''est une coquille — cette relation donne bien une **durée**. C''est $\lambda = 1/\tau$ qui s''exprime en s⁻¹ (ou an⁻¹).'
       tags:
       - decroissance
     - type: input
@@ -455,7 +455,7 @@ units:
       - null
       - 'Non : à la cathode a lieu la **réduction**. Moyen mnémotechnique : anode/oxydation (les deux voyelles), cathode/réduction (les deux consonnes).'
       - 'Non : le pont salin n''est pas une électrode ; il assure la neutralité électrique de chaque compartiment.'
-      - 'Non : c''est toujours vrai. « L''oxydation a toujours lieu à l''anode, et la réduction à la cathode », en décharge comme en recharge.'
+      - 'Non : c''est toujours vrai — l''oxydation a toujours lieu à l''anode et la réduction à la cathode, en décharge comme en recharge.'
       explanation: 'Anode : oxydation, $\mathrm{red_1} = \mathrm{ox_1} + n_1\,e^-$. Cathode : réduction, $\mathrm{ox_2} + n_2\,e^- = \mathrm{red_2}$.'
       tags:
       - electrodes
@@ -470,7 +470,7 @@ units:
       answer: 0
       feedback:
       - null
-      - 'Non : les électrons circulent par le **circuit extérieur** (« un échange d''électrons, via un circuit extérieur, entre deux électrodes »), pas par le pont salin, où seuls des ions se déplacent.'
+      - 'Non : les électrons circulent par le **circuit extérieur** (l''échange d''électrons se fait entre les deux électrodes par ce circuit), pas par le pont salin, où seuls des ions se déplacent.'
       - 'Non : le sens conventionnel du courant découle de la polarité des électrodes, pas du pont salin.'
       - 'Au contraire : sans pont salin, la réaction s''arrêterait très vite, faute de neutralité électrique.'
       explanation: Le pont salin permet d'assurer la neutralité électrique dans chaque compartiment, en laissant migrer des ions.
@@ -702,7 +702,7 @@ units:
       answer: 0
       feedback:
       - null
-      - 'Non : « les polarités demeurent inchangées, contrairement au sens de circulation des électrons ». Ce qui change, c''est le rôle anode/cathode de chaque électrode.'
+      - 'Non : les polarités demeurent inchangées, contrairement au sens de circulation des électrons. Ce qui change, c''est le rôle anode/cathode de chaque électrode.'
       - 'Non : les électrodes gardent leurs bornes ⊕ et ⊖ — c''est d''ailleurs pourquoi il faut respecter le branchement du chargeur.'
       - 'Non : si le sens des électrons ne changeait pas, la réaction ne s''inverserait pas et l''accumulateur ne se rechargerait pas.'
       explanation: 'En recharge, le générateur impose le sens du courant : l''électrode PbO₂ (toujours ⊕) devient le siège d''une **oxydation**, donc l''anode ; l''électrode Pb (toujours ⊖) devient le siège d''une **réduction**, donc la cathode.'
@@ -1152,7 +1152,7 @@ units:
       - 'Non, c''est justement le geste dangereux : la dilution dégage beaucoup de chaleur et l''eau versée sur l''acide concentré peut provoquer des projections.'
       - 'Non : la règle est de verser l''acide **dans** l''eau, jamais l''inverse.'
       - 'Non : le résultat chimique est le même, mais pas le risque. La règle de sécurité est explicite.'
-      explanation: « Quand il s'agit de diluer des solutions acides ou basiques très concentrées, il faut toujours les verser dans l'eau et non l'inverse. »
+      explanation: Quand on dilue une solution acide ou basique très concentrée, on la verse toujours dans l'eau, et jamais l'inverse.
       tags:
       - dilution
     - type: guided
@@ -1467,7 +1467,7 @@ units:
       answer: 0
       feedback:
       - null
-      - 'Non : c''est la modulation d''**amplitude** (AM). « Pour la modulation de fréquence, ce n''est pas l''amplitude de l''onde porteuse qui est modulée mais sa fréquence. »'
+      - 'Non : c''est la modulation d''**amplitude** (AM). En modulation de fréquence, ce n''est pas l''amplitude de la porteuse qui est modulée, mais sa fréquence.'
       - 'Non : c''est le troisième type de modulation, la modulation de **phase**.'
       - 'Non : $\lambda = c/f$. Si $f$ varie, $\lambda$ varie aussi : les deux ne peuvent pas être découplées.'
       explanation: 'Il existe trois types de modulation : d''**amplitude**, de **fréquence** et de **phase**. À chaque fois, la grandeur de la porteuse qui donne son nom à la modulation varie au rythme de l''information à transmettre.'
@@ -1613,7 +1613,7 @@ units:
       - null
       - 'Non : $\lambda = 3{,}00 \times 10^{8}/(9{,}00 \times 10^{8}) = 0{,}33$ m, pas 3 m. Une longueur d''onde de 3 m correspondrait à $f = 100$ MHz.'
       - 'Non : 3 mm correspondrait à environ 100 GHz, bien au-delà de la bande UHF.'
-      - 'Non : « pour que la réception soit optimale, il faut que la taille de l''antenne soit du même ordre de grandeur que la longueur d''onde de l''onde porteuse ».'
+      - 'Non : pour que la réception soit optimale, la taille de l''antenne doit être du même ordre de grandeur que la longueur d''onde de la porteuse.'
       explanation: $\lambda = c/f = 3{,}00 \times 10^{8}/(900 \times 10^{6}) = 0{,}33$ m, soit 33 cm. 900 MHz appartient bien à la bande UHF (3 GHz → 300 MHz, soit 10 cm → 1 m).
       tags:
       - telecom

@@ -30,8 +30,8 @@ $S = U \times I$
 | $\cos\varphi$ | 1 | 0 | 0 |
 | $P$ (W) | $U \times I = R \times I^{2}$ | 0 | 0 |
 
-*Remarque : le livre (p. 134) donne $\varphi = 90^{\circ}$ au dipôle capacitif et $\varphi = -90^{\circ}$ à l'inductif.
-Avec sa propre convention $i(t) = I\sqrt{2}\cos(\omega t - \varphi)$, les deux colonnes sont interverties
+*Remarque : on trouve parfois $\varphi = 90^{\circ}$ au dipôle capacitif et $\varphi = -90^{\circ}$ à l'inductif.
+Avec la convention $i(t) = I\sqrt{2}\cos(\omega t - \varphi)$, les deux colonnes sont interverties
 (le courant est en retard dans une bobine, en avance dans un condensateur). Cela ne change ni $\cos\varphi$,
 nul dans les deux cas, ni $P = 0$ W.*
 

@@ -27,7 +27,7 @@ L'énergie libérée par la combustion d'une masse $m$ de combustible vaut $E = 
 
 Donc **PCS > PCI**. Pour le gaz naturel : PCI = 50,1 et PCS = 55,5, soit $\dfrac{55{,}5-50{,}1}{50{,}1} = 0{,}108$, environ **11 % de plus** — c'est tout l'intérêt d'une chaudière **à condensation**.
 
-*Attention : le manuel écrit ces deux valeurs en $\mathrm{kJ\cdot kg^{-1}}$ ; l'ordre de grandeur réel du gaz naturel est d'environ $50\ \mathrm{MJ\cdot kg^{-1}}$, soit mille fois plus. L'écart relatif de 11 %, lui, reste correct.*
+*Attention : ces deux valeurs sont parfois écrites en $\mathrm{kJ\cdot kg^{-1}}$ ; l'ordre de grandeur réel du gaz naturel est d'environ $50\ \mathrm{MJ\cdot kg^{-1}}$, soit mille fois plus. L'écart relatif de 11 %, lui, reste correct.*
 
 ## Prévention et protection
 

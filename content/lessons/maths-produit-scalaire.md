@@ -39,7 +39,7 @@ $$\left\|\vec{u}+\vec{v}\right\|^{2}=\left\|\vec{u}\right\|^{2}+2\,\vec{u}\cdot\
 $$\left\|\vec{u}-\vec{v}\right\|^{2}=\left\|\vec{u}\right\|^{2}-2\,\vec{u}\cdot\vec{v}+\left\|\vec{v}\right\|^{2}$$
 $$(\vec{u}+\vec{v})\cdot(\vec{u}-\vec{v})=\left\|\vec{u}\right\|^{2}-\left\|\vec{v}\right\|^{2}$$
 
-*Attention :* le manuel imprime p. 105 un membre central en trop dans cette dernière égalité ; la relation correcte est bien $(\vec{u}+\vec{v})\cdot(\vec{u}-\vec{v})=\left\|\vec{u}\right\|^{2}-\left\|\vec{v}\right\|^{2}$.
+*Attention :* on voit parfois un membre central en trop dans cette dernière égalité ; la relation correcte est bien $(\vec{u}+\vec{v})\cdot(\vec{u}-\vec{v})=\left\|\vec{u}\right\|^{2}-\left\|\vec{v}\right\|^{2}$.
 
 On en déduit trois façons de calculer un produit scalaire à partir des seules longueurs :
 $$\vec{u}\cdot\vec{v}=\frac{1}{2}\left(\left\|\vec{u}+\vec{v}\right\|^{2}-\left\|\vec{u}\right\|^{2}-\left\|\vec{v}\right\|^{2}\right)=\frac{1}{2}\left(\left\|\vec{u}\right\|^{2}+\left\|\vec{v}\right\|^{2}-\left\|\vec{u}-\vec{v}\right\|^{2}\right)=\frac{1}{4}\left(\left\|\vec{u}+\vec{v}\right\|^{2}-\left\|\vec{u}-\vec{v}\right\|^{2}\right)$$

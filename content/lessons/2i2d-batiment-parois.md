@@ -13,13 +13,13 @@ La conductivité thermique indique la quantité de chaleur qui traverse un maté
 |---|---|---|---|---|---|---|---|
 | $\lambda$ (W/(m·K)) | 0,04 | 0,25 | 1 | 1,2 | 80 | 237 | 390 |
 
-*Attention* : le livre range le béton et le verre du côté des « isolants » parce qu'il n'oppose que deux familles extrêmes (non-métaux / métaux). Avec $\lambda = 1$ W/(m·K), le béton conduit **25 fois mieux** que la laine de verre : c'est un matériau **porteur**, jamais un isolant.
+*Attention* : on range parfois le béton et le verre du côté des « isolants », en n'opposant que deux familles extrêmes (non-métaux / métaux). Avec $\lambda = 1$ W/(m·K), le béton conduit **25 fois mieux** que la laine de verre : c'est un matériau **porteur**, jamais un isolant.
 
 ## La résistance thermique $R$ : une propriété de la couche
 
 $$R = \frac{e}{\lambda}$$
 
-$R$ en **m²·K/W**, $e$ l'épaisseur en **mètre**, $\lambda$ en W/(m·K). C'est la résistance d'**un mètre carré** de couche. Elle « représente la capacité d'un matériau à s'opposer au flux de chaleur en prenant en compte son épaisseur ».
+$R$ en **m²·K/W**, $e$ l'épaisseur en **mètre**, $\lambda$ en W/(m·K). C'est la résistance d'**un mètre carré** de couche. Elle représente la capacité d'un matériau à s'opposer au flux de chaleur en prenant en compte son épaisseur.
 
 Deux leviers pour l'augmenter : choisir un $\lambda$ plus faible, et/ou augmenter l'épaisseur $e$.
 

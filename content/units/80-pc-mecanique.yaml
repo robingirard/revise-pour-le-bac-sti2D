@@ -1071,7 +1071,7 @@ units:
       - 'Non : le maximum de couple utile du moteur n''est pas le point de fonctionnement ; c''est la charge qui impose le point de travail.'
       - 'Non : l''intersection avec l''axe des abscisses correspond à un couple utile nul, c''est-à-dire au fonctionnement à vide.'
       - 'Non : la caractéristique de la charge part de l''origine ; ce point correspond à l''arrêt.'
-      explanation: Le point de fonctionnement d'un ensemble moteur-charge se situe à l'intersection des deux caractéristiques couple-vitesse. Sur l'exemple du manuel, le moteur doit fournir 100 N·m à une vitesse légèrement supérieure à 900 tr/min.
+      explanation: Le point de fonctionnement d'un ensemble moteur-charge se situe à l'intersection des deux caractéristiques couple-vitesse. Sur la caractéristique tracée, le moteur doit fournir 100 N·m à une vitesse légèrement supérieure à 900 tr/min.
       tags:
       - moteur-charge
     - type: mcq
@@ -1088,7 +1088,7 @@ units:
       - 'Non : le moteur ne peut pas atteindre une vitesse où le couple demandé dépasse partout le couple qu''il sait fournir.'
       - 'Non : sans intersection, il n''y a **aucun** point de fonctionnement, pas même au maximum de couple.'
       - 'Non : rien dans le graphe ne parle de sens de rotation ; il s''agit uniquement d''un couple à fournir.'
-      explanation: « Si aucune intersection n'existe entre les deux caractéristiques, le moteur ne peut pas supporter la charge imposée. » Il faut alors choisir un moteur plus puissant ou réduire la charge.
+      explanation: Si aucune intersection n'existe entre les deux caractéristiques, le moteur ne peut pas supporter la charge imposée. Il faut alors choisir un moteur plus puissant ou réduire la charge.
       tags:
       - moteur-charge
     - type: input
@@ -1343,7 +1343,7 @@ units:
       answer: 0
       feedback:
       - null
-      - 'Non : c''est 10⁵ Pa. Le manomètre du manuel affiche 2,4 bars, soit 240 kPa, ce qui donne bien 1 bar = 100 kPa.'
+      - 'Non : c''est 10⁵ Pa. Le manomètre affiche 2,4 bars, soit 240 kPa, ce qui donne bien 1 bar = 100 kPa.'
       - 'Non : le pascal est une unité très petite ; 1 Pa, c''est 1 N réparti sur 1 m².'
       - 'Non : attention, 1 hPa = 100 Pa. 10⁵ hPa vaudrait 10⁷ Pa, soit 100 bars.'
       explanation: 1 bar = 10⁵ Pa = 100 kPa = 1 000 hPa. La pression atmosphérique de référence, 1 013 hPa, vaut donc à peu près 1 bar.
@@ -1366,7 +1366,7 @@ units:
       numeric: true
       tolerance: 20
       unit: hPa
-      explanation: 2,4 bars = 240 kPa = 2 400 hPa, et c'est une pression **relative**. P absolue = 2 400 + 1 013 = 3 413 hPa, soit environ 3 400 hPa comme l'indique le manuel.
+      explanation: 2,4 bars = 240 kPa = 2 400 hPa, et c'est une pression **relative**. P absolue = 2 400 + 1 013 = 3 413 hPa, soit environ 3 400 hPa.
       tags:
       - pression
     - type: input
@@ -1386,7 +1386,7 @@ units:
       numeric: true
       tolerance: 0.15
       unit: kPa
-      explanation: 'Il faut convertir la dénivellation : 50 cm = 0,50 m. ΔP = 920 × 9,81 × 0,50 = 4 513 Pa ≈ 4,5 kPa, la valeur mesurée dans le tableau du manuel. Erreur classique : garder 50 cm et trouver 451 kPa.'
+      explanation: 'Il faut convertir la dénivellation : 50 cm = 0,50 m. ΔP = 920 × 9,81 × 0,50 = 4 513 Pa ≈ 4,5 kPa, la valeur mesurée dans le tableau. Erreur classique : garder 50 cm et trouver 451 kPa.'
       tags:
       - hydrostatique
     - type: grid

@@ -667,7 +667,7 @@ class Builder(BuilderMoteur):
                 break
             # 6. la démarche dans l'ordre
             steps.append({"kind": "order", "prompt": f"**Étape {k}.** Pour finir, remets dans l'ordre les cinq étapes de la démarche que tu viens de suivre.",
-                          "steps": DEMARCHE, "explanation": "Étudier → classes → contacts et liaisons → graphe → schéma (manuel p. 33)."})
+                          "steps": DEMARCHE, "explanation": "Étudier → classes → contacts et liaisons → graphe → schéma."})
             k += 1
             # 7. lecture du schéma final : première question écrite à la main sur le schéma
             for q in m.get("questions", []):

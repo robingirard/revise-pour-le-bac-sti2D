@@ -32,7 +32,7 @@ Un filament porté à haute température rayonne surtout dans l'**infrarouge** :
 
 {{fig:pc-corps-chauffe}}
 
-Le livre retient **trois critères** pour caractériser une lampe : la **performance** (indice de rendu des couleurs, efficacité lumineuse, température de couleur), l'**économie** (puissance absorbée, durée de vie, coût) et l'**utilisation** (température de la lampe, temps d'allumage).
+On retient **trois critères** pour caractériser une lampe : la **performance** (indice de rendu des couleurs, efficacité lumineuse, température de couleur), l'**économie** (puissance absorbée, durée de vie, coût) et l'**utilisation** (température de la lampe, temps d'allumage).
 
 ## Éclairement d'une surface
 

@@ -57,4 +57,4 @@ On trace le **couple utile $T_u$ (N·m)** en fonction de la **vitesse de rotatio
 - le **point de fonctionnement** se situe à l'**intersection** des deux caractéristiques ;
 - **si aucune intersection n'existe, le moteur ne peut pas supporter la charge imposée**.
 
-Sur la figure du manuel, le moteur doit fournir un couple utile de **100 N·m** à une vitesse **légèrement supérieure à 900 tr·min⁻¹** pour supporter la charge.
+Sur la figure ci-dessus, le moteur doit fournir un couple utile de **100 N·m** à une vitesse **légèrement supérieure à 900 tr·min⁻¹** pour supporter la charge.

@@ -40,7 +40,7 @@ units:
       - 'Non : le watt est l''unité de **puissance**, c''est-à-dire d''une énergie divisée par une durée.'
       - 'Non : le kilowattheure est bien une unité d''énergie, mais ce n''est pas l''unité du système international ($1$ Wh $= 3\,600$ J).'
       - 'Non : le newton est l''unité de force.'
-      explanation: « Toute énergie s'exprime dans le système international d'unités en joule, noté J. »
+      explanation: Toute énergie s'exprime dans le système international d'unités en joule, noté J.
     - type: mcq
       level: 1
       prompt: Dans quelle unité toute **puissance** est-elle exprimée ?
@@ -55,7 +55,7 @@ units:
       - 'Non : le joule est l''unité d''énergie. Puissance = énergie ÷ durée.'
       - 'Non : le kilowattheure est une unité d''**énergie** ($1$ kWh $= 3{,}6 \times 10^{6}$ J).'
       - 'Non : le volt est l''unité de tension électrique.'
-      explanation: 'Encadré du cours de Tle : « Toute puissance est exprimée en watt (W). »'
+      explanation: 'Toute puissance est exprimée en watt (W).'
     - type: order
       level: 1
       prompt: 'Une batterie alimente un moteur électrique qui entraîne un disque en rotation. Remettez la **chaîne énergétique** dans l''ordre.
@@ -537,7 +537,7 @@ units:
       - 'Non : avec un condensateur ou une bobine, les tensions sont déphasées et leurs valeurs efficaces ne s''additionnent pas.'
       - 'Non : en régime continu la question ne se pose pas, valeur efficace et valeur continue se confondent.'
       - 'Non : le cours autorise explicitement ce calcul dans un cas particulier.'
-      explanation: 'Restriction du cours : « Les lois des mailles et des nœuds peuvent s''appliquer pour les valeurs efficaces uniquement si les récepteurs se limitent à des dipôles ohmiques. »'
+      explanation: 'Restriction du cours : Les lois des mailles et des nœuds peuvent s''appliquer pour les valeurs efficaces uniquement si les récepteurs se limitent à des dipôles ohmiques.'
     - type: input
       level: 3
       prompt: 'Un oscillogramme montre une tension sinusoïdale telle que $U_{\max} = 8{,}0$ V et $U_{\min} = -2{,}0$ V. Calculer sa valeur moyenne $U_{\text{moy}}$.
@@ -547,7 +547,7 @@ units:
       numeric: true
       tolerance: 0.2
       unit: V
-      explanation: '$U_{\text{moy}} = (U_{\max} + U_{\min})/2 = (8{,}0 - 2{,}0)/2 = 3{,}0$ V, et l''amplitude vaut $U_m = (U_{\max} - U_{\min})/2 = 5{,}0$ V. *Ces deux relations, indispensables pour exploiter un oscillogramme, ne sont pas écrites dans le livre : à retenir en plus.*'
+      explanation: '$U_{\text{moy}} = (U_{\max} + U_{\min})/2 = (8{,}0 - 2{,}0)/2 = 3{,}0$ V, et l''amplitude vaut $U_m = (U_{\max} - U_{\min})/2 = 5{,}0$ V. *Ces deux relations, indispensables pour exploiter un oscillogramme, ne sont pas au programme : à retenir en plus.*'
     - type: mcq
       level: 3
       prompt: Un élève calcule l'amplitude de la tension du réseau et écrit $U_m = U_{\text{eff}}/\sqrt{2} = 163$ V. Où est l'erreur ?
@@ -1086,7 +1086,7 @@ units:
       - 'Non : c''est l''inverse. Un dipôle résistif convertit toute la puissance apparente en puissance active.'
       - 'Non : un condensateur ou une bobine parfaits ne dissipent **aucune** énergie : $P = 0$ W.'
       - 'Non : pour $\varphi = \pm 90^{\circ}$, $\cos\varphi = 0$ exactement.'
-      explanation: 'Résistif : $\varphi = 0$, $\cos\varphi = 1$, $P = U I = R I^{2}$. Capacitif ou inductif pur : $\varphi = \pm 90^{\circ}$, $\cos\varphi = 0$, $P = 0$ W. *Attention : le livre (p. 134) attribue $\varphi = +90^{\circ}$ au capacitif et $\varphi = -90^{\circ}$ à l''inductif ; avec sa propre convention $i(t) = I\sqrt{2}\cos(\omega t - \varphi)$, les deux colonnes sont interverties. Cela ne change ni $\cos\varphi$ ni $P$.*'
+      explanation: 'Résistif : $\varphi = 0$, $\cos\varphi = 1$, $P = U I = R I^{2}$. Capacitif ou inductif pur : $\varphi = \pm 90^{\circ}$, $\cos\varphi = 0$, $P = 0$ W. *Attention : on trouve parfois $\varphi = +90^{\circ}$ pour le capacitif et $\varphi = -90^{\circ}$ pour l''inductif ; avec la convention $i(t) = I\sqrt{2}\cos(\omega t - \varphi)$, les deux colonnes sont interverties. Cela ne change ni $\cos\varphi$ ni $P$.*'
     - type: input
       level: 2
       prompt: Un moteur monophasé est alimenté sous $U = 230$ V et absorbe $I = 5{,}0$ A avec $\cos\varphi = 0{,}80$. Calculer sa **puissance active** $P$.

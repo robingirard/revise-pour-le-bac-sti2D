@@ -32,7 +32,7 @@ units:
       - 'Non : m²·K/W est l''unité de la **résistance thermique** $R$, qui tient compte de l''épaisseur.'
       - 'Non : W/(m²·K) est l''unité du **coefficient de transmission surfacique** $U$ d''une paroi.'
       - 'Non : J/(kg·K) est l''unité de la **chaleur massique** $C$.'
-      explanation: '$\lambda$ mesure « la quantité de chaleur qui se propage à travers un matériau d''un mètre d''épaisseur pour une différence de température de 1 kelvin entre les deux faces » (Tle, p. 283). Elle s''exprime en **W/(m·K)**.'
+      explanation: '$\lambda$ mesure la quantité de chaleur qui traverse un matériau d''un mètre d''épaisseur pour une différence de température de 1 kelvin entre ses deux faces. Elle s''exprime en **W/(m·K)**.'
       tags:
       - conductivite
     - type: mcq
@@ -49,7 +49,7 @@ units:
       - 'Non : W/(m·K) est l''unité de la conductivité $\lambda$, une propriété du **matériau** qui ne dépend pas de l''épaisseur.'
       - 'Non : W/m² est l''unité du **flux surfacique** $\varphi$.'
       - 'Non : W/(m²·K) est l''unité du coefficient $U$, qui est l''**inverse** de $R$.'
-      explanation: '$R = \dfrac{e}{\lambda}$ : une épaisseur en m divisée par une conductivité en W/(m·K) donne bien des **m²·K/W** (Tle, p. 284).'
+      explanation: '$R = \dfrac{e}{\lambda}$ : une épaisseur en m divisée par une conductivité en W/(m·K) donne bien des **m²·K/W**.'
       tags:
       - resistance
     - type: mcq
@@ -66,7 +66,7 @@ units:
       - 'Non : une conductivité élevée signifie au contraire que la chaleur **traverse facilement** le matériau.'
       - 'Non : la masse volumique intervient dans l''**inertie** thermique et dans l''isolation **acoustique**, pas dans la conductivité.'
       - 'Non : une résistance faible laisse passer beaucoup de flux — c''est le comportement d''un conducteur.'
-      explanation: '« Plus la conductivité thermique est faible, plus le matériau est isolant » (Tle, p. 283). Comme $R = e/\lambda$, un petit $\lambda$ donne une grande résistance thermique à épaisseur égale.'
+      explanation: 'Plus la conductivité thermique est faible, plus le matériau est isolant. Comme $R = e/\lambda$, un petit $\lambda$ donne une grande résistance thermique à épaisseur égale.'
       tags:
       - conductivite
     - type: mcq
@@ -116,7 +116,7 @@ units:
       numeric: true
       tolerance: 0.0004
       unit: m²·K/W
-      explanation: '$R = \dfrac{0{,}004}{1{,}2} = 3{,}33 \times 10^{-3}$ m²·K/W, soit **1 500 fois moins** qu''une couche de 20 cm de laine de verre. Un simple vitrage n''isole pratiquement pas : c''est l''**air emprisonné** entre deux verres qui isole dans un double vitrage (Tle, p. 283).'
+      explanation: '$R = \dfrac{0{,}004}{1{,}2} = 3{,}33 \times 10^{-3}$ m²·K/W, soit **1 500 fois moins** qu''une couche de 20 cm de laine de verre. Un simple vitrage n''isole pratiquement pas : c''est l''**air emprisonné** entre deux verres qui isole dans un double vitrage.'
       tags:
       - resistance
     - type: mcq
@@ -136,7 +136,7 @@ units:
       - 'Non : les conductivités ne s''additionnent pas. Il faut d''abord convertir chaque couche en résistance $e/\lambda$.'
       - 'Non : les autres couches apportent leur part, même si elle est faible ; on les compte toutes.'
       - 'Non : les couches sont traversées par le **même** flux, elles sont en **série** : leurs résistances s''ajoutent, elles ne se moyennent pas.'
-      explanation: '« La résistance thermique totale du mur est égale à la somme des résistances thermiques de chaque matériau » (Tle, p. 284) : $R^{\text{série}} = R^1 + R^2 + \cdots + R^n$.'
+      explanation: 'La résistance thermique totale du mur est égale à la somme des résistances thermiques de chaque matériau : $R^{\text{série}} = R^1 + R^2 + \cdots + R^n$.'
       tags:
       - multicouche
     - type: input
@@ -201,7 +201,7 @@ units:
       - coefficient-u
     - type: mcq
       level: 2
-      prompt: 'Le livre donne le flux de chaleur surfacique sous la forme $\varphi = \lambda \times \dfrac{\Delta T}{e}$. Quelle est son unité ?
+      prompt: 'Le flux de chaleur surfacique s''écrit $\varphi = \lambda \times \dfrac{\Delta T}{e}$. Quelle est son unité ?
 
 
         {{fig:pc-mur-flux-thermique}}'
@@ -216,7 +216,7 @@ units:
       - 'Non : le watt seul est l''unité du flux **total** $\Phi$ traversant toute la paroi, pas du flux rapporté au mètre carré.'
       - 'Non : W/(m²·K) est l''unité de $U$ ; $\varphi$ tient déjà compte de l''écart de température.'
       - 'Non : le kilowattheure est une **énergie**, pas une puissance.'
-      explanation: '$\varphi$ est une puissance **par mètre carré** de paroi : elle s''exprime en **W/m²** (Tle, p. 284). Le flux total vaut $\Phi = \varphi \times S$, en watts.'
+      explanation: '$\varphi$ est une puissance **par mètre carré** de paroi : elle s''exprime en **W/m²**. Le flux total vaut $\Phi = \varphi \times S$, en watts.'
       tags:
       - flux
     - type: input
@@ -256,12 +256,12 @@ units:
       - 'Non : spontanément, l''énergie ne remonte jamais du froid vers le chaud.'
       - 'Non : en été, quand il fait 35 °C dehors et 25 °C dedans, le flux **entre** dans le bâtiment.'
       - 'Non : l''épaisseur agit sur la **valeur** du flux, pas sur son sens.'
-      explanation: '« Le flux de chaleur va toujours du chaud vers le froid » (Tle, p. 284). C''est ce qui explique qu''une même isolation serve l''hiver (limiter les déperditions) et l''été (limiter les apports).'
+      explanation: 'Le flux de chaleur va toujours du chaud vers le froid. C''est ce qui explique qu''une même isolation serve l''hiver (limiter les déperditions) et l''été (limiter les apports).'
       tags:
       - flux
     - type: grid
       level: 2
-      prompt: 'Pour chacun de ces matériaux, cochez son comportement thermique (valeurs de $\lambda$ du livre, p. 284).'
+      prompt: 'Pour chacun de ces matériaux, cochez son comportement thermique (valeurs usuelles de $\lambda$).'
       rows:
       - id: lv
         label: Laine de verre (0,04 W/(m·K))
@@ -287,17 +287,17 @@ units:
       cellFeedback:
         Ilv: la laine de verre (0,04) est l'isolant de référence du bâtiment
         Clv: 'une conductivité de 0,04 W/(m·K) est parmi les plus faibles du tableau : c''est un isolant'
-        Iny: le nylon (0,25) reste classé isolant par le livre
+        Iny: le nylon (0,25) reste du côté des isolants
         Cfe: le fer (80) conduit 2 000 fois mieux que la laine de verre
         Ife: 'avec 80 W/(m·K), le fer évacue la chaleur très vite : c''est un conducteur'
         Ial: 'l''aluminium (237) est un excellent conducteur : d''où les radiateurs et dissipateurs en aluminium'
         Icu: 'le cuivre (390) est le meilleur conducteur du tableau : on en fait des échangeurs, pas des isolants'
-      explanation: Tableau p. 284 — isolants (λ faible) — laine de verre 0,04 et nylon 0,25 ; conducteurs (λ élevée) — fer 80, aluminium 237, cuivre 390 W/(m·K). Trois ordres de grandeur séparent les deux familles.
+      explanation: Isolants (λ faible) — laine de verre 0,04 et nylon 0,25 ; conducteurs (λ élevée) — fer 80, aluminium 237, cuivre 390 W/(m·K). Trois ordres de grandeur séparent les deux familles.
       tags:
       - conductivite
     - type: order
       level: 2
-      prompt: 'Classez ces matériaux du **plus isolant** au **plus conducteur** (valeurs de $\lambda$ du livre, p. 284).'
+      prompt: 'Classez ces matériaux du **plus isolant** au **plus conducteur** (valeurs usuelles de $\lambda$).'
       steps:
       - Laine de verre — 0,04 W/(m·K)
       - Nylon — 0,25 W/(m·K)
@@ -309,7 +309,7 @@ units:
       - conductivite
     - type: mcq
       level: 3
-      prompt: 'Le tableau du livre (p. 284) classe le **béton** ($\lambda = 1$ W/(m·K)) et le **verre** ($\lambda = 1{,}2$ W/(m·K)) parmi les « isolants ». Qu''en penser en tant qu''ingénieur du bâtiment ?'
+      prompt: 'Un tableau de conductivités classe le **béton** ($\lambda = 1$ W/(m·K)) et le **verre** ($\lambda = 1{,}2$ W/(m·K)) parmi les « isolants ». Qu''en penser en tant qu''ingénieur du bâtiment ?'
       choices:
       - 'Ce classement est trompeur : à 1 W/(m·K), le béton conduit 25 fois plus que la laine de verre — c''est un matériau porteur, pas un isolant'
       - 'Le classement est juste : tout matériau non métallique est un isolant thermique'
@@ -321,7 +321,7 @@ units:
       - 'Non : le verre, le béton ou la pierre conduisent bien mieux que les isolants. Le tableau oppose seulement les non-métaux aux métaux.'
       - 'Non : 0,20 m de béton donnent $R = 0{,}20$ m²·K/W, très loin des 3 à 5 m²·K/W attendus pour une façade.'
       - 'Non : la masse gouverne l''**inertie** thermique et l''isolation **acoustique**, pas la conductivité.'
-      explanation: 'Le tableau p. 284 n''oppose en réalité que deux familles extrêmes (non-métaux / métaux). Un ingénieur compare les valeurs : laine de verre 0,04 ; béton 1 ; verre 1,2. Le béton et le verre assurent la **structure** et la **transparence** ; l''isolation vient d''une couche dédiée.'
+      explanation: 'Un tel tableau n''oppose en réalité que deux familles extrêmes (non-métaux / métaux). Un ingénieur compare les valeurs : laine de verre 0,04 ; béton 1 ; verre 1,2. Le béton et le verre assurent la **structure** et la **transparence** ; l''isolation vient d''une couche dédiée.'
       tags:
       - conductivite
     - type: mcq
@@ -400,7 +400,7 @@ units:
       - 'Non : c''est une **différence**. De 19 °C à −1 °C, l''écart vaut 20 °C, soit exactement 20 K.'
       - 'Non : $\Phi$ est une puissance en watts, on n''y ajoute pas une température.'
       - 'Non : aucun facteur correctif n''est nécessaire.'
-      explanation: '« Une variation de température s''exprime indifféremment en °C ou en K » (Tle, p. 274). Seule une température **absolue** doit être convertie ($K = {}^\circ C + 273{,}15$).'
+      explanation: 'Une variation de température s''exprime indifféremment en °C ou en K. Seule une température **absolue** doit être convertie ($K = {}^\circ C + 273{,}15$).'
       tags:
       - deperditions
     - type: input
@@ -723,7 +723,7 @@ units:
         - 'Non : les conductivités ne s''additionnent pas ; il faut d''abord convertir chaque couche en résistance.'
         - 'Non : le béton apporte tout de même 0,20 m²·K/W, soit 6 % du total.'
         - 'Non : les deux couches sont traversées par le **même** flux (association en série) : leurs résistances s''ajoutent.'
-        explanation: '« La résistance thermique totale du mur est égale à la somme des résistances thermiques de chaque matériau » (Tle, p. 284).'
+        explanation: 'La résistance thermique totale du mur est égale à la somme des résistances thermiques de chaque matériau.'
       - kind: input
         prompt: '**Étape 2.** Calculer la résistance thermique de la couche de laine de verre.'
         answer: '3'
@@ -772,7 +772,7 @@ units:
         numeric: true
         tolerance: 3
         unit: kJ
-        explanation: '$Q = m \times C \times (T_{\text{finale}} - T_{\text{initiale}}) = 50 \times 880 \times (19 - 12) = 308\,000$ J $= 308$ kJ (Tle, p. 285). C''est l''énergie de **remise en température** de la masse, à ajouter aux déperditions pendant la relance.'
+        explanation: '$Q = m \times C \times (T_{\text{finale}} - T_{\text{initiale}}) = 50 \times 880 \times (19 - 12) = 308\,000$ J $= 308$ kJ. C''est l''énergie de **remise en température** de la masse, à ajouter aux déperditions pendant la relance.'
       tags:
       - bilan
   - id: 2i2d-bat-confort
@@ -797,7 +797,7 @@ units:
       - 'Non : les deux définitions sont inversées.'
       - 'Non : les deux se mesurent et se calculent ; ce sont deux parts de la chaleur échangée.'
       - 'Non : les deux notions s''appliquent à tous les états de la matière.'
-      explanation: '« La chaleur sensible est la part de la chaleur échangée qui fait varier la température ; la chaleur latente est celle qui fait changer d''état le système » (Tle, p. 274). Exemples du livre : 419 kJ/kg pour chauffer l''eau de 0 à 100 °C, 2 257 kJ/kg pour la vaporiser.'
+      explanation: 'La chaleur sensible est la part de la chaleur échangée qui fait varier la température ; la chaleur latente est celle qui fait changer d''état le système. Exemples : 419 kJ/kg pour chauffer l''eau de 0 à 100 °C, 2 257 kJ/kg pour la vaporiser.'
       tags:
       - chaleur
     - type: mcq
@@ -814,17 +814,17 @@ units:
       - 'Non : J/kg est l''unité de la chaleur **latente** de changement d''état ; il y manque le « par kelvin ».'
       - 'Non : W/(m·K) est l''unité de la conductivité thermique $\lambda$.'
       - 'Non : le joule seul est une énergie ; $C$ est une énergie **par kilogramme et par kelvin**.'
-      explanation: '« La chaleur massique d''un matériau caractérise sa capacité de stockage d''énergie thermique » (Tle, p. 284). Elle s''exprime en **J/(kg·K)** et intervient dans $Q = m \times C \times (T_{\text{finale}} - T_{\text{initiale}})$.'
+      explanation: 'La chaleur massique d''un matériau caractérise sa capacité de stockage d''énergie thermique. Elle s''exprime en **J/(kg·K)** et intervient dans $Q = m \times C \times (T_{\text{finale}} - T_{\text{initiale}})$.'
       tags:
       - chaleur
     - type: input
       level: 2
-      prompt: 'Un ballon d''eau chaude sanitaire contient $m = 150$ kg d''eau. Le livre indique qu''il faut **419 kJ/kg** pour chauffer l''eau de 0 °C à 100 °C. Quelle énergie faut-il pour porter tout le ballon de 0 °C à 100 °C ?'
+      prompt: 'Un ballon d''eau chaude sanitaire contient $m = 150$ kg d''eau. Il faut **419 kJ/kg** pour chauffer l''eau de 0 °C à 100 °C. Quelle énergie faut-il pour porter tout le ballon de 0 °C à 100 °C ?'
       answer: '62850'
       numeric: true
       tolerance: 200
       unit: kJ
-      explanation: '$E = 150 \times 419 = 62\,850$ kJ, soit 62,85 MJ ou 17,5 kWh. C''est de la chaleur **sensible** : la température varie, l''eau reste liquide (Tle, p. 274).'
+      explanation: '$E = 150 \times 419 = 62\,850$ kJ, soit 62,85 MJ ou 17,5 kWh. C''est de la chaleur **sensible** : la température varie, l''eau reste liquide.'
       tags:
       - chaleur
     - type: input
@@ -944,7 +944,7 @@ units:
       numeric: true
       tolerance: 0.05
       unit: K
-      explanation: '$K = {}^\circ C + 273{,}15 = 19 + 273{,}15 = 292{,}15$ K (Tle, p. 274). Attention : cette conversion vaut pour une **température**, jamais pour un écart de température.'
+      explanation: '$K = {}^\circ C + 273{,}15 = 19 + 273{,}15 = 292{,}15$ K. Attention : cette conversion vaut pour une **température**, jamais pour un écart de température.'
       tags:
       - temperature
     - type: mcq
@@ -961,12 +961,12 @@ units:
       - 'Non : on a converti la variation 15 °C en température absolue. Une **variation** ne se convertit pas.'
       - 'Non : c''est la conversion de la température finale 20 °C.'
       - 'Non : c''est la conversion de la température initiale 5 °C.'
-      explanation: '« Une variation de température s''exprime indifféremment en °C ou en K » (Tle, p. 274) : $\Delta\theta = 20 - 5 = 15$ °C $= 15$ K. Le livre donne exactement cet exemple.'
+      explanation: 'Une variation de température s''exprime indifféremment en °C ou en K : $\Delta\theta = 20 - 5 = 15$ °C $= 15$ K.'
       tags:
       - temperature
     - type: mcq
       level: 1
-      prompt: 'Un changement de température modifie la longueur des matériaux. Quelle relation le livre donne-t-il ?'
+      prompt: 'Un changement de température modifie la longueur des matériaux. Quelle relation traduit cette dilatation ?'
       choices:
       - $\Delta L = L_0 \times \alpha \times \Delta\theta$
       - $\Delta L = \dfrac{L_0 \times \Delta\theta}{\alpha}$
@@ -978,7 +978,7 @@ units:
       - 'Non : $\alpha$ est un coefficient multiplicatif, il n''est pas au dénominateur.'
       - 'Non : il manque la longueur initiale. Une poutre de 20 m s''allonge deux fois plus qu''une poutre de 10 m.'
       - 'Non : il manque le coefficient $\alpha$, propre au matériau.'
-      explanation: '$\Delta L = L_0 \cdot \alpha \cdot \Delta\theta$ avec $\Delta L$ et $L_0$ en m, $\alpha$ en °C⁻¹ et $\Delta\theta$ en °C (Tle, p. 283).'
+      explanation: '$\Delta L = L_0 \cdot \alpha \cdot \Delta\theta$ avec $\Delta L$ et $L_0$ en m, $\alpha$ en °C⁻¹ et $\Delta\theta$ en °C.'
       tags:
       - dilatation
     - type: input
@@ -1038,7 +1038,7 @@ units:
         Sdal: 'le béton s''échauffe sans changer d''état : Q = m × C × ΔT'
         Lcon: 'la vapeur redevient liquide à température constante : c''est un changement d''état'
         Scon: la condensation se produit sans variation de température de la vapeur
-      explanation: 'Règle : si la **température** varie, c''est de la chaleur sensible ($Q = m\,C\,\Delta T$) ; si l''**état** change à température constante, c''est de la chaleur latente (Tle, p. 274).'
+      explanation: 'Règle : si la **température** varie, c''est de la chaleur sensible ($Q = m\,C\,\Delta T$) ; si l''**état** change à température constante, c''est de la chaleur latente.'
       tags:
       - chaleur
     - type: mcq
@@ -1052,7 +1052,7 @@ units:
       answer: 0
       feedback:
       - null
-      - 'Non : dépasser la résistance exigée est une bonne chose. Ce sont bien des minima (le livre les note $R_{\max}$, ce qui prête à confusion).'
+      - 'Non : dépasser la résistance exigée est une bonne chose. Ce sont bien des minima (ils sont souvent notés $R_{\max}$, ce qui prête à confusion).'
       - 'Non : $U$ s''exprime en W/(m²·K) et évolue en sens inverse de $R$.'
       - 'Non : les consommations s''expriment en kWh·m⁻²·an⁻¹ — 130 pour la RT 2005, 40 à 80 pour « basse énergie », moins de 15 pour « très basse énergie ».'
       explanation: 'Plus le niveau de performance est exigeant, plus la résistance thermique minimale est élevée. Un toit de $R = 5{,}906$ m²·K/W satisfait la RT 2005 (5,0) mais pas le niveau « basse énergie » (6,7).
@@ -1148,7 +1148,7 @@ units:
         - 'Non : $N_p$ prend une valeur numérique (138, 258, 359…), il ne se limite pas à 0 ou 1.'
         - 'Non : **Fermee** ne peut valoir que 0 ou 1 (lames ouvertes ou fermées) : c''est un booléen.'
         - 'Non : les deux rôles sont inversés.'
-        explanation: '$N_p$ est « un nombre entier image de la quantité de pluie » ; $S_1$, $S_2$, $S_3$, **Fermee** et **Res** valent 0 ou 1, ce sont des booléens (1re, p. 179).'
+        explanation: '$N_p$ est un nombre entier image de la quantité de pluie ; $S_1$, $S_2$, $S_3$, **Fermee** et **Res** valent 0 ou 1, ce sont des booléens.'
       - kind: mcq
         prompt: '**Étape 2.** Le capteur renvoie $N_p = 300$. Quel est l''état des trois variables de seuil ?'
         choices:
@@ -1178,7 +1178,7 @@ units:
         - 'Non : les lames sont déjà ouvertes ; à pluie franche, il faut au contraire fermer la toiture.'
         - 'Non : le seuil de déclenchement est $S_3$ ($N_p = 359$), pas 100 % de surface mouillée.'
         - 'Non : la résistance est bien désactivée, mais l''action principale est la fermeture des lames.'
-        explanation: 'Le franchissement montant du seuil $S_3$ commande la **fermeture des lames** et le passage de **Fermee** à 1 ; la résistance **Res** est alors remise à 0, le capteur étant de toute façon mouillé (1re, p. 179-180).'
+        explanation: 'Le franchissement montant du seuil $S_3$ commande la **fermeture des lames** et le passage de **Fermee** à 1 ; la résistance **Res** est alors remise à 0, le capteur étant de toute façon mouillé.'
       - kind: mcq
         prompt: '**Étape 4.** La pluie faiblit : $N_p$ redescend à 200 alors que les lames sont fermées. Pourquoi la pergola ne se rouvre-t-elle pas immédiatement ?'
         choices:
@@ -1193,7 +1193,7 @@ units:
         - 'Non : c''est un comportement voulu, programmé dans l''algorigramme.'
         - 'Non : le seuil de réouverture est $N_p < 138$, ce qui correspond à 10 % de surface mouillée, pas à 0.'
         - 'Non : la résistance ne chauffe que le capteur, elle n''agit pas sur la motorisation.'
-        explanation: 'Fermeture au-dessus de $S_3$, réouverture en dessous de $S_1$ : les deux seuils sont différents, c''est un **cycle d''hystérésis**. L''objectif annoncé par l''énoncé est « d''éviter l''instabilité du comportement du mécanisme en limitant les phases d''ouverture/fermeture ».'
+        explanation: 'Fermeture au-dessus de $S_3$, réouverture en dessous de $S_1$ : les deux seuils sont différents, c''est un **cycle d''hystérésis**. L''objectif annoncé par l''énoncé est d''éviter l''instabilité du comportement du mécanisme en limitant les phases d''ouverture/fermeture.'
       - kind: mcq
         prompt: '**Étape 5.** À quoi sert la résistance chauffante **Res** du capteur de pluie ?'
         choices:
@@ -1237,7 +1237,7 @@ units:
     items:
     - type: mcq
       level: 1
-      prompt: 'Qu''est-ce qu''un **son**, selon le livre ?'
+      prompt: 'Qu''est-ce qu''un **son** ?'
       choices:
       - Une sensation auditive produite par une variation rapide de la pression de l'air
       - Un déplacement d'air d'un point à un autre de la pièce
@@ -1249,12 +1249,12 @@ units:
       - 'Non : les molécules d''air vibrent autour de leur position, elles ne sont pas transportées d''un bout à l''autre du local.'
       - 'Non : le son a besoin de matière pour se propager ; c''est la lumière qui traverse le vide.'
       - 'Non : la température n''intervient pas dans la définition (elle modifie seulement la vitesse de propagation).'
-      explanation: '« Le son est une sensation auditive produite par une variation rapide de la pression de l''air », créée par la vibration d''un corps ; il en résulte une succession de zones de pression et de dépression qui fait vibrer le tympan (Tle, p. 274).'
+      explanation: 'Le son est une sensation auditive produite par une variation rapide de la pression de l''air, créée par la vibration d''un corps ; il en résulte une succession de zones de pression et de dépression qui fait vibrer le tympan.'
       tags:
       - son
     - type: mcq
       level: 1
-      prompt: 'Quelle est la vitesse de propagation du son dans l''air retenue par le livre ?'
+      prompt: 'Quelle vitesse de propagation du son dans l''air retient-on en acoustique du bâtiment ?'
       choices:
       - 340 m/s
       - 340 km/s
@@ -1266,7 +1266,7 @@ units:
       - 'Non : 340 km/s serait mille fois trop rapide.'
       - 'Non : 3 × 10⁸ m/s est la vitesse de la **lumière** dans le vide.'
       - 'Non : 1 500 m/s est l''ordre de grandeur de la vitesse du son dans l''**eau**, pas dans l''air.'
-      explanation: '« La vitesse de propagation du son dans l''air est de 340 m/s » (Tle, p. 274). C''est cette valeur qui explique l''écho perçu dans les grands volumes et qu''on utilise pour calculer les retards de propagation.'
+      explanation: 'La vitesse de propagation du son dans l''air est de 340 m/s. C''est cette valeur qui explique l''écho perçu dans les grands volumes et qu''on utilise pour calculer les retards de propagation.'
       tags:
       - son
     - type: mcq
@@ -1283,7 +1283,7 @@ units:
       - 'Non : 0 à 130 est la plage des **niveaux sonores** en décibels, pas des fréquences.'
       - 'Non : erreur d''un facteur 10 sur la borne haute.'
       - 'Non : erreur d''un facteur 10 sur la borne basse.'
-      explanation: '« L''oreille humaine perçoit les sons dont la fréquence est comprise entre 20 Hz et 20 000 Hz » (Tle, p. 274). Plus la fréquence est élevée, plus le son est aigu. En acoustique du bâtiment, les basses fréquences (bruits d''impact, machines) sont les plus difficiles à traiter.'
+      explanation: 'L''oreille humaine perçoit les sons dont la fréquence est comprise entre 20 Hz et 20 000 Hz. Plus la fréquence est élevée, plus le son est aigu. En acoustique du bâtiment, les basses fréquences (bruits d''impact, machines) sont les plus difficiles à traiter.'
       tags:
       - son
     - type: mcq
@@ -1300,7 +1300,7 @@ units:
       - 'Non : le pascal est bien l''unité SI de pression ; il est simplement peu commode ici.'
       - 'Non : elle se mesure très bien (sonomètre) ; c''est l''**étendue** des valeurs qui pose problème.'
       - 'Non : le décibel ne dit rien de la fréquence, seulement de l''intensité.'
-      explanation: 'L''oreille est sensible « à des pressions allant de 0,00002 Pa à 20 Pa, soit un rapport de 1 à 1 000 000. Pour ramener cette large échelle à une échelle plus réduite […] on a adopté la notation logarithmique et créé le décibel » (Tle, p. 274). L''oreille perçoit de 0 à 130 dB, seuil de la douleur.
+      explanation: 'L''oreille est sensible à des pressions allant de 0,00002 Pa à 20 Pa, soit un rapport de 1 à 1 000 000. Pour ramener cette large échelle à une échelle plus réduite […] on a adopté la notation logarithmique et créé le décibel. L''oreille perçoit de 0 à 130 dB, seuil de la douleur.
 
 
         {{fig:pc-echelle-decibels}}'
@@ -1363,7 +1363,7 @@ units:
       - 'Non : il manque l''énergie **absorbée**, dissipée en chaleur dans le matériau.'
       - 'Non : il manque l''énergie **réfléchie** vers le local d''origine.'
       - 'Non : une paroi réfléchit et absorbe toujours une partie de l''énergie incidente.'
-      explanation: '« Lorsqu''une onde sonore rencontre une paroi, son énergie incidente est divisée en trois : l''énergie transmise qui traverse la paroi, l''énergie absorbée par la paroi et dissipée en chaleur, l''énergie réfléchie vers le local d''origine » (Tle, p. 274-275).'
+      explanation: 'Lorsqu''une onde sonore rencontre une paroi, son énergie incidente est divisée en trois : l''énergie transmise qui traverse la paroi, l''énergie absorbée par la paroi et dissipée en chaleur, l''énergie réfléchie vers le local d''origine.'
       tags:
       - transmission
     - type: mcq
@@ -1383,7 +1383,7 @@ units:
       - 'Non : l''énergie absorbée relève de la **correction** acoustique, et on cherche plutôt à l''augmenter.'
       - 'Non : l''énergie réfléchie relève également de la correction acoustique.'
       - 'Non : on cherche à **réduire** l''énergie transmise, et cela relève de l''isolation.'
-      explanation: '« L''isolation acoustique traite de l''énergie transmise par la paroi en la réduisant le plus possible. Les parties absorbées et réfléchies sont du domaine de la correction acoustique » (Tle, p. 275).'
+      explanation: 'L''isolation acoustique traite de l''énergie transmise par la paroi en la réduisant le plus possible. Les parties absorbées et réfléchies sont du domaine de la correction acoustique.'
       tags:
       - isolation-acoustique
     - type: mcq
@@ -1562,7 +1562,7 @@ units:
       - Une part de l'énergie est réfléchie vers le local d'origine
       - Une part est absorbée dans la paroi et dissipée en chaleur
       - La part restante est transmise et rayonnée dans le local voisin
-      explanation: 'C''est la décomposition de la p. 274-275 : énergie incidente = réfléchie + absorbée + transmise. L''isolation vise la dernière part, la correction les deux premières.'
+      explanation: 'C''est la décomposition de l''énergie sonore sur une paroi : énergie incidente = réfléchie + absorbée + transmise. L''isolation vise la dernière part, la correction les deux premières.'
       tags:
       - transmission
     - type: match
@@ -1608,7 +1608,7 @@ units:
     items:
     - type: mcq
       level: 1
-      prompt: 'Comment le livre définit-il le **flux lumineux** $\varphi$, et dans quelle unité s''exprime-t-il ?
+      prompt: 'Comment définit-on le **flux lumineux** $\varphi$, et dans quelle unité s''exprime-t-il ?
 
 
         {{fig:2i2d-grandeurs-photometriques}}'
@@ -1623,7 +1623,7 @@ units:
       - 'Non : c''est la définition de l''**intensité lumineuse** $I$, en candela.'
       - 'Non : c''est la définition de l''**éclairement** $E$, en lux.'
       - 'Non : c''est la définition de l''**efficacité lumineuse** $\eta$.'
-      explanation: 'Le flux lumineux est « la quantité d''énergie émise par une source sous forme de rayonnements visibles dans toutes les directions, par unité de temps ». Symbole $\varphi$, unité le **lumen (lm)** (Tle, p. 275). C''est la grandeur inscrite sur les emballages des ampoules.'
+      explanation: 'Le flux lumineux est la quantité d''énergie émise par une source sous forme de rayonnements visibles dans toutes les directions, par unité de temps. Symbole $\varphi$, unité le **lumen (lm)**. C''est la grandeur inscrite sur les emballages des ampoules.'
       tags:
       - photometrie
     - type: mcq
@@ -1643,7 +1643,7 @@ units:
       - 'Non : le lumen est l''unité du **flux** lumineux, émis dans toutes les directions.'
       - 'Non : le lux est l''unité de l''**éclairement** d''une surface.'
       - 'Non : le watt est l''unité de la puissance électrique consommée par la source.'
-      explanation: '« L''intensité lumineuse définit l''importance du flux lumineux émis dans une direction donnée par une source ponctuelle. » Symbole $I$, unité la **candela (cd)** (Tle, p. 275). C''est elle qui distingue un spot directif d''une ampoule diffusante à flux égal.'
+      explanation: 'L''intensité lumineuse définit l''importance du flux lumineux émis dans une direction donnée par une source ponctuelle. Symbole $I$, unité la **candela (cd)**. C''est elle qui distingue un spot directif d''une ampoule diffusante à flux égal.'
       tags:
       - photometrie
     - type: mcq
@@ -1663,12 +1663,12 @@ units:
       - 'Non : le lumen est l''unité du flux lumineux émis par la source.'
       - 'Non : la candela est l''unité de l''intensité lumineuse, dans une direction donnée.'
       - 'Non : le lumen par watt est l''unité de l''efficacité lumineuse $\eta = \varphi/P$.'
-      explanation: '« L''éclairement lumineux caractérise la quantité de lumière reçue par unité de surface. » Symbole $E$, unité le **lux (lx)** ; **1 lux = 1 lumen par mètre carré** (Tle, p. 275). C''est la grandeur que l''on mesure au luxmètre sur un plan de travail.'
+      explanation: 'L''éclairement lumineux caractérise la quantité de lumière reçue par unité de surface. Symbole $E$, unité le **lux (lx)** ; **1 lux = 1 lumen par mètre carré**. C''est la grandeur que l''on mesure au luxmètre sur un plan de travail.'
       tags:
       - photometrie
     - type: mcq
       level: 1
-      prompt: 'Une source lumineuse est présentée par le livre comme un **convertisseur d''énergie**. Quelles sont ses grandeurs d''entrée et de sortie ?
+      prompt: 'Une source lumineuse se lit comme un **convertisseur d''énergie**. Quelles sont ses grandeurs d''entrée et de sortie ?
 
 
         {{fig:2i2d-eclairement-surface}}'
@@ -1683,7 +1683,7 @@ units:
       - 'Non : les deux grandeurs sont inversées ; une lampe consomme de l''électricité et produit de la lumière.'
       - 'Non : ni le lux ni la candela ne décrivent l''entrée d''une lampe.'
       - 'Non : l''éclairement dépend en plus de la surface éclairée et de la géométrie du local — ce n''est pas une caractéristique de la source.'
-      explanation: '« Une source lumineuse est un convertisseur d''énergie dont la grandeur d''entrée est la puissance électrique, qui s''exprime en watt (W), et la grandeur de sortie est le flux lumineux, qui s''exprime en lumen (lm) » (Tle, p. 275). Le rendement de cette conversion est l''efficacité lumineuse.'
+      explanation: 'Une source lumineuse est un convertisseur d''énergie dont la grandeur d''entrée est la puissance électrique, qui s''exprime en watt (W), et la grandeur de sortie est le flux lumineux, qui s''exprime en lumen (lm). Le rendement de cette conversion est l''efficacité lumineuse.'
       tags:
       - sources
     - type: mcq
@@ -1700,7 +1700,7 @@ units:
       - 'Non : le rapport est inversé. Une efficacité élevée doit correspondre à une **bonne** source.'
       - 'Non : l''efficacité est un **quotient**, pas un produit.'
       - 'Non : $\varphi/S$ est l''éclairement $E$, en lux.'
-      explanation: '« L''efficacité lumineuse ou rendement lumineux $\eta$ d''une source est le quotient de son flux lumineux $\varphi$ par sa puissance $P$ » : $\eta = \varphi/P$, en **lm/W** (Tle, p. 275).'
+      explanation: 'L''efficacité lumineuse ou rendement lumineux $\eta$ d''une source est le quotient de son flux lumineux $\varphi$ par sa puissance $P$ : $\eta = \varphi/P$, en **lm/W**.'
       tags:
       - efficacite
     - type: input
@@ -1733,7 +1733,7 @@ units:
       numeric: true
       tolerance: 2
       unit: lx
-      explanation: '$E = \dfrac{\varphi}{S} = \dfrac{24\,000}{200} = 120$ lx, puisque 1 lux = 1 lumen par mètre carré (Tle, p. 275).'
+      explanation: '$E = \dfrac{\varphi}{S} = \dfrac{24\,000}{200} = 120$ lx, puisque 1 lux = 1 lumen par mètre carré.'
       tags:
       - eclairement
     - type: input
@@ -1788,7 +1788,7 @@ units:
       - dimensionnement
     - type: mcq
       level: 2
-      prompt: 'Sur quels **trois critères** le livre propose-t-il de caractériser une lampe ?'
+      prompt: 'Sur quels **trois critères** caractérise-t-on une lampe ?'
       choices:
       - Sa performance, son économie et son utilisation
       - Sa couleur, sa forme et son culot
@@ -1797,10 +1797,10 @@ units:
       answer: 0
       feedback:
       - null
-      - 'Non : ce sont des caractéristiques de montage, pas les critères de choix énoncés par le livre.'
+      - 'Non : ce sont des caractéristiques de montage, pas des critères de choix.'
       - 'Non : ces grandeurs électriques décrivent l''alimentation, pas la performance lumineuse.'
       - 'Non : le prix figure bien dans le critère « économie », mais la masse et le volume ne sont pas retenus.'
-      explanation: 'Trois critères (Tle, p. 276) : la **performance** (indice de rendu des couleurs, efficacité lumineuse, température de couleur), l''**économie** (puissance absorbée, durée de vie, coût) et l''**utilisation** (température de la lampe, temps d''allumage).'
+      explanation: 'Trois critères : la **performance** (indice de rendu des couleurs, efficacité lumineuse, température de couleur), l''**économie** (puissance absorbée, durée de vie, coût) et l''**utilisation** (température de la lampe, temps d''allumage).'
       tags:
       - sources
     - type: match
@@ -1815,7 +1815,7 @@ units:
         right: Une décharge dans la vapeur de mercure produit un ultraviolet converti en lumière visible par une poudre fluorescente
       - left: Diode électroluminescente (LED)
         right: Un composant électronique émet de la lumière quand il est parcouru par un courant
-      explanation: Quatre principes décrits p. 276. L'incandescence dissipe l'essentiel de l'énergie en chaleur (efficacité faible) ; la LED est aujourd'hui la solution la plus efficace et la plus durable.
+      explanation: Quatre principes d'émission. L'incandescence dissipe l'essentiel de l'énergie en chaleur (efficacité faible) ; la LED est aujourd'hui la solution la plus efficace et la plus durable.
       tags:
       - sources
     - type: mcq
@@ -1924,7 +1924,7 @@ units:
       - 'Non : c''est le **flux** qui mesure la lumière émise, et il est identique (2 000 lm).'
       - 'Non : $\eta = \varphi/P$ vaut $2\,000/20 = 100$ lm/W pour l''un et $2\,000/40 = 50$ lm/W pour l''autre.'
       - 'Non : les deux émettent exactement le même flux lumineux.'
-      explanation: 'À flux égal, c''est l''efficacité lumineuse qui départage. Sur 2 000 h par an, l''écart de 20 W représente 40 kWh par luminaire et par an : le critère « économie » du livre (puissance absorbée, durée de vie, coût) prend tout son sens.'
+      explanation: 'À flux égal, c''est l''efficacité lumineuse qui départage. Sur 2 000 h par an, l''écart de 20 W représente 40 kWh par luminaire et par an : le critère « économie » (puissance absorbée, durée de vie, coût) prend tout son sens.'
       tags:
       - efficacite
     - type: guided
@@ -1955,7 +1955,7 @@ units:
         - 'Non : multiplier donnerait un éclairement d''autant plus grand que la pièce est vaste, ce qui est absurde.'
         - 'Non : le rapport est inversé.'
         - 'Non : $\varphi/P$ est l''**efficacité lumineuse**, pas l''éclairement.'
-        explanation: '« L''éclairement lumineux caractérise la quantité de lumière reçue par unité de surface » : $E = \varphi/S$, en lux, avec **1 lux = 1 lumen par mètre carré** (Tle, p. 275).'
+        explanation: 'L''éclairement lumineux caractérise la quantité de lumière reçue par unité de surface : $E = \varphi/S$, en lux, avec **1 lux = 1 lumen par mètre carré**.'
       - kind: input
         prompt: '**Étape 2.** Calculer le flux lumineux $\varphi$ émis par **un** luminaire LED.'
         answer: '2000'

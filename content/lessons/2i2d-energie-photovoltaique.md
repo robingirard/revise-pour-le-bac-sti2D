@@ -35,7 +35,7 @@ Quatre cellules identiques de 18 V et 5,56 A (soit 100 W chacune) :
 
 **La puissance délivrée est la même dans les trois cas** : le branchement fixe le couple ($U$, $I$), pas leur produit. On le choisit pour adapter la tension au convertisseur placé en aval.
 
-*Précision de calcul* : $4 \times 5{,}56 = 22{,}24$ A et $18 \times 22{,}24 = 400{,}3$ W. Le manuel arrondit à 22,2 A puis écrit 400 W ; ne jamais réutiliser une valeur arrondie dans un calcul suivant.
+*Précision de calcul* : $4 \times 5{,}56 = 22{,}24$ A et $18 \times 22{,}24 = 400{,}3$ W. On lit souvent 22,2 A, puis 400 W ; ne jamais réutiliser une valeur arrondie dans un calcul suivant.
 
 ## Production journalière
 

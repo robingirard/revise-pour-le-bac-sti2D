@@ -26,7 +26,7 @@ Dans tout le tableau, $k$ désigne une constante réelle.
 
 Retenir la règle : on **augmente l'exposant de 1** et on **divise par le nouvel exposant**.
 
-Le tableau du manuel (p. 95) ne contient que des fonctions polynomiales ; pour les autres, on utilise les règles de composition ci-dessous. Par exemple $\dfrac{1}{x^{2}}=x^{-2}$ a pour primitives $x\mapsto-\dfrac{1}{x}+k$ (piège classique du signe).
+Le tableau des primitives usuelles ne contient que des fonctions polynomiales ; pour les autres, on utilise les règles de composition ci-dessous. Par exemple $\dfrac{1}{x^{2}}=x^{-2}$ a pour primitives $x\mapsto-\dfrac{1}{x}+k$ (piège classique du signe).
 
 ## Primitives de fonctions composées
 
@@ -36,7 +36,7 @@ $$x\longmapsto \frac{F(ax+b)}{a}+k.$$
 **Puissance d'une fonction.** Si $n$ est un entier relatif **différent de** $-1$ et $f$ une fonction dérivable, alors $f'\times f^{\,n}$ a pour primitives
 $$x\longmapsto \frac{\big(f(x)\big)^{\,n+1}}{n+1}+k.$$
 
-*(La condition est bien $n\neq-1$, car $n+1$ doit être non nul ; le manuel imprime « différent de 1 » p. 96 : c'est une coquille.)*
+*(La condition est bien $n\neq-1$, car $n+1$ doit être non nul ; on trouve parfois imprimé « différent de $1$ » : c'est une coquille.)*
 
 **Quotient** $\dfrac{f'}{f}$. Si $f$ est dérivable et **strictement positive**, ses primitives sont $x\mapsto\ln\big(f(x)\big)+k$ ; si $f$ est **strictement négative**, ce sont $x\mapsto\ln\big(-f(x)\big)+k$.
 
