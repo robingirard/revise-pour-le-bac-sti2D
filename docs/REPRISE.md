@@ -93,6 +93,32 @@ pour la formule du produit scalaire — c'est trop facile ».
 - Une soixantaine d'exercices changent d'identifiant (leur énoncé perd la référence de figure) : leur
   progression repart de zéro, ce qui est sans conséquence sur le reste.
 
+## Fait à la 7e session (7 sept. 2026) — la fiche de dérivation du cours
+
+Robin a déposé dans `~/Documents/Enseignement/STI2D/fiches_exos_encours/` la fiche distribuée en
+classe le jour même (« BO Dérivation », cours à trous en 4 pages). Décision : compléter la
+compétence `maths-derivee` avec ce qui y figurait et manquait, en **gardant les valeurs de la
+fiche** pour que le fils retrouve son cours (les PDF restent hors dépôt ; on n'en recopie pas le
+texte, voir `docs/notes/fiches-classe.md`).
+
+- **La tangente par trois méthodes**, comme au tableau : lecture graphique de
+  $m=\dfrac{\Delta y}{\Delta x}$ (nouvelle figure `maths-tangente-lecture`, quadrillage au pas de
+  1 et triangle à compter), la formule, et la forme $y=mx+p$ où $p$ vient d'une équation.
+- **Lecture d'un écran de calculatrice en mode tangente** (nouvelle figure
+  `maths-tangente-calculatrice`, sans marque) : la machine donne $x$, $f(x)$ et $f'(x)$, l'équation
+  reste à écrire. Les deux figures ont leur variante muette (`\rappel`), l'énoncé ne donne donc
+  jamais la formule ni le résultat.
+- **Composées et inverse** : $(ax+b)^n$, un `match` de cinq composées, et $\left(\dfrac1v\right)'$.
+- **Les trois tangentes de la fiche** ($-x^2+2x+4$ en $3$, $x^3+1$ en $-2$, $x\sqrt x$ en $4$).
+- **Exercice guidé en 8 étapes** sur l'étude globale de la fiche, $f(x)=\sqrt x\,(x-3)$ :
+  non-dérivabilité en $0$, dérivée d'un produit avec $\sqrt x$, factorisation
+  $f'(x)=\dfrac{3(x-1)}{2\sqrt x}$, signe, tableau de variations, minimum $-2$.
+- Leçon `maths-derivee.md` complétée (section « trois méthodes », formule $(ax+b)^n$, $1/v$).
+
+`maths-derivee` passe de 23 à 34 exercices ; total **2 119 exercices**, 338 figures. Vérifié :
+`check_unit.py`, `make check`, `make test` (119), `tour.mjs` (0 erreur), `grid-fit` (2 débordements,
+les mêmes qu'avant), `math-overflow` (0 erreur KaTeX), captures des nouveaux exercices sur mobile.
+
 ## Idées suivantes
 - Retours d'usage du fils : longueur des séances, difficulté, figures trop larges sur mobile (quelques diagrammes
   SysML et le treillis dépassent 8 cm : à resserrer si gênant).

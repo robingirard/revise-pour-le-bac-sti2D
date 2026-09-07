@@ -14,7 +14,7 @@ Lorsque ce quotient admet une limite finie $\ell$ quand $h$ tend vers $0$, on di
 
 **$f'(a)$ est le coefficient directeur de la tangente à la courbe au point d'abscisse $a$.**
 
-## L'équation de la tangente
+## L'équation de la tangente : trois méthodes
 
 La tangente passe par $A\big(a\,;f(a)\big)$ et a pour coefficient directeur $f'(a)$, d'où
 
@@ -23,6 +23,26 @@ $$y=f'(a)(x-a)+f(a).$$
 *Exemple.* $f(x)=x^{2}$ en $a=2$ : $f(2)=4$ et $f'(2)=4$, donc $y=4(x-2)+4$, soit $y=4x-4$.
 
 **Méthode.** Calculer $f'$, puis les deux nombres $f(a)$ et $f'(a)$, les reporter dans la formule, développer, et vérifier qu'en $x=a$ on retrouve bien $f(a)$.
+
+Selon ce que l'énoncé fournit — une courbe, une expression, un écran de calculatrice — on obtient cette droite de trois façons.
+
+**1. Par lecture graphique.** Quand la tangente est déjà tracée, on choisit deux points de la droite situés sur des nœuds du quadrillage et on compte les carreaux :
+
+$$m=f'(a)=\frac{\Delta y}{\Delta x}.$$
+
+{{fig:maths-tangente-lecture}}
+
+Ici $\Delta x=2$ et $\Delta y=3$, donc $f'(1)=1{,}5$ ; le point de contact se lit $A(1\,;2)$, et l'équation suit.
+
+**2. Par la formule.** On calcule $f'$, puis $f(a)$ et $f'(a)$, et on reporte dans $y=f'(a)(x-a)+f(a)$.
+
+**3. Par $y=mx+p$.** On pose $m=f'(a)$, puis on écrit que le point de contact appartient à la droite : $f(a)=m\times a+p$, ce qui donne $p$. Avec $f(2)=11$ et $f'(2)=6$ : $m=6$ puis $11=6\times2+p$, donc $p=-1$ et $y=6x-1$. Cette méthode évite de développer.
+
+**À la calculatrice.** Le menu « tangente » d'une calculatrice graphique trace la droite et affiche les trois nombres utiles : l'abscisse du point de contact, $f(x)$ et $f'(x)$.
+
+{{fig:maths-tangente-calculatrice}}
+
+La machine donne les ingrédients, pas la rédaction : c'est encore à la main qu'on écrit $y=6(x-2)+11=6x-1$. Elle sert surtout à **vérifier** un résultat obtenu par le calcul.
 
 ## La fonction dérivée et les dérivées usuelles
 
@@ -47,7 +67,7 @@ Pour $u$ et $v$ dérivables sur $I$ et $k$ un réel :
 
 $$(u+v)'=u'+v' \qquad\qquad (ku)'=ku'$$
 
-$$(uv)'=u'v+uv' \qquad\qquad \left(\frac{u}{v}\right)'=\frac{u'v-uv'}{v^{2}}\quad(v\neq0)$$
+$$(uv)'=u'v+uv' \qquad\qquad \left(\frac{u}{v}\right)'=\frac{u'v-uv'}{v^{2}}\quad(v\neq0) \qquad\qquad \left(\frac{1}{v}\right)'=-\frac{v'}{v^{2}}\quad(v\neq0)$$
 
 Dans la formule du produit, on dérive **un facteur à la fois** ; dans celle du quotient, l'ordre $u'v-uv'$ du numérateur est essentiel.
 
@@ -57,9 +77,11 @@ $f'(x)=3\left(x^{2}-2\right)+(3x+1)\times2x=3x^{2}-6+6x^{2}+2x=9x^{2}+2x-6$.
 *Exemple résolu.* $f(x)=\dfrac{2x-1}{x+3}$ sur $\left]-3\,;+\infty\right[$ est un **quotient** :
 $f'(x)=\dfrac{2(x+3)-(2x-1)\times1}{(x+3)^{2}}=\dfrac{2x+6-2x+1}{(x+3)^{2}}=\dfrac{7}{(x+3)^{2}}$, strictement positive : $f$ est croissante.
 
-## Deux composées à connaître
+## Les composées à connaître
 
-Ces deux formules servent en permanence en physique et en 2I2D. Pour tous réels $a$, $b$, $\omega$ et $\varphi$ :
+Ces formules servent en permanence en physique et en 2I2D. Pour tous réels $a$, $b$, $\omega$ et $\varphi$, et tout entier $n\geqslant1$ :
+
+$$\left((ax+b)^{n}\right)'=n\,a\,(ax+b)^{n-1}$$
 
 $$\left(\mathrm{e}^{ax+b}\right)'=a\,\mathrm{e}^{ax+b}$$
 
@@ -68,6 +90,8 @@ $$\left(\cos(\omega t+\varphi)\right)'=-\omega\sin(\omega t+\varphi) \qquad \lef
 Le facteur qui « sort » est toujours la dérivée de l'expression intérieure : $a$ ou $\omega$, jamais l'expression entière. C'est l'oubli le plus fréquent.
 
 *Exemple.* $u(t)=12\cos(100t+0{,}5)$ donne $u'(t)=12\times(-100)\sin(100t+0{,}5)=-1\,200\sin(100t+0{,}5)$.
+
+*Exemple.* $\left((3x-2)^{4}\right)'=4\times3\times(3x-2)^{3}=12(3x-2)^{3}$ : on abaisse l'exposant, on le fait passer en facteur, puis on multiplie par $3$.
 
 ## Signe de la dérivée et sens de variation
 

@@ -1,0 +1,61 @@
+%% maths-tangente-lecture — lire un nombre dérivé sur un graphique.
+%% Courbe de f(x) = 0,25 x^2 + x + 0,75, point A d'abscisse 1 (donc f(1) = 2) et sa
+%% tangente, de coefficient directeur 1,5. Le quadrillage au pas de 1 permet de LIRE
+%% f(1) sur l'axe des ordonnées et de compter les carreaux du triangle A-P-T :
+%% deux carreaux vers la droite, trois vers le haut, d'où m = Δy/Δx = 3/2.
+%% Rien n'est écrit des valeurs : le lecteur les compte. Seul le rappel de la formule
+%% m = Δy/Δx est enveloppé de \rappel (variante muette pour les énoncés qui la demandent).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1.05cm,y=1.05cm,
+  quad/.style={line width=0.4pt, draw=black!18},
+  axe/.style={-{Stealth[length=5pt]}, line width=0.6pt},
+  courbe/.style={line width=1.3pt, line join=round, black!80},
+  tangente/.style={solideA, line width=1.5pt},
+  cote/.style={solideE, line width=1.1pt},
+  grad/.style={font=\scriptsize, inner sep=0pt},
+  etiq/.style={font=\small, inner sep=2pt}]
+
+%% ---------------- quadrillage ---------------------------------------------
+\draw[quad] (-1.6,-1.4) grid[step=1] (4.6,6.4);
+
+%% ---------------- axes et graduations -------------------------------------
+\draw[axe] (-1.7,0) -- (4.85,0) node[anchor=north east, inner sep=3pt, font=\small] {$x$};
+\draw[axe] (0,-1.5) -- (0,6.75) node[anchor=south east, inner sep=3pt, font=\small] {$y$};
+\node[grad, anchor=north east, inner sep=3pt] at (-0.05,-0.05) {$O$};
+\foreach \xv in {-1,1,2,3,4} {
+  \draw[line width=0.6pt] (\xv,0) -- ++(0,-0.08cm);
+  \node[grad, anchor=north, yshift=-3pt] at (\xv,0) {$\xv$};}
+\foreach \yv in {-1,1,2,3,4,5,6} {
+  \draw[line width=0.6pt] (0,\yv) -- ++(-0.08cm,0);
+  \node[grad, anchor=east, xshift=-3pt] at (0,\yv) {$\yv$};}
+
+%% ---------------- la courbe -----------------------------------------------
+\draw[courbe] plot[domain=-1.55:3.35, samples=90, smooth] (\x,{0.25*\x*\x+\x+0.75});
+\node[font=\small, text=black!80, anchor=south east, inner sep=3pt] at (2.75,6.15) {$\mathcal{C}_f$};
+
+%% ---------------- la tangente en A : y = 1,5 x + 0,5 ----------------------
+\draw[tangente] (-1.55,{1.5*(-1.55)+0.5}) -- (3.75,{1.5*3.75+0.5});
+\node[font=\small, text=solideA, anchor=north west, inner sep=3pt, rotate=41]
+     at (3.20,{1.5*3.20+0.5}) {tangente en $A$};
+
+%% ---------------- triangle de lecture de la pente -------------------------
+\draw[cote] (1,2) -- (3,2);
+\draw[cote] (3,2) -- (3,5);
+\draw[line width=0.5pt, black!60] (2.82,2) -- (2.82,2.18) -- (3,2.18);
+\node[font=\small, text=solideE, anchor=north, inner sep=4pt] at (2,2) {$\Delta x$};
+\node[font=\small, text=solideE, anchor=west, inner sep=4pt] at (3,3.5) {$\Delta y$};
+
+%% ---------------- le point A ----------------------------------------------
+\fill[solideA] (1,2) circle (2.2pt);
+\node[etiq, anchor=south east, inner sep=3pt] at (1,2) {$A$};
+\draw[line width=0.5pt, dash pattern=on 3pt off 2pt, black!55] (1,0) -- (1,2) -- (0,2);
+
+%% ---------------- ce que la lecture doit redonner -------------------------
+\rappel{\node[draw=black!45, fill=black!3, rounded corners=3pt, line width=0.5pt,
+      inner sep=5pt, anchor=north, align=center, font=\small] at (1.5,-1.7)
+     {coefficient directeur de la tangente en $A$ :\\[3pt]
+      $f'(a)=\dfrac{\Delta y}{\Delta x}$};}
+\end{tikzpicture}
+\end{document}

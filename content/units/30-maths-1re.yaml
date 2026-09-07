@@ -12,7 +12,7 @@ units:
   - id: maths-derivee
     title: Dérivation
     icon: 📈
-    description: Nombre dérivé, tangente, dérivées usuelles, opérations, signe de la dérivée et tableau de variations.
+    description: Nombre dérivé, tangente (lecture graphique, formule, $y=mx+p$), dérivées usuelles et composées, signe de la dérivée et tableau de variations.
     prerequisites: []
     lesson: lessons/maths-derivee.md
     items:
@@ -80,6 +80,51 @@ units:
         right: $-\sin(x)$
       - left: $\sin(x)$
         right: $\cos(x)$
+    - type: match
+      level: 2
+      prompt: Associer chaque fonction composée à sa dérivée.
+      pairs:
+      - left: $(2x+5)^{3}$
+        right: $6(2x+5)^{2}$
+      - left: $(4x-3)^{2}$
+        right: $8(4x-3)$
+      - left: $\cos(3x+1)$
+        right: $-3\sin(3x+1)$
+      - left: $\sin(5x)$
+        right: $5\cos(5x)$
+      - left: $\mathrm{e}^{2x-1}$
+        right: $2\,\mathrm{e}^{2x-1}$
+      explanation: 'Dans les cinq cas, on dérive la fonction extérieure comme d''habitude, puis on multiplie par la dérivée de ce qu''il y a à l''intérieur — le coefficient de $x$. C''est ce facteur ($2$, $4$, $3$, $5$, $2$) que l''on oublie le plus souvent.'
+    - type: mcq
+      level: 2
+      prompt: Soit $n$ un entier supérieur ou égal à $1$ et $a$, $b$ deux réels. Quelle est la dérivée de la fonction $f$ définie sur $\mathbb{R}$ par $f(x)=(ax+b)^{n}$ ?
+      choices:
+      - $f'(x)=n\,a\,(ax+b)^{n-1}$
+      - $f'(x)=n\,(ax+b)^{n-1}$
+      - $f'(x)=n\,a\,(ax+b)^{n}$
+      - $f'(x)=a\,(ax+b)^{n-1}$
+      answer: 0
+      feedback:
+      - null
+      - Il manque le facteur $a$, dérivée de l'expression intérieure.
+      - L'exposant doit baisser d'une unité en dérivant.
+      - Le facteur $n$ a été perdu ; il vient de la dérivation de la puissance.
+      explanation: '$\left((ax+b)^{n}\right)''=n\,a\,(ax+b)^{n-1}$ : on abaisse l''exposant d''une unité, on le fait passer en facteur, puis on multiplie par $a$, la dérivée de l''intérieur. Exemple : $\left((3x-2)^{4}\right)''=4\times3\times(3x-2)^{3}=12(3x-2)^{3}$.'
+    - type: mcq
+      level: 3
+      prompt: Quelle est la dérivée de la fonction $f$ définie sur $\mathbb{R}$ par $f(x)=\dfrac{1}{x^{2}+1}$ ?
+      choices:
+      - $f'(x)=-\dfrac{2x}{\left(x^{2}+1\right)^{2}}$
+      - $f'(x)=\dfrac{2x}{\left(x^{2}+1\right)^{2}}$
+      - $f'(x)=-\dfrac{1}{\left(x^{2}+1\right)^{2}}$
+      - $f'(x)=-\dfrac{2x}{x^{2}+1}$
+      answer: 0
+      feedback:
+      - null
+      - Il manque le signe moins de la formule de l'inverse.
+      - Le numérateur est $v'(x)$, c'est-à-dire $2x$, et non $1$.
+      - Le dénominateur doit être élevé au carré.
+      explanation: 'Avec $v(x)=x^{2}+1$, la formule de l''inverse donne $\left(\dfrac{1}{v}\right)''=-\dfrac{v''}{v^{2}}$, soit $f''(x)=-\dfrac{2x}{\left(x^{2}+1\right)^{2}}$. Cette dérivée est du signe de $-2x$ : $f$ croît sur $\left]-\infty\,;0\right]$ puis décroît, avec un maximum égal à $1$ en $0$.'
     - type: mcq
       level: 1
       prompt: Soit $f$ une fonction dérivable en $a$ et $\mathcal{C}$ sa courbe représentative. Quelle est l'équation de la tangente à $\mathcal{C}$ au point d'abscisse $a$ ?
@@ -95,6 +140,37 @@ units:
       - Le coefficient directeur est correct, mais cette droite ne passe pas par le point de contact dès que $a\neq0$.
       - Deux signes sont faux ; la droite obtenue ne touche pas la courbe au point d'abscisse $a$.
       explanation: 'La tangente passe par le point $A\big(a\,;f(a)\big)$ et a pour coefficient directeur $f''(a)$. Une droite de coefficient directeur $m$ passant par $A$ a pour équation $y=m(x-a)+f(a)$, d''où $y=f''(a)(x-a)+f(a)$.'
+    - type: input
+      level: 2
+      prompt: 'Sur la figure, lire le coefficient directeur de la tangente à la courbe au point $A$. Le triangle vert donne les deux côtés à compter.
+
+
+        {{fig:maths-tangente-lecture-muet}}'
+      answer: '1,5'
+      numeric: true
+      tolerance: 0.05
+      explanation: 'On compte les carreaux du triangle : $\Delta x=2$ vers la droite et $\Delta y=3$ vers le haut, donc $f''(a)=\dfrac{\Delta y}{\Delta x}=\dfrac{3}{2}=1{,}5$. Cette lecture graphique est la première des trois façons d''obtenir le coefficient directeur ; les deux autres passent par le calcul de $f''(a)$.
+
+
+        {{fig:maths-tangente-lecture}}'
+    - type: mcq
+      level: 2
+      prompt: 'En reprenant la même figure, quelle est l''équation réduite de la tangente en $A$ ?
+
+
+        {{fig:maths-tangente-lecture-muet}}'
+      choices:
+      - $y=1{,}5x+0{,}5$
+      - $y=1{,}5x+2$
+      - $y=1{,}5x$
+      - $y=2x+0{,}5$
+      answer: 0
+      feedback:
+      - null
+      - '$2$ est l''ordonnée du point $A$, pas l''ordonnée à l''origine de la droite : la tangente coupe l''axe des ordonnées plus bas.'
+      - Cette droite passe par l'origine ; celle de la figure ne passe pas par $O$.
+      - '$2$ est l''ordonnée de $A$, elle ne peut pas servir de coefficient directeur.'
+      explanation: 'La figure donne deux lectures : le triangle donne $m=\dfrac{3}{2}=1{,}5$, et les pointillés donnent le point de contact $A(1\,;2)$. La tangente s''écrit $y=1{,}5(x-1)+2=1{,}5x-1{,}5+2=1{,}5x+0{,}5$. On peut aussi lire directement son ordonnée à l''origine sur le graphique, à mi-carreau entre $0$ et $1$.'
     - type: mcq
       level: 2
       prompt: Soit $f$ la fonction définie sur $\mathbb{R}$ par $f(x)=x^{2}$. Quelle est l'équation réduite de la tangente à sa courbe au point d'abscisse $2$ ?
@@ -121,6 +197,71 @@ units:
       - Développer et réduire pour obtenir la forme $y=mx+p$
       - Vérifier que le point de contact appartient bien à la droite trouvée
       explanation: 'Deux ingrédients seulement sont nécessaires : $f''(a)$ donne la pente, $f(a)$ garantit que la droite touche la courbe au bon endroit. La vérification finale (remplacer $x$ par $a$ et retrouver $f(a)$) détecte la plupart des erreurs de calcul.'
+    - type: input
+      level: 2
+      prompt: Pour une fonction $f$, on a calculé $f(2)=11$ et $f'(2)=6$. On cherche la tangente au point d'abscisse $2$ sous la forme $y=mx+p$, avec $m=6$. Que vaut $p$ ?
+      answer: '-1'
+      numeric: true
+      tolerance: 0.01
+      explanation: 'C''est la troisième méthode : au lieu de reporter dans $y=f''(a)(x-a)+f(a)$, on part de $y=mx+p$ avec $m=f''(2)=6$, puis on écrit que le point de contact $(2\,;11)$ appartient à la droite : $11=6\times2+p$, donc $p=11-12=-1$. La tangente est $y=6x-1$. Les deux méthodes donnent évidemment la même droite ; celle-ci évite de développer.'
+    - type: mcq
+      level: 2
+      prompt: 'Une calculatrice graphique affiche l''écran ci-dessous pour une fonction $f$. Quelle est l''équation réduite de la tangente qu''elle a tracée ?
+
+
+        {{fig:maths-tangente-calculatrice-muet}}'
+      choices:
+      - $y=6x-1$
+      - $y=6x+11$
+      - $y=11x-6$
+      - $y=2x+11$
+      answer: 0
+      feedback:
+      - null
+      - '$11$ est l''ordonnée du point de contact, pas l''ordonnée à l''origine.'
+      - Les rôles sont échangés ; le coefficient directeur est le nombre dérivé, $6$.
+      - '$2$ est l''abscisse du point de contact, elle ne donne pas la pente.'
+      explanation: 'La machine donne trois nombres : l''abscisse du point de contact ($x=2$), l''ordonnée ($f(x)=11$) et le nombre dérivé ($f''(x)=6$). Le reste est du calcul à la main : $y=6(x-2)+11=6x-12+11=6x-1$. Une calculatrice ne dispense donc pas de connaître la formule — elle fournit les trois ingrédients, pas la conclusion.
+
+
+        {{fig:maths-tangente-calculatrice}}'
+    - type: mcq
+      level: 2
+      prompt: Soit $f$ la fonction définie sur $\mathbb{R}$ par $f(x)=-x^{2}+2x+4$. Quelle est l'équation réduite de la tangente à sa courbe au point d'abscisse $3$ ?
+      choices:
+      - $y=-4x+13$
+      - $y=-4x+1$
+      - $y=-4x-11$
+      - $y=4x-11$
+      answer: 0
+      feedback:
+      - null
+      - '$1$ est l''ordonnée du point de contact ; il reste à en déduire l''ordonnée à l''origine.'
+      - 'Erreur de signe en développant : $-4(x-3)=-4x+12$.'
+      - Le signe du coefficient directeur est faux ; en $x=3$ la courbe descend.
+      explanation: '$f''(x)=-2x+2$, donc $f''(3)=-6+2=-4$, et $f(3)=-9+6+4=1$. La tangente a pour équation $y=-4(x-3)+1=-4x+12+1=-4x+13$. Vérification : pour $x=3$, $y=-12+13=1$, on retrouve bien $f(3)$.'
+    - type: mcq
+      level: 3
+      prompt: Soit $f$ la fonction définie sur $\mathbb{R}$ par $f(x)=x^{3}+1$. Quelle est l'équation réduite de la tangente à sa courbe au point d'abscisse $-2$ ?
+      choices:
+      - $y=12x+17$
+      - $y=12x-7$
+      - $y=-12x-7$
+      - $y=12x+7$
+      answer: 0
+      feedback:
+      - null
+      - '$-7$ est l''ordonnée du point de contact, pas l''ordonnée à l''origine.'
+      - '$f''(-2)=3\times(-2)^{2}=12$ : le carré rend le nombre dérivé positif.'
+      - 'Erreur de signe : $-12\times(-2)=+24$, donc $y=12(x+2)-7=12x+24-7$.'
+      explanation: '$f''(x)=3x^{2}$, donc $f''(-2)=3\times4=12$, et $f(-2)=-8+1=-7$. D''où $y=12\big(x-(-2)\big)+(-7)=12(x+2)-7=12x+24-7=12x+17$. Vérification : pour $x=-2$, $y=-24+17=-7$.'
+    - type: input
+      level: 3
+      prompt: Soit $f$ la fonction définie sur $\left[0\,;+\infty\right[$ par $f(x)=x\sqrt{x}$. Calculer le nombre dérivé $f'(4)$.
+      answer: '3'
+      numeric: true
+      tolerance: 0.02
+      explanation: '$f$ est le produit de $u(x)=x$ et $v(x)=\sqrt{x}$, donc sur $\left]0\,;+\infty\right[$ : $f''(x)=1\times\sqrt{x}+x\times\dfrac{1}{2\sqrt{x}}=\sqrt{x}+\dfrac{\sqrt{x}}{2}=\dfrac{3\sqrt{x}}{2}$, car $\dfrac{x}{\sqrt{x}}=\sqrt{x}$. Ainsi $f''(4)=\dfrac{3\times2}{2}=3$. La tangente au point d''abscisse $4$ a donc pour équation $y=3(x-4)+8=3x-4$.'
     - type: mcq
       level: 2
       prompt: Soit $u$ et $v$ deux fonctions dérivables sur un intervalle $I$. Quelle est la dérivée du produit $uv$ ?
@@ -447,6 +588,120 @@ units:
         - 'La perte relative vaut $\dfrac{2\,000-1\,792}{2\,000}=0{,}104$, soit environ $10\ \%$.'
         - '$7$ appartient à $\left]0\,;15\right[$ : le bac existe, il est seulement moins volumineux.'
         explanation: '$V(7)=7\times(30-14)^{2}=7\times256=1\,792$ cm³, soit $208$ cm³ de moins, environ $10\ \%$. Au voisinage d''un maximum la courbe est plate : s''écarter de $2$ cm de l''optimum coûte peu, ce qui laisse une marge au bureau des méthodes.'
+    - type: guided
+      level: 3
+      title: Étude d'une fonction avec une racine carrée
+      prompt: 'Exercice complet : dérivée d''un produit contenant $\sqrt{x}$, signe de la dérivée et tableau de variations.'
+      intro: 'On considère la fonction $f$ définie sur $\left[0\,;+\infty\right[$ par
+
+
+        $$f(x)=\sqrt{x}\,(x-3).$$
+
+
+        On veut établir son sens de variation sur $\left]0\,;+\infty\right[$, puis dresser son tableau de variations.'
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Pourquoi l''étude du sens de variation se fait-elle sur $\left]0\,;+\infty\right[$ et non sur $\left[0\,;+\infty\right[$ ?'
+        choices:
+        - Parce que $f$ est définie en $0$ mais que la fonction racine carrée n'y est pas dérivable
+        - Parce que $f(0)$ n'existe pas
+        - Parce que $f$ est négative au voisinage de $0$
+        - Parce qu'une fonction n'est jamais dérivable en une borne d'intervalle
+        answer:
+        - 0
+        feedback:
+        - null
+        - '$f(0)=\sqrt{0}\times(0-3)=0$ : la valeur existe, c''est la dérivée qui manque.'
+        - Le signe de $f$ n'a rien à voir avec l'existence de sa dérivée.
+        - Une fonction polynôme, par exemple, est parfaitement dérivable en une borne.
+        explanation: '$\sqrt{x}$ est définie en $0$ mais n''y est pas dérivable : la courbe y admet une tangente verticale. La fonction $f$ est donc définie sur $\left[0\,;+\infty\right[$ et dérivable seulement sur $\left]0\,;+\infty\right[$. C''est une distinction que le sujet attend.'
+      - kind: mcq
+        prompt: '**Étape 2.** En développant, quelle autre écriture de $f(x)$ obtient-on ?'
+        choices:
+        - $f(x)=x\sqrt{x}-3\sqrt{x}$
+        - $f(x)=\sqrt{x}\,x-3$
+        - $f(x)=\sqrt{x^{2}-3x}$
+        - $f(x)=x-3\sqrt{x}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - Le facteur $\sqrt{x}$ multiplie **toute** la parenthèse, donc aussi le $-3$.
+        - Faire entrer un facteur sous la racine reviendrait à écrire $\sqrt{x}\times x=\sqrt{x^{3}}$, ce n'est pas ce qui est demandé.
+        - '$\sqrt{x}\times x$ ne vaut pas $x$.'
+        explanation: 'On distribue : $f(x)=\sqrt{x}\times x-\sqrt{x}\times3=x\sqrt{x}-3\sqrt{x}$. Cette écriture est commode, car on sait dériver $x\sqrt{x}$ (produit) et $\sqrt{x}$.'
+      - kind: mcq
+        prompt: '**Étape 3.** Quelle est l''expression de $f''(x)$ sur $\left]0\,;+\infty\right[$ ?'
+        choices:
+        - $f'(x)=\dfrac{3\sqrt{x}}{2}-\dfrac{3}{2\sqrt{x}}$
+        - $f'(x)=\dfrac{1}{2\sqrt{x}}\times(x-3)$
+        - $f'(x)=\dfrac{3\sqrt{x}}{2}+\dfrac{3}{2\sqrt{x}}$
+        - $f'(x)=\sqrt{x}-\dfrac{3}{2\sqrt{x}}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'La dérivée d''un produit n''est pas le produit d''une dérivée par l''autre facteur : il manque un terme.'
+        - 'Erreur de signe : le terme $-3\sqrt{x}$ a une dérivée négative.'
+        - 'La dérivée de $x\sqrt{x}$ vaut $\dfrac{3\sqrt{x}}{2}$, et non $\sqrt{x}$ : le produit donne deux termes.'
+        explanation: 'On dérive terme à terme. Pour $x\sqrt{x}$, produit de $x$ et de $\sqrt{x}$ : $1\times\sqrt{x}+x\times\dfrac{1}{2\sqrt{x}}=\sqrt{x}+\dfrac{\sqrt{x}}{2}=\dfrac{3\sqrt{x}}{2}$. Pour $-3\sqrt{x}$ : $-\dfrac{3}{2\sqrt{x}}$. D''où $f''(x)=\dfrac{3\sqrt{x}}{2}-\dfrac{3}{2\sqrt{x}}$.'
+      - kind: mcq
+        prompt: '**Étape 4.** En réduisant au même dénominateur $2\sqrt{x}$, quelle forme factorisée obtient-on ?'
+        choices:
+        - $f'(x)=\dfrac{3(x-1)}{2\sqrt{x}}$
+        - $f'(x)=\dfrac{3(x+1)}{2\sqrt{x}}$
+        - $f'(x)=\dfrac{3x-1}{2\sqrt{x}}$
+        - $f'(x)=\dfrac{3(x-1)}{2}$
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Erreur de signe : les deux termes se retranchent.'
+        - Le facteur $3$ se met en facteur dans les deux termes du numérateur.
+        - Le dénominateur $2\sqrt{x}$ ne disparaît pas.
+        explanation: '$\dfrac{3\sqrt{x}}{2}=\dfrac{3\sqrt{x}\times\sqrt{x}}{2\sqrt{x}}=\dfrac{3x}{2\sqrt{x}}$, donc $f''(x)=\dfrac{3x-3}{2\sqrt{x}}=\dfrac{3(x-1)}{2\sqrt{x}}$. Mettre une dérivée sous forme factorisée est presque toujours l''étape qui rend le signe évident.'
+      - kind: mcq
+        prompt: '**Étape 5.** Quelle est la solution de l''inéquation $f''(x)\leqslant0$ sur $\left]0\,;+\infty\right[$ ?'
+        choices:
+        - $S=\left]0\,;1\right]$
+        - $S=\left[1\,;+\infty\right[$
+        - $S=\left]0\,;3\right]$
+        - $S=\left]0\,;+\infty\right[$
+        answer:
+        - 0
+        feedback:
+        - null
+        - Le sens de l'inégalité est inversé ; au-delà de $1$, le numérateur devient positif.
+        - '$3$ est la valeur où $f$ s''annule, pas où sa dérivée change de signe.'
+        - La dérivée n'est pas négative partout ; elle change de signe.
+        explanation: 'Sur $\left]0\,;+\infty\right[$, le dénominateur $2\sqrt{x}$ est strictement positif : $f''(x)$ est donc du signe de $3(x-1)$, c''est-à-dire du signe de $x-1$. Ainsi $f''(x)\leqslant0$ équivaut à $x\leqslant1$, d''où $S=\left]0\,;1\right]$.'
+      - kind: mcq
+        prompt: '**Étape 6.** Quel est le tableau de variations de $f$ sur $\left[0\,;+\infty\right[$ ?'
+        choices:
+        - $f$ décroît sur $\left[0\,;1\right]$ puis croît sur $\left[1\,;+\infty\right[$
+        - $f$ croît sur $\left[0\,;1\right]$ puis décroît sur $\left[1\,;+\infty\right[$
+        - $f$ est croissante sur tout $\left[0\,;+\infty\right[$
+        - $f$ décroît sur $\left[0\,;3\right]$ puis croît sur $\left[3\,;+\infty\right[$
+        answer:
+        - 0
+        feedback:
+        - null
+        - Le signe est inversé ; la dérivée est **négative** avant $1$.
+        - La dérivée est négative sur $\left]0\,;1\right[$, donc la fonction commence par descendre.
+        - Le changement de signe de $f'$ a lieu en $1$, pas en $3$.
+        explanation: 'La dérivée est négative sur $\left]0\,;1\right[$, nulle en $1$, positive ensuite : $f$ décroît puis croît. Le tableau comporte donc trois lignes — $x$ de $0$ à $+\infty$, le signe $-\ 0\ +$, et les flèches qui descendent puis remontent, avec un minimum en $x=1$.'
+      - kind: input
+        prompt: '**Étape 7.** Quelle est la valeur du minimum de $f$ ?'
+        answer: '-2'
+        numeric: true
+        tolerance: 0.01
+        explanation: 'Le minimum est atteint en $x=1$ et vaut $f(1)=\sqrt{1}\times(1-3)=1\times(-2)=-2$.'
+      - kind: input
+        prompt: '**Étape 8.** En quelle valeur strictement positive de $x$ la courbe de $f$ coupe-t-elle l''axe des abscisses ?'
+        answer: '3'
+        numeric: true
+        tolerance: 0.01
+        explanation: 'Un produit est nul si et seulement si l''un de ses facteurs l''est : $\sqrt{x}(x-3)=0$ donne $x=0$ ou $x=3$. La seule solution strictement positive est $x=3$. La courbe part de $0$, descend jusqu''à $-2$ en $x=1$, puis remonte et retraverse l''axe en $x=3$ — de quoi la tracer sans calculatrice.'
   - id: maths-primitives
     title: Primitives
     icon: 🧮
