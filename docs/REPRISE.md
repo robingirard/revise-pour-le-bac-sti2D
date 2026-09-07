@@ -123,6 +123,26 @@ reconstruit et vérifié sur l'adresse publique (2 119 exercices, figures servie
 Le `jekyll build` a aussi rattrapé les pages **netzerogame** restées en retard dans `_site/` :
 non commitées, à reconstruire et relire à part.
 
+## Défaut de mise à jour trouvé le soir même (7 sept.) — et corrigé
+
+Robin ouvre l'adresse publique après la publication : « L'application n'a pas pu démarrer… (file://) ».
+Le site était sain (un navigateur neuf chargeait l'appli sans erreur, trois fois de suite) ; le défaut
+était dans la **bascule de version** du service worker. `caches.match()` sans portée interroge **tous**
+les caches, y compris celui de la version précédente que l'activation n'a pas encore supprimé : pendant
+la fenêtre de mise à jour, un client pouvait recevoir l'ancien `content.js` avec le nouveau `main.js`.
+
+- `sw.js` : le gestionnaire `fetch` n'interroge plus que le cache de **sa** version
+  (`caches.open(CACHE).then((c) => c.match(...))`).
+- `index.html` : le garde-fou de démarrage ne sert plus en ligne un conseil écrit pour `file://`. En
+  http(s) il attend 8 s (téléphone lent) puis propose un bouton **« Réparer et recharger »** qui
+  désinscrit le service worker, vide les caches et recharge ; `localStorage` (la progression) est intact.
+- Vérifié par `app/dev/` + un scénario de **mise à jour rejouée** : client avec l'ancienne version
+  installée, fichiers du serveur remplacés, deux rechargements — l'application démarre, 0 erreur.
+  Le script est dans le bloc-notes de session ; le refaire à chaque changement de `sw.js`.
+
+Publié en `sw 2026-09-07.2`. **Leçon : après un `make deploy`, vérifier non seulement un chargement
+neuf, mais un chargement depuis un client qui avait déjà l'ancienne version.**
+
 ## Idées suivantes
 - Retours d'usage du fils : longueur des séances, difficulté, figures trop larges sur mobile (quelques diagrammes
   SysML et le treillis dépassent 8 cm : à resserrer si gênant).
