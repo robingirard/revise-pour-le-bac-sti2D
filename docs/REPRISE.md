@@ -1,7 +1,7 @@
-# Reprise du travail (état au 6 sept. 2026, fin de la 6e session)
+# Reprise du travail (état au 7 sept. 2026, fin de la 7e session)
 
-## Publié (6 sept. 2026, 2e publication du jour)
-19 unités, 85 compétences, 2 108 exercices dont 82 exercices complets guidés, 329 figures, 7 mécanismes animés
+## Publié (7 sept. 2026)
+19 unités, 85 compétences, 2 119 exercices dont 83 exercices complets guidés, 333 figures, 7 mécanismes animés
 (serre-joint, étau, bielle-manivelle, pompe à main, essuie-glace, benne à vérin, cric losange), 6 figures de
 transmission animées, symboles des 10 liaisons en perspective (3D), 13 annales.
 Site : https://www.robingirard.eu/Revise.html — l'application en https://www.robingirard.eu/assets/revise/sti2d/v1.0/index.html
@@ -117,7 +117,11 @@ texte, voir `docs/notes/fiches-classe.md`).
 
 `maths-derivee` passe de 23 à 34 exercices ; total **2 119 exercices**, 338 figures. Vérifié :
 `check_unit.py`, `make check`, `make test` (119), `tour.mjs` (0 erreur), `grid-fit` (2 débordements,
-les mêmes qu'avant), `math-overflow` (0 erreur KaTeX), captures des nouveaux exercices sur mobile.
+les mêmes qu'avant), `math-overflow` (0 erreur KaTeX), captures des nouveaux exercices sur mobile. **Publié** : `sw.js`
+en `2026-09-07.1`, v1.0 réécrite (`publish.py --force`), commits poussés sur les trois dépôts, site
+reconstruit et vérifié sur l'adresse publique (2 119 exercices, figures servies, KaTeX rendu).
+Le `jekyll build` a aussi rattrapé les pages **netzerogame** restées en retard dans `_site/` :
+non commitées, à reconstruire et relire à part.
 
 ## Idées suivantes
 - Retours d'usage du fils : longueur des séances, difficulté, figures trop larges sur mobile (quelques diagrammes
