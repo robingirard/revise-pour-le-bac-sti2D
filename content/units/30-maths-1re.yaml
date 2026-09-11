@@ -322,6 +322,118 @@ units:
       - Les deux termes du numérateur ont été écrits dans l'ordre inverse.
       - C'est le quotient des dérivées ; la dérivation d'un quotient ne fonctionne pas ainsi.
       explanation: 'Avec $u(x)=2x-1$, $u''(x)=2$, $v(x)=x+3$ et $v''(x)=1$ : $f''(x)=\dfrac{2(x+3)-(2x-1)\times1}{(x+3)^{2}}=\dfrac{2x+6-2x+1}{(x+3)^{2}}=\dfrac{7}{(x+3)^{2}}$. Cette dérivée est strictement positive, donc $f$ est croissante sur cet intervalle.'
+    - type: match
+      level: 2
+      prompt: Avant de dériver, il faut reconnaître la forme. Associer chaque fonction à la formule qui s'applique.
+      pairs:
+      - left: $\dfrac{2x-5}{x+1}$
+        right: quotient $\dfrac{u}{v}$
+      - left: $\sqrt{x}\,(2x+1)$
+        right: produit $u\times v$
+      - left: $\cos(3x+7)$
+        right: composée $\cos(ax+b)$
+      - left: $(4x-1)^{3}$
+        right: puissance $(ax+b)^{n}$
+      - left: $3x^{2}-\dfrac{5}{x}$
+        right: somme de fonctions usuelles
+      explanation: 'Une dérivée ratée commence presque toujours par une forme mal identifiée. Le réflexe : regarder l''opération **la plus extérieure**. Dans $\sqrt{x}\,(2x+1)$ c''est une multiplication, donc un produit ; dans $\dfrac{2x-5}{x+1}$ c''est une division, donc un quotient ; dans $\cos(3x+7)$ c''est le cosinus appliqué à autre chose, donc une composée. Ce n''est qu''ensuite qu''on pose $u$ et $v$.'
+    - type: order
+      level: 2
+      prompt: Remettre dans l'ordre la méthode pour dériver un quotient $\dfrac{u}{v}$.
+      steps:
+      - Vérifier que le dénominateur ne s'annule pas sur l'intervalle d'étude
+      - Poser $u$ et $v$, puis calculer $u'$ et $v'$
+      - Reporter dans $\dfrac{u'v-uv'}{v^{2}}$ sans rien développer
+      - Développer le numérateur en surveillant le signe devant $uv'$
+      - Réduire les termes semblables du numérateur
+      explanation: 'Deux précautions font la différence. La première : écrire $u$, $v$, $u''$ et $v''$ **à part**, en accolade, avant de toucher à la formule — c''est ce qui évite d''oublier le $v''$. La seconde : ne **jamais** développer le dénominateur. Il reste sous la forme $v^{2}$, par exemple $(x+1)^{2}$, car c''est sous cette forme qu''on lira ensuite son signe (un carré est toujours positif), et le signe de $f''$ ne dépendra donc que du numérateur.'
+    - type: mcq
+      level: 2
+      prompt: Quelle est la dérivée de la fonction $f$ définie sur $\left]-1\,;+\infty\right[$ par $f(x)=\dfrac{2x-5}{x+1}$ ?
+      choices:
+      - $f'(x)=\dfrac{7}{(x+1)^{2}}$
+      - $f'(x)=\dfrac{-3}{(x+1)^{2}}$
+      - $f'(x)=\dfrac{7}{x+1}$
+      - $f'(x)=\dfrac{2}{1}$
+      answer: 0
+      feedback:
+      - null
+      - 'Signe oublié en développant : $-(2x-5)=-2x+5$, et non $-2x-5$. Le numérateur vaut $2x+2-2x+5=7$.'
+      - Le dénominateur de la formule est $v^{2}$, donc $(x+1)^{2}$ et non $x+1$.
+      - C'est le quotient des dérivées ; la dérivation d'un quotient ne fonctionne pas ainsi.
+      explanation: 'On pose $u(x)=2x-5$ et $v(x)=x+1$, d''où $u''(x)=2$ et $v''(x)=1$. Alors
+
+        $$f''(x)=\dfrac{u''v-uv''}{v^{2}}=\dfrac{2(x+1)-(2x-5)\times1}{(x+1)^{2}}=\dfrac{2x+2-2x+5}{(x+1)^{2}}=\dfrac{7}{(x+1)^{2}}.$$
+
+        Le numérateur est constant et positif, le dénominateur est un carré : $f''$ est strictement positive et $f$ est croissante sur tout intervalle ne contenant pas $-1$.'
+    - type: mcq
+      level: 3
+      prompt: Quelle est la dérivée de la fonction $f$ définie sur $\left]0\,;+\infty\right[$ par $f(x)=\sqrt{x}\,(2x+1)$ ?
+      choices:
+      - $f'(x)=\dfrac{6x+1}{2\sqrt{x}}$
+      - $f'(x)=\dfrac{2}{2\sqrt{x}}$
+      - $f'(x)=\dfrac{2x+1}{2\sqrt{x}}$
+      - $f'(x)=\dfrac{4x+1}{2\sqrt{x}}$
+      answer: 0
+      feedback:
+      - null
+      - C'est le produit des dérivées ; la formule du produit comporte deux termes, $u'v$ **et** $uv'$.
+      - Le terme $uv'=\sqrt{x}\times2$ a été oublié ; il vaut $2\sqrt{x}$, soit $\dfrac{4x}{2\sqrt{x}}$ une fois au même dénominateur.
+      - 'Erreur en réduisant au même dénominateur : $2\sqrt{x}=\dfrac{4x}{2\sqrt{x}}$ et non $\dfrac{2x}{2\sqrt{x}}$, car $2\sqrt{x}\times2\sqrt{x}=4x$.'
+      explanation: 'On pose $u(x)=\sqrt{x}$ et $v(x)=2x+1$, d''où $u''(x)=\dfrac{1}{2\sqrt{x}}$ et $v''(x)=2$. Alors
+
+        $$f''(x)=u''v+uv''=\dfrac{2x+1}{2\sqrt{x}}+2\sqrt{x}.$$
+
+        Il reste à réduire au même dénominateur $2\sqrt{x}$ : comme $2\sqrt{x}=\dfrac{2\sqrt{x}\times2\sqrt{x}}{2\sqrt{x}}=\dfrac{4x}{2\sqrt{x}}$, on obtient
+
+        $$f''(x)=\dfrac{2x+1+4x}{2\sqrt{x}}=\dfrac{6x+1}{2\sqrt{x}}.$$
+
+        L''intervalle est **ouvert** en $0$ parce que $\sqrt{x}$ n''est pas dérivable en $0$.'
+    - type: mcq
+      level: 2
+      prompt: Quelle est la dérivée de la fonction $f$ définie sur $\mathbb{R}$ par $f(x)=\cos(3x+7)$ ?
+      choices:
+      - $f'(x)=-3\sin(3x+7)$
+      - $f'(x)=-\sin(3x+7)$
+      - $f'(x)=3\sin(3x+7)$
+      - $f'(x)=-\sin(3)$
+      answer: 0
+      feedback:
+      - null
+      - Il manque le facteur $3$, la dérivée de ce qui est à l'intérieur du cosinus.
+      - Il manque le signe moins que fait apparaître la dérivation du cosinus.
+      - Le $7$ disparaît en dérivant, mais le $x$ reste dans l'argument du sinus.
+      explanation: 'C''est la formule $\left(\cos(ax+b)\right)''=-a\sin(ax+b)$, avec ici $a=3$ et $b=7$. On dérive d''abord la fonction extérieure — le cosinus devient $-\sin$, en gardant l''argument tel quel — puis on multiplie par la dérivée de l''intérieur, soit $3$. Le $b$ ne laisse aucune trace, seul le coefficient de $x$ ressort en facteur.'
+    - type: mcq
+      level: 3
+      prompt: Quelle est la dérivée de la fonction $f$ définie sur $\left]-\infty\,;2\right[$ par $f(x)=\dfrac{x^{2}}{2-x}$ ?
+      choices:
+      - $f'(x)=\dfrac{4x-x^{2}}{(2-x)^{2}}$
+      - $f'(x)=\dfrac{4x-3x^{2}}{(2-x)^{2}}$
+      - $f'(x)=\dfrac{2x}{-1}$
+      - $f'(x)=\dfrac{4x-x^{2}}{2-x}$
+      answer: 0
+      feedback:
+      - null
+      - 'Piège du signe : $v''(x)=-1$, donc $-uv''=-x^{2}\times(-1)=+x^{2}$. Ce terme s''**ajoute** à $-2x^{2}$ au lieu de s''en retrancher.'
+      - C'est le quotient des dérivées ; la dérivation d'un quotient ne fonctionne pas ainsi.
+      - Le dénominateur de la formule est $v^{2}$, donc $(2-x)^{2}$.
+      explanation: 'On pose $u(x)=x^{2}$ et $v(x)=2-x$, d''où $u''(x)=2x$ et $v''(x)=-1$. Le signe de $v''$ est là le seul vrai piège :
+
+        $$f''(x)=\dfrac{2x(2-x)-x^{2}\times(-1)}{(2-x)^{2}}=\dfrac{4x-2x^{2}+x^{2}}{(2-x)^{2}}=\dfrac{4x-x^{2}}{(2-x)^{2}}.$$
+
+        On peut factoriser le numérateur en $x(4-x)$, ce qui rendra la lecture du signe immédiate.'
+    - type: input
+      level: 3
+      prompt: Pour la fonction $f$ définie par $f(x)=\dfrac{1-3x}{7x-2}$, le numérateur $u'v-uv'$ se réduit à une constante. Quelle est cette constante ?
+      answer: '-1'
+      numeric: true
+      tolerance: 0.01
+      explanation: 'Avec $u(x)=1-3x$, $u''(x)=-3$, $v(x)=7x-2$ et $v''(x)=7$ :
+
+        $$u''v-uv''=-3(7x-2)-(1-3x)\times7=-21x+6-7+21x=-1.$$
+
+        Les termes en $x$ s''éliminent — c''est toujours le cas quand $u$ et $v$ sont tous deux affines, et cela donne un moyen de contrôle : si un $x$ subsiste, il y a une erreur. La dérivée est donc $f''(x)=\dfrac{-1}{(7x-2)^{2}}$, strictement négative : $f$ est décroissante sur chacun des deux intervalles où elle est définie.'
     - type: mcq
       level: 2
       prompt: Quelle est la dérivée de la fonction $f$ définie sur $\mathbb{R}$ par $f(x)=\mathrm{e}^{-3x+1}$ ?

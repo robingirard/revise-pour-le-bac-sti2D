@@ -77,6 +77,24 @@ $f'(x)=3\left(x^{2}-2\right)+(3x+1)\times2x=3x^{2}-6+6x^{2}+2x=9x^{2}+2x-6$.
 *Exemple résolu.* $f(x)=\dfrac{2x-1}{x+3}$ sur $\left]-3\,;+\infty\right[$ est un **quotient** :
 $f'(x)=\dfrac{2(x+3)-(2x-1)\times1}{(x+3)^{2}}=\dfrac{2x+6-2x+1}{(x+3)^{2}}=\dfrac{7}{(x+3)^{2}}$, strictement positive : $f$ est croissante.
 
+### La méthode qui évite les erreurs
+
+Avant de toucher à la formule, on écrit **à part**, en accolade, les quatre ingrédients :
+
+$$\begin{cases} u(x)=\ldots & u'(x)=\ldots \\ v(x)=\ldots & v'(x)=\ldots \end{cases}$$
+
+Puis on reporte **sans rien développer**, et seulement ensuite on développe le numérateur. Trois règles tirées de l'expérience :
+
+1. **Le dénominateur ne se développe jamais.** Il reste $v^{2}$, par exemple $(x+1)^{2}$ ou $(2-x)^{2}$ : c'est sous cette forme qu'on voit immédiatement qu'il est positif, si bien que le signe de $f'$ ne dépendra que du numérateur.
+2. **Le signe devant $uv'$ est le piège n°1.** Si $v'$ est lui-même négatif, le terme change de signe deux fois. Pour $f(x)=\dfrac{x^{2}}{2-x}$ : $v'(x)=-1$, donc $-uv'=-x^{2}\times(-1)=+x^{2}$, et $f'(x)=\dfrac{2x(2-x)+x^{2}}{(2-x)^{2}}=\dfrac{4x-x^{2}}{(2-x)^{2}}$.
+3. **Quand $u$ et $v$ sont tous deux affines, le numérateur est une constante.** Les termes en $x$ s'éliminent toujours. Pour $f(x)=\dfrac{1-3x}{7x-2}$ : $u'v-uv'=-3(7x-2)-7(1-3x)=-21x+6-7+21x=-1$. Si un $x$ subsiste, c'est qu'il y a une erreur — le contrôle est gratuit.
+
+*Exemple résolu (produit avec une racine).* $f(x)=\sqrt{x}\,(2x+1)$ sur $\left]0\,;+\infty\right[$, avec $u=\sqrt{x}$, $u'=\dfrac{1}{2\sqrt{x}}$, $v=2x+1$, $v'=2$ :
+
+$$f'(x)=\frac{2x+1}{2\sqrt{x}}+2\sqrt{x}=\frac{2x+1}{2\sqrt{x}}+\frac{4x}{2\sqrt{x}}=\frac{6x+1}{2\sqrt{x}}.$$
+
+La réduction au même dénominateur utilise $2\sqrt{x}\times2\sqrt{x}=4x$ : c'est $4x$ qu'on ajoute au numérateur, pas $2x$. L'intervalle est **ouvert** en $0$ car $\sqrt{x}$ n'y est pas dérivable.
+
 ## Les composées à connaître
 
 Ces formules servent en permanence en physique et en 2I2D. Pour tous réels $a$, $b$, $\omega$ et $\varphi$, et tout entier $n\geqslant1$ :

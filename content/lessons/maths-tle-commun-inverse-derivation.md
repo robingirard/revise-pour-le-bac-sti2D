@@ -1,4 +1,4 @@
-# Fonction inverse, dérivation et lecture de courbes
+# Fonction inverse, limites, dérivation et lecture de courbes
 
 ## La fonction inverse
 
@@ -7,6 +7,40 @@ Définie sur $\left]-\infty\,;0\right[\cup\left]0\,;+\infty\right[$, la fonction
 {{fig:mathstc-fonction-inverse}}
 
 **Comportement aux bornes.** Quand $x$ se rapproche de $0$ par valeurs positives, $\dfrac{1}{x}$ devient aussi grand que l'on veut ($\dfrac{1}{0{,}0001}=10\,000$) ; quand $x$ devient très grand, $\dfrac{1}{x}$ se rapproche de $0$ sans l'atteindre ($\dfrac{1}{10^{6}}=10^{-6}$). On s'en tient à cette description **intuitive** : aucune définition d'asymptote n'est attendue.
+
+## Les quatre limites de la fonction inverse
+
+Le comportement aux bornes se lit dans un **tableau de valeurs**, puis s'écrit avec la notation `lim`.
+
+**Loin de l'origine.** Pour $x=-10$, $-1\,000$, $-100\,000$, $-2\,000\,000$, l'inverse vaut $-0{,}1$, $-0{,}001$, $-10^{-5}$, $-5\times10^{-7}$ : il s'écrase sur $0$. Même chose du côté positif. On écrit
+
+$$\lim_{x\to+\infty}\frac{1}{x}=0 \qquad\text{et}\qquad \lim_{x\to-\infty}\frac{1}{x}=0.$$
+
+Cela se lit : $\dfrac{1}{x}$ peut être rendu **aussi proche de $0$ que l'on veut**, pourvu que l'on choisisse $x$ assez grand. La fonction ne vaut jamais $0$ — elle s'en approche indéfiniment.
+
+**Près de l'origine.** Pour $x=0{,}1$, $0{,}025$, $0{,}000\,08$, $0{,}000\,000\,1$, l'inverse vaut $10$, $40$, $12\,500$, $10^{7}$ : il s'envole. Avec les mêmes valeurs négatives, il plonge. Les deux côtés ne donnent pas le même résultat, il faut donc **préciser par où l'on arrive** :
+
+$$\lim_{\substack{x\to0\\x>0}}\frac{1}{x}=+\infty \qquad\text{et}\qquad \lim_{\substack{x\to0\\x<0}}\frac{1}{x}=-\infty.$$
+
+Sans cette précision, la limite en $0$ n'existe pas. Et $+\infty$ n'est **pas un nombre** : on n'écrit jamais $\dfrac{1}{+\infty}$.
+
+## Vérifier une limite par un algorithme de seuil
+
+« Aussi grand que l'on veut » se teste : on fixe un seuil $A$ et on cherche à partir de quel $x$ on a $\dfrac{1}{x}>A$. En essayant $x=10^{-N}$ pour $N=1$, $2$, $3$… :
+
+```python
+A = float(input("Entrer un nombre positif"))
+x = 0.1
+N = 1
+while 1/x < A:
+    N = N + 1
+    x = 1/10**N
+print("x =", x)
+```
+
+Comme $\dfrac{1}{x}=10^{N}$, la boucle s'arrête au premier $N$ tel que $10^{N}>A$. Pour $A=350\,000$ : $10^{5}=100\,000$ ne suffit pas, $10^{6}=1\,000\,000$ dépasse — donc $N=6$ et $x=10^{-6}$.
+
+Quel que soit le seuil demandé, on finit par le franchir : c'est précisément ce que dit $\displaystyle\lim_{\substack{x\to0\\x>0}}\frac{1}{x}=+\infty$.
 
 ## La dérivée, retrouvée par le taux de variation
 

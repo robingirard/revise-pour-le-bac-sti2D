@@ -1131,9 +1131,9 @@ units:
         - Un coefficient multiplicateur n'est pas une activité, il n'a pas d'unité.
         explanation: 'C''est la **moyenne géométrique** de $0{,}88^{0}=1$ et $0{,}88^{1}=0{,}88$ : $0{,}938^{2}\approx0{,}88$. Voilà comment on intercale une valeur entre deux termes de la suite géométrique, ce qui fonde le passage du discret au continu.'
   - id: mathstc-inverse-derivation
-    title: Fonction inverse et lecture de courbes
+    title: Fonction inverse, limites et lecture de courbes
     icon: ➗
-    description: Dérivée et comportement de la fonction inverse, combinaisons linéaires avec des polynômes, tangentes, coûts moyens et prix unitaires.
+    description: Dérivée et comportement de la fonction inverse, limites en $\pm\infty$ et de part et d'autre de $0$, algorithme de seuil, combinaisons linéaires avec des polynômes, tangentes, coûts moyens et prix unitaires.
     prerequisites:
     - mathstc-exp-log
     lesson: lessons/maths-tle-commun-inverse-derivation.md
@@ -1276,6 +1276,105 @@ units:
       - Les valeurs proposées de $x$ sont positives, donc leurs inverses aussi.
       - L'inverse d'un nombre compris entre $0$ et $1$ est supérieur à $1$.
       explanation: 'Plus $x$ se rapproche de $0$ par valeurs positives, plus $\dfrac{1}{x}$ devient grand. Inversement, pour $x=10^{6}$, $\dfrac{1}{x}=10^{-6}$ est très proche de $0$. La courbe se rapproche des deux axes sans jamais les toucher.'
+    - type: mcq
+      level: 2
+      prompt: 'On observe que $\dfrac{1}{x}$ peut être rendu aussi proche de $0$ que l''on veut, pourvu que l''on choisisse $x$ assez grand. Comment note-t-on cette observation ?'
+      choices:
+      - $\displaystyle\lim_{x\to+\infty}\dfrac{1}{x}=0$
+      - $\displaystyle\lim_{x\to0}\dfrac{1}{x}=+\infty$
+      - $\dfrac{1}{+\infty}=0$
+      - $\dfrac{1}{x}=0$ pour $x$ assez grand
+      answer: 0
+      feedback:
+      - null
+      - Celle-ci décrit ce qui se passe près de $0$, pas pour les grandes valeurs de $x$.
+      - $+\infty$ n'est pas un nombre ; on n'écrit jamais de calcul avec lui au dénominateur.
+      - 'C''est le point délicat : $\dfrac{1}{x}$ ne vaut **jamais** $0$, aussi grand que soit $x$. Elle s''en approche seulement.'
+      explanation: 'La notation $\displaystyle\lim_{x\to+\infty}\dfrac{1}{x}=0$ se lit « la limite de $\dfrac{1}{x}$ quand $x$ tend vers $+\infty$ est $0$ ». Elle résume une phrase, pas un calcul : « quel que soit le seuil de proximité fixé à l''avance, on finit par le tenir dès que $x$ dépasse une certaine valeur ». La fonction ne prend jamais la valeur $0$ — elle s''en rapproche indéfiniment.'
+    - type: grid
+      level: 2
+      prompt: Pour chaque comportement de $x$, cocher la limite de $\dfrac{1}{x}$.
+      rows:
+      - id: pi
+        label: $x\to+\infty$
+      - id: mi
+        label: $x\to-\infty$
+      - id: zp
+        label: $x\to0\ (x>0)$
+      - id: zm
+        label: $x\to0\ (x<0)$
+      cols:
+      - id: Z
+        label: $0$
+      - id: P
+        label: $+\infty$
+      - id: M
+        label: $-\infty$
+      answer:
+      - Zpi
+      - Zmi
+      - Pzp
+      - Mzm
+      cellFeedback:
+        Ppi: 'pour $x=2\,000\,000$, $\dfrac{1}{x}=0{,}000\,000\,5$ : c''est minuscule, pas immense'
+        Mpi: $x$ est positif, donc son inverse aussi
+        Pmi: $x$ est négatif, donc son inverse aussi
+        Mmi: 'l''inverse d''un très grand nombre négatif est un très petit nombre négatif : il tend vers $0$'
+        Zzp: 'pour $x=0{,}000\,001$, $\dfrac{1}{x}=1\,000\,000$ : la valeur s''envole'
+        Mzp: $x$ est positif, donc son inverse aussi
+        Zzm: 'pour $x=-0{,}000\,001$, $\dfrac{1}{x}=-1\,000\,000$ : la valeur s''effondre'
+        Pzm: $x$ est négatif, donc son inverse aussi
+      explanation: 'Deux comportements très différents, et c''est tout le sujet. **Loin de l''origine** ($x\to\pm\infty$), $\dfrac{1}{x}$ s''écrase sur $0$ des deux côtés. **Près de l''origine** ($x\to0$), elle explose — mais vers $+\infty$ à droite et vers $-\infty$ à gauche. D''où l''obligation de préciser de quel côté on arrive en $0$ : sans cette précision, la limite en $0$ n''existe pas.
+
+
+        {{fig:mathstc-fonction-inverse}}'
+    - type: input
+      level: 2
+      prompt: Dans un tableau de valeurs de $x\mapsto\dfrac{1}{x}$ figure la colonne $x=-0{,}000\,002$. Quelle valeur faut-il inscrire dessous ?
+      answer: '-500000'
+      numeric: true
+      tolerance: 1
+      explanation: '$\dfrac{1}{-0{,}000\,002}=\dfrac{1}{-2\times10^{-6}}=-\dfrac{10^{6}}{2}=-500\,000$.
+
+
+        Le réflexe qui évite l''erreur : écrire $x$ en notation scientifique avant d''inverser. L''inverse de $10^{-6}$ est $10^{6}$, et le signe se conserve. Une valeur de $x$ dix fois plus proche de $0$ donne un résultat dix fois plus grand en valeur absolue — c''est ce que le tableau rend visible.'
+    - type: mcq
+      level: 3
+      prompt: 'Pourquoi la limite de $\dfrac{1}{x}$ en $0$ ne peut-elle pas s''écrire sans préciser le côté ?'
+      choices:
+      - Parce que la fonction part vers $+\infty$ à droite de $0$ et vers $-\infty$ à gauche
+      - Parce que la fonction n'est pas définie en $0$
+      - Parce que le résultat dépend de la calculatrice utilisée
+      - Parce que $\dfrac{1}{0}$ vaut $0$
+      answer: 0
+      feedback:
+      - null
+      - 'C''est vrai, mais insuffisant : une fonction non définie en un point peut très bien y avoir une limite des deux côtés. Le vrai problème est que les deux côtés ne donnent pas le même résultat.'
+      - Les valeurs du tableau ne dépendent pas de la machine ; elles se calculent à la main.
+      - Une division par $0$ n'a pas de résultat, quel qu'il soit.
+      explanation: 'Le tableau des valeurs négatives donne $-1$, $-10$, $-40$, $-12\,500$, puis $-10\,000\,000$ : la fonction plonge. Le tableau des valeurs positives donne $1$, $10$, $40$, $12\,500$, puis $10\,000\,000$ : elle s''envole. Deux comportements opposés selon le côté d''arrivée, donc deux écritures distinctes, $\displaystyle\lim_{\substack{x\to0\\x>0}}\dfrac{1}{x}=+\infty$ et $\displaystyle\lim_{\substack{x\to0\\x<0}}\dfrac{1}{x}=-\infty$. Le programme n''attend aucune définition formelle : cette lecture de tableau suffit.'
+    - type: order
+      level: 3
+      prompt: 'Dans cet algorithme de seuil, le seuil $A$ est déjà saisi et l''on a posé `x = 0.1` puis `N = 1`. Remettre dans l''ordre les quatre lignes qui suivent, pour que $x$ soit divisé par $10$ jusqu''à ce que $\dfrac{1}{x}$ dépasse $A$.'
+      steps:
+      - '`while 1/x < A:`'
+      - '`····N = N + 1`'
+      - '`····x = 1/10**N`'
+      - '`print("x =", x)`'
+      explanation: 'La variable `N` compte les tours et `x` vaut toujours $10^{-N}$ : à chaque passage, $x$ est divisé par $10$, donc $\dfrac{1}{x}$ est multiplié par $10$. La boucle s''arrête au **premier** $N$ pour lequel $10^{N}$ dépasse le seuil $A$ — c''est ce qu''on appelle un algorithme de seuil.
+
+
+        Les deux lignes indentées (les points médians `····` figurent l''indentation) sont **à l''intérieur** de la boucle, et le `print` est **en dehors** : il ne s''exécute qu''une fois, à la sortie. Si `x = 1/10**N` sortait de la boucle, `x` ne changerait plus et le programme tournerait indéfiniment.'
+    - type: input
+      level: 3
+      prompt: On exécute cet algorithme de seuil avec $A=350\,000$. Quelle valeur de $N$ affiche-t-il en sortie ?
+      answer: '6'
+      numeric: true
+      tolerance: 0.01
+      explanation: 'La boucle continue tant que $\dfrac{1}{x}<A$, avec $\dfrac{1}{x}=10^{N}$. Il faut donc trouver le plus petit entier $N$ tel que $10^{N}>350\,000$ : $10^{5}=100\,000$ est encore trop petit, $10^{6}=1\,000\,000$ dépasse le seuil. D''où $N=6$ et $x=10^{-6}=0{,}000\,001$.
+
+
+        Autrement dit : pour que $\dfrac{1}{x}$ dépasse $350\,000$, il suffit de prendre $x$ inférieur à $10^{-6}$. C''est exactement ce que dit $\displaystyle\lim_{\substack{x\to0\\x>0}}\dfrac{1}{x}=+\infty$ — quel que soit le seuil demandé, on finit par le franchir.'
     - type: grid
       level: 2
       prompt: Pour chaque fonction, cocher son sens de variation sur $\left]0\,;+\infty\right[$.
