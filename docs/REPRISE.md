@@ -180,10 +180,28 @@ le contenu du cours **et** fournir un lien de séance à lui envoyer, le devoir 
 13 nouveaux exercices. **Publié** : `sw.js` en `2026-09-11.1`, v1.0 réécrite (`publish.py --force`),
 poussé sur les trois dépôts, site reconstruit (diff propre, 14 fichiers, rien de netzerogame).
 
-**Liens de séance directs** (à envoyer par SMS ; la compétence doit être déverrouillée, ce qui est
-le cas des deux, sans prérequis ou déjà accessible) :
-`https://www.robingirard.eu/assets/revise/sti2d/v1.0/index.html#/session/maths-derivee`
-`…/index.html#/session/mathstc-inverse-derivation`
+- **Défaut du moteur trouvé en relisant la leçon en ligne** : un `**gras**` qui **enjambe une
+  formule** n'était pas rendu, les astérisques s'affichaient telles quelles. `renderRich` extrayait
+  les jetons (code, figure, maths) et appliquait la mise en forme à chaque morceau séparément : les
+  deux moitiés de la paire tombaient dans deux morceaux différents. Les jetons sont maintenant mis
+  de côté derrière un marqueur, la mise en forme s'applique à la chaîne entière, puis les jetons
+  reviennent. **13 textes du paquet étaient touchés depuis l'origine** (« pivot d'axe $(A,\vec y)$ »,
+  « signe de $k$ », « variations de $f$ », « au point $A$ »…) et sont réparés — sans changement
+  d'identifiant, la mise en forme ne touchant pas la source. Test de non-régression, 120 tests.
+  Republié en `sw 2026-09-11.2`.
+
+**Liens directs** (à envoyer par SMS). Vérifiés sur l'adresse publique depuis un navigateur neuf :
+
+- séance de dérivation, celle du devoir de lundi — démarre l'exercice sans rien toucher :
+  `https://www.robingirard.eu/assets/revise/sti2d/v1.0/index.html#/session/maths-derivee`
+- les limites — `#/session/…` **retombe sur l'écran de la compétence**, car
+  `mathstc-inverse-derivation` a `mathstc-exp-log` pour prérequis et reste verrouillée pour un profil
+  neuf. Donner directement l'écran de compétence, qui affiche la **leçon** complète (limites et
+  algorithme de seuil), lisible même verrouillée :
+  `…/index.html#/skill/mathstc-inverse-derivation`
+
+Règle générale : `#/session/<compétence>` ne démarre une séance que si la compétence est
+déverrouillée ; sinon `renderSessionEntry` renvoie sur `#/skill/<compétence>` (sans erreur).
 
 ## Idées suivantes
 - Retours d'usage du fils : longueur des séances, difficulté, figures trop larges sur mobile (quelques diagrammes
