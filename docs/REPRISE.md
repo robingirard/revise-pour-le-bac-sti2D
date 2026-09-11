@@ -1,7 +1,7 @@
-# Reprise du travail (état au 7 sept. 2026, fin de la 7e session)
+# Reprise du travail (état au 11 sept. 2026, fin de la 8e session)
 
-## Publié (7 sept. 2026)
-19 unités, 85 compétences, 2 119 exercices dont 83 exercices complets guidés, 333 figures, 7 mécanismes animés
+## Publié (11 sept. 2026)
+19 unités, 85 compétences, 2 132 exercices dont 83 exercices complets guidés, 333 figures, 7 mécanismes animés
 (serre-joint, étau, bielle-manivelle, pompe à main, essuie-glace, benne à vérin, cric losange), 6 figures de
 transmission animées, symboles des 10 liaisons en perspective (3D), 13 annales.
 Site : https://www.robingirard.eu/Revise.html — l'application en https://www.robingirard.eu/assets/revise/sti2d/v1.0/index.html
@@ -138,10 +138,52 @@ la fenêtre de mise à jour, un client pouvait recevoir l'ancien `content.js` av
   désinscrit le service worker, vide les caches et recharge ; `localStorage` (la progression) est intact.
 - Vérifié par `app/dev/` + un scénario de **mise à jour rejouée** : client avec l'ancienne version
   installée, fichiers du serveur remplacés, deux rechargements — l'application démarre, 0 erreur.
-  Le script est dans le bloc-notes de session ; le refaire à chaque changement de `sw.js`.
+  Ce scénario est maintenant un script du moteur, `app/dev/maj.mjs` (ajouté le 11 sept.) :
+  `node app/dev/maj.mjs <ancienne version> <nouvelle version> [sortie]`, les deux dossiers étant des
+  versions publiées du site. Pour extraire l'ancienne :
+  `git archive HEAD~1 assets/revise/sti2d/v1.0 | tar -x -C /tmp/ancienne --strip-components=4`.
+  **À rejouer à chaque changement de `sw.js`.** Deux pièges du test lui-même, déjà réglés dedans :
+  `Page.navigate` vers la même URL ne recharge que le fragment (il faut `reload()`), et le navigateur
+  ne revérifie `sw.js` que quand le cache HTTP le permet — le script force donc l'`update()` qu'il
+  finirait par faire.
 
 Publié en `sw 2026-09-07.2`. **Leçon : après un `make deploy`, vérifier non seulement un chargement
 neuf, mais un chargement depuis un client qui avait déjà l'ancienne version.**
+
+## Fait à la 8e session (11 sept. 2026) — les limites arrivent, et un lien pour amorcer
+
+Robin dépose quatre photos du tableau (10 et 11 sept.) et le corrigé partiel de « BO Dérivation »,
+et signale que **le fils n'a toujours pas ouvert l'application**. Choix arrêté avec lui : intégrer
+le contenu du cours **et** fournir un lien de séance à lui envoyer, le devoir de lundi 14/09
+(exercices 5 et 9 p. 41, noté au tableau) servant de prétexte.
+
+- **`maths-derivee` : 34 → 41 exercices.** Les cinq exemples traités au tableau le 11 sept., avec
+  leurs valeurs — $\dfrac{2x-5}{x+1}$, $\sqrt x(2x+1)$, $\cos(3x+7)$, $\dfrac{x^2}{2-x}$,
+  $\dfrac{1-3x}{7x-2}$ (celui-ci en `input` : le numérateur $u'v-uv'$ se réduit à $-1$, ce qui donne
+  un contrôle gratuit). S'y ajoutent un `match` « reconnaître la forme avant de dériver » et un
+  `order` sur la méthode du quotient. Leçon complétée d'une section « La méthode qui évite les
+  erreurs » : accolade $u$/$v$/$u'$/$v'$ à part, dénominateur jamais développé, signe devant $uv'$.
+- **`mathstc-inverse-derivation` : 20 → 26 exercices**, renommée « Fonction inverse, limites et
+  lecture de courbes ». Notation `lim`, grille des quatre limites ($\pm\infty$ et les deux côtés de
+  $0$), lecture d'un tableau de valeurs, pourquoi la limite en $0$ exige de préciser le côté, et
+  l'algorithme de seuil (`order` sur les quatre lignes du corps + `input` : $A=350\,000$ → $N=6$).
+  Leçon complétée de deux sections. Le programme du tronc commun restant en approche intuitive,
+  aucune définition d'asymptote n'est donnée.
+- **Défaut du moteur corrigé** : `shot-items.mjs` documentait « compétence::exercice » mais
+  `buildSkillSession` attend l'identifiant **complet** (`compétence.hXXXXXXXX`) ; la partie courte
+  lançait une séance ordinaire et capturait le mauvais exercice **sans rien signaler**. Le script
+  accepte les deux écritures et échoue maintenant sur un exercice inconnu.
+
+2 119 → **2 132 exercices**. Vérifié : `check_unit.py`, `make check` (aucune reprise non admise),
+`make test` (119), `tour.mjs` (0 erreur), `grid-fit` (2 débordements, les mêmes qu'avant),
+`math-overflow` (0 erreur KaTeX — `\substack` et `\displaystyle` passent), captures mobiles des
+13 nouveaux exercices. **Publié** : `sw.js` en `2026-09-11.1`, v1.0 réécrite (`publish.py --force`),
+poussé sur les trois dépôts, site reconstruit (diff propre, 14 fichiers, rien de netzerogame).
+
+**Liens de séance directs** (à envoyer par SMS ; la compétence doit être déverrouillée, ce qui est
+le cas des deux, sans prérequis ou déjà accessible) :
+`https://www.robingirard.eu/assets/revise/sti2d/v1.0/index.html#/session/maths-derivee`
+`…/index.html#/session/mathstc-inverse-derivation`
 
 ## Idées suivantes
 - Retours d'usage du fils : longueur des séances, difficulté, figures trop larges sur mobile (quelques diagrammes
