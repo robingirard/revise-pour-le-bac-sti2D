@@ -1,7 +1,7 @@
-# Reprise du travail (état au 17 sept. 2026, fin de la 10e session)
+# Reprise du travail (état au 17 sept. 2026, fin de la 11e session)
 
 ## Publié (17 sept. 2026)
-22 unités, 98 compétences, 2 402 exercices dont 97 exercices complets guidés, 372 figures, 7 mécanismes animés
+22 unités, 98 compétences, 2 406 exercices dont 101 exercices complets guidés, 379 figures, 7 mécanismes animés
 (serre-joint, étau, bielle-manivelle, pompe à main, essuie-glace, benne à vérin, cric losange), 6 figures de
 transmission animées, symboles des 10 liaisons en perspective (3D), 13 annales.
 Site : https://www.robingirard.eu/Revise.html — l'application en https://www.robingirard.eu/assets/revise/sti2d/v1.0/index.html
@@ -415,9 +415,19 @@ colonnes.
 
 Vérifié : `make check` (aucune reprise non admise), `make test` (122), `tour.mjs` (0 erreur),
 `grid-fit` (97 grilles, les 2 débordements connus), `math-overflow` (0 erreur KaTeX, 6
-débordements connus), captures mobiles des quatre sujets et d'un guidé ancien. `sw.js` passé en
-`2026-09-17.4`. **Pas encore publié** : `make deploy`, le scénario `maj.mjs` et les commits
-restent à faire.
+débordements connus), captures mobiles des quatre sujets et d'un guidé ancien.
+**Publié** : `sw.js` en `2026-09-17.4`, v1.0 réécrite (`publish.py --force`), `maj.mjs` passe
+(0 erreur ; 2 402 exercices au 1er rechargement, 2 406 au 2e, comme attendu), site reconstruit
+(diff propre, 40 fichiers, rien d'étranger) et poussé sur les trois dépôts.
+
+**Vérifié sur l'adresse publique** : 2 406 exercices, les dix SVG `guide-bac-*` servis (200),
+service worker actif, 0 erreur ; l'écran Annales affiche **4 boutons « S'entraîner »**, celui de
+l'annale 2026 mène à `#/session/schema-2d?item=schema-2d.h92bbc17a&seed=1` et ouvre bien
+« Étape 1 / 12 » avec KaTeX rendu (0 repli `span.math`) et les hachures correctement détourées.
+
+**Piège rencontré pendant cette vérification, déjà connu mais oublié** : `location.href` vers la
+même URL ne change que le **fragment**, la page ne recharge pas — un `localStorage` écrit juste
+avant n'est donc jamais relu. Il faut un `location.reload()`, comme le fait `maj.mjs`.
 
 ### Ce qui reste du point 5
 Les neuf autres annales (EE, SIN, et les six « physique-chimie et mathématiques » de l'APMEP)
