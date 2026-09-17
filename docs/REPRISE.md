@@ -1,7 +1,7 @@
-# Reprise du travail (état au 17 sept. 2026, fin de la 9e session)
+# Reprise du travail (état au 17 sept. 2026, fin de la 10e session)
 
 ## Publié (17 sept. 2026)
-21 unités, 94 compétences, 2 327 exercices dont 93 exercices complets guidés, 359 figures, 7 mécanismes animés
+22 unités, 98 compétences, 2 402 exercices dont 97 exercices complets guidés, 372 figures, 7 mécanismes animés
 (serre-joint, étau, bielle-manivelle, pompe à main, essuie-glace, benne à vérin, cric losange), 6 figures de
 transmission animées, symboles des 10 liaisons en perspective (3D), 13 annales.
 Site : https://www.robingirard.eu/Revise.html — l'application en https://www.robingirard.eu/assets/revise/sti2d/v1.0/index.html
@@ -294,3 +294,49 @@ eux, **deux rechargements**. Il vaut pour toutes les publications suivantes.
 **Règle à retenir : un lien vers une compétence NOUVELLE ne marche pas du premier coup sur un
 téléphone qui a déjà l'application** — le dire en envoyant le lien, ou envoyer d'abord l'adresse nue
 pour laisser la mise à jour se faire.
+
+## Fait à la 10e session (17 sept. 2026) — ITEC, la spécialité enfin connue
+
+**Robin confirme : la spécialité 2I2D de son fils est ITEC** (innovation technologique et
+éco-conception). C'était le point 1 de LA SUITE, ouvert depuis le 5 sept. Classe : T STI2D B.
+
+Ce que les quatre sujets ITEC d'éduscol déjà référencés dans `content/annales.yaml` demandent en
+partie spécifique (vélodrome 2023, PV flottant 2024, éolienne 2025, Hélilock 2026) : **modélisation
+et comportement mécanique** — schéma cinématique, liaisons, cinématique, statique, RDM, matériaux.
+Tout cela est déjà couvert. Ce qui manquait relève plutôt du **cours du professeur**, dont les scans
+du 14 sept. montrent qu'il va bien au-delà de l'épreuve. Quatre compétences ajoutées :
+
+- **`sc-guidages`** (18 ex.) dans l'unité « Solutions constructives et cotation » — palier lisse
+  contre roulement, types de roulements, la règle des ajustements (bague tournante **par rapport à
+  la charge** $\rightarrow$ serrée), les arrêts axiaux des deux côtés, côté fixe et côté libre pour
+  la dilatation, lubrification, guidage en translation. Guidé : l'arbre d'un treuil.
+- **`sc-chaines-cotes`** (19 ex.), même unité — condition fonctionnelle, tracé de la chaîne, règle
+  des signes, calcul au **pire cas**, $IT(J_a)=\sum IT$, et la règle de conception qui en découle
+  (une chaîne courte est une chaîne précise). Guidé : le jeu de montage d'une roue.
+- **`sc-dessin-technique`** (19 ex.) — nouvelle unité `16-dessin-procedes.yaml` — dessin de
+  définition contre dessin d'ensemble, cartouche et nomenclature, **projection européenne**
+  (dessus en dessous, gauche à droite), les quatre types de traits, coupes et sections, la règle des
+  hachures, les pièces jamais coupées, et le piège de l'échelle (une cote donne toujours la
+  dimension réelle). Guidé : lire l'équerre percée.
+- **`sc-procedes`** (19 ex.), même unité — enlèvement / déformation / ajout, tournage contre
+  fraisage, le trio **forme–matériau–quantité**, le **point d'équilibre** entre outillage et coût
+  unitaire (calculé, jamais appris par cœur), obtenir puis reprendre, fabrication additive et
+  prototypage. Guidé : choisir le procédé d'un support de capteur.
+
+Six figures : `sc-roulement`, `sc-montage-roulements`, `sc-chaine-cotes`, `sc-projections`,
+`sc-coupe` (cinq avec variante muette). **2 402 exercices, 98 compétences, 372 figures.**
+
+**Le piège de la taille des figures, confirmé et généralisé.** Un SVG s'affiche à sa taille
+**intrinsèque** (celle du `.tex`, en cm) tant qu'il ne dépasse ni `max-width: 100%` ni
+`max-height: 240px` : il n'est jamais agrandi. Une figure de 9 cm de large rendue dans une carte de
+440 px occupe donc environ 355 px, et des étiquettes en `\footnotesize` y deviennent illisibles.
+**Règle : viser 9-10 cm de large, un rapport d'environ 2:1, et des étiquettes en `\small` au
+minimum.** Les figures des sessions 9 et 10 ont toutes été reprises sur ce critère.
+
+Vérifié : `check_unit.py` sur les deux fichiers, `make check`, `make test` (120), `tour.mjs`
+(0 erreur), `grid-fit` (97 grilles, les 2 débordements connus), `math-overflow` (0 erreur KaTeX),
+`lesson-fit` (0 débordement sur les leçons neuves), captures mobiles des guidés.
+
+**Reste à faire pour ITEC** (LA SUITE point 5) : des **exercices guidés « à la manière des » sujets
+ITEC**, qui ré-emploient les compétences existantes dans le format long de l'épreuve — c'est là que
+se joue l'entraînement au bac, plus que dans de nouvelles connaissances.

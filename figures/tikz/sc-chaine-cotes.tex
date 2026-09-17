@@ -1,0 +1,49 @@
+%% Chaîne de cotes : la condition fonctionnelle Ja et les cotes qui la réalisent.
+%% La relation Ja = A1 - A2 - A3 est la réponse : elle passe par \rappel.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={line width=0.5pt, draw=black!55, dash pattern=on 9pt off 3pt on 2pt off 3pt},
+  cote/.style={{Stealth[length=4.5pt,width=4pt]}-{Stealth[length=4.5pt,width=4pt]},
+               line width=0.6pt, draw=black!70},
+  rappelle/.style={line width=0.4pt, draw=black!35, densely dotted},
+  etiq/.style={font=\small, text=black!80, inner sep=2pt}]
+
+%% ---------------- l'arbre épaulé (pièce 1) ----------------
+\hachures[draw=solideA, line width=0.9pt]{
+  (0,0) -- (0,1.15) -- (1.5,1.15) -- (1.5,0.7) -- (7.6,0.7) -- (7.6,0) -- cycle}
+\node[font=\small\bfseries, text=solideA, anchor=east] at (-0.15,0.35) {Arbre (1)};
+
+%% ---------------- la bague (pièce 2) ----------------
+\hachuresb[draw=solideB, line width=0.9pt]{(1.5,0.7) rectangle (3.6,1.6)}
+\node[font=\small\bfseries, text=solideB, anchor=south] at (2.55,1.68) {Bague (2)};
+
+%% ---------------- la roue (pièce 3) ----------------
+\hachures[draw=solideD, line width=0.9pt]{(3.6,0.7) rectangle (6.0,2.15)}
+\node[font=\small\bfseries, text=solideD, anchor=south] at (4.8,2.23) {Roue (3)};
+
+%% ---------------- l'anneau élastique ----------------
+\draw[line width=2.4pt, draw=solideE, line cap=round] (6.4,0.72) -- (6.4,1.35);
+\node[etiq, text=solideE, anchor=west, font=\footnotesize] at (6.5,1.5) {anneau élastique};
+
+%% ---------------- le jeu fonctionnel ----------------
+\fill[black!12] (6.0,0.72) rectangle (6.38,1.35);
+\draw[cote, draw=solideF] (6.0,1.75) -- (6.38,1.75);
+\node[etiq, text=solideF, anchor=south, font=\small\bfseries] at (6.19,1.8) {$J_a$};
+
+\draw[axe] (-0.5,0) -- (8.0,0);
+
+%% ---------------- la chaîne de cotes ----------------
+\foreach \x in {1.5, 3.6, 6.0, 6.4} { \draw[rappelle] (\x,0.7) -- (\x,-1.55); }
+\draw[cote] (1.5,-0.45) -- (6.4,-0.45);
+\node[etiq, anchor=south] at (3.95,-0.42) {$A_1$};
+\draw[cote] (1.5,-1.0) -- (3.6,-1.0);
+\node[etiq, anchor=south] at (2.55,-0.97) {$A_2$};
+\draw[cote] (3.6,-1.0) -- (6.0,-1.0);
+\node[etiq, anchor=south] at (4.8,-0.97) {$A_3$};
+
+\node[anchor=north west, font=\small, inner sep=3pt] at (-0.5,-1.75)
+  {\rappel{$J_a = A_1 - A_2 - A_3$}};
+\end{tikzpicture}
+\end{document}

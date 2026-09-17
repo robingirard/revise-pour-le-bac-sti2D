@@ -1,0 +1,45 @@
+%% Guidage en rotation par deux roulements : arrêts axiaux de chaque bague.
+%% La règle de montage est la réponse : elle passe par \rappel.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={line width=0.5pt, draw=black!55, dash pattern=on 9pt off 3pt on 2pt off 3pt},
+  repere/.style={line width=0.5pt, draw=black!60},
+  etiq/.style={font=\small, text=black!80, inner sep=2pt},
+  arret/.style={-{Stealth[length=5pt,width=4.5pt]}, line width=1pt, draw=solideE}]
+
+%% ---------------- l'arbre, épaulé à gauche ----------------
+\hachures[draw=solideA, line width=0.9pt]{
+  (0,0) -- (0,0.62) -- (1.5,0.62) -- (1.5,0.95) -- (2.4,0.95) -- (2.4,0.62)
+  -- (8.2,0.62) -- (8.2,0) -- cycle}
+\node[font=\small\bfseries, text=solideA, anchor=east] at (-0.15,0.31) {Arbre};
+
+%% ---------------- les deux roulements ----------------
+\foreach \x in {2.9, 6.6} {
+  \hachures[draw=solideA, line width=0.8pt]{(\x,0.62) rectangle (\x+1.0,1.02)}
+  \draw[line width=0.8pt, draw=black!70, fill=black!12] (\x+0.5,1.28) circle (0.24);
+  \hachuresb[draw=solideB, line width=0.8pt]{(\x,1.54) rectangle (\x+1.0,1.94)}
+}
+
+%% ---------------- le logement ----------------
+\hachuresb[draw=solideB, line width=0.9pt]{
+  (1.1,1.94) -- (1.1,2.6) -- (8.2,2.6) -- (8.2,1.94) -- (7.6,1.94) -- (7.6,1.54)
+  -- (7.0,1.54) -- (7.0,1.94) -- (3.9,1.94) -- (3.9,1.54) -- (3.3,1.54) -- (3.3,1.94) -- cycle}
+\node[font=\small\bfseries, text=solideB, anchor=west] at (8.35,2.27) {Logement};
+
+\draw[axe] (-0.5,0) -- (8.8,0);
+
+%% ---------------- les arrêts axiaux ----------------
+\draw[arret] (2.55,0.78) -- (2.85,0.78);
+\node[etiq, text=solideE, anchor=south east, font=\footnotesize] at (2.9,0.95) {épaulement};
+\draw[line width=2pt, draw=solideE, line cap=round] (7.72,0.66) -- (7.72,1.0);
+\draw[arret] (7.6,0.82) -- (7.9,0.82);
+\node[etiq, text=solideE, anchor=south west, font=\footnotesize] at (7.7,1.02) {anneau élastique};
+
+%% ---------------- la règle : c'est la réponse ----------------
+\node[anchor=north west, font=\small, align=left, inner sep=3pt] at (-0.5,-0.4) {%
+  \rappel{chaque bague est arrêtée \textbf{des deux côtés} : sinon l'arbre se promène dans son logement ;\\
+  la bague qui tourne par rapport à la charge est montée \textbf{serrée}, l'autre \textbf{glissante}}};
+\end{tikzpicture}
+\end{document}

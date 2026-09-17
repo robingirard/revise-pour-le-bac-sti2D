@@ -1,0 +1,40 @@
+%% Roulement à billes en demi-coupe : les deux bagues, la bille, l'arbre et le logement.
+%% Le rôle de chaque bague (tournante ou fixe) est la réponse : il passe par \rappel.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={line width=0.5pt, draw=black!55, dash pattern=on 9pt off 3pt on 2pt off 3pt},
+  repere/.style={line width=0.5pt, draw=black!60},
+  etiq/.style={font=\small, text=black!80, inner sep=2pt}]
+
+%% ---------------- l'arbre ----------------
+\hachures[draw=solideA, line width=0.9pt]{(0,0) rectangle (6,0.8)}
+\node[font=\small\bfseries, text=solideA, anchor=east] at (-0.15,0.4) {Arbre};
+
+%% ---------------- la bague intérieure, solidaire de l'arbre ----------------
+\hachures[draw=solideA, line width=0.9pt]{(2.1,0.8) rectangle (3.9,1.3)}
+
+%% ---------------- la bille ----------------
+\draw[line width=0.9pt, draw=black!70, fill=black!12] (3,1.62) circle (0.32);
+
+%% ---------------- la bague extérieure, solidaire du logement ----------------
+\hachuresb[draw=solideB, line width=0.9pt]{(2.1,1.94) rectangle (3.9,2.44)}
+
+%% ---------------- le logement (bâti) ----------------
+\hachuresb[draw=solideB, line width=0.9pt]{(0,2.44) rectangle (6,3.1)}
+\node[font=\small\bfseries, text=solideB, anchor=west] at (6.15,2.77) {Logement};
+
+\draw[axe] (-0.5,0) -- (6.6,0);
+
+%% ---------------- repères ----------------
+\draw[repere] (2.4,1.05) -- (1.0,1.05) node[etiq, anchor=east, text=solideA] {bague intérieure};
+\draw[repere] (3.26,1.78) -- (4.55,1.62) node[etiq, anchor=west, text=black!70] {bille};
+\draw[repere] (3.6,2.19) -- (5.0,2.19) node[etiq, anchor=west, text=solideB] {bague extérieure};
+
+%% ---------------- ce que l'énoncé ne doit pas donner ----------------
+\node[anchor=north west, font=\small, align=left, inner sep=3pt] at (-0.5,-0.45) {%
+  \rappel{la bague intérieure tourne avec l'arbre, la bague extérieure reste fixe avec le logement ;\\
+  les billes remplacent le frottement de glissement par du \textbf{roulement}}};
+\end{tikzpicture}
+\end{document}
