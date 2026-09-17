@@ -1,14 +1,15 @@
-# Reprise du travail (état au 11 sept. 2026, fin de la 8e session)
+# Reprise du travail (état au 17 sept. 2026, fin de la 9e session)
 
-## Publié (11 sept. 2026)
-19 unités, 85 compétences, 2 132 exercices dont 83 exercices complets guidés, 333 figures, 7 mécanismes animés
+## Publié (17 sept. 2026)
+21 unités, 94 compétences, 2 327 exercices dont 93 exercices complets guidés, 359 figures, 7 mécanismes animés
 (serre-joint, étau, bielle-manivelle, pompe à main, essuie-glace, benne à vérin, cric losange), 6 figures de
 transmission animées, symboles des 10 liaisons en perspective (3D), 13 annales.
 Site : https://www.robingirard.eu/Revise.html — l'application en https://www.robingirard.eu/assets/revise/sti2d/v1.0/index.html
 
-Unités : ingénierie (liaisons, schéma cinématique, transmission, cinématique, statique-RDM, information 1re+Tle,
-2I2D Tle : analyse fonctionnelle, énergie électrique, bâtiment, structures-matériaux), physique-chimie (électricité,
-thermique, chimie, ondes, mécanique, compléments Tle), maths (1re ; Tle spécialité PCM ; Tle enseignement commun).
+Unités : ingénierie (liaisons, schéma cinématique, transmission, cinématique, **unités et conversions**,
+**solutions constructives et cotation**, statique-RDM, information 1re+Tle, 2I2D Tle : analyse fonctionnelle,
+énergie électrique, bâtiment, structures-matériaux), physique-chimie (électricité, thermique, chimie, ondes,
+mécanique, compléments Tle), maths (1re ; Tle spécialité PCM ; Tle enseignement commun).
 
 ## Où en est la publication (6 sept. 2026)
 Une seule adresse publique : **https://www.robingirard.eu/Revise.html**, l'application en
@@ -209,3 +210,67 @@ déverrouillée ; sinon `renderSessionEntry` renvoie sur `#/skill/<compétence>`
 - Relecture par Robin des points « à vérifier » listés dans les notes et des données introduites hors manuel
   (signalées dans les rapports des agents : valeurs de bâtiment, lectures graphiques de courbes de batteries).
 - Autres mécanismes (pince de robot, table élévatrice…) ; le corrigé APMEP de Polynésie 2025 n'existe pas.
+
+
+## Fait à la 9e session (17 sept. 2026) — le DS de conversions, et trois chapitres du lot de scans
+
+Robin dépose 24 photos de documents de classe (`../scans/sources/scan-20260917/`, originaux HEIC +
+copies lisibles dans `jpg/`) et signale un **DS de SI sur les conversions le mercredi 23 sept.**
+Contenu des photos et ce qui en a été tiré : `docs/notes/fiches-classe.md`, section du 14 sept.
+Décision de Robin : tout intégrer, publier une seule fois.
+
+### Nouvelle unité « Unités et conversions » (`content/units/05-conversions.yaml`, 109 exercices)
+Cinq compétences, transversales à toutes les matières :
+`conv-prefixes` (préfixes n/µ/m/k/M/G, écriture scientifique, loi d'Ohm avec conversion préalable),
+`conv-surfaces` (facteur 100, are et hectare, aire du disque), `conv-volumes` (facteur 1000, le pont
+$1\ \ell = 1\ \mathrm{dm^3}$, cylindre), `conv-temps-vitesses` (sexagésimal contre décimal, le facteur 3,6
+retrouvé comme $3\,600/1\,000$), `conv-grandeurs-composees` (débits, masses volumiques, kWh, MPa, homogénéité).
+Cinq exercices guidés dont les deux problèmes de la fiche : le robinet et la citerne, le chasse-neige.
+**Les valeurs des fiches sont conservées** (documents du professeur, règle des 7e et 8e sessions) : le fils
+doit pouvoir vérifier ses propres réponses. Prérequis volontairement plats — tout part de `conv-prefixes`,
+pour qu'aucune compétence ne soit à plus d'un cran avant le DS.
+Huit figures : `conv-escalier-prefixes`, `conv-tableau-surfaces`, `conv-cube-metre`, `conv-cercle-cylindre`,
+`conv-loi-ohm`, `conv-vitesses-passage`, `conv-chasse-neige`, `conv-debit-citerne` (six avec variante muette).
+
+### Nouvelle compétence `2i2d-energie-puissance-instantanee` (20 exercices)
+Le chapitre 1 « Énergie, puissance et rendement » du cours de TSTI2D, qui fait le pont entre les
+mathématiques et la chaîne d'énergie : la puissance moyenne comme **pente d'une sécante**, la puissance
+instantanée comme **dérivée** $p(t)=\mathrm{d}E/\mathrm{d}t$, l'énergie comme **aire sous $p(t)$** approchée par
+des rectangles, le formulaire de dérivées écrit en $t$, le bilan $E_a=E_u+E_p$ et le rendement.
+Guidé : le relevé d'une habitation sur 24 h, avec le tracé de $p(t)$ en escalier.
+Figures `2i2d-velo-energie`, `2i2d-puissance-aire-rectangles`, `2i2d-habitation-releve`, `2i2d-habitation-puissance`.
+
+### Nouvelle unité « Solutions constructives et cotation » (`content/units/15-solutions-constructives.yaml`, 58 exercices)
+`sc-liaison-complete` (surfaces fonctionnelles, positionnement radial/axial, association de deux liaisons
+simples, MAP contre MEP — « une surface positionne, un organe maintient »), `sc-assemblages` (démontables
+et non démontables, transmission d'action par clavette, cannelures, goupille), `sc-ajustements` (CN, ES/EI
+et es/ei, IT, cotes limites, jeu et serrage, H7/g6, H7/m6, H7/p6). Valeurs vérifiées sur les tables :
+$\varnothing20$ H7 $= 20{,}021/20{,}000$, m6 $= 20{,}021/20{,}008$ (incertain) ; $\varnothing18$ H7/g6 (avec jeu).
+Figures `sc-liaison-complete`, `sc-tolerances`, `sc-jeu-serrage`.
+
+### Maths : les erreurs réelles du devoir corrigé
+Le devoir « Automatismes » rendu noté montre deux trous précis, repris en exercices ciblés :
+l'équation de la tangente écrite **en $a=1$ alors que l'énoncé demandait $a=0$**, puis rendue comme un
+**nombre** au lieu d'une droite (4 exercices dans `maths-derivee`, sur $f(x)=2x^3-x^2-3x+9$, la fonction du
+devoir) ; et les **quatre limites de $1/x$** laissées vides, notées 0/1 (4 exercices dans
+`mathstc-inverse-derivation`, dont le repérage des écritures fautives).
+
+### Un outil de plus : `lesson-fit`
+`math-overflow.mjs` ne voit pas les formules **d'affichage** (`$$…$$`) des leçons : il mesure les chaînes
+avec `renderRich`, qui ne les rend pas. Un script ad hoc rendant chaque leçon avec `renderLesson` à 390 px
+et mesurant `scrollWidth` des `.katex-display` a révélé 14 formules débordant dans les leçons neuves
+(jusqu'à 320 px) — toutes coupées en deux depuis. Le corpus ancien en compte 43, jamais signalées : elles
+défilent horizontalement (`.math-display` est en `overflow-x: auto`), mais c'est une gêne de lecture sur
+téléphone. **Candidat à ajouter dans `revise-core/app/dev/`.**
+
+Autre piège rencontré : dans une carte « Contexte » d'exercice guidé, une figure est en `.fig-block`
+(`max-height: 240px; width: auto`) et non en `.prompt .fig`. Une figure presque carrée y est donc bridée
+par sa **hauteur** et s'affiche minuscule. Les graphes doivent viser un rapport d'environ **2:1** et des
+étiquettes en `\small`, sans quoi elles sont illisibles sur un téléphone.
+
+Vérifié : `check_unit.py` sur les trois fichiers, `make check`, `make test` (120), `tour.mjs` (0 erreur),
+`grid-fit` (92 grilles, les 2 débordements connus), `math-overflow` (0 erreur KaTeX), `lesson-fit`,
+captures mobiles des nouveaux guidés. **Publié** : `sw.js` en `2026-09-17.1`, v1.0 réécrite
+(`publish.py --force`), poussé sur les trois dépôts, site reconstruit et vérifié en ligne.
+Au passage, le `jekyll build` a rattrapé `_site/index.html` et `_site/print.html`, restés en retard sur le
+lien « LinkedIn posts » ; `.sass-cache/` est passé dans le `.gitignore` du site.
