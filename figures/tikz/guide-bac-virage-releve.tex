@@ -1,0 +1,73 @@
+%% guide-bac-virage-releve — coupe transversale d'un virage relevé de circuit de karting :
+%% sol horizontal, piste inclinée du dévers de 32° (donnée, cotée par un arc), kart
+%% schématisé posé perpendiculairement à la piste, verticale passant par le point de
+%% contact I.
+%% \rappel cache le cône de frottement en I : la normale à la piste, les deux génératrices
+%% à phi = 36,9° de part et d'autre, l'aplat clair du cône et la conclusion (la résultante
+%% du contact reste dans le cône, donc pas de glissement). Le cône est dessiné AVANT le
+%% kart pour passer derrière lui, la légende après.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  piste/.style={line width=0.9pt, line join=round, draw=black!70, fill=black!10},
+  axe/.style={line width=0.5pt, draw=black!60,
+              dash pattern=on 8pt off 2.5pt on 1.5pt off 2.5pt},
+  cone/.style={line width=0.9pt, draw=solideA},
+  etiq/.style={font=\small, inner sep=2pt}]
+
+\def\dev{32}                       % dévers de la piste
+\def\phif{36.9}                    % angle de frottement
+\coordinate (T) at (2.40,0.50);    % pied du dévers
+\coordinate (P) at (6.98,3.36);    % haut de la piste : T + 5,40 cm à 32°
+\coordinate (I) at (4.859,2.037);  % point de contact, à 2,90 cm de T le long de la piste
+
+%% ---------------- le sol horizontal et le talus de la piste -----------------------------
+\hachures[draw=black!70]{(0.30,0.18) rectangle (7.40,0.50)}
+\draw[piste] (T) -- (P) -- (6.98,0.50) -- cycle;
+\begin{scope}[shift={(T)}, rotate=\dev]
+  \draw[line width=0.9pt, draw=black!75, fill=black!25] (0,-0.16) rectangle (5.40,0);
+\end{scope}
+\node[etiq, anchor=west, text=black!75, align=left] at (7.10,3.30) {piste relevée};
+\node[etiq, anchor=north west, text=black!75] at (0.30,0.14) {sol horizontal};
+
+%% ---------------- le dévers, coté (donnée de l'énoncé) ----------------------------------
+\draw[line width=0.7pt, draw=solideD] ([shift=(0:1.55)]T) arc (0:\dev:1.55);
+\node[etiq, anchor=west, text=solideD] at (4.05,0.94) {dévers $32^\circ$};
+
+%% ---------------- la réponse (1) : le cône de frottement, derrière le kart ---------------
+\rappel{%
+  \fill[solideA!10] (I) -- ([shift=({90+\dev-\phif}:1.95)]I)
+     arc ({90+\dev-\phif}:{90+\dev+\phif}:1.95) -- cycle;
+  \draw[cone] (I) -- ([shift=({90+\dev-\phif}:1.95)]I);
+  \draw[cone] (I) -- ([shift=({90+\dev+\phif}:1.95)]I);
+  \draw[axe, draw=solideA!80] (I) -- ([shift=({90+\dev}:2.15)]I);}
+
+%% ---------------- la verticale du point de contact (par-dessus l'aplat du cône) ----------
+\draw[axe] (4.859,0.28) -- (4.859,3.12);
+
+%% ---------------- le kart, perpendiculaire à la piste -------------------------------------
+\begin{scope}[shift={(I)}, rotate=\dev]
+  \draw[line width=0.8pt, draw=solideB, fill=solideB!15, rounded corners=2pt]
+    (-0.20,0.30) rectangle (1.72,0.50);
+  \draw[line width=0.8pt, draw=solideB, fill=solideB!25, line join=round]
+    (0.58,0.50) -- (1.02,0.50) -- (0.96,1.00) -- (0.66,1.00) -- cycle;   % dossier du siège
+  \foreach \xr in {0,1.45} {
+    \draw[line width=0.9pt, draw=black!80, fill=white] (\xr,0.24) circle (0.24);
+    \fill[black!80] (\xr,0.24) circle (0.045); }
+\end{scope}
+\fill (I) circle (1.7pt);
+\node[etiq, anchor=north west, inner sep=1.5pt] at (4.95,1.84) {$I$};
+
+%% ---------------- la réponse (2) : l'angle phi et la conclusion --------------------------
+\rappel{%
+  \draw[line width=0.6pt, draw=solideA] ([shift=({90+\dev}:1.52)]I)
+     arc ({90+\dev}:{90+\dev+\phif}:1.52);
+  \node[etiq, text=solideA] at ([shift=({90+\dev+0.5*\phif}:1.70)]I) {$\varphi$};
+  \draw[line width=0.6pt, draw=solideA] ([shift=({90+\dev-\phif}:1.52)]I)
+     arc ({90+\dev-\phif}:{90+\dev}:1.52);
+  \node[etiq, text=solideA] at ([shift=({90+\dev-0.5*\phif}:1.72)]I) {$\varphi$};
+  \node[etiq, anchor=north west, text=solideA, align=left] at (0.25,4.20)
+    {$\varphi = 36{,}9^\circ$\\la résultante du contact\\reste dans le cône :\\pas de glissement};}
+\end{tikzpicture}
+\end{document}

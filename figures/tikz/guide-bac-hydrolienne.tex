@@ -1,0 +1,84 @@
+%% guide-bac-hydrolienne — rotor d'une hydrolienne fluviale vu de face (l'axe de rotation
+%% pointe vers l'observateur), trois pales à 120°, immergé entre le fond et la surface.
+%% Échelle 1 m = 0,55 cm. Seul le DIAMÈTRE est coté (6,00 m) : le rayon est à en déduire.
+%% Le point M est en bout de pale, G est sur la même pale à OG = 1,60 m.
+%% La rotation est dans le sens horaire : la vitesse en M est donc tangente au cercle de
+%% bout de pale, perpendiculaire à la pale, dirigée vers le bas à droite.
+%% Le courant traverse le plan du rotor : il est noté par le symbole du vecteur qui s'enfonce
+%% dans la figure, pas par des flèches horizontales.
+%% \rappel cache le vecteur vitesse tangentielle en M et sa valeur (13,2 m/s) ; le reste de
+%% la figure (cotes, courant, sens de rotation) est une donnée de l'énoncé.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  pale/.style={line width=0.9pt, line join=round, draw=solideB, fill=solideB!12},
+  eau/.style={line width=0.7pt, draw=solideG!70},
+  courant/.style={-{Stealth[length=6pt]}, line width=1pt, draw=solideG},
+  cote/.style={{Stealth[length=4.5pt]}-{Stealth[length=4.5pt]}, line width=0.6pt, draw=solideD},
+  attache/.style={line width=0.4pt, draw=solideD!85, dash pattern=on 3pt off 2pt},
+  etiq/.style={font=\small, inner sep=2pt}]
+
+\def\Ox{4.60}\def\Oy{2.25}\def\R{1.65}
+
+%% ---------------- l'eau : surface et fond ---------------------------------------------------
+\draw[eau] plot[domain=0.20:9.15, samples=90] (\x, {4.55+0.055*sin(deg(3.2*\x))});
+\node[etiq, anchor=north east, text=solideG!85] at (9.15,4.44) {surface de l'eau};
+\draw[eau] (0.20,0.18) -- (9.15,0.18);
+\foreach \x in {0.32,0.62,...,9.14} { \draw[line width=0.4pt, draw=solideG!55] (\x,0.18) -- (\x-0.14,0.02); }
+\node[etiq, anchor=south east, text=solideG!85] at (9.15,0.26) {fond du fleuve};
+
+%% ---------------- le courant ----------------------------------------------------------------
+%% Vue de face : le courant traverse le plan du rotor, il s'enfonce donc DANS la figure.
+%% On le note par le symbole normalisé du vecteur qui s'éloigne de l'observateur (cercle croisé),
+%% et non par des flèches horizontales, qui feraient croire à un écoulement parallèle aux pales.
+\foreach \y in {1.15,2.25,3.35} {
+  \draw[line width=0.8pt, draw=solideG] (0.72,\y) circle (0.17);
+  \draw[line width=0.8pt, draw=solideG] ([shift=(45:0.17)]0.72,\y) -- ([shift=(225:0.17)]0.72,\y)
+                                        ([shift=(135:0.17)]0.72,\y) -- ([shift=(315:0.17)]0.72,\y); }
+\node[etiq, anchor=south west, text=solideG, align=left] at (0.26,3.62) {courant\\2,8 m$\cdot$s$^{-1}$};
+\node[etiq, anchor=north west, text=solideG] at (0.20,-0.04)
+  {$\otimes$ : le courant traverse le plan du rotor, il s'éloigne de l'observateur};
+
+%% ---------------- le rotor : cercle de bout de pale, trois pales, moyeu ----------------------
+\draw[line width=0.5pt, draw=black!35, dash pattern=on 3pt off 2pt] (\Ox,\Oy) circle (\R);
+\foreach \a in {60,180,300} {
+  \begin{scope}[shift={(\Ox,\Oy)}, rotate=\a]
+    \draw[pale] (0.24,-0.17) -- (\R,-0.085) -- (\R,0.085) -- (0.24,0.17) -- cycle;
+  \end{scope}}
+\draw[line width=0.9pt, draw=solideB, fill=solideB!30] (\Ox,\Oy) circle (0.26);
+\fill (\Ox,\Oy) circle (1.4pt);
+\node[etiq, anchor=north east, inner sep=3pt] at (\Ox,\Oy) {$O$};
+
+%% ---------------- sens de rotation (horaire) -------------------------------------------------
+\draw[-{Stealth[length=6pt]}, line width=1pt, draw=solideA]
+  ([shift=(285:1.05)]\Ox,\Oy) arc (285:205:1.05);
+\node[etiq, text=solideA] at ([shift=(243:1.40)]\Ox,\Oy) {$\omega$};
+
+%% ---------------- M en bout de pale, G à 1,60 m du moyeu -------------------------------------
+\coordinate (M) at ([shift=(60:\R)]\Ox,\Oy);
+\coordinate (G) at ([shift=(60:0.88)]\Ox,\Oy);
+\fill (M) circle (1.6pt); \fill (G) circle (1.6pt);
+\node[etiq, anchor=south west, inner sep=2pt] at (M) {$M$};
+\node[etiq, anchor=north west, inner sep=2pt] at (G) {$G$};
+
+% cote OG, reportée le long de la pale
+\draw[attache] (\Ox,\Oy) -- ([shift=(-30:0.54)]\Ox,\Oy);
+\draw[attache] (G) -- ([shift=(-30:0.54)]G);
+\draw[cote] ([shift=(-30:0.42)]\Ox,\Oy) -- ([shift=(-30:0.42)]G);
+\node[etiq, anchor=west, text=solideD, fill=white, inner sep=1.5pt] at (5.52,2.40) {$OG = 1{,}60$ m};
+
+% cote du diamètre, reportée à gauche du rotor
+\draw[attache] (\Ox,{\Oy+\R}) -- (2.45,{\Oy+\R});
+\draw[attache] (\Ox,{\Oy-\R}) -- (2.45,{\Oy-\R});
+\draw[cote] (2.62,{\Oy+\R}) -- (2.62,{\Oy-\R});
+\node[etiq, anchor=east, align=right, text=solideD, fill=white, inner sep=2pt]
+  at (2.52,\Oy) {diamètre\\$6{,}00$ m};
+
+%% ---------------- la réponse : la vitesse tangentielle en M ----------------------------------
+\rappel{%
+  \draw[-{Stealth[length=7pt]}, line width=1.3pt, draw=solideA] (M) -- ++(-30:1.15);
+  \node[etiq, anchor=west, text=solideA, align=left, inner sep=4pt]
+    at ([shift=(-30:1.15)]M) {$\vec{V_t}$\\$V_t = 13{,}2$ m$\cdot$s$^{-1}$};}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,81 @@
+%% guide-bac-ombriere — ombrière photovoltaïque de parking, vue de côté (schéma plan).
+%% Poteau ancré au sol, traverse horizontale en tête, panneau articulé en A sur la traverse
+%% et incliné de l'angle alpha, biellette entre le point C (haut du panneau) et le point B
+%% du poteau. Échelle 1 m = 1,75 cm pour le panneau : AC = 3,20 m et la hauteur de C
+%% au-dessus du plan de la traverse vaut 0,84 m, d'où sin(alpha) = 0,84/3,20.
+%% L'arc marque alpha sans donner sa valeur ; le poteau n'est pas à l'échelle du panneau.
+%% \rappel cache les quatre actions extérieures au panneau isolé : le poids en G, l'action
+%% du vent perpendiculaire au panneau, l'action de la traverse en A et celle des biellettes
+%% en C, portée par (BC).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  struct/.style={line width=0.9pt, line join=round, draw=solideE, fill=solideE!12},
+  cote/.style={{Stealth[length=4.5pt]}-{Stealth[length=4.5pt]}, line width=0.6pt, draw=solideD},
+  attache/.style={line width=0.4pt, draw=solideD!85, dash pattern=on 3pt off 2pt},
+  vent/.style={-{Stealth[length=6pt]}, line width=1pt, draw=solideG},
+  force/.style={-{Stealth[length=6pt]}, line width=1.3pt, draw=solideA},
+  etiq/.style={font=\small, inner sep=2pt}]
+
+\def\alfa{15.2}                      % arcsin(0,84/3,20)
+\coordinate (A) at (2.00,2.70);      % articulation du panneau sur la traverse
+\coordinate (C) at (7.405,4.168);    % extrémité haute du panneau : A + 5,60 cm à 15,2°
+\coordinate (B) at (8.20,3.05);      % point du poteau qui reçoit la biellette
+\coordinate (G) at (4.70,3.434);     % milieu du panneau
+
+%% ---------------- le sol et le poteau -------------------------------------------------------
+\hachures[draw=black!70]{(0.25,0.22) rectangle (9.00,0.55)}
+\draw[struct] (8.00,0.55) rectangle (8.40,3.40);
+\draw[struct] (7.80,0.55) rectangle (8.60,0.75);          % platine d'ancrage
+\draw[struct] (1.55,2.52) rectangle (8.75,2.70);          % traverse
+
+%% ---------------- le panneau et la biellette ------------------------------------------------
+\begin{scope}[shift={(A)}, rotate=\alfa]
+  \draw[line width=0.9pt, line join=round, draw=solideB, fill=solideB!15] (0,0) rectangle (5.60,0.15);
+  \foreach \s in {0.8,1.6,...,5.2} { \draw[line width=0.4pt, draw=solideB!70] (\s,0) -- (\s,0.15); }
+\end{scope}
+\draw[line width=2.2pt, draw=solideF, line cap=round] (B) -- (C);
+
+% points A, B et C
+\foreach \p in {(A), (B), (C)} { \fill \p circle (1.6pt); }
+\node[etiq, anchor=west] at (8.48,3.05) {$B$};
+\node[etiq, anchor=south east, inner sep=1pt] at (1.96,2.74) {$A$};
+\node[etiq, anchor=south west, inner sep=1pt] at (7.47,4.17) {$C$};
+
+%% ---------------- l'angle alpha (sans sa valeur) ----------------------------------------------
+\draw[line width=0.7pt, draw=black!75] ([shift=(0:1.35)]A) arc (0:\alfa:1.35);
+\node[etiq, anchor=west] at (3.50,2.88) {$\alpha$};
+
+%% ---------------- les deux cotes qui donnent l'angle -------------------------------------------
+% longueur du panneau, reportée au-dessus
+\draw[attache] (A) -- ++(105.2:0.55);
+\draw[attache] (C) -- ++(105.2:0.55);
+\draw[cote] ([shift=(105.2:0.42)]A) -- ([shift=(105.2:0.42)]C);
+\node[etiq, text=solideD, rotate=\alfa, anchor=south] at (4.62,3.86) {$3{,}20$ m};
+% hauteur de C au-dessus du plan de la traverse
+\draw[cote] (7.405,2.70) -- (C);
+\node[etiq, anchor=east, text=solideD, fill=white, inner sep=1.5pt] at (7.30,3.42) {$0{,}84$ m};
+
+%% ---------------- le vent ------------------------------------------------------------------------
+\foreach \y in {1.45,2.00} { \draw[vent] (0.30,\y) -- (1.45,\y); }
+\node[etiq, anchor=south, text=solideG] at (0.88,2.13) {vent};
+
+%% ---------------- la réponse : les quatre actions sur le panneau isolé -----------------------
+\rappel{%
+  % poids au centre de gravité
+  \fill (G) circle (1.6pt);
+  \node[etiq, anchor=south east, inner sep=1pt] at (4.66,3.50) {$G$};
+  \draw[force] (G) -- ++(0,-0.62);
+  \node[etiq, anchor=west, text=solideA] at (4.80,2.98) {$\vec P$};
+  % action du vent, perpendiculaire au panneau
+  \draw[force] (3.89,3.21) -- ++(105.2:1.05);
+  \node[etiq, anchor=south east, text=solideA, inner sep=1pt] at (3.56,4.24) {$\vec{F_{vent}}$};
+  % action de la traverse en A
+  \draw[force] (A) -- ++(0,-0.58);
+  \node[etiq, anchor=west, text=solideA] at (2.12,2.24) {$\vec{A_{trav/pan}}$};
+  % action des biellettes en C, portée par (BC)
+  \draw[force] (C) -- ++(-54.6:0.80);
+  \node[etiq, anchor=west, text=solideA] at (7.82,4.36) {$\vec{C_{biel/pan}}$};}
+\end{tikzpicture}
+\end{document}

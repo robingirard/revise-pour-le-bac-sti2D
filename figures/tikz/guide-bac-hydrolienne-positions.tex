@@ -1,0 +1,83 @@
+%% guide-bac-hydrolienne-positions — la même pale d'hydrolienne dans ses deux positions
+%% extrêmes, vues de face et à la même échelle : à gauche pale basse (l'axe x de la pale
+%% pointe vers le bas), à droite pale haute. Dans chaque vue : le moyeu O, la pale étudiée
+%% en trait fort, les deux autres en trait fin, le point G et l'axe x orienté du moyeu vers
+%% le bout de pale.
+%% \rappel cache les trois actions extérieures à la pale (poids, force centrifuge, action du
+%% moyeu) et la légende du bas. Les longueurs des flèches sont proportionnelles aux
+%% intensités (0,28 mm pour 1 N) : en position basse le poids s'ajoute à la force
+%% centrifuge (3 870 N), en position haute il s'en retranche (2 010 N).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  pale/.style={line width=0.9pt, line join=round, draw=solideB, fill=solideB!15},
+  palefine/.style={line width=0.5pt, line join=round, draw=black!45, fill=white},
+  axe/.style={-{Stealth[length=5pt]}, line width=0.5pt, draw=black!70,
+              dash pattern=on 7pt off 2pt on 1.5pt off 2pt},
+  force/.style={-{Stealth[length=5.5pt,width=4.5pt]}, line width=1.2pt},
+  report/.style={line width=0.4pt, draw=black!45, densely dotted},
+  etiq/.style={font=\small, inner sep=2pt},
+  titre/.style={font=\small\bfseries, anchor=north, inner sep=2pt}]
+
+\def\R{1.60}        % longueur d'une pale
+\def\rG{0.85}       % OG à l'échelle de la vue (1,60 m sur 3,00 m)
+\def\rmoyeu{0.24}
+
+%% ---- une vue : #1 = x du moyeu, #2 = y du moyeu, #3 = angle de la pale étudiée ----------
+\newcommand\vue[3]{%
+  \foreach \k in {1,2} { \pgfmathsetmacro\a{#3+120*\k}
+    \begin{scope}[shift={(#1,#2)}, rotate=\a]
+      \draw[palefine] (0.20,-0.13) -- (\R,-0.07) -- (\R,0.07) -- (0.20,0.13) -- cycle;
+    \end{scope}}
+  \begin{scope}[shift={(#1,#2)}, rotate=#3]
+    \draw[pale] (0.20,-0.15) -- (\R,-0.075) -- (\R,0.075) -- (0.20,0.15) -- cycle;
+    \draw[axe] (0,0) -- (\R+0.42,0);
+  \end{scope}
+  \draw[line width=0.9pt, draw=solideB, fill=solideB!30] (#1,#2) circle (\rmoyeu);
+  \fill (#1,#2) circle (1.3pt);
+  \node[etiq, anchor=east, inner sep=4pt] at (#1,#2) {$O$};
+  \fill ([shift=(#3:\rG)]#1,#2) circle (1.5pt);}
+
+%% ======================= vue de gauche : pale basse ======================================
+\vue{2.05}{3.35}{-90}
+\node[etiq, anchor=east, inner sep=3pt] at (2.05,2.50) {$G$};
+\node[etiq, anchor=west] at (2.17,1.50) {$\vec x$};
+\node[titre] at (2.05,1.15) {position basse};
+
+%% ======================= vue de droite : pale haute ======================================
+\vue{7.90}{2.55}{90}
+\node[etiq, anchor=east, inner sep=3pt] at (7.90,3.40) {$G$};
+\node[etiq, anchor=west] at (8.02,4.35) {$\vec x$};
+\node[titre] at (7.90,1.15) {position haute};
+
+%% filet de séparation entre les deux vues
+\draw[line width=0.5pt, draw=black!30] (4.90,0.95) -- (4.90,4.60);
+
+%% ======================= la réponse : les trois actions ==================================
+\rappel{%
+  % ---- pale basse : le poids s'ajoute à la force centrifuge ----
+  \draw[report] (2.05,2.50) -- (1.50,2.50);
+  \draw[force, solideE] (1.50,2.50) -- ++(0,-0.82);
+  \node[etiq, anchor=east, text=solideE] at (1.42,2.05) {$\vec{F_{cent}}$};
+  \draw[force, solideA] (2.05,2.50) -- ++(0,-0.26);
+  \node[etiq, anchor=west, text=solideA] at (2.15,2.26) {$\vec P$};
+  \draw[report] (2.05,2.50) -- (2.60,2.50);
+  \draw[force, solideF] (2.60,2.50) -- ++(0,1.08);
+  \node[etiq, anchor=west, text=solideF, align=left] at (2.70,3.18)
+    {$\vec{E_{moyeu/pale}}$\\$3\,870$ N};
+  % ---- pale haute : le poids se retranche de la force centrifuge ----
+  \draw[report] (7.90,3.40) -- (8.45,3.40);
+  \draw[force, solideE] (8.45,3.40) -- ++(0,0.82);
+  \node[etiq, anchor=west, text=solideE] at (8.53,3.85) {$\vec{F_{cent}}$};
+  \draw[force, solideA] (7.90,3.40) -- ++(0,-0.26);
+  \node[etiq, anchor=west, text=solideA] at (8.00,3.20) {$\vec P$};
+  \draw[report] (7.90,3.40) -- (7.35,3.40);
+  \draw[force, solideF] (7.35,3.40) -- ++(0,-0.56);
+  \node[etiq, anchor=east, text=solideF, align=right] at (7.25,3.05)
+    {$\vec{E_{moyeu/pale}}$\\$2\,010$ N};
+  % ---- légende commune ----
+  \node[etiq, anchor=north, text=black!75] at (4.90,0.62)
+    {$P = 932$ N \quad $F_{cent} = 2\,940$ N \quad (flèches à l'échelle)};}
+\end{tikzpicture}
+\end{document}

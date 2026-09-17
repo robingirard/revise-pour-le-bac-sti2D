@@ -852,6 +852,187 @@ units:
       - 'Non : le schéma doit permettre d''étudier les mouvements, il respecte les positions réelles.'
       - 'Non : les symboles se placent aux centres réels des liaisons.'
       - 'Non : la taille des pièces ne compte pas, la position des liaisons si.'
+    - type: guided
+      level: 3
+      title: Type bac ITEC — centrage automatique de tubes sur une découpeuse laser
+      tags:
+      - type-bac
+      - classes
+      - graphe
+      - helicoidale
+      - contrainte
+      intro: |-
+        Une machine de découpe **laser** débite des tubes ronds de diamètres variés. Avant chaque coupe, le tube doit être **centré sur l'axe de la machine** : si son axe est décalé, le faisceau attaque la paroi de travers et la coupe est perdue.
+
+        Le centrage est confié à un dispositif à **vis unique portant deux filetages de sens opposés** — un pas à gauche d'un côté, un pas à droite de l'autre. Chaque filetage entraîne une noix, et chaque noix porte un mors en V. Le tube T vient se loger entre les deux V.
+
+        Le repérage des pièces (1 à 7), le sens de chaque filetage et la façon dont les pièces sont montées se lisent **sur la figure**.
+
+        **Problématique :** le dispositif centre-t-il correctement le tube, et la vis résiste-t-elle à l'effort de serrage ?
+
+        Données de l'étude : pas des deux filetages $p = 4$ mm · fréquence de rotation de la vis $N = 120$ tr·min⁻¹ · effort de serrage d'un mors sur le tube $F = 2\,500$ N · diamètre du noyau de la vis $d = 8$ mm · limite élastique de l'acier de la vis $R_e = 320$ MPa · coefficient de sécurité imposé $s \geqslant 3$.
+
+        {{fig:guide-bac-centrage-tube-muet}}
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Combien de **classes d''équivalence cinématique** ce mécanisme compte-t-il ?'
+        choices:
+        - '4'
+        - '3'
+        - '5'
+        - '7'
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Tu as réuni les deux chariots dans une même classe. Or ils se déplacent en sens opposés : ils bougent l''un par rapport à l''autre, ils ne peuvent donc pas appartenir à la même classe.'
+        - 'Tu as compté le tube. T est la pièce **à découper**, pas un élément du mécanisme : il n''entre pas dans les classes d''équivalence.'
+        - 'Une classe n''est pas une pièce : on regroupe dans une même classe toutes les pièces qui ne bougent pas les unes par rapport aux autres. Les 7 pièces du dispositif ne font pas 7 classes.'
+        explanation: |-
+          Quatre classes : $E_0 = \{1, 2\}$ le bâti et le moteur, dont le stator lui est fixé — c'est la classe fixe ; $E_1 = \{3\}$ la vis seule, accouplée à l'arbre moteur ; $E_2 = \{4, 5\}$ la noix gauche et son mors, vissés ensemble ; $E_3 = \{6, 7\}$ la noix droite et son mors.
+
+          Le rotor du moteur est ici considéré comme faisant partie de la vis (accouplement direct), et le tube T reste hors du mécanisme.
+
+          {{fig:guide-bac-centrage-tube}}
+      - kind: match
+        prompt: '**Étape 2.** Associe chaque classe d''équivalence au rôle qu''elle joue dans le dispositif.'
+        pairs:
+        - left: 1 + 2
+          right: 'Support fixe : c''est le référentiel de l''étude'
+        - left: '3'
+          right: Transforme la rotation du moteur en translation des deux chariots
+        - left: 4 + 5
+          right: 'Chariot gauche : vient serrer le tube par la gauche'
+        - left: 6 + 7
+          right: 'Chariot droit : vient serrer le tube par la droite'
+        explanation: 'Nommer le rôle de chaque classe avant de tracer le graphe évite de se tromper de liaison ensuite : une classe qui « transforme » une rotation en translation annonce forcément une liaison hélicoïdale, et deux classes qui « viennent serrer » annoncent deux guidages en translation.'
+      - kind: grid
+        prompt: |-
+          **Étape 3.** Pour chaque couple de classes en contact, coche la liaison qui les relie. Toutes ces liaisons ont le même axe, l'axe $(O,\vec x)$ de la vis.
+
+          {{fig:guide-bac-centrage-tube-muet}}
+        hint: Une seule case par ligne, puis vérifie.
+        rows:
+        - id: E0E1
+          label: bâti (E0) ↔ vis (E1)
+        - id: E0E2
+          label: bâti (E0) ↔ chariot gauche (E2)
+        - id: E1E2
+          label: vis (E1) ↔ chariot gauche (E2)
+        cols:
+        - id: P
+          label: Pivot
+        - id: G
+          label: Glissière
+        - id: H
+          label: Hélicoïdale
+        answer:
+        - PE0E1
+        - GE0E2
+        - HE1E2
+        cellFeedback:
+          GE0E1: 'La vis ne se déplace pas le long de son axe : elle est retenue axialement par le bâti. Si elle pouvait coulisser, elle sortirait au lieu de faire avancer les chariots.'
+          HE0E1: 'Une hélicoïdale lie une rotation **et** une translation. Entre le bâti et la vis, il n''y a pas de filetage : la vis se contente de tourner.'
+          PE0E2: 'C''est l''erreur classique (« pivot », ou « pivot glissant ») : le chariot ne tourne pas autour de l''axe de la vis, il est guidé par le rail du bâti. C''est justement ce blocage en rotation qui force la noix à avancer quand la vis tourne.'
+          HE0E2: 'Le chariot ne tourne pas par rapport au bâti : il ne fait que translater. Aucune hélice entre ces deux classes.'
+          PE1E2: 'Un pivot laisserait la vis tourner sans que le chariot avance : le filetage ne servirait plus à rien.'
+          GE1E2: 'Une glissière interdirait la rotation relative de la vis et de la noix : la vis ne pourrait plus tourner dans son filetage.'
+        explanation: |-
+          La vis tourne dans le bâti sans avancer : liaison **pivot** d'axe $(O,\vec x)$. Le chariot gauche est guidé par le rail du bâti, il ne peut que coulisser : liaison **glissière** de direction $\vec x$. Entre la vis et la noix, le filetage lie la rotation à la translation : liaison **hélicoïdale** d'axe $(O,\vec x)$, de pas 4 mm à gauche.
+
+          Le chariot droit $E_3$ donne exactement les deux mêmes liaisons avec $E_0$ et $E_1$ — l'hélicoïdale étant cette fois à droite. Le graphe des liaisons est donc un triangle dédoublé autour de $E_0$ et $E_1$.
+      - kind: order
+        prompt: '**Étape 4.** Remets dans l''ordre la chaîne de transmission du mouvement, du moteur jusqu''à la pièce serrée.'
+        steps:
+        - Le moteur (classe E0) délivre un mouvement de rotation
+        - La vis (classe E1) tourne autour de son axe
+        - La noix, entraînée par le filetage, avance en translation
+        - Le mors en V, vissé sur la noix, se rapproche de l'axe de la machine
+        - Le tube T est serré et centré
+        explanation: 'C''est la chaîne qu''on lit sur le schéma cinématique, de la classe motrice à la pièce à positionner. La transformation de mouvement — rotation vers translation — se fait en un seul endroit, à la liaison hélicoïdale entre la vis et la noix.'
+      - kind: mcq
+        prompt: '**Étape 5.** Les deux filetages de la vis sont de **sens opposés**. Qu''est-ce que cela change pour le serrage ?'
+        choices:
+        - 'Les deux chariots se déplacent en sens inverse l''un de l''autre et à la même vitesse : le tube est serré symétriquement, donc centré'
+        - Les deux chariots se déplacent dans le même sens, ce qui pousse le tube contre une butée fixe
+        - Un seul chariot se déplace ; l'autre sert de butée et se règle à la main selon le diamètre
+        - Les deux chariots se déplacent en sens inverse, mais à des vitesses différentes
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Deux noix qui avanceraient du même côté garderaient le même écartement : rien ne serait serré. Ce sont les sens opposés des filetages qui les font se rapprocher.'
+        - 'Les deux noix sont vissées sur la même vis : elles bougent toutes les deux, en même temps. Un dispositif à mors unique existe, mais il imposerait un réglage à chaque changement de diamètre — c''est précisément ce qu''on veut éviter ici.'
+        - 'Ce serait vrai si les deux **pas** étaient différents. Ici les deux filetages ont le même pas (4 mm) : pour un même tour de vis, les deux noix parcourent la même distance, donc à la même vitesse.'
+        explanation: 'Les deux noix reçoivent la même rotation, puisqu''elles sont portées par la même vis. Les pas étant opposés en sens et égaux en valeur, elles avancent l''une vers l''autre de la même quantité : le **milieu** des deux mors reste immobile, sur l''axe de la machine. Le tube s''y retrouve centré quel que soit son diamètre, sans aucun réglage — c''est ce qu''on appelle un centrage automatique.'
+      - kind: input
+        prompt: '**Étape 6.** La vis tourne à $N = 120$ tr·min⁻¹. Calculer la vitesse d''avance $v$ d''un mors, en mm·s⁻¹.'
+        answer: '8'
+        numeric: true
+        tolerance: 0.2
+        unit: mm·s⁻¹
+        explanation: 'À chaque tour de vis, la noix avance d''un pas, soit $p = 4$ mm. Or $N = 120$ tr·min⁻¹ $= \dfrac{120}{60} = 2$ tr·s⁻¹. Donc $v = 2 \times 4 = 8$ mm·s⁻¹. Autrement dit $v = N \times p = 120 \times 4 = 480$ mm·min⁻¹, que l''on divise par 60. Erreur classique : rester en minutes et répondre 480.'
+      - kind: input
+        prompt: '**Étape 7.** Ce mors serre le tube avec un effort $F = 2\,500$ N tout en avançant à cette vitesse. Calculer la puissance utile $P$ développée par le mors, en watts.'
+        answer: '20'
+        numeric: true
+        tolerance: 0.5
+        unit: W
+        explanation: '$P = F \times v$, avec $v$ **en m·s⁻¹** : $v = 8$ mm·s⁻¹ $= 0{,}008$ m·s⁻¹, donc $P = 2\,500 \times 0{,}008 = 20$ W. Erreur classique : oublier la conversion et annoncer 20 000 W. Vingt kilowatts pour serrer un tube, c''est la puissance d''une petite voiture — l''ordre de grandeur suffit à repérer la faute.'
+      - kind: mcq
+        prompt: '**Étape 8.** Les deux mors sont en appui sur le tube et le serrent. À quelle sollicitation la portion de vis **située entre les deux noix** est-elle soumise ?'
+        choices:
+        - Traction
+        - Compression
+        - Flexion
+        - Cisaillement
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'C''est le **tube** qui est comprimé, pris en étau entre les deux mors. La vis, elle, est tirée par ses deux noix vers l''extérieur.'
+        - Il faudrait pour cela des efforts perpendiculaires à l'axe de la vis, qui la feraient fléchir. Les efforts de serrage sont dirigés **selon** cet axe.
+        - Le cisaillement suppose deux efforts opposés, perpendiculaires à l'axe et très proches l'un de l'autre, comme sur un axe d'articulation. Ici les efforts sont axiaux et éloignés.
+        explanation: |-
+          Chaque mors pousse le tube vers l'intérieur avec $F = 2\,500$ N ; le tube repousse donc chaque mors vers l'extérieur avec la même intensité. Chaque noix tire alors la vis de son côté : les deux efforts s'éloignent l'un de l'autre et la portion de vis comprise entre les noix s'allonge. C'est de la **traction**, dont l'effort normal vaut $F = 2\,500$ N.
+
+          En toute rigueur, cette portion subit **aussi** une torsion, due au couple que le moteur transmet par le filetage. Comme dans un sujet d'examen, on la néglige : l'étude demandée ne porte que sur l'effort axial.
+      - kind: input
+        prompt: '**Étape 9.** Le noyau de la vis a pour diamètre $d = 8$ mm. Calculer l''aire $S$ de sa section droite, en mm² (arrondir au dixième).'
+        answer: '50,3'
+        numeric: true
+        tolerance: 0.4
+        unit: mm²
+        explanation: '$S = \dfrac{\pi d^2}{4} = \dfrac{\pi \times 8^2}{4} = \dfrac{\pi \times 64}{4} = 16\pi \approx 50{,}3$ mm². Deux erreurs classiques donnent la même valeur fausse de 201,1 mm², quatre fois trop grande : écrire $S = \pi d^2$ (l''oubli du 4), ou prendre $d$ pour un rayon et calculer $\pi \times 8^2$. On calcule bien sur le **noyau**, c''est-à-dire le fond des filets : c''est la section la plus faible de la vis, donc la plus sollicitée.'
+      - kind: input
+        prompt: '**Étape 10.** Calculer la contrainte normale $\sigma$ dans le noyau de la vis, en MPa (arrondir au dixième).'
+        answer: '49,7'
+        numeric: true
+        tolerance: 0.6
+        unit: MPa
+        explanation: '$\sigma = \dfrac{F}{S} = \dfrac{2\,500}{50{,}3} \approx 49{,}7$ MPa. Aucune conversion n''est nécessaire : $1$ MPa $= 1$ N·mm⁻², donc des newtons divisés par des mm² donnent **directement** des MPa. En passant par les unités SI on aurait $S = 50{,}3 \times 10^{-6}$ m² et $\sigma \approx 49{,}7 \times 10^{6}$ Pa — la même chose, en trois lignes de plus.'
+      - kind: input
+        prompt: '**Étape 11.** L''acier de la vis a une limite élastique $R_e = 320$ MPa. Calculer le coefficient de sécurité **réel** $s$ de la vis (arrondir au dixième).'
+        answer: '6,4'
+        numeric: true
+        tolerance: 0.2
+        unit: ''
+        explanation: '$s = \dfrac{R_e}{\sigma} = \dfrac{320}{49{,}7} \approx 6{,}4$. C''est un rapport de deux contraintes : il n''a **pas d''unité**. On peut aussi raisonner à l''envers, avec la contrainte pratique admissible imposée par le cahier des charges : $R_{pe} = \dfrac{R_e}{s} = \dfrac{320}{3} \approx 106{,}7$ MPa, et la contrainte réelle de 49,7 MPa lui est bien inférieure.'
+      - kind: mcq
+        prompt: '**Étape 12.** Conclure sur le dimensionnement de la vis, sachant que le cahier des charges impose $s \geqslant 3$.'
+        choices:
+        - 'Le coefficient réel vaut $s = 6{,}4$, supérieur au minimum de 3 imposé : la vis est correctement dimensionnée'
+        - 'Le coefficient réel vaut $s = 6{,}4$, très supérieur à 3 : la vis est surdimensionnée, il faut réduire son diamètre'
+        - 'Le coefficient réel vaut $s = 6{,}4$ alors qu''il ne doit pas dépasser 3 : la vis n''est pas conforme'
+        - On ne peut pas conclure tant que la torsion de la vis n'a pas été calculée
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Un coefficient confortable n''est pas une faute. Le diamètre d''une vis est aussi imposé par le filetage à tailler, par la rigidité — une vis trop fine flamberait ou vibrerait — et par les diamètres normalisés disponibles : la contrainte n''est qu''un critère parmi d''autres.'
+        - 'Le cahier des charges impose $s \geqslant 3$ : c''est un **minimum** à dépasser, pas un plafond. Plus $s$ est grand, plus la marge de sécurité est grande.'
+        - 'La torsion est bien négligée, on l''a dit à l''étape 8. Mais l''étude demandée porte sur l''effort axial de serrage, et c''est elle qui tranche ici : la marge est très large.'
+        explanation: '$s = 6{,}4 \geqslant 3$ : la condition de résistance est vérifiée. Réponse à la problématique posée au début : les deux filetages de sens opposés, de même pas, assurent le centrage automatique du tube quel que soit son diamètre (étape 5), et la vis supporte l''effort de serrage de 2 500 N avec une marge confortable (étape 11). Le dispositif répond au cahier des charges.'
 - id: transmission-mvt
   matiere: ingenierie
   title: Transmettre et transformer le mouvement
@@ -1972,6 +2153,163 @@ units:
         - 'Non : un plus grand pignon parcourt plus de crémaillère par tour, donc va plus vite.'
         - 'Non : V est proportionnelle à R, pas à R².'
         explanation: 'V = ω × R : à ω constante, doubler R double V. En contrepartie, l''effort disponible sur la crémaillère est divisé par deux.'
+    - type: guided
+      level: 3
+      title: 'Type bac ITEC — hydrolienne fluviale : vitesse en bout de pale et effort dans la liaison'
+      tags:
+      - type-bac
+      - rotation
+      - vitesse-tangentielle
+      - force-centrifuge
+      - statique
+      intro: |-
+        Une **hydrolienne fluviale** est une turbine immergée dans le courant d'un fleuve : l'eau qui passe fait tourner un rotor à trois pales, lequel entraîne une génératrice. L'eau étant environ 800 fois plus dense que l'air, une hydrolienne tire beaucoup de puissance d'un rotor de petit diamètre — mais elle doit tourner **lentement** : une pale trop rapide blesse les poissons et fait caviter le bord d'attaque.
+
+        Le rotor tourne autour d'un axe horizontal, fixe par rapport à la **nacelle**, elle-même immobile sur son support posé au fond du fleuve. On étudie le point $M$, en bout de pale, et le centre de gravité $G$ d'une pale.
+
+        **Problématique** : la vitesse en bout de pale respecte-t-elle la limite fixée, et la liaison entre le moyeu et la pale tient-elle l'effort axial ?
+
+        **Données** : fréquence de rotation maximale $N = 42$ tr·min⁻¹ ; vitesse du courant $v_\text{courant} = 2{,}8$ m·s⁻¹ ; vitesse maximale admise en bout de pale **50 km·h⁻¹** ; masse d'une pale $m = 95$ kg ; accélération de la pesanteur $g = 9{,}81$ m·s⁻² ; effort axial admissible dans la liaison moyeu-pale **6,0 kN**.
+
+        **Relations fournies** : rapport de vitesse $\lambda = V_t / v_\text{courant}$, la machine étant dite « lente » si $\lambda < 3$ et « rapide » si $\lambda > 3$ ; force centrifuge sur une pale $\vec F_\text{cent} = (m \times OG \times \omega^2)\,\vec x$, toujours dirigée vers l'extérieur ; pale isolée à l'équilibre : $\vec E_\text{moyeu/pale} + \vec P_\text{pale} + \vec F_\text{cent} = \vec 0$.
+
+        {{fig:guide-bac-hydrolienne-muet}}
+      steps:
+      - kind: mcq
+        prompt: '**Étape 1.** Quel est le mouvement du rotor par rapport à la nacelle ?'
+        choices:
+        - Une rotation autour d'un axe fixe
+        - Une translation rectiligne
+        - Une translation circulaire
+        - Un mouvement plan quelconque
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : dans une translation rectiligne, tous les points suivent des segments de droite parallèles ; ici le bout de pale revient à son point de départ à chaque tour.'
+        - 'Non : dans une translation circulaire, la pale garderait la même orientation tout au long du tour (comme une nacelle de grande roue). Ici elle bascule avec le rotor : elle tourne sur elle-même autour de l''axe.'
+        - 'Non : un mouvement plan quelconque combine rotation et translation, avec un axe qui se déplace. Ici l''axe du rotor est fixe dans la nacelle.'
+        explanation: 'Tous les points du rotor décrivent des cercles concentriques centrés sur le même axe, fixe par rapport à la nacelle : c''est une **rotation autour d''un axe fixe**. C''est ce mouvement qui autorise la relation $V = \omega \times R$ pour la suite du sujet.'
+      - kind: mcq
+        prompt: '**Étape 2.** Quelle est la trajectoire du point $M$ dans son mouvement par rapport à la nacelle ?
+
+
+          {{fig:guide-bac-hydrolienne-muet}}'
+        choices:
+        - Un cercle de rayon 3,00 m
+        - Un cercle de rayon 6,00 m
+        - Une hélice
+        - Un arc de cercle de rayon 1,60 m
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la figure cote le **diamètre** du rotor, pas le rayon. Le rayon de la trajectoire de $M$ en vaut la moitié.'
+        - 'Non : une hélice supposerait que le point avance le long de l''axe pendant qu''il tourne. Ici la nacelle est immobile et le rotor ne se déplace pas le long de son axe.'
+        - 'Non : 1,60 m est la cote $OG$, qui repère le centre de gravité de la pale, pas son extrémité. Et $M$ décrit un cercle entier, pas un arc.'
+        explanation: 'Dans une rotation autour d''un axe fixe, chaque point décrit un **cercle** centré sur l''axe, de rayon égal à sa distance à l''axe. Le diamètre coté valant 6,00 m, $M$ tourne sur un cercle de rayon $R = 3{,}00$ m.'
+      - kind: input
+        prompt: '**Étape 3.** Le rotor tourne à sa fréquence de rotation maximale. Calculer la vitesse angulaire $\omega$ correspondante (arrondir au dixième).'
+        answer: '4,4'
+        numeric: true
+        tolerance: 0.05
+        unit: rad·s⁻¹
+        explanation: '$\omega = \dfrac{2\pi N}{60} = \dfrac{2\pi \times 42}{60} \approx 4{,}4$ rad·s⁻¹. Le 60 convertit les minutes en secondes : l''oublier donnerait $2\pi \times 42 \approx 264$ rad·s⁻¹, soixante fois trop, une valeur de perceuse et non d''hydrolienne.'
+      - kind: input
+        prompt: '**Étape 4.** Calculer la valeur de la vitesse du point $M$ dans son mouvement par rapport à la nacelle (arrondir au dixième).'
+        answer: '13,2'
+        numeric: true
+        tolerance: 0.2
+        unit: m·s⁻¹
+        explanation: '$V_t = \omega \times R = 4{,}398 \times 3{,}00 \approx 13{,}2$ m·s⁻¹. Le vecteur vitesse est **tangent** à la trajectoire, donc perpendiculaire à la pale, et de sens celui de la rotation.
+
+
+          {{fig:guide-bac-hydrolienne}}'
+      - kind: input
+        prompt: '**Étape 5.** Exprimer cette vitesse en kilomètres par heure (arrondir au dixième).'
+        answer: '47,5'
+        numeric: true
+        tolerance: 0.8
+        unit: km·h⁻¹
+        explanation: '$13{,}2 \times 3{,}6 \approx 47{,}5$ km·h⁻¹. Le facteur 3,6 vient des deux conversions : une heure fait $3\,600$ s et un kilomètre fait $1\,000$ m, donc $3\,600 / 1\,000 = 3{,}6$. On multiplie pour passer des m·s⁻¹ aux km·h⁻¹, on divise dans l''autre sens.'
+      - kind: mcq
+        prompt: '**Étape 6.** Conclure sur le respect de la limite de vitesse en bout de pale.'
+        choices:
+        - 'Conforme : 47,5 km·h⁻¹ reste sous la limite de 50 km·h⁻¹, mais la marge est faible (5 %)'
+        - 'Non conforme : 47,5 km·h⁻¹ dépasse la limite de 50 km·h⁻¹'
+        - 'Conforme, avec une marge confortable'
+        - On ne peut pas conclure sans connaître la vitesse du courant
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : 47,5 est **inférieur** à 50. Le sens de l''inégalité est inversé — attention à toujours placer la valeur calculée et la valeur limite dans le bon ordre.'
+        - 'Non : la marge vaut 2,5 km·h⁻¹ sur 50, soit 5 %. Une hausse de régime de 5 % — un coup de crue sur le fleuve — suffirait à dépasser la limite : ce n''est pas confortable.'
+        - 'Non : la limite porte sur la vitesse en bout de pale, qui vient d''être calculée à partir de $N$ et de $R$ seulement. La vitesse du courant servira au rapport $\lambda$, pas à cette comparaison.'
+        explanation: '$47{,}5 < 50$ : l''exigence est satisfaite à la fréquence de rotation maximale. Mais $(50 - 47{,}5)/50 = 0{,}05$, soit 5 % : c''est une marge mince pour un critère de sécurité (protection des poissons, cavitation). En pratique on bride la génératrice pour interdire tout dépassement de $N = 42$ tr·min⁻¹.'
+      - kind: input
+        prompt: '**Étape 7.** Calculer le rapport de vitesse $\lambda$ de l''hydrolienne (arrondir au dixième, sans unité).'
+        answer: '4,7'
+        numeric: true
+        tolerance: 0.15
+        explanation: '$\lambda = \dfrac{V_t}{v_\text{courant}} = \dfrac{13{,}2}{2{,}8} \approx 4{,}7$. Comme $\lambda > 3$, la machine est du type **rapide** : le bout de pale va près de cinq fois plus vite que l''eau. C''est cohérent avec un rotor à trois pales fines — les machines lentes ($\lambda < 3$) ont beaucoup de pales larges, comme une roue à aubes. $\lambda$ est un rapport de deux vitesses : il n''a pas d''unité.'
+      - kind: input
+        prompt: '**Étape 8.** On isole une pale. Calculer la valeur de son poids (arrondir à l''unité).'
+        answer: '932'
+        numeric: true
+        tolerance: 8
+        unit: N
+        explanation: '$P = m \times g = 95 \times 9{,}81 \approx 932$ N. Le poids est vertical, dirigé vers le bas, appliqué en $G$ — sa direction ne change pas quand la pale tourne, mais sa position **par rapport à la pale** change, et c''est tout le problème de l''étape 10.'
+      - kind: input
+        prompt: '**Étape 9.** Calculer la valeur de la force centrifuge qui s''exerce sur une pale à la fréquence de rotation maximale (arrondir à la dizaine).'
+        answer: '2940'
+        numeric: true
+        tolerance: 40
+        unit: N
+        explanation: '$F_\text{cent} = m \times OG \times \omega^2 = 95 \times 1{,}60 \times 4{,}398^2 \approx 2\,940$ N. La distance à prendre est celle du **centre de gravité**, $OG = 1{,}60$ m, pas le rayon du bout de pale : avec $R = 3{,}00$ m on trouverait $5\,510$ N, soit près du double. La force centrifuge vaut ici plus de trois fois le poids de la pale.'
+      - kind: mcq
+        prompt: '**Étape 10.** La pale occupe successivement les deux positions repérées sur la figure. Dans laquelle l''effort axial dans la liaison moyeu-pale est-il le plus grand ?
+
+
+          {{fig:guide-bac-hydrolienne-positions-muet}}'
+        choices:
+        - 'La position basse : le poids y est dirigé vers l''extérieur, comme la force centrifuge ; les deux s''ajoutent'
+        - 'La position haute : le poids et la force centrifuge s''y ajoutent'
+        - Les deux positions donnent le même effort, car le poids est perpendiculaire à la pale
+        - La position haute, parce que la pale y va plus vite
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : en position haute, la pale pointe vers le haut et le poids, toujours vertical descendant, est dirigé **vers le moyeu**. Il retire donc 932 N à la force centrifuge au lieu de s''y ajouter.'
+        - 'Non : le poids est perpendiculaire à la pale dans les positions **horizontales**, pas dans celles-ci. Dans les deux positions étudiées, la pale est verticale : le poids est porté par l''axe $\vec x$ de la pale.'
+        - 'Non : tous les points d''un solide en rotation autour d''un axe fixe ont la même vitesse angulaire, et $G$ reste à la même distance $OG$ de l''axe. La vitesse de $G$ est donc la même en haut et en bas.'
+        explanation: 'Projetés sur l''axe $\vec x$ de la pale (orienté du moyeu vers le bout) : en **position basse**, $\vec P$ est dirigé vers l''extérieur, donc dans le même sens que $\vec F_\text{cent}$ — les deux s''ajoutent. En **position haute**, $\vec P$ est dirigé vers le moyeu et se retranche. La position basse est donc le cas **le plus défavorable**, celui qui dimensionne la liaison.
+
+
+          {{fig:guide-bac-hydrolienne-positions}}'
+      - kind: input
+        prompt: '**Étape 11.** Calculer la valeur de l''effort axial maximal supporté par la liaison moyeu-pale (arrondir à la dizaine).'
+        answer: '3870'
+        numeric: true
+        tolerance: 50
+        unit: N
+        explanation: 'En position basse, l''équilibre de la pale isolée $\vec E_\text{moyeu/pale} + \vec P_\text{pale} + \vec F_\text{cent} = \vec 0$ projeté sur $\vec x$ donne $E = F_\text{cent} + P = 2\,940 + 932 \approx 3\,870$ N. La liaison **retient** la pale : son action est dirigée vers le moyeu, opposée à la somme des deux autres. En position haute, le même calcul donnerait $2\,940 - 932 \approx 2\,010$ N.'
+      - kind: mcq
+        prompt: '**Étape 12.** Conclure sur la tenue de la liaison moyeu-pale.'
+        choices:
+        - 'La liaison convient : 3,87 kN reste sous les 6,0 kN admissibles, avec un coefficient de sécurité d''environ 1,6'
+        - 'La liaison ne convient pas : 3,87 kN est trop proche de la valeur admissible'
+        - 'La liaison convient, avec un coefficient de sécurité d''environ 2,0'
+        - Il faut refaire le calcul en position haute, qui est le cas le plus défavorable
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : le critère est une inégalité, $3{,}87 < 6{,}0$, et elle est satisfaite. « Trop proche » ne se décide pas à l''œil : c''est le rôle du coefficient de sécurité, qui vaut ici 1,55.'
+        - 'Non : 2,0 c''est $6{,}0 / 2{,}94$, obtenu en oubliant le poids. Le dimensionnement se fait avec l''effort du cas le plus défavorable, poids compris : $6{,}0 / 3{,}87 = 1{,}55$.'
+        - 'Non : la position haute donne $2\,010$ N, soit environ 2,0 kN — un effort **plus faible**. C''est la position basse qui dimensionne la liaison.'
+        explanation: '$6{,}0 / 3{,}87 \approx 1{,}55$ : la liaison encaisse environ 1,6 fois l''effort maximal prévu. Les deux exigences du cahier des charges sont donc tenues — vitesse en bout de pale sous 50 km·h⁻¹, avec 5 % de marge, et effort axial sous 6,0 kN, avec un coefficient de sécurité de 1,6. C''est la vitesse en bout de pale, et non la tenue de la liaison, qui limite le régime de la machine.'
   - id: acceleration
     title: Accélération et équations
     icon: 📈
@@ -2193,3 +2531,164 @@ units:
         tolerance: 15
         unit: tours
         explanation: θ m = 4,00 ÷ 0,0005 = 8 000 rad ≈ 1 273 tours.
+    - type: guided
+      level: 3
+      title: 'Type bac ITEC — circuit de karting : virage relevé et monte-charge à crémaillère'
+      tags:
+      - type-bac
+      - frottement
+      - virage-releve
+      - pignon-cremaillere
+      - reducteur
+      intro: |-
+        Un **circuit de karting électrique couvert** vient d'ouvrir en périphérie d'une ville moyenne. Deux études indépendantes sont menées sur ce support, comme les deux parties d'un sujet d'examen.
+
+        **Partie A — le virage relevé.** Les virages du circuit sont *relevés* : la piste y est inclinée vers l'intérieur du virage, comme le montre la coupe ci-dessous. On cherche d'abord si un kart immobilisé en travers du dévers y tient sans glisser, puis à quelle vitesse il passe le virage lorsque le pilote incline l'ensemble jusqu'à la limite de l'adhérence. **Relation donnée** : l'angle d'inclinaison $\varphi_i$ de l'ensemble pilote + kart par rapport à la verticale vérifie $\tan \varphi_i = \dfrac{V_e^{\,2}}{g\,r}$, où $V_e$ est la vitesse d'équilibre et $r$ le rayon de courbure du virage.
+
+        **Partie B — le monte-charge du paddock.** Une plateforme élévatrice donne accès au paddock aux personnes à mobilité réduite. Un moteur électrique entraîne un réducteur, qui entraîne un pignon ; ce pignon roule sur une **crémaillère** fixée à la colonne et fait monter la plateforme. Le cahier des charges impose une vitesse de déplacement d'au plus **0,1 m·s⁻¹**.
+
+        {{fig:guide-bac-virage-releve-muet}}
+      steps:
+      - kind: input
+        prompt: '**Étape 1.** Les pneus du kart sont en élastomère et la piste est en béton : le coefficient de frottement de ce couple de matériaux vaut $f = 0{,}75$. Calculer l''**angle de frottement** $\varphi$ correspondant (arrondir au dixième de degré).'
+        answer: '36,9'
+        numeric: true
+        tolerance: 0.3
+        unit: °
+        explanation: '$\varphi = \arctan f = \arctan 0{,}75 \approx 36{,}9^\circ$. Cet angle est le **demi-angle au sommet du cône de frottement** construit sur la normale au contact : tant que la résultante de l''action de contact reste **à l''intérieur** de ce cône, il y a adhérence ; dès qu''elle en sort, la roue glisse.'
+      - kind: mcq
+        prompt: |-
+          **Étape 2.** Un kart est **à l'arrêt**, en travers du dévers, dans un virage du circuit. La coupe ci-dessous donne l'inclinaison de la piste à cet endroit. Le kart se met-il à glisser vers l'intérieur du virage ?
+
+          {{fig:guide-bac-virage-releve-muet}}
+        choices:
+        - 'Non : l''inclinaison de la piste reste inférieure à l''angle de frottement, le kart tient'
+        - 'Oui : la piste est trop inclinée pour les pneus, le kart glisse'
+        - On ne peut pas savoir sans connaître la masse du kart et de son pilote
+        - 'Il tient parce que les pneus de kart sont larges : la surface de contact est grande'
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : il faudrait pour cela que l''inclinaison de la piste **dépasse** $36{,}9^\circ$, l''angle de frottement. Relis la cote portée sur la coupe.'
+        - 'Non : c''est justement le résultat remarquable de cette étude — la masse **disparaît** de la condition de non-glissement, qui ne fait intervenir que des angles.'
+        - 'Non : l''aire de contact n''intervient pas dans la loi de Coulomb. Seul compte le couple de matériaux en présence, à travers le coefficient $f$.'
+        explanation: |-
+          Le kart à l'arrêt n'est soumis qu'à deux actions : son poids et l'action de la piste. À l'équilibre, elles sont directement opposées, donc l'action de contact est **verticale** — inclinée de l'angle du dévers par rapport à la normale à la piste. Le dévers vaut $32^\circ$ et $32^\circ < 36{,}9^\circ$ : la résultante reste dans le cône de frottement, il y a **adhérence**.
+
+          La masse se simplifie : la composante tangentielle vaut $T = m\,g \sin 32^\circ$, la normale $N = m\,g \cos 32^\circ$, et la condition $T \le f\,N$ se réduit à $\tan 32^\circ \le f$.
+
+          {{fig:guide-bac-virage-releve}}
+      - kind: mcq
+        prompt: '**Étape 3.** Deux karts abordent le **même** virage. Le premier est fortement incliné vers l''intérieur, pilote penché ; le second passe presque droit. Lequel va le plus vite ?'
+        choices:
+        - Le kart le plus incliné
+        - 'Le kart presque droit : plus stable, il peut passer plus vite'
+        - 'Les deux vont à la même vitesse : l''inclinaison ne dépend que du style du pilote'
+        - On ne peut pas comparer sans connaître la masse des deux ensembles
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : l''inclinaison n''est pas un choix de confort. Plus la vitesse est grande, plus il faut incliner l''ensemble pour que la résultante des actions passe par le point de contact au sol.'
+        - 'Non : la relation donnée lie $\varphi_i$ à $V_e$. À rayon fixé, une inclinaison correspond à une vitesse et une seule.'
+        - 'Non : comme à l''étape 2, la masse se simplifie ; elle n''apparaît pas dans $\tan \varphi_i = V_e^{\,2} / (g\,r)$.'
+        explanation: 'Dans $\tan \varphi_i = \dfrac{V_e^{\,2}}{g\,r}$, le rayon $r$ est le même pour les deux karts : $\varphi_i$ croît donc avec $V_e$. Le kart le plus incliné est le plus rapide — et le plus proche de la limite d''adhérence.'
+      - kind: input
+        prompt: '**Étape 4.** Le rayon de courbure du virage vaut $r = 24$ m et on prend $g = 9{,}81$ m·s⁻². Calculer la vitesse d''équilibre $V_e$ pour une inclinaison $\varphi_i = 40^\circ$ (arrondir au dixième).'
+        answer: '14,1'
+        numeric: true
+        tolerance: 0.2
+        unit: m·s⁻¹
+        explanation: '$V_e = \sqrt{\tan \varphi_i \times g \times r} = \sqrt{\tan 40^\circ \times 9{,}81 \times 24} = \sqrt{197{,}6} \approx 14{,}1$ m·s⁻¹. Erreur classique : oublier la **racine carrée** et annoncer $197{,}6$ m·s⁻¹, soit plus de 700 km·h⁻¹ — l''ordre de grandeur suffit à repérer la faute.'
+      - kind: input
+        prompt: '**Étape 5.** Exprimer cette vitesse en kilomètres par heure (arrondir au dixième).'
+        answer: '50,6'
+        numeric: true
+        tolerance: 0.8
+        unit: km·h⁻¹
+        explanation: '$14{,}06 \times 3{,}6 \approx 50{,}6$ km·h⁻¹. On **multiplie** par 3,6 pour passer des m·s⁻¹ aux km·h⁻¹, on divise pour faire l''inverse. C''est une vitesse crédible pour un kart de location dans un virage de 24 m de rayon.'
+      - kind: mcq
+        prompt: '**Étape 6.** À quoi sert de **relever** la piste dans les virages du circuit ?'
+        choices:
+        - 'La piste inclinée oriente sa réaction vers l''intérieur du virage : elle fournit une part de l''effort qui fait tourner le kart, l''adhérence est donc moins sollicitée et le virage se passe plus vite'
+        - À évacuer l'eau de pluie vers l'extérieur de la piste
+        - À ralentir les karts à l'entrée du virage, pour la sécurité
+        - À augmenter le coefficient de frottement entre les pneus et la piste
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : c''est le rôle du dévers d''une route ordinaire, qui vaut 2 à 3 %. Un relevé de $32^\circ$ n''est pas construit pour l''eau, mais pour la dynamique — et ce circuit est couvert.'
+        - 'Non : c''est l''inverse. Un virage relevé se passe **plus vite** que le même virage à plat.'
+        - 'Non : le coefficient $f$ ne dépend que du couple de matériaux en contact (élastomère / béton). Incliner la piste ne le change pas.'
+        explanation: 'Sur une piste plate, c''est le frottement **seul** qui fournit l''effort centripète. Sur une piste relevée, la réaction normale — perpendiculaire à la piste, donc penchée vers l''intérieur du virage — a une composante horizontale qui y participe. La part demandée au frottement diminue d''autant : le virage se prend plus vite, et il reste praticable quand $f$ chute (pneus froids, piste poussiéreuse).'
+      - kind: mcq
+        prompt: |-
+          **Étape 7.** On passe au **monte-charge du paddock**. Son pignon, entraîné par le réducteur, roule sur la crémaillère fixée à la colonne. Le pignon porte $Z$ dents et la crémaillère a un pas $p$ (distance d'une dent à la suivante, mesurée sur la ligne primitive). Pourquoi le rayon primitif du pignon vaut-il $r = \dfrac{p\,Z}{2\pi}$ ?
+
+          {{fig:transformation-pignon-cremaillere}}
+        choices:
+        - 'Parce que le pignon **roule sans glisser** : en un tour il parcourt sur la crémaillère une longueur égale à son périmètre primitif $2\pi r$, et cette même longueur vaut $Z$ pas, soit $p\,Z$'
+        - Parce que le diamètre primitif est la somme des largeurs des dents du pignon
+        - Parce que le pas est par définition le rayon divisé par le nombre de dents
+        - Parce que la crémaillère est droite, donc de rayon de courbure infini
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la somme des largeurs de dents n''est pas un diamètre, et elle ne fait même que la moitié du **périmètre** primitif — les creux valent autant que les pleins.'
+        - 'Non : c''est l''inverse. $Z$ pas font un tour complet de pignon, donc $p = 2\pi r / Z$, et non $p = r / Z$.'
+        - 'Non : la forme rectiligne de la crémaillère ne dit rien du rayon du pignon. C''est le roulement sans glissement au point $I$ qui fournit la relation.'
+        explanation: 'Au point de contact $I$, le pignon et la crémaillère ont la même vitesse : c''est le **roulement sans glissement**. Un tour de pignon déroule donc sur la crémaillère la longueur $2\pi r$, et ce tour a engrené $Z$ dents, c''est-à-dire $Z$ pas : $2\pi r = p\,Z$, d''où $r = \dfrac{p\,Z}{2\pi}$. C''est la même relation qui donne la loi entrée/sortie du mécanisme, $d = r\,\theta$ et $V = r\,\omega$.'
+      - kind: input
+        prompt: '**Étape 8.** Le moteur du monte-charge tourne à $1\,500$ tr·min⁻¹ et attaque un réducteur de rapport $1/60$. Calculer la vitesse angulaire $\omega$ du pignon, en radians par seconde (arrondir au centième).'
+        answer: '2,62'
+        numeric: true
+        tolerance: 0.05
+        unit: rad·s⁻¹
+        explanation: 'En sortie de réducteur : $1\,500 \times \dfrac{1}{60} = 25$ tr·min⁻¹. Conversion : $\omega = \dfrac{2\pi \times 25}{60} \approx 2{,}62$ rad·s⁻¹. Deux erreurs classiques : s''arrêter à $25$, qui est en tours par minute et non en rad·s⁻¹ ; ou convertir **avant** de réduire et annoncer $157$ rad·s⁻¹, qui est la vitesse du moteur.'
+      - kind: input
+        prompt: '**Étape 9.** La crémaillère a un pas $p = 10$ mm et le pignon $Z = 18$ dents. Calculer le rayon primitif $r$ du pignon (arrondir au dixième de millimètre).'
+        answer: '28,6'
+        numeric: true
+        tolerance: 0.3
+        unit: mm
+        explanation: '$r = \dfrac{p\,Z}{2\pi} = \dfrac{10 \times 18}{2\pi} = \dfrac{180}{6{,}283} \approx 28{,}6$ mm. Le diamètre primitif vaut donc environ 57,3 mm : un pignon qui tient dans la main.'
+      - kind: input
+        prompt: '**Étape 10.** En déduire la vitesse de montée $V$ de la plateforme, en mètres par seconde (trois décimales).'
+        answer: '0,075'
+        numeric: true
+        tolerance: 0.003
+        unit: m·s⁻¹
+        explanation: '$V = r\,\omega = 0{,}0286 \times 2{,}62 \approx 0{,}075$ m·s⁻¹, soit 7,5 cm par seconde, ou 4,5 m par minute. Erreur classique : garder le rayon en millimètres et annoncer $75$ — ce serait 270 km·h⁻¹ pour un monte-charge. Dans $V = r\,\omega$, $r$ doit être en mètres et $\omega$ en rad·s⁻¹.'
+      - kind: mcq
+        prompt: '**Étape 11.** Le cahier des charges impose une vitesse de déplacement d''au plus $0{,}1$ m·s⁻¹. Conclure sur la chaîne de transmission du monte-charge.'
+        choices:
+        - '$0{,}075$ m·s⁻¹ est inférieur à $0{,}1$ m·s⁻¹ : la transmission respecte le cahier des charges'
+        - '$0{,}075$ m·s⁻¹ ne respecte pas le cahier des charges : la plateforme monte trop vite'
+        - Le cahier des charges est respecté, et on pourrait même passer le réducteur à 1/40 pour monter plus vite
+        - On ne peut pas conclure sans connaître la charge transportée par la plateforme
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : compare les deux nombres — $0{,}075$ est **inférieur** à $0{,}1$. La valeur du cahier des charges est un maximum à ne pas dépasser, pas une vitesse à atteindre.'
+        - 'Attention : avec un rapport $1/40$, $\omega$ passerait à $3{,}93$ rad·s⁻¹ et $V$ à $0{,}113$ m·s⁻¹, donc **au-dessus** de la limite. Vérifie une modification avant de la proposer.'
+        - 'Non : la charge transportée fixe le **couple** que le moteur doit fournir, pas la vitesse, qui ne dépend que de la cinématique de la chaîne.'
+        explanation: 'La chaîne moteur → réducteur $1/60$ → pignon de rayon primitif $28{,}6$ mm donne $V = 0{,}075$ m·s⁻¹, soit 75 % de la vitesse maximale autorisée : le critère est respecté, avec 25 % de marge. Une vitesse lente est ici une qualité — c''est un appareil d''accès destiné aux personnes à mobilité réduite.'
+      - kind: mcq
+        prompt: '**Étape 12.** En une phrase, qu''a-t-on établi dans ce sujet ?'
+        choices:
+        - 'Le virage relevé se passe à $50{,}6$ km·h⁻¹ pour une inclinaison de $40^\circ$, et le monte-charge monte à $0{,}075$ m·s⁻¹, sous la limite de $0{,}1$ m·s⁻¹ : les deux systèmes, étudiés séparément, satisfont chacun leur exigence'
+        - Le virage relevé se passe à 0,075 m·s⁻¹ et le monte-charge du paddock monte à 50,6 km·h⁻¹
+        - Le monte-charge est conforme, donc le kart peut passer le virage à 50,6 km·h⁻¹ en toute sécurité
+        - Le kart ne glisse pas à l'arrêt sur le dévers, donc la vitesse du monte-charge est nécessairement conforme
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : les deux résultats sont intervertis. $50{,}6$ km·h⁻¹ est la vitesse du kart dans le virage, $0{,}075$ m·s⁻¹ celle de la plateforme.'
+        - 'Non : les deux parties sont **indépendantes** ; la conformité du monte-charge ne dit rien du virage. Et $50{,}6$ km·h⁻¹ est une limite d''adhérence, pas une consigne de sécurité.'
+        - 'Non : le non-glissement à l''arrêt (étape 2) et la vitesse de la plateforme (étape 10) sont deux résultats sans lien logique. Un sujet d''examen enchaîne des parties indépendantes sur un même support.'
+        explanation: 'Partie A : l''angle de frottement vaut $36{,}9^\circ$, supérieur au dévers de $32^\circ$, donc le kart tient à l''arrêt ; incliné à $40^\circ$, il passe le virage de 24 m de rayon à $14{,}1$ m·s⁻¹, soit $50{,}6$ km·h⁻¹. Partie B : la chaîne moteur — réducteur $1/60$ — pignon-crémaillère donne $0{,}075$ m·s⁻¹, inférieur aux $0{,}1$ m·s⁻¹ imposés. Deux études sans lien entre elles sur un même support : c''est exactement la structure d''un sujet de 2I2D.'

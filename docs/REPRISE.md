@@ -340,3 +340,88 @@ Vérifié : `check_unit.py` sur les deux fichiers, `make check`, `make test` (12
 **Reste à faire pour ITEC** (LA SUITE point 5) : des **exercices guidés « à la manière des » sujets
 ITEC**, qui ré-emploient les compétences existantes dans le format long de l'épreuve — c'est là que
 se joue l'entraînement au bac, plus que dans de nouvelles connaissances.
+
+## Fait à la 11e session (17 sept. 2026) — les sujets type bac ITEC (LA SUITE, point 5)
+
+Les 90 exercices guidés d'alors faisaient 6 à 8 étapes et restaient dans **une** compétence.
+Ce qui manquait pour le bac, c'est le **format de l'épreuve** : la partie spécifique de 2I2D
+enchaîne 10 à 15 questions sur **un seul système**, traverse plusieurs compétences et se termine
+par un « conclure ». Les quatre sujets ITEC d'éduscol ont donc été lus (le texte des PDF
+**s'extrait bien avec `pdftotext`** — contrairement à ce que dit `docs/biblio.md` §6, qui parlait
+du lecteur d'un outil web), puis **ré-écrits avec un autre support et d'autres valeurs**. Rien
+n'est recopié : les agents rédacteurs n'ont jamais vu le texte des sujets, seulement une fiche de
+mission décrivant le système inventé, les données et la chaîne de questions.
+
+**Quatre « sujets type bac ITEC » de 12 étapes**, rattachés au champ `guided:` de
+`content/annales.yaml`, resté vide sur les 13 annales depuis l'origine — le bouton
+« S'entraîner » de l'écran Annales existait dans le moteur et ne servait jamais :
+
+| annale | sujet type | compétence d'accueil | fil |
+|---|---|---|---|
+| 2026 ITEC, Hélilock | centrage automatique de tubes sur une découpeuse laser | `schema-2d` | 4 classes d'équivalence, grille des liaisons, chaîne fonctionnelle, double filetage, $v$ puis $P$, traction, $S$, $\sigma$, $s = 6{,}4$ |
+| 2025 ITEC, ferme éolienne | hydrolienne fluviale | `vitesses` | mouvement, trajectoire, $\omega$, $V_t$, km·h⁻¹, conclure, $\lambda$, poids, force centrifuge, position dimensionnante, effort, conclure |
+| 2024 ITEC, PV flottant | ombrière photovoltaïque de parking | `2i2d-materiaux-choix` | $\alpha = 15{,}2°$, conformité, 4 actions, solide à 2 forces, 4 800 N, traction, $S$, $\sigma$, $s = 3{,}8$, conclure, grille de 3 matériaux, choix argumenté |
+| 2023 ITEC, vélodrome | circuit de karting : virage relevé et monte-charge | `acceleration` | angle de frottement, non-glissement, inclinaison et vitesse, $V_e = 50{,}6$ km·h⁻¹, rôle du dévers, roulement sans glissement, $\omega$, rayon primitif, $0{,}075$ m·s⁻¹, conclure |
+
+Cinq figures : `guide-bac-centrage-tube`, `guide-bac-hydrolienne`,
+`guide-bac-hydrolienne-positions`, `guide-bac-ombriere`, `guide-bac-virage-releve` — toutes avec
+leur variante muette (`\rappel`). **2 402 → 2 406 exercices, 101 guidés, 379 figures.**
+
+### Le prérequis d'une annale doit nommer la compétence d'accueil de son guidé
+
+`renderSessionEntry` renvoie sur l'écran de compétence si celle-ci est verrouillée : un bouton
+« S'entraîner » qui lance une séance sur une compétence non déverrouillée n'ouvre donc pas
+l'exercice. Trois annales avaient déjà le bon prérequis ; celle de 2024 demandait `ddl` + `contacts`,
+qui n'impliquent pas `2i2d-materiaux-choix` — elle demande maintenant
+`{skill: 2i2d-materiaux-choix, level: 2}`, ce qui colle mieux à ce que le sujet demande
+(statique, RDM, choix de matériau).
+
+### DÉFAUT DU MOTEUR : deux copies d'une figure sur le même écran cassaient le détourage
+
+Trouvé en relisant les captures mobiles : dans le sujet du karting, la coupe du virage arrivait
+**hachurée sur toute sa surface**, alors que le PDF ne hachure que le sol. Reproduit hors de
+l'application : une figure insérée **deux fois** dans la même page porte deux fois les mêmes `id`,
+`url(#…-clip-0)` résout sur la **première** copie — celle du « Contexte », replié dès l'étape 2 —
+et Chrome ignore un `clipPath` pris dans un sous-arbre masqué. Les hachures de `\hachures`
+débordaient alors sur toute la figure.
+
+Corrigé dans `revise-core/app/js/figures.js` : `uniquifyIds(svg, suffixe)` suffixe les `id` et
+leurs références (`url(#…)`, `href="#…"`) à chaque injection, `inject()` l'applique avec un
+compteur d'instance. Deux tests de non-régression (122 tests).
+
+**Le défaut ne touchait pas que le contenu neuf : dix étapes déjà en ligne étaient cassées**, les
+sept exercices « du mécanisme au schéma » (`schema-2d.complet.*`, serre-joint, étau, cric losange,
+essuie-glace, benne à vérin, pompe à main, bielle-manivelle), où le dessin d'ensemble est rappelé
+dans une étape. Vérifié réparé sur le serre-joint.
+
+### Deux conventions à connaître
+
+- **La virgule décimale dans `answer:`.** Les 280 réponses numériques existantes utilisent le
+  point ; le contenu neuf écrit `answer: '13,2'`. `normalizeAnswer` convertit la virgule en point
+  **des deux côtés** avant comparaison, donc les deux écritures marchent — et le bandeau affiche
+  « Réponse attendue : 50,3 mm² » à la française. On garde la virgule pour le neuf sans reprendre
+  l'ancien.
+- **Le contexte d'un guidé n'est déplié qu'à la première étape** (`intro.open = index === 0`) :
+  une figure dont une étape tardive a besoin doit être **répétée dans son énoncé**, sans quoi
+  l'élève doit déplier le contexte pour lire une cote.
+
+### Un outil de plus : `guided-walk`
+
+`revise-core/app/dev/guided-walk.mjs` parcourt un exercice guidé étape par étape et capture
+chacune, énoncé puis correction, sur un écran de 390 px :
+`node app/dev/guided-walk.mjs <dist> <sortie> "<compétence>::<id complet>" …` C'est lui qui a rendu le défaut des hachures visible : `tour.mjs` ne joue que
+la première étape d'un guidé. Il bloque sur les étapes `match`, qui demandent d'apparier les deux
+colonnes.
+
+Vérifié : `make check` (aucune reprise non admise), `make test` (122), `tour.mjs` (0 erreur),
+`grid-fit` (97 grilles, les 2 débordements connus), `math-overflow` (0 erreur KaTeX, 6
+débordements connus), captures mobiles des quatre sujets et d'un guidé ancien. `sw.js` passé en
+`2026-09-17.4`. **Pas encore publié** : `make deploy`, le scénario `maj.mjs` et les commits
+restent à faire.
+
+### Ce qui reste du point 5
+Les neuf autres annales (EE, SIN, et les six « physique-chimie et mathématiques » de l'APMEP)
+n'ont pas encore de sujet type. Les plus utiles ensuite : `mathstle-equadiff` (2026,
+refroidissement), `mathstle-integrale` (2025, puissance sinusoïdale et primitive),
+`mathstle-exp-ln` (2024, niveau sonore) et `mathstle-complexes-exp` (2025 Polynésie, aire sous
+$v(t)$).

@@ -2180,3 +2180,195 @@ units:
         - 'Non : la ferme serait bien stable au vent, mais bridée en dilatation ; les 27 mm empêchés engendreraient des contraintes parasites très élevées.'
         - 'Non : 27 mm de course sur un appui, cela se voit et cela s''organise ; c''est même la raison d''être des appareils d''appui glissants.'
         explanation: 'La combinaison **fixe + glissant** est la solution retenue sur presque tous les ouvrages d''art : l''appui fixe sert de point de référence et reprend les efforts horizontaux, l''appui glissant absorbe les variations de longueur.'
+    - type: guided
+      level: 3
+      title: 'Type bac ITEC — ombrière photovoltaïque : la biellette et le choix du matériau'
+      tags:
+      - type-bac
+      - statique
+      - traction
+      - coefficient-securite
+      - choix-materiau
+      intro: |-
+        Une **ombrière photovoltaïque** couvre les places d'un parking : elle abrite les voitures et porte des panneaux qui produisent de l'électricité.
+
+        Un poteau vertical porte une traverse horizontale. Sur cette traverse, le panneau est articulé en $A$ par une liaison **pivot** ; il monte en oblique et son extrémité haute $C$ est retenue par **deux biellettes identiques** qui redescendent rejoindre le poteau en $B$. Ce sont elles qui règlent l'inclinaison du panneau et qui reprennent l'effort du vent : le vent s'engouffre sous le panneau et le **soulève**, les biellettes le retiennent.
+
+        Le bureau d'études doit répondre à deux questions : **les biellettes tiennent-elles le vent extrême** (partie A), et **quel matériau choisir pour l'ossature** (partie B) ?
+
+        **Données.** Inclinaison exigée par le cahier des charges : **15° ± 0,5°**. Masse du panneau : **45 kg**. Effort total induit au point $C$ par le vent extrême : **9,6 kN**, réparti sur les **deux** biellettes. Biellette : barreau plein en acier **S235**, diamètre $d = 10$ mm, limite élastique $R_e = 235$ MPa. Coefficient de sécurité minimal imposé : $s \geqslant 2$.
+
+        **Hypothèses.** Les articulations en $A$, $B$ et $C$ sont supposées parfaites, et les pièces indéformables pour toute la partie A.
+
+        {{fig:guide-bac-ombriere-muet}}
+      steps:
+      - kind: input
+        prompt: |-
+          **Étape 1.** *Partie A — la géométrie de la pose.* Le schéma du panneau est coté. En déduire l'inclinaison réelle $\alpha$ du panneau par rapport au plan de la traverse (arrondir au dixième de degré).
+
+          {{fig:guide-bac-ombriere-muet}}
+        answer: '15,2'
+        numeric: true
+        tolerance: 0.2
+        unit: °
+        explanation: 'Les deux cotes du schéma sont la **longueur du panneau**, de $A$ à son extrémité haute — c''est l''hypoténuse du triangle rectangle — et la **hauteur** de cette extrémité au-dessus du plan de la traverse — c''est le côté opposé à $\alpha$. Le rapport « côté opposé / hypoténuse » est un **sinus** : $\sin\alpha = \dfrac{0{,}84}{3{,}20} = 0{,}2625$, donc $\alpha \approx 15{,}2°$. Erreur classique : prendre la tangente. Mais la tangente réclame la **base** du triangle, c''est-à-dire la projection horizontale du panneau, qui n''est pas cotée ; appliquée telle quelle à la longueur du panneau, elle donnerait 14,7°.'
+      - kind: mcq
+        prompt: '**Étape 2.** Le cahier des charges impose une inclinaison de **15° ± 0,5°**. Que conclure sur la conformité de la pose ?'
+        choices:
+        - '15,2° appartient à l''intervalle 15° ± 0,5° : la pose est **conforme**'
+        - 'La pose est **non conforme** : l''écart à la valeur exigée dépasse la tolérance'
+        - La pose est conforme, mais il faudrait reprendre le réglage pour tomber exactement sur 15°
+        - On ne peut pas conclure sans connaître l'orientation du panneau par rapport au sud
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : l''écart vaut $15{,}2 - 15 = 0{,}2°$, alors que la tolérance en autorise 0,5. L''écart est donc plus de deux fois **inférieur** à ce qui est admis.'
+        - 'Non : une tolérance sert précisément à **autoriser** un écart. Exiger la valeur exacte n''aurait aucun sens : aucun montage réel n''y parviendrait, et aucun instrument ne saurait le vérifier.'
+        - 'Non : l''orientation au sud conditionne la **production** électrique, pas la conformité géométrique de la pose, qui se juge sur le seul intervalle imposé.'
+        explanation: 'L''intervalle toléré va de 14,5° à 15,5° ; 15,2° s''y trouve, la pose est conforme. Conclure, en dimensionnement, c''est toujours **comparer une valeur calculée à une valeur exigée** et dire laquelle est la plus grande — jamais se contenter de constater qu''elles sont « proches ».'
+      - kind: match
+        prompt: '**Étape 3.** *L''équilibre du panneau.* On isole le panneau. Associez chacune des quatre actions mécaniques extérieures qu''il subit à sa description.'
+        pairs:
+        - left: Le poids du panneau
+          right: verticale, vers le bas, appliquée au centre de gravité
+        - left: L'action du vent
+          right: perpendiculaire au panneau, elle tend à le soulever
+        - left: L'action de la traverse
+          right: au point $A$, transmise par la liaison pivot
+        - left: L'action des deux biellettes
+          right: au point $C$, dirigée suivant la droite $(BC)$
+        explanation: |-
+          Isoler, c'est d'abord savoir **combien** de forces on cherche : ici quatre, et pas une de plus. Le poids (45 kg, soit environ 0,44 kN) est vertical et s'applique au centre de gravité ; l'action du vent est perpendiculaire au panneau et le soulève ; la traverse agit en $A$ par la liaison pivot ; les deux biellettes agissent en $C$ suivant $(BC)$. Toute action oubliée ou inventée à ce stade fausse tout ce qui suit. Une nuance sur la figure de correction : l'action de la traverse en $A$ est la seule dont la **direction n'est pas connue d'avance** — un pivot transmet une force de direction quelconque. Elle y est tracée à titre indicatif ; c'est l'équilibre du panneau qui la donnerait.
+
+          {{fig:guide-bac-ombriere}}
+      - kind: mcq
+        prompt: '**Étape 4.** Pourquoi l''action exercée par une biellette est-elle portée par la droite $(BC)$ ?'
+        choices:
+        - 'Parce que la biellette est un solide soumis à **deux forces** seulement, en $B$ et en $C$ : deux forces en équilibre ont le même support, la droite qui joint leurs points d''application'
+        - Parce que la biellette est une pièce **droite**
+        - Parce que la biellette est verticale
+        - Parce que le poids de la biellette est négligé
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la forme n''y est pour rien. Une pièce droite soumise à **trois** forces n''aurait pas cette propriété, et une pièce coudée soumise à deux forces l''aurait quand même.'
+        - 'Non : la biellette relie $B$, sur le poteau, à $C$, en haut du panneau — elle est inclinée. Et de toute façon, la direction d''un solide à deux forces ne dépend pas de son orientation dans l''espace, seulement de ses deux points d''application.'
+        - 'Non : négliger le poids est bien ce qui **ramène** le bilan de la biellette à deux forces, mais ce n''est qu''une étape du raisonnement. La conclusion, c''est le support commun.'
+        explanation: 'Un solide en équilibre sous **deux** forces : même support, même intensité, sens opposés. Ici la biellette n''est en contact qu''en $B$ et en $C$, par deux articulations parfaites, et son poids est négligeable devant les kilonewtons en jeu : il ne reste que deux actions, dont le support commun ne peut être que la droite $(BC)$. C''est ce qui rend biellettes, bielles, tirants et haubans si commodes à calculer.'
+      - kind: input
+        prompt: '**Étape 5.** *La biellette sous vent extrême.* Les deux biellettes sont identiques et se partagent également l''effort induit au point $C$ par le vent extrême. Calculer l''effort $F$ supporté par **une** biellette.'
+        answer: '4800'
+        numeric: true
+        tolerance: 10
+        unit: N
+        explanation: '$F = \dfrac{9\,600}{2} = 4\,800$ N. Deux pièges dans la même ligne : la conversion $9{,}6$ kN $= 9\,600$ N, et le partage entre les **deux** biellettes. Garder les 9,6 kN pour une seule biellette doublerait l''effort, doublerait la contrainte et diviserait par deux le coefficient de sécurité trouvé à l''étape 9.'
+      - kind: mcq
+        prompt: '**Étape 6.** Comment la biellette est-elle sollicitée sous ce vent extrême ?'
+        choices:
+        - La **traction**
+        - La **compression**
+        - La **flexion**
+        - Le **cisaillement**
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : la biellette serait comprimée si le vent **appuyait** sur le panneau vers le bas. Il faudrait alors vérifier en plus le **flambage**, car une pièce longue et fine qu''on comprime se dérobe latéralement bien avant d''atteindre $R_e$.'
+        - 'Non : la flexion suppose un effort **perpendiculaire** à l''axe de la pièce. Or l''étape 4 vient de montrer que l''effort est porté par $(BC)$, c''est-à-dire par l''axe même de la biellette.'
+        - 'Non : le cisaillement suppose deux efforts opposés, perpendiculaires à l''axe et très proches l''un de l''autre. C''est la sollicitation de l''**axe d''articulation** en $B$ ou en $C$, pas celle de la biellette.'
+        explanation: 'Le vent **soulève** le panneau ; la biellette est ce qui le **retient**. Les deux forces qu''elle subit, en $B$ et en $C$, sont donc dirigées vers l''extérieur de la pièce, qui s''allonge : c''est de la **traction**. Un solide à deux forces est toujours soit tendu, soit comprimé — c''est le seul cas où l''on conclut sur la sollicitation sans aucun calcul, à condition de bien voir dans quel sens vont les flèches.'
+      - kind: input
+        prompt: '**Étape 7.** La biellette est un barreau **plein** de section circulaire. Calculer l''aire $S$ de sa section droite (arrondir au dixième).'
+        answer: '78,5'
+        numeric: true
+        tolerance: 0.6
+        unit: mm²
+        explanation: '$S = \dfrac{\pi d^2}{4} = \dfrac{\pi \times 10^2}{4} \approx 78{,}5$ mm². Erreur classique : écrire $\pi r^2$ en prenant $r = 10$ mm, c''est-à-dire confondre le diamètre et le rayon. On trouverait 314 mm², quatre fois trop, et un coefficient de sécurité quatre fois trop flatteur.'
+      - kind: input
+        prompt: '**Étape 8.** Calculer la contrainte normale $\sigma$ dans la biellette (arrondir au dixième).'
+        answer: '61,1'
+        numeric: true
+        tolerance: 0.8
+        unit: MPa
+        explanation: '$\sigma = \dfrac{F}{S} = \dfrac{4\,800}{78{,}5} \approx 61{,}1$ N·mm⁻². Comme $1$ MPa $= 1$ N·mm⁻², le résultat se lit directement **61,1 MPa** : en gardant les newtons et les millimètres carrés, la conversion est gratuite. Erreur classique : convertir la section en mètres carrés en oubliant que le résultat sort alors en pascals, soit $61{,}1 \cdot 10^{6}$ Pa — même valeur, mais un ordre de grandeur impossible à comparer de tête à $R_e$.'
+      - kind: input
+        prompt: '**Étape 9.** L''acier S235 a pour limite élastique $R_e = 235$ MPa. Calculer le coefficient de sécurité réel $s$ de la biellette (arrondir au dixième).'
+        answer: '3,8'
+        numeric: true
+        tolerance: 0.15
+        unit: ''
+        explanation: '$s = \dfrac{R_e}{\sigma} = \dfrac{235}{61{,}1} \approx 3{,}8$. Le coefficient de sécurité est **sans unité** : il dit par combien la contrainte réelle pourrait être multipliée avant que la pièce n''entre dans le domaine plastique. Le rapport se prend bien dans ce sens-là ; $\sigma / R_e$ donnerait 0,26, un nombre qui ne se compare à rien.'
+      - kind: mcq
+        prompt: '**Étape 10.** Le cahier des charges impose $s \geqslant 2$. Que conclure sur la tenue de la biellette au vent extrême ?'
+        choices:
+        - '$s = 3{,}8 \geqslant 2$ : la biellette **tient** le vent extrême, le cahier des charges est satisfait'
+        - 'La biellette est **non conforme** : sa contrainte est bien trop faible devant $R_e$'
+        - La biellette tient, et l'on pourrait même ramener son diamètre à 5 mm
+        - 'On ne peut pas conclure : il faudrait d''abord vérifier le **flambage** de la biellette'
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : une contrainte **faible** devant la limite élastique est exactement ce que l''on cherche. C''est $s < 2$ qui aurait fait refuser la pièce, pas $s > 2$.'
+        - 'Non : diviser le diamètre par deux divise la section par **quatre**, car la section varie comme $d^2$. Elle tomberait à 19,6 mm², la contrainte monterait à 245 MPa et le coefficient passerait sous 1 : la biellette plastifierait.'
+        - 'Non : le flambage ne menace que les pièces **comprimées**, qui se dérobent latéralement. Ici la biellette est **tendue** (étape 6) : un effort de traction ne fait que la redresser.'
+        explanation: 'La conclusion complète tient dans une comparaison chiffrée : $s = 3{,}8 \geqslant 2$, la condition est vérifiée, avec une marge confortable. Cette marge n''est pas du gaspillage : elle couvre les défauts de matière, les excentrements d''articulation et les rafales que le modèle statique représente mal. À l''inverse, un dimensionnement « au plus juste », avec $s$ voisin de 1, serait imprudent.'
+      - kind: grid
+        prompt: |-
+          **Étape 11.** *Partie B — le choix du matériau de l'ossature.* Trois matériaux sont candidats :
+
+          – **acier galvanisé S235** : masse volumique 7 850 kg·m⁻³ ; tenue à la corrosion bonne (revêtement de zinc) ; empreinte carbone ≈ 2,3 kg CO₂ éq/kg ; recyclable indéfiniment ;
+
+          – **aluminium 6060 T5** : masse volumique 2 700 kg·m⁻³ ; tenue à la corrosion excellente (couche d'alumine) ; empreinte carbone ≈ 8,6 kg CO₂ éq/kg à l'état de métal primaire ; recyclable, avec très peu d'énergie au recyclage ;
+
+          – **bois lamellé-collé GL24h** : masse volumique 420 kg·m⁻³ ; tenue médiocre en extérieur non protégé ; empreinte carbone ≈ 0,4 kg CO₂ éq/kg ; valorisable, ressource renouvelable.
+
+          Pour chaque matériau, cochez les critères qu'il satisfait.
+        rows:
+        - id: Ac
+          label: Acier galvanisé S235
+        - id: Al
+          label: Aluminium 6060 T5
+        - id: Bo
+          label: Bois lamellé-collé GL24h
+        cols:
+        - id: L
+          label: Léger
+        - id: C
+          label: Résiste à la corrosion en extérieur
+        - id: E
+          label: Faible empreinte carbone
+        answer:
+        - CAc
+        - LAl
+        - CAl
+        - LBo
+        - EBo
+        cellFeedback:
+          LAc: 'avec 7 850 kg·m⁻³, l''acier est le plus **dense** des trois : près de trois fois l''aluminium et presque vingt fois le bois'
+          CAc: 'le revêtement de zinc de la galvanisation protège l''acier de la rouille : c''est bien son point fort'
+          EAc: '≈ 2,3 kg CO₂ éq/kg, contre 0,4 pour le bois : l''acier n''est pas le candidat sobre en carbone'
+          LAl: '2 700 kg·m⁻³, soit environ le tiers de l''acier : la légèreté est l''argument numéro un de l''aluminium'
+          CAl: 'la couche d''alumine qui se forme spontanément à sa surface protège le métal ; c''est même sa meilleure note'
+          EAl: 'le piège de l''étape : **léger ne veut pas dire sobre en carbone**. À l''état de métal primaire, l''aluminium coûte ≈ 8,6 kg CO₂ éq/kg, près de quatre fois l''acier'
+          LBo: '420 kg·m⁻³ : le bois lamellé-collé est de très loin le plus léger des trois'
+          CBo: 'en extérieur non protégé, le bois grise, se fend et se dégrade ; sans traitement ni entretien régulier, il ne tient pas ce critère'
+          EBo: '≈ 0,4 kg CO₂ éq/kg, et la ressource se renouvelle : c''est le meilleur des trois sur ce point'
+        explanation: 'Aucun candidat ne coche les trois cases, et c''est la situation normale d''un choix de matériau : l''acier tient dehors mais il est lourd et coûteux en carbone ; l''aluminium est léger et inoxydable mais très coûteux en carbone à l''état primaire ; le bois est léger et sobre mais vulnérable à l''humidité. Il faut donc **hiérarchiser** les critères — c''est l''objet de la dernière étape.'
+      - kind: mcq
+        prompt: '**Étape 12.** L''ossature est exposée à la pluie et doit durer **trente ans** sans entretien lourd. Quel matériau retenir, et pour quelle raison ?'
+        choices:
+        - 'L''**acier galvanisé** : aucun candidat n''est bon partout, et pour une structure exposée c''est la tenue en extérieur sur trente ans qui prime ; son empreinte carbone est en outre en partie rattrapée par un recyclage indéfini'
+        - 'L''**aluminium**, parce qu''il est à la fois léger et inoxydable'
+        - 'Le **bois lamellé-collé**, parce que son empreinte carbone est la plus faible'
+        - Le choix ne peut pas se faire sans connaître le **prix** des trois matériaux
+        answer:
+        - 0
+        feedback:
+        - null
+        - 'Non : il tient effectivement très bien dehors, mais son empreinte carbone à l''état de métal primaire est près de quatre fois celle de l''acier. Sur une ossature de plusieurs tonnes, l''écart devient décisif.'
+        - 'Non : sur ce seul critère, c''est vrai. Mais une ossature de parking exposée à la pluie demanderait un traitement et un entretien réguliers que l''ombrière n''aura pas.'
+        - 'Non : le prix compte, bien sûr, mais un choix de matériau se conduit d''abord sur les critères **imposés par l''usage** — ici la tenue en extérieur — puis s''arbitre sur le coût entre les candidats qui restent.'
+        explanation: 'Le raisonnement se fait en deux temps. D''abord on **élimine** sur le critère imposé par l''usage : exposée trente ans à la pluie sans entretien lourd, l''ossature ne peut pas être en bois lamellé-collé, quelle que soit son empreinte carbone. Il reste l''acier galvanisé et l''aluminium, qui tiennent tous deux dehors ; on les **départage** alors sur le carbone, et l''acier l''emporte (≈ 2,3 contre ≈ 8,6 kg CO₂ éq/kg). Attention toutefois : ces chiffres ne portent que sur la matière première. Une analyse du cycle de vie complète compare les cinq étapes — extraction, fabrication, transport, usage, fin de vie — et l''aluminium y regagne du terrain grâce au très faible coût énergétique de son recyclage.'

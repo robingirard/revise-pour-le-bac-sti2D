@@ -12,7 +12,7 @@ annales:
     corrige: ""
     themes: ["schéma cinématique", "liaisons", "analyse de système"]
     prerequis: [{skill: schema-2d, level: 2}]
-    guided: ""
+    guided: "schema-2d.h92bbc17a"
   - id: 2i2d-2025-itec-eolienne
     titre: "Bac 2025 — ferme éolienne de 12 MW (ITEC)"
     session: 2025
@@ -22,7 +22,7 @@ annales:
     corrige: "https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/18209/18209-cor-me1-sujet-itec-sti2d-2i2d-correction.pdf"
     themes: ["cinématique", "vitesse de rotation", "statique", "RDM"]
     prerequis: [{skill: vitesses, level: 2}]
-    guided: ""
+    guided: "vitesses.h1a45aed7"
   - id: 2i2d-2025-ee-eolienne
     titre: "Bac 2025 — ferme éolienne de 12 MW (EE)"
     session: 2025
@@ -41,8 +41,8 @@ annales:
     url: "https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/17412/17412-sujet-bac-sti2d-itec-2024-parc-photovoltaique-flottant.pdf"
     corrige: "https://sti.eduscol.education.fr/sites/eduscol.education.fr.sti/files/concours-examens/17412/17412-corrige-bac-sti2d-itec-2024-parc-photovoltaique-flottant.pdf"
     themes: ["liaisons", "degrés de liberté", "matériaux"]
-    prerequis: [{skill: ddl, level: 2}, {skill: contacts, level: 2}]
-    guided: ""
+    prerequis: [{skill: 2i2d-materiaux-choix, level: 2}]
+    guided: "2i2d-materiaux-choix.ha23670ca"
   - id: 2i2d-2023-itec-velodrome
     titre: "Bac 2023 — vélodrome Raymond Poulidor (ITEC)"
     session: 2023
@@ -52,7 +52,7 @@ annales:
     corrige: ""
     themes: ["cinématique", "accélération", "statique", "RDM"]
     prerequis: [{skill: acceleration, level: 2}]
-    guided: ""
+    guided: "acceleration.h04d693ba"
   - id: 2i2d-2023-sin-trambus
     titre: "Bac 2023 (Réunion) — Trambus (SIN)"
     session: 2023

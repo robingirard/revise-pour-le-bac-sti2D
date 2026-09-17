@@ -1,0 +1,81 @@
+%% guide-bac-centrage-tube — dispositif de centrage d'un tube sur une découpeuse laser,
+%% vue de face en coupe schématique. Une seule vis (3), deux tronçons de filetage de sens
+%% opposés, deux noix (4) et (6) guidées en translation par le bâti (1) : quand la vis
+%% tourne, les deux mors en V (5) et (7) se rapprochent et centrent le tube T.
+%% Chaque pièce a sa propre couleur : le regroupement en classes d'équivalence n'est pas
+%% donné par la figure, il est à trouver.
+%% \rappel cache l'encadré du bas : E0={1,2}, E1={3}, E2={4,5}, E3={6,7} (réponse de la Q1).
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  piece/.style={line width=0.9pt, line join=round},
+  fleche/.style={-{Stealth[length=6pt]}, line width=1pt},
+  renvoi/.style={line width=0.4pt, draw=black!60},
+  etiq/.style={font=\small, inner sep=2pt},
+  num/.style={font=\small\bfseries, inner sep=1pt, fill=white}]
+
+%% ---------------- 1 : le bâti (semelle rainurée + montant du palier droit) ----------------
+\hachures[draw=black!75]{(0.30,-0.70) -- (0.30,0) -- (2.20,0) -- (2.20,-0.30)
+  -- (7.20,-0.30) -- (7.20,0) -- (9.40,0) -- (9.40,-0.70) -- cycle}
+\hachures[draw=black!75]{(8.95,0) rectangle (9.40,1.20)}
+\node[num, text=black!75] at (1.05,-0.48) {1};
+
+%% ---------------- 2 : le moteur ------------------------------------------------------------
+\draw[piece, draw=solideE, fill=solideE!12] (0.55,0.05) rectangle (1.75,0.95);
+\draw[piece, draw=solideE, line width=0.6pt] (0.72,0.05) -- (0.72,0.95) (0.89,0.05) -- (0.89,0.95);
+\node[num, text=solideE] at (1.35,0.62) {2};
+
+%% ---------------- 4 et 6 : les noix (pied engagé dans la rainure du bâti) -------------------
+\draw[piece, draw=solideA, fill=solideA!10]
+  (2.80,1.00) -- (2.80,0) -- (2.95,0) -- (2.95,-0.27) -- (3.65,-0.27) -- (3.65,0) -- (3.80,0) -- (3.80,1.00) -- cycle;
+\node[num, text=solideA] at (3.30,0.78) {4};
+\draw[piece, draw=solideF, fill=solideF!10]
+  (5.60,1.00) -- (5.60,0) -- (5.75,0) -- (5.75,-0.27) -- (6.45,-0.27) -- (6.45,0) -- (6.60,0) -- (6.60,1.00) -- cycle;
+\node[num, text=solideF] at (6.10,0.78) {6};
+
+%% ---------------- 5 et 7 : les mors en V (contacts tangents au tube) -----------------------
+\draw[piece, draw=solideC, fill=solideC!10]
+  (2.45,1.00) -- (4.10,1.00) -- (4.10,1.35) -- (3.50,1.95) -- (4.10,2.55) -- (4.10,2.90) -- (2.45,2.90) -- cycle;
+\node[num, text=solideC] at (2.90,1.95) {5};
+\draw[piece, draw=solideG, fill=solideG!10]
+  (6.95,1.00) -- (5.30,1.00) -- (5.30,1.35) -- (5.90,1.95) -- (5.30,2.55) -- (5.30,2.90) -- (6.95,2.90) -- cycle;
+\node[num, text=solideG] at (6.50,1.95) {7};
+
+%% ---------------- 3 : la vis (filet à gauche puis filet à droite) --------------------------
+\draw[piece, draw=solideB, fill=white] (1.75,0.34) rectangle (9.15,0.66);
+\foreach \x in {1.90,2.14,...,4.60} { \draw[line width=0.5pt, solideB] (\x,0.66) -- (\x+0.16,0.34); }
+\foreach \x in {4.80,5.04,...,9.00} { \draw[line width=0.5pt, solideB] (\x,0.34) -- (\x+0.16,0.66); }
+\draw[piece, draw=solideB] (4.70,0.30) -- (4.70,0.70);
+\node[num, text=solideB] at (4.98,0.50) {3};
+
+% le tube, posé entre les deux V
+\draw[piece, draw=solideD, fill=solideD!10] (4.70,1.95) circle (0.85);
+\draw[piece, draw=solideD, line width=0.6pt] (4.70,1.95) circle (0.66);
+\node[num, text=solideD] at (4.70,1.95) {T};
+
+%% ---------------- les deux sens de filetage (donnée de l'énoncé) ---------------------------
+\draw[renvoi] (1.55,1.78) -- (2.05,0.70);
+\node[etiq, anchor=south, align=center, text=solideB] at (1.50,1.80) {pas à\\gauche};
+\draw[renvoi] (8.05,1.78) -- (7.55,0.70);
+\node[etiq, anchor=south, align=center, text=solideB] at (8.10,1.80) {pas à\\droite};
+
+%% ---------------- les mors se rapprochent (donnée de l'énoncé) -----------------------------
+\draw[fleche, solideC] (2.30,3.15) -- (2.95,3.15);
+\draw[fleche, solideG] (7.10,3.15) -- (6.45,3.15);
+\node[etiq, text=black!75] at (4.70,3.15) {les mors se rapprochent};
+
+%% ---------------- repère lié au bâti, $\vec x$ suivant l'axe de la vis ---------------------
+\draw[-{Stealth[length=5pt]}, line width=0.6pt] (0.62,-1.30) -- ++(0.70,0)
+  node[anchor=west, inner sep=2pt, font=\small] {$\vec x$};
+\draw[-{Stealth[length=5pt]}, line width=0.6pt] (0.62,-1.30) -- ++(0,0.42)
+  node[anchor=west, inner sep=2pt, font=\small] {$\vec y$};
+\fill (0.62,-1.30) circle (1.3pt);
+\node[etiq, anchor=east, inner sep=3pt] at (0.62,-1.30) {$O$};
+
+%% ---------------- la réponse : les classes d'équivalence -----------------------------------
+\rappel{\node[draw=black!45, fill=black!3, rounded corners=3pt, inner sep=5pt, anchor=north,
+  font=\small] at (5.55,-0.86)
+  {classes : $E_0=\{1,2\}$\; $E_1=\{3\}$\; $E_2=\{4,5\}$\; $E_3=\{6,7\}$};}
+\end{tikzpicture}
+\end{document}
