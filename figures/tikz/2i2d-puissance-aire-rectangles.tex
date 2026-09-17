@@ -1,0 +1,45 @@
+%% L'énergie est l'aire sous la courbe de puissance instantanée ; on l'approche par des rectangles.
+%% Le résultat chiffré et la relation intégrale passent par \rappel.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=6pt,width=5pt]}, line width=0.9pt, draw=black!75},
+  grille/.style={line width=0.25pt, draw=black!15},
+  etiq/.style={font=\footnotesize, text=black!75, inner sep=2pt}]
+
+\def\sx{1.5}    % cm par seconde
+\def\sy{1.05}   % cm par watt
+
+\foreach \i in {0,1,2,3,4} { \draw[grille] (\i*\sx,0) -- (\i*\sx,3.4*\sy); }
+\foreach \j in {0,1,2,3} { \draw[grille] (0,\j*\sy) -- (4.4*\sx,\j*\sy); }
+
+%% les quatre rectangles (règle du milieu) : hauteurs 1 ; 2,5 ; 3 ; 2
+\foreach \i/\h in {0/1, 1/2.5, 2/3, 3/2} {
+  \fill[solideD!22] (\i*\sx,0) rectangle ({(\i+1)*\sx},\h*\sy);
+  \draw[line width=0.7pt, draw=solideD] (\i*\sx,0) rectangle ({(\i+1)*\sx},\h*\sy);
+  \node[font=\scriptsize, text=solideD!80!black, anchor=north] at ({(\i+0.5)*\sx},\h*\sy-0.06) {\h};
+}
+
+%% la courbe p(t)
+\draw[line width=1.4pt, draw=solideB, smooth]
+  plot coordinates {(0,0) (0.5*\sx,1*\sy) (1*\sx,1.8*\sy) (1.5*\sx,2.5*\sy) (2*\sx,2.85*\sy)
+                    (2.5*\sx,3*\sy) (3*\sx,2.6*\sy) (3.5*\sx,2*\sy) (4*\sx,1.2*\sy)};
+
+\draw[axe] (0,0) -- (4.6*\sx,0) node[etiq, anchor=north east, yshift=-2pt] {$t$ (s)};
+\draw[axe] (0,0) -- (0,3.75*\sy) node[etiq, anchor=north east, xshift=-3pt] {$p(t)$ (W)};
+\foreach \i in {1,2,3,4} {
+  \draw[line width=0.7pt, draw=black!70] (\i*\sx,0) -- (\i*\sx,-0.1);
+  \node[etiq, anchor=north] at (\i*\sx,-0.12) {\i};
+}
+\foreach \j in {1,2,3} {
+  \draw[line width=0.7pt, draw=black!70] (0,\j*\sy) -- (-0.1,\j*\sy);
+  \node[etiq, anchor=east] at (-0.12,\j*\sy) {\j};
+}
+
+\node[anchor=north west, font=\small, align=left, inner sep=3pt] at (4.75*\sx,3.4*\sy)
+  {\rappel{$E=\displaystyle\int_{0}^{t}p(\tau)\,\mathrm{d}\tau$}};
+\node[anchor=north west, font=\small, text=solideD!80!black, inner sep=3pt] at (4.75*\sx,2.4*\sy)
+  {\rappel{$E\approx8{,}5$ J}};
+\end{tikzpicture}
+\end{document}

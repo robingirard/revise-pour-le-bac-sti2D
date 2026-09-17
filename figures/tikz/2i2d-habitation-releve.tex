@@ -1,0 +1,33 @@
+%% Relevé de l'énergie consommée par une habitation sur 24 h (fiche TD, chap. 1).
+%% Les données sont sur la figure : l'énoncé ne les répète pas.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=6pt,width=5pt]}, line width=0.9pt, draw=black!75},
+  grille/.style={line width=0.25pt, draw=black!15},
+  etiq/.style={font=\small, text=black!75, inner sep=2pt}]
+
+\def\sx{0.42}   % cm par heure
+\def\sy{0.10}   % cm par kWh
+
+\foreach \i in {0,2,...,24} { \draw[grille] (\i*\sx,0) -- (\i*\sx,50*\sy); }
+\foreach \j in {0,10,...,50} { \draw[grille] (0,\j*\sy) -- (25*\sx,\j*\sy); }
+
+\draw[line width=1.5pt, draw=solideB]
+  (0,0) -- (5*\sx,5*\sy) -- (8*\sx,20*\sy) -- (16*\sx,20*\sy)
+      -- (18*\sx,32*\sy) -- (20*\sx,38*\sy) -- (24*\sx,48*\sy);
+\foreach \x/\y in {5/5, 8/20, 16/20, 18/32, 20/38, 24/48} { \fill[solideB] (\x*\sx,\y*\sy) circle (1.6pt); }
+
+\draw[axe] (0,0) -- (26*\sx,0) node[etiq, anchor=south east, yshift=2pt] {$t$ (heure)};
+\draw[axe] (0,0) -- (0,55*\sy) node[etiq, anchor=north east, xshift=-3pt] {$e(t)$ (kWh)};
+\foreach \i in {2,4,...,24} {
+  \draw[line width=0.6pt, draw=black!70] (\i*\sx,0) -- (\i*\sx,-0.08);
+  \node[etiq, anchor=north, font=\small] at (\i*\sx,-0.1) {\i};
+}
+\foreach \j in {10,20,30,40,50} {
+  \draw[line width=0.6pt, draw=black!70] (0,\j*\sy) -- (-0.08,\j*\sy);
+  \node[etiq, anchor=east, font=\small] at (-0.1,\j*\sy) {\j};
+}
+\end{tikzpicture}
+\end{document}

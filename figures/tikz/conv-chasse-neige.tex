@@ -1,0 +1,42 @@
+%% Le chasse-neige : les données du problème sont SUR la figure, pas dans l'énoncé.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cote/.style={{Stealth[length=4pt,width=3.5pt]}-{Stealth[length=4pt,width=3.5pt]},
+               line width=0.6pt, draw=black!70},
+  etiq/.style={font=\large, text=black!80, inner sep=2pt}]
+
+%% ---------- la route vue de dessus ----------
+\fill[black!8] (0,0) rectangle (7.4,1.6);
+\draw[line width=1pt, draw=black!60] (0,0) -- (7.4,0);
+\draw[line width=1pt, draw=black!60] (0,1.6) -- (7.4,1.6);
+\draw[line width=0.8pt, draw=solideD, dash pattern=on 9pt off 7pt] (0,0.8) -- (7.4,0.8);
+\draw[cote] (0,-0.4) -- (7.4,-0.4);
+\node[etiq, anchor=north] at (3.7,-0.45) {ville A $\rightarrow$ ville B : 15 km};
+\node[etiq, anchor=south west, text=black!60, font=\normalsize] at (0.1,1.66) {route à double sens};
+
+%% la lame, en travers d'une voie
+\draw[line width=2.2pt, draw=solideA, line cap=round] (2.5,0.06) -- (2.5,0.74);
+\draw[line width=0.8pt, draw=solideA!70] (2.5,0.4) -- (3.05,0.4);
+\draw[line width=0.9pt, draw=black!70, fill=black!15] (3.05,0.18) rectangle (3.95,0.62);
+\draw[-{Stealth[length=6pt,width=5.5pt]}, line width=1.1pt, draw=solideE] (4.15,0.4) -- (5.15,0.4);
+\node[font=\large, text=solideE, anchor=west, inner sep=3pt] at (5.2,0.4) {35 km/h};
+\draw[cote] (2.15,0.06) -- (2.15,0.74);
+\node[etiq, anchor=east] at (2.1,0.4) {3,5 m};
+
+%% ---------- la couche de neige, en coupe ----------
+\begin{scope}[yshift=-2.55cm]
+\fill[black!12] (0,0) rectangle (7.4,0.22);
+\draw[line width=0.9pt, draw=black!60] (0,0) rectangle (7.4,0.22);
+\fill[solideB!22] (0,0.22) rectangle (7.4,0.86);
+\draw[line width=0.9pt, draw=solideB] (0,0.22) rectangle (7.4,0.86);
+\draw[cote] (7.6,0.22) -- (7.6,0.86);
+\node[etiq, anchor=west] at (7.65,0.54) {25 cm};
+\node[etiq, anchor=west, text=solideB] at (0.15,0.54) {neige};
+\node[etiq, anchor=west, text=black!60, font=\normalsize] at (7.55,0.11) {chaussée};
+\node[etiq, anchor=north west, font=\normalsize, text=black!70] at (0,-0.12)
+  {masse volumique de la neige : $\mu = 50\ \mathrm{kg/m^{3}}$};
+\end{scope}
+\end{tikzpicture}
+\end{document}

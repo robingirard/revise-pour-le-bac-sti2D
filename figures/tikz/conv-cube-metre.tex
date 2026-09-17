@@ -1,0 +1,54 @@
+%% Le cube de 1 m de côté découpé en cubes de 1 dm : 10 x 10 x 10 = 1 000 dm3.
+%% La conclusion chiffrée est la réponse : elle passe par \rappel.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cote/.style={{Stealth[length=4pt,width=3.5pt]}-{Stealth[length=4pt,width=3.5pt]},
+               line width=0.6pt, draw=black!65},
+  etiq/.style={font=\scriptsize, text=black!75, inner sep=1.5pt}]
+
+\def\a{3.6}      % côté du cube (cm sur le dessin)
+\def\dx{1.35}    % fuite en x
+\def\dy{0.95}    % fuite en y
+
+%% faces : le cube vu en perspective cavalière
+\fill[solideB!10] (0,0) -- (\a,0) -- (\a,\a) -- (0,\a) -- cycle;                       % face avant
+\fill[solideB!18] (0,\a) -- (\dx,\a+\dy) -- (\a+\dx,\a+\dy) -- (\a,\a) -- cycle;       % dessus
+\fill[solideB!6]  (\a,0) -- (\a+\dx,\dy) -- (\a+\dx,\a+\dy) -- (\a,\a) -- cycle;       % droite
+
+%% quadrillage au pas de 1 dm (10 cases) sur les trois faces visibles
+\foreach \i in {0,...,10} {
+  \pgfmathsetmacro\t{\a*\i/10}
+  \draw[line width=0.25pt, draw=solideB!45] (\t,0) -- (\t,\a);
+  \draw[line width=0.25pt, draw=solideB!45] (0,\t) -- (\a,\t);
+  \draw[line width=0.25pt, draw=solideB!35] (\t,\a) -- (\t+\dx,\a+\dy);
+  \draw[line width=0.25pt, draw=solideB!35]
+      ({\dx*\i/10},{\a+\dy*\i/10}) -- ({\a+\dx*\i/10},{\a+\dy*\i/10});
+  \draw[line width=0.25pt, draw=solideB!35] (\a,\t) -- (\a+\dx,\t+\dy);
+  \draw[line width=0.25pt, draw=solideB!35]
+      ({\a+\dx*\i/10},{\dy*\i/10}) -- ({\a+\dx*\i/10},{\a+\dy*\i/10});
+}
+
+%% arêtes
+\draw[line width=1pt, draw=solideB] (0,0) -- (\a,0) -- (\a,\a) -- (0,\a) -- cycle;
+\draw[line width=1pt, draw=solideB] (0,\a) -- (\dx,\a+\dy) -- (\a+\dx,\a+\dy) -- (\a,\a);
+\draw[line width=1pt, draw=solideB] (\a,0) -- (\a+\dx,\dy) -- (\a+\dx,\a+\dy);
+
+%% cotes
+\draw[cote] (0,-0.45) -- (\a,-0.45);
+\node[etiq, anchor=north] at (\a/2,-0.5) {1 m = 10 dm};
+\draw[cote] (-0.45,0) -- (-0.45,\a);
+\node[etiq, anchor=east, rotate=90, anchor=south] at (-0.5,\a/2) {1 m = 10 dm};
+\draw[cote] (\a+0.32,-0.22) -- (\a+\dx+0.32,\dy-0.22);
+\node[etiq, anchor=north west] at (\a+\dx+0.3,\dy-0.3) {1 m};
+
+%% la conclusion : c'est elle, la réponse
+\node[anchor=north west, font=\small, inner sep=3pt] at (\a+\dx+0.9,\a+\dy)
+  {$V = 1\,\mathrm{m}\times1\,\mathrm{m}\times1\,\mathrm{m}$};
+\node[anchor=north west, font=\small, inner sep=3pt] at (\a+\dx+0.9,\a+\dy-0.5)
+  {\rappel{$V = 10\,\mathrm{dm}\times10\,\mathrm{dm}\times10\,\mathrm{dm}$}};
+\node[anchor=north west, font=\small\bfseries, text=solideA, inner sep=3pt]
+  at (\a+\dx+0.9,\a+\dy-1.25) {\rappel{$1\ \mathrm{m^3} = 1\,000\ \mathrm{dm^3}$}};
+\end{tikzpicture}
+\end{document}

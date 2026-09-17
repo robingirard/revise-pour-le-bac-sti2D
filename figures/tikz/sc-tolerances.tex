@@ -1,0 +1,47 @@
+%% Cotation tolérancée : ligne zéro, zones de tolérance de l'alésage et de l'arbre, écarts et IT.
+%% Les relations (IT = ES - EI, cote maxi = CN + ES…) donnent la réponse : elles passent par \rappel.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cote/.style={{Stealth[length=4pt,width=3.5pt]}-{Stealth[length=4pt,width=3.5pt]},
+               line width=0.55pt, draw=black!70},
+  etiq/.style={font=\footnotesize, text=black!80, inner sep=1.5pt},
+  rappelle/.style={line width=0.4pt, draw=black!35, densely dotted}]
+
+\def\k{45}    % cm par millimètre d'écart (les écarts valent quelques centièmes)
+
+%% la ligne zéro = la cote nominale
+\draw[line width=1pt, draw=black!75] (-0.9,0) -- (9.1,0);
+\node[etiq, anchor=north east, text=black!55, font=\scriptsize] at (9.1,-0.06)
+  {ligne zéro : la cote nominale $CN$};
+
+%% ----- zone de tolérance de l'ALÉSAGE : EI = 0, ES = +0,021
+\fill[solideB!22] (0.9,0) rectangle (3.5,0.021*\k);
+\draw[line width=0.9pt, draw=solideB] (0.9,0) rectangle (3.5,0.021*\k);
+\node[font=\small\bfseries, text=solideB, anchor=south] at (2.2,0.021*\k+0.1) {Alésage};
+\draw[rappelle] (3.5,0.021*\k) -- (4.4,0.021*\k);
+\draw[cote] (4.1,0) -- (4.1,0.021*\k);
+\node[etiq, anchor=west, text=solideB] at (4.17,0.5*0.021*\k) {$IT$};
+\draw[cote] (0.55,0) -- (0.55,0.021*\k);
+\node[etiq, anchor=east, text=solideB] at (0.5,0.5*0.021*\k) {$ES$};
+\node[etiq, anchor=north, text=solideB, font=\scriptsize] at (2.2,-0.08) {$EI=0$};
+
+%% ----- zone de tolérance de l'ARBRE : ei = +0,008, es = +0,021
+\fill[solideA!22] (5.6,0.008*\k) rectangle (8.2,0.021*\k);
+\draw[line width=0.9pt, draw=solideA] (5.6,0.008*\k) rectangle (8.2,0.021*\k);
+\node[font=\small\bfseries, text=solideA, anchor=south] at (6.9,0.021*\k+0.1) {Arbre};
+\draw[rappelle] (5.6,0.008*\k) -- (5.15,0.008*\k);
+\draw[cote] (5.3,0) -- (5.3,0.008*\k);
+\node[etiq, anchor=east, text=solideA] at (5.25,0.5*0.008*\k) {$ei$};
+\draw[rappelle] (8.2,0.021*\k) -- (8.75,0.021*\k);
+\draw[cote] (8.55,0) -- (8.55,0.021*\k);
+\node[etiq, anchor=west, text=solideA] at (8.62,0.5*0.021*\k) {$es$};
+
+%% ----- les relations : c'est la réponse
+\node[anchor=north west, font=\small, inner sep=3pt] at (-0.9,-0.55)
+  {\rappel{$IT = ES - EI$ pour l'alésage, \quad $IT = es - ei$ pour l'arbre}};
+\node[anchor=north west, font=\small, inner sep=3pt] at (-0.9,-1.15)
+  {\rappel{cote maxi $= CN + $ écart supérieur, \quad cote mini $= CN + $ écart inférieur}};
+\end{tikzpicture}
+\end{document}

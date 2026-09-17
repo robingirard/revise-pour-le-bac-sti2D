@@ -1,0 +1,45 @@
+%% Liaison complète tige-piston, en demi-coupe : deux surfaces fonctionnelles, l'une cylindrique
+%% (positionnement radial), l'autre plane (positionnement axial), plus la vis de maintien.
+%% Le rôle de chaque surface est la réponse : il passe par \rappel.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={line width=0.5pt, draw=black!55, dash pattern=on 9pt off 3pt on 2pt off 3pt},
+  repere/.style={line width=0.5pt, draw=black!60},
+  etiq/.style={font=\footnotesize, text=black!80, inner sep=2pt}]
+
+%% ---------------- la tige (1), demi-coupe au-dessus de l'axe ----------------
+\hachures[draw=solideA, line width=0.9pt]{
+  (0,0) -- (0,1.05) -- (2.4,1.05) -- (2.4,0.62) -- (4.6,0.62) -- (4.6,0) -- cycle}
+\node[font=\small\bfseries, text=solideA, anchor=south] at (1.2,1.12) {Tige (1)};
+
+%% ---------------- le piston (2), enfilé sur la portée cylindrique ----------------
+\hachuresb[draw=solideB, line width=0.9pt]{
+  (2.4,0.62) -- (2.4,1.95) -- (3.9,1.95) -- (3.9,0.62) -- cycle}
+\node[font=\small\bfseries, text=solideB, anchor=south] at (3.15,2.05) {Piston (2)};
+
+%% ---------------- la vis de maintien ----------------
+\draw[line width=0.8pt, draw=black!70, fill=black!14] (4.6,0) rectangle (5.2,0.45);
+\draw[line width=0.8pt, draw=black!70] (4.05,0) rectangle (4.6,0.2);
+\node[etiq, anchor=west, text=black!65] at (5.28,0.25) {vis de maintien};
+
+%% ---------------- l'axe de révolution ----------------
+\draw[axe] (-0.55,0) -- (6.0,0);
+\node[etiq, anchor=east, text=black!55, font=\scriptsize] at (-0.58,0) {axe};
+
+%% ---------------- SF1 : la portée cylindrique ----------------
+\draw[line width=2.4pt, draw=solideE, line cap=round] (2.45,0.62) -- (3.85,0.62);
+\draw[repere] (3.5,0.62) -- (4.35,-0.72);
+\node[etiq, text=solideE, anchor=north west, font=\small\bfseries] at (4.1,-0.68) {SF1 : surface cylindrique};
+\node[etiq, anchor=north west, align=left, text=black!70] at (4.1,-1.05)
+  {\rappel{positionnement \textbf{radial}\\ (la coaxialité)}};
+
+%% ---------------- SF2 : la face plane de l'épaulement ----------------
+\draw[line width=2.4pt, draw=solideF, line cap=round] (2.4,0.66) -- (2.4,1.91);
+\draw[repere] (2.4,1.5) -- (1.35,2.35);
+\node[etiq, text=solideF, anchor=south east, font=\small\bfseries] at (1.4,2.35) {SF2 : surface plane};
+\node[etiq, anchor=north east, align=right, text=black!70] at (1.4,2.32)
+  {\rappel{positionnement \textbf{axial}\\ (la butée)}};
+\end{tikzpicture}
+\end{document}

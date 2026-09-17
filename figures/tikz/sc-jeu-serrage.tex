@@ -1,0 +1,30 @@
+%% Les trois types d'ajustement, lus sur la position relative des deux zones de tolérance.
+%% Le nom de chaque cas est la réponse : il passe par \rappel.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  etiq/.style={font=\footnotesize, text=black!75, inner sep=2pt}]
+
+\def\w{1.05}   % demi-largeur d'une zone
+\def\h{0.62}   % hauteur d'une zone
+
+%% trois panneaux : arbre sous l'alésage / zones qui se recouvrent / arbre au-dessus
+\foreach \i/\dy/\nom in {0/-0.78/{avec jeu}, 1/0.30/{incertain}, 2/0.95/{avec serrage}} {
+  \pgfmathsetmacro\x{3.35*\i}
+  \draw[line width=0.9pt, draw=black!70] (\x-1.35,0) -- (\x+1.35,0);
+  %% alésage, toujours au-dessus de la ligne zéro
+  \fill[solideB!22] (\x-\w,0) rectangle (\x-\w+0.9,\h);
+  \draw[line width=0.9pt, draw=solideB] (\x-\w,0) rectangle (\x-\w+0.9,\h);
+  \node[font=\scriptsize, text=solideB, anchor=south] at (\x-\w+0.45,\h+0.04) {alésage};
+  %% arbre, décalé selon le cas
+  \fill[solideA!22] (\x+0.15,\dy) rectangle (\x+1.05,\dy+\h);
+  \draw[line width=0.9pt, draw=solideA] (\x+0.15,\dy) rectangle (\x+1.05,\dy+\h);
+  \node[font=\scriptsize, text=solideA, anchor=south] at (\x+0.6,\dy+\h+0.04) {arbre};
+  \node[font=\small\bfseries, anchor=north] at (\x,-1.55) {\rappel{\nom}};
+}
+\node[etiq, anchor=north, text=black!60, font=\scriptsize, align=center] at (3.35,-1.95)
+  {le trait horizontal est la ligne zéro, c'est-à-dire la cote nominale commune\\
+   la zone de l'arbre est sous celle de l'alésage, la recoupe, ou passe au-dessus};
+\end{tikzpicture}
+\end{document}

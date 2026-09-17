@@ -1,0 +1,41 @@
+%% Le tableau de conversion des surfaces : deux colonnes par unité, un exemple placé.
+%% L'exemple placé (0,29 dm2 = 29 cm2) donne la réponse : il passe par \rappel.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm]
+\def\w{1.16}          % largeur d'une unité (deux cases)
+\def\h{0.58}          % hauteur d'une ligne
+
+%% en-têtes
+\foreach \i/\u in {0/{km$^2$}, 1/{hm$^2$}, 2/{dam$^2$}, 3/{m$^2$}, 4/{dm$^2$}, 5/{cm$^2$}, 6/{mm$^2$}} {
+  \pgfmathsetmacro\x{\w*\i+\w/2}
+  \node[font=\small\bfseries, text=solideB] at (\x,0.42) {\u};
+}
+
+%% grille : trait épais entre unités, trait fin au milieu
+\foreach \i in {0,...,6} {
+  \pgfmathsetmacro\xa{\w*\i}
+  \pgfmathsetmacro\xm{\w*\i+\w/2}
+  \draw[line width=0.9pt, draw=black!70] (\xa,0.15) -- (\xa,-2*\h+0.15);
+  \draw[line width=0.35pt, draw=black!35] (\xm,0.15) -- (\xm,-2*\h+0.15);
+}
+\draw[line width=0.9pt, draw=black!70] (7*\w,0.15) -- (7*\w,-2*\h+0.15);
+\foreach \j in {0,1,2} {
+  \pgfmathsetmacro\y{0.15-\h*\j}
+  \draw[line width=0.9pt, draw=black!70] (0,\y) -- (7*\w,\y);
+}
+
+%% l'exemple : 0,29 dm2 posé dans le tableau, lu 29 cm2
+\rappel{%
+  \node[font=\small\bfseries, text=solideA] at (4*\w+0.75*\w,-0.14) {0};
+  \node[font=\small\bfseries, text=solideA] at (5*\w+0.25*\w,-0.14) {2};
+  \node[font=\small\bfseries, text=solideA] at (5*\w+0.75*\w,-0.14) {9};
+  \node[font=\small\bfseries, text=solideA, inner sep=0pt] at (5*\w,-0.28) {,};
+  \node[font=\small, text=solideA, anchor=west, inner sep=3pt] at (7*\w+0.1,-0.14)
+    {$0{,}29\ \mathrm{dm^2} = 29\ \mathrm{cm^2}$};
+}
+\node[font=\scriptsize\itshape, text=black!60, anchor=north west, inner sep=2pt]
+  at (0,-2*\h+0.05) {deux chiffres par unité : on avance de deux rangs à chaque changement d'unité};
+\end{tikzpicture}
+\end{document}

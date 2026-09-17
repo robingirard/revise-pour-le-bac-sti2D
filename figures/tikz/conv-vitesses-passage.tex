@@ -1,0 +1,38 @@
+%% Passer d'une unité de vitesse à l'autre : les trois chemins et leurs facteurs.
+%% Les facteurs sont la réponse : ils passent par \rappel.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  u/.style={draw=solideB, line width=1pt, fill=solideB!10, rounded corners=2pt,
+            minimum width=1.7cm, minimum height=0.7cm, inner sep=2pt, font=\small\bfseries},
+  fl/.style={-{Stealth[length=5pt,width=4.5pt]}, line width=0.9pt, draw=black!60}]
+
+\node[u] (ms)   at (0,0)     {m/s};
+\node[u] (kmh)  at (4.4,0)   {km/h};
+\node[u] (mmin) at (0,-1.9)  {m/min};
+\node[u] (kmmin) at (4.4,-1.9) {km/min};
+
+%% m/s <-> km/h
+\draw[fl] ([yshift=3pt]ms.east) to[out=25,in=155] ([yshift=3pt]kmh.west);
+\draw[fl] ([yshift=-3pt]kmh.west) to[out=-155,in=-25] ([yshift=-3pt]ms.east);
+\node[font=\small, text=solideA, anchor=south] at (2.2,0.42)  {\rappel{$\times3{,}6$}};
+\node[font=\small, text=solideE, anchor=north] at (2.2,-0.42) {\rappel{$\div3{,}6$}};
+
+%% m/s <-> m/min
+\draw[fl] ([xshift=-4pt]ms.south) -- ([xshift=-4pt]mmin.north);
+\draw[fl] ([xshift=10pt]mmin.north) -- ([xshift=10pt]ms.south);
+\node[font=\small, text=solideA, anchor=east] at (-0.42,-0.95) {\rappel{$\times60$}};
+\node[font=\small, text=solideE, anchor=west] at (0.52,-0.95)  {\rappel{$\div60$}};
+
+%% km/h <-> km/min
+\draw[fl] ([xshift=-4pt]kmh.south) -- ([xshift=-4pt]kmmin.north);
+\draw[fl] ([xshift=10pt]kmmin.north) -- ([xshift=10pt]kmh.south);
+\node[font=\small, text=solideE, anchor=east] at (3.98,-0.95) {\rappel{$\div60$}};
+\node[font=\small, text=solideA, anchor=west] at (4.92,-0.95) {\rappel{$\times60$}};
+
+\node[font=\scriptsize\itshape, text=black!60, anchor=north, align=center] at (2.2,-2.55)
+  {une vitesse est une longueur divisée par une durée :\\
+   on convertit la longueur, puis la durée};
+\end{tikzpicture}
+\end{document}

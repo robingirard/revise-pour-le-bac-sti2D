@@ -1,0 +1,39 @@
+%% La puissance instantanée de l'habitation : en escalier, une marche par tronçon de e(t).
+%% C'est la correction de l'exercice : la figure entière ne va que dans l'explication.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=6pt,width=5pt]}, line width=0.9pt, draw=black!75},
+  grille/.style={line width=0.25pt, draw=black!15},
+  etiq/.style={font=\small, text=black!75, inner sep=2pt}]
+
+\def\sx{0.36}   % cm par heure
+\def\sy{0.55}   % cm par kW
+
+\foreach \i in {0,2,...,24} { \draw[grille] (\i*\sx,0) -- (\i*\sx,7*\sy); }
+\foreach \j in {0,1,...,7} { \draw[grille] (0,\j*\sy) -- (25*\sx,\j*\sy); }
+
+%% marches : [0;5] 1 kW ; [5;8] 5 kW ; [8;16] 0 ; [16;18] 6 kW ; [18;20] 3 kW ; [20;24] 2,5 kW
+\foreach \a/\b/\p in {0/5/1, 5/8/5, 8/16/0, 16/18/6, 18/20/3, 20/24/2.5} {
+  \fill[solideD!20] (\a*\sx,0) rectangle (\b*\sx,\p*\sy);
+  \draw[line width=1.3pt, draw=solideD] (\a*\sx,\p*\sy) -- (\b*\sx,\p*\sy);
+  \draw[line width=0.6pt, draw=solideD!60] (\a*\sx,0) -- (\a*\sx,\p*\sy);
+  \draw[line width=0.6pt, draw=solideD!60] (\b*\sx,0) -- (\b*\sx,\p*\sy);
+}
+%% la puissance moyenne de la journée
+\draw[line width=1pt, draw=solideA, densely dashed] (0,2*\sy) -- (24*\sx,2*\sy);
+\node[etiq, text=solideA, anchor=west, font=\small] at (24.2*\sx,2*\sy) {$P_{\mathrm{moy}}=2$ kW};
+
+\draw[axe] (0,0) -- (26.5*\sx,0) node[etiq, anchor=south east, yshift=2pt] {$t$ (heure)};
+\draw[axe] (0,0) -- (0,7.6*\sy) node[etiq, anchor=north east, xshift=-3pt] {$p(t)$ (kW)};
+\foreach \i in {2,4,...,24} {
+  \draw[line width=0.6pt, draw=black!70] (\i*\sx,0) -- (\i*\sx,-0.08);
+  \node[etiq, anchor=north, font=\small] at (\i*\sx,-0.1) {\i};
+}
+\foreach \j in {1,...,6} {
+  \draw[line width=0.6pt, draw=black!70] (0,\j*\sy) -- (-0.08,\j*\sy);
+  \node[etiq, anchor=east, font=\small] at (-0.1,\j*\sy) {\j};
+}
+\end{tikzpicture}
+\end{document}

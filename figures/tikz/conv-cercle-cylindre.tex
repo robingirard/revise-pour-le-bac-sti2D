@@ -1,0 +1,47 @@
+%% Le disque de rayon R et le cylindre (R, h) : les grandeurs à calculer avant de convertir.
+%% Les formules sont la réponse : elles passent par \rappel.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  cote/.style={{Stealth[length=4pt,width=3.5pt]}-{Stealth[length=4pt,width=3.5pt]},
+               line width=0.6pt, draw=black!70},
+  etiq/.style={font=\small, text=black!80, inner sep=1.5pt}]
+
+%% ---------------- le disque ----------------
+\def\R{1.35}
+\fill[solideB!10] (0,0) circle (\R);
+\draw[line width=1.1pt, draw=solideB] (0,0) circle (\R);
+\fill[black!70] (0,0) circle (1.1pt);
+\draw[-{Stealth[length=4.5pt,width=4pt]}, line width=0.7pt, draw=solideA] (0,0) -- (42:\R);
+\node[etiq, text=solideA] at (48:0.78*\R) {$R$};
+\node[font=\small\bfseries, text=solideB, anchor=north] at (0,-\R-0.18) {Disque};
+\node[anchor=north, font=\small, align=center, inner sep=3pt] at (0,-\R-0.58)
+  {\rappel{$P = 2\pi R$\\[2pt] $S = \pi R^{2}$}};
+
+%% ---------------- le cylindre ----------------
+\begin{scope}[xshift=5.1cm]
+\def\r{1.05}     % demi-largeur
+\def\e{0.34}     % demi-hauteur de l'ellipse
+\def\h{2.15}     % hauteur
+\fill[solideD!12] (-\r,0) -- (-\r,\h) arc[start angle=180,end angle=360,x radius=\r,y radius=\e]
+                  -- (\r,0) arc[start angle=0,end angle=-180,x radius=\r,y radius=\e] -- cycle;
+\fill[solideD!22] (0,\h) ellipse[x radius=\r, y radius=\e];
+\draw[line width=1.1pt, draw=solideD] (0,\h) ellipse[x radius=\r, y radius=\e];
+\draw[line width=1.1pt, draw=solideD] (-\r,\h) -- (-\r,0);
+\draw[line width=1.1pt, draw=solideD] (\r,\h) -- (\r,0);
+\draw[line width=1.1pt, draw=solideD] (-\r,0) arc[start angle=180,end angle=360,x radius=\r,y radius=\e];
+\draw[line width=0.6pt, draw=solideD!55, densely dashed]
+     (\r,0) arc[start angle=0,end angle=180,x radius=\r,y radius=\e];
+%% rayon sur la face du haut
+\draw[-{Stealth[length=4.5pt,width=4pt]}, line width=0.7pt, draw=solideA] (0,\h) -- (\r,\h);
+\fill[black!70] (0,\h) circle (1.1pt);
+\node[etiq, text=solideA, anchor=south] at (0.55*\r,\h+0.04) {$R$};
+%% hauteur
+\draw[cote] (\r+0.5,0) -- (\r+0.5,\h);
+\node[etiq, anchor=west] at (\r+0.56,\h/2) {$h$};
+\node[font=\small\bfseries, text=solideD, anchor=north] at (0,-\e-0.18) {Cylindre};
+\node[anchor=north, font=\small, inner sep=3pt] at (0,-\e-0.58) {\rappel{$V = \pi R^{2}\,h$}};
+\end{scope}
+\end{tikzpicture}
+\end{document}

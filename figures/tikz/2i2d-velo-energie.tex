@@ -1,0 +1,49 @@
+%% Énergie électrique absorbée par le moteur d'un vélo au cours d'une promenade d'une heure.
+%% La pente de la sécante EST la puissance moyenne : la formule passe par \rappel.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  axe/.style={-{Stealth[length=6pt,width=5pt]}, line width=0.9pt, draw=black!75},
+  grille/.style={line width=0.25pt, draw=black!15},
+  etiq/.style={font=\small, text=black!75, inner sep=2pt}]
+
+%% repère : x = t/1000 s -> 2 cm ; y = E/50000 J -> 1.3 cm
+\def\sx{2}      % cm pour 1000 s
+\def\sy{1.0}    % cm pour 50 000 J
+
+\foreach \i in {0,1,2,3} { \draw[grille] (\i*\sx,0) -- (\i*\sx,4*\sy); }
+\foreach \j in {0,1,2,3,4} { \draw[grille] (0,\j*\sy) -- (3.7*\sx,\j*\sy); }
+
+\draw[axe] (0,0) -- (4.05*\sx,0) node[etiq, anchor=north east, yshift=-2pt] {$t$ (s)};
+\draw[axe] (0,0) -- (0,4.55*\sy) node[etiq, anchor=north east, xshift=-3pt] {$E$ (J)};
+
+\foreach \i/\lab in {1/{1\,000}, 2/{2\,000}, 3/{3\,000}} {
+  \draw[line width=0.7pt, draw=black!70] (\i*\sx,0) -- (\i*\sx,-0.1);
+  \node[etiq, anchor=north] at (\i*\sx,-0.12) {\lab};
+}
+\foreach \j/\lab in {1/{50\,000}, 2/{100\,000}, 3/{150\,000}, 4/{200\,000}} {
+  \draw[line width=0.7pt, draw=black!70] (0,\j*\sy) -- (-0.1,\j*\sy);
+  \node[etiq, anchor=east] at (-0.12,\j*\sy) {\lab};
+}
+
+%% la courbe E(t) : (0;0) (1000;30k) (2000;90k) (2300;120k) (3600;180k)
+\draw[line width=1.4pt, draw=solideB]
+  (0,0) -- (1*\sx,0.6*\sy) -- (2*\sx,1.8*\sy) -- (2.3*\sx,2.4*\sy) -- (3.6*\sx,3.6*\sy);
+\foreach \x/\y in {1/0.6, 2/1.8, 2.3/2.4, 3.6/3.6} { \fill[solideB] (\x*\sx,\y*\sy) circle (1.5pt); }
+
+%% la sécante entre t = 1000 s et t = 2300 s
+\draw[line width=1pt, draw=solideA, densely dashed] (0.55*\sx,0.06*\sy) -- (2.85*\sx,2.94*\sy);
+\draw[line width=0.6pt, draw=black!55, densely dotted] (1*\sx,0.6*\sy) -- (2.3*\sx,0.6*\sy);
+\draw[line width=0.6pt, draw=black!55, densely dotted] (2.3*\sx,0.6*\sy) -- (2.3*\sx,2.4*\sy);
+\draw[{Stealth[length=4pt,width=3.5pt]}-{Stealth[length=4pt,width=3.5pt]}, line width=0.6pt, draw=solideE]
+     (1*\sx,0.45*\sy) -- (2.3*\sx,0.45*\sy);
+\node[etiq, text=solideE, anchor=north] at (1.65*\sx,0.43*\sy) {$\Delta t$};
+\draw[{Stealth[length=4pt,width=3.5pt]}-{Stealth[length=4pt,width=3.5pt]}, line width=0.6pt, draw=solideE]
+     (2.45*\sx,0.6*\sy) -- (2.45*\sx,2.4*\sy);
+\node[etiq, text=solideE, anchor=west] at (2.48*\sx,1.5*\sy) {$\Delta E$};
+
+\node[anchor=north west, font=\small, text=solideA, inner sep=3pt] at (0.12*\sx,4.5*\sy)
+  {\rappel{$P_{\mathrm{moy}}=\dfrac{\Delta E}{\Delta t}$ = pente de la sécante}};
+\end{tikzpicture}
+\end{document}

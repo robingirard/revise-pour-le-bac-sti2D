@@ -1,0 +1,30 @@
+%% Le dipôle résistif : convention récepteur, U et I fléchés, la loi d'Ohm en rappel.
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{liaisons}
+\begin{document}
+\begin{tikzpicture}[x=1cm,y=1cm,
+  fil/.style={line width=1pt, draw=black!75},
+  fleche/.style={-{Stealth[length=5pt,width=4.5pt]}, line width=0.9pt}]
+
+%% le dipôle
+\draw[fil, fill=solideB!10] (-0.75,-0.4) rectangle (0.75,0.4);
+\node[font=\large] at (0,0) {$R$};
+\draw[fil] (-2.1,0) -- (-0.75,0);
+\draw[fil] (0.75,0) -- (2.1,0);
+
+%% le courant, dans le même sens des deux côtés
+\draw[fleche, draw=solideA] (-1.85,0.28) -- (-1.25,0.28);
+\node[font=\small, text=solideA, anchor=south] at (-1.55,0.3) {$I$};
+\draw[fleche, draw=solideA] (1.25,0.28) -- (1.85,0.28);
+\node[font=\small, text=solideA, anchor=south] at (1.55,0.3) {$I$};
+
+%% la tension, flèche de la borne moins vers la borne plus (convention récepteur)
+\draw[fleche, draw=solideE] (1.6,0.95) -- (-1.6,0.95);
+\node[font=\small, text=solideE, anchor=south] at (0,0.98) {$U$};
+
+%% ce que l'énoncé ne doit pas donner
+\node[anchor=north, font=\small, align=center, inner sep=4pt] at (0,-0.65) {%
+  \rappel{$U = R\times I$}\\[3pt]
+  \footnotesize $U$ en volts (V), $R$ en ohms ($\Omega$), $I$ en ampères (A)};
+\end{tikzpicture}
+\end{document}
