@@ -274,3 +274,23 @@ captures mobiles des nouveaux guidés. **Publié** : `sw.js` en `2026-09-17.1`, 
 (`publish.py --force`), poussé sur les trois dépôts, site reconstruit et vérifié en ligne.
 Au passage, le `jekyll build` a rattrapé `_site/index.html` et `_site/print.html`, restés en retard sur le
 lien « LinkedIn posts » ; `.sass-cache/` est passé dans le `.gitignore` du site.
+
+### Défaut trouvé juste après la publication (17 sept., par Robin sur le lien envoyé)
+Robin ouvre `#/session/conv-prefixes` et reçoit **« Introuvable — Cette page n'existe pas »**, alors
+que le serveur est sain (`liste.json` contient `conversions`, `content/conversions.js` répond 200, un
+navigateur neuf ouvre l'exercice). Cause : son navigateur exécutait encore la version du 11 sept., dont
+le `content.js` ignore la compétence — `sess.findSkill` rend `undefined`, et le routeur tombait sur son
+404 générique. `maj.mjs` le montre : **au premier rechargement après un déploiement, le client sert
+encore l'ancien contenu** ; c'est au deuxième que la bascule se fait.
+
+Corrigé dans le moteur (`sw 2026-09-17.2`) : `renderNotFound` reçoit la compétence demandée et, quand il
+y en a une, explique que **cette version ne la connaît pas** et propose **« Mettre à jour et réessayer »**
+(désinscrit le service worker, vide les caches, recharge — le fragment d'URL survit, donc le lien
+aboutit ; `localStorage` n'est pas touché). Même geste que le bouton « Réparer et recharger »
+d'`index.html`, qui ne se déclenche lui que sur un écran blanc, pas sur une route inconnue.
+
+**Le correctif ne sauve pas les clients déjà en retard** (ils exécutent l'ancien `main.js`) : pour
+eux, **deux rechargements**. Il vaut pour toutes les publications suivantes.
+**Règle à retenir : un lien vers une compétence NOUVELLE ne marche pas du premier coup sur un
+téléphone qui a déjà l'application** — le dire en envoyant le lien, ou envoyer d'abord l'adresse nue
+pour laisser la mise à jour se faire.
