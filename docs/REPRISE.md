@@ -38,7 +38,7 @@ est en §7. Rien n'est encore fait.
 5. Incrémenter `VERSION` dans `revise-core/app/sw.js`, `git commit`, `make deploy`.
    Une **correction** se republie avec `publish.py --force` (réécrit v1.0) : passer à une v1.1
    laisserait les téléphones déjà installés sur l'ancienne version.
-6. Côté site (`~/Documents/Recherche/robingirarddoteu`) : reconstruire avec
+6. Côté site (`~/Documents/Communication/robingirarddoteu`) : reconstruire avec
    `export PATH="/opt/homebrew/opt/ruby@3.3/bin:$PATH"` puis `bundle _2.3.19_ exec jekyll build`
    (le `bundle` du système échoue), relire le diff, commiter, pousser.
 7. **Vérifier sur l'adresse publique, pas seulement sur `dist/`.** Le 6 sept., KaTeX n'était jamais
